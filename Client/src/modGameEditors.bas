@@ -4353,7 +4353,7 @@ Public Sub MapEditorEyeDropper()
         
         TileTop = .Layer(CurrentLayer).y * PIC_Y
         TileLeft = .Layer(CurrentLayer).x * PIC_X
-        
+        frmEditor_Map.picBack_MouseDown 1, 0, (TileLeft - (frmEditor_Map.scrlPictureX.Value * PIC_X)), (TileTop - (frmEditor_Map.scrlPictureY.Value * PIC_Y))
         ' Don't change it if we already have it selected
         'TODO
         'If frmEditor_Map.shpSelected.Top = TileTop And frmEditor_Map.shpSelected.Left = TileLeft Then Exit Sub

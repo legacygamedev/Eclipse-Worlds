@@ -821,7 +821,6 @@ Begin VB.Form frmEditor_Map
          TabIndex        =   75
          ToolTipText     =   "Will find the tile on the layer you select."
          Top             =   240
-         Visible         =   0   'False
          Width           =   1275
       End
       Begin VB.CheckBox chkRandom 
@@ -1154,7 +1153,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub picBack_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Public Sub picBack_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
