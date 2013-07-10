@@ -1,0 +1,769 @@
+VERSION 5.00
+Begin VB.Form frmEditor_Ban 
+   BorderStyle     =   1  'Fixed Single
+   Caption         =   "Ban Editor"
+   ClientHeight    =   3600
+   ClientLeft      =   165
+   ClientTop       =   420
+   ClientWidth     =   6795
+   ClipControls    =   0   'False
+   Icon            =   "frmEditor_Ban.frx":0000
+   LinkTopic       =   "Form1"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
+   ScaleHeight     =   3600
+   ScaleWidth      =   6795
+   StartUpPosition =   2  'CenterScreen
+   Begin VB.Frame Frame1 
+      Caption         =   "Properties"
+      Height          =   3015
+      Left            =   3000
+      TabIndex        =   13
+      Top             =   0
+      Width           =   3735
+      Begin VB.TextBox txtName 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00FFFFFF&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   285
+         Left            =   960
+         TabIndex        =   1
+         Top             =   240
+         Width           =   2655
+      End
+      Begin VB.TextBox txtLogin 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00FFFFFF&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   285
+         Left            =   960
+         TabIndex        =   2
+         Top             =   600
+         Width           =   2655
+      End
+      Begin VB.TextBox txtDate 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00FFFFFF&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   285
+         Left            =   960
+         TabIndex        =   6
+         Top             =   1920
+         Width           =   2655
+      End
+      Begin VB.TextBox txtTime 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00FFFFFF&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   285
+         Left            =   960
+         TabIndex        =   7
+         Top             =   2280
+         Width           =   2655
+      End
+      Begin VB.TextBox txtIP 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00FFFFFF&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   285
+         Left            =   960
+         TabIndex        =   3
+         Top             =   960
+         Width           =   2655
+      End
+      Begin VB.TextBox txtSerial 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00FFFFFF&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   285
+         Left            =   960
+         TabIndex        =   4
+         Top             =   1275
+         Width           =   2655
+      End
+      Begin VB.TextBox txtBy 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00FFFFFF&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   285
+         Left            =   960
+         TabIndex        =   8
+         Top             =   2640
+         Width           =   2655
+      End
+      Begin VB.TextBox txtReason 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00FFFFFF&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   285
+         Left            =   960
+         TabIndex        =   5
+         Top             =   1605
+         Width           =   2655
+      End
+      Begin VB.Label lblLogin 
+         Alignment       =   1  'Right Justify
+         BackStyle       =   0  'Transparent
+         Caption         =   "Login:"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   240
+         TabIndex        =   21
+         Top             =   600
+         Width           =   540
+      End
+      Begin VB.Label lblName 
+         Alignment       =   1  'Right Justify
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Name:"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   240
+         TabIndex        =   20
+         Top             =   270
+         Width           =   570
+      End
+      Begin VB.Label lblIP 
+         Alignment       =   1  'Right Justify
+         BackStyle       =   0  'Transparent
+         Caption         =   "IP:"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   500
+         TabIndex        =   19
+         Top             =   960
+         Width           =   300
+      End
+      Begin VB.Label lblSerial 
+         Alignment       =   1  'Right Justify
+         BackStyle       =   0  'Transparent
+         Caption         =   "Serial:"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   240
+         TabIndex        =   18
+         Top             =   1305
+         Width           =   570
+      End
+      Begin VB.Label lblReason 
+         Alignment       =   1  'Right Justify
+         BackStyle       =   0  'Transparent
+         Caption         =   "Reason:"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   120
+         TabIndex        =   17
+         Top             =   1635
+         Width           =   705
+      End
+      Begin VB.Label lblDate 
+         Alignment       =   1  'Right Justify
+         BackStyle       =   0  'Transparent
+         Caption         =   "Date:"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   360
+         TabIndex        =   16
+         Top             =   1995
+         Width           =   480
+      End
+      Begin VB.Label lblTime 
+         Alignment       =   1  'Right Justify
+         BackStyle       =   0  'Transparent
+         Caption         =   "Time:"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   360
+         TabIndex        =   15
+         Top             =   2355
+         Width           =   495
+      End
+      Begin VB.Label lblBannedBy 
+         Alignment       =   1  'Right Justify
+         BackStyle       =   0  'Transparent
+         Caption         =   "By:"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   570
+         TabIndex        =   14
+         Top             =   2640
+         Width           =   285
+      End
+   End
+   Begin VB.Frame Frame3 
+      Caption         =   "Ban List"
+      Height          =   3495
+      Left            =   120
+      TabIndex        =   12
+      Top             =   0
+      Width           =   2775
+      Begin VB.TextBox txtSearch 
+         CausesValidation=   0   'False
+         Height          =   270
+         Left            =   120
+         TabIndex        =   22
+         Top             =   240
+         Width           =   2535
+      End
+      Begin VB.ListBox lstIndex 
+         Height          =   2595
+         Left            =   120
+         TabIndex        =   0
+         Top             =   600
+         Width           =   2535
+      End
+   End
+   Begin VB.CommandButton cmdSave 
+      Caption         =   "Save"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   3120
+      TabIndex        =   9
+      Top             =   3120
+      Width           =   1095
+   End
+   Begin VB.CommandButton cmdCancel 
+      Caption         =   "Cancel"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   5520
+      TabIndex        =   11
+      Top             =   3120
+      Width           =   1095
+   End
+   Begin VB.CommandButton cmdUnban 
+      Caption         =   "Delete"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   4320
+      TabIndex        =   10
+      Top             =   3120
+      Width           =   1095
+   End
+End
+Attribute VB_Name = "frmEditor_Ban"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Option Explicit
+
+Private Sub cmdSave_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    EditorSave = True
+    Call BanEditorSave
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdSave_Click", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdUnban_Click()
+    Dim TmpIndex As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    ClearBan EditorIndex
+    
+    TmpIndex = lstIndex.ListIndex
+    lstIndex.RemoveItem EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).PlayerName), EditorIndex - 1
+    lstIndex.ListIndex = TmpIndex
+    
+    BanEditorInit
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdDelete_Click", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdCancel_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Unload frmEditor_Ban
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdCancel_Click", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub lstIndex_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    BanEditorInit
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "lstIndex_Click", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtBy_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Ban(EditorIndex).By = Trim$(frmEditor_Ban.txtBy.text)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtBy_Change", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtDate_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Ban(EditorIndex).Date = Trim$(frmEditor_Ban.txtDate.text)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtDate_Change", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtIP_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Ban(EditorIndex).IP = Trim$(frmEditor_Ban.txtIP.text)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtIP_Change", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtLogin_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Ban(EditorIndex).PlayerLogin = Trim$(frmEditor_Ban.txtLogin.text)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtLogin_Change", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtName_Validate(Cancel As Boolean)
+    Dim TmpIndex As Long
+
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    TmpIndex = lstIndex.ListIndex
+    Ban(EditorIndex).PlayerName = Trim$(txtName.text)
+    lstIndex.RemoveItem EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).PlayerName), EditorIndex - 1
+    lstIndex.ListIndex = TmpIndex
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtName_Validate", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If EditorSave = False Then
+        BanEditorCancel
+    Else
+        EditorSave = False
+    End If
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "Form_Unload", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtReason_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Ban(EditorIndex).Reason = Trim$(frmEditor_Ban.txtReason.text)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtReason_Change", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSearch_Change()
+    Dim Find As String, i As Long
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
+        
+        ' Make sure we dont try to check a name that's too small
+        If Len(lstIndex.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
+                Exit For
+            End If
+        End If
+    Next
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSearch_Change", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSerial_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Ban(EditorIndex).HDSerial = Trim$(frmEditor_Ban.txtSerial.text)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSerial_Change", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtTime_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Ban(EditorIndex).time = Trim$(frmEditor_Ban.txtTime.text)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtTime_Change", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_Load()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    ' Set max values
+    txtTime.MaxLength = NAME_LENGTH
+    txtReason.MaxLength = NAME_LENGTH
+    txtSerial.MaxLength = NAME_LENGTH
+    txtIP.MaxLength = NAME_LENGTH
+    txtBy.MaxLength = NAME_LENGTH
+    txtLogin.MaxLength = NAME_LENGTH
+    txtDate.MaxLength = NAME_LENGTH
+    txtName.MaxLength = NAME_LENGTH
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "Form_Load", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtName_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtName.SelStart = Len(txtName)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtName_GotFocus", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtTime_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtTime.SelStart = Len(txtTime)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtTime_GotFocus", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtReason_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtReason.SelStart = Len(txtReason)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtReason_GotFocus", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSerial_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtSerial.SelStart = Len(txtSerial)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSerial_GotFocus", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtIP_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtIP.SelStart = Len(txtIP)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtIP_GotFocus", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtBy_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtBy.SelStart = Len(txtBy)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtBy_GotFocus", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtLogin_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtLogin.SelStart = Len(txtLogin)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtLogin_GotFocus", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtDate_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtDate.SelStart = Len(txtDate)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtDate_GotFocus", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub

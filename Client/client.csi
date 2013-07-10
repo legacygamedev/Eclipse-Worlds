@@ -1,0 +1,19 @@
+[History]
+1=#P0#=mb	#P1#=DrawActionMsg	#P2#=Client/modText/DrawActionMsg	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130616012918	#P7#=0	#P8#=51	.
+2=#P0#=mb	#P1#=IsInBounds	#P2#=Client/modGameLogic/IsInBounds	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130616012454	#P7#=0	#P8#=11	.
+3=#P0#=mb	#P1#=CreateActionMsg	#P2#=Client/modGameLogic/CreateActionMsg	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130616012757	#P7#=0	#P8#=23	.
+4=#P0#=mb	#P1#=SendSaveClass	#P2#=Client/modClientTCP/SendSaveClass	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130616003120	#P7#=0	#P8#=1	.
+5=#P0#=mb	#P1#=SendEmoticonEditor	#P2#=Client/modClientTCP/SendEmoticonEditor	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130616002907	#P7#=0	#P8#=6	.
+6=#P0#=mb	#P1#=SendCheckEmoticon	#P2#=Client/modClientTCP/SendCheckEmoticon	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130616002755	#P7#=0	#P8#=6	.
+7=#P0#=mb	#P1#=RequestSwitchesAndVariables	#P2#=Client/modClientTCP/RequestSwitchesAndVariables	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130616002526	#P7#=0	#P8#=8	.
+8=#P0#=mb	#P1#=SendSaveMap	#P2#=Client/modClientTCP/SendSaveMap	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130616010758	#P7#=0	#P8#=48	.
+9=#P0#=mb	#P1#=chkAoE_Click	#P2#=Client/frmEditor_Spell/chkAoE_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20130615221944	#P7#=0	#P8#=11	.
+10=#P0#=mb	#P1#=Form_KeyPress	#P2#=Client/frmLoad/Form_KeyPress	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20130615221720	#P7#=0	#P8#=10	.
+11=#P0#=mb	#P1#=HandleMapData	#P2#=Client/modHandleData/HandleMapData	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130616010831	#P7#=0	#P8#=30	.
+12=#P0#=mb	#P1#=CheckDirection	#P2#=Client/modGameLogic/CheckDirection	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130615215417	#P7#=0	#P8#=17	.
+13=#P0#=mb	#P1#=ProcessWeather	#P2#=Client/modGameLogic/ProcessWeather	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130615214858	#P7#=0	#P8#=1	.
+14=#P0#=mb	#P1#=DrawPlayer	#P2#=Client/modGraphics/DrawPlayer	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130615214349	#P7#=0	#P8#=27	.
+15=#P0#=mb	#P1#=GameLoop	#P2#=Client/modGameLogic/GameLoop	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130615214133	#P7#=0	#P8#=224	.
+16=#P0#=mb	#P1#=UpdateCamera	#P2#=Client/modGraphics/UpdateCamera	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130615213834	#P7#=0	#P8#=11	.
+17=#P0#=mb	#P1#=CheckMovement	#P2#=Client/modGameLogic/CheckMovement	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20130615213646	#P7#=0	#P8#=3	.
+18=#P0#=mb	#P1#=chkGlobal_Click	#P2#=Client/frmEditor_Events/chkGlobal_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20130615212747	#P7#=0	#P8#=1	.

@@ -1,0 +1,930 @@
+VERSION 5.00
+Begin VB.Form frmEditor_Resource 
+   BorderStyle     =   1  'Fixed Single
+   Caption         =   "Resource Editor"
+   ClientHeight    =   8625
+   ClientLeft      =   45
+   ClientTop       =   330
+   ClientWidth     =   8535
+   BeginProperty Font 
+      Name            =   "Verdana"
+      Size            =   6.75
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
+   Icon            =   "frmEditor_Resource.frx":0000
+   LinkTopic       =   "Form1"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
+   ScaleHeight     =   575
+   ScaleMode       =   3  'Pixel
+   ScaleWidth      =   569
+   ShowInTaskbar   =   0   'False
+   StartUpPosition =   2  'CenterScreen
+   Visible         =   0   'False
+   Begin VB.CommandButton cmdDelete 
+      Caption         =   "Delete"
+      Height          =   375
+      Left            =   5160
+      TabIndex        =   19
+      Top             =   8160
+      Width           =   1455
+   End
+   Begin VB.CommandButton cmdCancel 
+      Caption         =   "Cancel"
+      Height          =   375
+      Left            =   6840
+      TabIndex        =   20
+      Top             =   8160
+      Width           =   1455
+   End
+   Begin VB.CommandButton cmdSave 
+      Caption         =   "Save"
+      Height          =   375
+      Left            =   3480
+      TabIndex        =   18
+      Top             =   8160
+      Width           =   1455
+   End
+   Begin VB.Frame Frame1 
+      Caption         =   "Properties"
+      Height          =   8055
+      Left            =   3360
+      TabIndex        =   22
+      Top             =   0
+      Width           =   5055
+      Begin VB.HScrollBar scrlExp 
+         Height          =   255
+         Left            =   2640
+         TabIndex        =   9
+         Top             =   4680
+         Width           =   2295
+      End
+      Begin VB.HScrollBar scrlSkill 
+         Height          =   255
+         Left            =   2640
+         Max             =   3
+         Min             =   1
+         TabIndex        =   11
+         Top             =   5280
+         Value           =   1
+         Width           =   2295
+      End
+      Begin VB.ComboBox cmbSound 
+         Height          =   300
+         Left            =   960
+         Style           =   2  'Dropdown List
+         TabIndex        =   5
+         Top             =   1680
+         Width           =   3975
+      End
+      Begin VB.TextBox txtFail 
+         Height          =   285
+         Left            =   960
+         TabIndex        =   3
+         Top             =   960
+         Width           =   3975
+      End
+      Begin VB.HScrollBar scrlHighChance 
+         Height          =   255
+         Left            =   2640
+         Max             =   255
+         Min             =   2
+         TabIndex        =   15
+         Top             =   6480
+         Value           =   2
+         Width           =   2295
+      End
+      Begin VB.HScrollBar scrlLowChance 
+         Height          =   255
+         Left            =   120
+         Max             =   255
+         Min             =   1
+         TabIndex        =   14
+         Top             =   6480
+         Value           =   1
+         Width           =   2295
+      End
+      Begin VB.HScrollBar scrlRewardMax 
+         Height          =   255
+         Left            =   2640
+         Max             =   255
+         Min             =   1
+         TabIndex        =   13
+         Top             =   5880
+         Value           =   1
+         Width           =   2295
+      End
+      Begin VB.HScrollBar scrlAnimation 
+         Height          =   255
+         Left            =   120
+         Max             =   6000
+         TabIndex        =   17
+         Top             =   7680
+         Width           =   4815
+      End
+      Begin VB.HScrollBar scrlExhaustedPic 
+         Height          =   255
+         Left            =   2640
+         TabIndex        =   7
+         Top             =   2280
+         Width           =   2295
+      End
+      Begin VB.PictureBox picExhaustedPic 
+         AutoRedraw      =   -1  'True
+         AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   1680
+         Left            =   2640
+         ScaleHeight     =   112
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   152
+         TabIndex        =   32
+         TabStop         =   0   'False
+         Top             =   2640
+         Width           =   2280
+      End
+      Begin VB.TextBox txtName 
+         Height          =   285
+         Left            =   960
+         TabIndex        =   1
+         Top             =   240
+         Width           =   3975
+      End
+      Begin VB.HScrollBar scrlNormalPic 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   6
+         Top             =   2280
+         Width           =   2295
+      End
+      Begin VB.HScrollBar scrlReward 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   8
+         Top             =   4680
+         Width           =   2295
+      End
+      Begin VB.HScrollBar scrlTool 
+         Height          =   255
+         Left            =   120
+         Max             =   3
+         Min             =   1
+         TabIndex        =   10
+         Top             =   5280
+         Value           =   1
+         Width           =   2295
+      End
+      Begin VB.HScrollBar scrlRewardMin 
+         Height          =   255
+         Left            =   120
+         Max             =   255
+         Min             =   1
+         TabIndex        =   12
+         Top             =   5880
+         Value           =   1
+         Width           =   2295
+      End
+      Begin VB.PictureBox picNormalPic 
+         AutoRedraw      =   -1  'True
+         AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   1680
+         Left            =   120
+         ScaleHeight     =   112
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   152
+         TabIndex        =   23
+         TabStop         =   0   'False
+         Top             =   2640
+         Width           =   2280
+      End
+      Begin VB.HScrollBar scrlRespawn 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   16
+         Top             =   7080
+         Width           =   4815
+      End
+      Begin VB.TextBox txtSuccess 
+         Height          =   285
+         Left            =   960
+         TabIndex        =   2
+         Top             =   600
+         Width           =   3975
+      End
+      Begin VB.TextBox txtEmpty 
+         Height          =   285
+         Left            =   960
+         TabIndex        =   4
+         Top             =   1320
+         Width           =   3975
+      End
+      Begin VB.Label lblExp 
+         AutoSize        =   -1  'True
+         Caption         =   "Exp: None"
+         Height          =   180
+         Left            =   2640
+         TabIndex        =   41
+         Top             =   4440
+         Width           =   780
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         Caption         =   "Skill: None"
+         Height          =   180
+         Left            =   2640
+         TabIndex        =   40
+         Top             =   5040
+         Width           =   825
+      End
+      Begin VB.Label Label5 
+         Caption         =   "Sound:"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   39
+         Top             =   1680
+         Width           =   1455
+      End
+      Begin VB.Label lblLowChance 
+         AutoSize        =   -1  'True
+         Caption         =   "Low Chance: 1"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   38
+         Top             =   6240
+         Width           =   1110
+      End
+      Begin VB.Label lblHighChance 
+         AutoSize        =   -1  'True
+         Caption         =   "High Chance: 2"
+         Height          =   180
+         Left            =   2640
+         TabIndex        =   37
+         Top             =   6240
+         Width           =   1170
+      End
+      Begin VB.Label lblRewardMax 
+         AutoSize        =   -1  'True
+         Caption         =   "Maximum Reward: 1"
+         Height          =   180
+         Left            =   2640
+         TabIndex        =   36
+         Top             =   5640
+         Width           =   1515
+      End
+      Begin VB.Label lblRewardMin 
+         AutoSize        =   -1  'True
+         Caption         =   "Minimum Reward: 1"
+         DataSource      =   "in"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   35
+         Top             =   5640
+         Width           =   1470
+      End
+      Begin VB.Label lblAnim 
+         AutoSize        =   -1  'True
+         Caption         =   "Animation: None"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   34
+         Top             =   7440
+         Width           =   1260
+      End
+      Begin VB.Label lblExhaustedPic 
+         AutoSize        =   -1  'True
+         Caption         =   "Exhausted Image: 0"
+         Height          =   180
+         Left            =   2640
+         TabIndex        =   33
+         Top             =   2040
+         Width           =   1530
+      End
+      Begin VB.Label lblName 
+         AutoSize        =   -1  'True
+         Caption         =   "Name:"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   31
+         Top             =   240
+         Width           =   495
+      End
+      Begin VB.Label lblFail 
+         AutoSize        =   -1  'True
+         Caption         =   "Fail:"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   30
+         Top             =   960
+         Width           =   330
+      End
+      Begin VB.Label lblNormalPic 
+         AutoSize        =   -1  'True
+         Caption         =   "Normal Image: 0"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   120
+         TabIndex        =   29
+         Top             =   2040
+         Width           =   1470
+      End
+      Begin VB.Label lblReward 
+         AutoSize        =   -1  'True
+         Caption         =   "Reward: None"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   28
+         Top             =   4440
+         Width           =   1035
+      End
+      Begin VB.Label lblTool 
+         AutoSize        =   -1  'True
+         Caption         =   "Tool Required: None"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   27
+         Top             =   5040
+         Width           =   1530
+      End
+      Begin VB.Label lblRespawn 
+         AutoSize        =   -1  'True
+         Caption         =   "Respawn Time: 0 s"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   26
+         ToolTipText     =   "In seconds."
+         Top             =   6840
+         Width           =   1425
+      End
+      Begin VB.Label lblSuccess 
+         AutoSize        =   -1  'True
+         Caption         =   "Success:"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   25
+         Top             =   600
+         Width           =   705
+      End
+      Begin VB.Label lblEmpty 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Empty:"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   24
+         Top             =   1320
+         Width           =   540
+      End
+   End
+   Begin VB.Frame Frame3 
+      Caption         =   "Resource List"
+      Height          =   8535
+      Left            =   120
+      TabIndex        =   21
+      Top             =   0
+      Width           =   3135
+      Begin VB.TextBox txtSearch 
+         CausesValidation=   0   'False
+         Height          =   270
+         Left            =   120
+         TabIndex        =   42
+         Top             =   240
+         Width           =   2895
+      End
+      Begin VB.ListBox lstIndex 
+         Height          =   7800
+         Left            =   120
+         TabIndex        =   0
+         Top             =   600
+         Width           =   2895
+      End
+   End
+End
+Attribute VB_Name = "frmEditor_Resource"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Option Explicit
+
+Private Sub cmbSound_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    If cmbSound.ListIndex > 0 Then
+        Resource(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
+    Else
+        Resource(EditorIndex).Sound = vbNullString
+    End If
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdSound_Click", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdDelete_Click()
+    Dim TmpIndex As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    ClearResource EditorIndex
+    
+    TmpIndex = lstIndex.ListIndex
+    lstIndex.RemoveItem EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Resource(EditorIndex).Name, EditorIndex - 1
+    lstIndex.ListIndex = TmpIndex
+    
+    ResourceEditorInit
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdDelete_Click", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdSave_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    If frmEditor_Resource.scrlLowChance.Value >= frmEditor_Resource.scrlHighChance.Value Then
+        AlertMsg "The high chance must be greater than the low chance!"
+        Exit Sub
+    End If
+    
+    If frmEditor_Resource.scrlRewardMin.Value > frmEditor_Resource.scrlRewardMax.Value Then
+        AlertMsg "The maximum reward must be greater than or equal to the minimum reward!"
+        Exit Sub
+    End If
+    EditorSave = True
+    Call ResourceEditorSave
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdSave_Click", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_Load()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    scrlReward.max = MAX_ITEMS
+    scrlNormalPic.max = NumResources
+    scrlExhaustedPic.max = NumResources
+    scrlAnimation.max = MAX_ANIMATIONS
+    txtName.MaxLength = NAME_LENGTH
+    txtSuccess.MaxLength = NAME_LENGTH
+    txtFail.MaxLength = NAME_LENGTH
+    txtEmpty.MaxLength = NAME_LENGTH
+    scrlSkill.max = Skills.Skill_Count - 1
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "Form_Load", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdCancel_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    Unload frmEditor_Resource
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdCancel_Click", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    If EditorSave = False Then
+        ResourceEditorCancel
+    Else
+        EditorSave = False
+    End If
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "Form_Unload", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub lstIndex_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    ResourceEditorInit
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "lstIndex_Click", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlAnimation_Change()
+    Dim sString As String
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).Name)
+    lblAnim.Caption = "Animation: " & sString
+    Resource(EditorIndex).Animation = scrlAnimation.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlAnimation_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlExhaustedPic_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    lblExhaustedPic.Caption = "Exhausted Image: " & scrlExhaustedPic.Value
+    Resource(EditorIndex).ExhaustedImage = scrlExhaustedPic.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlExhaustedPic_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlExp_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    lblEXP.Caption = "Exp: " & scrlExp.Value
+    Resource(EditorIndex).Exp = scrlExp.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlExp_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlRewardMax_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    lblRewardMax.Caption = "Maximum Reward: " & scrlRewardMax.Value
+    Resource(EditorIndex).Reward_Max = scrlRewardMax.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlRewardMax_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlRewardMin_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    lblRewardMin.Caption = "Minimum Reward: " & scrlRewardMin.Value
+    Resource(EditorIndex).Reward_Min = scrlRewardMin.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlRewardMin_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlHighChance_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    lblHighChance.Caption = "High Chance: " & scrlHighChance.Value
+    Resource(EditorIndex).HighChance = scrlHighChance.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlHighChance_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlLowChance_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    lblLowChance.Caption = "Low Chance: " & scrlLowChance.Value
+    Resource(EditorIndex).LowChance = scrlLowChance.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlLowChance_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlNormalPic_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    lblNormalPic.Caption = "Normal Image: " & scrlNormalPic.Value
+    Resource(EditorIndex).ResourceImage = scrlNormalPic.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlNormalPic_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlRespawn_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    lblRespawn.Caption = "Respawn Time: " & scrlRespawn.Value & " s"
+    Resource(EditorIndex).RespawnTime = scrlRespawn.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlRespawn_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlReward_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    If scrlReward.Value > 0 Then
+        lblReward.Caption = "Reward: " & Trim$(Item(scrlReward.Value).Name)
+    Else
+        lblReward.Caption = "Reward: None"
+    End If
+    
+    Resource(EditorIndex).ItemReward = scrlReward.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlReward_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlSkill_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    lblSkill.Caption = "Skill: " & GetSkillName(scrlSkill.Value)
+    Resource(EditorIndex).Skill = scrlSkill.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlSkill_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlTool_Change()
+    Dim Name As String
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+
+    Select Case scrlTool.Value
+        Case 0
+            Name = "None"
+        Case 1
+            Name = "Hatchet"
+        Case 2
+            Name = "Fishing Pole"
+        Case 3
+            Name = "Pickaxe"
+    End Select
+
+    lblTool.Caption = "Tool Required: " & Name
+    Resource(EditorIndex).ToolRequired = scrlTool.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlTool_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtFail_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    Resource(EditorIndex).FailMessage = Trim$(txtFail.text)
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "txtFail_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSuccess_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    Resource(EditorIndex).SuccessMessage = Trim$(txtSuccess.text)
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "txtSuccess_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtEmpty_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    Resource(EditorIndex).EmptyMessage = Trim$(txtEmpty.text)
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "txtEmpty_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtName_Validate(Cancel As Boolean)
+    Dim TmpIndex As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    TmpIndex = lstIndex.ListIndex
+    Resource(EditorIndex).Name = Trim$(txtName.text)
+    lstIndex.RemoveItem EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Resource(EditorIndex).Name, EditorIndex - 1
+    lstIndex.ListIndex = TmpIndex
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "txtName_Validate", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtName_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    txtName.SelStart = Len(txtName)
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "txtName_GotFocus", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSuccess_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    txtSuccess.SelStart = Len(txtSuccess)
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "txtSuccess_GotFocus", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtFail_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    txtFail.SelStart = Len(txtFail)
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "txtFail_GotFocus", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtEmpty_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    txtEmpty.SelStart = Len(txtEmpty)
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "txtEmpty_GotFocus", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSearch_Change()
+    Dim Find As String, i As Long
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
+        
+        ' Make sure we dont try to check a name that's too small
+        If Len(lstIndex.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
+                Exit For
+            End If
+        End If
+    Next
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "txtSearch_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
