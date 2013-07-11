@@ -4293,19 +4293,19 @@ Public Sub SetMapAutotileScrollbar()
 
     If frmEditor_Map.scrlAutotile.Value > 0 Then
         Select Case frmEditor_Map.scrlAutotile.Value
-            Case 1 ' Autotile
+            Case 1 ' Autotile (VX)
                 EditorTileWidth = 2
                 EditorTileHeight = 3
-            Case 2 ' Fake autotile
+            Case 2 ' Fake autotile (VX)
                 EditorTileWidth = 1
                 EditorTileHeight = 1
-            Case 3 ' Animated
+            Case 3 ' Animated (VX)
                 EditorTileWidth = 6
                 EditorTileHeight = 3
-            Case 4 ' Cliff
+            Case 4 ' Cliff (VX)
                 EditorTileWidth = 2
                 EditorTileHeight = 2
-            Case 5 ' Waterfall
+            Case 5 ' Waterfall (VX)
                 EditorTileWidth = 2
                 EditorTileHeight = 3
         End Select

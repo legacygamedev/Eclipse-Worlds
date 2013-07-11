@@ -852,6 +852,95 @@ Begin VB.Form frmEditor_Map
          Width           =   3615
       End
    End
+   Begin VB.Frame fraLayers 
+      Caption         =   "Layers"
+      Height          =   5775
+      Left            =   5760
+      TabIndex        =   29
+      Top             =   0
+      Width           =   1455
+      Begin VB.HScrollBar scrlAutotile 
+         Height          =   255
+         Left            =   240
+         Max             =   5
+         TabIndex        =   94
+         Top             =   4440
+         Width           =   975
+      End
+      Begin VB.OptionButton optLayer 
+         Caption         =   "Fringe"
+         Height          =   255
+         Index           =   4
+         Left            =   120
+         TabIndex        =   22
+         Top             =   960
+         Width           =   1215
+      End
+      Begin VB.OptionButton optLayer 
+         Caption         =   "Mask"
+         Height          =   255
+         Index           =   2
+         Left            =   120
+         TabIndex        =   20
+         Top             =   480
+         Width           =   1215
+      End
+      Begin VB.OptionButton optLayer 
+         Caption         =   "Ground"
+         Height          =   255
+         Index           =   1
+         Left            =   120
+         TabIndex        =   19
+         Top             =   240
+         Value           =   -1  'True
+         Width           =   1215
+      End
+      Begin VB.OptionButton optLayer 
+         Caption         =   "Roof"
+         Height          =   255
+         Index           =   5
+         Left            =   120
+         TabIndex        =   23
+         Top             =   1200
+         Width           =   1215
+      End
+      Begin VB.OptionButton optLayer 
+         Caption         =   "Cover"
+         Height          =   255
+         Index           =   3
+         Left            =   120
+         TabIndex        =   21
+         Top             =   720
+         Width           =   1215
+      End
+      Begin VB.CommandButton cmdClear 
+         Caption         =   "Clear"
+         Height          =   375
+         Left            =   240
+         TabIndex        =   26
+         Top             =   5280
+         Width           =   975
+      End
+      Begin VB.CommandButton cmdFill 
+         Caption         =   "Fill"
+         Height          =   375
+         Left            =   240
+         TabIndex        =   25
+         Top             =   4800
+         Width           =   975
+      End
+      Begin VB.Label lblAutoTile 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Normal"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   95
+         Top             =   4200
+         Width           =   1215
+      End
+   End
    Begin VB.Frame fraAttribs 
       Caption         =   "Attributes"
       Height          =   5775
@@ -990,95 +1079,6 @@ Begin VB.Form frmEditor_Map
          Width           =   1215
       End
    End
-   Begin VB.Frame fraLayers 
-      Caption         =   "Layers"
-      Height          =   5775
-      Left            =   5760
-      TabIndex        =   29
-      Top             =   0
-      Width           =   1455
-      Begin VB.HScrollBar scrlAutotile 
-         Height          =   255
-         Left            =   240
-         Max             =   5
-         TabIndex        =   94
-         Top             =   4440
-         Width           =   975
-      End
-      Begin VB.OptionButton optLayer 
-         Caption         =   "Fringe"
-         Height          =   255
-         Index           =   4
-         Left            =   120
-         TabIndex        =   22
-         Top             =   960
-         Width           =   1215
-      End
-      Begin VB.OptionButton optLayer 
-         Caption         =   "Mask"
-         Height          =   255
-         Index           =   2
-         Left            =   120
-         TabIndex        =   20
-         Top             =   480
-         Width           =   1215
-      End
-      Begin VB.OptionButton optLayer 
-         Caption         =   "Ground"
-         Height          =   255
-         Index           =   1
-         Left            =   120
-         TabIndex        =   19
-         Top             =   240
-         Value           =   -1  'True
-         Width           =   1215
-      End
-      Begin VB.OptionButton optLayer 
-         Caption         =   "Roof"
-         Height          =   255
-         Index           =   5
-         Left            =   120
-         TabIndex        =   23
-         Top             =   1200
-         Width           =   1215
-      End
-      Begin VB.OptionButton optLayer 
-         Caption         =   "Cover"
-         Height          =   255
-         Index           =   3
-         Left            =   120
-         TabIndex        =   21
-         Top             =   720
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdClear 
-         Caption         =   "Clear"
-         Height          =   375
-         Left            =   240
-         TabIndex        =   26
-         Top             =   5280
-         Width           =   975
-      End
-      Begin VB.CommandButton cmdFill 
-         Caption         =   "Fill"
-         Height          =   375
-         Left            =   240
-         TabIndex        =   25
-         Top             =   4800
-         Width           =   975
-      End
-      Begin VB.Label lblAutoTile 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Normal"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   95
-         Top             =   4200
-         Width           =   1215
-      End
-   End
 End
 Attribute VB_Name = "frmEditor_Map"
 Attribute VB_GlobalNameSpace = False
@@ -1191,25 +1191,15 @@ Private Sub scrlAutotile_Change()
         Case 0 ' Normal
             lblAutoTile.Caption = "Normal"
         Case 1 ' Autotile
-            lblAutoTile.Caption = "Autotile (VX)"
+            lblAutoTile.Caption = "Autotile"
         Case 2 ' Fake autotile
-            lblAutoTile.Caption = "Fake (VX)"
+            lblAutoTile.Caption = "Fake"
         Case 3 ' Animated
-            lblAutoTile.Caption = "Animated (VX)"
+            lblAutoTile.Caption = "Animated"
         Case 4 ' Cliff
-            lblAutoTile.Caption = "Cliff (VX)"
+            lblAutoTile.Caption = "Cliff"
         Case 5 ' Waterfall
-            lblAutoTile.Caption = "Waterfall (VX)"
-        Case 6 ' Autotile
-            lblAutoTile.Caption = "Autotile (XP)"
-        Case 7 ' Fake autotile
-            lblAutoTile.Caption = "Fake (XP)"
-        Case 8 ' Animated
-            lblAutoTile.Caption = "Animated (XP)"
-        Case 9 ' Cliff
-            lblAutoTile.Caption = "Cliff (XP)"
-        Case 10 ' Waterfall
-            lblAutoTile.Caption = "Waterfall (XP)"
+            lblAutoTile.Caption = "Waterfall"
     End Select
     
     SetMapAutotileScrollbar
