@@ -1281,7 +1281,9 @@ Sub SendUpdateAnimationTo(ByVal index As Long, ByVal AnimationNum As Long)
     SendDataTo index, buffer.ToArray()
     Set buffer = Nothing
 End Sub
+Sub SendAssociatedCharacters()
 
+End Sub
 Sub SendUpdateNpcToAll(ByVal npcnum As Long)
     Dim buffer As clsBuffer
     Dim NpcSize As Long

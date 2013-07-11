@@ -267,6 +267,8 @@ Public Enum ClientPackets
     CEvent
     CSwitchesAndVariables
     CRequestSwitchesAndVariables
+    'Character Editor
+    CRequestAllCharacters
     
     ' Make sure CMSG_COUNT is below everything else
     CMSG_COUNT
