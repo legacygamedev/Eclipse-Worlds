@@ -2676,6 +2676,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -4523,8 +4524,10 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, x As Single
                 Exit Sub
             ElseIf ShiftDown And Button = 1 Then
                 frmEditor_Map.chkEyeDropper.Value = 1
-                Exit Sub
             End If
+            
+            ' Don't allow them to place tiles while they are finding a tile
+            If frmEditor_Map.chkEyeDropper.Value = 1 Then Exit Sub
             
             Call MapEditorMouseDown(Button, x, y, False)
         End If

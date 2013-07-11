@@ -817,7 +817,7 @@ Begin VB.Form frmEditor_Map
       Begin VB.CheckBox chkEyeDropper 
          Caption         =   "Eye Dropper"
          Height          =   255
-         Left            =   1560
+         Left            =   1680
          TabIndex        =   75
          ToolTipText     =   "Will find the tile on the layer you select."
          Top             =   240
@@ -826,7 +826,7 @@ Begin VB.Form frmEditor_Map
       Begin VB.CheckBox chkRandom 
          Caption         =   "Random"
          Height          =   255
-         Left            =   1560
+         Left            =   1680
          TabIndex        =   73
          ToolTipText     =   "Will place tiles you select randomly."
          Top             =   480
@@ -1087,9 +1087,31 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Sub chkEyeDropper_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    scrlAutotile.Value = 0
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "chkEyeDropper_Click", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub chkTilePreview_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
     CurX = 0
     CurY = 0
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "chkTilePreview_Click", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
 End Sub
 
 Private Sub cmbHeal_Click()
