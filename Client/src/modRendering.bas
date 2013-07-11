@@ -218,6 +218,12 @@ Public Sub DrawGDI()
         If frmEditor_Map.fraMapItem.Visible Then EditorMap_DrawMapItem
     End If
     
+    'Renders Random Tiles in MapEditor
+    If frmEditor_Map.chkRandom.Value = 1 Then
+        Call EditorMap_DrawRandom
+    End If
+
+
     If frmEditor_MapProperties.Visible Then
         EditorMapProperties_DrawPanorama
     End If
@@ -3482,26 +3488,47 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub EditorMap_DrawRandom(ByVal x As Long, ByVal y As Long, RandomTile As Long)
+Public Sub EditorMap_DrawRandom()
     Dim sRect As RECT
     Dim dRect As RECT
+    Dim x As Long, y As Long
+    Dim i As Byte
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    For i = 0 To 3
+        If RandomTileSheet(i) = 0 Then
+            Exit Sub
+        End If
+        
+        x = RandomTile(i) Mod 16
+        y = (RandomTile(i) - x) / 16
+        
+        Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
+        Direct3D_Device.BeginScene
+        
+        sRect.Top = y * PIC_Y
+        sRect.Bottom = sRect.Top + PIC_Y
+        sRect.Left = x * PIC_X
+        sRect.Right = sRect.Left + PIC_X
+        
+        dRect = sRect
+        dRect.Top = 0
+        dRect.Bottom = PIC_Y
+        dRect.Left = 0
+        dRect.Right = PIC_X
+        
+        'TODO
+        'Engine_BltToDC Tex_Tileset(frmEditor_Map.scrlTileSet.Value), sRect, dRect, frmEditor_Map.picRandomTile(RandomTile), True
     
-    sRect.Top = y * PIC_Y
-    sRect.Bottom = sRect.Top + PIC_Y
-    sRect.Left = x * PIC_X
-    sRect.Right = sRect.Left + PIC_X
     
-    dRect = sRect
-    dRect.Top = 0
-    dRect.Bottom = PIC_Y
-    dRect.Left = 0
-    dRect.Right = PIC_X
+        RenderTextureByRects Tex_Tileset(RandomTileSheet(i)), sRect, dRect
     
-    'TODO
-    'Engine_BltToDC Tex_Tileset(frmEditor_Map.scrlTileSet.Value), sRect, dRect, frmEditor_Map.picRandomTile(RandomTile), True
+        Direct3D_Device.EndScene
+        Direct3D_Device.Present dRect, dRect, frmEditor_Map.picRandomTile(i).hWnd, ByVal (0)
+    Next
+
+    
     Exit Sub
     
 ' Error handler

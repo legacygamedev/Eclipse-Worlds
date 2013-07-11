@@ -4276,7 +4276,6 @@ Public Sub MapEditorChooseTile(Button As Integer, x As Single, y As Single)
         If frmEditor_Map.chkRandom.Value = 1 Then
             RandomTile(RandomTileSelected) = EditorTileY * (Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / 32) + EditorTileX
             RandomTileSheet(RandomTileSelected) = frmEditor_Map.scrlTileSet.Value
-            Call EditorMap_DrawRandom(EditorTileX, EditorTileY, RandomTileSelected)
             Exit Sub
         End If
     End If

@@ -830,7 +830,6 @@ Begin VB.Form frmEditor_Map
          TabIndex        =   73
          ToolTipText     =   "Will place tiles you select randomly."
          Top             =   480
-         Visible         =   0   'False
          Width           =   915
       End
       Begin VB.HScrollBar scrlTileSet 

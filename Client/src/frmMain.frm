@@ -2794,6 +2794,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -4591,7 +4592,8 @@ Private Sub picScreen_MouseMove(Button As Integer, Shift As Integer, x As Single
     LastButton_Main = 0
     
     ' Reset all buttons
-    Call ResetMainButtons
+    'TODO -> Lags whole client like hell(FPS drop to 0), it loads pictures from hdd every 100 ms <... Note: Do not uncomment until we have new GUI, current one is based on pictureBoxes instead of pure DX8...
+    'Call ResetMainButtons
     Exit Sub
     
 ' Error handler
