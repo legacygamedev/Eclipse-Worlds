@@ -783,7 +783,7 @@ Sub SaveSpell(ByVal SpellNum As Long)
     Dim FileName As String
     Dim F As Long
     
-    FileName = App.path & "\data\spells\spells" & SpellNum & ".dat"
+    FileName = App.path & "\data\spells\" & SpellNum & ".dat"
     F = FreeFile
     
     Open FileName For Binary As #F
