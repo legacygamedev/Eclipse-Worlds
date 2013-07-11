@@ -110,6 +110,9 @@ Private Type OptionsRec
     ResistSound As String
     BuySound As String
     SellSound As String
+    DeflectAnimation As Long
+    DodgeAnimation As Long
+    CriticalAnimation As Long
 End Type
 
 Public Type PartyRec
