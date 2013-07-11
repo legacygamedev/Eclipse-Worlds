@@ -1373,7 +1373,7 @@ End Sub
 
 Public Sub BufferNpcSpell(ByVal MapNum As Integer, ByVal MapNpcNum As Long, ByVal Target As Long)
     Dim SpellNum As Long
-    Dim SpellCastType As Long
+    Dim SpellCastType As Byte
     Dim Range As Long
     Dim HasBuffered As Boolean
     
@@ -2071,7 +2071,7 @@ Public Sub BufferPlayerSpell(ByVal Index As Long, ByVal SpellSlot As Byte)
     Dim MPCost As Long
     Dim LevelReq As Long
     Dim MapNum As Integer
-    Dim SpellCastType As Long
+    Dim SpellCastType As Byte
     Dim ClassReq As Long
     Dim AccessReq As Long
     Dim Range As Long
@@ -2160,9 +2160,8 @@ Public Sub BufferPlayerSpell(ByVal Index As Long, ByVal SpellSlot As Byte)
             HasBuffered = True
         Case 2, 3 ' targeted & targeted AOE
             ' Check if have target
-            If Not Target > 0 Then
-                PlayerMsg Index, "You do not have a target.", BrightRed
-            End If
+            If Not Target > 0 Then Exit Sub
+
             If TargetType = TARGET_TYPE_PLAYER Then
                 ' If have target, check in range
                 If Not IsInRange(Range, GetPlayerX(Index), GetPlayerY(Index), GetPlayerX(Target), GetPlayerY(Target)) Then
