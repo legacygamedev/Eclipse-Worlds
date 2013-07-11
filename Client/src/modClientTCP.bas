@@ -157,7 +157,7 @@ End Sub
 ' *****************************
 ' ** Outgoing Client Packets **
 ' *****************************
-Public Sub SendNewAccount(ByVal name As String, ByVal Password As String)
+Public Sub SendNewAccount(ByVal Name As String, ByVal Password As String)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
@@ -169,7 +169,7 @@ Public Sub SendNewAccount(ByVal name As String, ByVal Password As String)
     buffer.WriteLong App.Major
     buffer.WriteLong App.Minor
     buffer.WriteLong App.Revision
-    buffer.WriteString name
+    buffer.WriteString Name
     buffer.WriteString Password
     SendData buffer.ToArray()
     Set buffer = Nothing
@@ -181,7 +181,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub SendDelAccount(ByVal name As String, ByVal Password As String)
+Public Sub SendDelAccount(ByVal Name As String, ByVal Password As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -193,7 +193,7 @@ Public Sub SendDelAccount(ByVal name As String, ByVal Password As String)
     buffer.WriteLong App.Major
     buffer.WriteLong App.Minor
     buffer.WriteLong App.Revision
-    buffer.WriteString name
+    buffer.WriteString Name
     buffer.WriteString Password
     SendData buffer.ToArray()
     Set buffer = Nothing
@@ -205,7 +205,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub SendLogin(ByVal name As String, ByVal Password As String)
+Public Sub SendLogin(ByVal Name As String, ByVal Password As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -217,7 +217,7 @@ Public Sub SendLogin(ByVal name As String, ByVal Password As String)
     buffer.WriteLong App.Major
     buffer.WriteLong App.Minor
     buffer.WriteLong App.Revision
-    buffer.WriteString name
+    buffer.WriteString Name
     buffer.WriteString Password
     SendData buffer.ToArray()
     Set buffer = Nothing
@@ -229,7 +229,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub SendAddChar(ByVal name As String, ByVal Gender As Long, ByVal ClassNum As Long)
+Public Sub SendAddChar(ByVal Name As String, ByVal Gender As Long, ByVal ClassNum As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -237,7 +237,7 @@ Public Sub SendAddChar(ByVal name As String, ByVal Gender As Long, ByVal ClassNu
     
     Set buffer = New clsBuffer
     buffer.WriteLong CAddChar
-    buffer.WriteString name
+    buffer.WriteString Name
     buffer.WriteByte Gender
     buffer.WriteByte ClassNum
     SendData buffer.ToArray()
@@ -269,7 +269,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub SayMsg(ByVal text As String)
+Public Sub SayMsg(ByVal Text As String)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
@@ -277,7 +277,7 @@ Public Sub SayMsg(ByVal text As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSayMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -288,7 +288,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub GlobalMsg(ByVal text As String)
+Public Sub GlobalMsg(ByVal Text As String)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
@@ -296,7 +296,7 @@ Public Sub GlobalMsg(ByVal text As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CGlobalMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -307,7 +307,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub AdminMsg(ByVal text As String)
+Public Sub AdminMsg(ByVal Text As String)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
@@ -315,7 +315,7 @@ Public Sub AdminMsg(ByVal text As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CAdminMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -326,7 +326,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub PartyMsg(ByVal text As String, PartyNum As Long)
+Public Sub PartyMsg(ByVal Text As String, PartyNum As Long)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
@@ -334,7 +334,7 @@ Public Sub PartyMsg(ByVal text As String, PartyNum As Long)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CPartyMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -345,7 +345,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub EmoteMsg(ByVal text As String)
+Public Sub EmoteMsg(ByVal Text As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -353,7 +353,7 @@ Public Sub EmoteMsg(ByVal text As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CEmoteMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -364,7 +364,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub PrivateMsg(ByVal MsgTo As String, text As String)
+Public Sub PrivateMsg(ByVal MsgTo As String, Text As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -373,7 +373,7 @@ Public Sub PrivateMsg(ByVal MsgTo As String, text As String)
     Set buffer = New clsBuffer
     buffer.WriteLong CPrivateMsg
     buffer.WriteString MsgTo
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -419,8 +419,8 @@ Public Sub SendPlayerMove()
         buffer.WriteByte MOVING_RUNNING
     End If
     
-    buffer.WriteInteger Player(MyIndex).X
-    buffer.WriteInteger Player(MyIndex).Y
+    buffer.WriteInteger Player(MyIndex).x
+    buffer.WriteInteger Player(MyIndex).y
     SendData buffer.ToArray()
     Set buffer = Nothing
     
@@ -455,8 +455,8 @@ End Sub
 
 Public Sub SendSaveMap()
     Dim packet As String
-    Dim X As Long
-    Dim Y As Long
+    Dim x As Long
+    Dim y As Long
     Dim i As Long, Z As Long, w As Long
     Dim buffer As clsBuffer
 
@@ -468,7 +468,7 @@ Public Sub SendSaveMap()
 
     With Map
         buffer.WriteLong CMapData
-        buffer.WriteString Trim$(.name)
+        buffer.WriteString Trim$(.Name)
         buffer.WriteString Trim$(.Music)
         buffer.WriteString Trim$(.BGS)
         buffer.WriteByte .Moral
@@ -500,12 +500,12 @@ Public Sub SendSaveMap()
         buffer.WriteByte .Npc_HighIndex
     End With
 
-    For X = 0 To Map.MaxX
-        For Y = 0 To Map.MaxY
-            With Map.Tile(X, Y)
+    For x = 0 To Map.MaxX
+        For y = 0 To Map.MaxY
+            With Map.Tile(x, y)
                 For i = 1 To MapLayer.Layer_Count - 1
-                    buffer.WriteLong .Layer(i).X
-                    buffer.WriteLong .Layer(i).Y
+                    buffer.WriteLong .Layer(i).x
+                    buffer.WriteLong .Layer(i).y
                     buffer.WriteLong .Layer(i).Tileset
                 Next
                 
@@ -524,9 +524,9 @@ Public Sub SendSaveMap()
     Next
 
     With Map
-        For X = 1 To MAX_MAP_NPCS
-            buffer.WriteLong .NPC(X)
-            buffer.WriteLong .NpcSpawnType(X)
+        For x = 1 To MAX_MAP_NPCS
+            buffer.WriteLong .NPC(x)
+            buffer.WriteLong .NpcSpawnType(x)
         Next
     End With
     
@@ -536,15 +536,15 @@ Public Sub SendSaveMap()
     If Map.EventCount > 0 Then
         For i = 1 To Map.EventCount
             With Map.events(i)
-                buffer.WriteString .name
+                buffer.WriteString .Name
                 buffer.WriteLong .Global
-                buffer.WriteLong .X
-                buffer.WriteLong .Y
+                buffer.WriteLong .x
+                buffer.WriteLong .y
                 buffer.WriteLong .pageCount
             End With
             If Map.events(i).pageCount > 0 Then
-                For X = 1 To Map.events(i).pageCount
-                    With Map.events(i).Pages(X)
+                For x = 1 To Map.events(i).pageCount
+                    With Map.events(i).Pages(x)
                         buffer.WriteLong .chkVariable
                         buffer.WriteLong .VariableIndex
                         buffer.WriteLong .VariableCondition
@@ -577,14 +577,14 @@ Public Sub SendSaveMap()
                         buffer.WriteLong .RepeatMoveRoute
                             
                         If .MoveRouteCount > 0 Then
-                            For Y = 1 To .MoveRouteCount
-                                buffer.WriteLong .MoveRoute(Y).Index
-                                buffer.WriteLong .MoveRoute(Y).Data1
-                                buffer.WriteLong .MoveRoute(Y).Data2
-                                buffer.WriteLong .MoveRoute(Y).Data3
-                                buffer.WriteLong .MoveRoute(Y).Data4
-                                buffer.WriteLong .MoveRoute(Y).Data5
-                                buffer.WriteLong .MoveRoute(Y).Data6
+                            For y = 1 To .MoveRouteCount
+                                buffer.WriteLong .MoveRoute(y).Index
+                                buffer.WriteLong .MoveRoute(y).Data1
+                                buffer.WriteLong .MoveRoute(y).Data2
+                                buffer.WriteLong .MoveRoute(y).Data3
+                                buffer.WriteLong .MoveRoute(y).Data4
+                                buffer.WriteLong .MoveRoute(y).Data5
+                                buffer.WriteLong .MoveRoute(y).Data6
                             Next
                         End If
                             
@@ -598,13 +598,13 @@ Public Sub SendSaveMap()
                         buffer.WriteLong .Position
                     End With
                         
-                    If Map.events(i).Pages(X).CommandListCount > 0 Then
-                        For Y = 1 To Map.events(i).Pages(X).CommandListCount
-                            buffer.WriteLong Map.events(i).Pages(X).CommandList(Y).CommandCount
-                            buffer.WriteLong Map.events(i).Pages(X).CommandList(Y).ParentList
-                            If Map.events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
-                                For Z = 1 To Map.events(i).Pages(X).CommandList(Y).CommandCount
-                                    With Map.events(i).Pages(X).CommandList(Y).Commands(Z)
+                    If Map.events(i).Pages(x).CommandListCount > 0 Then
+                        For y = 1 To Map.events(i).Pages(x).CommandListCount
+                            buffer.WriteLong Map.events(i).Pages(x).CommandList(y).CommandCount
+                            buffer.WriteLong Map.events(i).Pages(x).CommandList(y).ParentList
+                            If Map.events(i).Pages(x).CommandList(y).CommandCount > 0 Then
+                                For Z = 1 To Map.events(i).Pages(x).CommandList(y).CommandCount
+                                    With Map.events(i).Pages(x).CommandList(y).Commands(Z)
                                         buffer.WriteLong .Index
                                         buffer.WriteString .Text1
                                         buffer.WriteString .Text2
@@ -655,7 +655,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub WarpMeTo(ByVal name As String)
+Public Sub WarpMeTo(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -663,7 +663,7 @@ Public Sub WarpMeTo(ByVal name As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CWarpMeTo
-    buffer.WriteString name
+    buffer.WriteString Name
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -674,7 +674,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub WarpToMe(ByVal name As String)
+Public Sub WarpToMe(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -682,7 +682,7 @@ Public Sub WarpToMe(ByVal name As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CWarpToMe
-    buffer.WriteString name
+    buffer.WriteString Name
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -712,7 +712,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub SendSetAccess(ByVal name As String, ByVal Access As Byte)
+Public Sub SendSetAccess(ByVal Name As String, ByVal Access As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -720,7 +720,7 @@ Public Sub SendSetAccess(ByVal name As String, ByVal Access As Byte)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSetAccess
-    buffer.WriteString name
+    buffer.WriteString Name
     buffer.WriteLong Access
     SendData buffer.ToArray()
     Set buffer = Nothing
@@ -751,17 +751,17 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub SendSetPlayerSprite(ByVal name As String, ByVal SpriteNum As Long)
+Public Sub SendSetPlayerSprite(ByVal Name As String, ByVal SpriteNum As Long)
     Dim buffer As clsBuffer
     Set buffer = New clsBuffer
     buffer.WriteLong CSetPlayerSprite
     buffer.WriteLong SpriteNum
-    buffer.WriteString name
+    buffer.WriteString Name
     SendData buffer.ToArray()
     Set buffer = Nothing
 End Sub
 
-Public Sub SendKick(ByVal name As String)
+Public Sub SendKick(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -769,7 +769,7 @@ Public Sub SendKick(ByVal name As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CKickPlayer
-    buffer.WriteString name
+    buffer.WriteString Name
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -780,7 +780,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub SendMute(ByVal name As String)
+Public Sub SendMute(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -788,7 +788,7 @@ Public Sub SendMute(ByVal name As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CMutePlayer
-    buffer.WriteString name
+    buffer.WriteString Name
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -799,7 +799,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub SendBan(ByVal name As String, Reason As String)
+Public Sub SendBan(ByVal Name As String, Reason As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -807,7 +807,7 @@ Public Sub SendBan(ByVal name As String, Reason As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CBanPlayer
-    buffer.WriteString name
+    buffer.WriteString Name
     buffer.WriteString Reason
     SendData buffer.ToArray()
     Set buffer = Nothing
@@ -1656,7 +1656,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub AdminWarp(ByVal X As Long, ByVal Y As Long)
+Public Sub AdminWarp(ByVal x As Long, ByVal y As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -1664,8 +1664,8 @@ Public Sub AdminWarp(ByVal X As Long, ByVal Y As Long)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CAdminWarp
-    buffer.WriteLong X
-    buffer.WriteLong Y
+    buffer.WriteLong x
+    buffer.WriteLong y
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -1800,33 +1800,33 @@ ErrorHandler:
 End Sub
 
 Public Sub SendHotbarUse(ByVal Slot As Long)
-    Dim X As Long
+    Dim x As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Check the hotbar type
     If Hotbar(Slot).SType = 1 Then ' Item
-        For X = 1 To MAX_INV
+        For x = 1 To MAX_INV
             ' Is the item matching the hotbar
-            If GetPlayerInvItemNum(MyIndex, X) = Hotbar(Slot).Slot Then
-                SendUseItem X
+            If GetPlayerInvItemNum(MyIndex, x) = Hotbar(Slot).Slot Then
+                SendUseItem x
                 Exit Sub
             End If
         Next
         
-        For X = 1 To Equipment.Equipment_Count - 1
-            If Player(MyIndex).Equipment(X).Num = Hotbar(Slot).Slot Then
-                SendUnequip X
+        For x = 1 To Equipment.Equipment_Count - 1
+            If Player(MyIndex).Equipment(x).Num = Hotbar(Slot).Slot Then
+                SendUnequip x
                 Exit Sub
             End If
         Next
     ElseIf Hotbar(Slot).SType = 2 Then ' Spell
-        For X = 1 To MAX_PLAYER_SPELLS
+        For x = 1 To MAX_PLAYER_SPELLS
             ' Is the spell matching the hotbar
-            If PlayerSpells(X) = Hotbar(Slot).Slot Then
+            If PlayerSpells(x) = Hotbar(Slot).Slot Then
                 ' Found it, cast it
-                CastSpell X
+                CastSpell x
                 Exit Sub
             End If
         Next
@@ -1839,7 +1839,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub GuildMsg(ByVal text As String)
+Public Sub GuildMsg(ByVal Text As String)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
@@ -1847,7 +1847,7 @@ Public Sub GuildMsg(ByVal text As String)
     Set buffer = New clsBuffer
     
     buffer.WriteLong CGuildMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     
     SendData buffer.ToArray()
     Set buffer = Nothing
@@ -1972,7 +1972,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Sub SendPartyRequest(ByVal name As String)
+Sub SendPartyRequest(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -1980,7 +1980,7 @@ Sub SendPartyRequest(ByVal name As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CPartyRequest
-    buffer.WriteString name
+    buffer.WriteString Name
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -2037,23 +2037,23 @@ Public Sub SendGuildDecline()
     Set buffer = Nothing
 End Sub
 
-Public Sub SendGuildCreate(ByVal name As String)
+Public Sub SendGuildCreate(ByVal Name As String)
     Dim buffer As clsBuffer
     Set buffer = New clsBuffer
     
     buffer.WriteLong CGuildCreate
-    buffer.WriteString name
+    buffer.WriteString Name
     
     SendData buffer.ToArray()
     Set buffer = Nothing
 End Sub
 
-Public Sub SendGuildChangeAccess(ByVal name As String, ByVal Access As Byte)
+Public Sub SendGuildChangeAccess(ByVal Name As String, ByVal Access As Byte)
     Dim buffer As clsBuffer
     Set buffer = New clsBuffer
     
     buffer.WriteLong CGuildChangeAccess
-    buffer.WriteString name
+    buffer.WriteString Name
     buffer.WriteByte Access
     
     SendData buffer.ToArray()
@@ -2292,9 +2292,9 @@ Sub SendSaveTitle(ByVal TitleNum As Long)
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Set buffer = New clsBuffer
-    TitleSize = LenB(title(TitleNum))
+    TitleSize = LenB(Title(TitleNum))
     ReDim TitleData(TitleSize - 1)
-    CopyMemory TitleData(0), ByVal VarPtr(title(TitleNum)), TitleSize
+    CopyMemory TitleData(0), ByVal VarPtr(Title(TitleNum)), TitleSize
     buffer.WriteLong CSaveTitle
     buffer.WriteLong TitleNum
     buffer.WriteBytes TitleData
@@ -2345,7 +2345,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Sub SendGuildInvite(ByVal name As String)
+Sub SendGuildInvite(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -2353,7 +2353,7 @@ Sub SendGuildInvite(ByVal name As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CGuildInvite
-    buffer.WriteString name
+    buffer.WriteString Name
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -2364,7 +2364,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Sub SendGuildRemove(ByVal name As String)
+Sub SendGuildRemove(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -2372,7 +2372,7 @@ Sub SendGuildRemove(ByVal name As String)
     
     Set buffer = New clsBuffer
     buffer.WriteLong CGuildRemove
-    buffer.WriteString name
+    buffer.WriteString Name
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub

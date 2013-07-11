@@ -342,15 +342,15 @@ Function PasswordOK(ByVal Name As String, ByVal Password As String) As Boolean
     End If
 End Function
 
-Sub AddAccount(ByVal index As Long, ByVal Name As String, ByVal Password As String)
+Sub AddAccount(ByVal Index As Long, ByVal Name As String, ByVal Password As String)
     Dim i As Long
     
-    ClearAccount index
+    ClearAccount Index
     
-    Account(index).Login = Name
-    Account(index).Password = Password
+    Account(Index).Login = Name
+    Account(Index).Password = Password
     
-    Call SaveAccount(index)
+    Call SaveAccount(Index)
 End Sub
 
 Sub DeleteName(ByVal Name As String)
@@ -383,16 +383,16 @@ End Sub
 ' ****************
 ' ** Characters **
 ' ****************
-Function CharExist(ByVal index As Long) As Boolean
-    If Len(Trim$(Account(index).Chars(GetPlayerChar(index)).Name)) > 0 And Len(Trim$(Account(index).Chars(GetPlayerChar(index)).Name)) <= NAME_LENGTH Then
+Function CharExist(ByVal Index As Long) As Boolean
+    If Len(Trim$(Account(Index).Chars(GetPlayerChar(Index)).Name)) > 0 And Len(Trim$(Account(Index).Chars(GetPlayerChar(Index)).Name)) <= NAME_LENGTH Then
         CharExist = True
     End If
 End Function
 
-Sub AddChar(ByVal index As Long, ByVal Name As String, ByVal Gender As Byte, ByVal ClassNum As Byte)
+Sub AddChar(ByVal Index As Long, ByVal Name As String, ByVal Gender As Byte, ByVal ClassNum As Byte)
     Dim i As Long, F As Long
 
-    With Account(index).Chars(GetPlayerChar(index))
+    With Account(Index).Chars(GetPlayerChar(Index))
         ' Basic things
         .Name = Name
         .Gender = Gender
@@ -417,7 +417,7 @@ Sub AddChar(ByVal index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
         
         ' Skills
         For i = 1 To Skills.Skill_Count - 1
-            Call SetPlayerSkillLevel(index, 1, i)
+            Call SetPlayerSkillLevel(Index, 1, i)
         Next
         
         .CurrentCombatTree = 1
@@ -429,8 +429,8 @@ Sub AddChar(ByVal index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
         .Y = START_Y
         
         ' Vitals
-        .Vital(Vitals.HP) = GetPlayerMaxVital(index, Vitals.HP)
-        .Vital(Vitals.MP) = GetPlayerMaxVital(index, Vitals.MP)
+        .Vital(Vitals.HP) = GetPlayerMaxVital(Index, Vitals.HP)
+        .Vital(Vitals.MP) = GetPlayerMaxVital(Index, Vitals.MP)
         
         ' Set the checkpoint values
         .CheckPointMap = START_MAP
@@ -444,7 +444,7 @@ Sub AddChar(ByVal index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
         .Status = vbNullString
         
         ' Check for new title
-        Call CheckPlayerNewTitle(index, False)
+        Call CheckPlayerNewTitle(Index, False)
         
         ' Set starter equipment
         For i = 1 To MAX_INV
@@ -475,7 +475,7 @@ Sub AddChar(ByVal index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
         Print #F, Name
     Close #F
     
-    Call SaveAccount(index)
+    Call SaveAccount(Index)
 End Sub
 
 Function FindChar(ByVal Name As String) As Boolean
@@ -510,49 +510,49 @@ Sub SaveAllPlayersOnline()
     Next
 End Sub
 
-Sub SaveAccount(ByVal index As Long)
+Sub SaveAccount(ByVal Index As Long)
     Dim filename As String
     Dim F As Long
 
-    Call ChkDir(App.path & "\data\accounts\", GetPlayerLogin(index))
-    filename = App.path & "\data\accounts\" & GetPlayerLogin(index) & "\data.bin"
+    Call ChkDir(App.path & "\data\accounts\", GetPlayerLogin(Index))
+    filename = App.path & "\data\accounts\" & GetPlayerLogin(Index) & "\data.bin"
     F = FreeFile
     
     Open filename For Binary As #F
-        Put #F, , Account(index)
+        Put #F, , Account(Index)
     Close #F
 End Sub
 
-Sub LoadAccount(ByVal index As Long, ByVal Name As String)
+Sub LoadAccount(ByVal Index As Long, ByVal Name As String)
     Dim filename As String
     Dim F As Long
 
-    Call ClearAccount(index)
+    Call ClearAccount(Index)
     
     filename = App.path & "\data\accounts\" & Name & "\data.bin"
     F = FreeFile
     
     Open filename For Binary As #F
-        Get #F, , Account(index)
+        Get #F, , Account(Index)
     Close #F
 End Sub
 
-Sub ClearAccount(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(TempPlayer(index)), LenB(TempPlayer(index)))
-    TempPlayer(index).HDSerial = vbNullString
-    Set TempPlayer(index).buffer = New clsBuffer
+Sub ClearAccount(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(TempPlayer(Index)), LenB(TempPlayer(Index)))
+    TempPlayer(Index).HDSerial = vbNullString
+    Set TempPlayer(Index).buffer = New clsBuffer
     
-    ZeroMemory ByVal VarPtr(Account(index)), LenB(Account(index))
-    Account(index).Login = vbNullString
-    Account(index).Password = vbNullString
-    Account(index).CurrentChar = 1
-    Account(index).Chars(GetPlayerChar(index)).Name = vbNullString
-    Account(index).Chars(GetPlayerChar(index)).Status = vbNullString
-    Account(index).Chars(GetPlayerChar(index)).Class = 1
+    ZeroMemory ByVal VarPtr(Account(Index)), LenB(Account(Index))
+    Account(Index).Login = vbNullString
+    Account(Index).Password = vbNullString
+    Account(Index).CurrentChar = 1
+    Account(Index).Chars(GetPlayerChar(Index)).Name = vbNullString
+    Account(Index).Chars(GetPlayerChar(Index)).Status = vbNullString
+    Account(Index).Chars(GetPlayerChar(Index)).Class = 1
     
-    frmServer.lvwInfo.ListItems(index).SubItems(1) = vbNullString
-    frmServer.lvwInfo.ListItems(index).SubItems(2) = vbNullString
-    frmServer.lvwInfo.ListItems(index).SubItems(3) = vbNullString
+    frmServer.lvwInfo.ListItems(Index).SubItems(1) = vbNullString
+    frmServer.lvwInfo.ListItems(Index).SubItems(2) = vbNullString
+    frmServer.lvwInfo.ListItems(Index).SubItems(3) = vbNullString
 End Sub
 
 ' ***********
@@ -606,9 +606,9 @@ Sub CheckClasses()
     Next
 End Sub
 
-Sub ClearClass(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Class(index)), LenB(Class(index)))
-    Class(index).Name = vbNullString
+Sub ClearClass(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Class(Index)), LenB(Class(Index)))
+    Class(Index).Name = vbNullString
 End Sub
 
 Sub ClearClasses()
@@ -670,11 +670,11 @@ Sub CheckItems()
     Next
 End Sub
 
-Sub ClearItem(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Item(index)), LenB(Item(index)))
-    Item(index).Name = vbNullString
-    Item(index).Desc = vbNullString
-    Item(index).Sound = vbNullString
+Sub ClearItem(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Item(Index)), LenB(Item(Index)))
+    Item(Index).Name = vbNullString
+    Item(Index).Desc = vbNullString
+    Item(Index).Sound = vbNullString
 End Sub
 
 Sub ClearItems()
@@ -736,9 +736,9 @@ Sub CheckShops()
     Next
 End Sub
 
-Sub ClearShop(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Shop(index)), LenB(Shop(index)))
-    Shop(index).Name = vbNullString
+Sub ClearShop(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Shop(Index)), LenB(Shop(Index)))
+    Shop(Index).Name = vbNullString
 End Sub
 
 Sub ClearShops()
@@ -802,12 +802,12 @@ Sub CheckSpells()
     Next
 End Sub
 
-Sub ClearSpell(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Spell(index)), LenB(Spell(index)))
-    Spell(index).Name = vbNullString
-    Spell(index).Desc = vbNullString
-    Spell(index).LevelReq = 1 ' Needs to be 1 for the spell editor
-    Spell(index).Sound = vbNullString
+Sub ClearSpell(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Spell(Index)), LenB(Spell(Index)))
+    Spell(Index).Name = vbNullString
+    Spell(Index).Desc = vbNullString
+    Spell(Index).LevelReq = 1 ' Needs to be 1 for the spell editor
+    Spell(Index).Sound = vbNullString
 End Sub
 
 Sub ClearSpells()
@@ -876,13 +876,13 @@ Sub CheckNpcs()
     Next
 End Sub
 
-Sub ClearNpc(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(NPC(index)), LenB(NPC(index)))
-    NPC(index).Name = vbNullString
-    NPC(index).Title = vbNullString
-    NPC(index).AttackSay = vbNullString
-    NPC(index).Music = vbNullString
-    NPC(index).Sound = vbNullString
+Sub ClearNpc(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(NPC(Index)), LenB(NPC(Index)))
+    NPC(Index).Name = vbNullString
+    NPC(Index).Title = vbNullString
+    NPC(Index).AttackSay = vbNullString
+    NPC(Index).Music = vbNullString
+    NPC(Index).Sound = vbNullString
 End Sub
 
 Sub ClearNpcs()
@@ -945,13 +945,13 @@ Sub CheckResources()
     Next
 End Sub
 
-Sub ClearResource(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Resource(index)), LenB(Resource(index)))
-    Resource(index).Name = vbNullString
-    Resource(index).SuccessMessage = vbNullString
-    Resource(index).EmptyMessage = vbNullString
-    Resource(index).FailMessage = vbNullString
-    Resource(index).Sound = vbNullString
+Sub ClearResource(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Resource(Index)), LenB(Resource(Index)))
+    Resource(Index).Name = vbNullString
+    Resource(Index).SuccessMessage = vbNullString
+    Resource(Index).EmptyMessage = vbNullString
+    Resource(Index).FailMessage = vbNullString
+    Resource(Index).Sound = vbNullString
 End Sub
 
 Sub ClearResources()
@@ -1014,10 +1014,10 @@ Sub CheckAnimations()
     Next
 End Sub
 
-Sub ClearAnimation(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Animation(index)), LenB(Animation(index)))
-    Animation(index).Name = vbNullString
-    Animation(index).Sound = vbNullString
+Sub ClearAnimation(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Animation(Index)), LenB(Animation(Index)))
+    Animation(Index).Name = vbNullString
+    Animation(Index).Sound = vbNullString
 End Sub
 
 Sub ClearAnimations()
@@ -1136,7 +1136,7 @@ Sub SaveMap(ByVal MapNum As Long)
                         
                         If .MoveRouteCount > 0 Then
                             For Y = 1 To .MoveRouteCount
-                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Index", Val(.MoveRoute(Y).index)
+                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Index", Val(.MoveRoute(Y).Index)
                                 PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data1", Val(.MoveRoute(Y).Data1)
                                 PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data2", Val(.MoveRoute(Y).Data2)
                                 PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data3", Val(.MoveRoute(Y).Data3)
@@ -1163,7 +1163,7 @@ Sub SaveMap(ByVal MapNum As Long)
                             If Map(MapNum).Events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
                                 For z = 1 To Map(MapNum).Events(i).Pages(X).CommandList(Y).CommandCount
                                     With Map(MapNum).Events(i).Pages(X).CommandList(Y).Commands(z)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Index", Val(.index)
+                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Index", Val(.Index)
                                         PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Text1", .Text1
                                         PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Text2", .Text2
                                         PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Text3", .Text3
@@ -1184,7 +1184,7 @@ Sub SaveMap(ByVal MapNum As Long)
                                         PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRouteCount", Val(.MoveRouteCount)
                                         If .MoveRouteCount > 0 Then
                                             For w = 1 To .MoveRouteCount
-                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Index", Val(.MoveRoute(w).index)
+                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Index", Val(.MoveRoute(w).Index)
                                                 PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data1", Val(.MoveRoute(w).Data1)
                                                 PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data2", Val(.MoveRoute(w).Data2)
                                                 PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data3", Val(.MoveRoute(w).Data3)
@@ -1334,7 +1334,7 @@ Sub LoadMaps()
                             If .MoveRouteCount > 0 Then
                                 ReDim Map(z).Events(i).Pages(X).MoveRoute(0 To .MoveRouteCount)
                                 For Y = 1 To .MoveRouteCount
-                                    .MoveRoute(Y).index = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Index"))
+                                    .MoveRoute(Y).Index = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Index"))
                                     .MoveRoute(Y).Data1 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data1"))
                                     .MoveRoute(Y).Data2 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data2"))
                                     .MoveRoute(Y).Data3 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data3"))
@@ -1363,7 +1363,7 @@ Sub LoadMaps()
                                     ReDim Map(z).Events(i).Pages(X).CommandList(Y).Commands(Map(z).Events(i).Pages(X).CommandList(Y).CommandCount)
                                     For p = 1 To Map(z).Events(i).Pages(X).CommandList(Y).CommandCount
                                         With Map(z).Events(i).Pages(X).CommandList(Y).Commands(p)
-                                            .index = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Index"))
+                                            .Index = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Index"))
                                             .Text1 = GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Text1")
                                             .Text2 = GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Text2")
                                             .Text3 = GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Text3")
@@ -1385,7 +1385,7 @@ Sub LoadMaps()
                                             If .MoveRouteCount > 0 Then
                                                 ReDim .MoveRoute(1 To .MoveRouteCount)
                                                 For w = 1 To .MoveRouteCount
-                                                    .MoveRoute(w).index = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Index"))
+                                                    .MoveRoute(w).Index = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Index"))
                                                     .MoveRoute(w).Data1 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data1"))
                                                     .MoveRoute(w).Data2 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data2"))
                                                     .MoveRoute(w).Data3 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data3"))
@@ -1418,9 +1418,9 @@ Sub CheckMaps()
     Next
 End Sub
 
-Sub ClearMapItem(ByVal index As Long, ByVal MapNum As Integer)
-    Call ZeroMemory(ByVal VarPtr(MapItem(MapNum, index)), LenB(MapItem(MapNum, index)))
-    MapItem(MapNum, index).PlayerName = vbNullString
+Sub ClearMapItem(ByVal Index As Long, ByVal MapNum As Integer)
+    Call ZeroMemory(ByVal VarPtr(MapItem(MapNum, Index)), LenB(MapItem(MapNum, Index)))
+    MapItem(MapNum, Index).PlayerName = vbNullString
 End Sub
 
 Sub ClearMapItems()
@@ -1434,9 +1434,9 @@ Sub ClearMapItems()
     Next
 End Sub
 
-Sub ClearMapNpc(ByVal index As Long, ByVal MapNum As Integer)
+Sub ClearMapNpc(ByVal Index As Long, ByVal MapNum As Integer)
     ReDim MapNpc(MapNum).NPC(1 To MAX_MAP_NPCS)
-    Call ZeroMemory(ByVal VarPtr(MapNpc(MapNum).NPC(index)), LenB(MapNpc(MapNum).NPC(index)))
+    Call ZeroMemory(ByVal VarPtr(MapNpc(MapNum).NPC(Index)), LenB(MapNpc(MapNum).NPC(Index)))
 End Sub
 
 Sub ClearMapNpcs()
@@ -1534,10 +1534,10 @@ Sub ClearGuilds()
     Next
 End Sub
 
-Sub ClearGuild(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Guild(index)), LenB(Guild(index)))
-    Guild(index).Name = vbNullString
-    Guild(index).MOTD = vbNullString
+Sub ClearGuild(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Guild(Index)), LenB(Guild(Index)))
+    Guild(Index).Name = vbNullString
+    Guild(Index).MOTD = vbNullString
 End Sub
 
 ' ************
@@ -1574,16 +1574,16 @@ Sub ClearBans()
     Next
 End Sub
 
-Sub ClearBan(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Ban(index)), LenB(Ban(index)))
-    Ban(index).PlayerLogin = vbNullString
-    Ban(index).PlayerName = vbNullString
-    Ban(index).Reason = vbNullString
-    Ban(index).IP = vbNullString
-    Ban(index).HDSerial = vbNullString
-    Ban(index).Time = vbNullString
-    Ban(index).By = vbNullString
-    Ban(index).Date = vbNullString
+Sub ClearBan(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Ban(Index)), LenB(Ban(Index)))
+    Ban(Index).PlayerLogin = vbNullString
+    Ban(Index).PlayerName = vbNullString
+    Ban(Index).Reason = vbNullString
+    Ban(Index).IP = vbNullString
+    Ban(Index).HDSerial = vbNullString
+    Ban(Index).Time = vbNullString
+    Ban(Index).By = vbNullString
+    Ban(Index).Date = vbNullString
 End Sub
 
 ' ************
@@ -1611,15 +1611,15 @@ Sub LoadTitles()
     Next
 End Sub
 
-Sub LoadTitle(index As Long)
+Sub LoadTitle(Index As Long)
     Dim F As Long
     Dim filename  As String
 
     F = FreeFile
-    filename = App.path & "\data\titles\" & index & ".dat"
+    filename = App.path & "\data\titles\" & Index & ".dat"
     
     Open filename For Binary As #F
-        Get #F, , Title(index)
+        Get #F, , Title(Index)
     Close #F
 End Sub
 
@@ -1642,9 +1642,9 @@ Sub ClearTitles()
     Next
 End Sub
 
-Sub ClearTitle(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Title(index)), LenB(Title(index)))
-    Title(index).Name = vbNullString
+Sub ClearTitle(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Title(Index)), LenB(Title(Index)))
+    Title(Index).Name = vbNullString
 End Sub
 
 ' ************
@@ -1698,9 +1698,9 @@ Sub CheckMorals()
     Next
 End Sub
 
-Sub ClearMoral(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Moral(index)), LenB(Moral(index)))
-    Moral(index).Name = vbNullString
+Sub ClearMoral(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Moral(Index)), LenB(Moral(Index)))
+    Moral(Index).Name = vbNullString
 End Sub
 
 Sub ClearMorals()
@@ -1770,9 +1770,9 @@ Sub ClearEmoticons()
     Next
 End Sub
 
-Sub ClearEmoticon(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Emoticon(index)), LenB(Emoticon(index)))
-    Emoticon(index).Command = "/"
+Sub ClearEmoticon(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(Emoticon(Index)), LenB(Emoticon(Index)))
+    Emoticon(Index).Command = "/"
 End Sub
 
 ' ***********
@@ -1782,7 +1782,7 @@ Sub ClearParty(ByVal PartyNum As Long)
     Call ZeroMemory(ByVal VarPtr(Party(PartyNum)), LenB(Party(PartyNum)))
 End Sub
 
-Sub SaveTempChar(ByVal index As Long, ByVal Login As String)
+Sub SaveTempChar(ByVal Index As Long, ByVal Login As String)
     Dim filename As String
     Dim F As Long
 
@@ -1791,24 +1791,24 @@ Sub SaveTempChar(ByVal index As Long, ByVal Login As String)
     F = FreeFile
     
     Open filename For Binary As #F
-    Put #F, , TempChar(index)
+    Put #F, , TempChar(Index)
     Close #F
 End Sub
 
-Sub LoadTempChar(ByVal index As Long, ByVal Login As String)
+Sub LoadTempChar(ByVal Index As Long, ByVal Login As String)
     Dim filename As String
     Dim F As Long
     
-    Call ClearTempChar(index)
+    Call ClearTempChar(Index)
     filename = App.path & "\data\Accounts\" & Trim$(Login) & "\data.bin"
     F = FreeFile
     Open filename For Binary As #F
-    Get #F, , TempChar(index)
+    Get #F, , TempChar(Index)
     Close #F
 End Sub
 
-Sub ClearTempChar(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(TempChar(index)), LenB(TempChar(index)))
+Sub ClearTempChar(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(TempChar(Index)), LenB(TempChar(Index)))
 End Sub
 
 Sub SaveSwitches()

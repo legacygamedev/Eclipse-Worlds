@@ -5,9 +5,8 @@
 data files/
 data/
 logs/
-Client.exe
-Server.exe
 
+*.exe
 *.dropbox
 *_i.c
 *_p.c

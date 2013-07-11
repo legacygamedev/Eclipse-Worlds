@@ -1351,7 +1351,7 @@ Public Sub DrawHotbar()
     
         Select Case Hotbar(i).SType
             Case 1 ' Inventory
-                If Len(Item(Hotbar(i).Slot).name) > 0 Then
+                If Len(Item(Hotbar(i).Slot).Name) > 0 Then
                     If Item(Hotbar(i).Slot).Pic > 0 Then
                         If Item(Hotbar(i).Slot).Pic <= NumItems Then
                             Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 255), 1#, 0
@@ -1363,7 +1363,7 @@ Public Sub DrawHotbar()
                     End If
                 End If
             Case 2 ' Spell
-                If Len(Spell(Hotbar(i).Slot).name) > 0 Then
+                If Len(Spell(Hotbar(i).Slot).Name) > 0 Then
                     If Spell(Hotbar(i).Slot).Icon > 0 Then
                         With sRect
                             .Top = 0
@@ -3177,7 +3177,7 @@ Public Sub Render_Graphics()
     Next
 
     ' Draw map name
-    RenderText Font_Default, Map.name, DrawMapNameX, DrawMapNameY, DrawMapNameColor
+    RenderText Font_Default, Map.Name, DrawMapNameX, DrawMapNameY, DrawMapNameColor
     
     If InMapEditor And frmEditor_Map.OptEvents.Value Then DrawEvents
     If InMapEditor And frmEditor_Map.OptLayers Then DrawTileOutline
@@ -4012,10 +4012,16 @@ Public Sub DrawEmoticons()
         If IsPlaying(i) And GetPlayerMap(MyIndex) = GetPlayerMap(i) Then
             EmoticonNum = TempPlayer(i).EmoticonNum
             
-            If EmoticonNum < 1 Or EmoticonNum > NumEmoticons Then Exit Sub
+            If EmoticonNum < 1 Or EmoticonNum > NumEmoticons Then
+                If Trim$(Player(MyIndex).Status) = "AFK" Then
+                    EmoticonNum = Emoticon(1).Pic
+                Else
+                    Exit Sub
+                End If
+            End If
             
             ' Clear out the data if it needs to disappear
-            If timeGetTime > TempPlayer(i).EmoticonTimer Then
+            If timeGetTime > TempPlayer(i).EmoticonTimer And EmoticonNum <> Emoticon(1).Pic Then
                 TempPlayer(i).EmoticonNum = 0
                 TempPlayer(i).EmoticonTimer = 0
                 Exit Sub
