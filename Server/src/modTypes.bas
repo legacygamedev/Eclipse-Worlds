@@ -9,7 +9,7 @@ Public PlayersOnMap(1 To MAX_MAPS) As Long
 Public ResourceCache(1 To MAX_MAPS) As ResourceCacheRec
 Public Account(1 To MAX_PLAYERS) As AccountRec
 Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
-Public TempChar(1 To MAX_GUILD_MEMBERS) As PlayerRec
+Public TempGuildMember(1 To MAX_GUILD_MEMBERS) As PlayerRec
 
 Public Item(1 To MAX_ITEMS) As ItemRec
 Public NPC(1 To MAX_NPCS) As NpcRec
@@ -111,8 +111,8 @@ Private Type OptionsRec
     BuySound As String
     SellSound As String
     DeflectAnimation As Long
-    DodgeAnimation As Long
     CriticalAnimation As Long
+    DodgeAnimation As Long
 End Type
 
 Public Type PartyRec

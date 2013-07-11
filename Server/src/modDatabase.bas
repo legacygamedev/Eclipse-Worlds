@@ -1809,7 +1809,7 @@ Sub ClearParty(ByVal PartyNum As Long)
     Call ZeroMemory(ByVal VarPtr(Party(PartyNum)), LenB(Party(PartyNum)))
 End Sub
 
-Sub SaveTempChar(ByVal Index As Long, ByVal Login As String)
+Sub SaveTempGuildMember(ByVal Index As Long, ByVal Login As String)
     Dim FileName As String
     Dim F As Long
 
@@ -1818,24 +1818,24 @@ Sub SaveTempChar(ByVal Index As Long, ByVal Login As String)
     F = FreeFile
     
     Open FileName For Binary As #F
-    Put #F, , TempChar(Index)
+    Put #F, , TempGuildMember(Index)
     Close #F
 End Sub
 
-Sub LoadTempChar(ByVal Index As Long, ByVal Login As String)
+Sub LoadTempGuildMember(ByVal Index As Long, ByVal Login As String)
     Dim FileName As String
     Dim F As Long
     
-    Call ClearTempChar(Index)
+    Call ClearTempGuildMember(Index)
     FileName = App.path & "\data\Accounts\" & Trim$(Login) & "\data.bin"
     F = FreeFile
     Open FileName For Binary As #F
-    Get #F, , TempChar(Index)
+    Get #F, , TempGuildMember(Index)
     Close #F
 End Sub
 
-Sub ClearTempChar(ByVal Index As Long)
-    Call ZeroMemory(ByVal VarPtr(TempChar(Index)), LenB(TempChar(Index)))
+Sub ClearTempGuildMember(ByVal Index As Long)
+    Call ZeroMemory(ByVal VarPtr(TempGuildMember(Index)), LenB(TempGuildMember(Index)))
 End Sub
 
 Sub SaveSwitches()
