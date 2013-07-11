@@ -1222,13 +1222,13 @@ Sub Guild_Disband(ByVal Index As Long)
         If Not Guild(tmpGuild).Members(i) = vbNullString Then
             tmpIndex = FindPlayer(Guild(tmpGuild).Members(i))
             
-            Call LoadTempChar(i, Guild(tmpGuild).Members(i))
-            TempChar(i).Guild.Index = 0
-            TempChar(i).Guild.Access = 0
-            Call SaveTempChar(i, Guild(tmpGuild).Members(i))
+            Call LoadTempGuildMember(i, Guild(tmpGuild).Members(i))
+            TempGuildMember(i).Guild.Index = 0
+            TempGuildMember(i).Guild.Access = 0
+            Call SaveTempGuildMember(i, Guild(tmpGuild).Members(i))
             Guild(tmpGuild).Members(i) = vbNullString
 
-            Call ClearTempChar(i)
+            Call ClearTempGuildMember(i)
             
             ' Send update
             If IsPlaying(tmpIndex) Then
