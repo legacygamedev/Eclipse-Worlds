@@ -802,7 +802,6 @@ Sub SendMapItemsTo(ByVal index As Long, ByVal MapNum As Integer)
         buffer.WriteInteger MapItem(MapNum, i).Durability
         buffer.WriteByte MapItem(MapNum, i).X
         buffer.WriteByte MapItem(MapNum, i).Y
-        buffer.WriteInteger MapItem(MapNum, i).YOffset
     Next
 
     SendDataTo index, buffer.ToArray()
@@ -823,7 +822,6 @@ Sub SendMapItemToMap(ByVal MapNum As Integer, ByVal MapSlotNum As Long)
     buffer.WriteInteger MapItem(MapNum, MapSlotNum).Durability
     buffer.WriteLong MapItem(MapNum, MapSlotNum).X
     buffer.WriteLong MapItem(MapNum, MapSlotNum).Y
-    buffer.WriteInteger MapItem(MapNum, MapSlotNum).YOffset
     
     SendDataToMap MapNum, buffer.ToArray()
     Set buffer = Nothing

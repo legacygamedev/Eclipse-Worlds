@@ -721,22 +721,28 @@ End Sub
 
 Public Sub DrawMapLowerTiles(ByVal X As Long, ByVal Y As Long)
     Dim rec As RECT
-    Dim i As Long
+    Dim i As Long, Alpha As Byte
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     With Map.Tile(X, Y)
         For i = MapLayer.Ground To MapLayer.Cover
+            If i < CurrentLayer And frmEditor_Map.ChkDimLayers = 1 Then
+                Alpha = 255 - ((CurrentLayer - i) * 48)
+            Else
+                Alpha = 255
+            End If
+            
             If Autotile(X, Y).Layer(i).RenderState = RENDER_STATE_NORMAL Then
                 ' Draw normally
-                RenderTexture Tex_Tileset(.Layer(i).Tileset), ConvertMapX(X * PIC_X), ConvertMapY(Y * PIC_Y), .Layer(i).X * 32, .Layer(i).Y * 32, 32, 32, 32, 32, -1
+                RenderTexture Tex_Tileset(.Layer(i).Tileset), ConvertMapX(X * PIC_X), ConvertMapY(Y * PIC_Y), .Layer(i).X * 32, .Layer(i).Y * 32, 32, 32, 32, 32, D3DColorARGB(Alpha, 255, 255, 255)
             ElseIf Autotile(X, Y).Layer(i).RenderState = RENDER_STATE_AUTOTILE And Options.Autotile = 1 Then
                 ' Draw autotiles
-                DrawAutoTile i, ConvertMapX(X * PIC_X), ConvertMapY(Y * PIC_Y), 1, X, Y
-                DrawAutoTile i, ConvertMapX((X * PIC_X) + 16), ConvertMapY(Y * PIC_Y), 2, X, Y
-                DrawAutoTile i, ConvertMapX(X * PIC_X), ConvertMapY((Y * PIC_Y) + 16), 3, X, Y
-                DrawAutoTile i, ConvertMapX((X * PIC_X) + 16), ConvertMapY((Y * PIC_Y) + 16), 4, X, Y
+                DrawAutoTile i, ConvertMapX(X * PIC_X), ConvertMapY(Y * PIC_Y), 1, X, Y, Alpha
+                DrawAutoTile i, ConvertMapX((X * PIC_X) + 16), ConvertMapY(Y * PIC_Y), 2, X, Y, Alpha
+                DrawAutoTile i, ConvertMapX(X * PIC_X), ConvertMapY((Y * PIC_Y) + 16), 3, X, Y, Alpha
+                DrawAutoTile i, ConvertMapX((X * PIC_X) + 16), ConvertMapY((Y * PIC_Y) + 16), 4, X, Y, Alpha
             End If
         Next
     End With
@@ -750,28 +756,34 @@ End Sub
 
 Public Sub DrawMapUpperTiles(ByVal X As Long, ByVal Y As Long)
     Dim rec As RECT
-    Dim i As Long
+    Dim i As Long, Alpha As Byte
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     With Map.Tile(X, Y)
         For i = MapLayer.Fringe To MapLayer.Roof
+            If i < CurrentLayer And frmEditor_Map.ChkDimLayers = 1 Then
+                Alpha = 255 - ((CurrentLayer - i) * 48)
+            Else
+                Alpha = 255
+            End If
+            
             If Autotile(X, Y).Layer(i).RenderState = RENDER_STATE_NORMAL Then
                 ' Draw normally
-                RenderTexture Tex_Tileset(.Layer(i).Tileset), ConvertMapX(X * PIC_X), ConvertMapY(Y * PIC_Y), .Layer(i).X * 32, .Layer(i).Y * 32, 32, 32, 32, 32, -1
+                RenderTexture Tex_Tileset(.Layer(i).Tileset), ConvertMapX(X * PIC_X), ConvertMapY(Y * PIC_Y), .Layer(i).X * 32, .Layer(i).Y * 32, 32, 32, 32, 32, D3DColorARGB(Alpha, 255, 255, 255)
             ElseIf Autotile(X, Y).Layer(i).RenderState = RENDER_STATE_AUTOTILE And Options.Autotile = 1 Then
                 ' Draw autotiles
-                DrawAutoTile i, ConvertMapX(X * PIC_X), ConvertMapY(Y * PIC_Y), 1, X, Y
-                DrawAutoTile i, ConvertMapX((X * PIC_X) + 16), ConvertMapY(Y * PIC_Y), 2, X, Y
-                DrawAutoTile i, ConvertMapX(X * PIC_X), ConvertMapY((Y * PIC_Y) + 16), 3, X, Y
-                DrawAutoTile i, ConvertMapX((X * PIC_X) + 16), ConvertMapY((Y * PIC_Y) + 16), 4, X, Y
+                DrawAutoTile i, ConvertMapX(X * PIC_X), ConvertMapY(Y * PIC_Y), 1, X, Y, Alpha
+                DrawAutoTile i, ConvertMapX((X * PIC_X) + 16), ConvertMapY(Y * PIC_Y), 2, X, Y, Alpha
+                DrawAutoTile i, ConvertMapX(X * PIC_X), ConvertMapY((Y * PIC_Y) + 16), 3, X, Y, Alpha
+                DrawAutoTile i, ConvertMapX((X * PIC_X) + 16), ConvertMapY((Y * PIC_Y) + 16), 4, X, Y, Alpha
             End If
         Next
 
         ' Tile preview
         If InMapEditor Then
-            If frmEditor_Map.chkTilePreview.Value Then
+            If frmEditor_Map.chkTilePreview.Value And frmEditor_Map.chkRandom = 0 And frmEditor_Map.scrlAutotile.Value = 0 Then
                 Call DrawMapTilesPreview
             End If
         End If
@@ -3198,16 +3210,26 @@ Public Sub Render_Graphics()
     
     ' Draw loc
     If BLoc Then
-        RenderText Font_Default, Trim$("cur x: " & CurX & " y: " & CurY), Camera.Left, Camera.Top, Yellow
-        RenderText Font_Default, Trim$("loc x: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), Camera.Left, Camera.Top + 16, Yellow
-        RenderText Font_Default, Trim$(" (map #" & GetPlayerMap(MyIndex) & ")"), Camera.Left, Camera.Top + 32, Yellow
+        RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 8, 85, Yellow
+        RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 8, 100, Yellow
+        RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 8, 115, Yellow
     End If
     
     ' Draw fps
-    If FPS_Lock Then
-        RenderText Font_Default, "FPS: " & Round(GameFPS / 1500) & " Ping: " & CStr(Ping), 303, 48, White
-    Else
-        RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 303, 48, White
+    If BFPS Then
+        If FPS_Lock Then
+            If GUIVisible Then
+                RenderText Font_Default, "FPS: " & Round(GameFPS / 1500) & " Ping: " & CStr(Ping), 300, 48, White
+            Else
+                RenderText Font_Default, "FPS: " & Round(GameFPS / 1500) & " Ping: " & CStr(Ping), 300, 8, White
+            End If
+        Else
+            If GUIVisible Then
+                RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 300, 48, White
+            Else
+                RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 300, 8, White
+            End If
+        End If
     End If
     
     Call Direct3D_Device.EndScene
@@ -3473,7 +3495,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub DrawAutoTile(ByVal layerNum As Long, ByVal destX As Long, ByVal destY As Long, ByVal quarterNum As Long, ByVal X As Long, ByVal Y As Long)
+Public Sub DrawAutoTile(ByVal layerNum As Long, ByVal destX As Long, ByVal destY As Long, ByVal quarterNum As Long, ByVal X As Long, ByVal Y As Long, Optional ByVal Alpha As Byte = 255)
     Dim yOffset As Long, xOffset As Long
     
     ' If debug mode, handle error then exit out
@@ -3490,7 +3512,7 @@ Public Sub DrawAutoTile(ByVal layerNum As Long, ByVal destX As Long, ByVal destY
     End Select
     
     ' Draw the quarter
-    RenderTexture Tex_Tileset(Map.Tile(X, Y).Layer(layerNum).Tileset), destX, destY, Autotile(X, Y).Layer(layerNum).srcX(quarterNum) + xOffset, Autotile(X, Y).Layer(layerNum).srcY(quarterNum) + yOffset, 16, 16, 16, 16, -1
+    RenderTexture Tex_Tileset(Map.Tile(X, Y).Layer(layerNum).Tileset), destX, destY, Autotile(X, Y).Layer(layerNum).srcX(quarterNum) + xOffset, Autotile(X, Y).Layer(layerNum).srcY(quarterNum) + yOffset, 16, 16, 16, 16, D3DColorARGB(Alpha, 255, 255, 255)
     Exit Sub
     
 ' Error handler
@@ -5970,5 +5992,3 @@ ErrorHandler:
     HandleError "EditorMapProperties_DrawPanorama", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-
-

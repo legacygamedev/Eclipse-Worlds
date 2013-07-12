@@ -2676,6 +2676,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -4517,7 +4518,7 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If InMapEditor Then
-        If frmEditor_Map.chkEyeDropper.Value Then
+        If frmEditor_Map.chkEyeDropper.Value = 1 Then
             Call MapEditorEyeDropper
         Else
             If ControlDown And Button = 1 Then
@@ -4527,7 +4528,7 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
                 MapEditorClearSelection
                 Exit Sub
             ElseIf ShiftDown And Button = 1 Then
-                frmEditor_Map.chkEyeDropper.Value = 1
+                MapEditorEyeDropper
                 Exit Sub
             End If
             
@@ -4564,6 +4565,20 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
 ' Error handler
 ErrorHandler:
     HandleError "picScreen_MouseDown", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub picScreen_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    ' Do a re-init so we can see our changes
+    InitAutotiles
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "picScreen_MouseUp", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

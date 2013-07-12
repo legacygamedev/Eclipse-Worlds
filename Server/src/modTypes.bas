@@ -673,9 +673,8 @@ Private Type MapItemRec
     Durability As Integer
     X As Byte
     Y As Byte
-    YOffset As Integer
     
-    ' Ownership & Despawn
+    ' Ownership & despawn
     PlayerTimer As Long
     CanDespawn As Boolean
     DespawnTimer As Long

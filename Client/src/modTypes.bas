@@ -487,7 +487,6 @@ Private Type MapItemRec
     Frame As Byte
     X As Byte
     Y As Byte
-    yOffset As Integer
 End Type
 
 Private Type NpcRec
@@ -776,7 +775,7 @@ Public Type SubEventRec
     HasText As Boolean
     text() As String
     HasData As Boolean
-    data() As Long
+    Data() As Long
 End Type
 
 Public Type EventWrapperRec

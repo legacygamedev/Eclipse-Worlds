@@ -324,8 +324,7 @@ Public Const TILE_TYPE_HEAL As Byte = 9
 Public Const TILE_TYPE_TRAP As Byte = 10
 Public Const TILE_TYPE_SLIDE As Byte = 11
 Public Const TILE_TYPE_CHECKPOINT As Byte = 12
-Public Const TILE_TYPE_GRAVITY As Byte = 13
-Public Const TILE_TYPE_SOUND As Byte = 14
+Public Const TILE_TYPE_SOUND As Byte = 13
 
 ' Weather Type Constants
 Public Const WEATHER_TYPE_NONE As Byte = 0

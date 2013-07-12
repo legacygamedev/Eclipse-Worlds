@@ -7,7 +7,7 @@ Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Int
 
 Public Sub CheckKeys()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If GetAsyncKeyState(VK_UP) >= 0 Then DirUp = False
     If GetAsyncKeyState(VK_DOWN) >= 0 Then DirDown = False
@@ -18,7 +18,7 @@ Public Sub CheckKeys()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "CheckKeys", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -28,7 +28,7 @@ Public Sub CheckInputKeys()
     Dim distanceY As Long
         
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If GetKeyState(vbKeyShift) < 0 Then
         ShiftDown = True
@@ -186,14 +186,14 @@ Public Sub CheckInputKeys()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "CheckInputKeys", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
     Dim ChatText As String
-    Dim Name As String
+    Dim name As String
     Dim i As Long
     Dim n As Long
     Dim Command() As String
@@ -201,7 +201,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
     Dim StrInput As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ChatText = Trim$(MyText)
 
@@ -334,12 +334,12 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Exit Sub
             End If
             
-            Name = vbNullString
+            name = vbNullString
 
             ' Get the desired player from the user text
             For i = 1 To Len(ChatText)
                 If Not Mid$(ChatText, i, 1) = " " Then
-                    Name = Name & Mid$(ChatText, i, 1)
+                    name = name & Mid$(ChatText, i, 1)
                 Else
                     Exit For
                 End If
@@ -350,7 +350,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 ChatText = Mid$(ChatText, i + 1, Len(ChatText) - i)
 
                 ' Send the message to the player
-                Call PrivateMsg(Name, ChatText)
+                Call PrivateMsg(name, ChatText)
             Else
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
             End If
@@ -847,18 +847,18 @@ Continue:
             Exit Sub
         End If
 
-        ' Global Message
+        ' Chat message
         If Len(ChatText) > 0 Then
             If CurrentChatChannel = 0 Then
                 Call SayMsg(ChatText)
             End If
             
-            ' Global Message
+            ' Global message
             If CurrentChatChannel = 1 Then
                 Call GlobalMsg(ChatText)
             End If
             
-            ' Guild Message
+            ' Guild message
             If CurrentChatChannel = 2 Then
                 If Not GetPlayerGuild(MyIndex) = vbNullString Then
                     Call GuildMsg(ChatText)
@@ -867,7 +867,7 @@ Continue:
                 End If
             End If
             
-            ' Party Message
+            ' Party message
             If CurrentChatChannel = 3 Then
                 If Party.Num > 0 Then
                     Call PartyMsg(GetPlayerName(MyIndex) & ": " & ChatText, Party.Num)
@@ -876,7 +876,7 @@ Continue:
                 End If
             End If
             
-            ' Admin Message
+            ' Admin message
             If CurrentChatChannel = 4 And GetPlayerAccess(MyIndex) >= STAFF_MODERATOR Then
                 Call AdminMsg(Trim$(GetPlayerName(MyIndex) & ": " & ChatText))
             End If
@@ -902,14 +902,14 @@ Continue:
     Exit Sub
 
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "HandleKeyPresses", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MouseMoveX()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Left movement
     If GetPlayerX(MyIndex) > MouseX Then
@@ -933,14 +933,14 @@ Public Sub MouseMoveX()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "MouseMoveX", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MouseMoveY()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Up movement
     If GetPlayerY(MyIndex) > MouseY Then
@@ -964,7 +964,7 @@ Public Sub MouseMoveY()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "MouseMoveY", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
