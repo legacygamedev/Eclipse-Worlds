@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "Tabctl32.ocx"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmServer 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Loading..."
@@ -35,7 +35,6 @@ Begin VB.Form frmServer
       _Version        =   393216
       Style           =   1
       Tabs            =   4
-      Tab             =   1
       TabsPerRow      =   4
       TabHeight       =   503
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -49,7 +48,7 @@ Begin VB.Form frmServer
       EndProperty
       TabCaption(0)   =   "Console"
       TabPicture(0)   =   "frmServer.frx":1708A
-      Tab(0).ControlEnabled=   0   'False
+      Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "lblCPSLock"
       Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "lblCPS"
@@ -61,24 +60,24 @@ Begin VB.Form frmServer
       Tab(0).ControlCount=   4
       TabCaption(1)   =   "Players"
       TabPicture(1)   =   "frmServer.frx":170A6
-      Tab(1).ControlEnabled=   -1  'True
+      Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "lvwInfo"
       Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "Control "
       TabPicture(2)   =   "frmServer.frx":170C2
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "fraDatabase"
+      Tab(2).Control(0)=   "fraServer"
       Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "fraServer"
+      Tab(2).Control(1)=   "fraDatabase"
       Tab(2).Control(1).Enabled=   0   'False
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "News"
       TabPicture(3)   =   "frmServer.frx":170DE
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "cmdLoadNews"
+      Tab(3).Control(0)=   "txtNews"
       Tab(3).Control(1)=   "cmdSaveNews"
-      Tab(3).Control(2)=   "txtNews"
+      Tab(3).Control(2)=   "cmdLoadNews"
       Tab(3).ControlCount=   3
       Begin VB.CommandButton cmdLoadNews 
          Caption         =   "Load News"
@@ -120,14 +119,14 @@ Begin VB.Form frmServer
       End
       Begin VB.TextBox txtChat 
          Height          =   375
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   16
          Top             =   2880
          Width           =   6855
       End
       Begin VB.TextBox txtText 
          Height          =   2175
-         Left            =   -74880
+         Left            =   120
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
          TabIndex        =   15
@@ -344,7 +343,7 @@ Begin VB.Form frmServer
       End
       Begin MSComctlLib.ListView lvwInfo 
          Height          =   2775
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   23
          Top             =   480
          Width           =   6855
@@ -395,7 +394,7 @@ Begin VB.Form frmServer
       Begin VB.Label lblCPS 
          Caption         =   "CPS: Calculating"
          Height          =   255
-         Left            =   -74040
+         Left            =   960
          TabIndex        =   18
          Top             =   360
          Width           =   1815
@@ -406,7 +405,7 @@ Begin VB.Form frmServer
          Caption         =   "[Unlock]"
          ForeColor       =   &H00FF0000&
          Height          =   195
-         Left            =   -74820
+         Left            =   180
          TabIndex        =   17
          Top             =   360
          Width           =   600

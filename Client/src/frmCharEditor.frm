@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmCharEditor 
    BorderStyle     =   4  'Fixed ToolWindow
@@ -616,7 +616,6 @@ Private Sub cmdUpdate_Click()
     SendRequestAllCharacters
 End Sub
 
-
 Private Sub Form_Load()
     listCharacters.ListItems.Clear
     listCharacters.ColumnHeaders.Item(1).Width = frmCharEditor.listCharacters.Width - 800
@@ -629,9 +628,9 @@ End Sub
 Public Sub ResetCharList()
     listCharacters.Sorted = False
     listCharacters.ListItems.Clear
-    Dim length As Long, i As Long
-    length = UBound(charList)
-    For i = 0 To length
+    Dim Length As Long, i As Long
+    Length = UBound(charList)
+    For i = 0 To Length
         listCharacters.ListItems.Add , , charList(i, 0)
         listCharacters.ListItems.Item(i + 1).SubItems(1) = charList(i, 1)
     Next
@@ -760,7 +759,7 @@ Private Sub txtExp_Click()
     selectValue txtExp
 End Sub
 
-Private Sub txtExp_GotFocus()
+Private Sub txtEXP_GotFocus()
     selectValue txtExp
 End Sub
 
@@ -773,12 +772,12 @@ Private Sub txtFilter_Change()
     If txtFilter.text <> "" Then
         listCharacters.ListItems.Clear
         
-        Dim content As String, length As Long, i As Long
+        Dim content As String, Length As Long, i As Long
         content = txtFilter.text
     
-        length = UBound(charList)
+        Length = UBound(charList)
         listCharacters.Sorted = False
-        For i = 0 To length
+        For i = 0 To Length
             If InStr(LCase(charList(i, 0)), LCase(content)) <> 0 Then
                 listCharacters.ListItems.Add , , charList(i, 0)
                 listCharacters.ListItems.Item(listCharacters.ListItems.count).SubItems(1) = charList(i, 1)
@@ -925,47 +924,47 @@ Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
-    Dim msg As String
+    Dim Msg As String
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
     Else
-        msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
-        displayFieldStatus txtBox, msg, Status.Error
+        Msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
+        displayFieldStatus txtBox, Msg, Status.Error
         verifyValue = False
     End If
 End Function
-Private Sub displayStatus(ByVal msg As String, msgType As Byte)
-    Select Case msgType
+Private Sub displayStatus(ByVal Msg As String, MsgType As Byte)
+    Select Case MsgType
     
         Case Status.Error:
             lStatus.BackColor = &H8080FF
-            lStatus.Caption = msg
+            lStatus.Caption = Msg
         Case Status.Correct:
             lStatus.BackColor = &H80FF80
-            lStatus.Caption = msg
+            lStatus.Caption = Msg
         Case Status.Neutral:
             lStatus.BackColor = &H80FFFF
-            lStatus.Caption = msg
+            lStatus.Caption = Msg
         Case Status.Info_:
             lStatus.BackColor = &H8000000F
-            lStatus.Caption = msg
+            lStatus.Caption = Msg
     End Select
 End Sub
-Private Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
-    Select Case msgType
+Private Sub displayFieldStatus(ByVal txtBox As textBox, ByVal Msg As String, MsgType As Status)
+    Select Case MsgType
     
         Case Status.Error:
             lStatus.BackColor = &H8080FF
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+            lStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
         Case Status.Correct:
             lStatus.BackColor = &H80FF80
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+            lStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
         Case Status.Neutral:
             lStatus.BackColor = &H80FFFF
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+            lStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
         Case Status.Info_:
             lStatus.BackColor = &H8000000F
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+            lStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
     End Select
 End Sub
 
