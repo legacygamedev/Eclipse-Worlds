@@ -38,7 +38,7 @@ Public Log As LogRec
 Public Options As OptionsRec
 
 Private Type MoveRouteRec
-    Index As Long
+    index As Long
     Data1 As Long
     Data2 As Long
     Data3 As Long
@@ -48,7 +48,7 @@ Private Type MoveRouteRec
 End Type
 
 Private Type GuildMemberRec
-    Index As Long
+    index As Long
     Access As Byte
 End Type
 
@@ -321,7 +321,7 @@ Public Type ConditionalBranchRec
 End Type
 
 Private Type EventCommandRec
-    Index As Byte
+    index As Byte
     Text1 As String
     Text2 As String
     Text3 As String
@@ -649,9 +649,8 @@ Private Type MapItemRec
     Durability As Integer
     X As Byte
     Y As Byte
-    YOffset As Integer
     
-    ' Ownership & Despawn
+    ' Ownership & despawn
     PlayerTimer As Long
     CanDespawn As Boolean
     DespawnTimer As Long

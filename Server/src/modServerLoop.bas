@@ -103,14 +103,6 @@ Sub ServerLoop()
                 End If
             Next
             
-            For i = 1 To MAX_MAPS
-                For n = 1 To MAX_MAP_ITEMS
-                    If MapItem(i, n).YOffset > 0 Then
-                        MapItem(i, n).YOffset = MapItem(i, n).YOffset - 32
-                    End If
-                Next
-            Next
-            
             UpdateMapLogic
             tmr500 = timeGetTime + 500
         End If

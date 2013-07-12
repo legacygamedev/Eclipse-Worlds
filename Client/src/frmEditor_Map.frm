@@ -56,7 +56,7 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Sound Effect"
          Height          =   2655
          Left            =   2040
-         TabIndex        =   101
+         TabIndex        =   99
          Top             =   2160
          Visible         =   0   'False
          Width           =   3375
@@ -64,7 +64,7 @@ Begin VB.Form frmEditor_Map
             Caption         =   "Accept"
             Height          =   375
             Left            =   240
-            TabIndex        =   104
+            TabIndex        =   102
             Top             =   2040
             Width           =   1215
          End
@@ -74,7 +74,7 @@ Begin VB.Form frmEditor_Map
             Left            =   240
             List            =   "frmEditor_Map.frx":038C
             Style           =   2  'Dropdown List
-            TabIndex        =   102
+            TabIndex        =   100
             Top             =   360
             Width           =   2895
          End
@@ -465,15 +465,6 @@ Begin VB.Form frmEditor_Map
          End
       End
    End
-   Begin VB.CheckBox chkGrid 
-      Caption         =   "Grid"
-      Height          =   255
-      Left            =   3360
-      TabIndex        =   105
-      ToolTipText     =   "Will place tiles you select randomly."
-      Top             =   6000
-      Width           =   675
-   End
    Begin VB.PictureBox picBack 
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
@@ -491,7 +482,7 @@ Begin VB.Form frmEditor_Map
       ScaleHeight     =   352
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   352
-      TabIndex        =   103
+      TabIndex        =   101
       Top             =   120
       Width           =   5280
    End
@@ -499,7 +490,7 @@ Begin VB.Form frmEditor_Map
       Caption         =   "Delete"
       Height          =   375
       Left            =   2280
-      TabIndex        =   93
+      TabIndex        =   91
       Top             =   7080
       Width           =   900
    End
@@ -549,12 +540,22 @@ Begin VB.Form frmEditor_Map
       TabIndex        =   86
       Top             =   5880
       Width           =   1455
+      Begin VB.CheckBox chkGrid 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Grid"
+         Height          =   255
+         Left            =   535
+         TabIndex        =   105
+         ToolTipText     =   "Will display a 32x32 grid across the entire screen."
+         Top             =   1200
+         Width           =   675
+      End
       Begin VB.OptionButton OptLayers 
          Alignment       =   1  'Right Justify
          Caption         =   "Layers"
          Height          =   255
          Left            =   360
-         TabIndex        =   99
+         TabIndex        =   97
          Top             =   240
          Value           =   -1  'True
          Width           =   855
@@ -564,7 +565,7 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Attributes"
          Height          =   255
          Left            =   120
-         TabIndex        =   98
+         TabIndex        =   96
          Top             =   480
          Width           =   1095
       End
@@ -573,7 +574,7 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Block"
          Height          =   255
          Left            =   480
-         TabIndex        =   97
+         TabIndex        =   95
          Top             =   720
          Width           =   735
       End
@@ -582,20 +583,9 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Events"
          Height          =   255
          Left            =   360
-         TabIndex        =   96
+         TabIndex        =   94
          Top             =   960
          Width           =   855
-      End
-      Begin VB.CheckBox chkShowAttributes 
-         Alignment       =   1  'Right Justify
-         Caption         =   "Attributes"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   87
-         ToolTipText     =   "Will show the attribute's text on the map."
-         Top             =   1200
-         Value           =   1  'Checked
-         Width           =   1115
       End
    End
    Begin VB.Frame fraRandom 
@@ -615,7 +605,7 @@ Begin VB.Form frmEditor_Map
          ScaleHeight     =   34
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   34
-         TabIndex        =   88
+         TabIndex        =   87
          Top             =   240
          Width           =   540
          Begin VB.PictureBox Picture8 
@@ -635,7 +625,7 @@ Begin VB.Form frmEditor_Map
             ScaleHeight     =   32
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   32
-            TabIndex        =   89
+            TabIndex        =   88
             Top             =   15
             Width           =   480
             Begin VB.PictureBox picRandomTile 
@@ -648,7 +638,7 @@ Begin VB.Form frmEditor_Map
                ScaleHeight     =   32
                ScaleMode       =   3  'Pixel
                ScaleWidth      =   32
-               TabIndex        =   90
+               TabIndex        =   89
                Top             =   0
                Width           =   480
             End
@@ -810,26 +800,28 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Tile Preview"
          Height          =   255
          Left            =   240
-         TabIndex        =   91
+         TabIndex        =   90
+         ToolTipText     =   "Will display tiles you have selected visually on the screen."
          Top             =   240
+         Value           =   1  'Checked
          Width           =   1275
       End
       Begin VB.CheckBox chkEyeDropper 
          Caption         =   "Eye Dropper"
          Height          =   255
-         Left            =   1680
+         Left            =   1560
          TabIndex        =   75
-         ToolTipText     =   "Will find the tile on the layer you select."
+         ToolTipText     =   "Will find the tile on the current layer you select."
          Top             =   240
          Width           =   1275
       End
       Begin VB.CheckBox chkRandom 
          Caption         =   "Random"
          Height          =   255
-         Left            =   1680
+         Left            =   3000
          TabIndex        =   73
          ToolTipText     =   "Will place tiles you select randomly."
-         Top             =   480
+         Top             =   240
          Width           =   915
       End
       Begin VB.HScrollBar scrlTileSet 
@@ -849,7 +841,7 @@ Begin VB.Form frmEditor_Map
          Left            =   240
          TabIndex        =   74
          Top             =   600
-         Width           =   3615
+         Width           =   1335
       End
    End
    Begin VB.Frame fraLayers 
@@ -859,12 +851,23 @@ Begin VB.Form frmEditor_Map
       TabIndex        =   29
       Top             =   0
       Width           =   1455
+      Begin VB.CheckBox ChkDimLayers 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Dim Layers"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   103
+         ToolTipText     =   "Will dim tiles of layers that are below your curent layer."
+         Top             =   4440
+         Value           =   1  'Checked
+         Width           =   1155
+      End
       Begin VB.HScrollBar scrlAutotile 
          Height          =   255
          Left            =   240
          Max             =   5
-         TabIndex        =   94
-         Top             =   4440
+         TabIndex        =   92
+         Top             =   4080
          Width           =   975
       End
       Begin VB.OptionButton optLayer 
@@ -936,8 +939,8 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Normal"
          Height          =   255
          Left            =   120
-         TabIndex        =   95
-         Top             =   4200
+         TabIndex        =   93
+         Top             =   3840
          Width           =   1215
       End
    End
@@ -949,21 +952,23 @@ Begin VB.Form frmEditor_Map
       Top             =   0
       Visible         =   0   'False
       Width           =   1455
+      Begin VB.CheckBox chkShowAttributes 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Attributes"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   104
+         ToolTipText     =   "Will show the attribute's text on the map."
+         Top             =   4440
+         Width           =   1115
+      End
       Begin VB.OptionButton optSound 
          Caption         =   "Sound"
          Height          =   270
          Left            =   120
-         TabIndex        =   100
-         Top             =   3360
-         Width           =   1215
-      End
-      Begin VB.OptionButton optGravity 
-         Caption         =   "Gravity"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   92
+         TabIndex        =   98
          Top             =   3120
-         Width           =   1225
+         Width           =   1215
       End
       Begin VB.CommandButton cmdAttributeFill 
          Caption         =   "Fill"
@@ -1087,19 +1092,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub chkEyeDropper_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
-    
-    scrlAutotile.Value = 0
-    Exit Sub
-    
-' Error handler
-ErrorHandler:
-    HandleError "chkEyeDropper_Click", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
 Private Sub chkTilePreview_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1159,6 +1151,19 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Private Sub OptEvents_Click()
+   ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    chkGrid.Enabled = True
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "OptEvents_Click", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub optSound_Click()
    ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1174,14 +1179,14 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub picBack_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Public Sub picBack_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    x = x + (frmEditor_Map.scrlPictureX.Value * PIC_X)
-    y = y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
+    X = X + (frmEditor_Map.scrlPictureX.Value * PIC_X)
+    Y = Y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
     
-    Call MapEditorChooseTile(Button, x, y)
+    Call MapEditorChooseTile(Button, X, Y)
     Exit Sub
     
 ' Error handler
@@ -1190,15 +1195,15 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub picBack_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picBack_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    x = x + (frmEditor_Map.scrlPictureX.Value * PIC_X)
-    y = y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
+    X = X + (frmEditor_Map.scrlPictureX.Value * PIC_X)
+    Y = Y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
     
     If scrlAutotile.Value = 0 Then
-        Call MapEditorDrag(Button, x, y)
+        Call MapEditorDrag(Button, X, Y)
     End If
     Exit Sub
     
@@ -1478,6 +1483,7 @@ Private Sub optBlock_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
+    chkGrid.Enabled = False
     picBack.Visible = True
     scrlPictureY.Visible = True
     scrlPictureX.Visible = True
@@ -1556,6 +1562,7 @@ Private Sub optAttributes_Click()
         fraAttribs.Visible = True
     End If
     
+    chkGrid.Enabled = True
     frmEditor_Map.chkEyeDropper.Enabled = True
     frmEditor_Map.chkRandom.Enabled = True
     Exit Sub
@@ -1700,29 +1707,29 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub MapEditorDrag(Button As Integer, x As Single, y As Single)
+Public Sub MapEditorDrag(Button As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Button = vbLeftButton Then
         ' Convert the pixel number to tile number
-        x = (x \ PIC_X) + 1
-        y = (y \ PIC_Y) + 1
+        X = (X \ PIC_X) + 1
+        Y = (Y \ PIC_Y) + 1
         
         ' Check it's not out of bounds
-        If x < 0 Then x = 0
-        If x > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X Then x = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X
-        If y < 0 Then y = 0
-        If y > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y Then y = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y
+        If X < 0 Then X = 0
+        If X > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X Then X = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X
+        If Y < 0 Then Y = 0
+        If Y > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y Then Y = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y
         
         ' Find out what to set the width + height of map editor to
-        If x > EditorTileX Then ' Drag right
-            EditorTileWidth = x - EditorTileX
+        If X > EditorTileX Then ' Drag right
+            EditorTileWidth = X - EditorTileX
         Else ' Drag left
             ' TO DO
         End If
-        If y > EditorTileY Then ' Drag down
-            EditorTileHeight = y - EditorTileY
+        If Y > EditorTileY Then ' Drag down
+            EditorTileHeight = Y - EditorTileY
         Else ' Drag up
             ' TO DO
         End If

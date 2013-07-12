@@ -16,7 +16,7 @@ Public Resource(1 To MAX_RESOURCES) As ResourceRec
 Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
 Public events(1 To MAX_EVENTS) As EventWrapperRec
 Public Ban(1 To MAX_BANS) As BanRec
-Public Title(1 To MAX_TITLES) As TitleRec
+Public title(1 To MAX_TITLES) As TitleRec
 Public Moral(1 To MAX_MORALS) As MoralRec
 Public Class(1 To MAX_CLASSES) As ClassRec
 Public Emoticon(1 To MAX_EMOTICONS) As EmoticonRec
@@ -51,8 +51,8 @@ Public MainButton(1 To MAX_MAINBUTTONS) As ButtonRec
 Public Party As PartyRec
 
 Public Type SoundsRec
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     handle As Long
     InUse As Boolean
     channel As Long
@@ -146,8 +146,8 @@ Private Type PlayerRec
     
     ' Position
     Map As Integer
-    x As Byte
-    y As Byte
+    X As Byte
+    Y As Byte
     Dir As Byte
     
     ' Vitals
@@ -162,7 +162,7 @@ Private Type PlayerRec
     AmountOfTitles As Byte
     
     ' Titles
-    Title(1 To MAX_TITLES) As Byte
+    title(1 To MAX_TITLES) As Byte
     
     ' Current title
     CurTitle As Byte
@@ -203,8 +203,8 @@ Private Type TempPlayerRec
 End Type
 
 Private Type TileDataRec
-    x As Byte
-    y As Byte
+    X As Byte
+    Y As Byte
     Tileset As Byte
 End Type
 
@@ -302,8 +302,8 @@ Public Type EventPageRec
     Position As Byte
     
     ' Client Needed Only
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 Public Type EventRec
@@ -311,8 +311,8 @@ Public Type EventRec
     Global As Long
     pageCount As Long
     Pages() As EventPageRec
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 Public Type TileRec
@@ -329,8 +329,8 @@ End Type
 Private Type MapEventRec
     Name As String
     Dir As Long
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     GraphicType As Long
     GraphicX As Long
     GraphicY As Long
@@ -464,14 +464,13 @@ Private Type MapItemRec
     Value As Long
     Durability As Integer
     Frame As Byte
-    x As Byte
-    y As Byte
-    yOffset As Integer
+    X As Byte
+    Y As Byte
 End Type
 
 Private Type NpcRec
     Name As String * NAME_LENGTH
-    Title As String * NAME_LENGTH
+    title As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     Sound As String * FILE_LENGTH
     
@@ -501,8 +500,8 @@ Private Type MapNpcRec
     Target As Byte
     TargetType As Byte
     Vital(1 To Vitals.Vital_Count - 1) As Long
-    x As Byte
-    y As Byte
+    X As Byte
+    Y As Byte
     Dir As Byte
     
     ' Client use only
@@ -549,8 +548,8 @@ Private Type SpellRec
     CDTime As Long
     Icon As Long
     Map As Long
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     Dir As Byte
     Vital As Long
     Duration As Long
@@ -568,8 +567,8 @@ Private Type SpellRec
 End Type
 
 Public Type MapResourceRec
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     ResourceState As Byte
 End Type
 
@@ -600,16 +599,16 @@ Private Type ActionMsgRec
     Type As Long
     Color As Long
     Scroll As Long
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     Alpha As Byte
 End Type
 
 Private Type BloodRec
     Sprite As Long
     Timer As Long
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     Alpha As Byte
 End Type
 
@@ -625,8 +624,8 @@ End Type
 
 Private Type AnimInstanceRec
     Animation As Long
-    x As Byte
-    y As Byte
+    X As Byte
+    Y As Byte
     
     ' Used for locking to players/npcs
     lockIndex As Long
@@ -688,8 +687,8 @@ Public Type HotbarRec
 End Type
 
 Type DropRec
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     YSpeed As Long
     XSpeed As Long
     Init As Boolean
@@ -717,16 +716,16 @@ End Type
 
 Public Type WeatherParticleRec
     Type As Long
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     Velocity As Long
     InUse As Long
 End Type
 
 ' Auto tiles
 Public Type PointRec
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 Public Type QuarterTileRec
@@ -753,9 +752,9 @@ End Type
 Public Type SubEventRec
     Type As EventType
     HasText As Boolean
-    Text() As String
+    text() As String
     HasData As Boolean
-    data() As Long
+    Data() As Long
 End Type
 
 Public Type EventWrapperRec
