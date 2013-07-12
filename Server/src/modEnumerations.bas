@@ -127,7 +127,10 @@ Public Enum ServerPackets
     SMapEventData
     SChatBubble
     SSpecialEffect
-    
+    'Character Editor
+    SPlayersOnline
+    SAllCharacters
+    SExtendedPlayerData
     ' Make sure SMSG_COUNT is below everything else
     SMSG_COUNT
 End Enum
@@ -269,7 +272,9 @@ Public Enum ClientPackets
     CRequestSwitchesAndVariables
     'Character Editor
     CRequestAllCharacters
-    
+    CRequestPlayersOnline
+    CRequestExtendedPlayerData
+    CCharacterUpdate
     ' Make sure CMSG_COUNT is below everything else
     CMSG_COUNT
 End Enum

@@ -127,7 +127,10 @@ Public Enum ServerPackets
     SMapEventData
     SChatBubble
     SSpecialEffect
-    
+    'Character Editor
+    SPlayersOnline
+    SAllCharacters
+    SExtendedPlayerData
     ' Make sure SMSG_COUNT is below everything else
     SMSG_COUNT
 End Enum
@@ -267,7 +270,11 @@ Public Enum ClientPackets
     CEvent
     CSwitchesAndVariables
     CRequestSwitchesAndVariables
-    
+    'Character Editor
+    CRequestAllCharacters
+    CRequestPlayersOnline
+    CRequestExtendedPlayerData
+    CCharacterUpdate
     ' Make sure CMSG_COUNT is below everything else
     CMSG_COUNT
 End Enum
@@ -338,7 +345,16 @@ Public Enum SoundEntity
     ' Make sure SoundEntity_Count is below everything else
     SoundEntity_Count
 End Enum
-
+' Message status
+Public Enum Status
+    Error = 1
+    Correct
+    Neutral
+    Info_
+    
+    ' Make sure SoundEntity_Count is below everything else
+    Status_Count
+End Enum
 Public Enum Skills
     Herbalism = 1
     Alchemy

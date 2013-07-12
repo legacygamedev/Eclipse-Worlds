@@ -25,7 +25,7 @@ End Function
 
 Function IsPlaying(ByVal index As Long) As Boolean
     If IsConnected(index) Then
-        If TempPlayer(index).InGame Then
+        If tempPlayer(index).InGame Then
             IsPlaying = True
         End If
     End If
@@ -373,48 +373,48 @@ Sub IncomingData(ByVal index As Long, ByVal DataLength As Long)
 
     If GetPlayerAccess(index) <= 0 Then
         ' Check for data flooding
-        If TempPlayer(index).DataBytes > 1000 Then Exit Sub
+        If tempPlayer(index).DataBytes > 1000 Then Exit Sub
     
         ' Check for Packet flooding
-        If TempPlayer(index).DataPackets > 105 Then Exit Sub
+        If tempPlayer(index).DataPackets > 105 Then Exit Sub
     End If
             
     ' Check if elapsed time has passed
-    TempPlayer(index).DataBytes = TempPlayer(index).DataBytes + DataLength
+    tempPlayer(index).DataBytes = tempPlayer(index).DataBytes + DataLength
     
-    If timeGetTime >= TempPlayer(index).DataTimer Then
-        TempPlayer(index).DataTimer = timeGetTime + 1000
-        TempPlayer(index).DataBytes = 0
-        TempPlayer(index).DataPackets = 0
+    If timeGetTime >= tempPlayer(index).DataTimer Then
+        tempPlayer(index).DataTimer = timeGetTime + 1000
+        tempPlayer(index).DataBytes = 0
+        tempPlayer(index).DataPackets = 0
     End If
     
     ' Get the data from the socket now
     frmServer.Socket(index).GetData buffer(), vbUnicode, DataLength
-    TempPlayer(index).buffer.WriteBytes buffer()
+    tempPlayer(index).buffer.WriteBytes buffer()
     
-    If TempPlayer(index).buffer.Length >= 4 Then
-        pLength = TempPlayer(index).buffer.ReadLong(False)
+    If tempPlayer(index).buffer.Length >= 4 Then
+        pLength = tempPlayer(index).buffer.ReadLong(False)
     
         If pLength < 0 Then Exit Sub
     End If
     
-    Do While pLength > 0 And pLength <= TempPlayer(index).buffer.Length - 4
-        If pLength <= TempPlayer(index).buffer.Length - 4 Then
-            TempPlayer(index).DataPackets = TempPlayer(index).DataPackets + 1
-            TempPlayer(index).buffer.ReadLong
-            HandleData index, TempPlayer(index).buffer.ReadBytes(pLength)
+    Do While pLength > 0 And pLength <= tempPlayer(index).buffer.Length - 4
+        If pLength <= tempPlayer(index).buffer.Length - 4 Then
+            tempPlayer(index).DataPackets = tempPlayer(index).DataPackets + 1
+            tempPlayer(index).buffer.ReadLong
+            HandleData index, tempPlayer(index).buffer.ReadBytes(pLength)
         End If
         
         pLength = 0
         
-        If TempPlayer(index).buffer.Length >= 4 Then
-            pLength = TempPlayer(index).buffer.ReadLong(False)
+        If tempPlayer(index).buffer.Length >= 4 Then
+            pLength = tempPlayer(index).buffer.ReadLong(False)
         
             If pLength < 0 Then Exit Sub
         End If
     Loop
             
-    TempPlayer(index).buffer.Trim
+    tempPlayer(index).buffer.Trim
 End Sub
 
 Sub CloseSocket(ByVal index As Long, Optional ByVal NoMessage As Boolean = False)
@@ -549,6 +549,42 @@ Sub SendWhosOnline(ByVal index As Long)
 
     Call PlayerMsg(index, s, WhoColor)
 End Sub
+'Character Editor
+Sub SendPlayersOnline(ByVal index As Long)
+    Dim buffer As clsBuffer, i As Long
+    Dim list As String
+
+    If index > Player_HighIndex Or index < 1 Then Exit Sub
+    Set buffer = New clsBuffer
+    For i = 1 To Player_HighIndex
+        If IsPlaying(i) Then
+                If i <> Player_HighIndex Then
+                    list = list & GetPlayerName(i) & ", "
+                Else
+                    list = list & GetPlayerName(i)
+                End If
+        End If
+    Next
+    
+    buffer.WriteLong SPlayersOnline
+    buffer.WriteString list
+ 
+    SendDataTo index, buffer.ToArray()
+    Set buffer = Nothing
+End Sub
+'Character Editor
+Sub SendAllCharacters(index As Long, Optional everyone As Boolean = False)
+    Dim buffer As clsBuffer, i As Long
+    
+    Set buffer = New clsBuffer
+    buffer.WriteLong SAllCharacters
+    
+    buffer.WriteString GetCharList
+    
+    SendDataTo index, buffer.ToArray
+    
+    Set buffer = Nothing
+End Sub
 
 Function PlayerData(ByVal index As Long) As Byte()
     Dim buffer As clsBuffer, i As Long
@@ -590,7 +626,7 @@ Function PlayerData(ByVal index As Long) As Byte()
     
     ' Send player titles
     For i = 1 To Account(index).Chars(GetPlayerChar(index)).AmountOfTitles
-        buffer.WriteByte Account(index).Chars(GetPlayerChar(index)).Title(i)
+        buffer.WriteByte Account(index).Chars(GetPlayerChar(index)).title(i)
     Next
     
     ' Send the player's current title
@@ -602,6 +638,7 @@ Function PlayerData(ByVal index As Long) As Byte()
     PlayerData = buffer.ToArray()
     Set buffer = Nothing
 End Function
+
 
 Sub SendJoinMap(ByVal index As Long)
     Dim i As Long
@@ -652,6 +689,93 @@ Sub SendPlayerData(ByVal index As Long)
     SendDataToMap GetPlayerMap(index), PlayerData(index)
 End Sub
 
+'Character Editor
+Sub SendExtendedPlayerData(index As Long, playerName As String)
+    'Check if He is Online
+    Dim i As Long, j As Long, tempPlayer_ As PlayerRec
+    For i = 1 To MAX_PLAYERS
+        For j = 1 To MAX_CHARS
+            If Account(i).Login = "" Then GoTo use_offline_player
+            If Trim(Account(i).Chars(j).Name) = playerName Then
+                tempPlayer_ = Account(i).Chars(j)
+                GoTo use_online_player
+            End If
+        Next
+    Next
+use_offline_player:
+    'Find associated Account Name
+    Dim F As Long
+    Dim s As String
+    Dim charLogin() As String
+    
+    F = FreeFile
+    
+    Open App.path & "\data\accounts\charlist.txt" For Input As #F
+        Do While Not EOF(F)
+            Input #F, s
+            charLogin = Split(s, ":")
+            If charLogin(0) = playerName Then Exit Do
+        Loop
+    Close #F
+    
+    'Load Character into temp variable - charLogin(0) -> Character Name | charLogin(1) -> Account/Login Name
+    Dim tempAccount As AccountRec
+    Dim filename As String
+    
+    filename = App.path & "\data\accounts\" & charLogin(1) & "\data.bin"
+    
+    F = FreeFile
+    
+    Open filename For Binary As #F
+        Get #F, , tempAccount
+    Close #F
+    
+    'Get Character info, that we are requesting -> playerName
+    Dim requestedClientPlayer As PlayerEditableRec
+    For i = 1 To MAX_CHARS
+        If Trim$(tempAccount.Chars(i).Name) = playerName Then
+            tempPlayer_ = tempAccount.Chars(i)
+            Exit For
+        End If
+    Next
+use_online_player:
+    'Copy over data that's available...
+    requestedClientPlayer.Name = tempPlayer_.Name
+    requestedClientPlayer.Level = tempPlayer_.Level
+    requestedClientPlayer.Class = tempPlayer_.Class
+    requestedClientPlayer.Access = tempPlayer_.Access
+    requestedClientPlayer.Exp = tempPlayer_.Exp
+    requestedClientPlayer.Gender = tempPlayer_.Gender
+    requestedClientPlayer.Login = "XXXX" ' Do we really want to edit it in client? Is it safe to send it?
+    requestedClientPlayer.Password = "XXXX" ' Do we really want to edit it in client? Is it safe to send it?
+    requestedClientPlayer.Points = tempPlayer_.Points
+    requestedClientPlayer.Sprite = tempPlayer_.Sprite
+    Dim tempSize As Long
+    tempSize = LenB(tempPlayer_.Stat(1)) * UBound(tempPlayer_.Stat)
+    CopyMemory ByVal VarPtr(requestedClientPlayer.Stat(1)), ByVal VarPtr(tempPlayer_.Stat(1)), tempSize
+    tempSize = LenB(tempPlayer_.Vital(1)) * UBound(tempPlayer_.Vital)
+    CopyMemory ByVal VarPtr(requestedClientPlayer.Vital(1)), ByVal VarPtr(tempPlayer_.Vital(1)), tempSize
+    
+    'Send Data Over Network to Admin
+    Dim buffer As clsBuffer
+    
+    Set buffer = New clsBuffer
+    buffer.WriteLong SExtendedPlayerData
+    
+    Dim PlayerSize As Long
+    Dim PlayerData() As Byte
+    
+    PlayerSize = LenB(requestedClientPlayer)
+    ReDim PlayerData(PlayerSize - 1)
+    CopyMemory PlayerData(0), ByVal VarPtr(requestedClientPlayer), PlayerSize
+    buffer.WriteBytes PlayerData
+    
+    SendDataTo index, buffer.ToArray
+    
+    Set buffer = Nothing
+    
+    
+End Sub
 Sub SendMap(ByVal index As Long, ByVal MapNum As Long)
     Dim buffer As clsBuffer
     Set buffer = New clsBuffer
@@ -672,7 +796,7 @@ Sub SendMapItemsTo(ByVal index As Long, ByVal MapNum As Integer)
     
     buffer.WriteLong SMapItemData
     For i = 1 To MAX_MAP_ITEMS
-        buffer.WriteString MapItem(MapNum, i).PlayerName
+        buffer.WriteString MapItem(MapNum, i).playerName
         buffer.WriteLong MapItem(MapNum, i).Num
         buffer.WriteLong MapItem(MapNum, i).Value
         buffer.WriteInteger MapItem(MapNum, i).Durability
@@ -693,7 +817,7 @@ Sub SendMapItemToMap(ByVal MapNum As Integer, ByVal MapSlotNum As Long)
     
     buffer.WriteLong SSpawnItem
     buffer.WriteLong MapSlotNum
-    buffer.WriteString MapItem(MapNum, MapSlotNum).PlayerName
+    buffer.WriteString MapItem(MapNum, MapSlotNum).playerName
     buffer.WriteLong MapItem(MapNum, MapSlotNum).Num
     buffer.WriteLong MapItem(MapNum, MapSlotNum).Value
     buffer.WriteInteger MapItem(MapNum, MapSlotNum).Durability
@@ -824,7 +948,7 @@ Sub SendTitles(ByVal index As Long)
     Dim i As Long
     
     For i = 1 To MAX_TITLES
-        If Len(Trim$(Title(i).Name)) > 0 Then
+        If Len(Trim$(title(i).Name)) > 0 Then
             Call SendUpdateTitleTo(index, i)
         End If
     Next
@@ -1138,7 +1262,7 @@ Sub SendPlayerTitles(ByVal index As Long)
     
     ' Send player titles
     For i = 1 To Account(index).Chars(GetPlayerChar(index)).AmountOfTitles
-        buffer.WriteByte Account(index).Chars(GetPlayerChar(index)).Title(i)
+        buffer.WriteByte Account(index).Chars(GetPlayerChar(index)).title(i)
     Next
     
     ' Send the player's current title
@@ -1656,7 +1780,7 @@ Sub SendStunned(ByVal index As Long)
     Set buffer = New clsBuffer
     buffer.WriteLong SStunned
     
-    buffer.WriteLong TempPlayer(index).StunDuration
+    buffer.WriteLong tempPlayer(index).StunDuration
     
     SendDataTo index, buffer.ToArray()
     Set buffer = Nothing
@@ -1803,7 +1927,7 @@ Sub SendTradeUpdate(ByVal index As Long, ByVal DataType As Byte)
     Dim TradeTarget As Long
     Dim TotalWorth As Long
     
-    TradeTarget = TempPlayer(index).InTrade
+    TradeTarget = tempPlayer(index).InTrade
     
     Set buffer = New clsBuffer
     buffer.WriteLong STradeUpdate
@@ -1811,29 +1935,29 @@ Sub SendTradeUpdate(ByVal index As Long, ByVal DataType As Byte)
     buffer.WriteByte DataType
     If DataType = 0 Then ' own inventory
         For i = 1 To MAX_INV
-            buffer.WriteLong TempPlayer(index).TradeOffer(i).Num
-            buffer.WriteLong TempPlayer(index).TradeOffer(i).Value
+            buffer.WriteLong tempPlayer(index).TradeOffer(i).Num
+            buffer.WriteLong tempPlayer(index).TradeOffer(i).Value
             ' add total worth
-            If TempPlayer(index).TradeOffer(i).Num > 0 Then
+            If tempPlayer(index).TradeOffer(i).Num > 0 Then
                 ' currency?
-                If Item(TempPlayer(index).TradeOffer(i).Num).Type = ITEM_TYPE_CURRENCY Then
-                    TotalWorth = TotalWorth + (Item(GetPlayerInvItemNum(index, TempPlayer(index).TradeOffer(i).Num)).Price * TempPlayer(index).TradeOffer(i).Value)
+                If Item(tempPlayer(index).TradeOffer(i).Num).Type = ITEM_TYPE_CURRENCY Then
+                    TotalWorth = TotalWorth + (Item(GetPlayerInvItemNum(index, tempPlayer(index).TradeOffer(i).Num)).Price * tempPlayer(index).TradeOffer(i).Value)
                 Else
-                    TotalWorth = TotalWorth + Item(GetPlayerInvItemNum(index, TempPlayer(index).TradeOffer(i).Num)).Price
+                    TotalWorth = TotalWorth + Item(GetPlayerInvItemNum(index, tempPlayer(index).TradeOffer(i).Num)).Price
                 End If
             End If
         Next
     ElseIf DataType = 1 Then ' other inventory
         For i = 1 To MAX_INV
-            buffer.WriteLong GetPlayerInvItemNum(TradeTarget, TempPlayer(TradeTarget).TradeOffer(i).Num)
-            buffer.WriteLong TempPlayer(TradeTarget).TradeOffer(i).Value
+            buffer.WriteLong GetPlayerInvItemNum(TradeTarget, tempPlayer(TradeTarget).TradeOffer(i).Num)
+            buffer.WriteLong tempPlayer(TradeTarget).TradeOffer(i).Value
             ' add total worth
-            If GetPlayerInvItemNum(TradeTarget, TempPlayer(TradeTarget).TradeOffer(i).Num) > 0 Then
+            If GetPlayerInvItemNum(TradeTarget, tempPlayer(TradeTarget).TradeOffer(i).Num) > 0 Then
                 ' currency?
-                If Item(GetPlayerInvItemNum(TradeTarget, TempPlayer(TradeTarget).TradeOffer(i).Num)).Type = ITEM_TYPE_CURRENCY Then
-                    TotalWorth = TotalWorth + (Item(GetPlayerInvItemNum(TradeTarget, TempPlayer(TradeTarget).TradeOffer(i).Num)).Price * TempPlayer(TradeTarget).TradeOffer(i).Value)
+                If Item(GetPlayerInvItemNum(TradeTarget, tempPlayer(TradeTarget).TradeOffer(i).Num)).Type = ITEM_TYPE_CURRENCY Then
+                    TotalWorth = TotalWorth + (Item(GetPlayerInvItemNum(TradeTarget, tempPlayer(TradeTarget).TradeOffer(i).Num)).Price * tempPlayer(TradeTarget).TradeOffer(i).Value)
                 Else
-                    TotalWorth = TotalWorth + Item(GetPlayerInvItemNum(TradeTarget, TempPlayer(TradeTarget).TradeOffer(i).Num)).Price
+                    TotalWorth = TotalWorth + Item(GetPlayerInvItemNum(TradeTarget, tempPlayer(TradeTarget).TradeOffer(i).Num)).Price
                 End If
             End If
         Next
@@ -1890,8 +2014,8 @@ Sub SendPlayerTarget(ByVal index As Long)
     Set buffer = New clsBuffer
     buffer.WriteLong STarget
     
-    buffer.WriteByte TempPlayer(index).Target
-    buffer.WriteByte TempPlayer(index).TargetType
+    buffer.WriteByte tempPlayer(index).Target
+    buffer.WriteByte tempPlayer(index).TargetType
     
     SendDataTo index, buffer.ToArray()
     Set buffer = Nothing
@@ -2228,7 +2352,7 @@ Sub SendPartyUpdateTo(ByVal index As Long)
     buffer.WriteLong SPartyUpdate
     
     ' Check if we're in a party
-    PartyNum = TempPlayer(index).InParty
+    PartyNum = tempPlayer(index).InParty
     
     If PartyNum > 0 Then
         ' Send party data
@@ -2270,9 +2394,9 @@ Sub SendUpdateTitleToAll(ByVal TitleNum As Long)
     
     Set buffer = New clsBuffer
     
-    TitleSize = LenB(Title(TitleNum))
+    TitleSize = LenB(title(TitleNum))
     ReDim TitleData(TitleSize - 1)
-    CopyMemory TitleData(0), ByVal VarPtr(Title(TitleNum)), TitleSize
+    CopyMemory TitleData(0), ByVal VarPtr(title(TitleNum)), TitleSize
     buffer.WriteLong SUpdateTitle
     
     buffer.WriteLong TitleNum
@@ -2289,9 +2413,9 @@ Sub SendUpdateTitleTo(ByVal index As Long, ByVal TitleNum As Long)
     
     Set buffer = New clsBuffer
     
-    TitleSize = LenB(Title(TitleNum))
+    TitleSize = LenB(title(TitleNum))
     ReDim TitleData(TitleSize - 1)
-    CopyMemory TitleData(0), ByVal VarPtr(Title(TitleNum)), TitleSize
+    CopyMemory TitleData(0), ByVal VarPtr(title(TitleNum)), TitleSize
     buffer.WriteLong SUpdateTitle
     
     buffer.WriteLong TitleNum

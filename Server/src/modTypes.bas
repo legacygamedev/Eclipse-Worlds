@@ -8,7 +8,7 @@ Public MapCache(1 To MAX_MAPS) As Cache
 Public PlayersOnMap(1 To MAX_MAPS) As Long
 Public ResourceCache(1 To MAX_MAPS) As ResourceCacheRec
 Public Account(1 To MAX_PLAYERS) As AccountRec
-Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
+Public tempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
 Public TempGuildMember(1 To MAX_GUILD_MEMBERS) As PlayerRec
 
 Public Item(1 To MAX_ITEMS) As ItemRec
@@ -22,7 +22,7 @@ Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
 Public Guild(1 To MAX_GUILDS) As GuildRec
 Public Party(1 To MAX_PARTYS) As PartyRec
 Public Ban(1 To MAX_BANS) As BanRec
-Public Title(1 To MAX_TITLES) As TitleRec
+Public title(1 To MAX_TITLES) As TitleRec
 Public Moral(1 To MAX_MORALS) As MoralRec
 Public Class(1 To MAX_CLASSES) As ClassRec
 Public Emoticon(1 To MAX_EMOTICONS) As EmoticonRec
@@ -38,7 +38,7 @@ Public Log As LogRec
 Public Options As OptionsRec
 
 Private Type MoveRouteRec
-    Index As Long
+    index As Long
     Data1 As Long
     Data2 As Long
     Data3 As Long
@@ -48,7 +48,7 @@ Private Type MoveRouteRec
 End Type
 
 Private Type GuildMemberRec
-    Index As Long
+    index As Long
     Access As Byte
 End Type
 
@@ -92,7 +92,7 @@ Public Type GlobalEventsRec
 End Type
 
 Private Type OptionsRec
-    Name As String
+    name As String
     MOTD As String
     SMOTD As String
     Port As Long
@@ -146,7 +146,7 @@ End Type
 Private Type BanRec
     Date As String * NAME_LENGTH
     Time As String * NAME_LENGTH
-    PlayerName As String * NAME_LENGTH
+    playerName As String * NAME_LENGTH
     PlayerLogin As String * NAME_LENGTH
     IP As String * NAME_LENGTH
     HDSerial As String * NAME_LENGTH
@@ -155,7 +155,7 @@ Private Type BanRec
 End Type
 
 Public Type TitleRec
-    Name As String * NAME_LENGTH
+    name As String * NAME_LENGTH
     Color As Byte
     LevelReq As Byte
     PKReq As Integer
@@ -163,7 +163,7 @@ Public Type TitleRec
 End Type
 
 Public Type MoralRec
-    Name As String * NAME_LENGTH
+    name As String * NAME_LENGTH
     Color As Byte
     CanPK As Byte
     CanCast As Byte
@@ -199,27 +199,27 @@ Public Type FoesRec
     Members(1 To MAX_PEOPLE) As String
 End Type
 
-Private Type PlayerRec
-    ' Face
+Public Type PlayerRec
+    ' Face - Both
     Face As Integer
-    
+    'Both
     Level As Integer
     Exp As Long
     
-    ' Stats
-    Stat(1 To Stats.Stat_count - 1) As Integer
+    ' Stats - Both
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     Points As Integer
     
-    ' Spells
+    ' Spells - Server Only
     Spell(1 To MAX_PLAYER_SPELLS) As Byte
     SpellCD(1 To MAX_PLAYER_SPELLS) As Long
     AmountOfCasts(1 To MAX_PLAYER_SPELLS) As Integer
     
-    ' Tree
+    ' Tree - Server Only
     CurrentCombatTree As Byte
     
-    ' General
-    Name As String * NAME_LENGTH
+    ' General - Both
+    name As String * NAME_LENGTH
     Gender As Byte
     Class As Byte
     Sprite As Integer
@@ -233,37 +233,37 @@ Private Type PlayerRec
     Y As Byte
     Dir As Byte
     
-    ' Vitals
+    ' Vitals - Both
     Vital(1 To Vitals.Vital_Count - 1) As Long
     
-    ' Amount of titles
+    ' Amount of titles - Both
     AmountOfTitles As Byte
     
-    ' Current Title
+    ' Current Title - Both
     CurrentTitle As Byte
     
-    ' Titles
-    Title(1 To MAX_TITLES) As Byte
+    ' Titles - Both
+    title(1 To MAX_TITLES) As Byte
     
-    ' Worn equipment
+    ' Worn equipment - Both
     Equipment(1 To Equipment.Equipment_Count - 1) As PlayerItemRec
     
-    ' Inventory
+    ' Inventory - Both
     Inv(1 To MAX_INV) As PlayerItemRec
     
-    ' Buffs
+    ' Buffs  - Server Only
     Buff(1 To MAX_BUFFS) As BuffRec
     
-    ' Hotbar
+    ' Hotbar - Server Only
     Hotbar(1 To MAX_HOTBAR) As HotbarRec
     
-    ' Guild
+    ' Guild - Both
     Guild As GuildMemberRec
-    
-    ' Skill
+    'Missing GuildAcc ->ess from Client Type
+    ' Skill - Server Only
     Skills(1 To Skill_Count - 1) As SkillRec
     
-    ' Events
+    ' Events - Server Only
     Switches(0 To MAX_SWITCHES) As Byte
     Variables(0 To MAX_VARIABLES) As Long
 
@@ -274,6 +274,30 @@ Private Type PlayerRec
     CanTrade As Boolean
     TempSprite As Integer
     PlayerKills As Integer
+End Type
+
+'Character Editor
+Public Type PlayerEditableRec
+    ' Account
+    Login As String * NAME_LENGTH
+    Password As String * NAME_LENGTH
+  
+    ' General
+    name As String * NAME_LENGTH
+    Gender As Byte
+    Class As Byte
+    Sprite As Integer
+    Level As Integer
+    Exp As Long
+    Access As Byte
+
+    ' Vitals
+    Vital(1 To Vitals.Vital_Count - 1) As Long
+    'Max Vitals are dynamically calculate on server
+    
+    ' Stats
+    Stat(1 To Stats.Stat_Count - 1) As Integer
+    Points As Integer
 End Type
 
 Type AccountRec
@@ -321,7 +345,7 @@ Public Type ConditionalBranchRec
 End Type
 
 Private Type EventCommandRec
-    Index As Byte
+    index As Byte
     Text1 As String
     Text2 As String
     Text3 As String
@@ -401,7 +425,7 @@ Private Type EventPageRec
 End Type
 
 Private Type EventRec
-    Name As String
+    name As String
     Global As Byte
     PageCount As Long
     Pages() As EventPageRec
@@ -540,7 +564,7 @@ Private Type TileRec
 End Type
 
 Private Type MapRec
-    Name As String * NAME_LENGTH
+    name As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     BGS As String * FILE_LENGTH
     
@@ -583,8 +607,8 @@ Private Type MapRec
 End Type
 
 Private Type ClassRec
-    Name As String * NAME_LENGTH
-    Stat(1 To Stats.Stat_count - 1) As Integer
+    name As String * NAME_LENGTH
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     MaleSprite As Integer
     FemaleSprite As Integer
     
@@ -603,7 +627,7 @@ Private Type ClassRec
 End Type
 
 Private Type ItemRec
-    Name As String * NAME_LENGTH
+    name As String * NAME_LENGTH
     Desc As String * 256
     Sound As String * FILE_LENGTH
     
@@ -623,12 +647,12 @@ Private Type ItemRec
     ProficiencyReq As Byte
     
     Price As Long
-    Add_Stat(1 To Stats.Stat_count - 1) As Integer
+    Add_Stat(1 To Stats.Stat_Count - 1) As Integer
     Rarity As Byte
     WeaponSpeed As Long
     Handed As Long
     BindType As Byte
-    Stat_Req(1 To Stats.Stat_count - 1) As Integer
+    Stat_Req(1 To Stats.Stat_Count - 1) As Integer
     Animation As Long
     Paperdoll As Long
     AddHP As Long
@@ -643,7 +667,7 @@ Private Type ItemRec
 End Type
 
 Private Type MapItemRec
-    PlayerName As String * NAME_LENGTH
+    playerName As String * NAME_LENGTH
     Num As Byte
     Value As Long
     Durability As Integer
@@ -658,8 +682,8 @@ Private Type MapItemRec
 End Type
 
 Private Type NpcRec
-    Name As String * NAME_LENGTH
-    Title As String * NAME_LENGTH
+    name As String * NAME_LENGTH
+    title As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     Sound As String * FILE_LENGTH
 
@@ -671,7 +695,7 @@ Private Type NpcRec
     DropItem(1 To MAX_NPC_DROPS) As Byte
     DropValue(1 To MAX_NPC_DROPS) As Integer
     Damage As Long
-    Stat(1 To Stats.Stat_count - 1) As Integer
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     HP As Long
     MP As Long
     Exp As Long
@@ -725,7 +749,7 @@ Private Type TradeItemRec
 End Type
 
 Private Type ShopRec
-    Name As String * NAME_LENGTH
+    name As String * NAME_LENGTH
     BuyRate As Integer
     SellRate As Integer
     TradeItem(1 To MAX_TRADES) As TradeItemRec
@@ -733,7 +757,7 @@ Private Type ShopRec
 End Type
 
 Private Type SpellRec
-    Name As String * NAME_LENGTH
+    name As String * NAME_LENGTH
     Desc As String * 256
     Sound As String * FILE_LENGTH
     
@@ -765,7 +789,7 @@ Private Type SpellRec
 End Type
 
 Private Type GuildRec
-    Name As String * NAME_LENGTH
+    name As String * NAME_LENGTH
     MOTD As String * 512
     Members(1 To MAX_GUILD_MEMBERS) As String
 End Type
@@ -788,7 +812,7 @@ Private Type ResourceCacheRec
 End Type
 
 Private Type ResourceRec
-    Name As String * NAME_LENGTH
+    name As String * NAME_LENGTH
     SuccessMessage As String * NAME_LENGTH
     EmptyMessage As String * NAME_LENGTH
     FailMessage As String * NAME_LENGTH
@@ -809,7 +833,7 @@ Private Type ResourceRec
 End Type
 
 Private Type AnimationRec
-    Name As String * NAME_LENGTH
+    name As String * NAME_LENGTH
     Sound As String * FILE_LENGTH
     Sprite(0 To 1) As Long
     Frames(0 To 1) As Long

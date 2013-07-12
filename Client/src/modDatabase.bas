@@ -458,6 +458,8 @@ Public Sub CheckCharacters()
     NumCharacters = 1
     
     ReDim Tex_Character(1)
+    Dim test As String
+    test = Dir(GFX_PATH & "characters\" & "*" & GFX_EXT, vbNormal)
     
     While FileExist(GFX_PATH & "characters\" & i & GFX_EXT)
         ReDim Preserve Tex_Character(NumCharacters)
@@ -814,12 +816,12 @@ Sub ClearPlayer(ByVal Index As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    Call ZeroMemory(ByVal VarPtr(Player(Index)), LenB(Player(Index)))
-    Player(Index).Login = vbNullString
-    Player(Index).Password = vbNullString
-    Player(Index).name = vbNullString
-    Player(Index).Status = vbNullString
-    Player(Index).Class = 1
+    Call ZeroMemory(ByVal VarPtr(player(Index)), LenB(player(Index)))
+    player(Index).Login = vbNullString
+    player(Index).Password = vbNullString
+    player(Index).name = vbNullString
+    player(Index).Status = vbNullString
+    player(Index).Class = 1
     Exit Sub
     
 ' Error handler
@@ -1044,7 +1046,7 @@ Sub ClearMapItem(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Call ZeroMemory(ByVal VarPtr(MapItem(Index)), LenB(MapItem(Index)))
-    MapItem(Index).PlayerName = vbNullString
+    MapItem(Index).playerName = vbNullString
     Exit Sub
     
 ' Error handler
@@ -1144,7 +1146,7 @@ Sub ClearBan(ByVal Index As Long)
     
     Call ZeroMemory(ByVal VarPtr(Ban(Index)), LenB(Ban(Index)))
     Ban(Index).PlayerLogin = vbNullString
-    Ban(Index).PlayerName = vbNullString
+    Ban(Index).playerName = vbNullString
     Ban(Index).Reason = vbNullString
     Ban(Index).IP = vbNullString
     Ban(Index).HDSerial = vbNullString

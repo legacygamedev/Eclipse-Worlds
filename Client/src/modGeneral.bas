@@ -13,7 +13,7 @@ Private Declare Sub GetSystemTime Lib "kernel32.dll" Alias "GetSystemTimeAsFileT
 Public Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) As Long
 
 ' For Clear functions
-Public Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (Destination As Any, ByVal Length As Long)
+Public Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (Destination As Any, ByVal length As Long)
 
 ' Swear filter
 Public SwearString As String
@@ -24,7 +24,9 @@ Public Sub Main()
         AlertMsg "This application is already running!"
         End
     End If
-    
+    'Character Editor
+    'frmCharEditor.Visible = True
+    'Exit Sub
     ' Set the high-resolution timer
     timeBeginPeriod 1
     
@@ -519,7 +521,7 @@ ErrorHandler:
     Err.Clear
 End Function
 
-Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, x As Single, y As Single)
+Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim GlobalX As Integer
     Dim GlobalY As Integer
 
@@ -530,8 +532,8 @@ Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, x 
     GlobalY = PB.Top
 
     If Button = 1 Then
-        PB.Left = GlobalX + x - SOffsetX
-        PB.Top = GlobalY + y - SYOffset
+        PB.Left = GlobalX + X - SOffsetX
+        PB.Top = GlobalY + Y - SYOffset
     End If
     Exit Sub
     
@@ -974,6 +976,7 @@ Public Sub LogoutGame()
     CurButton_Menu = 0
 
     ' Close out all the editors
+    Unload frmCharEditor
     Unload frmEditor_Map
     Unload frmEditor_MapProperties
     Unload frmEditor_Item
