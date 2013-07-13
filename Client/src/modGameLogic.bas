@@ -6,10 +6,10 @@ Public Sub GameLoop()
     Dim tick As Long
     Dim TickFPS As Long
     Dim FPS As Long
-    Dim I As Long
+    Dim i As Long
     Dim WalkTimer As Long
     Dim tmr25 As Long, tmr100 As Long, tmr250 As Long, tmr10000 As Long, targetTmr As Long
-    Dim X As Long, Y As Long
+    Dim X As Long, y As Long
     Dim tmr500, Fadetmr As Long
     Dim Fogtmr As Long
     
@@ -52,11 +52,11 @@ Public Sub GameLoop()
             
             ' Check if we need to end the CD icon
             If NumSpellIcons > 0 Then
-                For I = 1 To MAX_PLAYER_SPELLS
-                    If PlayerSpells(I) > 0 Then
-                        If SpellCD(I) > 0 Then
-                            If SpellCD(I) + (Spell(PlayerSpells(I)).CDTime * 1000) < tick Then
-                                SpellCD(I) = 0
+                For i = 1 To MAX_PLAYER_SPELLS
+                    If PlayerSpells(i) > 0 Then
+                        If SpellCD(i) > 0 Then
+                            If SpellCD(i) + (Spell(PlayerSpells(i)).CDTime * 1000) < tick Then
+                                SpellCD(i) = 0
                             End If
                         End If
                     End If
@@ -85,8 +85,8 @@ Public Sub GameLoop()
                 tmr100 = tick + 100
             End If
             
-            For I = 1 To MAX_ANIMATIONS
-                CheckAnimInstance I
+            For i = 1 To MAX_ANIMATIONS
+                CheckAnimInstance i
             Next
             
             ' Resize bars if vitals were changed
@@ -108,23 +108,23 @@ Public Sub GameLoop()
         ' Process input before rendering, otherwise input will be behind by 1 frame
         If WalkTimer < tick Then
             ' Process player movements (actually move them)
-            For I = 1 To Player_HighIndex
-                If IsPlaying(I) Then
-                    Call ProcessPlayerMovement(I)
+            For i = 1 To Player_HighIndex
+                If IsPlaying(i) Then
+                    Call ProcessPlayerMovement(i)
                 End If
             Next
 
             ' Process npc movements (actually move them)
-            For I = 1 To Map.Npc_HighIndex
-                If Map.NPC(I) > 0 Then
-                    Call ProcessNpcMovement(I)
+            For i = 1 To Map.Npc_HighIndex
+                If Map.NPC(i) > 0 Then
+                    Call ProcessNpcMovement(i)
                 End If
             Next
             
             ' Process events movements (actually move them)
             If Map.CurrentEvents > 0 Then
-                For I = 1 To Map.CurrentEvents
-                    Call ProcessEventMovement(I)
+                For i = 1 To Map.CurrentEvents
+                    Call ProcessEventMovement(i)
                 Next
             End If
 
@@ -133,7 +133,7 @@ Public Sub GameLoop()
         
         ' Targetting
         If targetTmr < tick Then
-            If tabDown Then
+            If TabDown Then
                 FindNearestTarget
             End If
             targetTmr = tick + 50
@@ -223,9 +223,10 @@ Public Sub GameLoop()
         End If
     Loop
 
+    frmMain.Visible = False
+    
     If IsLogging Then
         IsLogging = False
-        frmMain.Visible = False
         frmMenu.Visible = True
         GettingMap = True
         
@@ -350,7 +351,7 @@ End Sub
 
 Sub CheckMapGetItem()
     Dim buffer As New clsBuffer
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -358,12 +359,12 @@ Sub CheckMapGetItem()
     Set buffer = New clsBuffer
 
     If timeGetTime > TempPlayer(MyIndex).MapGetTimer + 250 Then
-        For I = 1 To MAX_MAP_ITEMS
-            If MapItem(I).Num > 0 Then
-                If MapItem(I).X = GetPlayerX(MyIndex) And MapItem(I).Y = GetPlayerY(MyIndex) Then
+        For i = 1 To MAX_MAP_ITEMS
+            If MapItem(i).Num > 0 Then
+                If MapItem(i).X = GetPlayerX(MyIndex) And MapItem(i).y = GetPlayerY(MyIndex) Then
                     TempPlayer(MyIndex).MapGetTimer = timeGetTime
                     buffer.WriteLong CMapGetItem
-                    buffer.WriteByte I
+                    buffer.WriteByte i
                     SendData buffer.ToArray()
                     Exit For
                 End If
@@ -382,7 +383,7 @@ End Sub
 
 Public Sub CheckAttack()
     Dim buffer As clsBuffer
-    Dim AttackSpeed As Long, I As Long, X As Long, Y As Long
+    Dim AttackSpeed As Long, i As Long, X As Long, y As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -416,25 +417,25 @@ Public Sub CheckAttack()
         Select Case Player(MyIndex).Dir
             Case DIR_UP
                 X = GetPlayerX(MyIndex)
-                Y = GetPlayerY(MyIndex) - 1
+                y = GetPlayerY(MyIndex) - 1
             Case DIR_DOWN
                 X = GetPlayerX(MyIndex)
-                Y = GetPlayerY(MyIndex) + 1
+                y = GetPlayerY(MyIndex) + 1
             Case DIR_LEFT
                 X = GetPlayerX(MyIndex) - 1
-                Y = GetPlayerY(MyIndex)
+                y = GetPlayerY(MyIndex)
             Case DIR_RIGHT
                 X = GetPlayerX(MyIndex) + 1
-                Y = GetPlayerY(MyIndex)
+                y = GetPlayerY(MyIndex)
         End Select
         
         If timeGetTime > TempPlayer(MyIndex).EventTimer Then
-            For I = 1 To Map.CurrentEvents
-                If Map.MapEvents(I).Visible = 1 Then
-                    If Map.MapEvents(I).X = X And Map.MapEvents(I).Y = Y Then
+            For i = 1 To Map.CurrentEvents
+                If Map.MapEvents(i).Visible = 1 Then
+                    If Map.MapEvents(i).X = X And Map.MapEvents(i).y = y Then
                         Set buffer = New clsBuffer
                         buffer.WriteLong CEvent
-                        buffer.WriteLong I
+                        buffer.WriteLong i
                         SendData buffer.ToArray()
                         Set buffer = Nothing
                         TempPlayer(MyIndex).EventTimer = timeGetTime + 200
@@ -495,6 +496,12 @@ Function CanMove() As Boolean
         CanMove = False
         Exit Function
     End If
+    
+    ' Don't let them move if in an event
+    If InEvent Then
+        CanMove = False
+        Exit Function
+    End If
 
     ' Make sure they haven't just casted a spell
     If SpellBuffer > 0 Then
@@ -513,13 +520,13 @@ Function CanMove() As Boolean
         CloseShop
     End If
 
-    ' Close if in Bank
+    ' Close if in bank
     If InBank Then
         CloseBank
     End If
     
     ' Close if in trade
-    If frmMain.picTrade.Visible = True Then
+    If frmMain.picTrade.Visible Then
         CloseTrade
     End If
 
@@ -650,8 +657,8 @@ End Function
 
 Function CheckDirection(ByVal Direction As Byte) As Boolean
     Dim X As Long
-    Dim Y As Long
-    Dim I As Long
+    Dim y As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -667,36 +674,36 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     Select Case Direction
         Case DIR_UP
             X = GetPlayerX(MyIndex)
-            Y = GetPlayerY(MyIndex) - 1
+            y = GetPlayerY(MyIndex) - 1
         Case DIR_DOWN
             X = GetPlayerX(MyIndex)
-            Y = GetPlayerY(MyIndex) + 1
+            y = GetPlayerY(MyIndex) + 1
         Case DIR_LEFT
             X = GetPlayerX(MyIndex) - 1
-            Y = GetPlayerY(MyIndex)
+            y = GetPlayerY(MyIndex)
         Case DIR_RIGHT
             X = GetPlayerX(MyIndex) + 1
-            Y = GetPlayerY(MyIndex)
+            y = GetPlayerY(MyIndex)
     End Select
 
     ' Check to see if the map tile is blocked or not
-    If Map.Tile(X, Y).Type = TILE_TYPE_BLOCKED Then
+    If Map.Tile(X, y).Type = TILE_TYPE_BLOCKED Then
         CheckDirection = True
         Exit Function
     End If
 
     ' Check to see if the map tile is a resource or not
-    If Map.Tile(X, Y).Type = TILE_TYPE_RESOURCE Then
+    If Map.Tile(X, y).Type = TILE_TYPE_RESOURCE Then
         CheckDirection = True
         Exit Function
     End If
     
     ' Check to see if a player is already on that tile
-    For I = 1 To Player_HighIndex
-        If IsPlaying(I) And GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
+    For i = 1 To Player_HighIndex
+        If IsPlaying(i) And GetPlayerMap(i) = GetPlayerMap(MyIndex) Then
             If Moral(Map.Moral).PlayerBlocked = 1 Then
-                If GetPlayerX(I) = X Then
-                    If GetPlayerY(I) = Y Then
+                If GetPlayerX(i) = X Then
+                    If GetPlayerY(i) = y Then
                         CheckDirection = True
                         Exit Function
                     End If
@@ -706,10 +713,10 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     Next
 
     ' Check to see if a npc is already on that tile
-    For I = 1 To Map.Npc_HighIndex
-        If MapNPC(I).Num > 0 Then
-            If MapNPC(I).X = X Then
-                If MapNPC(I).Y = Y Then
+    For i = 1 To Map.Npc_HighIndex
+        If MapNPC(i).Num > 0 Then
+            If MapNPC(i).X = X Then
+                If MapNPC(i).y = y Then
                     CheckDirection = True
                     Exit Function
                 End If
@@ -718,11 +725,11 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     Next
     
     ' Check to see if an event is already on that tile
-    For I = 1 To Map.CurrentEvents
-        If Map.MapEvents(I).Visible = 1 Then
-            If Map.MapEvents(I).X = X Then
-                If Map.MapEvents(I).Y = Y Then
-                    If Map.MapEvents(I).WalkThrough = 0 Then
+    For i = 1 To Map.CurrentEvents
+        If Map.MapEvents(i).Visible = 1 Then
+            If Map.MapEvents(i).X = X Then
+                If Map.MapEvents(i).y = y Then
+                    If Map.MapEvents(i).WalkThrough = 0 Then
                         CheckDirection = True
                         Exit Function
                     End If
@@ -868,7 +875,7 @@ ErrorHandler:
 End Sub
 
 Public Sub CastSpell(ByVal SpellSlot As Byte)
-    Dim X As Long, Y As Long, SpellCastType As Byte
+    Dim X As Long, y As Long, SpellCastType As Byte
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -923,10 +930,10 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
             If Spell(SpellSlot).Range > 0 Then
                 ' Set the X and Y used for function below
                 X = MapNPC(MyTarget).X
-                Y = MapNPC(MyTarget).Y
+                y = MapNPC(MyTarget).y
                     
                 ' Check if there in range
-                If Not IsInRange(Spell(SpellSlot).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), X, Y) Then
+                If Not IsInRange(Spell(SpellSlot).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), X, y) Then
                     AddText "Target is not in range!", BrightRed
                     Exit Sub
                 End If
@@ -936,7 +943,7 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
             If Spell(SpellSlot).Range > 0 Then
                 ' Set the X and Y used for function below
                 X = GetPlayerX(MyTarget)
-                Y = GetPlayerY(MyTarget)
+                y = GetPlayerY(MyTarget)
  
                 ' Make sure we can only cast specific spells on ourselves
                 If MyTargetType = TARGET_TYPE_PLAYER Then
@@ -947,7 +954,7 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
                 End If
                 
                 ' Check if there in range
-                If Not IsInRange(Spell(SpellSlot).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), X, Y) Then
+                If Not IsInRange(Spell(SpellSlot).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), X, y) Then
                     AddText "Target is not in range!", BrightRed
                     Exit Sub
                 End If
@@ -1031,19 +1038,19 @@ ErrorHandler:
     Err.Clear
 End Function
 
-Public Sub UpdateSpellDescWindow(ByVal SpellNum As Long, ByVal X As Long, ByVal Y As Long)
-    Dim I As Long
+Public Sub UpdateSpellDescWindow(ByVal SpellNum As Long, ByVal X As Long, ByVal y As Long)
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Check for off-screen
-    If Y + frmMain.picSpellDesc.Height > frmMain.ScaleHeight Then
-        Y = frmMain.ScaleHeight - frmMain.picSpellDesc.Height
+    If y + frmMain.picSpellDesc.Height > frmMain.ScaleHeight Then
+        y = frmMain.ScaleHeight - frmMain.picSpellDesc.Height
     End If
     
     With frmMain
-        .picSpellDesc.Top = Y
+        .picSpellDesc.Top = y
         .picSpellDesc.Left = X
         .picSpellDesc.Visible = True
         .picSpellDesc.ZOrder (0)
@@ -1061,8 +1068,8 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal X As Long, ByVal Y As Long, Optional ByVal IsShopWindow As Boolean = False, Optional ByVal ShopValue As Long = 0, Optional ByVal ShopItem As Long)
-    Dim I As Long
+Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal X As Long, ByVal y As Long, Optional ByVal IsShopWindow As Boolean = False, Optional ByVal ShopValue As Long = 0, Optional ByVal ShopItem As Long)
+    Dim i As Long
     Dim FirstLetter As String * 1
     Dim name As String
     Dim Multiplier As Single
@@ -1079,15 +1086,15 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal X As Long, ByVal Y 
     End If
     
     ' Check for off-screen
-    If Y + frmMain.picItemDesc.Height > frmMain.ScaleHeight Then
-        Y = frmMain.ScaleHeight - frmMain.picItemDesc.Height
+    If y + frmMain.picItemDesc.Height > frmMain.ScaleHeight Then
+        y = frmMain.ScaleHeight - frmMain.picItemDesc.Height
     End If
     
     ' Set z-order
     frmMain.picItemDesc.ZOrder (0)
 
     With frmMain
-        .picItemDesc.Top = Y
+        .picItemDesc.Top = y
         .picItemDesc.Left = X
         .picItemDesc.Visible = True
         
@@ -1147,7 +1154,7 @@ ErrorHandler:
 End Sub
 
 Public Sub CacheResources()
-    Dim X As Long, Y As Long, Resource_Count As Long
+    Dim X As Long, y As Long, Resource_Count As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1155,12 +1162,12 @@ Public Sub CacheResources()
     Resource_Count = 0
 
     For X = 0 To Map.MaxX
-        For Y = 0 To Map.MaxY
-            If Map.Tile(X, Y).Type = TILE_TYPE_RESOURCE Then
+        For y = 0 To Map.MaxY
+            If Map.Tile(X, y).Type = TILE_TYPE_RESOURCE Then
                 Resource_Count = Resource_Count + 1
                 ReDim Preserve MapResource(0 To Resource_Count)
                 MapResource(Resource_Count).X = X
-                MapResource(Resource_Count).Y = Y
+                MapResource(Resource_Count).y = y
             End If
         Next
     Next
@@ -1174,8 +1181,8 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal MsgType As Byte, ByVal X As Long, ByVal Y As Long)
-    Dim I As Long '
+Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal MsgType As Byte, ByVal X As Long, ByVal y As Long)
+    Dim i As Long '
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1183,9 +1190,9 @@ Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal M
     ActionMsgIndex = 0
     
     ' Carry on with the set
-    For I = 1 To MAX_BYTE
-        If ActionMsg(I).Timer = 0 Then
-            ActionMsgIndex = I
+    For i = 1 To MAX_BYTE
+        If ActionMsg(i).Timer = 0 Then
+            ActionMsgIndex = i
             Exit For
         End If
     Next
@@ -1202,12 +1209,12 @@ Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal M
         .Timer = timeGetTime
         .Scroll = 1
         .X = X
-        .Y = Y
+        .y = y
         .Alpha = 255
     End With
 
     If ActionMsg(ActionMsgIndex).Type = ACTIONMSG_SCROLL Then
-        ActionMsg(ActionMsgIndex).Y = ActionMsg(ActionMsgIndex).Y + Random(-2, 6)
+        ActionMsg(ActionMsgIndex).y = ActionMsg(ActionMsgIndex).y + Random(-2, 6)
         ActionMsg(ActionMsgIndex).X = ActionMsg(ActionMsgIndex).X + Random(-8, 8)
     End If
     
@@ -1220,8 +1227,8 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub CreateBlood(ByVal X As Long, ByVal Y As Long)
-    Dim I As Long, Sprite As Long
+Public Sub CreateBlood(ByVal X As Long, ByVal y As Long)
+    Dim i As Long, Sprite As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1232,19 +1239,19 @@ Public Sub CreateBlood(ByVal X As Long, ByVal Y As Long)
     Sprite = Random(1, BloodCount)
     
     ' Make sure tile doesn't already have blood
-    For I = 1 To Blood_HighIndex
+    For i = 1 To Blood_HighIndex
         ' Already have blood
-        If Blood(I).X = X And Blood(I).Y = Y Then
+        If Blood(i).X = X And Blood(i).y = y Then
             ' Refresh the timer
-            Blood(I).Timer = timeGetTime
+            Blood(i).Timer = timeGetTime
             Exit Sub
         End If
     Next
     
     ' Carry on with the set
-    For I = 1 To MAX_BYTE
-        If Blood(I).Timer = 0 Then
-            BloodIndex = I
+    For i = 1 To MAX_BYTE
+        If Blood(i).Timer = 0 Then
+            BloodIndex = i
             Exit For
         End If
     Next
@@ -1257,7 +1264,7 @@ Public Sub CreateBlood(ByVal X As Long, ByVal Y As Long)
     ' Set the blood up
     With Blood(BloodIndex)
           .X = X
-          .Y = Y
+          .y = y
           .Sprite = Sprite
           .Timer = timeGetTime
           .Alpha = 255
@@ -1273,26 +1280,26 @@ ErrorHandler:
 End Sub
 
 Public Sub CreateChatBubble(ByVal Target As Long, ByVal TargetType As Byte, ByVal Msg As String, ByVal Color As Long)
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Loop through and see if that player/npc already has a chat bubble
-    For I = 1 To MAX_BYTE
-        If ChatBubble(I).TargetType = TargetType Then
-            If ChatBubble(I).Target = Target Then
+    For i = 1 To MAX_BYTE
+        If ChatBubble(i).TargetType = TargetType Then
+            If ChatBubble(i).Target = Target Then
                 ' Clear it out
-                Call ClearChatBubble(I)
+                Call ClearChatBubble(i)
                 Exit For
             End If
         End If
     Next
     
     ' Carry on with the set
-    For I = 1 To MAX_BYTE
-        If ChatBubble(I).Timer = 0 Then
-            ChatBubbleIndex = I
+    For i = 1 To MAX_BYTE
+        If ChatBubble(i).Timer = 0 Then
+            ChatBubbleIndex = i
             Exit For
         End If
     Next
@@ -1333,7 +1340,7 @@ Public Sub ClearActionMsg(ByVal Index As Byte, Optional ByVal SetHighIndex As Bo
         .Color = 0
         .Scroll = 0
         .X = 0
-        .Y = 0
+        .y = 0
         .Alpha = 0
     End With
     
@@ -1354,7 +1361,7 @@ Public Sub ClearBlood(ByVal Index As Long, Optional ByVal SetHighIndex As Boolea
     
     With Blood(Index)
         .X = 0
-        .Y = 0
+        .y = 0
         .Sprite = 0
         .Timer = 0
         .Alpha = 0
@@ -1482,7 +1489,7 @@ Public Function GetBankItemNum(ByVal BankSlot As Byte) As Integer
         Exit Function
     End If
     
-    GetBankItemNum = Bank.Item(BankSlot).Num
+    GetBankItemNum = bank.Item(BankSlot).Num
     Exit Function
     
 ' Error handler
@@ -1495,7 +1502,7 @@ Public Sub SetBankItemNum(ByVal BankSlot As Byte, ByVal ItemNum As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    Bank.Item(BankSlot).Num = ItemNum
+    bank.Item(BankSlot).Num = ItemNum
     Exit Sub
     
 ' Error handler
@@ -1508,7 +1515,7 @@ Public Function GetBankItemValue(ByVal BankSlot As Byte) As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    GetBankItemValue = Bank.Item(BankSlot).Value
+    GetBankItemValue = bank.Item(BankSlot).Value
     Exit Function
     
 ' Error handler
@@ -1521,7 +1528,7 @@ Public Sub SetBankItemValue(ByVal BankSlot As Byte, ByVal ItemValue As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    Bank.Item(BankSlot).Value = ItemValue
+    bank.Item(BankSlot).Value = ItemValue
     Exit Sub
     
 ' Error handler
@@ -1535,7 +1542,7 @@ Function GetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte) 
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
-    GetPlayerBankItemDurValue = Bank.Item(Index).Durability
+    GetPlayerBankItemDurValue = bank.Item(Index).Durability
     Exit Function
     
 ' Error handler
@@ -1548,7 +1555,7 @@ Sub SetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte, ByVal
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    Bank.Item(Index).Durability = DurValue
+    bank.Item(Index).Durability = DurValue
     Exit Sub
     
 ' Error handler
@@ -1618,22 +1625,22 @@ ErrorHandler:
     Err.Clear
 End Function
 
-Public Function IsHotbarSlot(ByVal X As Single, ByVal Y As Single, Optional ByVal SType As Byte) As Long
+Public Function IsHotbarSlot(ByVal X As Single, ByVal y As Single, Optional ByVal SType As Byte) As Long
     Dim Top As Long, Left As Long
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_HOTBAR
+    For i = 1 To MAX_HOTBAR
         Top = HotbarTop
-        Left = HotbarLeft + ((HotbarOffsetX + 32) * (((I - 1) Mod MAX_HOTBAR)))
+        Left = HotbarLeft + ((HotbarOffsetX + 32) * (((i - 1) Mod MAX_HOTBAR)))
         If X >= Left And X <= Left + PIC_X Then
-            If Y >= Top And Y <= Top + PIC_Y Then
+            If y >= Top And y <= Top + PIC_Y Then
                 If SType > 0 Then
-                    If Not Hotbar(I).SType = SType Then Exit Function
+                    If Not Hotbar(i).SType = SType Then Exit Function
                 End If
-                IsHotbarSlot = I
+                IsHotbarSlot = i
                 Exit Function
             End If
         End If
@@ -1646,7 +1653,7 @@ ErrorHandler:
     Err.Clear
 End Function
 
-Public Sub PlaySoundEntity(ByVal X As Long, ByVal Y As Long, ByVal EntityType As Long, ByVal EntityNum As Long)
+Public Sub PlaySoundEntity(ByVal X As Long, ByVal y As Long, ByVal EntityType As Long, ByVal EntityNum As Long)
     Dim SoundName As String
 
     ' If debug mode, handle error then exit out
@@ -1924,7 +1931,7 @@ Public Function GetColorName(ByVal ColorNum As Byte) As String
 End Function
 
 Public Sub UpdatePlayerTitles()
-    Dim I As Long, n As Long
+    Dim i As Long, n As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1934,9 +1941,9 @@ Public Sub UpdatePlayerTitles()
     frmMain.lstTitles.AddItem "None"
     
     ' Build the combo list
-    For I = 1 To Player(MyIndex).AmountOfTitles
-        If Player(MyIndex).title(I) > 0 Then
-            frmMain.lstTitles.AddItem Trim$(title(Player(MyIndex).title(I)).name)
+    For i = 1 To Player(MyIndex).AmountOfTitles
+        If Player(MyIndex).title(i) > 0 Then
+            frmMain.lstTitles.AddItem Trim$(title(Player(MyIndex).title(i)).name)
         End If
     Next
 
@@ -1952,8 +1959,8 @@ Public Sub UpdatePlayerTitles()
     With frmMain
         If .lstTitles.ListIndex > 0 Then
             If Player(MyIndex).title(.lstTitles.ListIndex) = 0 Then Exit Sub
-            For I = 1 To MAX_TITLES
-                If .lstTitles.ListIndex = Player(MyIndex).title(I) Then
+            For i = 1 To MAX_TITLES
+                If .lstTitles.ListIndex = Player(MyIndex).title(i) Then
                     frmMain.lblDesc.Caption = Trim$(title(.lstTitles.ListIndex).Desc)
                 End If
             Next
@@ -1991,7 +1998,7 @@ ErrorHandler:
 End Sub
 
 Public Sub ToggleButtons(ByVal Visible As Boolean)
-    Dim I As Byte
+    Dim i As Byte
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2001,15 +2008,15 @@ Public Sub ToggleButtons(ByVal Visible As Boolean)
     Call frmMain.ResetMainButtons
     
     If Visible Then
-        For I = 1 To MAX_MAINBUTTONS
-            If Not I = 14 And Not I = 15 Then
-                frmMain.picButton(I).Visible = True
+        For i = 1 To MAX_MAINBUTTONS
+            If Not i = 14 And Not i = 15 Then
+                frmMain.picButton(i).Visible = True
             End If
         Next
     Else
-        For I = 1 To MAX_MAINBUTTONS
-            If Not I = 14 And Not I = 15 Then
-                frmMain.picButton(I).Visible = False
+        For i = 1 To MAX_MAINBUTTONS
+            If Not i = 14 And Not i = 15 Then
+                frmMain.picButton(i).Visible = False
             End If
         Next
         Call frmMain.CloseAllPanels
@@ -2130,14 +2137,14 @@ Public Sub UpdateGuildPanel()
 End Sub
 
 Public Sub PlayMapMusic()
-    Dim I As Long
+    Dim i As Long
     Dim MusicFile As String
     
     BattleMusicActive = False
     ActiveNPCTarget = 0
     
-    For I = 1 To Map.Npc_HighIndex - 1
-        Call CheckForBattleMusic(I)
+    For i = 1 To Map.Npc_HighIndex - 1
+        Call CheckForBattleMusic(i)
     Next
     
     InitBattleMusic = True
@@ -2157,83 +2164,46 @@ Public Sub PlayMapMusic()
 End Sub
 
 Public Sub SetActionHighIndex()
-    Dim I As Long
+    Dim i As Long
     
     Action_HighIndex = 0
     
     ' Find the new high index
-    For I = MAX_BYTE To 1 Step -1
-        If ActionMsg(I).Timer > 0 Then
-            Action_HighIndex = I
+    For i = MAX_BYTE To 1 Step -1
+        If ActionMsg(i).Timer > 0 Then
+            Action_HighIndex = i
             Exit For
         End If
     Next
 End Sub
 
 Public Sub SetBloodHighIndex()
-    Dim I As Long
+    Dim i As Long
     
     Blood_HighIndex = 0
     
     ' Find the new high index
-    For I = MAX_BYTE To 1 Step -1
-        If Blood(I).Timer > 0 Then
-            Blood_HighIndex = I
+    For i = MAX_BYTE To 1 Step -1
+        If Blood(i).Timer > 0 Then
+            Blood_HighIndex = i
             Exit For
         End If
     Next
 End Sub
 
 Public Sub SetChatBubbleHighIndex()
-    Dim I As Long
+    Dim i As Long
     
     ChatBubble_HighIndex = 0
     
     ' Find the new high index
-    For I = MAX_BYTE To 1 Step -1
-        If ChatBubble(I).Timer > 0 Then
-            ChatBubble_HighIndex = I
+    For i = MAX_BYTE To 1 Step -1
+        If ChatBubble(i).Timer > 0 Then
+            ChatBubble_HighIndex = i
             Exit For
         End If
     Next
 End Sub
-
-Public Function GetColorString(Color As Long)
-    Select Case Color
-        Case 0
-            GetColorString = "Black"
-        Case 1
-            GetColorString = "Blue"
-        Case 2
-            GetColorString = "Green"
-        Case 3
-            GetColorString = "Cyan"
-        Case 4
-            GetColorString = "Red"
-        Case 5
-            GetColorString = "Magenta"
-        Case 6
-            GetColorString = "Brown"
-        Case 7
-            GetColorString = "Grey"
-        Case 8
-            GetColorString = "Dark Grey"
-        Case 9
-            GetColorString = "Bright Blue"
-        Case 10
-            GetColorString = "Bright Green"
-        Case 11
-            GetColorString = "Bright Cyan"
-        Case 12
-            GetColorString = "Bright Red"
-        Case 13
-            GetColorString = "Pink"
-        Case 14
-            GetColorString = "Yellow"
-        Case 15
-            GetColorString = "White"
-    End Select
-End Function
 
 Public Sub RequestGuildResign()
     If GetPlayerGuild(MyIndex) = vbNullString Then
@@ -2308,27 +2278,27 @@ ErrorHandler:
 End Sub
 
 Sub ProcessWeather()
-    Dim I As Long
+    Dim i As Long
     
     If CurrentWeather > 0 Then
-        I = Random(1, 101 - CurrentWeatherIntensity)
+        i = Random(1, 101 - CurrentWeatherIntensity)
         
-        If I = 1 Then
+        If i = 1 Then
             'Add a new particle
-            For I = 1 To MAX_WEATHER_PARTICLES
-                If WeatherParticle(I).InUse = False Then
+            For i = 1 To MAX_WEATHER_PARTICLES
+                If WeatherParticle(i).InUse = False Then
                     If Random(1, 2) = 1 Then
-                        WeatherParticle(I).InUse = True
-                        WeatherParticle(I).Type = CurrentWeather
-                        WeatherParticle(I).Velocity = Random(8, 14)
-                        WeatherParticle(I).X = (TileView.Left * 32) - 32
-                        WeatherParticle(I).Y = (TileView.Top * 32) + Random(-32, frmMain.picScreen.ScaleHeight)
+                        WeatherParticle(i).InUse = True
+                        WeatherParticle(i).Type = CurrentWeather
+                        WeatherParticle(i).Velocity = Random(8, 14)
+                        WeatherParticle(i).X = (TileView.Left * 32) - 32
+                        WeatherParticle(i).y = (TileView.Top * 32) + Random(-32, frmMain.picScreen.ScaleHeight)
                     Else
-                        WeatherParticle(I).InUse = True
-                        WeatherParticle(I).Type = CurrentWeather
-                        WeatherParticle(I).Velocity = Random(10, 15)
-                        WeatherParticle(I).X = (TileView.Left * 32) + Random(-32, frmMain.picScreen.ScaleWidth)
-                        WeatherParticle(I).Y = (TileView.Top * 32) - 32
+                        WeatherParticle(i).InUse = True
+                        WeatherParticle(i).Type = CurrentWeather
+                        WeatherParticle(i).Velocity = Random(10, 15)
+                        WeatherParticle(i).X = (TileView.Left * 32) + Random(-32, frmMain.picScreen.ScaleWidth)
+                        WeatherParticle(i).y = (TileView.Top * 32) - 32
                     End If
                     Exit For
                 End If
@@ -2337,21 +2307,21 @@ Sub ProcessWeather()
     End If
     
     If CurrentWeather = WEATHER_TYPE_STORM Then
-        I = Random(1, 400 - CurrentWeatherIntensity)
-        If I = 1 Then
+        i = Random(1, 400 - CurrentWeatherIntensity)
+        If i = 1 Then
             ' Draw Thunder
             DrawThunder = Random(15, 22)
             Audio.PlaySound Sound_Thunder
         End If
     End If
     
-    For I = 1 To MAX_WEATHER_PARTICLES
-        If WeatherParticle(I).InUse Then
-            If WeatherParticle(I).X > TileView.Right * 32 Or WeatherParticle(I).Y > TileView.Bottom * 32 Then
-                WeatherParticle(I).InUse = False
+    For i = 1 To MAX_WEATHER_PARTICLES
+        If WeatherParticle(i).InUse Then
+            If WeatherParticle(i).X > TileView.Right * 32 Or WeatherParticle(i).y > TileView.Bottom * 32 Then
+                WeatherParticle(i).InUse = False
             Else
-                WeatherParticle(I).X = WeatherParticle(I).X + WeatherParticle(I).Velocity
-                WeatherParticle(I).Y = WeatherParticle(I).Y + WeatherParticle(I).Velocity
+                WeatherParticle(i).X = WeatherParticle(i).X + WeatherParticle(i).Velocity
+                WeatherParticle(i).y = WeatherParticle(i).y + WeatherParticle(i).Velocity
             End If
         End If
     Next
@@ -2374,7 +2344,7 @@ Function IsEven(Number As Long) As Boolean
 End Function
 
 Public Sub FindNearestTarget()
-    Dim I As Long, X As Long, Y As Long, X2 As Long, Y2 As Long, xDif As Long, yDif As Long
+    Dim i As Long, X As Long, y As Long, X2 As Long, Y2 As Long, xDif As Long, yDif As Long
     Dim bestX As Long, bestY As Long, bestIndex As Long
 
     X2 = GetPlayerX(MyIndex)
@@ -2383,10 +2353,10 @@ Public Sub FindNearestTarget()
     bestX = 255
     bestY = 255
     
-    For I = 1 To MAX_MAP_NPCS
-        If MapNPC(I).Num > 0 Then
-            X = MapNPC(I).X
-            Y = MapNPC(I).Y
+    For i = 1 To MAX_MAP_NPCS
+        If MapNPC(i).Num > 0 Then
+            X = MapNPC(i).X
+            y = MapNPC(i).y
             
             ' Find the difference - x
             If X < X2 Then
@@ -2398,10 +2368,10 @@ Public Sub FindNearestTarget()
             End If
             
             ' Find the difference - y
-            If Y < Y2 Then
-                yDif = Y2 - Y
-            ElseIf Y > Y2 Then
-                yDif = Y - Y2
+            If y < Y2 Then
+                yDif = Y2 - y
+            ElseIf y > Y2 Then
+                yDif = y - Y2
             Else
                 yDif = 0
             End If
@@ -2410,7 +2380,7 @@ Public Sub FindNearestTarget()
             If (xDif + yDif) < (bestX + bestY) Then
                 bestX = xDif
                 bestY = yDif
-                bestIndex = I
+                bestIndex = i
             End If
         End If
     Next
@@ -2420,17 +2390,17 @@ Public Sub FindNearestTarget()
 End Sub
 
 Public Function FindTarget() As Boolean
-    Dim I As Long, X As Long, Y As Long
+    Dim i As Long, X As Long, y As Long
 
     ' Check players
-    For I = 1 To MAX_PLAYERS
-        If IsPlaying(I) And GetPlayerMap(MyIndex) = GetPlayerMap(I) Then
-            X = (GetPlayerX(I) * 32) + TempPlayer(I).xOffset + 32
-            Y = (GetPlayerY(I) * 32) + TempPlayer(I).yOffset + 32
+    For i = 1 To MAX_PLAYERS
+        If IsPlaying(i) And GetPlayerMap(MyIndex) = GetPlayerMap(i) Then
+            X = (GetPlayerX(i) * 32) + TempPlayer(i).xOffset + 32
+            y = (GetPlayerY(i) * 32) + TempPlayer(i).yOffset + 32
             If X >= CurX And X <= CurX + 32 Then
-                If Y >= CurY And Y <= CurY + 32 Then
+                If y >= CurY And y <= CurY + 32 Then
                     ' Found our target!
-                    PlayerTarget I, TARGET_TYPE_PLAYER
+                    PlayerTarget i, TARGET_TYPE_PLAYER
                     FindTarget = True
                     Exit Function
                 End If
@@ -2439,14 +2409,14 @@ Public Function FindTarget() As Boolean
     Next
     
     ' Check NPCs
-    For I = 1 To Map.Npc_HighIndex
-        If MapNPC(I).Num > 0 Then
-            X = (MapNPC(I).X * 32) + MapNPC(I).xOffset + 32
-            Y = (MapNPC(I).Y * 32) + MapNPC(I).yOffset + 32
+    For i = 1 To Map.Npc_HighIndex
+        If MapNPC(i).Num > 0 Then
+            X = (MapNPC(i).X * 32) + MapNPC(i).xOffset + 32
+            y = (MapNPC(i).y * 32) + MapNPC(i).yOffset + 32
             If X >= CurX And X <= CurX + 32 Then
-                If Y >= CurY And Y <= CurY + 32 Then
+                If y >= CurY And y <= CurY + 32 Then
                     ' Found our target!
-                    PlayerTarget I, TARGET_TYPE_NPC
+                    PlayerTarget i, TARGET_TYPE_NPC
                     FindTarget = True
                     Exit Function
                 End If

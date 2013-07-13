@@ -85,7 +85,6 @@ Public Enum ServerPackets
     SPartyInvite
     SPartyUpdate
     SPartyVitals
-    SChatUpdate
     STarget
     SHotbar
     SGuildMembers

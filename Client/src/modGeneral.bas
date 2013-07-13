@@ -13,7 +13,7 @@ Private Declare Sub GetSystemTime Lib "kernel32.dll" Alias "GetSystemTimeAsFileT
 Public Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) As Long
 
 ' For Clear functions
-Public Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (Destination As Any, ByVal length As Long)
+Public Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (Destination As Any, ByVal Length As Long)
 
 ' Swear filter
 Public SwearString As String
@@ -395,6 +395,7 @@ Sub GameInit()
     
     ' Update chat
     frmMain.picChatbox.ZOrder (0)
+    frmMain.picEventChat.ZOrder (0)
     Exit Sub
 
 ' Error handler
@@ -464,7 +465,7 @@ ErrorHandler:
 End Sub
 
 ' Used for adding text to packet debugger
-Public Sub TextAdd(ByVal txt As TextBox, Msg As String, NewLine As Boolean)
+Public Sub TextAdd(ByVal txt As textBox, Msg As String, NewLine As Boolean)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
@@ -521,7 +522,7 @@ ErrorHandler:
     Err.Clear
 End Function
 
-Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, X As Single, y As Single)
     Dim GlobalX As Integer
     Dim GlobalY As Integer
 
@@ -533,7 +534,7 @@ Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, X 
 
     If Button = 1 Then
         PB.Left = GlobalX + X - SOffsetX
-        PB.Top = GlobalY + Y - SYOffset
+        PB.Top = GlobalY + y - SYOffset
     End If
     Exit Sub
     

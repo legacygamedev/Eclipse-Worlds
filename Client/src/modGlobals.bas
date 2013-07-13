@@ -34,6 +34,7 @@ Public IsWaitingForMove As Boolean
 
 ' Events
 Public InEvent As Boolean
+Public EventFace As Long
 
 ' Amount of blood decals
 Public BloodCount As Long

@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmCharEditor 
-   BorderStyle     =   4  'Fixed ToolWindow
+   BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Character Editor"
    ClientHeight    =   5700
    ClientLeft      =   45
@@ -24,7 +24,7 @@ Begin VB.Form frmCharEditor
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   652
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   3  'Windows Default
+   StartUpPosition =   1  'CenterOwner
    Begin VB.Frame frameSearch 
       Caption         =   "Search for Players"
       Height          =   5475
@@ -672,7 +672,6 @@ Public Sub fetchPlayerData()
         Case 5: cmbAccess.ListIndex = 5
     End Select
     SetSprite
-
 End Sub
 Private Sub SetSprite()
     If requestedPlayer.Sprite > 0 And requestedPlayer.Sprite <= NumCharacters Then
@@ -695,7 +694,6 @@ Private Sub frameCharPanel_Click()
     txtFake.SetFocus
 End Sub
 
-
 Private Sub listCharacters_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
     With listCharacters
         If .SortKey <> ColumnHeader.Index - 1 Then
@@ -713,7 +711,7 @@ Private Sub listCharacters_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnH
 End Sub
 
 Private Sub listCharacters_DblClick()
-    'RequestCharacterData - check if online and edit it.
+    ' RequestCharacterData - check if online and edit it
     If listCharacters.SelectedItem.text = "" Then Exit Sub
     frameCharPanel.Caption = "Editing - " & listCharacters.SelectedItem.text & " - " & listCharacters.SelectedItem.SubItems(1)
     SendRequestExtendedPlayerData (listCharacters.SelectedItem.text)
@@ -787,9 +785,6 @@ Private Sub txtFilter_Change()
     Else
         ResetCharList
     End If
-
-    
-
 End Sub
 
 Private Sub txtHP_Change()
@@ -911,8 +906,8 @@ Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min
         textBox.SelStart = Len(textBox.text)
         correctValue = False
     End If
-
 End Function
+
 Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
     If Not IsNumeric(textBox.text) Then
         textBox.text = CStr(valueToChange)
@@ -925,6 +920,7 @@ End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
     Dim Msg As String
+    
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
     Else
@@ -933,6 +929,7 @@ Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
         verifyValue = False
     End If
 End Function
+
 Private Sub displayStatus(ByVal Msg As String, MsgType As Byte)
     Select Case MsgType
     
@@ -950,6 +947,7 @@ Private Sub displayStatus(ByVal Msg As String, MsgType As Byte)
             lStatus.Caption = Msg
     End Select
 End Sub
+
 Private Sub displayFieldStatus(ByVal txtBox As textBox, ByVal Msg As String, MsgType As Status)
     Select Case MsgType
     
@@ -1001,9 +999,11 @@ Private Sub txtSpi_LostFocus()
 End Sub
 
 Private Sub txtSprite_Change()
-     Dim ok As Boolean
-     ok = correctValue(txtSprite, requestedPlayer.Sprite, 1, NumCharacters, 1)
-     If ok Then
+     Dim OK As Boolean
+     
+     OK = correctValue(txtSprite, requestedPlayer.Sprite, 1, NumCharacters, 1)
+     
+     If OK Then
         SetSprite
         displayFieldStatus txtSprite, ":" & txtSprite.text & " field is correct. Saving...", Status.Correct
      End If

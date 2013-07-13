@@ -43,8 +43,8 @@ Private Type MoveRouteRec
     Data2 As Long
     Data3 As Long
     Data4 As Long
-    data5 As Long
-    data6 As Long
+    Data5 As Long
+    Data6 As Long
 End Type
 
 Private Type GuildMemberRec
@@ -137,7 +137,7 @@ Private Type BankRec
 End Type
 
 Public Type BuffRec
-    id As Long
+    ID As Long
     Behavior As Long
     Vital As Long
     Timer As Long
@@ -183,10 +183,6 @@ End Type
 Public Type SkillRec
     Level As Integer
     Exp As Long
-    
-    ' For future use...
-    ObjectiveLevel As Integer
-    ObjectiveExp As Long
 End Type
 
 Public Type FriendsRec
@@ -200,25 +196,26 @@ Public Type FoesRec
 End Type
 
 Public Type PlayerRec
-    ' Face - Both
+    ' Face - both
     Face As Integer
-    'Both
+    
+    ' Both
     Level As Integer
     Exp As Long
     
-    ' Stats - Both
+    ' Stats - both
     Stat(1 To Stats.Stat_count - 1) As Integer
     Points As Integer
     
-    ' Spells - Server Only
+    ' Spells - server only
     Spell(1 To MAX_PLAYER_SPELLS) As Byte
     SpellCD(1 To MAX_PLAYER_SPELLS) As Long
     AmountOfCasts(1 To MAX_PLAYER_SPELLS) As Integer
     
-    ' Tree - Server Only
+    ' Tree - server only
     CurrentCombatTree As Byte
     
-    ' General - Both
+    ' General - both
     Name As String * NAME_LENGTH
     Gender As Byte
     Class As Byte
@@ -233,37 +230,37 @@ Public Type PlayerRec
     Y As Byte
     Dir As Byte
     
-    ' Vitals - Both
+    ' Vitals - both
     Vital(1 To Vitals.Vital_Count - 1) As Long
     
-    ' Amount of titles - Both
+    ' Amount of titles - both
     AmountOfTitles As Byte
     
-    ' Current Title - Both
+    ' Current Title - both
     CurrentTitle As Byte
     
-    ' Titles - Both
+    ' Titles - both
     title(1 To MAX_TITLES) As Byte
     
-    ' Worn equipment - Both
+    ' Worn equipment - both
     Equipment(1 To Equipment.Equipment_Count - 1) As PlayerItemRec
     
-    ' Inventory - Both
+    ' Inventory - both
     Inv(1 To MAX_INV) As PlayerItemRec
     
-    ' Buffs  - Server Only
+    ' Buffs - server only
     Buff(1 To MAX_BUFFS) As BuffRec
     
-    ' Hotbar - Server Only
+    ' Hotbar - server only
     Hotbar(1 To MAX_HOTBAR) As HotbarRec
     
-    ' Guild - Both
+    ' Guild - both
     Guild As GuildMemberRec
-    'Missing GuildAcc ->ess from Client Type
-    ' Skill - Server Only
+    
+    ' Skill - server only
     Skills(1 To Skill_Count - 1) As SkillRec
     
-    ' Events - Server Only
+    ' Events - server only
     Switches(0 To MAX_SWITCHES) As Byte
     Variables(0 To MAX_VARIABLES) As Long
 
@@ -276,7 +273,7 @@ Public Type PlayerRec
     PlayerKills As Integer
 End Type
 
-'Character Editor
+' Character Editor
 Public Type PlayerEditableRec
     ' Account
     Login As String * NAME_LENGTH
@@ -293,7 +290,7 @@ Public Type PlayerEditableRec
 
     ' Vitals
     Vital(1 To Vitals.Vital_Count - 1) As Long
-    'Max Vitals are dynamically calculate on server
+    ' Max Vitals are dynamically calculate on server
     
     ' Stats
     Stat(1 To Stats.Stat_count - 1) As Integer
@@ -355,8 +352,8 @@ Private Type EventCommandRec
     Data2 As Long
     Data3 As Long
     Data4 As Long
-    data5 As Long
-    data6 As Long
+    Data5 As Long
+    Data6 As Long
     ConditionalBranch As ConditionalBranchRec
     MoveRouteCount As Long
     MoveRoute() As MoveRouteRec
@@ -497,7 +494,7 @@ End Type
 
 Public Type TempPlayerRec
     ' Non saved local vars
-    Buffer As clsBuffer
+    buffer As clsBuffer
     HDSerial As String * NAME_LENGTH
     InGame As Boolean
     AttackTimer As Long

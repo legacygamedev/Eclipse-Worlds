@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmEditor_NPC 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "NPC Editor"
-   ClientHeight    =   9705
+   ClientHeight    =   9090
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   8505
@@ -19,7 +19,7 @@ Begin VB.Form frmEditor_NPC
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   647
+   ScaleHeight     =   606
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   567
    ShowInTaskbar   =   0   'False
@@ -43,7 +43,7 @@ Begin VB.Form frmEditor_NPC
       ScaleHeight     =   64
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   40
-      TabIndex        =   47
+      TabIndex        =   46
       TabStop         =   0   'False
       Top             =   360
       Width           =   600
@@ -52,42 +52,33 @@ Begin VB.Form frmEditor_NPC
       Caption         =   "Save"
       Height          =   375
       Left            =   3480
-      TabIndex        =   29
-      Top             =   9240
+      TabIndex        =   28
+      Top             =   8640
       Width           =   1455
    End
    Begin VB.CommandButton cmdCancel 
       Caption         =   "Cancel"
       Height          =   375
       Left            =   6840
-      TabIndex        =   31
-      Top             =   9240
+      TabIndex        =   30
+      Top             =   8640
       Width           =   1455
    End
    Begin VB.CommandButton cmdDelete 
       Caption         =   "Delete"
       Height          =   375
       Left            =   5160
-      TabIndex        =   30
-      Top             =   9240
+      TabIndex        =   29
+      Top             =   8640
       Width           =   1455
    End
    Begin VB.Frame Frame1 
       Caption         =   "Properties"
-      Height          =   9015
+      Height          =   8415
       Left            =   3360
-      TabIndex        =   33
+      TabIndex        =   32
       Top             =   120
       Width           =   5055
-      Begin VB.CheckBox chkSwapVisibility 
-         Caption         =   "Show Spells"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   68
-         TabStop         =   0   'False
-         Top             =   5280
-         Width           =   1455
-      End
       Begin VB.TextBox txtMP 
          Height          =   285
          Left            =   3360
@@ -116,7 +107,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Faction Threat"
          Height          =   255
          Left            =   3000
-         TabIndex        =   61
+         TabIndex        =   58
          TabStop         =   0   'False
          ToolTipText     =   "Other faction members will defend this NPC"
          Top             =   2400
@@ -146,36 +137,6 @@ Begin VB.Form frmEditor_NPC
          Top             =   600
          Width           =   1815
       End
-      Begin VB.PictureBox picFace 
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   1500
-         Left            =   3360
-         ScaleHeight     =   100
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   100
-         TabIndex        =   57
-         TabStop         =   0   'False
-         Top             =   3840
-         Width           =   1500
-      End
-      Begin VB.HScrollBar scrlFace 
-         Height          =   255
-         Left            =   2040
-         TabIndex        =   17
-         Top             =   4560
-         Width           =   1215
-      End
       Begin VB.HScrollBar scrlLevel 
          Height          =   255
          Left            =   1080
@@ -190,92 +151,6 @@ Begin VB.Form frmEditor_NPC
          TabIndex        =   15
          Top             =   3840
          Width           =   1215
-      End
-      Begin VB.Frame fraDrop 
-         Caption         =   "Drop: 1"
-         Height          =   1815
-         Left            =   120
-         TabIndex        =   49
-         Top             =   7080
-         Width           =   4815
-         Begin VB.TextBox txtChance 
-            Height          =   285
-            Left            =   2880
-            TabIndex        =   26
-            Text            =   "0"
-            ToolTipText     =   "Use 0, 1, number%, 1/number, or decimal values."
-            Top             =   720
-            Width           =   1815
-         End
-         Begin VB.HScrollBar scrlNum 
-            Height          =   255
-            Left            =   1200
-            Max             =   255
-            TabIndex        =   27
-            Top             =   1080
-            Width           =   3495
-         End
-         Begin VB.HScrollBar scrlValue 
-            Height          =   255
-            Left            =   1200
-            TabIndex        =   28
-            Top             =   1440
-            Width           =   3495
-         End
-         Begin VB.HScrollBar scrlDrop 
-            Height          =   255
-            Left            =   120
-            Min             =   1
-            TabIndex        =   25
-            Top             =   240
-            Value           =   1
-            Width           =   4575
-         End
-         Begin VB.Label Label3 
-            AutoSize        =   -1  'True
-            Caption         =   "Chance:"
-            Height          =   180
-            Left            =   2160
-            TabIndex        =   53
-            Top             =   720
-            UseMnemonic     =   0   'False
-            Width           =   630
-         End
-         Begin VB.Label lblNum 
-            AutoSize        =   -1  'True
-            Caption         =   "Number: 0"
-            Height          =   180
-            Left            =   120
-            TabIndex        =   52
-            Top             =   1080
-            Width           =   795
-         End
-         Begin VB.Label lblItemName 
-            AutoSize        =   -1  'True
-            Caption         =   "Item: None"
-            Height          =   180
-            Left            =   120
-            TabIndex        =   51
-            Top             =   720
-            Width           =   855
-         End
-         Begin VB.Label lblValue 
-            AutoSize        =   -1  'True
-            Caption         =   "Value: 0"
-            Height          =   180
-            Left            =   120
-            TabIndex        =   50
-            Top             =   1440
-            UseMnemonic     =   0   'False
-            Width           =   645
-         End
-         Begin VB.Line Line1 
-            BorderColor     =   &H00C0C0C0&
-            X1              =   0
-            X2              =   4800
-            Y1              =   600
-            Y2              =   600
-         End
       End
       Begin VB.TextBox txtSpawnSecs 
          Height          =   285
@@ -346,14 +221,14 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Stats"
          Height          =   1455
          Left            =   120
-         TabIndex        =   34
-         Top             =   5640
+         TabIndex        =   33
+         Top             =   4920
          Width           =   4815
          Begin VB.HScrollBar scrlStat 
             Height          =   255
             Index           =   1
             Left            =   120
-            TabIndex        =   18
+            TabIndex        =   17
             Top             =   480
             Width           =   1455
          End
@@ -361,7 +236,7 @@ Begin VB.Form frmEditor_NPC
             Height          =   255
             Index           =   2
             Left            =   1680
-            TabIndex        =   19
+            TabIndex        =   18
             Top             =   480
             Width           =   1455
          End
@@ -369,7 +244,7 @@ Begin VB.Form frmEditor_NPC
             Height          =   255
             Index           =   3
             Left            =   3240
-            TabIndex        =   20
+            TabIndex        =   19
             Top             =   480
             Width           =   1455
          End
@@ -377,7 +252,7 @@ Begin VB.Form frmEditor_NPC
             Height          =   255
             Index           =   4
             Left            =   120
-            TabIndex        =   21
+            TabIndex        =   20
             Top             =   1080
             Width           =   1455
          End
@@ -385,7 +260,7 @@ Begin VB.Form frmEditor_NPC
             Height          =   255
             Index           =   5
             Left            =   1680
-            TabIndex        =   22
+            TabIndex        =   21
             Top             =   1080
             Width           =   1455
          End
@@ -395,7 +270,7 @@ Begin VB.Form frmEditor_NPC
             Height          =   180
             Index           =   1
             Left            =   120
-            TabIndex        =   39
+            TabIndex        =   38
             Top             =   240
             Width           =   1515
          End
@@ -405,7 +280,7 @@ Begin VB.Form frmEditor_NPC
             Height          =   180
             Index           =   2
             Left            =   1680
-            TabIndex        =   38
+            TabIndex        =   37
             Top             =   240
             Width           =   1455
          End
@@ -415,7 +290,7 @@ Begin VB.Form frmEditor_NPC
             Height          =   180
             Index           =   3
             Left            =   3240
-            TabIndex        =   37
+            TabIndex        =   36
             Top             =   240
             Width           =   1515
          End
@@ -425,7 +300,7 @@ Begin VB.Form frmEditor_NPC
             Height          =   180
             Index           =   4
             Left            =   120
-            TabIndex        =   36
+            TabIndex        =   35
             Top             =   840
             Width           =   1425
          End
@@ -435,24 +310,119 @@ Begin VB.Form frmEditor_NPC
             Height          =   180
             Index           =   5
             Left            =   1680
-            TabIndex        =   35
+            TabIndex        =   34
             Top             =   840
             Width           =   450
          End
+      End
+      Begin VB.Frame fraDrop 
+         Caption         =   "Drop: 1"
+         Height          =   1815
+         Left            =   120
+         TabIndex        =   48
+         Top             =   6360
+         Width           =   4815
+         Begin VB.TextBox txtChance 
+            Height          =   285
+            Left            =   2880
+            TabIndex        =   25
+            Text            =   "0"
+            ToolTipText     =   "Use 0, 1, number%, 1/number, or decimal values."
+            Top             =   720
+            Width           =   1815
+         End
+         Begin VB.HScrollBar scrlNum 
+            Height          =   255
+            Left            =   1200
+            Max             =   255
+            TabIndex        =   26
+            Top             =   1080
+            Width           =   3495
+         End
+         Begin VB.HScrollBar scrlValue 
+            Height          =   255
+            Left            =   1200
+            TabIndex        =   27
+            Top             =   1440
+            Width           =   3495
+         End
+         Begin VB.HScrollBar scrlDrop 
+            Height          =   255
+            Left            =   120
+            Min             =   1
+            TabIndex        =   24
+            Top             =   240
+            Value           =   1
+            Width           =   4575
+         End
+         Begin VB.Label Label3 
+            AutoSize        =   -1  'True
+            Caption         =   "Chance:"
+            Height          =   180
+            Left            =   2160
+            TabIndex        =   52
+            Top             =   720
+            UseMnemonic     =   0   'False
+            Width           =   630
+         End
+         Begin VB.Label lblNum 
+            AutoSize        =   -1  'True
+            Caption         =   "Number: 0"
+            Height          =   180
+            Left            =   120
+            TabIndex        =   51
+            Top             =   1080
+            Width           =   795
+         End
+         Begin VB.Label lblItemName 
+            AutoSize        =   -1  'True
+            Caption         =   "Item: None"
+            Height          =   180
+            Left            =   120
+            TabIndex        =   50
+            Top             =   720
+            Width           =   855
+         End
+         Begin VB.Label lblValue 
+            AutoSize        =   -1  'True
+            Caption         =   "Value: 0"
+            Height          =   180
+            Left            =   120
+            TabIndex        =   49
+            Top             =   1440
+            UseMnemonic     =   0   'False
+            Width           =   645
+         End
+         Begin VB.Line Line1 
+            BorderColor     =   &H00C0C0C0&
+            X1              =   0
+            X2              =   4800
+            Y1              =   600
+            Y2              =   600
+         End
+      End
+      Begin VB.CheckBox chkSwapVisibility 
+         Caption         =   "Show Spells"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   65
+         TabStop         =   0   'False
+         Top             =   4560
+         Width           =   1455
       End
       Begin VB.Frame fraSpell 
          Caption         =   "Spell: 1"
          Height          =   1455
          Left            =   120
-         TabIndex        =   65
-         Top             =   5640
+         TabIndex        =   62
+         Top             =   4920
          Visible         =   0   'False
          Width           =   4815
          Begin VB.HScrollBar scrlSpellNum 
             Height          =   255
             Left            =   1200
             Max             =   255
-            TabIndex        =   24
+            TabIndex        =   23
             Top             =   1080
             Width           =   3495
          End
@@ -460,7 +430,7 @@ Begin VB.Form frmEditor_NPC
             Height          =   255
             Left            =   120
             Min             =   1
-            TabIndex        =   23
+            TabIndex        =   22
             Top             =   240
             Value           =   1
             Width           =   4575
@@ -470,7 +440,7 @@ Begin VB.Form frmEditor_NPC
             Caption         =   "Spell: None"
             Height          =   180
             Left            =   120
-            TabIndex        =   67
+            TabIndex        =   64
             Top             =   720
             Width           =   870
          End
@@ -486,7 +456,7 @@ Begin VB.Form frmEditor_NPC
             Caption         =   "Number: 0"
             Height          =   180
             Left            =   120
-            TabIndex        =   66
+            TabIndex        =   63
             Top             =   1080
             Width           =   795
          End
@@ -496,7 +466,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "MP:"
          Height          =   180
          Left            =   3000
-         TabIndex        =   64
+         TabIndex        =   61
          Top             =   3120
          Width           =   300
       End
@@ -504,7 +474,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Music:"
          Height          =   255
          Left            =   120
-         TabIndex        =   63
+         TabIndex        =   60
          Top             =   2040
          Width           =   615
       End
@@ -512,7 +482,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Sound:"
          Height          =   255
          Left            =   2520
-         TabIndex        =   62
+         TabIndex        =   59
          Top             =   2040
          Width           =   615
       End
@@ -521,7 +491,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Say:"
          Height          =   180
          Left            =   3000
-         TabIndex        =   60
+         TabIndex        =   57
          Top             =   2760
          UseMnemonic     =   0   'False
          Width           =   345
@@ -531,7 +501,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Faction:"
          Height          =   180
          Left            =   120
-         TabIndex        =   59
+         TabIndex        =   56
          Top             =   2400
          Width           =   735
       End
@@ -540,24 +510,16 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Title:"
          Height          =   180
          Left            =   120
-         TabIndex        =   58
+         TabIndex        =   55
          Top             =   600
          UseMnemonic     =   0   'False
          Width           =   405
-      End
-      Begin VB.Label lblFace 
-         Caption         =   "Face: 0"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   56
-         Top             =   4560
-         Width           =   1215
       End
       Begin VB.Label lblLevel 
          Caption         =   "Level: 0"
          Height          =   255
          Left            =   120
-         TabIndex        =   55
+         TabIndex        =   54
          Top             =   960
          Width           =   975
       End
@@ -565,7 +527,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Damage: 0"
          Height          =   255
          Left            =   120
-         TabIndex        =   54
+         TabIndex        =   53
          Top             =   3840
          Width           =   1575
       End
@@ -574,7 +536,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Spawn:"
          Height          =   180
          Left            =   3000
-         TabIndex        =   48
+         TabIndex        =   47
          Top             =   3480
          UseMnemonic     =   0   'False
          Width           =   540
@@ -583,7 +545,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Animation: None"
          Height          =   255
          Left            =   120
-         TabIndex        =   46
+         TabIndex        =   45
          Top             =   4200
          Width           =   1815
       End
@@ -592,7 +554,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Sprite: 0"
          Height          =   180
          Left            =   120
-         TabIndex        =   45
+         TabIndex        =   44
          Top             =   1320
          Width           =   660
       End
@@ -601,7 +563,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Name:"
          Height          =   180
          Left            =   120
-         TabIndex        =   44
+         TabIndex        =   43
          Top             =   240
          UseMnemonic     =   0   'False
          Width           =   495
@@ -611,7 +573,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Behavior:"
          Height          =   180
          Left            =   120
-         TabIndex        =   43
+         TabIndex        =   42
          Top             =   2760
          UseMnemonic     =   0   'False
          Width           =   720
@@ -621,7 +583,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Range: 0"
          Height          =   180
          Left            =   120
-         TabIndex        =   42
+         TabIndex        =   41
          Top             =   1680
          UseMnemonic     =   0   'False
          Width           =   675
@@ -631,7 +593,7 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "Experience:"
          Height          =   180
          Left            =   120
-         TabIndex        =   41
+         TabIndex        =   40
          Top             =   3480
          Width           =   900
       End
@@ -640,28 +602,28 @@ Begin VB.Form frmEditor_NPC
          Caption         =   "HP:"
          Height          =   180
          Left            =   120
-         TabIndex        =   40
+         TabIndex        =   39
          Top             =   3120
          Width           =   285
       End
    End
    Begin VB.Frame Frame3 
       Caption         =   "Npc List"
-      Height          =   9495
+      Height          =   8895
       Left            =   120
-      TabIndex        =   32
+      TabIndex        =   31
       Top             =   120
       Width           =   3135
       Begin VB.TextBox txtSearch 
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   69
+         TabIndex        =   66
          Top             =   240
          Width           =   2895
       End
       Begin VB.ListBox lstIndex 
-         Height          =   8340
+         Height          =   7980
          Left            =   120
          TabIndex        =   0
          Top             =   600
@@ -787,7 +749,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & NPC(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & NPC(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     NpcEditorInit
     Exit Sub
@@ -805,19 +767,12 @@ Private Sub Form_Load()
     scrlSprite.max = NumCharacters
     scrlAnimation.max = MAX_ANIMATIONS
     scrlDrop.max = MAX_NPC_DROPS
-    scrlFace.max = NumFaces
     scrlLevel.max = MAX_LEVEL
     txtName.MaxLength = NAME_LENGTH
     txtTitle.MaxLength = NAME_LENGTH
     scrlNum.max = MAX_ITEMS
     scrlSpell.max = MAX_NPC_SPELLS
     scrlSpellNum.max = MAX_SPELLS
-    
-    ' Resize face picture
-    If NumFaces > 0 Then
-        frmEditor_NPC.picFace.Width = Tex_Face(1).Width * Screen.TwipsPerPixelX
-        frmEditor_NPC.picFace.Height = Tex_Face(1).Height * Screen.TwipsPerPixelY
-    End If
     
     ' Resize the sprite pictures
     If NumCharacters > 0 Then
@@ -903,7 +858,7 @@ Private Sub scrlAnimation_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).name)
+    If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).Name)
     lblAnimation.Caption = "Animation: " & sString
     NPC(EditorIndex).Animation = scrlAnimation.Value
     Exit Sub
@@ -927,22 +882,6 @@ Private Sub scrlDamage_Change()
 ' Error handler
 ErrorHandler:
     HandleError "scrlDamage_Change", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
-Private Sub scrlFace_Change()
-    If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
-    
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
-    
-    lblFace.Caption = "Face: " & scrlFace.Value
-    NPC(EditorIndex).Face = scrlFace.Value
-    Exit Sub
-    
-' Error handler
-ErrorHandler:
-    HandleError "scrlFace_Change", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -988,7 +927,7 @@ Private Sub scrlSpellNum_Change()
     lblSpellNum.Caption = "Number: " & scrlSpellNum.Value
 
     If scrlSpellNum.Value > 0 Then
-        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).name)
+        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).Name)
     Else
         lblSpellName.Caption = "Spell: None"
     End If
@@ -1061,7 +1000,7 @@ Private Sub scrlNum_Change()
     lblNum.Caption = "Number: " & scrlNum.Value
 
     If scrlNum.Value > 0 Then
-        lblItemName.Caption = "Item: " & Trim$(Item(scrlNum.Value).name)
+        lblItemName.Caption = "Item: " & Trim$(Item(scrlNum.Value).Name)
     Else
         lblItemName.Caption = "Item: None"
     End If
@@ -1198,9 +1137,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
-    NPC(EditorIndex).name = Trim$(txtName.text)
+    NPC(EditorIndex).Name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & NPC(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & NPC(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -1270,7 +1209,7 @@ Private Sub txtTitle_Validate(Cancel As Boolean)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    NPC(EditorIndex).title = Trim$(txtTitle.text)
+    NPC(EditorIndex).Title = Trim$(txtTitle.text)
     Exit Sub
     
 ' Error handler

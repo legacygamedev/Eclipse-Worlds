@@ -3,7 +3,7 @@ Option Explicit
 
 ' Public data structures
 Public Map As MapRec
-Public Bank As BankRec
+Public bank As BankRec
 Public Player(1 To MAX_PLAYERS) As PlayerRec
 Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
 Public Item(1 To MAX_ITEMS) As ItemRec
@@ -14,7 +14,7 @@ Public Shop(1 To MAX_SHOPS) As ShopRec
 Public Spell(1 To MAX_SPELLS) As SpellRec
 Public Resource(1 To MAX_RESOURCES) As ResourceRec
 Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
-Public events(1 To MAX_EVENTS) As EventWrapperRec
+Public Events(1 To MAX_EVENTS) As EventWrapperRec
 Public Ban(1 To MAX_BANS) As BanRec
 Public title(1 To MAX_TITLES) As TitleRec
 Public Moral(1 To MAX_MORALS) As MoralRec
@@ -52,7 +52,7 @@ Public Party As PartyRec
 
 Public Type SoundsRec
     X As Long
-    Y As Long
+    y As Long
     handle As Long
     InUse As Boolean
     channel As Long
@@ -147,7 +147,7 @@ Public Type PlayerRec
     ' Position
     Map As Integer
     X As Byte
-    Y As Byte
+    y As Byte
     Dir As Byte
     
     ' Vitals
@@ -225,7 +225,7 @@ End Type
 
 Private Type TileDataRec
     X As Byte
-    Y As Byte
+    y As Byte
     Tileset As Byte
 End Type
 
@@ -290,7 +290,7 @@ Public Type EventPageRec
     SelfSwitchIndex As Long
     SelfSwitchCompare As Long
     
-    ' Handles the Event Sprite
+    ' Handles the event sprite
     GraphicType As Byte
     Graphic As Long
     GraphicX As Long
@@ -298,7 +298,7 @@ Public Type EventPageRec
     GraphicX2 As Long
     GraphicY2 As Long
     
-    ' Handles Movement
+    ' Handles movement
     MoveType As Byte
     MoveSpeed As Byte
     MoveFreq As Byte
@@ -322,18 +322,18 @@ Public Type EventPageRec
     
     Position As Byte
     
-    ' Client Needed Only
+    ' Client needed only
     X As Long
-    Y As Long
+    y As Long
 End Type
 
 Public Type EventRec
     name As String
     Global As Long
-    pageCount As Long
+    PageCount As Long
     Pages() As EventPageRec
     X As Long
-    Y As Long
+    y As Long
 End Type
 
 Public Type TileRec
@@ -351,7 +351,7 @@ Private Type MapEventRec
     name As String
     Dir As Long
     X As Long
-    Y As Long
+    y As Long
     GraphicType As Long
     GraphicX As Long
     GraphicY As Long
@@ -410,9 +410,9 @@ Private Type MapRec
     
     Tile() As TileRec
     NPC(1 To MAX_MAP_NPCS) As Long
-    NpcSpawnType(1 To MAX_MAP_NPCS) As Long
+    NPCSpawnType(1 To MAX_MAP_NPCS) As Long
     EventCount As Long
-    events() As EventRec
+    Events() As EventRec
     
     ' Client side only
     CurrentEvents As Long
@@ -486,7 +486,7 @@ Private Type MapItemRec
     Durability As Integer
     Frame As Byte
     X As Byte
-    Y As Byte
+    y As Byte
 End Type
 
 Private Type NpcRec
@@ -509,7 +509,6 @@ Private Type NpcRec
     Exp As Long
     Animation As Long
     Level As Byte
-    Face As Long
     Spell(1 To MAX_NPC_SPELLS) As Integer
     Faction As Byte
     AttackSay As String * 100
@@ -522,7 +521,7 @@ Private Type MapNpcRec
     TargetType As Byte
     Vital(1 To Vitals.Vital_Count - 1) As Long
     X As Byte
-    Y As Byte
+    y As Byte
     Dir As Byte
     
     ' Client use only
@@ -570,7 +569,7 @@ Private Type SpellRec
     Icon As Long
     Map As Long
     X As Long
-    Y As Long
+    y As Long
     Dir As Byte
     Vital As Long
     Duration As Long
@@ -589,7 +588,7 @@ End Type
 
 Public Type MapResourceRec
     X As Long
-    Y As Long
+    y As Long
     ResourceState As Byte
 End Type
 
@@ -621,7 +620,7 @@ Private Type ActionMsgRec
     Color As Long
     Scroll As Long
     X As Long
-    Y As Long
+    y As Long
     Alpha As Byte
 End Type
 
@@ -629,7 +628,7 @@ Private Type BloodRec
     Sprite As Long
     Timer As Long
     X As Long
-    Y As Long
+    y As Long
     Alpha As Byte
 End Type
 
@@ -646,7 +645,7 @@ End Type
 Private Type AnimInstanceRec
     Animation As Long
     X As Byte
-    Y As Byte
+    y As Byte
     
     ' Used for locking to players/npcs
     lockIndex As Long
@@ -709,7 +708,7 @@ End Type
 
 Type DropRec
     X As Long
-    Y As Long
+    y As Long
     YSpeed As Long
     XSpeed As Long
     Init As Boolean
@@ -738,7 +737,7 @@ End Type
 Public Type WeatherParticleRec
     Type As Long
     X As Long
-    Y As Long
+    y As Long
     Velocity As Long
     InUse As Long
 End Type
@@ -746,7 +745,7 @@ End Type
 ' Auto tiles
 Public Type PointRec
     X As Long
-    Y As Long
+    y As Long
 End Type
 
 Public Type QuarterTileRec

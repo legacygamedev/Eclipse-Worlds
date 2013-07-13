@@ -231,7 +231,7 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     Dim ShopNum As Long
     Dim OldMap As Long
     Dim i As Long
-    Dim Buffer As clsBuffer
+    Dim buffer As clsBuffer
 
     ' Check for subscript out of range
     If IsPlaying(Index) = False Or MapNum <= 0 Or MapNum > MAX_MAPS Then Exit Sub
@@ -252,7 +252,7 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     
     ' if same map then just send their co-ordinates
     If MapNum = GetPlayerMap(Index) And Not NeedMap Then
-        Call SendPlayerWarp(Index)
+        Call SendPlayerPosition(Index)
         Exit Sub
     End If
     
@@ -303,27 +303,37 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     ' Sets it so we know to process npcs on the map
     PlayersOnMap(MapNum) = YES
     TempPlayer(Index).GettingMap = YES
-    Set Buffer = New clsBuffer
+    Set buffer = New clsBuffer
     Call SendCheckForMap(Index, MapNum)
 End Sub
 
 Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, Optional ByVal SendToSelf As Boolean = False)
-    Dim Buffer As clsBuffer, MapNum As Integer
+    Dim buffer As clsBuffer, MapNum As Integer
     Dim X As Long, Y As Long, i As Long
     Dim Moved As Byte, MovedSoFar As Boolean
     Dim TileType As Long, VitalType As Long, Color As Long, Amount As Long, BeginEventProcessing As Boolean
 
+    ' Check for subscript out of range
+    If IsPlaying(Index) = False Or Dir < DIR_UP Or Dir > DIR_RIGHT Or Movement < 1 Or Movement > 2 Then Exit Sub
+    
     ' Don't allow them to move if they are transfering to a new map
     If TempPlayer(Index).GettingMap = YES Then Exit Sub
+    
+    ' Don't let them move if an event is waiting for their response
+    If TempPlayer(Index).EventProcessingCount > 0 Then
+        For i = 1 To TempPlayer(Index).EventProcessingCount
+            If TempPlayer(Index).EventProcessing(i).WaitingForResponse > 0 Then
+                Call SendPlayerPosition(Index)
+                Exit Sub
+            End If
+        Next
+    End If
     
     ' Prevent player from moving if they are casting a spell
     If TempPlayer(Index).SpellBuffer.Spell > 0 Then Exit Sub
     
     ' If stunned, stop them moving
     If TempPlayer(Index).StunDuration > 0 Then Exit Sub
-    
-    ' Check for subscript out of range
-    If IsPlaying(Index) = False Or Dir < DIR_UP Or Dir > DIR_RIGHT Or Movement < 1 Or Movement > 2 Then Exit Sub
 
     Call SetPlayerDir(Index, Dir)
     

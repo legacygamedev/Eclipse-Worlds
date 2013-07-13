@@ -38,7 +38,7 @@ Begin VB.Form frmAdmin
       Top             =   0
       Width           =   2835
       Begin VB.CommandButton cmdCharEditor 
-         Caption         =   "Characters Editor"
+         Caption         =   "Character Editor"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -799,7 +799,7 @@ ErrorHandler:
 End Sub
 'Character Editor
 Private Sub cmdCharEditor_Click()
-    'SendRequest for Character NAmes
+    ' Send request for character names
     Tex_CharSprite.Texture = 0
     SendRequestAllCharacters
 End Sub
