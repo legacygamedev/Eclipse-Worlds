@@ -16,7 +16,7 @@ Sub JoinGame(ByVal Index As Long)
     Dim Color As Long
 
     ' Set the flag so we know the person is in the game
-    tempPlayer(Index).InGame = True
+    TempPlayer(Index).InGame = True
 
     ' Update the log
     frmServer.lvwInfo.ListItems(Index).SubItems(1) = GetPlayerIP(Index)
@@ -67,6 +67,7 @@ Sub JoinGame(ByVal Index As Long)
         For i = 1 To Vitals.Vital_Count - 1
             If IsPlaying(n) Then
                 Call SendVitalTo(Index, n, i) ' Sends all players to new player
+                
                 If Not Index = n Then
                     Call SendVitalTo(n, Index, i) ' Sends new player to logged in players
                 End If
@@ -135,40 +136,40 @@ Sub LeftGame(ByVal Index As Long)
     Dim n As Long, i As Long
     Dim TradeTarget As Long
 
-    If tempPlayer(Index).InGame Then
-        tempPlayer(Index).InGame = False
+    If TempPlayer(Index).InGame Then
+        TempPlayer(Index).InGame = False
         ' Check if player was the only player on the map and stop npc processing if so
         If GetTotalMapPlayers(GetPlayerMap(Index)) < 1 Then
             PlayersOnMap(GetPlayerMap(Index)) = NO
         End If
         
         ' Clear any invites out
-        If tempPlayer(Index).TradeRequest > 0 Or tempPlayer(Index).PartyInvite > 0 Or tempPlayer(Index).GuildInvite > 0 Then
-            If tempPlayer(Index).TradeRequest > 0 Then
+        If TempPlayer(Index).TradeRequest > 0 Or TempPlayer(Index).PartyInvite > 0 Or TempPlayer(Index).GuildInvite > 0 Then
+            If TempPlayer(Index).TradeRequest > 0 Then
                 Call DeclineTradeRequest(Index)
             End If
             
-            If tempPlayer(Index).PartyInvite > 0 Then
-                Call Party_InviteDecline(tempPlayer(Index).PartyInvite, Index)
+            If TempPlayer(Index).PartyInvite > 0 Then
+                Call Party_InviteDecline(TempPlayer(Index).PartyInvite, Index)
             End If
             
-            If tempPlayer(Index).GuildInvite > 0 Then
+            If TempPlayer(Index).GuildInvite > 0 Then
                 Call DeclineGuildInvite(Index)
             End If
         End If
         
         ' Cancel any trade they're in
-        If tempPlayer(Index).InTrade > 0 Then
-            TradeTarget = tempPlayer(Index).InTrade
+        If TempPlayer(Index).InTrade > 0 Then
+            TradeTarget = TempPlayer(Index).InTrade
             PlayerMsg TradeTarget, Trim$(GetPlayerName(Index)) & " has declined the trade!", BrightRed
             
             ' Clear out trade
             For i = 1 To MAX_INV
-                tempPlayer(TradeTarget).TradeOffer(i).Num = 0
-                tempPlayer(TradeTarget).TradeOffer(i).Value = 0
+                TempPlayer(TradeTarget).TradeOffer(i).Num = 0
+                TempPlayer(TradeTarget).TradeOffer(i).Value = 0
             Next
             
-            tempPlayer(TradeTarget).InTrade = 0
+            TempPlayer(TradeTarget).InTrade = 0
             SendCloseTrade TradeTarget
         End If
         
@@ -230,7 +231,7 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     Dim ShopNum As Long
     Dim OldMap As Long
     Dim i As Long
-    Dim buffer As clsBuffer
+    Dim Buffer As clsBuffer
 
     ' Check for subscript out of range
     If IsPlaying(Index) = False Or MapNum <= 0 Or MapNum > MAX_MAPS Then Exit Sub
@@ -255,9 +256,13 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
         Exit Sub
     End If
     
+    ' Clear events
+    TempPlayer(Index).EventProcessingCount = 0
+    TempPlayer(Index).EventMap.CurrentEvents = 0
+    
     ' Clear target
-    tempPlayer(Index).Target = 0
-    tempPlayer(Index).TargetType = TARGET_TYPE_NONE
+    TempPlayer(Index).Target = 0
+    TempPlayer(Index).TargetType = TARGET_TYPE_NONE
     SendPlayerTarget Index
 
     ' Loop through entire map and purge npc targets from player
@@ -297,17 +302,26 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
 
     ' Sets it so we know to process npcs on the map
     PlayersOnMap(MapNum) = YES
-    tempPlayer(Index).GettingMap = YES
-    Set buffer = New clsBuffer
+    TempPlayer(Index).GettingMap = YES
+    Set Buffer = New clsBuffer
     Call SendCheckForMap(Index, MapNum)
 End Sub
 
 Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, Optional ByVal SendToSelf As Boolean = False)
-    Dim buffer As clsBuffer, MapNum As Integer
+    Dim Buffer As clsBuffer, MapNum As Integer
     Dim X As Long, Y As Long, i As Long
     Dim Moved As Byte, MovedSoFar As Boolean
     Dim TileType As Long, VitalType As Long, Color As Long, Amount As Long, BeginEventProcessing As Boolean
 
+    ' Don't allow them to move if they are transfering to a new map
+    If TempPlayer(Index).GettingMap = YES Then Exit Sub
+    
+    ' Prevent player from moving if they are casting a spell
+    If TempPlayer(Index).SpellBuffer.Spell > 0 Then Exit Sub
+    
+    ' If stunned, stop them moving
+    If TempPlayer(Index).StunDuration > 0 Then Exit Sub
+    
     ' Check for subscript out of range
     If IsPlaying(Index) = False Or Dir < DIR_UP Or Dir > DIR_RIGHT Or Movement < 1 Or Movement > 2 Then Exit Sub
 
@@ -322,12 +336,14 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
             If GetPlayerY(Index) > 0 Then
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index)).DirBlock, DIR_UP + 1) Then
-                    If Not isPlayerBlocked(Index, 0, -1) Then
-                        If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index) - 1).Type <> TILE_TYPE_BLOCKED Then
-                            If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index) - 1).Type <> TILE_TYPE_RESOURCE Then
-                                Call SetPlayerY(Index, GetPlayerY(Index) - 1)
-                                SendPlayerMove Index, Movement, SendToSelf
-                                Moved = YES
+                    If Not IsPlayerBlocked(Index, 0, -1) Then
+                        If Not IsEventBlocked(Index, 0, -1) Then
+                            If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index) - 1).Type <> TILE_TYPE_BLOCKED Then
+                                If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index) - 1).Type <> TILE_TYPE_RESOURCE Then
+                                    Call SetPlayerY(Index, GetPlayerY(Index) - 1)
+                                    SendPlayerMove Index, Movement, SendToSelf
+                                    Moved = YES
+                                End If
                             End If
                         End If
                     End If
@@ -339,8 +355,8 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
                     Moved = YES
                     
                     ' Clear their target
-                    tempPlayer(Index).Target = 0
-                    tempPlayer(Index).TargetType = TARGET_TYPE_NONE
+                    TempPlayer(Index).Target = 0
+                    TempPlayer(Index).TargetType = TARGET_TYPE_NONE
                     SendPlayerTarget Index
                 End If
             End If
@@ -350,12 +366,14 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
             If GetPlayerY(Index) < Map(MapNum).MaxY Then
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index)).DirBlock, DIR_DOWN + 1) Then
-                    If Not isPlayerBlocked(Index, 0, 1) Then
-                        If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index) + 1).Type <> TILE_TYPE_BLOCKED Then
-                            If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index) + 1).Type <> TILE_TYPE_RESOURCE Then
-                                Call SetPlayerY(Index, GetPlayerY(Index) + 1)
-                                SendPlayerMove Index, Movement, SendToSelf
-                                Moved = YES
+                    If Not IsPlayerBlocked(Index, 0, 1) Then
+                        If Not IsEventBlocked(Index, 0, 1) Then
+                            If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index) + 1).Type <> TILE_TYPE_BLOCKED Then
+                                If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index) + 1).Type <> TILE_TYPE_RESOURCE Then
+                                    Call SetPlayerY(Index, GetPlayerY(Index) + 1)
+                                    SendPlayerMove Index, Movement, SendToSelf
+                                    Moved = YES
+                                End If
                             End If
                         End If
                     End If
@@ -367,8 +385,8 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
                     Moved = YES
                     
                     ' Clear their target
-                    tempPlayer(Index).Target = 0
-                    tempPlayer(Index).TargetType = TARGET_TYPE_NONE
+                    TempPlayer(Index).Target = 0
+                    TempPlayer(Index).TargetType = TARGET_TYPE_NONE
                     SendPlayerTarget Index
                 End If
             End If
@@ -378,12 +396,14 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
             If GetPlayerX(Index) > 0 Then
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index)).DirBlock, DIR_LEFT + 1) Then
-                    If Not isPlayerBlocked(Index, -1, 0) Then
-                        If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index) - 1, GetPlayerY(Index)).Type <> TILE_TYPE_BLOCKED Then
-                            If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index) - 1, GetPlayerY(Index)).Type <> TILE_TYPE_RESOURCE Then
-                                Call SetPlayerX(Index, GetPlayerX(Index) - 1)
-                                SendPlayerMove Index, Movement, SendToSelf
-                                Moved = YES
+                    If Not IsPlayerBlocked(Index, -1, 0) Then
+                        If Not IsEventBlocked(Index, -1, 0) Then
+                            If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index) - 1, GetPlayerY(Index)).Type <> TILE_TYPE_BLOCKED Then
+                                If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index) - 1, GetPlayerY(Index)).Type <> TILE_TYPE_RESOURCE Then
+                                    Call SetPlayerX(Index, GetPlayerX(Index) - 1)
+                                    SendPlayerMove Index, Movement, SendToSelf
+                                    Moved = YES
+                                End If
                             End If
                         End If
                     End If
@@ -395,8 +415,8 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
                     Moved = YES
                     
                     ' Clear their target
-                    tempPlayer(Index).Target = 0
-                    tempPlayer(Index).TargetType = TARGET_TYPE_NONE
+                    TempPlayer(Index).Target = 0
+                    TempPlayer(Index).TargetType = TARGET_TYPE_NONE
                     SendPlayerTarget Index
                 End If
             End If
@@ -406,12 +426,14 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
             If GetPlayerX(Index) < Map(MapNum).MaxX Then
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index), GetPlayerY(Index)).DirBlock, DIR_RIGHT + 1) Then
-                    If Not isPlayerBlocked(Index, 1, 0) Then
-                        If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index) + 1, GetPlayerY(Index)).Type <> TILE_TYPE_BLOCKED Then
-                            If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index) + 1, GetPlayerY(Index)).Type <> TILE_TYPE_RESOURCE Then
-                                Call SetPlayerX(Index, GetPlayerX(Index) + 1)
-                                SendPlayerMove Index, Movement, SendToSelf
-                                Moved = YES
+                    If Not IsPlayerBlocked(Index, 1, 0) Then
+                        If Not IsEventBlocked(Index, 1, 0) Then
+                            If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index) + 1, GetPlayerY(Index)).Type <> TILE_TYPE_BLOCKED Then
+                                If Map(GetPlayerMap(Index)).Tile(GetPlayerX(Index) + 1, GetPlayerY(Index)).Type <> TILE_TYPE_RESOURCE Then
+                                    Call SetPlayerX(Index, GetPlayerX(Index) + 1)
+                                    SendPlayerMove Index, Movement, SendToSelf
+                                    Moved = YES
+                                End If
                             End If
                         End If
                     End If
@@ -423,8 +445,8 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
                     Moved = YES
                     
                     ' Clear their target
-                    tempPlayer(Index).Target = 0
-                    tempPlayer(Index).TargetType = TARGET_TYPE_NONE
+                    TempPlayer(Index).Target = 0
+                    TempPlayer(Index).TargetType = TARGET_TYPE_NONE
                     SendPlayerTarget Index
                 End If
             End If
@@ -446,7 +468,7 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
             If X > 0 Then ' Shop exists?
                 If Len(Trim$(Shop(X).Name)) > 0 Then ' Name exists?
                     SendOpenShop Index, X
-                    tempPlayer(Index).InShop = X ' Stops movement and the like
+                    TempPlayer(Index).InShop = X ' Stops movement and the like
                 End If
             End If
         End If
@@ -454,7 +476,7 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
         ' Check to see if the tile is a bank, and if so send bank
         If .Type = TILE_TYPE_BANK Then
             SendBank Index
-            tempPlayer(Index).InBank = True
+            TempPlayer(Index).InBank = True
             Moved = YES
         End If
         
@@ -478,7 +500,7 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
                 Call SendVital(Index, VitalType)
             Else
                 SendActionMsg GetPlayerMap(Index), "+0", Color, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32, 1
-                If tempPlayer(Index).InParty > 0 Then SendPartyVitals tempPlayer(Index).InParty, Index
+                If TempPlayer(Index).InParty > 0 Then SendPartyVitals TempPlayer(Index).InParty, Index
             End If
             Moved = YES
         End If
@@ -511,7 +533,7 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
                 PlayerMsg Index, "You're injured by a trap.", BrightRed
                 Call SendVital(Index, HP)
                 ' Send vitals to party if in one
-                If tempPlayer(Index).InParty > 0 Then SendPartyVitals tempPlayer(Index).InParty, Index
+                If TempPlayer(Index).InParty > 0 Then SendPartyVitals TempPlayer(Index).InParty, Index
             End If
             Moved = YES
         End If
@@ -538,27 +560,28 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
             Call SendPlayerStatus(Index)
         End If
         
-        If tempPlayer(Index).EventMap.CurrentEvents > 0 Then
-            For i = 1 To tempPlayer(Index).EventMap.CurrentEvents
-                If Map(GetPlayerMap(Index)).Events(tempPlayer(Index).EventMap.EventPages(i).eventID).Global = 1 Then
-                    If Map(GetPlayerMap(Index)).Events(tempPlayer(Index).EventMap.EventPages(i).eventID).X = X And Map(GetPlayerMap(Index)).Events(tempPlayer(Index).EventMap.EventPages(i).eventID).Y = Y And Map(GetPlayerMap(Index)).Events(tempPlayer(Index).EventMap.EventPages(i).eventID).Pages(tempPlayer(Index).EventMap.EventPages(i).pageID).Trigger = 1 And tempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then BeginEventProcessing = True
+        If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
+            For i = 1 To TempPlayer(Index).EventMap.CurrentEvents
+                If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Global = 1 Then
+                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).X = X And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).pageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then BeginEventProcessing = True
                 Else
-                    If tempPlayer(Index).EventMap.EventPages(i).X = X And tempPlayer(Index).EventMap.EventPages(i).Y = Y And Map(GetPlayerMap(Index)).Events(tempPlayer(Index).EventMap.EventPages(i).eventID).Pages(tempPlayer(Index).EventMap.EventPages(i).pageID).Trigger = 1 And tempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then BeginEventProcessing = True
+                    If TempPlayer(Index).EventMap.EventPages(i).X = X And TempPlayer(Index).EventMap.EventPages(i).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).pageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then BeginEventProcessing = True
                 End If
                 
-                If BeginEventProcessing = True Then
-                    'Process this event, it is on-touch and everything checks out.
-                    If Map(GetPlayerMap(Index)).Events(tempPlayer(Index).EventMap.EventPages(i).eventID).Pages(tempPlayer(Index).EventMap.EventPages(i).pageID).CommandListCount > 0 Then
-                        tempPlayer(Index).EventProcessingCount = tempPlayer(Index).EventProcessingCount + 1
-                        ReDim Preserve tempPlayer(Index).EventProcessing(tempPlayer(Index).EventProcessingCount)
-                        tempPlayer(Index).EventProcessing(tempPlayer(Index).EventProcessingCount).ActionTimer = timeGetTime
-                        tempPlayer(Index).EventProcessing(tempPlayer(Index).EventProcessingCount).CurList = 1
-                        tempPlayer(Index).EventProcessing(tempPlayer(Index).EventProcessingCount).CurSlot = 1
-                        tempPlayer(Index).EventProcessing(tempPlayer(Index).EventProcessingCount).eventID = tempPlayer(Index).EventMap.EventPages(i).eventID
-                        tempPlayer(Index).EventProcessing(tempPlayer(Index).EventProcessingCount).pageID = tempPlayer(Index).EventMap.EventPages(i).pageID
-                        tempPlayer(Index).EventProcessing(tempPlayer(Index).EventProcessingCount).WaitingForResponse = 0
-                        ReDim tempPlayer(Index).EventProcessing(tempPlayer(Index).EventProcessingCount).ListLeftOff(0 To Map(GetPlayerMap(Index)).Events(tempPlayer(Index).EventMap.EventPages(i).eventID).Pages(tempPlayer(Index).EventMap.EventPages(i).pageID).CommandListCount)
+                If BeginEventProcessing Then
+                    ' Process this event, it is on-touch and everything checks out.
+                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).pageID).CommandListCount > 0 Then
+                        TempPlayer(Index).EventProcessingCount = TempPlayer(Index).EventProcessingCount + 1
+                        ReDim Preserve TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount)
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ActionTimer = timeGetTime
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).CurList = 1
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).CurSlot = 1
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).eventID = TempPlayer(Index).EventMap.EventPages(i).eventID
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).pageID = TempPlayer(Index).EventMap.EventPages(i).pageID
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).WaitingForResponse = 0
+                        ReDim TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ListLeftOff(0 To Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).pageID).CommandListCount)
                     End If
+                    
                     BeginEventProcessing = False
                 End If
             Next
@@ -567,9 +590,6 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
 End Sub
 
 Sub ForcePlayerMove(ByVal Index As Long, ByVal Movement As Long, ByVal Direction As Long)
-    If Direction < DIR_UP Or Direction > DIR_RIGHT Then Exit Sub
-    If Movement < 1 Or Movement > 2 Then Exit Sub
-    
     Select Case Direction
         Case DIR_UP
             If GetPlayerY(Index) = 0 Then Exit Sub
@@ -599,7 +619,6 @@ Sub CheckEquippedItems(ByVal Index As Long)
             SetPlayerEquipment Index, 0, i
         End If
     Next
-
 End Sub
 
 Function FindOpenInvSlot(ByVal Index As Long, ByVal ItemNum As Long) As Long
@@ -1090,8 +1109,8 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
         ' Drop all worn items
         For i = 1 To Equipment.Equipment_Count - 1
             If GetPlayerEquipment(Index, i) > 0 Then
-                If tempPlayer(Attacker).InParty > 0 Then
-                    Call Party_GetLoot(tempPlayer(Attacker).InParty, GetPlayerEquipment(Index, i), 1, GetPlayerX(Index), GetPlayerY(Index))
+                If TempPlayer(Attacker).InParty > 0 Then
+                    Call Party_GetLoot(TempPlayer(Attacker).InParty, GetPlayerEquipment(Index, i), 1, GetPlayerX(Index), GetPlayerY(Index))
                 Else
                     If Moral(GetPlayerMap(Index)).CanDropItem = 0 Then
                         Call SpawnItem(GetPlayerEquipment(Index, i), 1, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Attacker))
@@ -1151,7 +1170,7 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
     
     ' Clear all DoTs and HoTs
     For i = 1 To MAX_DOTS
-        With tempPlayer(Index).DoT(i)
+        With TempPlayer(Index).DoT(i)
             .Used = False
             .Spell = 0
             .Timer = 0
@@ -1159,7 +1178,7 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
             .StartTime = 0
         End With
         
-        With tempPlayer(Index).HoT(i)
+        With TempPlayer(Index).HoT(i)
             .Used = False
             .Spell = 0
             .Timer = 0
@@ -1177,7 +1196,7 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
     Call SetPlayerVital(Index, Vitals.MP, GetPlayerMaxVital(Index, Vitals.MP))
 
     ' Send vitals to party if in one
-    If tempPlayer(Index).InParty > 0 Then SendPartyVitals tempPlayer(Index).InParty, Index
+    If TempPlayer(Index).InParty > 0 Then SendPartyVitals TempPlayer(Index).InParty, Index
     
     ' Send vitals
     For i = 1 To Vitals.Vital_Count - 1
@@ -1453,8 +1472,8 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                     Call SendVital(Index, i)
                 Next
                 
-            ' Send vitals to party if in one
-            If tempPlayer(Index).InParty > 0 Then SendPartyVitals tempPlayer(Index).InParty, Index
+                ' Send vitals to party if in one
+                If TempPlayer(Index).InParty > 0 Then SendPartyVitals TempPlayer(Index).InParty, Index
                 
                  ' Send the sound
                 SendPlayerSound Index, GetPlayerX(Index), GetPlayerY(Index), SoundEntity.seItem, GetPlayerInvItemNum(Index, InvNum)
@@ -1469,19 +1488,19 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
             ' Add HP
             If Item(GetPlayerInvItemNum(Index, InvNum)).AddHP > 0 Then
                 If Not GetPlayerVital(Index, HP) = GetPlayerMaxVital(Index, HP) Then
-                    If tempPlayer(Index).VitalPotionTimer(HP) > timeGetTime Then
+                    If TempPlayer(Index).VitalPotionTimer(HP) > timeGetTime Then
                         Call PlayerMsg(Index, "You must wait before you can use another potion that modifies your health!", BrightRed)
                         Exit Sub
                     Else
                         If Item(GetPlayerInvItemNum(Index, InvNum)).HoT = 1 Then
-                            tempPlayer(Index).VitalCycle(HP) = Item(GetPlayerInvItemNum(Index, InvNum)).Data1
-                            tempPlayer(Index).VitalPotion(HP) = GetPlayerInvItemNum(Index, InvNum)
-                            tempPlayer(Index).VitalPotionTimer(HP) = timeGetTime + (Item(GetPlayerInvItemNum(Index, InvNum)).Data1 * 1000)
+                            TempPlayer(Index).VitalCycle(HP) = Item(GetPlayerInvItemNum(Index, InvNum)).Data1
+                            TempPlayer(Index).VitalPotion(HP) = GetPlayerInvItemNum(Index, InvNum)
+                            TempPlayer(Index).VitalPotionTimer(HP) = timeGetTime + (Item(GetPlayerInvItemNum(Index, InvNum)).Data1 * 1000)
                         Else
                             Account(Index).Chars(GetPlayerChar(Index)).Vital(Vitals.HP) = Account(Index).Chars(GetPlayerChar(Index)).Vital(Vitals.HP) + Item(GetPlayerInvItemNum(Index, InvNum)).AddHP
                             SendActionMsg GetPlayerMap(Index), "+" & Item(GetPlayerInvItemNum(Index, InvNum)).AddHP, BrightGreen, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32
                             SendVital Index, HP
-                            tempPlayer(Index).VitalPotionTimer(HP) = timeGetTime + PotionWaitTimer
+                            TempPlayer(Index).VitalPotionTimer(HP) = timeGetTime + PotionWaitTimer
                         End If
                     End If
                 ElseIf Item(GetPlayerInvItemNum(Index, InvNum)).AddMP < 1 Then
@@ -1493,19 +1512,19 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
             ' Add MP
             If Item(GetPlayerInvItemNum(Index, InvNum)).AddMP > 0 Then
                 If Not GetPlayerVital(Index, MP) = GetPlayerMaxVital(Index, MP) Then
-                    If tempPlayer(Index).VitalPotionTimer(MP) > timeGetTime And Item(GetPlayerInvItemNum(Index, InvNum)).AddHP < 1 Then
+                    If TempPlayer(Index).VitalPotionTimer(MP) > timeGetTime And Item(GetPlayerInvItemNum(Index, InvNum)).AddHP < 1 Then
                         Call PlayerMsg(Index, "You must wait before you can use another potion that modifies your mana!", BrightRed)
                         Exit Sub
                     Else
                         If Item(GetPlayerInvItemNum(Index, InvNum)).HoT = 1 Then
-                            tempPlayer(Index).VitalCycle(MP) = Item(GetPlayerInvItemNum(Index, InvNum)).Data1
-                            tempPlayer(Index).VitalPotion(MP) = GetPlayerInvItemNum(Index, InvNum)
-                            tempPlayer(Index).VitalPotionTimer(MP) = timeGetTime + (Item(GetPlayerInvItemNum(Index, InvNum)).Data1 * 1000)
+                            TempPlayer(Index).VitalCycle(MP) = Item(GetPlayerInvItemNum(Index, InvNum)).Data1
+                            TempPlayer(Index).VitalPotion(MP) = GetPlayerInvItemNum(Index, InvNum)
+                            TempPlayer(Index).VitalPotionTimer(MP) = timeGetTime + (Item(GetPlayerInvItemNum(Index, InvNum)).Data1 * 1000)
                         Else
                             Account(Index).Chars(GetPlayerChar(Index)).Vital(Vitals.MP) = Account(Index).Chars(GetPlayerChar(Index)).Vital(Vitals.MP) + Item(GetPlayerInvItemNum(Index, InvNum)).AddMP
                             SendActionMsg GetPlayerMap(Index), "+" & Item(GetPlayerInvItemNum(Index, InvNum)).AddMP, BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32
                             SendVital Index, MP
-                            tempPlayer(Index).VitalPotionTimer(MP) = timeGetTime + PotionWaitTimer
+                            TempPlayer(Index).VitalPotionTimer(MP) = timeGetTime + PotionWaitTimer
                         End If
                     End If
                 ElseIf Item(GetPlayerInvItemNum(Index, InvNum)).AddHP < 1 Then
@@ -1514,7 +1533,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                 End If
             End If
             
-            ' Add Exp
+            ' Add exp
             If Item(GetPlayerInvItemNum(Index, InvNum)).AddEXP > 0 Then
                 SetPlayerExp Index, GetPlayerExp(Index) + Item(GetPlayerInvItemNum(Index, InvNum)).AddEXP
                 SendPlayerExp Index
@@ -1672,8 +1691,6 @@ End Sub
 Public Sub UpdateAllPlayerInvItems(ByVal ItemNum As Integer)
     Dim TmpItem As Long
     Dim n As Long, i As Byte, X As Byte
-    
-    X = 0
 
     For n = 1 To Player_HighIndex
         If IsPlaying(n) Then
@@ -1928,7 +1945,7 @@ End Function
 Function IsPlayerBusy(ByVal Index As Long, ByVal OtherPlayer As Long) As Boolean
     ' Make sure they're not busy doing something else
     If IsPlaying(OtherPlayer) Then
-        If tempPlayer(OtherPlayer).InBank Or tempPlayer(OtherPlayer).InShop > 0 Or tempPlayer(OtherPlayer).InTrade > 0 Or tempPlayer(OtherPlayer).PartyInvite > 0 Or tempPlayer(OtherPlayer).TradeRequest > 0 Or tempPlayer(OtherPlayer).GuildInvite > 0 Then
+        If TempPlayer(OtherPlayer).InBank Or TempPlayer(OtherPlayer).InShop > 0 Or TempPlayer(OtherPlayer).InTrade > 0 Or TempPlayer(OtherPlayer).PartyInvite > 0 Or TempPlayer(OtherPlayer).TradeRequest > 0 Or TempPlayer(OtherPlayer).GuildInvite > 0 Then
             IsPlayerBusy = True
             PlayerMsg Index, GetPlayerName(OtherPlayer) & " is busy!", BrightRed
             Exit Function

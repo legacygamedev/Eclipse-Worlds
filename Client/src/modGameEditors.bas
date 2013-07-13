@@ -163,7 +163,10 @@ Public Sub MapEditorSetTile(ByVal x As Long, ByVal y As Long, ByVal CurrentLayer
             .Layer(CurrentLayer).x = X2
             .Layer(CurrentLayer).y = Y2
             .Layer(CurrentLayer).Tileset = RandomTileSheet(RandomSelected)
-            .Autotile(CurrentLayer) = 0
+            If .Autotile(CurrentLayer) <> 0 Then
+                .Autotile(CurrentLayer) = 0
+                InitAutotiles
+            End If
         End With
         
         CacheRenderState X2, Y2, CurrentLayer
@@ -205,13 +208,18 @@ Public Sub MapEditorSetTile(ByVal x As Long, ByVal y As Long, ByVal CurrentLayer
                             .Layer(CurrentLayer).x = EditorTileX + X2
                             .Layer(CurrentLayer).y = EditorTileY + Y2
                             .Layer(CurrentLayer).Tileset = frmEditor_Map.scrlTileSet.Value
-                            .Autotile(CurrentLayer) = 0
+                            If .Autotile(CurrentLayer) <> 0 Then
+                                .Autotile(CurrentLayer) = 0
+                                InitAutotiles
+                            End If
                             CacheRenderState x, y, CurrentLayer
                         End With
                     End If
                 End If
+                
                 X2 = X2 + 1
             Next
+            
             Y2 = Y2 + 1
         Next
     End If
@@ -235,7 +243,10 @@ Public Sub MapEditorEraseTile(ByVal x As Long, ByVal y As Long, ByVal CurrentLay
             .Layer(CurrentLayer).x = 0
             .Layer(CurrentLayer).y = 0
             .Layer(CurrentLayer).Tileset = 0
-            .Autotile(CurrentLayer) = 0
+            If .Autotile(CurrentLayer) <> 0 Then
+                .Autotile(CurrentLayer) = 0
+                InitAutotiles
+            End If
             CacheRenderState x, y, CurrentLayer
         End With
         
@@ -264,13 +275,18 @@ Public Sub MapEditorEraseTile(ByVal x As Long, ByVal y As Long, ByVal CurrentLay
                             .Layer(CurrentLayer).x = 0
                             .Layer(CurrentLayer).y = 0
                             .Layer(CurrentLayer).Tileset = 0
-                            .Autotile(CurrentLayer) = 0
+                            If .Autotile(CurrentLayer) <> 0 Then
+                                .Autotile(CurrentLayer) = 0
+                                InitAutotiles
+                            End If
                             CacheRenderState x, y, CurrentLayer
                         End With
                     End If
                 End If
+                
                 X2 = X2 + 1
             Next
+            
             Y2 = Y2 + 1
         Next
     End If
@@ -1095,7 +1111,7 @@ Public Sub NpcEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtExp.text = NPC(EditorIndex).Exp
+        .txtEXP.text = NPC(EditorIndex).Exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
