@@ -2,8 +2,8 @@ Attribute VB_Name = "modConstants"
 Option Explicit
 
 ' API Declares
-Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal length As Long)
-Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lparam As Long) As Long
+Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
+Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lparam As Long) As Long
 Public Declare Function GetForegroundWindow Lib "user32" () As Long
 
 ' Sounds
@@ -103,13 +103,18 @@ Public Const GFX_EXT As String = ".png"
 Public Const FONT_PATH As String = "\data files\graphics\fonts\"
 
 ' Key constants
-Public Const VK_UP As Long = &H26
-Public Const VK_DOWN As Long = &H28
-Public Const VK_LEFT As Long = &H25
-Public Const VK_RIGHT As Long = &H27
+Public Const VK_A As Long = &H41
+Public Const VK_D As Long = &H44
+Public Const VK_S As Long = &H53
+Public Const VK_W As Long = &H57
 Public Const VK_SHIFT As Long = &H10
 Public Const VK_RETURN As Long = &HD
 Public Const VK_CONTROL As Long = &H11
+Public Const VK_TAB As Long = &H9
+Public Const VK_LEFT As Long = &H25
+Public Const VK_UP As Long = &H26
+Public Const VK_RIGHT As Long = &H27
+Public Const VK_DOWN As Long = &H28
 
 ' Menu states
 Public Const MENU_STATE_NEWACCOUNT As Byte = 0

@@ -51,15 +51,15 @@ Public Sub IncomingData(ByVal DataLength As Long)
     
     PlayerBuffer.WriteBytes buffer()
     
-    If PlayerBuffer.length >= 4 Then pLength = PlayerBuffer.ReadLong(False)
-    Do While pLength > 0 And pLength <= PlayerBuffer.length - 4
-        If pLength <= PlayerBuffer.length - 4 Then
+    If PlayerBuffer.Length >= 4 Then pLength = PlayerBuffer.ReadLong(False)
+    Do While pLength > 0 And pLength <= PlayerBuffer.Length - 4
+        If pLength <= PlayerBuffer.Length - 4 Then
             PlayerBuffer.ReadLong
             HandleData PlayerBuffer.ReadBytes(pLength)
         End If
 
         pLength = 0
-        If PlayerBuffer.length >= 4 Then pLength = PlayerBuffer.ReadLong(False)
+        If PlayerBuffer.Length >= 4 Then pLength = PlayerBuffer.ReadLong(False)
     Loop
     PlayerBuffer.Trim
     DoEvents
@@ -71,7 +71,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Function ConnectToServer(ByVal i As Long) As Boolean
+Public Function ConnectToServer(ByVal I As Long) As Boolean
     Dim Wait As Long
 
     ' If debug mode, handle error then exit out
@@ -411,7 +411,7 @@ Public Sub SendPlayerMove()
     
     Set buffer = New clsBuffer
     buffer.WriteLong CPlayerMove
-    buffer.WriteByte player(MyIndex).Dir
+    buffer.WriteByte Player(MyIndex).Dir
     
     If ShiftDown Then
         buffer.WriteByte MOVING_WALKING
@@ -419,8 +419,8 @@ Public Sub SendPlayerMove()
         buffer.WriteByte MOVING_RUNNING
     End If
     
-    buffer.WriteInteger player(MyIndex).X
-    buffer.WriteInteger player(MyIndex).Y
+    buffer.WriteInteger Player(MyIndex).X
+    buffer.WriteInteger Player(MyIndex).Y
     SendData buffer.ToArray()
     Set buffer = Nothing
     
@@ -457,7 +457,7 @@ Public Sub SendSaveMap()
     Dim packet As String
     Dim X As Long
     Dim Y As Long
-    Dim i As Long, Z As Long, w As Long
+    Dim I As Long, Z As Long, w As Long
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -503,10 +503,10 @@ Public Sub SendSaveMap()
     For X = 0 To Map.MaxX
         For Y = 0 To Map.MaxY
             With Map.Tile(X, Y)
-                For i = 1 To MapLayer.Layer_Count - 1
-                    buffer.WriteLong .Layer(i).X
-                    buffer.WriteLong .Layer(i).Y
-                    buffer.WriteLong .Layer(i).Tileset
+                For I = 1 To MapLayer.Layer_Count - 1
+                    buffer.WriteLong .Layer(I).X
+                    buffer.WriteLong .Layer(I).Y
+                    buffer.WriteLong .Layer(I).Tileset
                 Next
                 
                 For Z = 1 To MapLayer.Layer_Count - 1
@@ -534,17 +534,17 @@ Public Sub SendSaveMap()
     buffer.WriteLong Map.EventCount
         
     If Map.EventCount > 0 Then
-        For i = 1 To Map.EventCount
-            With Map.events(i)
+        For I = 1 To Map.EventCount
+            With Map.events(I)
                 buffer.WriteString .name
                 buffer.WriteLong .Global
                 buffer.WriteLong .X
                 buffer.WriteLong .Y
                 buffer.WriteLong .pageCount
             End With
-            If Map.events(i).pageCount > 0 Then
-                For X = 1 To Map.events(i).pageCount
-                    With Map.events(i).Pages(X)
+            If Map.events(I).pageCount > 0 Then
+                For X = 1 To Map.events(I).pageCount
+                    With Map.events(I).Pages(X)
                         buffer.WriteLong .chkVariable
                         buffer.WriteLong .VariableIndex
                         buffer.WriteLong .VariableCondition
@@ -598,13 +598,13 @@ Public Sub SendSaveMap()
                         buffer.WriteLong .Position
                     End With
                         
-                    If Map.events(i).Pages(X).CommandListCount > 0 Then
-                        For Y = 1 To Map.events(i).Pages(X).CommandListCount
-                            buffer.WriteLong Map.events(i).Pages(X).CommandList(Y).CommandCount
-                            buffer.WriteLong Map.events(i).Pages(X).CommandList(Y).ParentList
-                            If Map.events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
-                                For Z = 1 To Map.events(i).Pages(X).CommandList(Y).CommandCount
-                                    With Map.events(i).Pages(X).CommandList(Y).Commands(Z)
+                    If Map.events(I).Pages(X).CommandListCount > 0 Then
+                        For Y = 1 To Map.events(I).Pages(X).CommandListCount
+                            buffer.WriteLong Map.events(I).Pages(X).CommandList(Y).CommandCount
+                            buffer.WriteLong Map.events(I).Pages(X).CommandList(Y).ParentList
+                            If Map.events(I).Pages(X).CommandList(Y).CommandCount > 0 Then
+                                For Z = 1 To Map.events(I).Pages(X).CommandList(Y).CommandCount
+                                    With Map.events(I).Pages(X).CommandList(Y).Commands(Z)
                                         buffer.WriteLong .Index
                                         buffer.WriteString .Text1
                                         buffer.WriteString .Text2
@@ -1903,7 +1903,7 @@ Public Sub SendHotbarUse(ByVal Slot As Long)
         Next
         
         For X = 1 To Equipment.Equipment_Count - 1
-            If player(MyIndex).Equipment(X).Num = Hotbar(Slot).Slot Then
+            If Player(MyIndex).Equipment(X).Num = Hotbar(Slot).Slot Then
                 SendUnequip X
                 Exit Sub
             End If
@@ -2494,7 +2494,7 @@ Sub SendChangeStatus(Index As Long, Status As String)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If Trim$(player(MyIndex).Status) = "Muted" Then
+    If Trim$(Player(MyIndex).Status) = "Muted" Then
         Call AddText("You can't change your status when your muted!", BrightRed)
         Exit Sub
     End If
@@ -2735,7 +2735,7 @@ ErrorHandler:
 End Sub
 
 Sub RequestSwitchesAndVariables()
-    Dim i As Long, buffer As clsBuffer
+    Dim I As Long, buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2754,7 +2754,7 @@ ErrorHandler:
 End Sub
 
 Sub SendSwitchesAndVariables()
-    Dim i As Long, buffer As clsBuffer
+    Dim I As Long, buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2762,12 +2762,12 @@ Sub SendSwitchesAndVariables()
     Set buffer = New clsBuffer
     buffer.WriteLong CSwitchesAndVariables
     
-    For i = 1 To MAX_SWITCHES
-        buffer.WriteString Switches(i)
+    For I = 1 To MAX_SWITCHES
+        buffer.WriteString Switches(I)
     Next
     
-    For i = 1 To MAX_VARIABLES
-        buffer.WriteString Variables(i)
+    For I = 1 To MAX_VARIABLES
+        buffer.WriteString Variables(I)
     Next
     
     SendData buffer.ToArray
@@ -2780,19 +2780,31 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Sub SendFinishTutorial()
+Sub PlayerTarget(ByVal Target As Long, ByVal TargetType As Long)
     Dim buffer As clsBuffer
+
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
+    If MyTargetType = TargetType And MyTarget = Target Then
+        MyTargetType = 0
+        MyTarget = 0
+    Else
+        MyTarget = Target
+        MyTargetType = TargetType
+    End If
+
     Set buffer = New clsBuffer
-    buffer.WriteLong CFinishTutorial
+    buffer.WriteLong CTarget
+    buffer.WriteLong Target
+    buffer.WriteLong TargetType
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
     
 ' Error handler
 ErrorHandler:
-    HandleError "SendFinishTutorial", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "PlayerTarget", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+

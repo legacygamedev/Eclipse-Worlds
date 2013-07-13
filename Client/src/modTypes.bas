@@ -3,9 +3,9 @@ Option Explicit
 
 ' Public data structures
 Public Map As MapRec
-Public bank As BankRec
-Public player(1 To MAX_PLAYERS) As PlayerRec
-Public tempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
+Public Bank As BankRec
+Public Player(1 To MAX_PLAYERS) As PlayerRec
+Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
 Public Item(1 To MAX_ITEMS) As ItemRec
 Public NPC(1 To MAX_NPCS) As NpcRec
 Public MapItem(1 To MAX_MAP_ITEMS) As MapItemRec
@@ -775,7 +775,7 @@ Public Type SubEventRec
     HasText As Boolean
     text() As String
     HasData As Boolean
-    Data() As Long
+    data() As Long
 End Type
 
 Public Type EventWrapperRec

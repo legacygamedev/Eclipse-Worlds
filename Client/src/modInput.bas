@@ -9,12 +9,19 @@ Public Sub CheckKeys()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
+    If GetAsyncKeyState(VK_W) >= 0 Then DirUp = False
+    If GetAsyncKeyState(VK_S) >= 0 Then DirDown = False
+    If GetAsyncKeyState(VK_A) >= 0 Then DirLeft = False
+    If GetAsyncKeyState(VK_D) >= 0 Then DirRight = False
+    
     If GetAsyncKeyState(VK_UP) >= 0 Then DirUp = False
     If GetAsyncKeyState(VK_DOWN) >= 0 Then DirDown = False
     If GetAsyncKeyState(VK_LEFT) >= 0 Then DirLeft = False
     If GetAsyncKeyState(VK_RIGHT) >= 0 Then DirRight = False
+    
     If GetAsyncKeyState(VK_CONTROL) >= 0 Then ControlDown = False
     If GetAsyncKeyState(VK_SHIFT) >= 0 Then ShiftDown = False
+    If GetAsyncKeyState(VK_TAB) >= 0 Then tabDown = False
     Exit Sub
     
 ' Error handler
@@ -35,15 +42,21 @@ Public Sub CheckInputKeys()
     Else
         ShiftDown = False
     End If
-
-    If GetKeyState(vbKeySpace) < 0 And ChatLocked Then
-        CheckMapGetItem
+    
+    If GetKeyState(vbKeyTab) < 0 Then
+        tabDown = True
+    Else
+        tabDown = False
     End If
 
     If GetKeyState(vbKeyControl) < 0 Then
         ControlDown = True
     Else
         ControlDown = False
+    End If
+    
+    If GetKeyState(vbKeySpace) < 0 And ChatLocked Then
+        CheckMapGetItem
     End If
     
     ' WASD
@@ -194,7 +207,7 @@ End Sub
 Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
     Dim ChatText As String
     Dim name As String
-    Dim i As Long
+    Dim I As Long
     Dim n As Long
     Dim Command() As String
     Dim buffer As clsBuffer
@@ -337,17 +350,17 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             name = vbNullString
 
             ' Get the desired player from the user text
-            For i = 1 To Len(ChatText)
-                If Not Mid$(ChatText, i, 1) = " " Then
-                    name = name & Mid$(ChatText, i, 1)
+            For I = 1 To Len(ChatText)
+                If Not Mid$(ChatText, I, 1) = " " Then
+                    name = name & Mid$(ChatText, I, 1)
                 Else
                     Exit For
                 End If
             Next
             
             ' Make sure they are actually sending something
-            If Len(ChatText) - i > 0 Then
-                ChatText = Mid$(ChatText, i + 1, Len(ChatText) - i)
+            If Len(ChatText) - I > 0 Then
+                ChatText = Mid$(ChatText, I + 1, Len(ChatText) - I)
 
                 ' Send the message to the player
                 Call PrivateMsg(name, ChatText)
@@ -431,12 +444,12 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Case "/emotes"
                     ' Empty out text
                     ChatText = vbNullString
-                    For i = 1 To MAX_EMOTICONS
-                        If Not Trim$(Emoticon(i).Command) = "/" Then
+                    For I = 1 To MAX_EMOTICONS
+                        If Not Trim$(Emoticon(I).Command) = "/" Then
                             If Not ChatText = vbNullString Then
                                 ChatText = ChatText & ", "
                             End If
-                            ChatText = ChatText & Trim$(Emoticon(i).Command)
+                            ChatText = ChatText & Trim$(Emoticon(I).Command)
                         End If
                     Next
                     AddText "Emotes: " & ChatText, BrightGreen
@@ -826,10 +839,10 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendSetAccess Command(1), CLng(Command(2))
                 Case Else
                     ' Check for Emoticons
-                    For i = 1 To MAX_EMOTICONS
-                        If Not Trim$(Emoticon(i).Command) = "/" Then
-                            If Trim$(Emoticon(i).Command) = Command(0) Then
-                                SendCheckEmoticon i
+                    For I = 1 To MAX_EMOTICONS
+                        If Not Trim$(Emoticon(I).Command) = "/" Then
+                            If Trim$(Emoticon(I).Command) = Command(0) Then
+                                SendCheckEmoticon I
                                 n = n + 1
                                 Exit For
                             End If

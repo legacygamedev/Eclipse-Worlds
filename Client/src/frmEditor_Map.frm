@@ -1179,14 +1179,14 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub picBack_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Public Sub picBack_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    X = X + (frmEditor_Map.scrlPictureX.Value * PIC_X)
-    Y = Y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
+    x = x + (frmEditor_Map.scrlPictureX.Value * PIC_X)
+    y = y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
     
-    Call MapEditorChooseTile(Button, X, Y)
+    Call MapEditorChooseTile(Button, x, y)
     Exit Sub
     
 ' Error handler
@@ -1195,15 +1195,15 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub picBack_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picBack_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    X = X + (frmEditor_Map.scrlPictureX.Value * PIC_X)
-    Y = Y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
+    x = x + (frmEditor_Map.scrlPictureX.Value * PIC_X)
+    y = y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
     
     If scrlAutotile.Value = 0 Then
-        Call MapEditorDrag(Button, X, Y)
+        Call MapEditorDrag(Button, x, y)
     End If
     Exit Sub
     
@@ -1707,29 +1707,29 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub MapEditorDrag(Button As Integer, X As Single, Y As Single)
+Public Sub MapEditorDrag(Button As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Button = vbLeftButton Then
         ' Convert the pixel number to tile number
-        X = (X \ PIC_X) + 1
-        Y = (Y \ PIC_Y) + 1
+        x = (x \ PIC_X) + 1
+        y = (y \ PIC_Y) + 1
         
         ' Check it's not out of bounds
-        If X < 0 Then X = 0
-        If X > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X Then X = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X
-        If Y < 0 Then Y = 0
-        If Y > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y Then Y = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y
+        If x < 0 Then x = 0
+        If x > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X Then x = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X
+        If y < 0 Then y = 0
+        If y > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y Then y = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y
         
         ' Find out what to set the width + height of map editor to
-        If X > EditorTileX Then ' Drag right
-            EditorTileWidth = X - EditorTileX
+        If x > EditorTileX Then ' Drag right
+            EditorTileWidth = x - EditorTileX
         Else ' Drag left
             ' TO DO
         End If
-        If Y > EditorTileY Then ' Drag down
-            EditorTileHeight = Y - EditorTileY
+        If y > EditorTileY Then ' Drag down
+            EditorTileHeight = y - EditorTileY
         Else ' Drag up
             ' TO DO
         End If

@@ -152,6 +152,7 @@ Public DirLeft As Boolean
 Public DirRight As Boolean
 Public ShiftDown As Boolean
 Public ControlDown As Boolean
+Public TabDown As Boolean
 
 ' Mouse directions
 Public MouseX As Integer

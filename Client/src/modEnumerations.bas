@@ -265,16 +265,18 @@ Public Enum ClientPackets
     CSaveEmoticon
     CRequestEmoticons
     CCheckEmoticon
-    CFinishTutorial
     CEventChatReply
     CEvent
     CSwitchesAndVariables
     CRequestSwitchesAndVariables
+    
     'Character Editor
     CRequestAllCharacters
     CRequestPlayersOnline
     CRequestExtendedPlayerData
     CCharacterUpdate
+    
+    CTarget
     ' Make sure CMSG_COUNT is below everything else
     CMSG_COUNT
 End Enum

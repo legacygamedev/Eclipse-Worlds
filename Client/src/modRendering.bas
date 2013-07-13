@@ -783,7 +783,7 @@ Public Sub DrawMapUpperTiles(ByVal x As Long, ByVal y As Long)
 
         ' Tile preview
         If InMapEditor Then
-            If frmEditor_Map.chkTilePreview.Value And frmEditor_Map.chkRandom = 0 And frmEditor_Map.scrlAutotile.Value = 0 Then
+            If frmEditor_Map.chkTilePreview.Value And frmEditor_Map.chkRandom = 0 And frmEditor_Map.scrlAutotile.Value = 0 And frmEditor_Map.OptLayers.Value Then
                 Call DrawMapTilesPreview
             End If
         End If
