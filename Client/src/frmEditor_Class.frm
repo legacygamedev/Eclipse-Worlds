@@ -107,6 +107,7 @@ Begin VB.Form frmEditor_Class
       Begin VB.HScrollBar scrlY 
          Height          =   255
          Left            =   3720
+         Max             =   255
          TabIndex        =   47
          Top             =   5280
          Width           =   1215
@@ -114,6 +115,7 @@ Begin VB.Form frmEditor_Class
       Begin VB.HScrollBar scrlX 
          Height          =   255
          Left            =   1080
+         Max             =   255
          TabIndex        =   46
          Top             =   5280
          Width           =   1215
@@ -653,7 +655,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     ClassEditorInit
@@ -783,7 +785,7 @@ Private Sub scrlDir_Change()
             sDir = "Right"
     End Select
     
-    lblDir.Caption = "Map : " & sDir
+    lblDir.Caption = "Direction: " & sDir
     Class(EditorIndex).Map = scrlDir.Value
     Exit Sub
     
@@ -854,7 +856,7 @@ Private Sub scrlItemNum_Change()
     lblItemNum.Caption = "Number: " & scrlItemNum.Value
 
     If scrlItemNum.Value > 0 Then
-        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.Value).Name)
+        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.Value).name)
     Else
         lblItemName.Caption = "Item: None"
     End If
@@ -893,7 +895,7 @@ Private Sub scrlSpellNum_Change()
     lblSpellNum.Caption = "Number: " & scrlSpellNum.Value
 
     If scrlSpellNum.Value > 0 Then
-        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).Name)
+        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).name)
     Else
         lblSpellName.Caption = "Spell: None"
     End If
@@ -1011,7 +1013,7 @@ Private Sub scrlX_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblX.Caption = "X : " & scrlX.Value
-    Class(EditorIndex).X = scrlX.Value
+    Class(EditorIndex).x = scrlX.Value
     Exit Sub
     
 ' Error handler
@@ -1027,7 +1029,7 @@ Private Sub scrlY_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblY.Caption = "Y : " & scrlY.Value
-    Class(EditorIndex).Y = scrlY.Value
+    Class(EditorIndex).y = scrlY.Value
     Exit Sub
     
 ' Error handler
@@ -1045,9 +1047,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Class(EditorIndex).Name = Trim$(txtName.text)
+    Class(EditorIndex).name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
