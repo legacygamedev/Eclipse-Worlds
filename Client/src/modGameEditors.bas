@@ -14,7 +14,7 @@ Public EventList() As EventListRec
 ' ////////////////
 Public Sub MapEditorInit()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Reset the layer to 1
     frmEditor_Map.OptLayers = 1
@@ -39,12 +39,12 @@ Public Sub MapEditorInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal y As Long, Optional ByVal MovedMouse As Boolean = True)
+Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal MovedMouse As Boolean = True)
     Dim i As Long
     Dim TmpDir As Byte
     Dim RandomSelected As Byte, Tile As Long
@@ -52,7 +52,7 @@ Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal y 
     Dim Y2 As Long
     
    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Check for subscript out of range
     If Not IsInBounds Then Exit Sub
@@ -95,12 +95,12 @@ Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal y 
             
             ' Find coordinates if clicked
             X = X - ((X \ 32) * 32)
-            y = y - ((y \ 32) * 32)
+            Y = Y - ((Y \ 32) * 32)
             
             ' See if it hits an arrow
             For i = 1 To 4
                 If X >= DirArrowX(i) And X <= DirArrowX(i) + 8 Then
-                    If y >= DirArrowY(i) And y <= DirArrowY(i) + 8 Then
+                    If Y >= DirArrowY(i) And Y <= DirArrowY(i) + 8 Then
                         ' Flip the Value
                         SetDirBlock Map.Tile(CurX, CurY).DirBlock, CByte(i), Not IsDirBlocked(Map.Tile(CurX, CurY).DirBlock, CByte(i))
                         Exit Sub
@@ -136,16 +136,16 @@ Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal y 
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorMouseDown", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub MapEditorSetTile(ByVal X As Long, ByVal y As Long, ByVal CurrentLayer As Long, Optional ByVal MultiTile As Boolean = False, Optional ByVal Autotile As Byte = 0)
+Public Sub MapEditorSetTile(ByVal X As Long, ByVal Y As Long, ByVal CurrentLayer As Long, Optional ByVal MultiTile As Boolean = False, Optional ByVal Autotile As Byte = 0)
     Dim X2 As Long, Y2 As Long, RandomSelected As Integer, Tile As Integer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Random tiles
     If frmEditor_Map.chkRandom = 1 Then
@@ -161,7 +161,7 @@ Public Sub MapEditorSetTile(ByVal X As Long, ByVal y As Long, ByVal CurrentLayer
         With Map.Tile(CurX, CurY)
             .Layer(CurrentLayer).Tileset = RandomTileSheet(RandomSelected)
             .Layer(CurrentLayer).X = X2
-            .Layer(CurrentLayer).y = Y2
+            .Layer(CurrentLayer).Y = Y2
             .Layer(CurrentLayer).Tileset = RandomTileSheet(RandomSelected)
             If .Autotile(CurrentLayer) <> 0 Then
                 .Autotile(CurrentLayer) = 0
@@ -174,13 +174,13 @@ Public Sub MapEditorSetTile(ByVal X As Long, ByVal y As Long, ByVal CurrentLayer
     End If
             
     If Autotile > 0 Then
-        With Map.Tile(X, y)
+        With Map.Tile(X, Y)
             ' Set layer
             .Layer(CurrentLayer).X = EditorTileX
-            .Layer(CurrentLayer).y = EditorTileY
+            .Layer(CurrentLayer).Y = EditorTileY
             .Layer(CurrentLayer).Tileset = frmEditor_Map.scrlTileSet.Value
             .Autotile(CurrentLayer) = Autotile
-            CacheRenderState X, y, CurrentLayer
+            CacheRenderState X, Y, CurrentLayer
         End With
         
         ' Do a re-init so we can see our changes
@@ -189,30 +189,30 @@ Public Sub MapEditorSetTile(ByVal X As Long, ByVal y As Long, ByVal CurrentLayer
     End If
     
     If Not MultiTile Then ' Single
-        With Map.Tile(X, y)
+        With Map.Tile(X, Y)
             ' Set layer
             .Layer(CurrentLayer).X = EditorTileX
-            .Layer(CurrentLayer).y = EditorTileY
+            .Layer(CurrentLayer).Y = EditorTileY
             .Layer(CurrentLayer).Tileset = frmEditor_Map.scrlTileSet.Value
             .Autotile(CurrentLayer) = 0
-            CacheRenderState X, y, CurrentLayer
+            CacheRenderState X, Y, CurrentLayer
         End With
     Else ' Multi-tile
         Y2 = 0 ' Starting tile for y axis
-        For y = CurY To CurY + EditorTileHeight - 1
+        For Y = CurY To CurY + EditorTileHeight - 1
             X2 = 0 ' Re-set x count every y loop
             For X = CurX To CurX + EditorTileWidth - 1
                 If X >= 0 And X <= Map.MaxX Then
-                    If y >= 0 And y <= Map.MaxY Then
-                        With Map.Tile(X, y)
+                    If Y >= 0 And Y <= Map.MaxY Then
+                        With Map.Tile(X, Y)
                             .Layer(CurrentLayer).X = EditorTileX + X2
-                            .Layer(CurrentLayer).y = EditorTileY + Y2
+                            .Layer(CurrentLayer).Y = EditorTileY + Y2
                             .Layer(CurrentLayer).Tileset = frmEditor_Map.scrlTileSet.Value
                             If .Autotile(CurrentLayer) <> 0 Then
                                 .Autotile(CurrentLayer) = 0
                                 InitAutotiles
                             End If
-                            CacheRenderState X, y, CurrentLayer
+                            CacheRenderState X, Y, CurrentLayer
                         End With
                     End If
                 End If
@@ -226,28 +226,28 @@ Public Sub MapEditorSetTile(ByVal X As Long, ByVal y As Long, ByVal CurrentLayer
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorSetTile", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub MapEditorEraseTile(ByVal X As Long, ByVal y As Long, ByVal CurrentLayer As Long, Optional ByVal MultiTile As Boolean = False, Optional ByVal Autotile As Byte = 0)
+Public Sub MapEditorEraseTile(ByVal X As Long, ByVal Y As Long, ByVal CurrentLayer As Long, Optional ByVal MultiTile As Boolean = False, Optional ByVal Autotile As Byte = 0)
     Dim X2 As Long, Y2 As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Autotile > 0 Then
-        With Map.Tile(X, y)
+        With Map.Tile(X, Y)
             ' Set layer
             .Layer(CurrentLayer).X = 0
-            .Layer(CurrentLayer).y = 0
+            .Layer(CurrentLayer).Y = 0
             .Layer(CurrentLayer).Tileset = 0
             If .Autotile(CurrentLayer) <> 0 Then
                 .Autotile(CurrentLayer) = 0
                 InitAutotiles
             End If
-            CacheRenderState X, y, CurrentLayer
+            CacheRenderState X, Y, CurrentLayer
         End With
         
         ' Do a re-init so we can see our changes
@@ -256,30 +256,30 @@ Public Sub MapEditorEraseTile(ByVal X As Long, ByVal y As Long, ByVal CurrentLay
     End If
     
     If Not MultiTile Then ' Single
-        With Map.Tile(X, y)
+        With Map.Tile(X, Y)
             ' Set layer
             .Layer(CurrentLayer).X = 0
-            .Layer(CurrentLayer).y = 0
+            .Layer(CurrentLayer).Y = 0
             .Layer(CurrentLayer).Tileset = 0
             .Autotile(CurrentLayer) = 0
-            CacheRenderState X, y, CurrentLayer
+            CacheRenderState X, Y, CurrentLayer
         End With
     Else ' Multi-tile
         Y2 = 0 ' Starting tile for y axis
-        For y = CurY To CurY + EditorTileHeight - 1
+        For Y = CurY To CurY + EditorTileHeight - 1
             X2 = 0 ' Reset x count every y loop
             For X = CurX To CurX + EditorTileWidth - 1
                 If X >= 0 And X <= Map.MaxX Then
-                    If y >= 0 And y <= Map.MaxY Then
-                        With Map.Tile(X, y)
+                    If Y >= 0 And Y <= Map.MaxY Then
+                        With Map.Tile(X, Y)
                             .Layer(CurrentLayer).X = 0
-                            .Layer(CurrentLayer).y = 0
+                            .Layer(CurrentLayer).Y = 0
                             .Layer(CurrentLayer).Tileset = 0
                             If .Autotile(CurrentLayer) <> 0 Then
                                 .Autotile(CurrentLayer) = 0
                                 InitAutotiles
                             End If
-                            CacheRenderState X, y, CurrentLayer
+                            CacheRenderState X, Y, CurrentLayer
                         End With
                     End If
                 End If
@@ -293,16 +293,16 @@ Public Sub MapEditorEraseTile(ByVal X As Long, ByVal y As Long, ByVal CurrentLay
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorEraseTile", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub MapEditorSetAttributes(ByVal Button As Integer, ByVal X As Long, ByVal y As Long, Optional ByVal MovedMouse As Boolean = True)
+Public Sub MapEditorSetAttributes(ByVal Button As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal MovedMouse As Boolean = True)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    With Map.Tile(X, y)
+    With Map.Tile(X, Y)
         ' Blocked Tile
         If frmEditor_Map.optBlocked.Value Then .Type = TILE_TYPE_BLOCKED
         
@@ -389,7 +389,7 @@ Public Sub MapEditorSetAttributes(ByVal Button As Integer, ByVal X As Long, ByVa
         ' Checkpoint
         If frmEditor_Map.optCheckpoint.Value Then
             X = X - (CurX * 32)
-            y = y - (CurY * 32)
+            Y = Y - (CurY * 32)
             .Type = TILE_TYPE_CHECKPOINT
             .Data1 = GetPlayerMap(MyIndex)
             .Data2 = CurX
@@ -408,14 +408,14 @@ Public Sub MapEditorSetAttributes(ByVal Button As Integer, ByVal X As Long, ByVa
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorSetAttributes", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MapEditorTileScroll()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Horizontal scrolling
     If Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width < frmEditor_Map.picBack.Width Then
@@ -433,14 +433,14 @@ Public Sub MapEditorTileScroll()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorTileScroll", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MapEditorSave()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call SendSaveMap
     InMapEditor = False
@@ -451,14 +451,14 @@ Public Sub MapEditorSave()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MapEditorCancel()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If InMapEditor And IsLogging = False Then
         If AlertMsg("Are you sure you wish to discard changes made to this map?", False, False) = YES Then
@@ -471,27 +471,27 @@ Public Sub MapEditorCancel()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MapEditorClearLayer()
-    Dim i As Long, X As Long, y As Long
+    Dim i As Long, X As Long, Y As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If AlertMsg("Are you sure you wish to clear this layer", False, False) = YES Then
         If CurrentLayer = 0 Then Exit Sub
     
         For X = 0 To Map.MaxX
-            For y = 0 To Map.MaxY
-                With Map.Tile(X, y).Layer(CurrentLayer)
+            For Y = 0 To Map.MaxY
+                With Map.Tile(X, Y).Layer(CurrentLayer)
                     .X = 0
-                    .y = 0
+                    .Y = 0
                     .Tileset = 0
-                    CacheRenderState X, y, CurrentLayer
+                    CacheRenderState X, Y, CurrentLayer
                 End With
             Next
         Next
@@ -499,68 +499,68 @@ Public Sub MapEditorClearLayer()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorClearLayer", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MapEditorFillLayer()
     Dim X As Long
-    Dim y As Long
+    Dim Y As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If AlertMsg("Are you sure you wish to fill this layer", False, False) = YES Then
         For X = 0 To Map.MaxX
-            For y = 0 To Map.MaxY
-                With Map.Tile(X, y).Layer(CurrentLayer)
+            For Y = 0 To Map.MaxY
+                With Map.Tile(X, Y).Layer(CurrentLayer)
                     .X = EditorTileX
-                    .y = EditorTileY
+                    .Y = EditorTileY
                     .Tileset = frmEditor_Map.scrlTileSet.Value
                 End With
                 
-                Map.Tile(X, y).Autotile(CurrentLayer) = frmEditor_Map.scrlAutotile.Value
-                CacheRenderState X, y, CurrentLayer
+                Map.Tile(X, Y).Autotile(CurrentLayer) = frmEditor_Map.scrlAutotile.Value
+                CacheRenderState X, Y, CurrentLayer
             Next
         Next
     End If
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorFillLayer", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MapEditorFillSelection()
     Dim X As Long
-    Dim y As Long
+    Dim Y As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
         
     For X = 0 To Map.MaxX
-        For y = 0 To Map.MaxY
+        For Y = 0 To Map.MaxY
             If frmEditor_Map.fraLayers.Visible Then
-                If Map.Tile(CurX, CurY).Layer(CurrentLayer).X = Map.Tile(X, y).Layer(CurrentLayer).X Then
-                    If Map.Tile(CurX, CurY).Layer(CurrentLayer).y = Map.Tile(X, y).Layer(CurrentLayer).y Then
-                        If Map.Tile(CurX, CurY).Layer(CurrentLayer).Tileset = Map.Tile(X, y).Layer(CurrentLayer).Tileset Then
-                            With Map.Tile(X, y).Layer(CurrentLayer)
+                If Map.Tile(CurX, CurY).Layer(CurrentLayer).X = Map.Tile(X, Y).Layer(CurrentLayer).X Then
+                    If Map.Tile(CurX, CurY).Layer(CurrentLayer).Y = Map.Tile(X, Y).Layer(CurrentLayer).Y Then
+                        If Map.Tile(CurX, CurY).Layer(CurrentLayer).Tileset = Map.Tile(X, Y).Layer(CurrentLayer).Tileset Then
+                            With Map.Tile(X, Y).Layer(CurrentLayer)
                                 .X = EditorTileX
-                                .y = EditorTileY
+                                .Y = EditorTileY
                                 .Tileset = frmEditor_Map.scrlTileSet.Value
                             End With
                             
                             Map.Tile(CurX, CurY).Autotile(CurrentLayer) = frmEditor_Map.scrlAutotile.Value
-                            CacheRenderState X, y, CurrentLayer
+                            CacheRenderState X, Y, CurrentLayer
                         End If
                     End If
                 End If
             ElseIf frmEditor_Map.fraAttribs.Visible Then
-                If Map.Tile(CurX, CurY).Layer(CurrentLayer).X = Map.Tile(X, y).Layer(CurrentLayer).X Then
-                    If Map.Tile(CurX, CurY).Layer(CurrentLayer).y = Map.Tile(X, y).Layer(CurrentLayer).y Then
-                        Call MapEditorSetAttributes(vbLeftButton, X, y)
+                If Map.Tile(CurX, CurY).Layer(CurrentLayer).X = Map.Tile(X, Y).Layer(CurrentLayer).X Then
+                    If Map.Tile(CurX, CurY).Layer(CurrentLayer).Y = Map.Tile(X, Y).Layer(CurrentLayer).Y Then
+                        Call MapEditorSetAttributes(vbLeftButton, X, Y)
                     End If
                 End If
             End If
@@ -574,39 +574,39 @@ Public Sub MapEditorFillSelection()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorFillSelection", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MapEditorClearSelection()
     Dim X As Long
-    Dim y As Long
+    Dim Y As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
         
     For X = 0 To Map.MaxX
-        For y = 0 To Map.MaxY
+        For Y = 0 To Map.MaxY
             If frmEditor_Map.fraLayers.Visible Then
-                If Map.Tile(CurX, CurY).Layer(CurrentLayer).X = Map.Tile(X, y).Layer(CurrentLayer).X Then
-                    If Map.Tile(CurX, CurY).Layer(CurrentLayer).y = Map.Tile(X, y).Layer(CurrentLayer).y Then
-                        If Map.Tile(CurX, CurY).Layer(CurrentLayer).Tileset = Map.Tile(X, y).Layer(CurrentLayer).Tileset Then
-                            With Map.Tile(X, y).Layer(CurrentLayer)
+                If Map.Tile(CurX, CurY).Layer(CurrentLayer).X = Map.Tile(X, Y).Layer(CurrentLayer).X Then
+                    If Map.Tile(CurX, CurY).Layer(CurrentLayer).Y = Map.Tile(X, Y).Layer(CurrentLayer).Y Then
+                        If Map.Tile(CurX, CurY).Layer(CurrentLayer).Tileset = Map.Tile(X, Y).Layer(CurrentLayer).Tileset Then
+                            With Map.Tile(X, Y).Layer(CurrentLayer)
                                 .X = 0
-                                .y = 0
+                                .Y = 0
                                 .Tileset = 0
                             End With
                         
                             Map.Tile(CurX, CurY).Autotile(CurrentLayer) = 0
-                            CacheRenderState X, y, CurrentLayer
+                            CacheRenderState X, Y, CurrentLayer
                         End If
                     End If
                 End If
             ElseIf frmEditor_Map.fraAttribs.Visible Then
-                If Map.Tile(CurX, CurY).Layer(CurrentLayer).X = Map.Tile(X, y).Layer(CurrentLayer).X Then
-                    If Map.Tile(CurX, CurY).Layer(CurrentLayer).y = Map.Tile(X, y).Layer(CurrentLayer).y Then
-                        With Map.Tile(X, y)
+                If Map.Tile(CurX, CurY).Layer(CurrentLayer).X = Map.Tile(X, Y).Layer(CurrentLayer).X Then
+                    If Map.Tile(CurX, CurY).Layer(CurrentLayer).Y = Map.Tile(X, Y).Layer(CurrentLayer).Y Then
+                        With Map.Tile(X, Y)
                             .Type = 0
                             .Data1 = 0
                             .Data2 = 0
@@ -625,21 +625,21 @@ Public Sub MapEditorClearSelection()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorClearSelection", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MapEditorClearAttributes()
-    Dim X As Long, y As Long
+    Dim X As Long, Y As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If AlertMsg("Are you sure you wish to clear all the attributes on this map", False, False) = YES Then
         For X = 0 To Map.MaxX
-            For y = 0 To Map.MaxY
-                With Map.Tile(X, y)
+            For Y = 0 To Map.MaxY
+                With Map.Tile(X, Y)
                     .Type = 0
                     .Data1 = 0
                     .Data2 = 0
@@ -651,35 +651,35 @@ Public Sub MapEditorClearAttributes()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorClearAttributes", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MapEditorFillAttributes(ByVal Button As Integer)
-    Dim X As Long, y As Long
+    Dim X As Long, Y As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If AlertMsg("Are you sure you wish to fill this attribute on the entire map", False, False) = YES Then
         For X = 0 To Map.MaxX
-            For y = 0 To Map.MaxY
-                Call MapEditorSetAttributes(Button, X, y)
+            For Y = 0 To Map.MaxY
+                Call MapEditorSetAttributes(Button, X, Y)
             Next
         Next
     End If
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorFillAttributes", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MapEditorLeaveMap()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If InMapEditor Then
         If AlertMsg("Save changes to current map?", vbYesNo) = vbYes Then
@@ -691,7 +691,7 @@ Public Sub MapEditorLeaveMap()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorLeaveMap", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -704,7 +704,7 @@ Public Sub ItemEditorInit()
     Dim SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If frmEditor_Item.Visible = False Then Exit Sub
     
@@ -875,7 +875,7 @@ Public Sub ItemEditorInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ItemEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -884,7 +884,7 @@ Public Sub ItemEditorSave()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_ITEMS
         If Item_Changed(i) Then
@@ -898,14 +898,14 @@ Public Sub ItemEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ItemEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ItemEditorCancel()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Editor = 0
     ClearChanged_Item
@@ -914,20 +914,20 @@ Public Sub ItemEditorCancel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ItemEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearChanged_Item()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ZeroMemory Item_Changed(1), MAX_ITEMS * 2 ' 2 = boolean length
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Item", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -940,7 +940,7 @@ Public Sub AnimationEditorInit()
     Dim SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' If form isn't visible then exit
     If frmEditor_Animation.Visible = False Then Exit Sub
@@ -1003,7 +1003,7 @@ Public Sub AnimationEditorInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "AnimationEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1012,7 +1012,7 @@ Public Sub AnimationEditorSave()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_ANIMATIONS
         If Animation_Changed(i) Then
@@ -1026,14 +1026,14 @@ Public Sub AnimationEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "AnimationEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub AnimationEditorCancel()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Editor = 0
     ClearChanged_Animation
@@ -1042,20 +1042,20 @@ Public Sub AnimationEditorCancel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "AnimationEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearChanged_Animation()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ZeroMemory Animation_Changed(1), MAX_ANIMATIONS * 2 ' 2 = boolean length
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Animation", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1068,7 +1068,7 @@ Public Sub NpcEditorInit()
     Dim MusicSet As Boolean, SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If frmEditor_NPC.Visible = False Then Exit Sub
     
@@ -1171,7 +1171,7 @@ Public Sub NpcEditorInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "NpcEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1180,7 +1180,7 @@ Public Sub NpcEditorSave()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_NPCS
         If Npc_Changed(i) Then
@@ -1194,14 +1194,14 @@ Public Sub NpcEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "NpcEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub NpcEditorCancel()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Editor = 0
     ClearChanged_Npc
@@ -1210,20 +1210,20 @@ Public Sub NpcEditorCancel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "NpcEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearChanged_Npc()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ZeroMemory Npc_Changed(1), MAX_NPCS * 2 ' 2 = boolean length
     Exit Sub
       
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Npc", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1236,7 +1236,7 @@ Public Sub ResourceEditorInit()
     Dim SoundSet As Boolean
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If frmEditor_Resource.Visible = False Then Exit Sub
     
@@ -1305,7 +1305,7 @@ Public Sub ResourceEditorInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ResourceEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1314,7 +1314,7 @@ Public Sub ResourceEditorSave()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_RESOURCES
         If Resource_Changed(i) Then
@@ -1328,14 +1328,14 @@ Public Sub ResourceEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ResourceEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ResourceEditorCancel()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Editor = 0
     ClearChanged_Resource
@@ -1344,20 +1344,20 @@ Public Sub ResourceEditorCancel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ResourceEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearChanged_Resource()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ZeroMemory Resource_Changed(1), MAX_RESOURCES * 2 ' 2 = boolean length
     Exit Sub
      
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Resource", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1369,7 +1369,7 @@ Public Sub ShopEditorInit()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If frmEditor_Shop.Visible = False Then Exit Sub
     
@@ -1398,7 +1398,7 @@ Public Sub ShopEditorInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ShopEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1407,7 +1407,7 @@ Public Sub UpdateShopTrade(Optional ByVal tmpPos As Long = 0)
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     frmEditor_Shop.lstTradeItem.Clear
     
@@ -1430,7 +1430,7 @@ Public Sub UpdateShopTrade(Optional ByVal tmpPos As Long = 0)
     Exit Sub
      
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "UpdateShopTrade", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1439,7 +1439,7 @@ Public Sub ShopEditorSave()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_SHOPS
         If Shop_Changed(i) Then
@@ -1453,14 +1453,14 @@ Public Sub ShopEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ShopEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ShopEditorCancel()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Editor = 0
     ClearChanged_Shop
@@ -1469,20 +1469,20 @@ Public Sub ShopEditorCancel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ShopEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearChanged_Shop()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ZeroMemory Shop_Changed(1), MAX_SHOPS * 2 ' 2 = boolean length
     
 ' Error handler
     Exit Sub
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Shop", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
     Exit Sub
@@ -1496,7 +1496,7 @@ Public Sub SpellEditorInit()
     Dim SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If frmEditor_Spell.Visible = False Then Exit Sub
     
@@ -1547,7 +1547,7 @@ Public Sub SpellEditorInit()
         .scrlIcon.Value = Spell(EditorIndex).Icon
         .scrlMap.Value = Spell(EditorIndex).Map
         .scrlX.Value = Spell(EditorIndex).X
-        .scrlY.Value = Spell(EditorIndex).y
+        .scrlY.Value = Spell(EditorIndex).Y
         .scrlDir.Value = Spell(EditorIndex).Dir
         .scrlVital.Value = Spell(EditorIndex).Vital
         .scrlDuration.Value = Spell(EditorIndex).Duration
@@ -1578,7 +1578,7 @@ Public Sub SpellEditorInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SpellEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1587,7 +1587,7 @@ Public Sub SpellEditorSave()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_SPELLS
         If Spell_Changed(i) Then
@@ -1601,7 +1601,7 @@ Public Sub SpellEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SpellEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1610,7 +1610,7 @@ Public Sub SpellEditorCancel()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Editor = 0
     ClearChanged_Spell
@@ -1625,27 +1625,27 @@ Public Sub SpellEditorCancel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SpellEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearChanged_Spell()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ZeroMemory Spell_Changed(1), MAX_SPELLS * 2 ' 2 = Boolean length
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Spell", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearAttributeFrames()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     With frmEditor_Map
         .fraMapItem.Visible = False
@@ -1661,7 +1661,7 @@ Public Sub ClearAttributeFrames()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearAttributeFrames", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1670,7 +1670,7 @@ Public Sub MapPropertiesInit()
     Dim i As Long, MusicSet As Boolean, SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Populate the cache if we need to
     If Not HasPopulated Then
@@ -1739,7 +1739,7 @@ Public Sub MapPropertiesInit()
             .cmbNpcs.AddItem i & ": " & Trim$(NPC(i).name)
         Next
         
-        .CmbWeather.ListIndex = Map.Weather
+        .cmbWeather.ListIndex = Map.Weather
         .scrlWeatherIntensity.Value = Map.WeatherIntensity
         
         .ScrlFog.Value = Map.Fog
@@ -1774,7 +1774,7 @@ Public Sub MapPropertiesInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapPropertiesInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1783,7 +1783,7 @@ Public Sub LoadMapPropertiesNpcs()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Load the npcs into the list
     With Map
@@ -1798,7 +1798,7 @@ Public Sub LoadMapPropertiesNpcs()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "LoadMapPropertiesNpcs", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1807,7 +1807,7 @@ Public Sub MapEditorInitShop()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     frmEditor_Map.cmbShop.Clear
     frmEditor_Map.cmbShop.AddItem "None"
@@ -1822,7 +1822,7 @@ Public Sub MapEditorInitShop()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorInitShop", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1832,7 +1832,7 @@ Public Sub BanEditorInit()
     If frmEditor_Ban.Visible = False Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     EditorIndex = frmEditor_Ban.lstIndex.ListIndex + 1
     Ban_Changed(EditorIndex) = True
@@ -1853,7 +1853,7 @@ Public Sub BanEditorInit()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "BanEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1865,7 +1865,7 @@ Public Sub BanEditorSave()
     If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_BANS
         If Ban_Changed(i) Then
@@ -1879,7 +1879,7 @@ Public Sub BanEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "BanEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1889,7 +1889,7 @@ Public Sub BanEditorCancel()
     If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Editor = 0
     ClearChanged_Ban
@@ -1898,7 +1898,7 @@ Public Sub BanEditorCancel()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "BanEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1908,13 +1908,13 @@ Public Sub ClearChanged_Ban()
     If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ZeroMemory Ban_Changed(1), MAX_BANS * 2 ' 2 = Boolean length
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Ban", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1924,7 +1924,7 @@ Public Sub TitleEditorInit()
     If frmEditor_Title.Visible = False Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     EditorIndex = frmEditor_Title.lstIndex.ListIndex + 1
     Title_Changed(EditorIndex) = True
@@ -1943,7 +1943,7 @@ Public Sub TitleEditorInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "TitleEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1955,7 +1955,7 @@ Public Sub TitleEditorSave()
     If EditorIndex < 1 Or EditorIndex > MAX_TITLES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_TITLES
         If Title_Changed(i) Then
@@ -1969,7 +1969,7 @@ Public Sub TitleEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "TitleEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1979,7 +1979,7 @@ Public Sub TitleEditorCancel()
     If EditorIndex < 1 Or EditorIndex > MAX_TITLES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Editor = 0
     ClearChanged_Title
@@ -1988,7 +1988,7 @@ Public Sub TitleEditorCancel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "TitleEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1998,13 +1998,13 @@ Public Sub ClearChanged_Title()
     If EditorIndex < 1 Or EditorIndex > MAX_TITLES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ZeroMemory Title_Changed(1), MAX_TITLES * 2 ' 2 = Boolean length
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Title", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2013,7 +2013,7 @@ Public Sub MoralEditorSave()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_MORALS
         If Moral_Changed(i) Then
@@ -2027,14 +2027,14 @@ Public Sub MoralEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MoralEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MoralEditorCancel()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Editor = 0
     ClearChanged_Moral
@@ -2043,20 +2043,20 @@ Public Sub MoralEditorCancel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MoralEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearChanged_Moral()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ZeroMemory Moral_Changed(1), MAX_MORALS * 2 ' 2 = Boolean length
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Moral", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2066,7 +2066,7 @@ Public Sub MoralEditorInit()
     If frmEditor_Moral.Visible = False Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     EditorIndex = frmEditor_Moral.lstIndex.ListIndex + 1
     Moral_Changed(EditorIndex) = True
@@ -2090,7 +2090,7 @@ Public Sub MoralEditorInit()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MoralEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2099,7 +2099,7 @@ Public Sub ClassEditorSave()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_CLASSES
         If Class_Changed(i) Then
@@ -2113,14 +2113,14 @@ Public Sub ClassEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClassEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClassEditorCancel()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Editor = 0
     ClearChanged_Class
@@ -2129,20 +2129,20 @@ Public Sub ClassEditorCancel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClassEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearChanged_Class()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ZeroMemory Class_Changed(1), MAX_CLASSES * 2 ' 2 = Boolean length
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Class", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2154,7 +2154,7 @@ Public Sub ClassEditorInit()
     If frmEditor_Class.Visible = False Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     EditorIndex = frmEditor_Class.lstIndex.ListIndex + 1
     Class_Changed(EditorIndex) = True
@@ -2182,6 +2182,12 @@ Public Sub ClassEditorInit()
         ' Color
          .cmbColor.ListIndex = Class(EditorIndex).Color
 
+        ' Start position
+        .scrlMap.Value = Class(EditorIndex).Map
+        .scrlX.Value = Class(EditorIndex).X
+        .scrlY.Value = Class(EditorIndex).Y
+        .scrlDir.Value = Class(EditorIndex).Dir
+        
         ' Loop for stats
         For i = 1 To Stats.Stat_Count - 1
             If Class(EditorIndex).Stat(i) < 1 Then Class(EditorIndex).Stat(i) = 1
@@ -2221,7 +2227,7 @@ Public Sub ClassEditorInit()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClassEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2281,7 +2287,7 @@ End Sub
 ' /////////////////
 Public Sub EmoticonEditorInit()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     With frmEditor_Emoticon
         ' Check if the form is visible if not then exit
@@ -2302,7 +2308,7 @@ Public Sub EmoticonEditorInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "EmoticonEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2311,7 +2317,7 @@ Public Sub EmoticonEditorSave()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_EMOTICONS
         If Emoticon_Changed(i) Then
@@ -2325,14 +2331,14 @@ Public Sub EmoticonEditorSave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "EmoticonEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub EmoticonEditorCancel()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Editor = 0
     ClearChanged_Emoticon
@@ -2341,59 +2347,59 @@ Public Sub EmoticonEditorCancel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "EmoticonEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearChanged_Emoticon()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ZeroMemory Emoticon_Changed(1), MAX_EMOTICONS * 2 ' 2 = Boolean length
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Emoticon", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Sub CopyEvent_Map(X As Long, y As Long)
+Sub CopyEvent_Map(X As Long, Y As Long)
     Dim count As Long, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     count = Map.EventCount
     If count = 0 Then Exit Sub
     
     For i = 1 To count
-        If Map.Events(i).X = X And Map.Events(i).y = y Then
+        If Map.events(i).X = X And Map.events(i).Y = Y Then
             ' Copy it
-            cpEvent = Map.Events(i)
+            cpEvent = Map.events(i)
             Exit Sub
         End If
     Next
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CopyEvent_Map", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Sub PasteEvent_Map(X As Long, y As Long)
+Sub PasteEvent_Map(X As Long, Y As Long)
     Dim count As Long, i As Long, EventNum As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     count = Map.EventCount
     
     If count > 0 Then
         For i = 1 To count
-            If Map.Events(i).X = X And Map.Events(i).y = y Then
+            If Map.events(i).X = X And Map.events(i).Y = Y Then
                 ' Already an event - paste over it
                 EventNum = i
             End If
@@ -2403,29 +2409,29 @@ Sub PasteEvent_Map(X As Long, y As Long)
     ' Couldn't find one - create one
     If EventNum = 0 Then
         ' increment count
-        AddEvent X, y, True
+        AddEvent X, Y, True
         EventNum = count + 1
     End If
     
     ' Copy it
-    Map.Events(EventNum) = cpEvent
+    Map.events(EventNum) = cpEvent
     
     ' Set position
-    Map.Events(EventNum).X = X
-    Map.Events(EventNum).y = y
+    Map.events(EventNum).X = X
+    Map.events(EventNum).Y = Y
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChanged_Emoticon", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Sub DeleteEvent(X As Long, y As Long)
+Sub DeleteEvent(X As Long, Y As Long)
     Dim count As Long, i As Long, lowIndex As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Not InMapEditor Then Exit Sub
     If frmEditor_Events.Visible = True Then Exit Sub
@@ -2433,7 +2439,7 @@ Sub DeleteEvent(X As Long, y As Long)
     count = Map.EventCount
     
     For i = 1 To count
-        If Map.Events(i).X = X And Map.Events(i).y = y Then
+        If Map.events(i).X = X And Map.events(i).Y = Y Then
             ' Delete it
             ClearEvent i
             lowIndex = i
@@ -2457,23 +2463,23 @@ Sub DeleteEvent(X As Long, y As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "DeleteEvent", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Sub AddEvent(X As Long, y As Long, Optional ByVal cancelLoad As Boolean = False)
+Sub AddEvent(X As Long, Y As Long, Optional ByVal cancelLoad As Boolean = False)
     Dim count As Long, PageCount As Long, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     count = Map.EventCount + 1
     
     ' Make sure there's not already an event
     If count - 1 > 0 Then
         For i = 1 To count - 1
-            If Map.Events(i).X = X And Map.Events(i).y = y Then
+            If Map.events(i).X = X And Map.events(i).Y = Y Then
                 ' already an event - edit it
                 If Not cancelLoad Then EventEditorInit i
                 Exit Sub
@@ -2483,49 +2489,49 @@ Sub AddEvent(X As Long, y As Long, Optional ByVal cancelLoad As Boolean = False)
     
     ' Increment count
     Map.EventCount = count
-    ReDim Preserve Map.Events(0 To count)
+    ReDim Preserve Map.events(0 To count)
     
     ' Set the new event
-    Map.Events(count).X = X
-    Map.Events(count).y = y
+    Map.events(count).X = X
+    Map.events(count).Y = Y
     
     ' Give it a new page
-    PageCount = Map.Events(count).PageCount + 1
-    Map.Events(count).PageCount = PageCount
-    ReDim Preserve Map.Events(count).Pages(PageCount)
+    PageCount = Map.events(count).PageCount + 1
+    Map.events(count).PageCount = PageCount
+    ReDim Preserve Map.events(count).Pages(PageCount)
     
     ' Load the editor
     If Not cancelLoad Then EventEditorInit count
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "AddEvent", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearEvent(EventNum As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Call ZeroMemory(ByVal VarPtr(Map.Events(EventNum)), LenB(Map.Events(EventNum)))
+    Call ZeroMemory(ByVal VarPtr(Map.events(EventNum)), LenB(Map.events(EventNum)))
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearEvent", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub CopyEvent(original As Long, newone As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    CopyMemory ByVal VarPtr(Map.Events(newone)), ByVal VarPtr(Map.Events(original)), LenB(Map.Events(original))
+    CopyMemory ByVal VarPtr(Map.events(newone)), ByVal VarPtr(Map.events(original)), LenB(Map.events(original))
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CopyEvent", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2534,7 +2540,7 @@ Sub EventEditorInit(EventNum As Long)
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Populate the cache if we need to
     If Not HasPopulated Then
@@ -2544,7 +2550,7 @@ Sub EventEditorInit(EventNum As Long)
     EditorEvent = EventNum
     
     ' Copy the event data to the temp event
-    tmpEvent = Map.Events(EventNum)
+    tmpEvent = Map.events(EventNum)
     frmEditor_Events.InitEventEditorForm
     
     ' Populate form
@@ -2601,14 +2607,14 @@ Sub EventEditorInit(EventNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "EventEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub EventEditorLoadPage(pageNum As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Populate form
     With tmpEvent.Pages(pageNum)
@@ -2690,24 +2696,24 @@ Sub EventEditorLoadPage(pageNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "EventEditorLoadPage", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub EventEditorSave()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Copy the event data from the temp event
-    Map.Events(EditorEvent) = tmpEvent
+    Map.events(EditorEvent) = tmpEvent
     
     ' Unload the form
     Unload frmEditor_Events
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "EventEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2716,7 +2722,7 @@ Public Sub EventListCommands()
 Dim i As Long, CurList As Long, oldI As Long, X As Long, indent As String, listleftoff() As Long, conditionalstage() As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     frmEditor_Events.lstCommands.Clear
     
@@ -3047,7 +3053,7 @@ newlist:
                             End If
                         Case EventType.evSetMoveRoute
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 <= Map.EventCount Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Map.Events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
                             Else
                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for COULD NOT FIND EVENT!"
                             End If
@@ -3055,7 +3061,7 @@ newlist:
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
                                 frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Player"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " [" & Trim$(Map.Events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3).name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3).name) & "]"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 2 Then
                                 frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4 & ")"
                             End If
@@ -3088,7 +3094,7 @@ newlist:
                                         frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2)).name) & "]"
                                     End If
                                 Case TARGET_TYPE_EVENT
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.Events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).name) & "]"
                             End Select
                         Case EventType.evLabel
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"
@@ -3153,7 +3159,7 @@ newlist:
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "EventListCommands", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3162,7 +3168,7 @@ Sub ListCommandAdd(S As String)
     Static X As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     frmEditor_Events.lstCommands.AddItem S
     
@@ -3175,7 +3181,7 @@ Sub ListCommandAdd(S As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ListCommandAdd", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3184,7 +3190,7 @@ Sub AddCommand(Index As Long)
     Dim CurList As Long, i As Long, X As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If tmpEvent.Pages(curPageNum).CommandListCount = 0 Then
         tmpEvent.Pages(curPageNum).CommandListCount = 1
@@ -3466,7 +3472,7 @@ Sub AddCommand(Index As Long)
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
@@ -3483,7 +3489,7 @@ Sub AddCommand(Index As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "AddCommand", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3492,7 +3498,7 @@ Public Sub EditEventCommand()
     Dim i As Long, X As Long, Z As Long, CurList As Long, CurSlot As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     i = frmEditor_Events.lstCommands.ListIndex
     
@@ -3717,7 +3723,7 @@ Public Sub EditEventCommand()
             
             For i = 1 To Map.EventCount
                 If i <> EditorEvent Then
-                    frmEditor_Events.cmbEvent.AddItem Trim$(Map.Events(i).name)
+                    frmEditor_Events.cmbEvent.AddItem Trim$(Map.events(i).name)
                     X = X + 1
                     ListOfEvents(X) = i
                     If i = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 Then frmEditor_Events.cmbEvent.ListIndex = X
@@ -3840,7 +3846,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.cmbPlayAnimEvent.Clear
             
             For i = 1 To Map.EventCount
-                frmEditor_Events.cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.Events(i).name)
+                frmEditor_Events.cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).name)
             Next
             
             frmEditor_Events.cmbPlayAnimEvent.ListIndex = 0
@@ -3952,7 +3958,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.fraCommands.Visible = False
         Case EventType.evSetWeather
             isEdit = True
-            frmEditor_Events.CmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
+            frmEditor_Events.cmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
             frmEditor_Events.scrlWeatherIntensity.Value = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(23).Visible = True
@@ -3976,7 +3982,7 @@ Public Sub EditEventCommand()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "EditEventCommand", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3985,7 +3991,7 @@ Public Sub DeleteEventCommand()
     Dim i As Long, X As Long, Z As Long, CurList As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     i = frmEditor_Events.lstCommands.ListIndex
     
@@ -4043,14 +4049,14 @@ Public Sub DeleteEventCommand()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "DeleteEventCommand", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearEventCommands()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ReDim tmpEvent.Pages(curPageNum).CommandList(1)
     tmpEvent.Pages(curPageNum).CommandListCount = 1
@@ -4058,7 +4064,7 @@ Public Sub ClearEventCommands()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearEventCommands", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4067,7 +4073,7 @@ Public Sub EditCommand()
     Dim i As Long, X As Long, Z As Long, CurList As Long, CurSlot As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     i = frmEditor_Events.lstCommands.ListIndex
     If i = -1 Then Exit Sub
@@ -4245,7 +4251,7 @@ Public Sub EditCommand()
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.ScrlFogData(1).Value
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlMapTintData(0).Value
@@ -4260,14 +4266,14 @@ Public Sub EditCommand()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "EditCommand", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub MapEditorChooseTile(Button As Integer, X As Single, y As Single)
+Public Sub MapEditorChooseTile(Button As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If Button = vbLeftButton Then
         ' Change selected shape for autotiles
@@ -4295,7 +4301,7 @@ Public Sub MapEditorChooseTile(Button As Integer, X As Single, y As Single)
         End If
         
         EditorTileX = X \ PIC_X
-        EditorTileY = y \ PIC_Y
+        EditorTileY = Y \ PIC_Y
 
         ' Random tile
         If frmEditor_Map.chkRandom.Value = 1 Then
@@ -4307,14 +4313,14 @@ Public Sub MapEditorChooseTile(Button As Integer, X As Single, y As Single)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorChooseTile", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub SetMapAutotileScrollbar()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If frmEditor_Map.scrlAutotile.Value > 0 Then
         Select Case frmEditor_Map.scrlAutotile.Value
@@ -4341,7 +4347,7 @@ Public Sub SetMapAutotileScrollbar()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SetMapAutotileScrollbar", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4352,8 +4358,8 @@ End Sub
 Public Function GetSubEventCount(ByVal Index As Long)
     GetSubEventCount = 0
     If Index <= 0 Or Index > MAX_EVENTS Then Exit Function
-    If Events(Index).HasSubEvents Then
-        GetSubEventCount = UBound(Events(Index).SubEvents)
+    If events(Index).HasSubEvents Then
+        GetSubEventCount = UBound(events(Index).SubEvents)
     End If
 End Function
 
@@ -4363,7 +4369,7 @@ Public Sub MapEditorEyeDropper()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Check for subscript out of range
     If Not IsInBounds Then Exit Sub
@@ -4384,7 +4390,7 @@ Public Sub MapEditorEyeDropper()
             frmEditor_Map.scrlTileSet.Value = 1
         End If
         
-        TileTop = .Layer(CurrentLayer).y * PIC_Y
+        TileTop = .Layer(CurrentLayer).Y * PIC_Y
         TileLeft = .Layer(CurrentLayer).X * PIC_X
         
         frmEditor_Map.picBack_MouseDown 1, 0, (TileLeft - (frmEditor_Map.scrlPictureX.Value * PIC_X)), (TileTop - (frmEditor_Map.scrlPictureY.Value * PIC_Y))
@@ -4426,7 +4432,7 @@ Public Sub MapEditorEyeDropper()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MapEditorEyeDropper", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

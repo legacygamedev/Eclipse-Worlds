@@ -786,7 +786,7 @@ Private Sub scrlDir_Change()
     End Select
     
     lblDir.Caption = "Direction: " & sDir
-    Class(EditorIndex).Map = scrlDir.Value
+    Class(EditorIndex).Dir = scrlDir.Value
     Exit Sub
     
 ' Error handler
@@ -1013,7 +1013,7 @@ Private Sub scrlX_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblX.Caption = "X : " & scrlX.Value
-    Class(EditorIndex).x = scrlX.Value
+    Class(EditorIndex).X = scrlX.Value
     Exit Sub
     
 ' Error handler
@@ -1029,7 +1029,7 @@ Private Sub scrlY_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblY.Caption = "Y : " & scrlY.Value
-    Class(EditorIndex).y = scrlY.Value
+    Class(EditorIndex).Y = scrlY.Value
     Exit Sub
     
 ' Error handler
