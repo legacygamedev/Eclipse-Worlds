@@ -32,101 +32,157 @@ Begin VB.Form frmEditor_Events
       Visible         =   0   'False
       Width           =   6375
       Begin VB.Frame fraCommand 
-         Caption         =   "Map Overlay"
-         Height          =   2055
-         Index           =   24
-         Left            =   1320
-         TabIndex        =   408
-         Top             =   1320
+         Caption         =   "Show Choices"
+         Height          =   4335
+         Index           =   1
+         Left            =   240
+         TabIndex        =   189
+         Top             =   1080
          Visible         =   0   'False
-         Width           =   4095
-         Begin VB.CommandButton cmdMapTint_Cancel 
+         Width           =   5655
+         Begin VB.HScrollBar scrlFace2 
+            Height          =   255
+            Left            =   120
+            TabIndex        =   429
+            Top             =   2400
+            Width           =   1455
+         End
+         Begin VB.PictureBox picFace2 
+            AutoRedraw      =   -1  'True
+            BackColor       =   &H00000000&
+            BorderStyle     =   0  'None
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   1500
+            Left            =   120
+            ScaleHeight     =   100
+            ScaleMode       =   3  'Pixel
+            ScaleWidth      =   100
+            TabIndex        =   428
+            TabStop         =   0   'False
+            Top             =   600
+            Width           =   1500
+         End
+         Begin VB.TextBox txtChoices 
+            Height          =   375
+            Index           =   4
+            Left            =   3720
+            TabIndex        =   200
+            Text            =   "0"
+            Top             =   3360
+            Width           =   1455
+         End
+         Begin VB.TextBox txtChoices 
+            Height          =   375
+            Index           =   3
+            Left            =   1680
+            TabIndex        =   198
+            Text            =   "0"
+            Top             =   3360
+            Width           =   1455
+         End
+         Begin VB.TextBox txtChoices 
+            Height          =   375
+            Index           =   2
+            Left            =   3720
+            TabIndex        =   196
+            Text            =   "0"
+            Top             =   2640
+            Width           =   1455
+         End
+         Begin VB.TextBox txtChoices 
+            Height          =   375
+            Index           =   1
+            Left            =   1680
+            TabIndex        =   194
+            Text            =   "0"
+            Top             =   2640
+            Width           =   1455
+         End
+         Begin VB.CommandButton cmdChoices_Cancel 
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2760
-            TabIndex        =   418
-            Top             =   1560
+            TabIndex        =   192
+            Top             =   3840
             Width           =   1215
          End
-         Begin VB.CommandButton cmdMapTint_Ok 
+         Begin VB.CommandButton cmdChoices_Ok 
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   417
-            Top             =   1560
+            TabIndex        =   191
+            Top             =   3840
             Width           =   1215
          End
-         Begin VB.HScrollBar scrlMapTintData 
-            Height          =   255
-            Index           =   3
-            Left            =   2280
-            Max             =   255
-            TabIndex        =   412
-            Top             =   1200
-            Width           =   855
+         Begin VB.TextBox txtChoicePrompt 
+            Height          =   1695
+            Left            =   1680
+            MultiLine       =   -1  'True
+            ScrollBars      =   2  'Vertical
+            TabIndex        =   190
+            Top             =   600
+            Width           =   3855
          End
-         Begin VB.HScrollBar scrlMapTintData 
+         Begin VB.Label lblFace2 
+            Caption         =   "Face: 0"
             Height          =   255
-            Index           =   0
             Left            =   120
-            Max             =   255
-            TabIndex        =   411
-            Top             =   480
-            Width           =   855
-         End
-         Begin VB.HScrollBar scrlMapTintData 
-            Height          =   255
-            Index           =   1
-            Left            =   2280
-            Max             =   255
-            TabIndex        =   410
-            Top             =   480
-            Width           =   855
-         End
-         Begin VB.HScrollBar scrlMapTintData 
-            Height          =   255
-            Index           =   2
-            Left            =   120
-            Max             =   255
-            TabIndex        =   409
-            Top             =   1200
-            Width           =   855
-         End
-         Begin VB.Label lblMapTintData 
-            Caption         =   "Opacity: 0"
-            Height          =   255
-            Index           =   3
-            Left            =   2280
-            TabIndex        =   416
-            Top             =   960
-            Width           =   1455
-         End
-         Begin VB.Label lblMapTintData 
-            Caption         =   "Red: 0"
-            Height          =   255
-            Index           =   0
-            Left            =   120
-            TabIndex        =   415
-            Top             =   240
+            TabIndex        =   430
+            Top             =   2160
             Width           =   975
          End
-         Begin VB.Label lblMapTintData 
-            Caption         =   "Green: 0"
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Choice 4"
             Height          =   255
-            Index           =   1
-            Left            =   2280
-            TabIndex        =   414
-            Top             =   240
+            Index           =   21
+            Left            =   3720
+            TabIndex        =   201
+            Top             =   3120
             Width           =   1455
          End
-         Begin VB.Label lblMapTintData 
-            Caption         =   "Blue: 0"
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Choice 3"
             Height          =   255
-            Index           =   2
-            Left            =   120
-            TabIndex        =   413
-            Top             =   960
+            Index           =   20
+            Left            =   1680
+            TabIndex        =   199
+            Top             =   3120
             Width           =   1455
+         End
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Choice 2"
+            Height          =   255
+            Index           =   19
+            Left            =   3720
+            TabIndex        =   197
+            Top             =   2400
+            Width           =   1455
+         End
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Choice 1"
+            Height          =   255
+            Index           =   17
+            Left            =   1680
+            TabIndex        =   195
+            Top             =   2400
+            Width           =   1455
+         End
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Prompt:"
+            Height          =   255
+            Index           =   16
+            Left            =   1680
+            TabIndex        =   193
+            Top             =   360
+            Width           =   1935
          End
       End
       Begin VB.Frame fraCommand 
@@ -735,336 +791,6 @@ Begin VB.Form frmEditor_Events
             TabIndex        =   380
             Top             =   240
             Width           =   3735
-         End
-      End
-      Begin VB.Frame fraCommand 
-         Caption         =   "Show Text"
-         Height          =   4095
-         Index           =   0
-         Left            =   360
-         TabIndex        =   184
-         Top             =   1200
-         Visible         =   0   'False
-         Width           =   5655
-         Begin VB.HScrollBar scrlFace 
-            Height          =   255
-            Left            =   240
-            TabIndex        =   426
-            Top             =   2280
-            Width           =   1575
-         End
-         Begin VB.PictureBox picFace 
-            AutoRedraw      =   -1  'True
-            BackColor       =   &H00000000&
-            BorderStyle     =   0  'None
-            BeginProperty Font 
-               Name            =   "MS Sans Serif"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   1500
-            Left            =   240
-            ScaleHeight     =   100
-            ScaleMode       =   3  'Pixel
-            ScaleWidth      =   100
-            TabIndex        =   425
-            TabStop         =   0   'False
-            Top             =   480
-            Width           =   1500
-         End
-         Begin VB.TextBox txtShowText 
-            Height          =   2775
-            Left            =   1920
-            MultiLine       =   -1  'True
-            ScrollBars      =   2  'Vertical
-            TabIndex        =   187
-            Top             =   480
-            Width           =   3255
-         End
-         Begin VB.CommandButton cmdShowText_Ok 
-            Caption         =   "Ok"
-            Height          =   375
-            Left            =   1440
-            TabIndex        =   186
-            Top             =   3600
-            Width           =   1215
-         End
-         Begin VB.CommandButton cmdShowText_Cancel 
-            Caption         =   "Cancel"
-            Height          =   375
-            Left            =   2760
-            TabIndex        =   185
-            Top             =   3600
-            Width           =   1215
-         End
-         Begin VB.Label lblFace 
-            Caption         =   "Face: 0"
-            Height          =   255
-            Left            =   240
-            TabIndex        =   427
-            Top             =   2040
-            Width           =   975
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Text:"
-            Height          =   255
-            Index           =   18
-            Left            =   1920
-            TabIndex        =   188
-            Top             =   240
-            Width           =   1935
-         End
-      End
-      Begin VB.Frame fraCommand 
-         Caption         =   "Show Choices"
-         Height          =   4335
-         Index           =   1
-         Left            =   240
-         TabIndex        =   189
-         Top             =   1080
-         Visible         =   0   'False
-         Width           =   5655
-         Begin VB.HScrollBar scrlFace2 
-            Height          =   255
-            Left            =   120
-            TabIndex        =   429
-            Top             =   2400
-            Width           =   1455
-         End
-         Begin VB.PictureBox picFace2 
-            AutoRedraw      =   -1  'True
-            BackColor       =   &H00000000&
-            BorderStyle     =   0  'None
-            BeginProperty Font 
-               Name            =   "MS Sans Serif"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   1500
-            Left            =   120
-            ScaleHeight     =   100
-            ScaleMode       =   3  'Pixel
-            ScaleWidth      =   100
-            TabIndex        =   428
-            TabStop         =   0   'False
-            Top             =   600
-            Width           =   1500
-         End
-         Begin VB.TextBox txtChoices 
-            Height          =   375
-            Index           =   4
-            Left            =   3720
-            TabIndex        =   200
-            Text            =   "0"
-            Top             =   3360
-            Width           =   1455
-         End
-         Begin VB.TextBox txtChoices 
-            Height          =   375
-            Index           =   3
-            Left            =   1680
-            TabIndex        =   198
-            Text            =   "0"
-            Top             =   3360
-            Width           =   1455
-         End
-         Begin VB.TextBox txtChoices 
-            Height          =   375
-            Index           =   2
-            Left            =   3720
-            TabIndex        =   196
-            Text            =   "0"
-            Top             =   2640
-            Width           =   1455
-         End
-         Begin VB.TextBox txtChoices 
-            Height          =   375
-            Index           =   1
-            Left            =   1680
-            TabIndex        =   194
-            Text            =   "0"
-            Top             =   2640
-            Width           =   1455
-         End
-         Begin VB.CommandButton cmdChoices_Cancel 
-            Caption         =   "Cancel"
-            Height          =   375
-            Left            =   2760
-            TabIndex        =   192
-            Top             =   3840
-            Width           =   1215
-         End
-         Begin VB.CommandButton cmdChoices_Ok 
-            Caption         =   "Ok"
-            Height          =   375
-            Left            =   1440
-            TabIndex        =   191
-            Top             =   3840
-            Width           =   1215
-         End
-         Begin VB.TextBox txtChoicePrompt 
-            Height          =   1695
-            Left            =   1680
-            MultiLine       =   -1  'True
-            ScrollBars      =   2  'Vertical
-            TabIndex        =   190
-            Top             =   600
-            Width           =   3855
-         End
-         Begin VB.Label lblFace2 
-            Caption         =   "Face: 0"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   430
-            Top             =   2160
-            Width           =   975
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Choice 4"
-            Height          =   255
-            Index           =   21
-            Left            =   3720
-            TabIndex        =   201
-            Top             =   3120
-            Width           =   1455
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Choice 3"
-            Height          =   255
-            Index           =   20
-            Left            =   1680
-            TabIndex        =   199
-            Top             =   3120
-            Width           =   1455
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Choice 2"
-            Height          =   255
-            Index           =   19
-            Left            =   3720
-            TabIndex        =   197
-            Top             =   2400
-            Width           =   1455
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Choice 1"
-            Height          =   255
-            Index           =   17
-            Left            =   1680
-            TabIndex        =   195
-            Top             =   2400
-            Width           =   1455
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Prompt:"
-            Height          =   255
-            Index           =   16
-            Left            =   1680
-            TabIndex        =   193
-            Top             =   360
-            Width           =   1935
-         End
-      End
-      Begin VB.Frame fraCommand 
-         Caption         =   "Add Text"
-         Height          =   4095
-         Index           =   2
-         Left            =   1200
-         TabIndex        =   217
-         Top             =   600
-         Visible         =   0   'False
-         Width           =   4095
-         Begin VB.TextBox txtAddText_Text 
-            Height          =   1815
-            Left            =   120
-            MultiLine       =   -1  'True
-            ScrollBars      =   2  'Vertical
-            TabIndex        =   224
-            Top             =   480
-            Width           =   3855
-         End
-         Begin VB.HScrollBar scrlAddText_Colour 
-            Height          =   255
-            Left            =   120
-            Max             =   17
-            TabIndex        =   223
-            Top             =   2640
-            Width           =   3855
-         End
-         Begin VB.OptionButton optAddText_Player 
-            Caption         =   "Player"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   222
-            Top             =   3240
-            Value           =   -1  'True
-            Width           =   975
-         End
-         Begin VB.OptionButton optAddText_Map 
-            Caption         =   "Map"
-            Height          =   255
-            Left            =   1080
-            TabIndex        =   221
-            Top             =   3240
-            Width           =   735
-         End
-         Begin VB.OptionButton optAddText_Global 
-            Caption         =   "Global"
-            Height          =   255
-            Left            =   1920
-            TabIndex        =   220
-            Top             =   3240
-            Width           =   855
-         End
-         Begin VB.CommandButton cmdAddText_Ok 
-            Caption         =   "Ok"
-            Height          =   375
-            Left            =   1440
-            TabIndex        =   219
-            Top             =   3600
-            Width           =   1215
-         End
-         Begin VB.CommandButton cmdAddText_Cancel 
-            Caption         =   "Cancel"
-            Height          =   375
-            Left            =   2760
-            TabIndex        =   218
-            Top             =   3600
-            Width           =   1215
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Text:"
-            Height          =   255
-            Index           =   34
-            Left            =   120
-            TabIndex        =   227
-            Top             =   240
-            Width           =   1935
-         End
-         Begin VB.Label lblAddText_Colour 
-            Caption         =   "Color: Black"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   226
-            Top             =   2400
-            Width           =   3255
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Channel:"
-            Height          =   255
-            Index           =   10
-            Left            =   120
-            TabIndex        =   225
-            Top             =   3000
-            Width           =   1575
          End
       End
       Begin VB.Frame fraCommand 
@@ -2179,6 +1905,280 @@ Begin VB.Form frmEditor_Events
             TabIndex        =   404
             Top             =   240
             Width           =   1275
+         End
+      End
+      Begin VB.Frame fraCommand 
+         Caption         =   "Add Text"
+         Height          =   4095
+         Index           =   2
+         Left            =   1200
+         TabIndex        =   217
+         Top             =   600
+         Visible         =   0   'False
+         Width           =   4095
+         Begin VB.TextBox txtAddText_Text 
+            Height          =   1815
+            Left            =   120
+            MultiLine       =   -1  'True
+            ScrollBars      =   2  'Vertical
+            TabIndex        =   224
+            Top             =   480
+            Width           =   3855
+         End
+         Begin VB.HScrollBar scrlAddText_Colour 
+            Height          =   255
+            Left            =   120
+            Max             =   17
+            TabIndex        =   223
+            Top             =   2640
+            Width           =   3855
+         End
+         Begin VB.OptionButton optAddText_Player 
+            Caption         =   "Player"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   222
+            Top             =   3240
+            Value           =   -1  'True
+            Width           =   975
+         End
+         Begin VB.OptionButton optAddText_Map 
+            Caption         =   "Map"
+            Height          =   255
+            Left            =   1080
+            TabIndex        =   221
+            Top             =   3240
+            Width           =   735
+         End
+         Begin VB.OptionButton optAddText_Global 
+            Caption         =   "Global"
+            Height          =   255
+            Left            =   1920
+            TabIndex        =   220
+            Top             =   3240
+            Width           =   855
+         End
+         Begin VB.CommandButton cmdAddText_Ok 
+            Caption         =   "Ok"
+            Height          =   375
+            Left            =   1440
+            TabIndex        =   219
+            Top             =   3600
+            Width           =   1215
+         End
+         Begin VB.CommandButton cmdAddText_Cancel 
+            Caption         =   "Cancel"
+            Height          =   375
+            Left            =   2760
+            TabIndex        =   218
+            Top             =   3600
+            Width           =   1215
+         End
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Text:"
+            Height          =   255
+            Index           =   34
+            Left            =   120
+            TabIndex        =   227
+            Top             =   240
+            Width           =   1935
+         End
+         Begin VB.Label lblAddText_Colour 
+            Caption         =   "Color: Black"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   226
+            Top             =   2400
+            Width           =   3255
+         End
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Channel:"
+            Height          =   255
+            Index           =   10
+            Left            =   120
+            TabIndex        =   225
+            Top             =   3000
+            Width           =   1575
+         End
+      End
+      Begin VB.Frame fraCommand 
+         Caption         =   "Show Text"
+         Height          =   4095
+         Index           =   0
+         Left            =   360
+         TabIndex        =   184
+         Top             =   1200
+         Visible         =   0   'False
+         Width           =   5655
+         Begin VB.HScrollBar scrlFace 
+            Height          =   255
+            Left            =   240
+            TabIndex        =   426
+            Top             =   2280
+            Width           =   1575
+         End
+         Begin VB.PictureBox picFace 
+            AutoRedraw      =   -1  'True
+            BackColor       =   &H00000000&
+            BorderStyle     =   0  'None
+            BeginProperty Font 
+               Name            =   "MS Sans Serif"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   1500
+            Left            =   240
+            ScaleHeight     =   100
+            ScaleMode       =   3  'Pixel
+            ScaleWidth      =   100
+            TabIndex        =   425
+            TabStop         =   0   'False
+            Top             =   480
+            Width           =   1500
+         End
+         Begin VB.TextBox txtShowText 
+            Height          =   2775
+            Left            =   1920
+            MultiLine       =   -1  'True
+            ScrollBars      =   2  'Vertical
+            TabIndex        =   187
+            Top             =   480
+            Width           =   3255
+         End
+         Begin VB.CommandButton cmdShowText_Ok 
+            Caption         =   "Ok"
+            Height          =   375
+            Left            =   1440
+            TabIndex        =   186
+            Top             =   3600
+            Width           =   1215
+         End
+         Begin VB.CommandButton cmdShowText_Cancel 
+            Caption         =   "Cancel"
+            Height          =   375
+            Left            =   2760
+            TabIndex        =   185
+            Top             =   3600
+            Width           =   1215
+         End
+         Begin VB.Label lblFace 
+            Caption         =   "Face: 0"
+            Height          =   255
+            Left            =   240
+            TabIndex        =   427
+            Top             =   2040
+            Width           =   975
+         End
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Text:"
+            Height          =   255
+            Index           =   18
+            Left            =   1920
+            TabIndex        =   188
+            Top             =   240
+            Width           =   1935
+         End
+      End
+      Begin VB.Frame fraCommand 
+         Caption         =   "Map Overlay"
+         Height          =   2055
+         Index           =   24
+         Left            =   1320
+         TabIndex        =   408
+         Top             =   1320
+         Visible         =   0   'False
+         Width           =   4095
+         Begin VB.CommandButton cmdMapTint_Cancel 
+            Caption         =   "Cancel"
+            Height          =   375
+            Left            =   2760
+            TabIndex        =   418
+            Top             =   1560
+            Width           =   1215
+         End
+         Begin VB.CommandButton cmdMapTint_Ok 
+            Caption         =   "Ok"
+            Height          =   375
+            Left            =   1440
+            TabIndex        =   417
+            Top             =   1560
+            Width           =   1215
+         End
+         Begin VB.HScrollBar scrlMapTintData 
+            Height          =   255
+            Index           =   3
+            Left            =   2280
+            Max             =   255
+            TabIndex        =   412
+            Top             =   1200
+            Width           =   855
+         End
+         Begin VB.HScrollBar scrlMapTintData 
+            Height          =   255
+            Index           =   0
+            Left            =   120
+            Max             =   255
+            TabIndex        =   411
+            Top             =   480
+            Width           =   855
+         End
+         Begin VB.HScrollBar scrlMapTintData 
+            Height          =   255
+            Index           =   1
+            Left            =   2280
+            Max             =   255
+            TabIndex        =   410
+            Top             =   480
+            Width           =   855
+         End
+         Begin VB.HScrollBar scrlMapTintData 
+            Height          =   255
+            Index           =   2
+            Left            =   120
+            Max             =   255
+            TabIndex        =   409
+            Top             =   1200
+            Width           =   855
+         End
+         Begin VB.Label lblMapTintData 
+            Caption         =   "Opacity: 0"
+            Height          =   255
+            Index           =   3
+            Left            =   2280
+            TabIndex        =   416
+            Top             =   960
+            Width           =   1455
+         End
+         Begin VB.Label lblMapTintData 
+            Caption         =   "Red: 0"
+            Height          =   255
+            Index           =   0
+            Left            =   120
+            TabIndex        =   415
+            Top             =   240
+            Width           =   975
+         End
+         Begin VB.Label lblMapTintData 
+            Caption         =   "Green: 0"
+            Height          =   255
+            Index           =   1
+            Left            =   2280
+            TabIndex        =   414
+            Top             =   240
+            Width           =   1455
+         End
+         Begin VB.Label lblMapTintData 
+            Caption         =   "Blue: 0"
+            Height          =   255
+            Index           =   2
+            Left            =   120
+            TabIndex        =   413
+            Top             =   960
+            Width           =   1455
          End
       End
    End
@@ -4376,7 +4376,7 @@ Private Sub cmdClearPage_Click()
 End Sub
 
 Private Sub cmdCommands_Click(Index As Integer)
-    Dim i As Long, X As Long
+    Dim i As Long, x As Long
     
     Select Case Index
         Case 0
@@ -4537,9 +4537,9 @@ Private Sub cmdCommands_Click(Index As Integer)
             cmbEvent.Enabled = True
             For i = 1 To Map.EventCount
                 If i <> EditorEvent Then
-                    cmbEvent.AddItem Trim$(Map.Events(i).name)
-                    X = X + 1
-                    ListOfEvents(X) = i
+                    cmbEvent.AddItem Trim$(Map.events(i).name)
+                    x = x + 1
+                    ListOfEvents(x) = i
                 End If
             Next
             IsMoveRouteCommand = True
@@ -4559,7 +4559,7 @@ Private Sub cmdCommands_Click(Index As Integer)
         Case 25
             cmbPlayAnimEvent.Clear
             For i = 1 To Map.EventCount
-                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.Events(i).name)
+                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).name)
             Next
             cmbPlayAnimEvent.ListIndex = 0
             optPlayAnimPlayer.Value = True
@@ -5617,14 +5617,14 @@ Private Sub lstCommands_Click()
 End Sub
 
 Sub AddMoveRouteCommand(Index As Integer)
-Dim i As Long, X As Long, Z As Long
+Dim i As Long, x As Long, Z As Long
     Index = Index + 1
     If lstMoveRoute.ListIndex > -1 Then
         i = lstMoveRoute.ListIndex + 1
         TempMoveRouteCount = TempMoveRouteCount + 1
         ReDim Preserve TempMoveRoute(TempMoveRouteCount)
-        For X = TempMoveRouteCount - 1 To i Step -1
-            TempMoveRoute(X + 1) = TempMoveRoute(X)
+        For x = TempMoveRouteCount - 1 To i Step -1
+            TempMoveRoute(x + 1) = TempMoveRoute(x)
         Next
         TempMoveRoute(i).Index = Index
         'if set graphic then...
@@ -5734,19 +5734,19 @@ Dim i As Long
         cmbChatBubbleTarget.Visible = True
         cmbChatBubbleTarget.Clear
         For i = 1 To Map.EventCount
-            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.Events(i).name)
+            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.events(i).name)
         Next
         cmbChatBubbleTarget.ListIndex = 0
     End If
 End Sub
 
 Private Sub optCondition_Index_Click(Index As Integer)
-Dim i As Long, X As Long
+Dim i As Long, x As Long
     For i = 0 To 6
-        If optCondition_Index(i).Value = True Then X = i
+        If optCondition_Index(i).Value = True Then x = i
     Next
     ClearConditionFrame
-    Select Case X
+    Select Case x
         Case 0
             cmbCondition_PlayerVarIndex.Enabled = True
             cmbCondition_PlayerVarCompare.Enabled = True
@@ -5885,25 +5885,25 @@ Private Sub picGraphic_Click()
     GraphicSelType = 0
 End Sub
 
-Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 Dim i As Long
     If frmEditor_Events.cmbGraphic.ListIndex = 2 Then
         'Tileset... hard one....
         If ShiftDown Then
             If GraphicSelX > -1 And GraphicSelY > -1 Then
-                If CLng(X + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
-                    GraphicSelX2 = CLng(X + frmEditor_Events.hScrlGraphicSel.Value) / 32
+                If CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
+                    GraphicSelX2 = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32
                     GraphicSelY2 = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32
                 End If
             End If
         Else
-            GraphicSelX = CLng(X + frmEditor_Events.hScrlGraphicSel.Value) \ 32
+            GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) \ 32
             GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) \ 32
             GraphicSelX2 = 0
             GraphicSelY2 = 0
         End If
     ElseIf frmEditor_Events.cmbGraphic.ListIndex = 1 Then
-        GraphicSelX = CLng(X + frmEditor_Events.hScrlGraphicSel.Value)
+        GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value)
         GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value)
         GraphicSelX2 = 0
         GraphicSelY2 = 0
