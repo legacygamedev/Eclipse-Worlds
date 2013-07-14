@@ -14,7 +14,7 @@ Public Shop(1 To MAX_SHOPS) As ShopRec
 Public Spell(1 To MAX_SPELLS) As SpellRec
 Public Resource(1 To MAX_RESOURCES) As ResourceRec
 Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
-Public Events(1 To MAX_EVENTS) As EventWrapperRec
+Public events(1 To MAX_EVENTS) As EventWrapperRec
 Public Ban(1 To MAX_BANS) As BanRec
 Public title(1 To MAX_TITLES) As TitleRec
 Public Moral(1 To MAX_MORALS) As MoralRec
@@ -52,7 +52,7 @@ Public Party As PartyRec
 
 Public Type SoundsRec
     X As Long
-    y As Long
+    Y As Long
     handle As Long
     InUse As Boolean
     channel As Long
@@ -118,11 +118,11 @@ Public Type BuffRec
 End Type
 
 Type FriendsRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
 End Type
 
 Type FoesRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
 End Type
 
 Public Type PlayerRec
@@ -134,7 +134,7 @@ Public Type PlayerRec
     Face As Integer
     
     ' General
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Gender As Byte
     Class As Byte
     Sprite As Integer
@@ -147,7 +147,7 @@ Public Type PlayerRec
     ' Position
     Map As Integer
     X As Byte
-    y As Byte
+    Y As Byte
     Dir As Byte
     
     ' Vitals
@@ -193,7 +193,7 @@ Public Type PlayerEditableRec
     Password As String * NAME_LENGTH
   
     ' General
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Gender As Byte
     Class As Byte
     Sprite As Integer
@@ -225,7 +225,7 @@ End Type
 
 Private Type TileDataRec
     X As Byte
-    y As Byte
+    Y As Byte
     Tileset As Byte
 End Type
 
@@ -324,16 +324,16 @@ Public Type EventPageRec
     
     ' Client needed only
     X As Long
-    y As Long
+    Y As Long
 End Type
 
 Public Type EventRec
-    name As String
+    Name As String
     Global As Long
     PageCount As Long
     Pages() As EventPageRec
     X As Long
-    y As Long
+    Y As Long
 End Type
 
 Public Type TileRec
@@ -348,10 +348,10 @@ Public Type TileRec
 End Type
 
 Private Type MapEventRec
-    name As String
+    Name As String
     Dir As Long
     X As Long
-    y As Long
+    Y As Long
     GraphicType As Long
     GraphicX As Long
     GraphicY As Long
@@ -373,7 +373,7 @@ Private Type MapEventRec
 End Type
 
 Private Type MapRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     BGS As String * FILE_LENGTH
     
@@ -412,7 +412,7 @@ Private Type MapRec
     NPC(1 To MAX_MAP_NPCS) As Long
     NPCSpawnType(1 To MAX_MAP_NPCS) As Long
     EventCount As Long
-    Events() As EventRec
+    events() As EventRec
     
     ' Client side only
     CurrentEvents As Long
@@ -420,7 +420,7 @@ Private Type MapRec
 End Type
 
 Private Type ClassRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Stat(1 To Stats.Stat_Count - 1) As Integer
     MaleSprite As Integer
     FemaleSprite As Integer
@@ -437,10 +437,16 @@ Private Type ClassRec
     
     ' Color
     Color As Long
+    
+    ' Start position
+    Map As Integer
+    X As Byte
+    Y As Byte
+    Dir As Byte
 End Type
 
 Private Type ItemRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Desc As String * 256
     Sound As String * FILE_LENGTH
     
@@ -486,11 +492,11 @@ Private Type MapItemRec
     Durability As Integer
     Frame As Byte
     X As Byte
-    y As Byte
+    Y As Byte
 End Type
 
 Private Type NpcRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     title As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     Sound As String * FILE_LENGTH
@@ -521,7 +527,7 @@ Private Type MapNpcRec
     TargetType As Byte
     Vital(1 To Vitals.Vital_Count - 1) As Long
     X As Byte
-    y As Byte
+    Y As Byte
     Dir As Byte
     
     ' Client use only
@@ -547,7 +553,7 @@ Private Type TradeItemRec
 End Type
 
 Private Type ShopRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     BuyRate As Integer
     SellRate As Integer
     TradeItem(1 To MAX_TRADES) As TradeItemRec
@@ -555,7 +561,7 @@ Private Type ShopRec
 End Type
 
 Private Type SpellRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Desc As String * 256
     Sound As String * FILE_LENGTH
     
@@ -569,7 +575,7 @@ Private Type SpellRec
     Icon As Long
     Map As Long
     X As Long
-    y As Long
+    Y As Long
     Dir As Byte
     Vital As Long
     Duration As Long
@@ -588,12 +594,12 @@ End Type
 
 Public Type MapResourceRec
     X As Long
-    y As Long
+    Y As Long
     ResourceState As Byte
 End Type
 
 Private Type ResourceRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     SuccessMessage As String * NAME_LENGTH
     EmptyMessage As String * NAME_LENGTH
     FailMessage As String * NAME_LENGTH
@@ -620,7 +626,7 @@ Private Type ActionMsgRec
     Color As Long
     Scroll As Long
     X As Long
-    y As Long
+    Y As Long
     Alpha As Byte
 End Type
 
@@ -628,12 +634,12 @@ Private Type BloodRec
     Sprite As Long
     Timer As Long
     X As Long
-    y As Long
+    Y As Long
     Alpha As Byte
 End Type
 
 Private Type AnimationRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Sound As String * FILE_LENGTH
     
     Sprite(0 To 1) As Long
@@ -645,7 +651,7 @@ End Type
 Private Type AnimInstanceRec
     Animation As Long
     X As Byte
-    y As Byte
+    Y As Byte
     
     ' Used for locking to players/npcs
     lockIndex As Long
@@ -681,7 +687,7 @@ Private Type BanRec
 End Type
 
 Public Type TitleRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Color As Byte
     LevelReq As Byte
     PKReq As Integer
@@ -689,7 +695,7 @@ Public Type TitleRec
 End Type
 
 Public Type MoralRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Color As Byte
     CanPK As Byte
     CanCast As Byte
@@ -708,7 +714,7 @@ End Type
 
 Type DropRec
     X As Long
-    y As Long
+    Y As Long
     YSpeed As Long
     XSpeed As Long
     Init As Boolean
@@ -737,7 +743,7 @@ End Type
 Public Type WeatherParticleRec
     Type As Long
     X As Long
-    y As Long
+    Y As Long
     Velocity As Long
     InUse As Long
 End Type
@@ -745,7 +751,7 @@ End Type
 ' Auto tiles
 Public Type PointRec
     X As Long
-    y As Long
+    Y As Long
 End Type
 
 Public Type QuarterTileRec
@@ -778,7 +784,7 @@ Public Type SubEventRec
 End Type
 
 Public Type EventWrapperRec
-    name As String
+    Name As String
     chkSwitch As Byte
     chkVariable As Byte
     chkHasItem As Byte

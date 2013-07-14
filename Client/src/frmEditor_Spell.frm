@@ -591,7 +591,7 @@ Private Sub chkAoE_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If frmEditor_Spell.chkAoE = False Then
         frmEditor_Spell.scrlAOE.Enabled = False
@@ -602,7 +602,7 @@ Private Sub chkAoE_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "chkAoE_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -611,7 +611,7 @@ Private Sub chkWeaponDamage_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If frmEditor_Spell.chkWeaponDamage.Value = 0 Then
         Spell(EditorIndex).WeaponDamage = False
@@ -621,7 +621,7 @@ Private Sub chkWeaponDamage_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "chkAoE_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -630,20 +630,20 @@ Private Sub cmbClass_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Spell(EditorIndex).ClassReq = cmbClass.ListIndex
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmbClass_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmbSound_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If cmbSound.ListIndex > 0 Then
         Spell(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
@@ -653,7 +653,7 @@ Private Sub cmbSound_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdSound_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -662,7 +662,7 @@ Private Sub cmbType_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Not cmbType.ListIndex = SPELL_TYPE_WARP Then
         scrlX.Enabled = False
@@ -687,7 +687,7 @@ Private Sub cmbType_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmbType_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -698,7 +698,7 @@ Private Sub cmdDelete_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ClearSpell EditorIndex
     
@@ -711,7 +711,7 @@ Private Sub cmdDelete_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdDelete_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -720,21 +720,21 @@ Private Sub cmdSave_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     EditorSave = True
     SpellEditorSave
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdSave_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Set max values
     scrlIcon.max = NumSpellIcons
@@ -748,17 +748,18 @@ Private Sub Form_Load()
     scrlLevel.max = MAX_LEVEL
     txtDesc.MaxLength = 256
     scrlRankUp.max = MAX_SPELLS
+    scrlMap.max = MAX_MAPS
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Form_Load", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If EditorSave = False Then
         SpellEditorCancel
@@ -768,7 +769,7 @@ Private Sub Form_Unload(Cancel As Integer)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Form_Unload", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -777,13 +778,13 @@ Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     SpellEditorInit
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "lstIndex_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -792,13 +793,13 @@ Private Sub cmdCancel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Unload frmEditor_Spell
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdCancel_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -807,7 +808,7 @@ Private Sub scrlAccess_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlAccess.Value > 0 Then
         lblAccess.Caption = "Access Required: " & scrlAccess.Value
@@ -818,7 +819,7 @@ Private Sub scrlAccess_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlAccess_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -827,7 +828,7 @@ Private Sub scrlAnim_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlAnim.Value > 0 Then
         lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).Name)
@@ -838,7 +839,7 @@ Private Sub scrlAnim_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlAnim_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -847,7 +848,7 @@ Private Sub scrlAnimCast_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlAnimCast.Value > 0 Then
         lblAnimCast.Caption = "Cast Animation: " & Trim$(Animation(scrlAnimCast.Value).Name)
@@ -858,7 +859,7 @@ Private Sub scrlAnimCast_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlAnimCast_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -867,7 +868,7 @@ Private Sub scrlAOE_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlAOE.Value > 0 Then
         lblAOE.Caption = "AoE Range: " & scrlAOE.Value & " tiles"
@@ -878,7 +879,7 @@ Private Sub scrlAOE_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlAOE_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -887,14 +888,14 @@ Private Sub scrlCast_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblCast.Caption = "Casting Time: " & scrlCast.Value & " s"
     Spell(EditorIndex).CastTime = scrlCast.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlCast_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -903,14 +904,14 @@ Private Sub scrlCastRequired_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblCastRequired.Caption = "Cast Required: " & scrlCastRequired.Value
     Spell(EditorIndex).CastRequired = scrlCastRequired.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlCastRequired_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -921,7 +922,7 @@ Private Sub scrlDir_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Select Case scrlDir.Value
         Case 0
@@ -938,7 +939,7 @@ Private Sub scrlDir_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlDir_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -947,14 +948,14 @@ Private Sub scrlDuration_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblDuration.Caption = "Duration: " & scrlDuration.Value & " s"
     Spell(EditorIndex).Duration = scrlDuration.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlDuration_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -963,7 +964,7 @@ Private Sub scrlIcon_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlIcon.Value > 0 Then
         lblIcon.Caption = "Icon: " & scrlIcon.Value
@@ -974,7 +975,7 @@ Private Sub scrlIcon_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlIcon_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -983,14 +984,14 @@ Private Sub scrlInterval_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblInterval.Caption = "Interval: " & scrlInterval.Value & " s"
     Spell(EditorIndex).Interval = scrlInterval.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlInterval_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -999,7 +1000,7 @@ Private Sub scrlLevel_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlLevel.Value > 0 Then
         lblLevel.Caption = "Level Required: " & scrlLevel.Value
@@ -1010,7 +1011,7 @@ Private Sub scrlLevel_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlLevel_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1019,14 +1020,14 @@ Private Sub scrlMap_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblMap.Caption = "Map: " & scrlMap.Value
     Spell(EditorIndex).Map = scrlMap.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlMap_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1035,7 +1036,7 @@ Private Sub scrlMP_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlMP.Value > 0 Then
         lblMP.Caption = "Mana Cost: " & scrlMP.Value
@@ -1046,7 +1047,7 @@ Private Sub scrlMP_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlMP_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1055,7 +1056,7 @@ Private Sub scrlRange_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlRange.Value > 0 Then
         lblRange.Caption = "Range: " & scrlRange.Value & " tiles"
@@ -1066,7 +1067,7 @@ Private Sub scrlRange_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlRange_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1075,14 +1076,14 @@ Private Sub scrlRankUp_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblRankUp.Caption = "Rank Up Spell: " & scrlRankUp.Value
     Spell(EditorIndex).NewSpell = scrlRankUp.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlRankUp_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1091,14 +1092,14 @@ Private Sub scrlSprite_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblSprite.Caption = "Sprite: " & scrlSprite.Value
     Spell(EditorIndex).Sprite = scrlSprite.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlSprite_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1107,7 +1108,7 @@ Private Sub scrlStun_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlStun.Value > 0 Then
         lblStun.Caption = "Stun Duration: " & scrlStun.Value & " s"
@@ -1118,7 +1119,7 @@ Private Sub scrlStun_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlStun_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1127,14 +1128,14 @@ Private Sub scrlVital_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblVital.Caption = "Vital: " & scrlVital.Value
     Spell(EditorIndex).Vital = scrlVital.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlVital_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1143,14 +1144,14 @@ Private Sub scrlX_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblX.Caption = "X: " & scrlX.Value
-    Spell(EditorIndex).x = scrlX.Value
+    Spell(EditorIndex).X = scrlX.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlX_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1159,14 +1160,14 @@ Private Sub scrlY_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblY.Caption = "Y: " & scrlY.Value
-    Spell(EditorIndex).y = scrlY.Value
+    Spell(EditorIndex).Y = scrlY.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlY_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1175,7 +1176,7 @@ Private Sub txtCool_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Not IsNumeric(txtCool.text) Then txtCool.text = 1
     If txtCool.text < 1 Then txtCool = 1
@@ -1185,7 +1186,7 @@ Private Sub txtCool_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtCool_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1194,13 +1195,13 @@ Private Sub txtDesc_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Spell(EditorIndex).Desc = Trim$(txtDesc.text)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtDesc_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1211,7 +1212,7 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
     Spell(EditorIndex).Name = Trim$(txtName.text)
@@ -1221,46 +1222,46 @@ Private Sub txtName_Validate(Cancel As Boolean)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtName_Validate", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtName_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtName.SelStart = Len(txtName)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtName_GotFocus", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtDesc_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtDesc.SelStart = Len(txtDesc)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtDesc_GotFocus", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtCool_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtCool.SelStart = Len(txtCool)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtCool_GotFocus", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1269,7 +1270,7 @@ Private Sub txtSearch_Change()
     Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 0 To lstIndex.ListCount - 1
         Find = Trim$(i + 1 & ": " & txtSearch.text)
@@ -1285,7 +1286,7 @@ Private Sub txtSearch_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtSearch_Change", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

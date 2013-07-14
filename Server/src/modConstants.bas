@@ -181,11 +181,6 @@ Public Const ACTIONMSG_SCREEN As Byte = 2
 Public Const nLng As Long = (&H80 Or &H1 Or &H4 Or &H20) + (&H8 Or &H40)
 
 ' ********************************************
-' Default starting location [Server Only]
-Public Const START_MAP As Integer = 1
-Public Const START_X As Byte = 0
-Public Const START_Y As Byte = 0
-
 Public Const ITEM_SPAWN_TIME As Long = 30000 ' 30 seconds
 Public Const ITEM_DESPAWN_TIME As Long = 90000 ' 90 seconds
 Public Const MAX_DOTS As Byte = 30

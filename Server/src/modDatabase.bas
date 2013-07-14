@@ -295,7 +295,7 @@ Public Sub BanIndex(ByVal BanPlayerIndex As Long, ByVal BannedByIndex As String,
     IP = Mid$(IP, 1, i)
 
     For n = 1 To MAX_BANS
-        If Not Len(Trim$(Ban(n).PlayerLogin)) > 0 And Not Len(Trim$(Ban(n).PlayerName)) > 0 Then
+        If Not Len(Trim$(Ban(n).PlayerLogin)) > 0 And Not Len(Trim$(Ban(n).playerName)) > 0 Then
             With Ban(n)
                 .Date = Date
                 
@@ -309,7 +309,7 @@ Public Sub BanIndex(ByVal BanPlayerIndex As Long, ByVal BannedByIndex As String,
                 .HDSerial = GetPlayerHDSerial(BanPlayerIndex)
                 .IP = IP
                 .PlayerLogin = GetPlayerLogin(BanPlayerIndex)
-                .PlayerName = GetPlayerName(BanPlayerIndex)
+                .playerName = GetPlayerName(BanPlayerIndex)
                 .Reason = Reason
             End With
             Call SaveBan(n)
@@ -439,7 +439,7 @@ Sub AddChar(ByVal index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
         .Level = 1
     
         ' Stats
-        For i = 1 To Stats.Stat_count - 1
+        For i = 1 To Stats.Stat_Count - 1
             .Stat(i) = Class(ClassNum).Stat(i)
         Next
         
@@ -451,19 +451,19 @@ Sub AddChar(ByVal index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
         .CurrentCombatTree = 1
         
         ' Set the player's start values
-        .Dir = DIR_DOWN
-        .Map = START_MAP
-        .X = START_X
-        .Y = START_Y
+        .Dir = Class(GetPlayerClass(index)).Dir
+        .Map = Class(GetPlayerClass(index)).Map
+        .X = Class(GetPlayerClass(index)).X
+        .Y = Class(GetPlayerClass(index)).Y
         
         ' Vitals
         .Vital(Vitals.HP) = GetPlayerMaxVital(index, Vitals.HP)
         .Vital(Vitals.MP) = GetPlayerMaxVital(index, Vitals.MP)
         
         ' Set the checkpoint values
-        .CheckPointMap = START_MAP
-        .CheckPointX = START_X
-        .CheckPointY = START_Y
+        .CheckPointMap = .Map
+        .CheckPointX = .X
+        .CheckPointY = .Y
         
         ' Set the trade status value
         .CanTrade = True
@@ -926,7 +926,7 @@ End Sub
 Sub ClearNpc(ByVal index As Long)
     Call ZeroMemory(ByVal VarPtr(NPC(index)), LenB(NPC(index)))
     NPC(index).Name = vbNullString
-    NPC(index).Title = vbNullString
+    NPC(index).title = vbNullString
     NPC(index).AttackSay = vbNullString
     NPC(index).Music = vbNullString
     NPC(index).Sound = vbNullString
@@ -1188,8 +1188,8 @@ Sub SaveMap(ByVal MapNum As Long)
                                 PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data2", Val(.MoveRoute(Y).Data2)
                                 PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data3", Val(.MoveRoute(Y).Data3)
                                 PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data4", Val(.MoveRoute(Y).Data4)
-                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data5", Val(.MoveRoute(Y).data5)
-                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data6", Val(.MoveRoute(Y).data6)
+                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data5", Val(.MoveRoute(Y).Data5)
+                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data6", Val(.MoveRoute(Y).Data6)
                             Next
                         End If
                         
@@ -1220,8 +1220,8 @@ Sub SaveMap(ByVal MapNum As Long)
                                         PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data2", Val(.Data2)
                                         PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data3", Val(.Data3)
                                         PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data4", Val(.Data4)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data5", Val(.data5)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data6", Val(.data6)
+                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data5", Val(.Data5)
+                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data6", Val(.Data6)
                                         PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchCommandList", Val(.ConditionalBranch.CommandList)
                                         PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchCondition", Val(.ConditionalBranch.Condition)
                                         PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchData1", Val(.ConditionalBranch.Data1)
@@ -1236,8 +1236,8 @@ Sub SaveMap(ByVal MapNum As Long)
                                                 PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data2", Val(.MoveRoute(w).Data2)
                                                 PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data3", Val(.MoveRoute(w).Data3)
                                                 PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data4", Val(.MoveRoute(w).Data4)
-                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data5", Val(.MoveRoute(w).data5)
-                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data6", Val(.MoveRoute(w).data6)
+                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data5", Val(.MoveRoute(w).Data5)
+                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data6", Val(.MoveRoute(w).Data6)
                                             Next
                                         End If
                                     End With
@@ -1386,8 +1386,8 @@ Sub LoadMaps()
                                     .MoveRoute(Y).Data2 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data2"))
                                     .MoveRoute(Y).Data3 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data3"))
                                     .MoveRoute(Y).Data4 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data4"))
-                                    .MoveRoute(Y).data5 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data5"))
-                                    .MoveRoute(Y).data6 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data6"))
+                                    .MoveRoute(Y).Data5 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data5"))
+                                    .MoveRoute(Y).Data6 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data6"))
                                 Next
                             End If
                             
@@ -1420,8 +1420,8 @@ Sub LoadMaps()
                                             .Data2 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data2"))
                                             .Data3 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data3"))
                                             .Data4 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data4"))
-                                            .data5 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data5"))
-                                            .data6 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data6"))
+                                            .Data5 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data5"))
+                                            .Data6 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data6"))
                                             .ConditionalBranch.CommandList = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchCommandList"))
                                             .ConditionalBranch.Condition = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchCondition"))
                                             .ConditionalBranch.Data1 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchData1"))
@@ -1437,8 +1437,8 @@ Sub LoadMaps()
                                                     .MoveRoute(w).Data2 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data2"))
                                                     .MoveRoute(w).Data3 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data3"))
                                                     .MoveRoute(w).Data4 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data4"))
-                                                    .MoveRoute(w).data5 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data5"))
-                                                    .MoveRoute(w).data6 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data6"))
+                                                    .MoveRoute(w).Data5 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data5"))
+                                                    .MoveRoute(w).Data6 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data6"))
                                                 Next
                                             End If
                                         End With
@@ -1467,7 +1467,7 @@ End Sub
 
 Sub ClearMapItem(ByVal index As Long, ByVal MapNum As Integer)
     Call ZeroMemory(ByVal VarPtr(MapItem(MapNum, index)), LenB(MapItem(MapNum, index)))
-    MapItem(MapNum, index).PlayerName = vbNullString
+    MapItem(MapNum, index).playerName = vbNullString
 End Sub
 
 Sub ClearMapItems()
@@ -1624,7 +1624,7 @@ End Sub
 Sub ClearBan(ByVal index As Long)
     Call ZeroMemory(ByVal VarPtr(Ban(index)), LenB(Ban(index)))
     Ban(index).PlayerLogin = vbNullString
-    Ban(index).PlayerName = vbNullString
+    Ban(index).playerName = vbNullString
     Ban(index).Reason = vbNullString
     Ban(index).IP = vbNullString
     Ban(index).HDSerial = vbNullString
@@ -1644,7 +1644,7 @@ Sub SaveTitle(ByVal TitleNum As Long)
     filename = App.path & "\data\titles\" & TitleNum & ".dat"
     
     Open filename For Binary As #F
-        Put #F, , Title(TitleNum)
+        Put #F, , title(TitleNum)
     Close #F
 End Sub
 
@@ -1666,7 +1666,7 @@ Sub LoadTitle(index As Long)
     filename = App.path & "\data\titles\" & index & ".dat"
     
     Open filename For Binary As #F
-        Get #F, , Title(index)
+        Get #F, , title(index)
     Close #F
 End Sub
 
@@ -1690,8 +1690,8 @@ Sub ClearTitles()
 End Sub
 
 Sub ClearTitle(ByVal index As Long)
-    Call ZeroMemory(ByVal VarPtr(Title(index)), LenB(Title(index)))
-    Title(index).Name = vbNullString
+    Call ZeroMemory(ByVal VarPtr(title(index)), LenB(title(index)))
+    title(index).Name = vbNullString
 End Sub
 
 ' ************

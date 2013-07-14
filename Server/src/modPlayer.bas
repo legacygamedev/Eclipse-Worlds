@@ -92,7 +92,13 @@ Sub JoinGame(ByVal Index As Long)
 
     ' Send a global message that they joined
     If GetPlayerAccess(Index) <= STAFF_MODERATOR Then
-        Call GlobalMsg(GetPlayerName(Index) & " has joined " & Options.Name & "!", Class(GetPlayerClass(Index)).Color)
+        If Class(GetPlayerClass(Index)).Color = Orange Then
+            Color = RGB(255, 165, 0)
+        Else
+            Color = Class(GetPlayerClass(Index)).Color
+        End If
+        
+        Call GlobalMsg(GetPlayerName(Index) & " has joined " & Options.Name & "!", Color)
     Else
          ' Color for access
         Select Case GetPlayerAccess(Index)
@@ -227,7 +233,7 @@ Sub LeftGame(ByVal Index As Long)
     End If
 End Sub
 
-Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal NeedMap = False)
+Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal NeedMap = False, Optional ByVal Dir As Integer = -1)
     Dim ShopNum As Long
     Dim OldMap As Long
     Dim i As Long
@@ -249,6 +255,11 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     Call SetPlayerX(Index, X)
     Call SetPlayerY(Index, Y)
     UpdateMapBlock MapNum, X, Y, True
+    
+    ' Set direction
+    If Dir > -1 Then
+        Call SetPlayerDir(Index, Dir)
+    End If
     
     ' if same map then just send their co-ordinates
     If MapNum = GetPlayerMap(Index) And Not NeedMap Then
@@ -292,7 +303,7 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     If GetTotalMapPlayers(OldMap) = 0 Then
         PlayersOnMap(OldMap) = NO
         
-        ' Get all npcs' vitals
+        ' Get all NPCs' vitals
         For i = 1 To Map(OldMap).Npc_HighIndex
             If MapNpc(OldMap).NPC(i).Num > 0 Then
                 MapNpc(OldMap).NPC(i).Vital(Vitals.HP) = GetNpcMaxVital(MapNpc(OldMap).NPC(i).Num, Vitals.HP)
@@ -1225,7 +1236,7 @@ Private Sub WarpPlayer(ByVal Index As Long)
                 PlayerWarp Index, .BootMap, .BootX, .BootY
             Else
                 ' Warp to the start map
-                Call PlayerWarp(Index, START_MAP, START_X, START_Y)
+                Call PlayerWarp(Index, Class(GetPlayerClass(Index)).Map, Class(GetPlayerClass(Index)).X, Class(GetPlayerClass(Index)).Y, False, Class(GetPlayerClass(Index)).Dir)
             End If
         End If
      End With
@@ -1619,7 +1630,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
             TotalPoints = GetPlayerPoints(Index)
             filename = App.path & "\data\classes.ini"
             
-            For i = 1 To Stats.Stat_count - 1
+            For i = 1 To Stats.Stat_Count - 1
                 TotalPoints = TotalPoints + (GetPlayerStat(Index, i) - (Val(GetVar(filename, "Class" & Index, "" & i & ""))))
                 Call SetPlayerStat(Index, i, Val(GetVar(filename, "Class" & Index, "" & i & "")))
             Next
@@ -1832,7 +1843,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal InvItem As Integer, Optiona
     End If
     
     ' Check if they have the stats required to use this item
-    For i = 1 To Stats.Stat_count - 1
+    For i = 1 To Stats.Stat_Count - 1
         If GetPlayerRawStat(Index, i) < Item(InvItem).Stat_Req(i) Then
             If Message Then
                 PlayerMsg Index, "You do not meet the stat requirements to use this item.", BrightRed
