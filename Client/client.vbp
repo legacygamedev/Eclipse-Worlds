@@ -58,7 +58,6 @@ HelpFile=""
 NoControlUpgrade=1
 Title="Legends of Arteix"
 ExeName32="Client.exe"
-Path32="..\..\..\..\Dropbox\EclipseWorlds\Client"
 Command32=""
 Name="Client"
 HelpContextID="0"

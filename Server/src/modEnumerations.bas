@@ -25,16 +25,16 @@ Public Enum ServerPackets
     SPlayerData
     SPlayerMove
     SPlayerWarp
-    SNPCMove
+    SNpcMove
     SPlayerDir
-    SNPCDir
+    SNpcDir
     SAttack
-    SNPCAttack
+    SNpcAttack
     SCheckForMap
     SMapData
     SMapItemData
-    SMapNPCData
-    SMapNPCTarget
+    SMapNpcData
+    SMapNpcTarget
     SMapDone
     SGlobalMsg
     SAdminMsg
@@ -44,10 +44,10 @@ Public Enum ServerPackets
     SItemEditor
     SUpdateItem
     SREditor
-    SSpawnNPC
-    SNPCDead
-    SNPCEditor
-    SUpdateNPC
+    SSpawnNpc
+    SNpcDead
+    SNpcEditor
+    SUpdateNpc
     SEditMap
     SEditEvent
     SShopEditor
@@ -68,7 +68,7 @@ Public Enum ServerPackets
     SAnimationEditor
     SUpdateAnimation
     SAnimation
-    SMapNPCVitals
+    SMapNpcVitals
     SSpellCooldown
     SClearSpellBuffer
     SSayMsg
@@ -90,7 +90,7 @@ Public Enum ServerPackets
     SGuildMembers
     SGuildInvite
     SMapReport
-    SNPCSpellBuffer
+    SNpcSpellBuffer
     SCheckpoint
     SUpdateLogs
     SFriendsList
@@ -126,10 +126,12 @@ Public Enum ServerPackets
     SMapEventData
     SChatBubble
     SSpecialEffect
-    'Character Editor
+    
+    ' Character editor
     SPlayersOnline
     SAllCharacters
     SExtendedPlayerData
+    
     ' Make sure SMSG_COUNT is below everything else
     SMSG_COUNT
 End Enum
@@ -270,7 +272,7 @@ Public Enum ClientPackets
     CSwitchesAndVariables
     CRequestSwitchesAndVariables
     
-    ' Character Editor
+    ' Character editor
     CRequestAllCharacters
     CRequestPlayersOnline
     CRequestExtendedPlayerData

@@ -206,7 +206,7 @@ End Sub
 
 Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
     Dim ChatText As String
-    Dim Name As String
+    Dim name As String
     Dim i As Long
     Dim n As Long
     Dim Command() As String
@@ -233,7 +233,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: ~message or /party message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.Text = vbNullString
+                frmMain.txtMyChat.text = vbNullString
                 Exit Sub
             End If
             ' Send the message to the player
@@ -243,7 +243,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 AddText "You are not in a party!", BrightRed
             End If
             MyText = vbNullString
-            frmMain.txtMyChat.Text = vbNullString
+            frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
         
@@ -257,7 +257,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: @message or /guild message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.Text = vbNullString
+                frmMain.txtMyChat.text = vbNullString
                 Exit Sub
             End If
             ' Send the message to the player
@@ -267,7 +267,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 AddText "You are not in a guild!", BrightRed
             End If
             MyText = vbNullString
-            frmMain.txtMyChat.Text = vbNullString
+            frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
 
@@ -281,13 +281,13 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: 'message or /global message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.Text = vbNullString
+                frmMain.txtMyChat.text = vbNullString
                 Exit Sub
             End If
             ' Send the message to the player
             Call GlobalMsg(ChatText)
             MyText = vbNullString
-            frmMain.txtMyChat.Text = vbNullString
+            frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
             
@@ -301,7 +301,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: `message or /staff message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.Text = vbNullString
+                frmMain.txtMyChat.text = vbNullString
                 Exit Sub
             End If
             If GetPlayerAccess(MyIndex) > 0 Then
@@ -309,7 +309,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AdminMsg(GetPlayerName(MyIndex) & ": " & ChatText)
             End If
             MyText = vbNullString
-            frmMain.txtMyChat.Text = vbNullString
+            frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
         
@@ -323,13 +323,13 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: -message or /emote message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.Text = vbNullString
+                frmMain.txtMyChat.text = vbNullString
                 Exit Sub
             End If
             ' Send the message to the player
             Call EmoteMsg(ChatText)
             MyText = vbNullString
-            frmMain.txtMyChat.Text = vbNullString
+            frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
         
@@ -343,16 +343,16 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.Text = vbNullString
+                frmMain.txtMyChat.text = vbNullString
                 Exit Sub
             End If
             
-            Name = vbNullString
+            name = vbNullString
 
             ' Get the desired player from the user text
             For i = 1 To Len(ChatText)
                 If Not Mid$(ChatText, i, 1) = " " Then
-                    Name = Name & Mid$(ChatText, i, 1)
+                    name = name & Mid$(ChatText, i, 1)
                 Else
                     Exit For
                 End If
@@ -363,13 +363,13 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 ChatText = Mid$(ChatText, i + 1, Len(ChatText) - i)
 
                 ' Send the message to the player
-                Call PrivateMsg(Name, ChatText)
+                Call PrivateMsg(name, ChatText)
             Else
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
             End If
             
             MyText = vbNullString
-            frmMain.txtMyChat.Text = vbNullString
+            frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
 
@@ -398,7 +398,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendGuildCreate Command(1)
                     
                 Case "/clearchat"
-                    frmMain.txtChat.Text = vbNullString
+                    frmMain.txtChat.text = vbNullString
                     
                 Case "/trade"
                     SendCanTrade
@@ -792,7 +792,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendRequestEditMap
                 
                 ' Event Editor
-                Case "/editmap"
+                Case "/editevent"
                     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -865,7 +865,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 ' Continue label where we go instead of exiting the sub
 Continue:
             MyText = vbNullString
-            frmMain.txtMyChat.Text = vbNullString
+            frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
 
@@ -906,7 +906,7 @@ Continue:
         End If
 
         MyText = vbNullString
-        frmMain.txtMyChat.Text = vbNullString
+        frmMain.txtMyChat.text = vbNullString
         Exit Sub
     End If
 
