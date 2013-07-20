@@ -9,7 +9,7 @@ Private PlayerBuffer As clsBuffer
 
 Sub TcpInit()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set PlayerBuffer = New clsBuffer
 
@@ -22,20 +22,20 @@ Sub TcpInit()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "TcpInit", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub DestroyTCP()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     frmMain.Socket.close
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "DestroyTCP", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -45,7 +45,7 @@ Public Sub IncomingData(ByVal DataLength As Long)
     Dim pLength As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     frmMain.Socket.GetData buffer, vbUnicode, DataLength
     
@@ -66,7 +66,7 @@ Public Sub IncomingData(ByVal DataLength As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "IncomingData", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -75,7 +75,7 @@ Public Function ConnectToServer(ByVal i As Long) As Boolean
     Dim Wait As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Check to see if we are already connected, if so just exit
     If IsConnected Then
@@ -98,14 +98,14 @@ Public Function ConnectToServer(ByVal i As Long) As Boolean
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ConnectToServer", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Function IsConnected() As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If frmMain.Socket.State = sckConnected Then
         IsConnected = True
@@ -113,14 +113,14 @@ Function IsConnected() As Boolean
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "IsConnected", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Function IsPlaying(ByVal Index As Long) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' If the player doesn't exist, the Name will equal 0
     If Len(GetPlayerName(Index)) > 0 Then
@@ -129,27 +129,27 @@ Function IsPlaying(ByVal Index As Long) As Boolean
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "IsPlaying", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
-Sub SendData(ByRef data() As Byte)
+Sub SendData(ByRef Data() As Byte)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If IsConnected Then
         Set buffer = New clsBuffer
-        buffer.WriteLong (UBound(data) - LBound(data)) + 1
-        buffer.WriteBytes data()
+        buffer.WriteLong (UBound(Data) - LBound(Data)) + 1
+        buffer.WriteBytes Data()
         frmMain.Socket.SendData buffer.ToArray()
     End If
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendData", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -161,7 +161,7 @@ Public Sub SendNewAccount(ByVal Name As String, ByVal Password As String)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CNewAccount
@@ -176,7 +176,7 @@ Public Sub SendNewAccount(ByVal Name As String, ByVal Password As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendNewAccount", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -185,7 +185,7 @@ Public Sub SendDelAccount(ByVal Name As String, ByVal Password As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CDelAccount
@@ -200,7 +200,7 @@ Public Sub SendDelAccount(ByVal Name As String, ByVal Password As String)
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendDelAccount", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -209,7 +209,7 @@ Public Sub SendLogin(ByVal Name As String, ByVal Password As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CLogin
@@ -224,7 +224,7 @@ Public Sub SendLogin(ByVal Name As String, ByVal Password As String)
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendLogin", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -233,7 +233,7 @@ Public Sub SendAddChar(ByVal Name As String, ByVal Gender As Long, ByVal ClassNu
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CAddChar
@@ -245,7 +245,7 @@ Public Sub SendAddChar(ByVal Name As String, ByVal Gender As Long, ByVal ClassNu
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendAddChar", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -254,7 +254,7 @@ Public Sub SendUseChar(ByVal CharSlot As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CUseChar
@@ -264,122 +264,122 @@ Public Sub SendUseChar(ByVal CharSlot As Long)
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendUseChar", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub SayMsg(ByVal text As String)
+Public Sub SayMsg(ByVal Text As String)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSayMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SayMsg", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub GlobalMsg(ByVal text As String)
+Public Sub GlobalMsg(ByVal Text As String)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CGlobalMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "GlobalMsg", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub AdminMsg(ByVal text As String)
+Public Sub AdminMsg(ByVal Text As String)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CAdminMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "AdminMsg", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub PartyMsg(ByVal text As String, PartyNum As Long)
+Public Sub PartyMsg(ByVal Text As String, PartyNum As Long)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CPartyMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "PartyMsg", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub EmoteMsg(ByVal text As String)
+Public Sub EmoteMsg(ByVal Text As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CEmoteMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "EmoteMsg", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub PrivateMsg(ByVal MsgTo As String, text As String)
+Public Sub PrivateMsg(ByVal MsgTo As String, Text As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CPrivateMsg
     buffer.WriteString MsgTo
-    buffer.WriteString text
+    buffer.WriteString Text
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "PrivateMsg", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -388,7 +388,7 @@ Public Sub SendPlayerDir()
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CPlayerDir
@@ -398,7 +398,7 @@ Public Sub SendPlayerDir()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendPlayerDir", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -407,7 +407,7 @@ Public Sub SendPlayerMove()
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CPlayerMove
@@ -429,7 +429,7 @@ Public Sub SendPlayerMove()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendPlayerMove", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -438,7 +438,7 @@ Public Sub SendPlayerRequestNewMap()
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestNewMap
@@ -448,7 +448,7 @@ Public Sub SendPlayerRequestNewMap()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendPlayerRequestNewMap", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -461,7 +461,7 @@ Public Sub SendSaveMap()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Set buffer = New clsBuffer
     CanMoveNow = False
@@ -526,7 +526,7 @@ Public Sub SendSaveMap()
     With Map
         For X = 1 To MAX_MAP_NPCS
             buffer.WriteLong .NPC(X)
-            buffer.WriteLong .NpcSpawnType(X)
+            buffer.WriteLong .NPCSpawnType(X)
         Next
     End With
     
@@ -650,7 +650,7 @@ Public Sub SendSaveMap()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendMap", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -659,7 +659,7 @@ Public Sub WarpMeTo(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CWarpMeTo
@@ -669,7 +669,7 @@ Public Sub WarpMeTo(ByVal Name As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "WarpMeTo", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -678,7 +678,7 @@ Public Sub WarpToMe(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CWarpToMe
@@ -688,7 +688,7 @@ Public Sub WarpToMe(ByVal Name As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "WarptoMe", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -697,7 +697,7 @@ Public Sub WarpTo(ByVal MapNum As Integer)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CWarpTo
@@ -707,7 +707,7 @@ Public Sub WarpTo(ByVal MapNum As Integer)
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "WarpTo", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -716,7 +716,7 @@ Public Sub SendSetAccess(ByVal Name As String, ByVal Access As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSetAccess
@@ -727,7 +727,7 @@ Public Sub SendSetAccess(ByVal Name As String, ByVal Access As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSetAccess", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -736,7 +736,7 @@ Public Sub SendSetSprite(ByVal SpriteNum As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSetSprite
@@ -746,7 +746,7 @@ Public Sub SendSetSprite(ByVal SpriteNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSetSprite", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -765,7 +765,7 @@ Public Sub SendKick(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CKickPlayer
@@ -775,7 +775,7 @@ Public Sub SendKick(ByVal Name As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendKick", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -784,7 +784,7 @@ Public Sub SendMute(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CMutePlayer
@@ -794,7 +794,7 @@ Public Sub SendMute(ByVal Name As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendMute", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -803,7 +803,7 @@ Public Sub SendBan(ByVal Name As String, Reason As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CBanPlayer
@@ -814,7 +814,7 @@ Public Sub SendBan(ByVal Name As String, Reason As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendBan", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -823,7 +823,7 @@ Public Sub SendRequestEditItem()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditItem
@@ -832,7 +832,7 @@ Public Sub SendRequestEditItem()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -843,7 +843,7 @@ Public Sub SendSaveItem(ByVal ItemNum As Long)
     Dim ItemData() As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     ItemSize = LenB(Item(ItemNum))
@@ -857,7 +857,7 @@ Public Sub SendSaveItem(ByVal ItemNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -866,7 +866,7 @@ Public Sub SendRequestEditAnimation()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditAnimation
@@ -875,7 +875,7 @@ Public Sub SendRequestEditAnimation()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditAnimation", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -886,7 +886,7 @@ Public Sub SendSaveAnimation(ByVal Animationnum As Long)
     Dim AnimationData() As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     AnimationSize = LenB(Animation(Animationnum))
@@ -900,7 +900,7 @@ Public Sub SendSaveAnimation(ByVal Animationnum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveAnimation", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -909,7 +909,7 @@ Public Sub SendRequestEditNPC()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditNPC
@@ -918,7 +918,7 @@ Public Sub SendRequestEditNPC()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditNPC", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -929,7 +929,7 @@ Public Sub SendSaveNpc(ByVal NpcNum As Long)
     Dim NpcData() As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     NpcSize = LenB(NPC(NpcNum))
@@ -943,7 +943,7 @@ Public Sub SendSaveNpc(ByVal NpcNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveNpc", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -952,7 +952,7 @@ Public Sub SendRequestEditResource()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditResource
@@ -961,7 +961,7 @@ Public Sub SendRequestEditResource()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditResource", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -972,7 +972,7 @@ Public Sub SendSaveResource(ByVal ResourceNum As Long)
     Dim ResourceData() As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     ResourceSize = LenB(Resource(ResourceNum))
@@ -986,7 +986,7 @@ Public Sub SendSaveResource(ByVal ResourceNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveResource", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -995,7 +995,7 @@ Public Sub SendMapRespawn()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CMapRespawn
@@ -1004,7 +1004,7 @@ Public Sub SendMapRespawn()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendMapRespawn", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1013,7 +1013,7 @@ Public Sub SendUseItem(ByVal InvNum As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CUseItem
@@ -1023,14 +1023,14 @@ Public Sub SendUseItem(ByVal InvNum As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendUseItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub SendDropItem(ByVal InvNum As Byte, ByVal Amount As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If InBank Or InShop > 0 Or InChat Then Exit Sub
     
@@ -1051,7 +1051,7 @@ Public Sub SendDropItem(ByVal InvNum As Byte, ByVal Amount As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendDropItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1061,7 +1061,7 @@ Public Sub SendRequestPlayersOnline()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestPlayersOnline
@@ -1070,7 +1070,7 @@ Public Sub SendRequestPlayersOnline()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestPlayersOnline", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1079,7 +1079,7 @@ Public Sub SendRequestAllCharacters()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestAllCharacters
@@ -1088,28 +1088,28 @@ Public Sub SendRequestAllCharacters()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestAllCharacters", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub SendRequestExtendedPlayerData(playerName As String)
+Public Sub SendRequestExtendedPlayerData(PlayerName As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     
     buffer.WriteLong CRequestExtendedPlayerData
-    buffer.WriteString playerName
+    buffer.WriteString PlayerName
     
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestExtendedPlayerData", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1118,7 +1118,7 @@ Public Sub SendCharacterUpdate()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     
@@ -1138,7 +1138,7 @@ Public Sub SendCharacterUpdate()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendCharacterUpdate", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1147,7 +1147,7 @@ Public Sub SendWhosOnline()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CWhosOnline
@@ -1156,7 +1156,7 @@ Public Sub SendWhosOnline()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendWhosOnline", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1165,7 +1165,7 @@ Public Sub SendMOTDChange(ByVal MOTD As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSetMOTD
@@ -1175,14 +1175,14 @@ Public Sub SendMOTDChange(ByVal MOTD As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendMOTDChange", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub SendSMOTDChange(ByVal SMOTD As String)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Dim buffer As clsBuffer
     Set buffer = New clsBuffer
@@ -1193,14 +1193,14 @@ Public Sub SendSMOTDChange(ByVal SMOTD As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSMOTDChange", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub SendGMOTDChange(ByVal GMOTD As String)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Dim buffer As clsBuffer
     Set buffer = New clsBuffer
@@ -1211,7 +1211,7 @@ Public Sub SendGMOTDChange(ByVal GMOTD As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendGMOTDChange", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1220,7 +1220,7 @@ Public Sub SendRequestEditShop()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditShop
@@ -1229,7 +1229,7 @@ Public Sub SendRequestEditShop()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditShop", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1240,7 +1240,7 @@ Public Sub SendSaveShop(ByVal ShopNum As Long)
     Dim ShopData() As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     ShopSize = LenB(Shop(ShopNum))
@@ -1254,7 +1254,7 @@ Public Sub SendSaveShop(ByVal ShopNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveShop", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1263,7 +1263,7 @@ Public Sub SendRequestEditSpell()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditSpell
@@ -1272,7 +1272,7 @@ Public Sub SendRequestEditSpell()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditSpell", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1283,7 +1283,7 @@ Public Sub SendSaveSpell(ByVal SpellNum As Long)
     Dim SpellData() As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     SpellSize = LenB(Spell(SpellNum))
@@ -1298,7 +1298,7 @@ Public Sub SendSaveSpell(ByVal SpellNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveSpell", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1307,7 +1307,7 @@ Public Sub SendRequestEditMap()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditMap
@@ -1316,8 +1316,26 @@ Public Sub SendRequestEditMap()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditMap", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Public Sub SendRequestEditEvent()
+    Dim buffer As clsBuffer
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Set buffer = New clsBuffer
+    buffer.WriteLong CRequestEditEvent
+    SendData buffer.ToArray()
+    Set buffer = Nothing
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "SendRequestEditEvent", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1325,7 +1343,7 @@ Sub SendChangeInvSlots(ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSwapInvSlots
@@ -1336,7 +1354,7 @@ Sub SendChangeInvSlots(ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSwapHotbarSlots", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1345,7 +1363,7 @@ Sub SendChangeSpellSlots(ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If SpellBuffer > 0 Then
         If PlayerSpells(OldSlot) = SpellBuffer Or PlayerSpells(NewSlot) = SpellBuffer Then
@@ -1363,7 +1381,7 @@ Sub SendChangeSpellSlots(ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendChangeSpellSlots", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1372,7 +1390,7 @@ Sub SendSwapHotbarSlots(ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSwapHotbarSlots
@@ -1383,7 +1401,7 @@ Sub SendSwapHotbarSlots(ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendChangeInvSlots", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1392,7 +1410,7 @@ Sub CheckPing()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     PingStart = timeGetTime
     Set buffer = New clsBuffer
@@ -1402,7 +1420,7 @@ Sub CheckPing()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckPing", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1411,7 +1429,7 @@ Sub SendUnequip(ByVal EqNum As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CUnequip
@@ -1421,7 +1439,7 @@ Sub SendUnequip(ByVal EqNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendUnequip", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1430,7 +1448,7 @@ Sub SendRequestItems()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestItems
@@ -1439,7 +1457,7 @@ Sub SendRequestItems()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestItems", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1448,7 +1466,7 @@ Sub SendRequestAnimations()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestAnimations
@@ -1457,7 +1475,7 @@ Sub SendRequestAnimations()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestAnimations", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1466,7 +1484,7 @@ Sub SendRequestNpcs()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestNPCs
@@ -1475,7 +1493,7 @@ Sub SendRequestNpcs()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestNpcs", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1484,7 +1502,7 @@ Sub SendRequestResources()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestResources
@@ -1493,7 +1511,7 @@ Sub SendRequestResources()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestResources", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1502,7 +1520,7 @@ Sub SendRequestSpells()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestSpells
@@ -1511,14 +1529,14 @@ Sub SendRequestSpells()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestSpells", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub SendRequestShops()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Dim buffer As clsBuffer
     Set buffer = New clsBuffer
@@ -1528,7 +1546,7 @@ Sub SendRequestShops()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestShops", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1537,7 +1555,7 @@ Sub SendSpawnItem(ByVal TmpItem As Long, ByVal TmpAmount As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSpawnItem
@@ -1548,7 +1566,7 @@ Sub SendSpawnItem(ByVal TmpItem As Long, ByVal TmpAmount As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSpawnItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1557,7 +1575,7 @@ Sub SendTrainStat(ByVal StatNum As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CUseStatPoint
@@ -1567,7 +1585,7 @@ Sub SendTrainStat(ByVal StatNum As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendTrainStat", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1576,7 +1594,7 @@ Public Sub SendRequestLevelUp()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestLevelUp
@@ -1585,7 +1603,7 @@ Public Sub SendRequestLevelUp()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestLevelUp", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1594,7 +1612,7 @@ Public Sub BuyItem(ByVal ShopSlot As Long)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CBuyItem
@@ -1604,7 +1622,7 @@ Public Sub BuyItem(ByVal ShopSlot As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "BuyItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1613,7 +1631,7 @@ Public Sub SellItem(ByVal InvSlot As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSellItem
@@ -1623,7 +1641,7 @@ Public Sub SellItem(ByVal InvSlot As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SellItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1632,7 +1650,7 @@ Public Sub DepositItem(ByVal InvSlot As Byte, ByVal Amount As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CDepositItem
@@ -1643,7 +1661,7 @@ Public Sub DepositItem(ByVal InvSlot As Byte, ByVal Amount As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "DepositItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1652,7 +1670,7 @@ Public Sub WithdrawItem(ByVal BankSlot As Byte, ByVal Amount As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CWithdrawItem
@@ -1663,7 +1681,7 @@ Public Sub WithdrawItem(ByVal BankSlot As Byte, ByVal Amount As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "WithdrawItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1672,7 +1690,7 @@ Public Sub CloseBank()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CCloseBank
@@ -1683,14 +1701,14 @@ Public Sub CloseBank()
     Exit Sub
         
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CloseBank", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub CloseTrade()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     frmMain.picCurrency.Visible = False
     TmpCurrencyItem = 0
@@ -1699,7 +1717,7 @@ Public Sub CloseTrade()
     Exit Sub
         
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CloseTrade", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1718,7 +1736,7 @@ Public Sub CloseShop()
     Exit Sub
         
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CloseShop", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1727,7 +1745,7 @@ Public Sub SwapBankSlots(ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSwapBankSlots
@@ -1738,7 +1756,7 @@ Public Sub SwapBankSlots(ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SwapBankSlots", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1747,7 +1765,7 @@ Public Sub AdminWarp(ByVal X As Long, ByVal Y As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CAdminWarp
@@ -1758,7 +1776,7 @@ Public Sub AdminWarp(ByVal X As Long, ByVal Y As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "AdminWarp", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1767,7 +1785,7 @@ Public Sub FixItem(ByVal InvSlot As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CFixItem
@@ -1777,7 +1795,7 @@ Public Sub FixItem(ByVal InvSlot As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "FixItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1786,7 +1804,7 @@ Public Sub AcceptTrade()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CAcceptTrade
@@ -1795,7 +1813,7 @@ Public Sub AcceptTrade()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "AcceptTrade", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1804,7 +1822,7 @@ Public Sub DeclineTrade()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Set buffer = New clsBuffer
     buffer.WriteLong CDeclineTrade
@@ -1813,7 +1831,7 @@ Public Sub DeclineTrade()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "DeclineTrade", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1822,7 +1840,7 @@ Public Sub TradeItem(ByVal InvSlot As Byte, ByVal Amount As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CTradeItem
@@ -1833,7 +1851,7 @@ Public Sub TradeItem(ByVal InvSlot As Byte, ByVal Amount As Long)
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "TradeItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1842,7 +1860,7 @@ Public Sub UntradeItem(ByVal InvSlot As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CUntradeItem
@@ -1852,7 +1870,7 @@ Public Sub UntradeItem(ByVal InvSlot As Byte)
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "UntradeItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1861,7 +1879,7 @@ Public Sub SendHotbarChange(ByVal SType As Byte, ByVal Slot As Byte, ByVal Hotba
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If SType = 1 Then
         ' Don't add None/Currency/Auto Life type items
@@ -1881,7 +1899,7 @@ Public Sub SendHotbarChange(ByVal SType As Byte, ByVal Slot As Byte, ByVal Hotba
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendHotbarChange", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1890,7 +1908,7 @@ Public Sub SendHotbarUse(ByVal Slot As Long)
     Dim X As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Check the hotbar type
     If Hotbar(Slot).SType = 1 Then ' Item
@@ -1921,27 +1939,27 @@ Public Sub SendHotbarUse(ByVal Slot As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendHotbarUse", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub GuildMsg(ByVal text As String)
+Public Sub GuildMsg(ByVal Text As String)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Dim buffer As clsBuffer
     Set buffer = New clsBuffer
     
     buffer.WriteLong CGuildMsg
-    buffer.WriteString text
+    buffer.WriteString Text
     
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "GuildMsg", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1950,7 +1968,7 @@ Public Sub SendGuildAccept()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     
@@ -1960,7 +1978,7 @@ Public Sub SendGuildAccept()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendGuildAccept", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1969,7 +1987,7 @@ Sub PlayerSearch(ByVal CurX As Long, ByVal CurY As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If IsInBounds Then
         Set buffer = New clsBuffer
@@ -1982,7 +2000,7 @@ Sub PlayerSearch(ByVal CurX As Long, ByVal CurY As Long)
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "PlayerSearch", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1991,7 +2009,7 @@ Sub SendTradeRequest()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CTradeRequest
@@ -2000,7 +2018,7 @@ Sub SendTradeRequest()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendTradeRequest", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2009,7 +2027,7 @@ Sub SendAcceptTradeRequest()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CAcceptTradeRequest
@@ -2018,7 +2036,7 @@ Sub SendAcceptTradeRequest()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendAcceptTradeRequest", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2027,7 +2045,7 @@ Sub SendDeclineTradeRequest()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CDeclineTradeRequest
@@ -2036,7 +2054,7 @@ Sub SendDeclineTradeRequest()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendDeclineTradeRequest", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2045,7 +2063,7 @@ Sub SendPartyLeave()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CPartyLeave
@@ -2054,7 +2072,7 @@ Sub SendPartyLeave()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendPartyLeave", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2063,7 +2081,7 @@ Sub SendPartyRequest(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CPartyRequest
@@ -2073,7 +2091,7 @@ Sub SendPartyRequest(ByVal Name As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendPartyRequest", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2082,7 +2100,7 @@ Sub SendAcceptParty()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CAcceptParty
@@ -2091,7 +2109,7 @@ Sub SendAcceptParty()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendAcceptParty", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2100,7 +2118,7 @@ Sub SendDeclineParty()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CDeclineParty
@@ -2109,7 +2127,7 @@ Sub SendDeclineParty()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendDeclineParty", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2151,7 +2169,7 @@ Public Sub SendMapReport()
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CMapReport
@@ -2160,7 +2178,7 @@ Public Sub SendMapReport()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendMapReport", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2169,7 +2187,7 @@ Public Sub SendOpenMaps()
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong COpenMaps
@@ -2178,7 +2196,7 @@ Public Sub SendOpenMaps()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendOpenMaps", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2319,7 +2337,7 @@ Sub SendSaveBan(ByVal BanNum As Long)
     Dim BanData() As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     BanSize = LenB(Ban(BanNum))
@@ -2333,7 +2351,7 @@ Sub SendSaveBan(ByVal BanNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveBan", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2342,7 +2360,7 @@ Sub SendRequestEditBan()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Get the new ban data
     SendRequestBans
@@ -2354,7 +2372,7 @@ Sub SendRequestEditBan()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditBan", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2376,12 +2394,12 @@ Sub SendSaveTitle(ByVal TitleNum As Long)
     Dim TitleData() As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
-    TitleSize = LenB(Title(TitleNum))
+    TitleSize = LenB(title(TitleNum))
     ReDim TitleData(TitleSize - 1)
-    CopyMemory TitleData(0), ByVal VarPtr(Title(TitleNum)), TitleSize
+    CopyMemory TitleData(0), ByVal VarPtr(title(TitleNum)), TitleSize
     buffer.WriteLong CSaveTitle
     buffer.WriteLong TitleNum
     buffer.WriteBytes TitleData
@@ -2390,7 +2408,7 @@ Sub SendSaveTitle(ByVal TitleNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveTitle", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2399,7 +2417,7 @@ Sub SendRequestEditTitle()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditTitles
@@ -2408,7 +2426,7 @@ Sub SendRequestEditTitle()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditTitle", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2417,7 +2435,7 @@ Sub SendSetTitle(TitleNum As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSetTitle
@@ -2427,7 +2445,7 @@ Sub SendSetTitle(TitleNum As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSetTitle", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2436,7 +2454,7 @@ Sub SendGuildInvite(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CGuildInvite
@@ -2446,7 +2464,7 @@ Sub SendGuildInvite(ByVal Name As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendGuildInvite", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2455,7 +2473,7 @@ Sub SendGuildRemove(ByVal Name As String)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CGuildRemove
@@ -2465,7 +2483,7 @@ Sub SendGuildRemove(ByVal Name As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendGuildRemove", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2474,7 +2492,7 @@ Sub SendGuildDisband()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CGuildDisband
@@ -2483,7 +2501,7 @@ Sub SendGuildDisband()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendGuildDisband", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2492,7 +2510,7 @@ Sub SendChangeStatus(Index As Long, Status As String)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Trim$(Player(MyIndex).Status) = "Muted" Then
         Call AddText("You can't change your status when your muted!", BrightRed)
@@ -2509,7 +2527,7 @@ Sub SendChangeStatus(Index As Long, Status As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendChangeStatus", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2520,7 +2538,7 @@ Sub SendSaveMoral(ByVal MoralNum As Long)
     Dim MoralData() As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     MoralSize = LenB(Moral(MoralNum))
@@ -2534,7 +2552,7 @@ Sub SendSaveMoral(ByVal MoralNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveMoral", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2543,7 +2561,7 @@ Sub SendRequestEditMoral()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditMorals
@@ -2552,7 +2570,7 @@ Sub SendRequestEditMoral()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditMoral", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2571,7 +2589,7 @@ Sub SendSaveClass(ByVal ClassNum As Long)
     Dim ClassData() As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     ClassSize = LenB(Class(ClassNum))
@@ -2585,7 +2603,7 @@ Sub SendSaveClass(ByVal ClassNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveClass", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2594,7 +2612,7 @@ Sub SendRequestEditClass()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditClasses
@@ -2603,7 +2621,7 @@ Sub SendRequestEditClass()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditClass", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2620,7 +2638,7 @@ Sub SendDestroyItem(ByVal InvNum As Integer)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     
@@ -2631,7 +2649,7 @@ Sub SendDestroyItem(ByVal InvNum As Integer)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendDestroyItem", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2640,7 +2658,7 @@ Public Sub SendRequestEditEmoticon()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEditEmoticons
@@ -2649,7 +2667,7 @@ Public Sub SendRequestEditEmoticon()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEditEmoticon", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2660,7 +2678,7 @@ Public Sub SendSaveEmoticon(ByVal EmoticonNum As Long)
     Dim EmoticonData() As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     EmoticonSize = LenB(Emoticon(EmoticonNum))
@@ -2674,7 +2692,7 @@ Public Sub SendSaveEmoticon(ByVal EmoticonNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSaveEmoticon", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2683,7 +2701,7 @@ Sub SendRequestEmoticons()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestEmoticons
@@ -2692,14 +2710,14 @@ Sub SendRequestEmoticons()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendRequestEmoticons", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub SendEmoticonEditor()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Dim buffer As clsBuffer
     Set buffer = New clsBuffer
@@ -2709,7 +2727,7 @@ Public Sub SendEmoticonEditor()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendEmoticonEditor", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2718,7 +2736,7 @@ Sub SendCheckEmoticon(ByVal EmoticonNum As Long)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Set buffer = New clsBuffer
     
@@ -2729,7 +2747,7 @@ Sub SendCheckEmoticon(ByVal EmoticonNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendCheckEmoticon", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2738,7 +2756,7 @@ Sub RequestSwitchesAndVariables()
     Dim i As Long, buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestSwitchesAndVariables
@@ -2748,7 +2766,7 @@ Sub RequestSwitchesAndVariables()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "RequestSwitchesAndVariables", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2757,7 +2775,7 @@ Sub SendSwitchesAndVariables()
     Dim i As Long, buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CSwitchesAndVariables
@@ -2775,7 +2793,7 @@ Sub SendSwitchesAndVariables()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SendSwitchesAndVariables", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2784,7 +2802,7 @@ Sub PlayerTarget(ByVal Target As Long, ByVal TargetType As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If MyTargetType = TargetType And MyTarget = Target Then
         MyTargetType = 0
@@ -2803,7 +2821,7 @@ Sub PlayerTarget(ByVal Target As Long, ByVal TargetType As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "PlayerTarget", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

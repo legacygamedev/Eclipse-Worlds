@@ -48,8 +48,8 @@ Public Enum ServerPackets
     SNPCDead
     SNPCEditor
     SUpdateNPC
-    SMapKey
     SEditMap
+    SEditEvent
     SShopEditor
     SUpdateShop
     SSpellEditor
@@ -170,6 +170,7 @@ Public Enum ClientPackets
     CRequestPlayerStats
     CRequestSpellCooldown
     CRequestEditMap
+    CRequestEditEvent
     CRequestEditItem
     CSaveItem
     CRequestEditNPC
@@ -292,7 +293,7 @@ Public Enum Stats
     Spirit
     
     ' Make sure Stat_Count is below everything else
-    Stat_Count
+    Stat_count
 End Enum
 
 ' Vitals used by Players, NPCs and Classes

@@ -40,6 +40,7 @@ Public Const MAX_CLASSES As Byte = 10
 Public Const MAX_EMOTICONS As Byte = 50
 Public Const MAX_SWITCHES As Long = 1000
 Public Const MAX_VARIABLES As Long = 1000
+Public Const MAX_COMMON_EVENTS As Long = 100
 Public Const MAX_NPC_SPELLS As Byte = 5
 Public Const MAX_CHARS As Byte = 3
 

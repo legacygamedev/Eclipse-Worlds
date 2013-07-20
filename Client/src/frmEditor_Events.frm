@@ -32,18 +32,116 @@ Begin VB.Form frmEditor_Events
       Visible         =   0   'False
       Width           =   6375
       Begin VB.Frame fraCommand 
+         Caption         =   "Map Overlay"
+         Height          =   2055
+         Index           =   24
+         Left            =   1320
+         TabIndex        =   406
+         Top             =   1320
+         Visible         =   0   'False
+         Width           =   4095
+         Begin VB.CommandButton cmdMapTint_Cancel 
+            Caption         =   "Cancel"
+            Height          =   375
+            Left            =   2760
+            TabIndex        =   416
+            Top             =   1560
+            Width           =   1215
+         End
+         Begin VB.CommandButton cmdMapTint_Ok 
+            Caption         =   "Ok"
+            Height          =   375
+            Left            =   1440
+            TabIndex        =   415
+            Top             =   1560
+            Width           =   1215
+         End
+         Begin VB.HScrollBar scrlMapTintData 
+            Height          =   255
+            Index           =   3
+            Left            =   2280
+            Max             =   255
+            TabIndex        =   410
+            Top             =   1200
+            Width           =   855
+         End
+         Begin VB.HScrollBar scrlMapTintData 
+            Height          =   255
+            Index           =   0
+            Left            =   120
+            Max             =   255
+            TabIndex        =   409
+            Top             =   480
+            Width           =   855
+         End
+         Begin VB.HScrollBar scrlMapTintData 
+            Height          =   255
+            Index           =   1
+            Left            =   2280
+            Max             =   255
+            TabIndex        =   408
+            Top             =   480
+            Width           =   855
+         End
+         Begin VB.HScrollBar scrlMapTintData 
+            Height          =   255
+            Index           =   2
+            Left            =   120
+            Max             =   255
+            TabIndex        =   407
+            Top             =   1200
+            Width           =   855
+         End
+         Begin VB.Label lblMapTintData 
+            Caption         =   "Opacity: 0"
+            Height          =   255
+            Index           =   3
+            Left            =   2280
+            TabIndex        =   414
+            Top             =   960
+            Width           =   1455
+         End
+         Begin VB.Label lblMapTintData 
+            Caption         =   "Red: 0"
+            Height          =   255
+            Index           =   0
+            Left            =   120
+            TabIndex        =   413
+            Top             =   240
+            Width           =   975
+         End
+         Begin VB.Label lblMapTintData 
+            Caption         =   "Green: 0"
+            Height          =   255
+            Index           =   1
+            Left            =   2280
+            TabIndex        =   412
+            Top             =   240
+            Width           =   1455
+         End
+         Begin VB.Label lblMapTintData 
+            Caption         =   "Blue: 0"
+            Height          =   255
+            Index           =   2
+            Left            =   120
+            TabIndex        =   411
+            Top             =   960
+            Width           =   1455
+         End
+      End
+      Begin VB.Frame fraCommand 
          Caption         =   "Show Choices"
          Height          =   4335
          Index           =   1
          Left            =   240
-         TabIndex        =   189
+         TabIndex        =   187
          Top             =   1080
          Visible         =   0   'False
          Width           =   5655
          Begin VB.HScrollBar scrlFace2 
             Height          =   255
             Left            =   120
-            TabIndex        =   429
+            TabIndex        =   427
             Top             =   2400
             Width           =   1455
          End
@@ -65,7 +163,7 @@ Begin VB.Form frmEditor_Events
             ScaleHeight     =   100
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   100
-            TabIndex        =   428
+            TabIndex        =   426
             TabStop         =   0   'False
             Top             =   600
             Width           =   1500
@@ -74,7 +172,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   4
             Left            =   3720
-            TabIndex        =   200
+            TabIndex        =   198
             Text            =   "0"
             Top             =   3360
             Width           =   1455
@@ -83,7 +181,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   3
             Left            =   1680
-            TabIndex        =   198
+            TabIndex        =   196
             Text            =   "0"
             Top             =   3360
             Width           =   1455
@@ -92,7 +190,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   2
             Left            =   3720
-            TabIndex        =   196
+            TabIndex        =   194
             Text            =   "0"
             Top             =   2640
             Width           =   1455
@@ -101,7 +199,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   1
             Left            =   1680
-            TabIndex        =   194
+            TabIndex        =   192
             Text            =   "0"
             Top             =   2640
             Width           =   1455
@@ -110,7 +208,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2760
-            TabIndex        =   192
+            TabIndex        =   190
             Top             =   3840
             Width           =   1215
          End
@@ -118,7 +216,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   191
+            TabIndex        =   189
             Top             =   3840
             Width           =   1215
          End
@@ -127,7 +225,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1680
             MultiLine       =   -1  'True
             ScrollBars      =   2  'Vertical
-            TabIndex        =   190
+            TabIndex        =   188
             Top             =   600
             Width           =   3855
          End
@@ -135,7 +233,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Face: 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   430
+            TabIndex        =   428
             Top             =   2160
             Width           =   975
          End
@@ -144,7 +242,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   21
             Left            =   3720
-            TabIndex        =   201
+            TabIndex        =   199
             Top             =   3120
             Width           =   1455
          End
@@ -153,7 +251,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   20
             Left            =   1680
-            TabIndex        =   199
+            TabIndex        =   197
             Top             =   3120
             Width           =   1455
          End
@@ -162,7 +260,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   19
             Left            =   3720
-            TabIndex        =   197
+            TabIndex        =   195
             Top             =   2400
             Width           =   1455
          End
@@ -171,16 +269,16 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   17
             Left            =   1680
-            TabIndex        =   195
+            TabIndex        =   193
             Top             =   2400
             Width           =   1455
          End
          Begin VB.Label lblRandomLabel 
-            Caption         =   "Prompt:"
+            Caption         =   "Text:"
             Height          =   255
             Index           =   16
             Left            =   1680
-            TabIndex        =   193
+            TabIndex        =   191
             Top             =   360
             Width           =   1935
          End
@@ -190,7 +288,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1575
          Index           =   25
          Left            =   1080
-         TabIndex        =   290
+         TabIndex        =   288
          Top             =   1800
          Visible         =   0   'False
          Width           =   4335
@@ -200,7 +298,7 @@ Begin VB.Form frmEditor_Events
             Left            =   120
             List            =   "frmEditor_Events.frx":038C
             Style           =   2  'Dropdown List
-            TabIndex        =   293
+            TabIndex        =   291
             Top             =   360
             Width           =   3135
          End
@@ -208,7 +306,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   3000
-            TabIndex        =   292
+            TabIndex        =   290
             Top             =   1080
             Width           =   1215
          End
@@ -216,7 +314,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1560
-            TabIndex        =   291
+            TabIndex        =   289
             Top             =   1080
             Width           =   1215
          End
@@ -226,7 +324,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1575
          Index           =   26
          Left            =   1080
-         TabIndex        =   294
+         TabIndex        =   292
          Top             =   1800
          Visible         =   0   'False
          Width           =   4215
@@ -234,7 +332,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   297
+            TabIndex        =   295
             Top             =   1080
             Width           =   1215
          End
@@ -242,7 +340,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2880
-            TabIndex        =   296
+            TabIndex        =   294
             Top             =   1080
             Width           =   1215
          End
@@ -252,7 +350,7 @@ Begin VB.Form frmEditor_Events
             Left            =   120
             List            =   "frmEditor_Events.frx":0390
             Style           =   2  'Dropdown List
-            TabIndex        =   295
+            TabIndex        =   293
             Top             =   360
             Width           =   3135
          End
@@ -262,7 +360,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1455
          Index           =   27
          Left            =   1080
-         TabIndex        =   419
+         TabIndex        =   417
          Top             =   1800
          Visible         =   0   'False
          Width           =   4335
@@ -270,7 +368,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   3000
-            TabIndex        =   422
+            TabIndex        =   420
             Top             =   840
             Width           =   1215
          End
@@ -278,7 +376,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1560
-            TabIndex        =   421
+            TabIndex        =   419
             Top             =   840
             Width           =   1215
          End
@@ -286,25 +384,25 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Left            =   120
             Min             =   1
-            TabIndex        =   420
+            TabIndex        =   418
             Top             =   480
             Value           =   1
             Width           =   4095
          End
          Begin VB.Label lblRandomLabel 
-            Caption         =   "Hint: 1000 Ms = 1 Second"
+            Caption         =   "Hint: 1000 ms = 1 Second"
             Height          =   255
             Index           =   44
             Left            =   1920
-            TabIndex        =   424
+            TabIndex        =   422
             Top             =   240
             Width           =   2295
          End
          Begin VB.Label lblWaitAmount 
-            Caption         =   "Wait: 0 Ms"
+            Caption         =   "Wait: 0 ms"
             Height          =   255
             Left            =   120
-            TabIndex        =   423
+            TabIndex        =   421
             Top             =   240
             Width           =   1695
          End
@@ -314,7 +412,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1575
          Index           =   28
          Left            =   1080
-         TabIndex        =   312
+         TabIndex        =   310
          Top             =   1800
          Visible         =   0   'False
          Width           =   4215
@@ -324,7 +422,7 @@ Begin VB.Form frmEditor_Events
             Left            =   120
             List            =   "frmEditor_Events.frx":03A8
             Style           =   2  'Dropdown List
-            TabIndex        =   315
+            TabIndex        =   313
             Top             =   360
             Width           =   3135
          End
@@ -332,7 +430,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2880
-            TabIndex        =   314
+            TabIndex        =   312
             Top             =   1080
             Width           =   1215
          End
@@ -340,7 +438,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   313
+            TabIndex        =   311
             Top             =   1080
             Width           =   1215
          End
@@ -350,7 +448,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1575
          Index           =   29
          Left            =   1080
-         TabIndex        =   285
+         TabIndex        =   283
          Top             =   1800
          Visible         =   0   'False
          Width           =   4335
@@ -359,7 +457,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1560
             Max             =   255
             Min             =   1
-            TabIndex        =   289
+            TabIndex        =   287
             Top             =   360
             Value           =   1
             Width           =   2655
@@ -368,7 +466,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1560
-            TabIndex        =   287
+            TabIndex        =   285
             Top             =   840
             Width           =   1215
          End
@@ -376,7 +474,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   3000
-            TabIndex        =   286
+            TabIndex        =   284
             Top             =   840
             Width           =   1215
          End
@@ -384,7 +482,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Case: 1"
             Height          =   255
             Left            =   120
-            TabIndex        =   288
+            TabIndex        =   286
             Top             =   360
             Width           =   1335
          End
@@ -394,14 +492,14 @@ Begin VB.Form frmEditor_Events
          Height          =   2775
          Index           =   3
          Left            =   720
-         TabIndex        =   362
+         TabIndex        =   360
          Top             =   1320
          Visible         =   0   'False
          Width           =   5055
          Begin VB.TextBox txtChatbubbleText 
             Height          =   285
             Left            =   1680
-            TabIndex        =   371
+            TabIndex        =   369
             Top             =   360
             Width           =   3135
          End
@@ -411,7 +509,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1920
             List            =   "frmEditor_Events.frx":03F7
             Style           =   2  'Dropdown List
-            TabIndex        =   368
+            TabIndex        =   366
             Top             =   1560
             Visible         =   0   'False
             Width           =   2895
@@ -421,7 +519,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   2
             Left            =   3720
-            TabIndex        =   367
+            TabIndex        =   365
             Top             =   1080
             Width           =   975
          End
@@ -430,7 +528,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   1
             Left            =   1920
-            TabIndex        =   366
+            TabIndex        =   364
             Top             =   1080
             Width           =   1335
          End
@@ -439,7 +537,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   0
             Left            =   120
-            TabIndex        =   365
+            TabIndex        =   363
             Top             =   1080
             Width           =   1695
          End
@@ -447,7 +545,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   2160
-            TabIndex        =   364
+            TabIndex        =   362
             Top             =   2280
             Width           =   1215
          End
@@ -455,7 +553,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   3600
-            TabIndex        =   363
+            TabIndex        =   361
             Top             =   2280
             Width           =   1215
          End
@@ -464,7 +562,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   39
             Left            =   120
-            TabIndex        =   370
+            TabIndex        =   368
             Top             =   840
             Width           =   1335
          End
@@ -473,7 +571,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   38
             Left            =   120
-            TabIndex        =   369
+            TabIndex        =   367
             Top             =   360
             Width           =   1575
          End
@@ -492,7 +590,7 @@ Begin VB.Form frmEditor_Events
             Height          =   285
             Index           =   4
             Left            =   3240
-            TabIndex        =   346
+            TabIndex        =   344
             Text            =   "0"
             Top             =   1560
             Width           =   735
@@ -502,7 +600,7 @@ Begin VB.Form frmEditor_Events
             Height          =   285
             Index           =   3
             Left            =   1920
-            TabIndex        =   345
+            TabIndex        =   343
             Text            =   "0"
             Top             =   1590
             Width           =   855
@@ -512,7 +610,7 @@ Begin VB.Form frmEditor_Events
             Height          =   285
             Index           =   2
             Left            =   1680
-            TabIndex        =   344
+            TabIndex        =   342
             Text            =   "0"
             Top             =   1320
             Width           =   2295
@@ -522,7 +620,7 @@ Begin VB.Form frmEditor_Events
             Height          =   285
             Index           =   1
             Left            =   1680
-            TabIndex        =   343
+            TabIndex        =   341
             Text            =   "0"
             Top             =   1080
             Width           =   2295
@@ -531,7 +629,7 @@ Begin VB.Form frmEditor_Events
             Height          =   285
             Index           =   0
             Left            =   1680
-            TabIndex        =   342
+            TabIndex        =   340
             Text            =   "0"
             Top             =   840
             Width           =   2295
@@ -541,7 +639,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   3
             Left            =   120
-            TabIndex        =   341
+            TabIndex        =   339
             Top             =   1560
             Width           =   1095
          End
@@ -550,7 +648,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   2
             Left            =   120
-            TabIndex        =   340
+            TabIndex        =   338
             Top             =   1320
             Width           =   1095
          End
@@ -559,7 +657,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   1
             Left            =   120
-            TabIndex        =   339
+            TabIndex        =   337
             Top             =   1080
             Width           =   1095
          End
@@ -568,7 +666,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   0
             Left            =   120
-            TabIndex        =   338
+            TabIndex        =   336
             Top             =   840
             Value           =   -1  'True
             Width           =   1095
@@ -602,7 +700,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   37
             Left            =   2760
-            TabIndex        =   361
+            TabIndex        =   359
             Top             =   1590
             Width           =   495
          End
@@ -611,7 +709,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   13
             Left            =   1440
-            TabIndex        =   360
+            TabIndex        =   358
             Top             =   1590
             Width           =   495
          End
@@ -630,7 +728,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1695
          Index           =   5
          Left            =   1320
-         TabIndex        =   202
+         TabIndex        =   200
          Top             =   1920
          Visible         =   0   'False
          Width           =   4095
@@ -640,7 +738,7 @@ Begin VB.Form frmEditor_Events
             Left            =   960
             List            =   "frmEditor_Events.frx":0403
             Style           =   2  'Dropdown List
-            TabIndex        =   208
+            TabIndex        =   206
             Top             =   800
             Width           =   3015
          End
@@ -648,7 +746,7 @@ Begin VB.Form frmEditor_Events
             Height          =   315
             Left            =   960
             Style           =   2  'Dropdown List
-            TabIndex        =   205
+            TabIndex        =   203
             Top             =   360
             Width           =   3015
          End
@@ -656,7 +754,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   204
+            TabIndex        =   202
             Top             =   1200
             Width           =   1215
          End
@@ -664,7 +762,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2760
-            TabIndex        =   203
+            TabIndex        =   201
             Top             =   1200
             Width           =   1215
          End
@@ -673,7 +771,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   23
             Left            =   120
-            TabIndex        =   207
+            TabIndex        =   205
             Top             =   360
             Width           =   3855
          End
@@ -682,7 +780,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   22
             Left            =   120
-            TabIndex        =   206
+            TabIndex        =   204
             Top             =   840
             Width           =   1815
          End
@@ -692,7 +790,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1695
          Index           =   6
          Left            =   1320
-         TabIndex        =   209
+         TabIndex        =   207
          Top             =   1920
          Visible         =   0   'False
          Width           =   4095
@@ -700,7 +798,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2760
-            TabIndex        =   213
+            TabIndex        =   211
             Top             =   1200
             Width           =   1215
          End
@@ -708,7 +806,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   212
+            TabIndex        =   210
             Top             =   1200
             Width           =   1215
          End
@@ -718,7 +816,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1440
             List            =   "frmEditor_Events.frx":0424
             Style           =   2  'Dropdown List
-            TabIndex        =   211
+            TabIndex        =   209
             Top             =   360
             Width           =   2535
          End
@@ -728,7 +826,7 @@ Begin VB.Form frmEditor_Events
             Left            =   960
             List            =   "frmEditor_Events.frx":043E
             Style           =   2  'Dropdown List
-            TabIndex        =   210
+            TabIndex        =   208
             Top             =   800
             Width           =   3015
          End
@@ -737,7 +835,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   26
             Left            =   120
-            TabIndex        =   215
+            TabIndex        =   213
             Top             =   840
             Width           =   1815
          End
@@ -746,7 +844,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   24
             Left            =   120
-            TabIndex        =   214
+            TabIndex        =   212
             Top             =   360
             Width           =   3855
          End
@@ -756,14 +854,14 @@ Begin VB.Form frmEditor_Events
          Height          =   1695
          Index           =   8
          Left            =   1200
-         TabIndex        =   377
+         TabIndex        =   375
          Top             =   1680
          Visible         =   0   'False
          Width           =   4095
          Begin VB.TextBox txtLabelName 
             Height          =   375
             Left            =   120
-            TabIndex        =   381
+            TabIndex        =   379
             Top             =   480
             Width           =   3855
          End
@@ -771,7 +869,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1320
-            TabIndex        =   379
+            TabIndex        =   377
             Top             =   1200
             Width           =   1215
          End
@@ -779,16 +877,16 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2640
-            TabIndex        =   378
+            TabIndex        =   376
             Top             =   1200
             Width           =   1215
          End
          Begin VB.Label lblRandomLabel 
-            Caption         =   "Label Name:"
+            Caption         =   "Name:"
             Height          =   255
             Index           =   40
             Left            =   120
-            TabIndex        =   380
+            TabIndex        =   378
             Top             =   240
             Width           =   3735
          End
@@ -798,7 +896,7 @@ Begin VB.Form frmEditor_Events
          Height          =   4815
          Index           =   7
          Left            =   120
-         TabIndex        =   157
+         TabIndex        =   155
          Top             =   480
          Visible         =   0   'False
          Width           =   6135
@@ -807,7 +905,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   6
             Left            =   120
-            TabIndex        =   300
+            TabIndex        =   298
             Top             =   3720
             Width           =   1695
          End
@@ -818,7 +916,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1920
             List            =   "frmEditor_Events.frx":045B
             Style           =   2  'Dropdown List
-            TabIndex        =   299
+            TabIndex        =   297
             Top             =   3720
             Width           =   1695
          End
@@ -829,7 +927,7 @@ Begin VB.Form frmEditor_Events
             Left            =   3960
             List            =   "frmEditor_Events.frx":0475
             Style           =   2  'Dropdown List
-            TabIndex        =   298
+            TabIndex        =   296
             Top             =   3720
             Width           =   1095
          End
@@ -840,7 +938,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1920
             List            =   "frmEditor_Events.frx":0488
             Style           =   2  'Dropdown List
-            TabIndex        =   177
+            TabIndex        =   175
             Top             =   2760
             Width           =   1695
          End
@@ -851,7 +949,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1920
             List            =   "frmEditor_Events.frx":048C
             Style           =   2  'Dropdown List
-            TabIndex        =   176
+            TabIndex        =   174
             Top             =   2280
             Width           =   1695
          End
@@ -862,7 +960,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1920
             List            =   "frmEditor_Events.frx":0490
             Style           =   2  'Dropdown List
-            TabIndex        =   175
+            TabIndex        =   173
             Top             =   1800
             Width           =   1695
          End
@@ -873,7 +971,7 @@ Begin VB.Form frmEditor_Events
             Left            =   3960
             List            =   "frmEditor_Events.frx":049C
             Style           =   2  'Dropdown List
-            TabIndex        =   174
+            TabIndex        =   172
             Top             =   1320
             Width           =   1095
          End
@@ -884,7 +982,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1920
             List            =   "frmEditor_Events.frx":04AF
             Style           =   2  'Dropdown List
-            TabIndex        =   173
+            TabIndex        =   171
             Top             =   1320
             Width           =   1695
          End
@@ -892,7 +990,7 @@ Begin VB.Form frmEditor_Events
             Enabled         =   0   'False
             Height          =   285
             Left            =   3480
-            TabIndex        =   172
+            TabIndex        =   170
             Text            =   "0"
             Top             =   3240
             Width           =   855
@@ -904,7 +1002,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1440
             List            =   "frmEditor_Events.frx":04C7
             Style           =   2  'Dropdown List
-            TabIndex        =   171
+            TabIndex        =   169
             Top             =   3240
             Width           =   1695
          End
@@ -913,7 +1011,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   5
             Left            =   120
-            TabIndex        =   169
+            TabIndex        =   167
             Top             =   3240
             Width           =   975
          End
@@ -923,14 +1021,14 @@ Begin VB.Form frmEditor_Events
             Left            =   1920
             List            =   "frmEditor_Events.frx":0543
             Style           =   2  'Dropdown List
-            TabIndex        =   167
+            TabIndex        =   165
             Top             =   840
             Width           =   1695
          End
          Begin VB.TextBox txtCondition_PlayerVarCondition 
             Height          =   285
             Left            =   3840
-            TabIndex        =   166
+            TabIndex        =   164
             Text            =   "0"
             Top             =   840
             Width           =   855
@@ -941,7 +1039,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1920
             List            =   "frmEditor_Events.frx":05AB
             Style           =   2  'Dropdown List
-            TabIndex        =   165
+            TabIndex        =   163
             Top             =   480
             Width           =   1695
          End
@@ -950,7 +1048,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   4
             Left            =   120
-            TabIndex        =   164
+            TabIndex        =   162
             Top             =   2760
             Width           =   1695
          End
@@ -959,7 +1057,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   3
             Left            =   120
-            TabIndex        =   163
+            TabIndex        =   161
             Top             =   2280
             Width           =   1695
          End
@@ -968,7 +1066,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   2
             Left            =   120
-            TabIndex        =   162
+            TabIndex        =   160
             Top             =   1800
             Width           =   1695
          End
@@ -977,7 +1075,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   1
             Left            =   120
-            TabIndex        =   161
+            TabIndex        =   159
             Top             =   1320
             Width           =   1695
          End
@@ -986,7 +1084,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   0
             Left            =   120
-            TabIndex        =   160
+            TabIndex        =   158
             Top             =   480
             Width           =   1695
          End
@@ -994,7 +1092,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   3360
-            TabIndex        =   159
+            TabIndex        =   157
             Top             =   4320
             Width           =   1215
          End
@@ -1002,7 +1100,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   4680
-            TabIndex        =   158
+            TabIndex        =   156
             Top             =   4320
             Width           =   1215
          End
@@ -1011,7 +1109,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   35
             Left            =   3720
-            TabIndex        =   301
+            TabIndex        =   299
             Top             =   3720
             Width           =   255
          End
@@ -1020,7 +1118,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   1
             Left            =   3720
-            TabIndex        =   183
+            TabIndex        =   181
             Top             =   1320
             Width           =   255
          End
@@ -1029,7 +1127,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   2
             Left            =   1080
-            TabIndex        =   170
+            TabIndex        =   168
             Top             =   3240
             Width           =   255
          End
@@ -1038,7 +1136,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   0
             Left            =   3840
-            TabIndex        =   168
+            TabIndex        =   166
             Top             =   480
             Width           =   615
          End
@@ -1048,7 +1146,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1695
          Index           =   9
          Left            =   1200
-         TabIndex        =   382
+         TabIndex        =   380
          Top             =   1680
          Visible         =   0   'False
          Width           =   4095
@@ -1056,7 +1154,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2640
-            TabIndex        =   385
+            TabIndex        =   383
             Top             =   1200
             Width           =   1215
          End
@@ -1064,14 +1162,14 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1320
-            TabIndex        =   384
+            TabIndex        =   382
             Top             =   1200
             Width           =   1215
          End
          Begin VB.TextBox txtGotoLabel 
             Height          =   375
             Left            =   120
-            TabIndex        =   383
+            TabIndex        =   381
             Top             =   480
             Width           =   3855
          End
@@ -1080,7 +1178,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   41
             Left            =   120
-            TabIndex        =   386
+            TabIndex        =   384
             Top             =   240
             Width           =   3735
          End
@@ -1090,7 +1188,7 @@ Begin VB.Form frmEditor_Events
          Height          =   2415
          Index           =   10
          Left            =   1200
-         TabIndex        =   228
+         TabIndex        =   226
          Top             =   1320
          Visible         =   0   'False
          Width           =   4095
@@ -1100,14 +1198,14 @@ Begin VB.Form frmEditor_Events
             Left            =   120
             List            =   "frmEditor_Events.frx":05AF
             Style           =   2  'Dropdown List
-            TabIndex        =   236
+            TabIndex        =   234
             Top             =   480
             Width           =   1695
          End
          Begin VB.TextBox txtChangeItemsAmount 
             Height          =   375
             Left            =   120
-            TabIndex        =   235
+            TabIndex        =   233
             Text            =   "0"
             Top             =   1320
             Width           =   3735
@@ -1116,7 +1214,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2640
-            TabIndex        =   233
+            TabIndex        =   231
             Top             =   1800
             Width           =   1215
          End
@@ -1124,7 +1222,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1200
-            TabIndex        =   232
+            TabIndex        =   230
             Top             =   1800
             Width           =   1215
          End
@@ -1132,7 +1230,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Take Away"
             Height          =   255
             Left            =   2640
-            TabIndex        =   231
+            TabIndex        =   229
             Top             =   960
             Width           =   1335
          End
@@ -1140,7 +1238,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Give"
             Height          =   255
             Left            =   1680
-            TabIndex        =   230
+            TabIndex        =   228
             Top             =   960
             Width           =   735
          End
@@ -1148,7 +1246,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Set Amount"
             Height          =   255
             Left            =   120
-            TabIndex        =   229
+            TabIndex        =   227
             Top             =   960
             Value           =   -1  'True
             Width           =   1455
@@ -1158,7 +1256,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   27
             Left            =   120
-            TabIndex        =   234
+            TabIndex        =   232
             Top             =   240
             Width           =   1935
          End
@@ -1168,14 +1266,14 @@ Begin VB.Form frmEditor_Events
          Height          =   1815
          Index           =   11
          Left            =   1200
-         TabIndex        =   237
+         TabIndex        =   235
          Top             =   1560
          Visible         =   0   'False
          Width           =   4095
          Begin VB.HScrollBar scrlChangeLevel 
             Height          =   255
             Left            =   120
-            TabIndex        =   241
+            TabIndex        =   239
             Top             =   600
             Width           =   3615
          End
@@ -1183,7 +1281,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1200
-            TabIndex        =   239
+            TabIndex        =   237
             Top             =   1080
             Width           =   1215
          End
@@ -1191,7 +1289,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2520
-            TabIndex        =   238
+            TabIndex        =   236
             Top             =   1080
             Width           =   1215
          End
@@ -1199,7 +1297,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Level: 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   240
+            TabIndex        =   238
             Top             =   360
             Width           =   1695
          End
@@ -1209,7 +1307,7 @@ Begin VB.Form frmEditor_Events
          Height          =   2175
          Index           =   12
          Left            =   1200
-         TabIndex        =   242
+         TabIndex        =   240
          Top             =   1440
          Visible         =   0   'False
          Width           =   4095
@@ -1217,7 +1315,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Remove"
             Height          =   255
             Left            =   2640
-            TabIndex        =   248
+            TabIndex        =   246
             Top             =   960
             Width           =   1095
          End
@@ -1225,7 +1323,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Teach"
             Height          =   255
             Left            =   120
-            TabIndex        =   247
+            TabIndex        =   245
             Top             =   960
             Width           =   1455
          End
@@ -1235,7 +1333,7 @@ Begin VB.Form frmEditor_Events
             Left            =   120
             List            =   "frmEditor_Events.frx":05B3
             Style           =   2  'Dropdown List
-            TabIndex        =   246
+            TabIndex        =   244
             Top             =   480
             Width           =   3735
          End
@@ -1243,7 +1341,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2520
-            TabIndex        =   244
+            TabIndex        =   242
             Top             =   1680
             Width           =   1215
          End
@@ -1251,7 +1349,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1200
-            TabIndex        =   243
+            TabIndex        =   241
             Top             =   1680
             Width           =   1215
          End
@@ -1260,7 +1358,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   28
             Left            =   120
-            TabIndex        =   245
+            TabIndex        =   243
             Top             =   240
             Width           =   495
          End
@@ -1270,7 +1368,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1695
          Index           =   13
          Left            =   1200
-         TabIndex        =   249
+         TabIndex        =   247
          Top             =   1680
          Visible         =   0   'False
          Width           =   4095
@@ -1278,7 +1376,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1200
-            TabIndex        =   252
+            TabIndex        =   250
             Top             =   960
             Width           =   1215
          End
@@ -1286,7 +1384,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2520
-            TabIndex        =   251
+            TabIndex        =   249
             Top             =   960
             Width           =   1215
          End
@@ -1296,7 +1394,7 @@ Begin VB.Form frmEditor_Events
             Left            =   120
             List            =   "frmEditor_Events.frx":05B7
             Style           =   2  'Dropdown List
-            TabIndex        =   250
+            TabIndex        =   248
             Top             =   480
             Width           =   3735
          End
@@ -1305,7 +1403,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   29
             Left            =   120
-            TabIndex        =   253
+            TabIndex        =   251
             Top             =   240
             Width           =   615
          End
@@ -1315,7 +1413,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1695
          Index           =   14
          Left            =   1200
-         TabIndex        =   254
+         TabIndex        =   252
          Top             =   1680
          Visible         =   0   'False
          Width           =   4095
@@ -1324,7 +1422,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1200
             Max             =   100
             Min             =   1
-            TabIndex        =   258
+            TabIndex        =   256
             Top             =   360
             Value           =   1
             Width           =   2535
@@ -1333,7 +1431,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2520
-            TabIndex        =   256
+            TabIndex        =   254
             Top             =   960
             Width           =   1215
          End
@@ -1341,7 +1439,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1200
-            TabIndex        =   255
+            TabIndex        =   253
             Top             =   960
             Width           =   1215
          End
@@ -1349,7 +1447,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Sprite: 1"
             Height          =   255
             Left            =   120
-            TabIndex        =   257
+            TabIndex        =   255
             Top             =   360
             Width           =   1095
          End
@@ -1359,7 +1457,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1455
          Index           =   15
          Left            =   1200
-         TabIndex        =   259
+         TabIndex        =   257
          Top             =   1800
          Visible         =   0   'False
          Width           =   4095
@@ -1367,7 +1465,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Female"
             Height          =   255
             Left            =   1200
-            TabIndex        =   263
+            TabIndex        =   261
             Top             =   360
             Width           =   975
          End
@@ -1375,7 +1473,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Male"
             Height          =   255
             Left            =   240
-            TabIndex        =   262
+            TabIndex        =   260
             Top             =   360
             Width           =   1455
          End
@@ -1383,7 +1481,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1200
-            TabIndex        =   261
+            TabIndex        =   259
             Top             =   840
             Width           =   1215
          End
@@ -1391,7 +1489,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2520
-            TabIndex        =   260
+            TabIndex        =   258
             Top             =   840
             Width           =   1215
          End
@@ -1401,7 +1499,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1455
          Index           =   16
          Left            =   1200
-         TabIndex        =   264
+         TabIndex        =   262
          Top             =   1800
          Visible         =   0   'False
          Width           =   4095
@@ -1409,7 +1507,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2520
-            TabIndex        =   268
+            TabIndex        =   266
             Top             =   840
             Width           =   1215
          End
@@ -1417,7 +1515,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1200
-            TabIndex        =   267
+            TabIndex        =   265
             Top             =   840
             Width           =   1215
          End
@@ -1425,7 +1523,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Yes"
             Height          =   255
             Left            =   240
-            TabIndex        =   266
+            TabIndex        =   264
             Top             =   360
             Width           =   735
          End
@@ -1433,7 +1531,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "No"
             Height          =   255
             Left            =   1080
-            TabIndex        =   265
+            TabIndex        =   263
             Top             =   360
             Width           =   615
          End
@@ -1443,7 +1541,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1695
          Index           =   17
          Left            =   1200
-         TabIndex        =   372
+         TabIndex        =   370
          Top             =   1680
          Visible         =   0   'False
          Width           =   4095
@@ -1451,7 +1549,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Left            =   120
             Max             =   32000
-            TabIndex        =   375
+            TabIndex        =   373
             Top             =   480
             Width           =   3735
          End
@@ -1459,7 +1557,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2640
-            TabIndex        =   374
+            TabIndex        =   372
             Top             =   1200
             Width           =   1215
          End
@@ -1467,15 +1565,15 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1320
-            TabIndex        =   373
+            TabIndex        =   371
             Top             =   1200
             Width           =   1215
          End
          Begin VB.Label lblGiveExp 
-            Caption         =   "Give Exp: 0"
+            Caption         =   "Experience: 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   376
+            TabIndex        =   374
             Top             =   240
             Width           =   3735
          End
@@ -1495,7 +1593,7 @@ Begin VB.Form frmEditor_Events
             Left            =   120
             List            =   "frmEditor_Events.frx":05CC
             Style           =   2  'Dropdown List
-            TabIndex        =   302
+            TabIndex        =   300
             Top             =   2040
             Width           =   3855
          End
@@ -1568,7 +1666,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1695
          Index           =   19
          Left            =   1200
-         TabIndex        =   387
+         TabIndex        =   385
          Top             =   1680
          Visible         =   0   'False
          Width           =   4095
@@ -1578,7 +1676,7 @@ Begin VB.Form frmEditor_Events
             Left            =   120
             List            =   "frmEditor_Events.frx":060F
             Style           =   2  'Dropdown List
-            TabIndex        =   391
+            TabIndex        =   389
             Top             =   480
             Width           =   3735
          End
@@ -1586,7 +1684,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1320
-            TabIndex        =   389
+            TabIndex        =   387
             Top             =   1200
             Width           =   1215
          End
@@ -1594,7 +1692,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2640
-            TabIndex        =   388
+            TabIndex        =   386
             Top             =   1200
             Width           =   1215
          End
@@ -1603,7 +1701,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   42
             Left            =   120
-            TabIndex        =   390
+            TabIndex        =   388
             Top             =   240
             Width           =   3735
          End
@@ -1613,7 +1711,7 @@ Begin VB.Form frmEditor_Events
          Height          =   2775
          Index           =   20
          Left            =   720
-         TabIndex        =   271
+         TabIndex        =   269
          Top             =   1320
          Visible         =   0   'False
          Width           =   5055
@@ -1623,21 +1721,21 @@ Begin VB.Form frmEditor_Events
             Left            =   1680
             List            =   "frmEditor_Events.frx":0613
             Style           =   2  'Dropdown List
-            TabIndex        =   284
+            TabIndex        =   282
             Top             =   300
             Width           =   3135
          End
          Begin VB.HScrollBar scrlPlayAnimTileY 
             Height          =   255
             Left            =   1920
-            TabIndex        =   282
+            TabIndex        =   280
             Top             =   1800
             Width           =   2895
          End
          Begin VB.HScrollBar scrlPlayAnimTileX 
             Height          =   255
             Left            =   1920
-            TabIndex        =   281
+            TabIndex        =   279
             Top             =   1455
             Width           =   2895
          End
@@ -1645,7 +1743,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   3600
-            TabIndex        =   277
+            TabIndex        =   275
             Top             =   2280
             Width           =   1215
          End
@@ -1653,7 +1751,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   2160
-            TabIndex        =   276
+            TabIndex        =   274
             Top             =   2280
             Width           =   1215
          End
@@ -1661,7 +1759,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Player"
             Height          =   255
             Left            =   120
-            TabIndex        =   275
+            TabIndex        =   273
             Top             =   1080
             Width           =   1695
          End
@@ -1669,7 +1767,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Event"
             Height          =   255
             Left            =   1920
-            TabIndex        =   274
+            TabIndex        =   272
             Top             =   1080
             Width           =   1335
          End
@@ -1677,7 +1775,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Tile"
             Height          =   255
             Left            =   3720
-            TabIndex        =   273
+            TabIndex        =   271
             Top             =   1080
             Width           =   975
          End
@@ -1687,7 +1785,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1920
             List            =   "frmEditor_Events.frx":0617
             Style           =   2  'Dropdown List
-            TabIndex        =   272
+            TabIndex        =   270
             Top             =   1440
             Visible         =   0   'False
             Width           =   2895
@@ -1697,7 +1795,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   30
             Left            =   120
-            TabIndex        =   283
+            TabIndex        =   281
             Top             =   360
             Width           =   1215
          End
@@ -1705,7 +1803,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Map Tile Y:"
             Height          =   255
             Left            =   240
-            TabIndex        =   280
+            TabIndex        =   278
             Top             =   1800
             Visible         =   0   'False
             Width           =   1215
@@ -1714,7 +1812,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Map Tile X:"
             Height          =   255
             Left            =   240
-            TabIndex        =   279
+            TabIndex        =   277
             Top             =   1440
             Visible         =   0   'False
             Width           =   1215
@@ -1724,7 +1822,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   31
             Left            =   120
-            TabIndex        =   278
+            TabIndex        =   276
             Top             =   840
             Width           =   1335
          End
@@ -1734,7 +1832,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1575
          Index           =   21
          Left            =   1200
-         TabIndex        =   316
+         TabIndex        =   314
          Top             =   1800
          Visible         =   0   'False
          Width           =   4215
@@ -1742,7 +1840,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   319
+            TabIndex        =   317
             Top             =   1080
             Width           =   1215
          End
@@ -1750,7 +1848,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2880
-            TabIndex        =   318
+            TabIndex        =   316
             Top             =   1080
             Width           =   1215
          End
@@ -1760,7 +1858,7 @@ Begin VB.Form frmEditor_Events
             Left            =   960
             List            =   "frmEditor_Events.frx":062C
             Style           =   2  'Dropdown List
-            TabIndex        =   317
+            TabIndex        =   315
             Top             =   360
             Width           =   3135
          End
@@ -1770,7 +1868,7 @@ Begin VB.Form frmEditor_Events
          Height          =   2415
          Index           =   22
          Left            =   1200
-         TabIndex        =   392
+         TabIndex        =   390
          Top             =   1440
          Visible         =   0   'False
          Width           =   4095
@@ -1778,7 +1876,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   400
+            TabIndex        =   398
             Top             =   1920
             Width           =   1215
          End
@@ -1786,7 +1884,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2760
-            TabIndex        =   399
+            TabIndex        =   397
             Top             =   1920
             Width           =   1215
          End
@@ -1795,7 +1893,7 @@ Begin VB.Form frmEditor_Events
             Index           =   1
             Left            =   120
             Max             =   255
-            TabIndex        =   395
+            TabIndex        =   393
             Top             =   1050
             Width           =   1575
          End
@@ -1804,7 +1902,7 @@ Begin VB.Form frmEditor_Events
             Index           =   0
             Left            =   120
             Max             =   255
-            TabIndex        =   394
+            TabIndex        =   392
             Top             =   480
             Width           =   1575
          End
@@ -1813,7 +1911,7 @@ Begin VB.Form frmEditor_Events
             Index           =   2
             Left            =   120
             Max             =   255
-            TabIndex        =   393
+            TabIndex        =   391
             Top             =   1620
             Width           =   1575
          End
@@ -1822,7 +1920,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   1
             Left            =   120
-            TabIndex        =   398
+            TabIndex        =   396
             Top             =   810
             Width           =   1815
          End
@@ -1831,7 +1929,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   0
             Left            =   120
-            TabIndex        =   397
+            TabIndex        =   395
             Top             =   240
             Width           =   1815
          End
@@ -1840,7 +1938,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   2
             Left            =   120
-            TabIndex        =   396
+            TabIndex        =   394
             Top             =   1380
             Width           =   1815
          End
@@ -1850,7 +1948,7 @@ Begin VB.Form frmEditor_Events
          Height          =   1935
          Index           =   23
          Left            =   1200
-         TabIndex        =   401
+         TabIndex        =   399
          Top             =   1680
          Visible         =   0   'False
          Width           =   4095
@@ -1858,7 +1956,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2760
-            TabIndex        =   407
+            TabIndex        =   405
             Top             =   1440
             Width           =   1215
          End
@@ -1866,7 +1964,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   406
+            TabIndex        =   404
             Top             =   1440
             Width           =   1215
          End
@@ -1874,7 +1972,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Left            =   120
             Max             =   100
-            TabIndex        =   403
+            TabIndex        =   401
             Top             =   1080
             Width           =   1815
          End
@@ -1884,7 +1982,7 @@ Begin VB.Form frmEditor_Events
             Left            =   120
             List            =   "frmEditor_Events.frx":0685
             Style           =   2  'Dropdown List
-            TabIndex        =   402
+            TabIndex        =   400
             Top             =   480
             Width           =   1815
          End
@@ -1892,7 +1990,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Intensity: 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   405
+            TabIndex        =   403
             Top             =   840
             Width           =   1455
          End
@@ -1902,7 +2000,7 @@ Begin VB.Form frmEditor_Events
             Height          =   195
             Index           =   43
             Left            =   120
-            TabIndex        =   404
+            TabIndex        =   402
             Top             =   240
             Width           =   1275
          End
@@ -1912,7 +2010,7 @@ Begin VB.Form frmEditor_Events
          Height          =   4095
          Index           =   2
          Left            =   1200
-         TabIndex        =   217
+         TabIndex        =   215
          Top             =   600
          Visible         =   0   'False
          Width           =   4095
@@ -1921,7 +2019,7 @@ Begin VB.Form frmEditor_Events
             Left            =   120
             MultiLine       =   -1  'True
             ScrollBars      =   2  'Vertical
-            TabIndex        =   224
+            TabIndex        =   222
             Top             =   480
             Width           =   3855
          End
@@ -1929,7 +2027,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Left            =   120
             Max             =   17
-            TabIndex        =   223
+            TabIndex        =   221
             Top             =   2640
             Width           =   3855
          End
@@ -1937,7 +2035,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Player"
             Height          =   255
             Left            =   120
-            TabIndex        =   222
+            TabIndex        =   220
             Top             =   3240
             Value           =   -1  'True
             Width           =   975
@@ -1946,7 +2044,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Map"
             Height          =   255
             Left            =   1080
-            TabIndex        =   221
+            TabIndex        =   219
             Top             =   3240
             Width           =   735
          End
@@ -1954,7 +2052,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Global"
             Height          =   255
             Left            =   1920
-            TabIndex        =   220
+            TabIndex        =   218
             Top             =   3240
             Width           =   855
          End
@@ -1962,7 +2060,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   219
+            TabIndex        =   217
             Top             =   3600
             Width           =   1215
          End
@@ -1970,7 +2068,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2760
-            TabIndex        =   218
+            TabIndex        =   216
             Top             =   3600
             Width           =   1215
          End
@@ -1979,7 +2077,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   34
             Left            =   120
-            TabIndex        =   227
+            TabIndex        =   225
             Top             =   240
             Width           =   1935
          End
@@ -1987,7 +2085,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Color: Black"
             Height          =   255
             Left            =   120
-            TabIndex        =   226
+            TabIndex        =   224
             Top             =   2400
             Width           =   3255
          End
@@ -1996,7 +2094,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   10
             Left            =   120
-            TabIndex        =   225
+            TabIndex        =   223
             Top             =   3000
             Width           =   1575
          End
@@ -2006,14 +2104,14 @@ Begin VB.Form frmEditor_Events
          Height          =   4095
          Index           =   0
          Left            =   360
-         TabIndex        =   184
+         TabIndex        =   182
          Top             =   1200
          Visible         =   0   'False
          Width           =   5655
          Begin VB.HScrollBar scrlFace 
             Height          =   255
             Left            =   240
-            TabIndex        =   426
+            TabIndex        =   424
             Top             =   2280
             Width           =   1575
          End
@@ -2035,7 +2133,7 @@ Begin VB.Form frmEditor_Events
             ScaleHeight     =   100
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   100
-            TabIndex        =   425
+            TabIndex        =   423
             TabStop         =   0   'False
             Top             =   480
             Width           =   1500
@@ -2045,7 +2143,7 @@ Begin VB.Form frmEditor_Events
             Left            =   1920
             MultiLine       =   -1  'True
             ScrollBars      =   2  'Vertical
-            TabIndex        =   187
+            TabIndex        =   185
             Top             =   480
             Width           =   3255
          End
@@ -2053,7 +2151,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Ok"
             Height          =   375
             Left            =   1440
-            TabIndex        =   186
+            TabIndex        =   184
             Top             =   3600
             Width           =   1215
          End
@@ -2061,7 +2159,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Cancel"
             Height          =   375
             Left            =   2760
-            TabIndex        =   185
+            TabIndex        =   183
             Top             =   3600
             Width           =   1215
          End
@@ -2069,7 +2167,7 @@ Begin VB.Form frmEditor_Events
             Caption         =   "Face: 0"
             Height          =   255
             Left            =   240
-            TabIndex        =   427
+            TabIndex        =   425
             Top             =   2040
             Width           =   975
          End
@@ -2078,107 +2176,9 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   18
             Left            =   1920
-            TabIndex        =   188
+            TabIndex        =   186
             Top             =   240
             Width           =   1935
-         End
-      End
-      Begin VB.Frame fraCommand 
-         Caption         =   "Map Overlay"
-         Height          =   2055
-         Index           =   24
-         Left            =   1320
-         TabIndex        =   408
-         Top             =   1320
-         Visible         =   0   'False
-         Width           =   4095
-         Begin VB.CommandButton cmdMapTint_Cancel 
-            Caption         =   "Cancel"
-            Height          =   375
-            Left            =   2760
-            TabIndex        =   418
-            Top             =   1560
-            Width           =   1215
-         End
-         Begin VB.CommandButton cmdMapTint_Ok 
-            Caption         =   "Ok"
-            Height          =   375
-            Left            =   1440
-            TabIndex        =   417
-            Top             =   1560
-            Width           =   1215
-         End
-         Begin VB.HScrollBar scrlMapTintData 
-            Height          =   255
-            Index           =   3
-            Left            =   2280
-            Max             =   255
-            TabIndex        =   412
-            Top             =   1200
-            Width           =   855
-         End
-         Begin VB.HScrollBar scrlMapTintData 
-            Height          =   255
-            Index           =   0
-            Left            =   120
-            Max             =   255
-            TabIndex        =   411
-            Top             =   480
-            Width           =   855
-         End
-         Begin VB.HScrollBar scrlMapTintData 
-            Height          =   255
-            Index           =   1
-            Left            =   2280
-            Max             =   255
-            TabIndex        =   410
-            Top             =   480
-            Width           =   855
-         End
-         Begin VB.HScrollBar scrlMapTintData 
-            Height          =   255
-            Index           =   2
-            Left            =   120
-            Max             =   255
-            TabIndex        =   409
-            Top             =   1200
-            Width           =   855
-         End
-         Begin VB.Label lblMapTintData 
-            Caption         =   "Opacity: 0"
-            Height          =   255
-            Index           =   3
-            Left            =   2280
-            TabIndex        =   416
-            Top             =   960
-            Width           =   1455
-         End
-         Begin VB.Label lblMapTintData 
-            Caption         =   "Red: 0"
-            Height          =   255
-            Index           =   0
-            Left            =   120
-            TabIndex        =   415
-            Top             =   240
-            Width           =   975
-         End
-         Begin VB.Label lblMapTintData 
-            Caption         =   "Green: 0"
-            Height          =   255
-            Index           =   1
-            Left            =   2280
-            TabIndex        =   414
-            Top             =   240
-            Width           =   1455
-         End
-         Begin VB.Label lblMapTintData 
-            Caption         =   "Blue: 0"
-            Height          =   255
-            Index           =   2
-            Left            =   120
-            TabIndex        =   413
-            Top             =   960
-            Width           =   1455
          End
       End
    End
@@ -2195,7 +2195,7 @@ Begin VB.Form frmEditor_Events
          LargeChange     =   64
          Left            =   240
          SmallChange     =   32
-         TabIndex        =   104
+         TabIndex        =   102
          Top             =   7920
          Visible         =   0   'False
          Width           =   11895
@@ -2205,7 +2205,7 @@ Begin VB.Form frmEditor_Events
          LargeChange     =   64
          Left            =   12240
          SmallChange     =   32
-         TabIndex        =   103
+         TabIndex        =   101
          Top             =   720
          Visible         =   0   'False
          Width           =   255
@@ -2278,7 +2278,7 @@ Begin VB.Form frmEditor_Events
       Caption         =   "Labeling Variables and Switches"
       Height          =   495
       Left            =   120
-      TabIndex        =   321
+      TabIndex        =   319
       Top             =   120
       Visible         =   0   'False
       Width           =   615
@@ -2286,7 +2286,7 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Renaming Variable/Switch"
          Height          =   8535
          Left            =   120
-         TabIndex        =   330
+         TabIndex        =   328
          Top             =   120
          Visible         =   0   'False
          Width           =   12615
@@ -2295,13 +2295,13 @@ Begin VB.Form frmEditor_Events
             Height          =   2295
             Index           =   10
             Left            =   3600
-            TabIndex        =   331
+            TabIndex        =   329
             Top             =   2520
             Width           =   5055
             Begin VB.TextBox txtRename 
                Height          =   375
                Left            =   120
-               TabIndex        =   334
+               TabIndex        =   332
                Top             =   720
                Width           =   4815
             End
@@ -2309,7 +2309,7 @@ Begin VB.Form frmEditor_Events
                Caption         =   "Cancel"
                Height          =   375
                Left            =   3720
-               TabIndex        =   333
+               TabIndex        =   331
                Top             =   1800
                Width           =   1215
             End
@@ -2317,7 +2317,7 @@ Begin VB.Form frmEditor_Events
                Caption         =   "Ok"
                Height          =   375
                Left            =   2280
-               TabIndex        =   332
+               TabIndex        =   330
                Top             =   1800
                Width           =   1215
             End
@@ -2325,7 +2325,7 @@ Begin VB.Form frmEditor_Events
                Caption         =   "Naming Variable #1"
                Height          =   375
                Left            =   120
-               TabIndex        =   335
+               TabIndex        =   333
                Top             =   360
                Width           =   4815
             End
@@ -2335,7 +2335,7 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Rename Switch"
          Height          =   375
          Left            =   8280
-         TabIndex        =   329
+         TabIndex        =   327
          Top             =   7320
          Width           =   1935
       End
@@ -2343,21 +2343,21 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Rename Variable"
          Height          =   375
          Left            =   360
-         TabIndex        =   328
+         TabIndex        =   326
          Top             =   7320
          Width           =   1935
       End
       Begin VB.ListBox lstSwitches 
          Height          =   6495
          Left            =   8280
-         TabIndex        =   326
+         TabIndex        =   324
          Top             =   720
          Width           =   3855
       End
       Begin VB.ListBox lstVariables 
          Height          =   6495
          Left            =   360
-         TabIndex        =   324
+         TabIndex        =   322
          Top             =   720
          Width           =   3855
       End
@@ -2365,7 +2365,7 @@ Begin VB.Form frmEditor_Events
          Caption         =   "OK"
          Height          =   375
          Left            =   9480
-         TabIndex        =   323
+         TabIndex        =   321
          Top             =   8400
          Width           =   1455
       End
@@ -2373,7 +2373,7 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Cancel"
          Height          =   375
          Left            =   11040
-         TabIndex        =   322
+         TabIndex        =   320
          Top             =   8400
          Width           =   1455
       End
@@ -2382,7 +2382,7 @@ Begin VB.Form frmEditor_Events
          Height          =   255
          Index           =   36
          Left            =   8280
-         TabIndex        =   327
+         TabIndex        =   325
          Top             =   480
          Width           =   2175
       End
@@ -2391,7 +2391,7 @@ Begin VB.Form frmEditor_Events
          Height          =   255
          Index           =   25
          Left            =   360
-         TabIndex        =   325
+         TabIndex        =   323
          Top             =   480
          Width           =   2175
       End
@@ -2400,7 +2400,7 @@ Begin VB.Form frmEditor_Events
       Caption         =   "Move Route"
       Height          =   375
       Left            =   120
-      TabIndex        =   105
+      TabIndex        =   103
       Top             =   120
       Visible         =   0   'False
       Width           =   855
@@ -2409,7 +2409,7 @@ Begin VB.Form frmEditor_Events
          Height          =   6615
          Index           =   14
          Left            =   3120
-         TabIndex        =   112
+         TabIndex        =   110
          Top             =   480
          Width           =   9255
          Begin VB.CommandButton cmdAddMoveRoute 
@@ -2417,7 +2417,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   42
             Left            =   6720
-            TabIndex        =   155
+            TabIndex        =   153
             Top             =   3240
             Width           =   1935
          End
@@ -2426,7 +2426,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   41
             Left            =   6720
-            TabIndex        =   154
+            TabIndex        =   152
             Top             =   2760
             Width           =   1935
          End
@@ -2435,7 +2435,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   40
             Left            =   6720
-            TabIndex        =   153
+            TabIndex        =   151
             Top             =   2280
             Width           =   1935
          End
@@ -2444,7 +2444,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   39
             Left            =   6720
-            TabIndex        =   152
+            TabIndex        =   150
             Top             =   1800
             Width           =   1935
          End
@@ -2453,7 +2453,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   38
             Left            =   6720
-            TabIndex        =   151
+            TabIndex        =   149
             Top             =   1320
             Width           =   1935
          End
@@ -2462,7 +2462,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   37
             Left            =   6720
-            TabIndex        =   150
+            TabIndex        =   148
             Top             =   840
             Width           =   1935
          End
@@ -2471,7 +2471,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   36
             Left            =   6720
-            TabIndex        =   149
+            TabIndex        =   147
             Top             =   360
             Width           =   1935
          End
@@ -2480,7 +2480,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   35
             Left            =   4560
-            TabIndex        =   148
+            TabIndex        =   146
             Top             =   5640
             Width           =   1935
          End
@@ -2489,7 +2489,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   34
             Left            =   4560
-            TabIndex        =   147
+            TabIndex        =   145
             Top             =   5160
             Width           =   1935
          End
@@ -2498,7 +2498,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   33
             Left            =   4560
-            TabIndex        =   146
+            TabIndex        =   144
             Top             =   4680
             Width           =   1935
          End
@@ -2507,7 +2507,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   32
             Left            =   4560
-            TabIndex        =   145
+            TabIndex        =   143
             Top             =   4200
             Width           =   1935
          End
@@ -2516,7 +2516,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   31
             Left            =   4560
-            TabIndex        =   144
+            TabIndex        =   142
             Top             =   3720
             Width           =   1935
          End
@@ -2525,7 +2525,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   30
             Left            =   4560
-            TabIndex        =   143
+            TabIndex        =   141
             Top             =   3240
             Width           =   1935
          End
@@ -2534,7 +2534,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   29
             Left            =   4560
-            TabIndex        =   142
+            TabIndex        =   140
             Top             =   2760
             Width           =   1935
          End
@@ -2543,7 +2543,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   28
             Left            =   4560
-            TabIndex        =   141
+            TabIndex        =   139
             Top             =   2280
             Width           =   1935
          End
@@ -2552,7 +2552,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   27
             Left            =   4560
-            TabIndex        =   140
+            TabIndex        =   138
             Top             =   1800
             Width           =   1935
          End
@@ -2561,7 +2561,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   26
             Left            =   4560
-            TabIndex        =   139
+            TabIndex        =   137
             Top             =   1320
             Width           =   1935
          End
@@ -2570,7 +2570,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   25
             Left            =   4560
-            TabIndex        =   138
+            TabIndex        =   136
             Top             =   840
             Width           =   1935
          End
@@ -2579,7 +2579,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   24
             Left            =   4560
-            TabIndex        =   137
+            TabIndex        =   135
             Top             =   360
             Width           =   1935
          End
@@ -2588,7 +2588,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   23
             Left            =   2400
-            TabIndex        =   136
+            TabIndex        =   134
             Top             =   5640
             Width           =   1935
          End
@@ -2597,7 +2597,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   22
             Left            =   2400
-            TabIndex        =   135
+            TabIndex        =   133
             Top             =   5160
             Width           =   1935
          End
@@ -2606,7 +2606,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   21
             Left            =   2400
-            TabIndex        =   134
+            TabIndex        =   132
             Top             =   4680
             Width           =   1935
          End
@@ -2615,7 +2615,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   20
             Left            =   2400
-            TabIndex        =   133
+            TabIndex        =   131
             Top             =   4200
             Width           =   1935
          End
@@ -2624,7 +2624,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   19
             Left            =   2400
-            TabIndex        =   132
+            TabIndex        =   130
             Top             =   3720
             Width           =   1935
          End
@@ -2633,7 +2633,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   18
             Left            =   2400
-            TabIndex        =   131
+            TabIndex        =   129
             Top             =   3240
             Width           =   1935
          End
@@ -2642,7 +2642,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   17
             Left            =   2400
-            TabIndex        =   130
+            TabIndex        =   128
             Top             =   2760
             Width           =   1935
          End
@@ -2651,7 +2651,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   16
             Left            =   2400
-            TabIndex        =   129
+            TabIndex        =   127
             Top             =   2280
             Width           =   1935
          End
@@ -2660,7 +2660,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   15
             Left            =   2400
-            TabIndex        =   128
+            TabIndex        =   126
             Top             =   1800
             Width           =   1935
          End
@@ -2669,7 +2669,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   14
             Left            =   2400
-            TabIndex        =   127
+            TabIndex        =   125
             Top             =   1320
             Width           =   1935
          End
@@ -2678,7 +2678,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   13
             Left            =   2400
-            TabIndex        =   126
+            TabIndex        =   124
             Top             =   840
             Width           =   1935
          End
@@ -2687,7 +2687,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   12
             Left            =   2400
-            TabIndex        =   125
+            TabIndex        =   123
             Top             =   360
             Width           =   1935
          End
@@ -2696,7 +2696,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   11
             Left            =   240
-            TabIndex        =   124
+            TabIndex        =   122
             Top             =   5640
             Width           =   1935
          End
@@ -2705,7 +2705,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   10
             Left            =   240
-            TabIndex        =   123
+            TabIndex        =   121
             Top             =   5160
             Width           =   1935
          End
@@ -2714,7 +2714,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   9
             Left            =   240
-            TabIndex        =   122
+            TabIndex        =   120
             Top             =   4680
             Width           =   1935
          End
@@ -2723,7 +2723,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   8
             Left            =   240
-            TabIndex        =   121
+            TabIndex        =   119
             Top             =   4200
             Width           =   1935
          End
@@ -2732,7 +2732,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   7
             Left            =   240
-            TabIndex        =   120
+            TabIndex        =   118
             Top             =   3720
             Width           =   1935
          End
@@ -2741,7 +2741,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   6
             Left            =   240
-            TabIndex        =   119
+            TabIndex        =   117
             Top             =   3240
             Width           =   1935
          End
@@ -2750,7 +2750,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   5
             Left            =   240
-            TabIndex        =   118
+            TabIndex        =   116
             Top             =   2760
             Width           =   1935
          End
@@ -2759,7 +2759,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   4
             Left            =   240
-            TabIndex        =   117
+            TabIndex        =   115
             Top             =   2280
             Width           =   1935
          End
@@ -2768,7 +2768,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   3
             Left            =   240
-            TabIndex        =   116
+            TabIndex        =   114
             Top             =   1800
             Width           =   1935
          End
@@ -2777,7 +2777,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   2
             Left            =   240
-            TabIndex        =   115
+            TabIndex        =   113
             Top             =   1320
             Width           =   1935
          End
@@ -2786,7 +2786,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   1
             Left            =   240
-            TabIndex        =   114
+            TabIndex        =   112
             Top             =   840
             Width           =   1935
          End
@@ -2795,7 +2795,7 @@ Begin VB.Form frmEditor_Events
             Height          =   375
             Index           =   0
             Left            =   240
-            TabIndex        =   113
+            TabIndex        =   111
             Top             =   360
             Width           =   1935
          End
@@ -2814,7 +2814,7 @@ Begin VB.Form frmEditor_Events
             Height          =   255
             Index           =   15
             Left            =   240
-            TabIndex        =   156
+            TabIndex        =   154
             Top             =   6240
             Width           =   8535
          End
@@ -2826,7 +2826,7 @@ Begin VB.Form frmEditor_Events
          Left            =   120
          List            =   "frmEditor_Events.frx":06E1
          Style           =   2  'Dropdown List
-         TabIndex        =   111
+         TabIndex        =   109
          Top             =   480
          Width           =   2655
       End
@@ -2834,7 +2834,7 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Repeat Route"
          Height          =   255
          Left            =   120
-         TabIndex        =   110
+         TabIndex        =   108
          Top             =   7560
          Width           =   2655
       End
@@ -2842,14 +2842,14 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Ignore if event can't move."
          Height          =   255
          Left            =   120
-         TabIndex        =   109
+         TabIndex        =   107
          Top             =   7200
          Width           =   2655
       End
       Begin VB.ListBox lstMoveRoute 
          Height          =   6105
          Left            =   120
-         TabIndex        =   108
+         TabIndex        =   106
          Top             =   960
          Width           =   2655
       End
@@ -2857,7 +2857,7 @@ Begin VB.Form frmEditor_Events
          Caption         =   "OK"
          Height          =   375
          Left            =   9480
-         TabIndex        =   107
+         TabIndex        =   105
          Top             =   8160
          Width           =   1455
       End
@@ -2865,7 +2865,7 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Cancel"
          Height          =   375
          Left            =   11040
-         TabIndex        =   106
+         TabIndex        =   104
          Top             =   8160
          Width           =   1455
       End
@@ -2875,7 +2875,7 @@ Begin VB.Form frmEditor_Events
       Height          =   855
       Index           =   19
       Left            =   2760
-      TabIndex        =   101
+      TabIndex        =   99
       Top             =   5640
       Width           =   3375
       Begin VB.ComboBox cmbPositioning 
@@ -2884,42 +2884,25 @@ Begin VB.Form frmEditor_Events
          Left            =   120
          List            =   "frmEditor_Events.frx":06F0
          Style           =   2  'Dropdown List
-         TabIndex        =   102
+         TabIndex        =   100
          Top             =   360
          Width           =   3135
-      End
-   End
-   Begin VB.Frame fraRandom 
-      Caption         =   "Global"
-      Height          =   615
-      Index           =   17
-      Left            =   2760
-      TabIndex        =   99
-      Top             =   7680
-      Width           =   3375
-      Begin VB.CheckBox chkGlobal 
-         Caption         =   "Activated"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   100
-         Top             =   240
-         Width           =   2895
       End
    End
    Begin VB.CommandButton cmdSave 
       Caption         =   "Save"
       Height          =   375
-      Left            =   9720
+      Left            =   9480
       TabIndex        =   36
-      Top             =   8520
+      Top             =   8400
       Width           =   1455
    End
    Begin VB.CommandButton cmdCancel 
       Caption         =   "Cancel"
       Height          =   375
-      Left            =   11280
+      Left            =   11160
       TabIndex        =   35
-      Top             =   8520
+      Top             =   8400
       Width           =   1455
    End
    Begin VB.Frame fraRandom 
@@ -2991,11 +2974,11 @@ Begin VB.Form frmEditor_Events
    End
    Begin VB.Frame fraRandom 
       Caption         =   "Trigger"
-      Height          =   735
+      Height          =   855
       Index           =   18
       Left            =   2760
       TabIndex        =   24
-      Top             =   6480
+      Top             =   7440
       Width           =   3375
       Begin VB.ComboBox cmbTrigger 
          Height          =   315
@@ -3004,7 +2987,7 @@ Begin VB.Form frmEditor_Events
          List            =   "frmEditor_Events.frx":0739
          Style           =   2  'Dropdown List
          TabIndex        =   25
-         Top             =   240
+         Top             =   360
          Width           =   3135
       End
    End
@@ -3016,11 +2999,19 @@ Begin VB.Form frmEditor_Events
       TabIndex        =   20
       Top             =   6720
       Width           =   2295
+      Begin VB.CheckBox chkGlobal 
+         Caption         =   "Global"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   429
+         Top             =   1200
+         Width           =   1215
+      End
       Begin VB.CheckBox chkShowName 
          Caption         =   "Show Name"
          Height          =   255
          Left            =   120
-         TabIndex        =   337
+         TabIndex        =   335
          Top             =   960
          Value           =   1  'Checked
          Width           =   1695
@@ -3062,10 +3053,10 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Move Route"
          Enabled         =   0   'False
          Height          =   375
-         Left            =   1680
+         Left            =   840
          TabIndex        =   98
          Top             =   720
-         Width           =   1575
+         Width           =   2415
       End
       Begin VB.ComboBox cmbMoveFreq 
          Height          =   315
@@ -3164,7 +3155,7 @@ Begin VB.Form frmEditor_Events
          Left            =   3720
          List            =   "frmEditor_Events.frx":0861
          Style           =   2  'Dropdown List
-         TabIndex        =   307
+         TabIndex        =   305
          Top             =   240
          Width           =   1335
       End
@@ -3175,7 +3166,7 @@ Begin VB.Form frmEditor_Events
          Left            =   3720
          List            =   "frmEditor_Events.frx":08D1
          Style           =   2  'Dropdown List
-         TabIndex        =   306
+         TabIndex        =   304
          Top             =   1680
          Width           =   1095
       End
@@ -3186,7 +3177,7 @@ Begin VB.Form frmEditor_Events
          Left            =   3720
          List            =   "frmEditor_Events.frx":08EC
          Style           =   2  'Dropdown List
-         TabIndex        =   303
+         TabIndex        =   301
          Top             =   720
          Width           =   1095
       End
@@ -3279,7 +3270,7 @@ Begin VB.Form frmEditor_Events
          Height          =   255
          Index           =   4
          Left            =   3480
-         TabIndex        =   305
+         TabIndex        =   303
          Top             =   1760
          Width           =   255
       End
@@ -3288,7 +3279,7 @@ Begin VB.Form frmEditor_Events
          Height          =   255
          Index           =   3
          Left            =   3480
-         TabIndex        =   304
+         TabIndex        =   302
          Top             =   800
          Width           =   255
       End
@@ -3341,7 +3332,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   21
                Left            =   120
-               TabIndex        =   336
+               TabIndex        =   334
                Top             =   5040
                Width           =   2535
             End
@@ -3350,7 +3341,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   20
                Left            =   120
-               TabIndex        =   216
+               TabIndex        =   214
                Top             =   4560
                Width           =   2535
             End
@@ -3449,7 +3440,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   10
                Left            =   120
-               TabIndex        =   352
+               TabIndex        =   350
                Top             =   1680
                Width           =   2535
             End
@@ -3458,7 +3449,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   9
                Left            =   120
-               TabIndex        =   351
+               TabIndex        =   349
                Top             =   1200
                Width           =   2535
             End
@@ -3530,7 +3521,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   3
                Left            =   120
-               TabIndex        =   347
+               TabIndex        =   345
                Top             =   1680
                Width           =   2535
             End
@@ -3579,7 +3570,7 @@ Begin VB.Form frmEditor_Events
             Height          =   1695
             Index           =   12
             Left            =   3000
-            TabIndex        =   356
+            TabIndex        =   354
             Top             =   0
             Width           =   2775
             Begin VB.CommandButton cmdCommands 
@@ -3587,7 +3578,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   31
                Left            =   120
-               TabIndex        =   359
+               TabIndex        =   357
                Top             =   240
                Width           =   2535
             End
@@ -3596,7 +3587,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   32
                Left            =   120
-               TabIndex        =   358
+               TabIndex        =   356
                Top             =   720
                Width           =   2535
             End
@@ -3605,7 +3596,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   33
                Left            =   120
-               TabIndex        =   357
+               TabIndex        =   355
                Top             =   1200
                Width           =   2535
             End
@@ -3615,7 +3606,7 @@ Begin VB.Form frmEditor_Events
             Height          =   1695
             Index           =   11
             Left            =   0
-            TabIndex        =   349
+            TabIndex        =   347
             Top             =   3840
             Width           =   2775
             Begin VB.CommandButton cmdCommands 
@@ -3623,7 +3614,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   30
                Left            =   120
-               TabIndex        =   355
+               TabIndex        =   353
                Top             =   1200
                Width           =   2535
             End
@@ -3632,7 +3623,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   29
                Left            =   120
-               TabIndex        =   354
+               TabIndex        =   352
                Top             =   720
                Width           =   2535
             End
@@ -3641,7 +3632,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   28
                Left            =   120
-               TabIndex        =   350
+               TabIndex        =   348
                Top             =   240
                Width           =   2535
             End
@@ -3651,7 +3642,7 @@ Begin VB.Form frmEditor_Events
             Height          =   1215
             Index           =   6
             Left            =   0
-            TabIndex        =   308
+            TabIndex        =   306
             Top             =   2520
             Width           =   2775
             Begin VB.CommandButton cmdCommands 
@@ -3659,7 +3650,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   27
                Left            =   120
-               TabIndex        =   310
+               TabIndex        =   308
                Top             =   720
                Width           =   2535
             End
@@ -3668,7 +3659,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   26
                Left            =   120
-               TabIndex        =   309
+               TabIndex        =   307
                Top             =   240
                Width           =   2535
             End
@@ -3678,7 +3669,7 @@ Begin VB.Form frmEditor_Events
             Height          =   1695
             Index           =   8
             Left            =   3000
-            TabIndex        =   269
+            TabIndex        =   267
             Top             =   3840
             Width           =   2775
             Begin VB.CommandButton cmdCommands 
@@ -3686,7 +3677,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   38
                Left            =   120
-               TabIndex        =   348
+               TabIndex        =   346
                Top             =   240
                Width           =   2535
             End
@@ -3695,7 +3686,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   39
                Left            =   120
-               TabIndex        =   311
+               TabIndex        =   309
                Top             =   720
                Width           =   2535
             End
@@ -3704,7 +3695,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   40
                Left            =   120
-               TabIndex        =   270
+               TabIndex        =   268
                Top             =   1200
                Width           =   2535
             End
@@ -3785,7 +3776,7 @@ Begin VB.Form frmEditor_Events
                Height          =   375
                Index           =   24
                Left            =   120
-               TabIndex        =   353
+               TabIndex        =   351
                Top             =   1200
                Width           =   2535
             End
@@ -3838,14 +3829,14 @@ Begin VB.Form frmEditor_Events
       Height          =   735
       Index           =   9
       Left            =   6240
-      TabIndex        =   178
+      TabIndex        =   176
       Top             =   7560
       Width           =   6255
       Begin VB.CommandButton cmdClearCommand 
          Caption         =   "Clear"
          Height          =   375
          Left            =   4680
-         TabIndex        =   182
+         TabIndex        =   180
          Top             =   240
          Width           =   1455
       End
@@ -3853,7 +3844,7 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Delete"
          Height          =   375
          Left            =   3120
-         TabIndex        =   181
+         TabIndex        =   179
          Top             =   240
          Width           =   1455
       End
@@ -3861,7 +3852,7 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Edit"
          Height          =   375
          Left            =   1560
-         TabIndex        =   180
+         TabIndex        =   178
          Top             =   240
          Width           =   1455
       End
@@ -3869,7 +3860,7 @@ Begin VB.Form frmEditor_Events
          Caption         =   "Add"
          Height          =   375
          Left            =   120
-         TabIndex        =   179
+         TabIndex        =   177
          Top             =   240
          Width           =   1335
       End
@@ -3877,9 +3868,9 @@ Begin VB.Form frmEditor_Events
    Begin VB.CommandButton cmdLabel 
       Caption         =   "Label Variables/Switches"
       Height          =   375
-      Left            =   120
-      TabIndex        =   320
-      Top             =   8520
+      Left            =   360
+      TabIndex        =   318
+      Top             =   8400
       Width           =   2415
    End
    Begin VB.ListBox lstCommands 
@@ -3890,13 +3881,13 @@ Begin VB.Form frmEditor_Events
       Width           =   6255
    End
    Begin MSComctlLib.TabStrip tabPages 
-      Height          =   7455
+      Height          =   8055
       Left            =   120
       TabIndex        =   34
       Top             =   960
-      Width           =   12615
-      _ExtentX        =   22251
-      _ExtentY        =   13150
+      Width           =   12735
+      _ExtentX        =   22463
+      _ExtentY        =   14208
       MultiRow        =   -1  'True
       ShowTips        =   0   'False
       TabMinWidth     =   529
@@ -3908,6 +3899,30 @@ Begin VB.Form frmEditor_Events
             ImageVarType    =   2
          EndProperty
       EndProperty
+   End
+   Begin VB.Frame fraEvents 
+      Caption         =   "Events List"
+      Height          =   4815
+      Left            =   360
+      TabIndex        =   430
+      Top             =   3480
+      Visible         =   0   'False
+      Width           =   5775
+      Begin VB.ListBox lstIndex 
+         Height          =   3960
+         Left            =   120
+         TabIndex        =   432
+         Top             =   600
+         Width           =   5535
+      End
+      Begin VB.TextBox txtSearch 
+         CausesValidation=   0   'False
+         Height          =   270
+         Left            =   120
+         TabIndex        =   431
+         Top             =   240
+         Width           =   5535
+      End
    End
    Begin VB.Label lblRandomLabel 
       Caption         =   "List of commands:"
@@ -4376,7 +4391,7 @@ Private Sub cmdClearPage_Click()
 End Sub
 
 Private Sub cmdCommands_Click(Index As Integer)
-    Dim i As Long, x As Long
+    Dim i As Long, X As Long
     
     Select Case Index
         Case 0
@@ -4488,7 +4503,7 @@ Private Sub cmdCommands_Click(Index As Integer)
                 If cmbChangeClass.ListCount = 0 Then
                 cmbChangeClass.Clear
                 For i = 1 To MAX_CLASSES
-                    cmbChangeClass.AddItem Trim$(Class(i).name)
+                    cmbChangeClass.AddItem Trim$(Class(i).Name)
                 Next
                 cmbChangeClass.ListIndex = 0
                 End If
@@ -4537,9 +4552,9 @@ Private Sub cmdCommands_Click(Index As Integer)
             cmbEvent.Enabled = True
             For i = 1 To Map.EventCount
                 If i <> EditorEvent Then
-                    cmbEvent.AddItem Trim$(Map.events(i).name)
-                    x = x + 1
-                    ListOfEvents(x) = i
+                    cmbEvent.AddItem Trim$(Map.events(i).Name)
+                    X = X + 1
+                    ListOfEvents(X) = i
                 End If
             Next
             IsMoveRouteCommand = True
@@ -4559,7 +4574,7 @@ Private Sub cmdCommands_Click(Index As Integer)
         Case 25
             cmbPlayAnimEvent.Clear
             For i = 1 To Map.EventCount
-                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).name)
+                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).Name)
             Next
             cmbPlayAnimEvent.ListIndex = 0
             optPlayAnimPlayer.Value = True
@@ -5524,7 +5539,7 @@ Public Sub InitEventEditorForm()
     cmbChangeItemIndex.Clear
     
     For i = 1 To MAX_ITEMS
-        cmbChangeItemIndex.AddItem Trim$(Item(i).name)
+        cmbChangeItemIndex.AddItem Trim$(Item(i).Name)
     Next
     
     cmbChangeItemIndex.ListIndex = 0
@@ -5535,7 +5550,7 @@ Public Sub InitEventEditorForm()
     cmbChangeSkills.Clear
     
     For i = 1 To MAX_SPELLS
-        cmbChangeSkills.AddItem Trim$(Spell(i).name)
+        cmbChangeSkills.AddItem Trim$(Spell(i).Name)
     Next
     
     cmbChangeSkills.ListIndex = 0
@@ -5543,7 +5558,7 @@ Public Sub InitEventEditorForm()
     
     If MAX_CLASSES > 0 Then
         For i = 1 To MAX_CLASSES
-            cmbChangeClass.AddItem Trim$(Class(i).name)
+            cmbChangeClass.AddItem Trim$(Class(i).Name)
         Next
         cmbChangeClass.ListIndex = 0
     End If
@@ -5551,7 +5566,7 @@ Public Sub InitEventEditorForm()
     cmbPlayAnim.Clear
     
     For i = 1 To MAX_ANIMATIONS
-        cmbPlayAnim.AddItem i & ". " & Trim$(Animation(i).name)
+        cmbPlayAnim.AddItem i & ". " & Trim$(Animation(i).Name)
     Next
     
     cmbPlayAnim.ListIndex = 0
@@ -5581,7 +5596,7 @@ Public Sub InitEventEditorForm()
     
     cmbOpenShop.Clear
     For i = 1 To MAX_SHOPS
-        cmbOpenShop.AddItem i & ". " & Trim$(Shop(i).name)
+        cmbOpenShop.AddItem i & ". " & Trim$(Shop(i).Name)
     Next
     
     cmbOpenShop.ListIndex = 0
@@ -5589,7 +5604,7 @@ Public Sub InitEventEditorForm()
     
     For i = 1 To MAX_MAP_NPCS
         If Map.NPC(i) > 0 Then
-            cmbSpawnNPC.AddItem i & ". " & Trim$(NPC(Map.NPC(i)).name)
+            cmbSpawnNPC.AddItem i & ". " & Trim$(NPC(Map.NPC(i)).Name)
         Else
             cmbSpawnNPC.AddItem i & ". "
         End If
@@ -5617,17 +5632,22 @@ Private Sub lstCommands_Click()
 End Sub
 
 Sub AddMoveRouteCommand(Index As Integer)
-Dim i As Long, x As Long, Z As Long
+    Dim i As Long, X As Long, Z As Long
+    
     Index = Index + 1
+    
     If lstMoveRoute.ListIndex > -1 Then
         i = lstMoveRoute.ListIndex + 1
         TempMoveRouteCount = TempMoveRouteCount + 1
         ReDim Preserve TempMoveRoute(TempMoveRouteCount)
-        For x = TempMoveRouteCount - 1 To i Step -1
-            TempMoveRoute(x + 1) = TempMoveRoute(x)
+        
+        For X = TempMoveRouteCount - 1 To i Step -1
+            TempMoveRoute(X + 1) = TempMoveRoute(X)
         Next
+        
         TempMoveRoute(i).Index = Index
-        'if set graphic then...
+        
+        ' If set graphic then...
         If Index = 43 Then
             TempMoveRoute(i).Data1 = cmbGraphic.ListIndex
             TempMoveRoute(i).Data2 = scrlGraphic.Value
@@ -5642,7 +5662,8 @@ Dim i As Long, x As Long, Z As Long
         ReDim Preserve TempMoveRoute(TempMoveRouteCount)
         TempMoveRoute(TempMoveRouteCount).Index = Index
         PopulateMoveRouteList
-        'if set graphic then....
+        
+        ' If set graphic then....
         If Index = 43 Then
             TempMoveRoute(TempMoveRouteCount).Data1 = cmbGraphic.ListIndex
             TempMoveRoute(TempMoveRouteCount).Data2 = scrlGraphic.Value
@@ -5655,18 +5676,23 @@ Dim i As Long, x As Long, Z As Long
 End Sub
 
 Sub RemoveMoveRouteCommand(Index As Long)
-Dim i As Long
+    Dim i As Long
+    
     Index = Index + 1
+    
     If Index > 0 And Index <= TempMoveRouteCount Then
         For i = Index + 1 To TempMoveRouteCount
             TempMoveRoute(i - 1) = TempMoveRoute(i)
         Next
+        
         TempMoveRouteCount = TempMoveRouteCount - 1
+        
         If TempMoveRouteCount = 0 Then
             ReDim TempMoveRoute(0)
         Else
             ReDim Preserve TempMoveRoute(TempMoveRouteCount)
         End If
+        
         PopulateMoveRouteList
     End If
 End Sub
@@ -5677,9 +5703,15 @@ End Sub
 
 Private Sub lstCommands_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = 46 Then
-        'remove move route command lol
+        ' Remove move route command lol
         cmdDeleteCommand_Click
     End If
+End Sub
+
+Private Sub lstIndex_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_COMMON_EVENTS Then Exit Sub
+    
+    EventEditorInit EditorIndex
 End Sub
 
 Private Sub lstMoveRoute_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -5689,10 +5721,6 @@ Private Sub lstMoveRoute_KeyDown(KeyCode As Integer, Shift As Integer)
             Call RemoveMoveRouteCommand(lstMoveRoute.ListIndex)
         End If
     End If
-End Sub
-
-Private Sub optAddText_Game_Click()
-
 End Sub
 
 Private Sub lstSwitches_DblClick()
@@ -5726,7 +5754,7 @@ Dim i As Long
             If Map.NPC(i) <= 0 Then
                 cmbChatBubbleTarget.AddItem CStr(i) & ". "
             Else
-                cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(NPC(Map.NPC(i)).name)
+                cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(NPC(Map.NPC(i)).Name)
             End If
         Next
         cmbChatBubbleTarget.ListIndex = 0
@@ -5734,19 +5762,19 @@ Dim i As Long
         cmbChatBubbleTarget.Visible = True
         cmbChatBubbleTarget.Clear
         For i = 1 To Map.EventCount
-            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.events(i).name)
+            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.events(i).Name)
         Next
         cmbChatBubbleTarget.ListIndex = 0
     End If
 End Sub
 
 Private Sub optCondition_Index_Click(Index As Integer)
-Dim i As Long, x As Long
+Dim i As Long, X As Long
     For i = 0 To 6
-        If optCondition_Index(i).Value = True Then x = i
+        If optCondition_Index(i).Value = True Then X = i
     Next
     ClearConditionFrame
-    Select Case x
+    Select Case X
         Case 0
             cmbCondition_PlayerVarIndex.Enabled = True
             cmbCondition_PlayerVarCompare.Enabled = True
@@ -5796,21 +5824,21 @@ Dim i As Long
     cmbCondition_HasItem.Enabled = False
     cmbCondition_HasItem.Clear
     For i = 1 To MAX_ITEMS
-        cmbCondition_HasItem.AddItem i & ". " & Trim$(Item(i).name)
+        cmbCondition_HasItem.AddItem i & ". " & Trim$(Item(i).Name)
     Next
     cmbCondition_HasItem.ListIndex = 0
     
     cmbCondition_ClassIs.Enabled = False
     cmbCondition_ClassIs.Clear
     For i = 1 To MAX_CLASSES
-        cmbCondition_ClassIs.AddItem i & ". " & CStr(Class(i).name)
+        cmbCondition_ClassIs.AddItem i & ". " & CStr(Class(i).Name)
     Next
     cmbCondition_ClassIs.ListIndex = 0
     
     cmbCondition_LearntSkill.Enabled = False
     cmbCondition_LearntSkill.Clear
     For i = 1 To MAX_SPELLS
-        cmbCondition_LearntSkill.AddItem i & ". " & Trim$(Spell(i).name)
+        cmbCondition_LearntSkill.AddItem i & ". " & Trim$(Spell(i).Name)
     Next
     cmbCondition_LearntSkill.ListIndex = 0
     cmbCondition_LevelCompare.Enabled = False
@@ -5885,26 +5913,26 @@ Private Sub picGraphic_Click()
     GraphicSelType = 0
 End Sub
 
-Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim i As Long
     If frmEditor_Events.cmbGraphic.ListIndex = 2 Then
         'Tileset... hard one....
         If ShiftDown Then
             If GraphicSelX > -1 And GraphicSelY > -1 Then
-                If CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
-                    GraphicSelX2 = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32
-                    GraphicSelY2 = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32
+                If CLng(X + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
+                    GraphicSelX2 = CLng(X + frmEditor_Events.hScrlGraphicSel.Value) / 32
+                    GraphicSelY2 = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) / 32
                 End If
             End If
         Else
-            GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) \ 32
-            GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) \ 32
+            GraphicSelX = CLng(X + frmEditor_Events.hScrlGraphicSel.Value) \ 32
+            GraphicSelY = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) \ 32
             GraphicSelX2 = 0
             GraphicSelY2 = 0
         End If
     ElseIf frmEditor_Events.cmbGraphic.ListIndex = 1 Then
-        GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value)
-        GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value)
+        GraphicSelX = CLng(X + frmEditor_Events.hScrlGraphicSel.Value)
+        GraphicSelY = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value)
         GraphicSelX2 = 0
         GraphicSelY2 = 0
         
@@ -5996,33 +6024,33 @@ End Sub
 
 Private Sub scrlFace_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblFace.Caption = "Face: " & scrlFace.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlFace_Change", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub scrlFace2_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblFace2.Caption = "Face: " & scrlFace2.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlFace2_Change", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub ScrlFogData_Change(Index As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Select Case Index
         Case 0
@@ -6039,14 +6067,14 @@ Private Sub ScrlFogData_Change(Index As Integer)
     
     ' Error handler
     Exit Sub
-ErrorHandler:
+errorhandler:
     HandleError "ScrlFogData_Change(" & CStr(Index) & ")", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
     Exit Sub
 End Sub
 
 Private Sub scrlGiveExp_Change()
-    lblGiveExp.Caption = "Give Exp: " & scrlGiveExp.Value
+    lblGiveExp.Caption = "Experience: " & scrlGiveExp.Value
 End Sub
 
 Private Sub scrlGraphic_Change()
@@ -6060,7 +6088,7 @@ End Sub
 
 Private Sub scrlMapTintData_Change(Index As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Select Case Index
         Case 0
@@ -6075,7 +6103,7 @@ Private Sub scrlMapTintData_Change(Index As Integer)
     
     ' Error handler
     Exit Sub
-ErrorHandler:
+errorhandler:
     HandleError "ScrlMapTintData_Change(" & CStr(Index) & ")", "frmEditor_MapProperties", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
     Exit Sub
@@ -6090,21 +6118,11 @@ Private Sub scrlPlayAnimTileY_Change()
 End Sub
 
 Private Sub scrlWaitAmount_Change()
-    lblWaitAmount.Caption = "Wait: " & scrlWaitAmount.Value & " Ms"
+    lblWaitAmount.Caption = "Wait: " & scrlWaitAmount.Value & " ms"
 End Sub
 
 Private Sub scrlWeatherIntensity_Change()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
-    
     lblWeatherIntensity.Caption = "Intensity: " & scrlWeatherIntensity.Value
-    
-    ' Error handler
-    Exit Sub
-ErrorHandler:
-    HandleError "ScrlWeatherIntensity_Change", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-    Exit Sub
 End Sub
 
 Private Sub scrlWPMap_Change()
@@ -6120,7 +6138,8 @@ Private Sub scrlWPY_Change()
 End Sub
 
 Private Sub tabCommands_Click()
-Dim i As Long
+    Dim i As Long
+
     For i = 1 To 2
         picCommands(i).Visible = False
     Next
@@ -6135,9 +6154,25 @@ Private Sub tabPages_Click()
 End Sub
 
 Private Sub txtName_Validate(Cancel As Boolean)
-    tmpEvent.name = Trim$(txtName.text)
+    tmpEvent.Name = Trim$(txtName.text)
 End Sub
 
 Private Sub txtPlayerVariable_Validate(Cancel As Boolean)
     tmpEvent.Pages(curPageNum).VariableCondition = Val(Trim$(txtPlayerVariable.text))
+End Sub
+
+Private Sub txtSearch_Change()
+    Dim i As Long, Find As String
+    
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
+        
+        ' Make sure we dont try to check a name that's too small
+        If Len(lstIndex.List(i)) = Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
+                Exit For
+            End If
+        End If
+    Next
 End Sub

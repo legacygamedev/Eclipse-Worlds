@@ -730,14 +730,14 @@ Public Sub ItemEditorInit()
         If .Pic > frmEditor_Item.scrlPic.max Then .Pic = frmEditor_Item.scrlPic.max
         
         ' Basic data
-        frmEditor_Item.txtName.text = Trim$(.name)
+        frmEditor_Item.txtName.Text = Trim$(.Name)
         frmEditor_Item.scrlPic.Value = .Pic
         frmEditor_Item.cmbType.ListIndex = .Type
         frmEditor_Item.scrlAnim.Value = .Animation
         frmEditor_Item.cmbTool.ListIndex = .Data3
         frmEditor_Item.scrlPaperdoll = .Paperdoll
         frmEditor_Item.scrlDurability = .Data1
-        frmEditor_Item.txtDesc.text = Trim$(.Desc)
+        frmEditor_Item.txtDesc.Text = Trim$(.Desc)
         frmEditor_Item.cmbEquipSlot.ListIndex = .EquipSlot
         frmEditor_Item.scrlSpell.Value = .Data1
         frmEditor_Item.chkHoT.Value = .HoT
@@ -746,11 +746,11 @@ Public Sub ItemEditorInit()
         
         ' Reusable
         If .IsReusable = True Then
-            For i = 1 To frmEditor_Item.chkReusable.count - 1
+            For i = 1 To frmEditor_Item.chkReusable.Count - 1
                 frmEditor_Item.chkReusable.Item(i) = 1
             Next
         Else
-            For i = 1 To frmEditor_Item.chkReusable.count - 1
+            For i = 1 To frmEditor_Item.chkReusable.Count - 1
                 frmEditor_Item.chkReusable.Item(i) = 0
             Next
         End If
@@ -862,11 +862,11 @@ Public Sub ItemEditorInit()
         ItemClassReqListInit
         
         ' Information
-        frmEditor_Item.txtPrice.text = .Price
+        frmEditor_Item.txtPrice.Text = .Price
         frmEditor_Item.cmbBind.ListIndex = .BindType
         
         ' Rarity
-        If Trim$(.name) = vbNullString Then
+        If Trim$(.Name) = vbNullString Then
             frmEditor_Item.scrlRarity.Value = 1
         Else
             frmEditor_Item.scrlRarity.Value = .Rarity
@@ -962,7 +962,7 @@ Public Sub AnimationEditorInit()
     Next
 
     With Animation(EditorIndex)
-        frmEditor_Animation.txtName.text = Trim$(.name)
+        frmEditor_Animation.txtName.Text = Trim$(.Name)
         
         ' Find the sound we have set
         If frmEditor_Animation.cmbSound.ListCount > 0 Then
@@ -991,8 +991,8 @@ Public Sub AnimationEditorInit()
             If .LoopCount(i) = 0 Then .LoopCount(i) = 1
             frmEditor_Animation.scrlLoopCount(i).Value = .LoopCount(i)
             
-            If .looptime(i) = 0 Then .looptime(i) = 1
-            frmEditor_Animation.scrlLoopTime(i).Value = .looptime(i)
+            If .LoopTime(i) = 0 Then .LoopTime(i) = 1
+            frmEditor_Animation.scrlLoopTime(i).Value = .LoopTime(i)
             
             ' Set the loop time to 40 if it is 1
             If frmEditor_Animation.scrlLoopTime(i).Value = 1 Then
@@ -1098,20 +1098,20 @@ Public Sub NpcEditorInit()
         ' Check for an invalid Value
         If NPC(EditorIndex).Sprite < 0 Or NPC(EditorIndex).Sprite > .scrlSprite.max Then NPC(EditorIndex).Sprite = 0
         
-        .txtName.text = Trim$(NPC(EditorIndex).name)
-        .txtAttackSay.text = Trim$(NPC(EditorIndex).AttackSay)
-        .txtTitle.text = Trim$(NPC(EditorIndex).title)
+        .txtName.Text = Trim$(NPC(EditorIndex).Name)
+        .txtAttackSay.Text = Trim$(NPC(EditorIndex).AttackSay)
+        .txtTitle.Text = Trim$(NPC(EditorIndex).title)
         
         If NumCharacters < NPC(EditorIndex).Sprite Then NPC(EditorIndex).Sprite = NumCharacters
         .scrlSprite.Value = NPC(EditorIndex).Sprite
         
-        .txtSpawnSecs.text = CStr(NPC(EditorIndex).SpawnSecs)
+        .txtSpawnSecs.Text = CStr(NPC(EditorIndex).SpawnSecs)
         .cmbBehavior.ListIndex = NPC(EditorIndex).Behavior
         .cmbFaction.ListIndex = NPC(EditorIndex).Faction
         .scrlRange.Value = NPC(EditorIndex).Range
-        .txtHP.text = NPC(EditorIndex).HP
-        .txtMP.text = NPC(EditorIndex).MP
-        .txtExp.text = NPC(EditorIndex).Exp
+        .txtHP.Text = NPC(EditorIndex).HP
+        .txtMP.Text = NPC(EditorIndex).MP
+        .txtExp.Text = NPC(EditorIndex).Exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -1119,7 +1119,7 @@ Public Sub NpcEditorInit()
         
         ' Drops
         .scrlDrop.Value = 1
-        .txtChance.text = NPC(EditorIndex).DropChance(1)
+        .txtChance.Text = NPC(EditorIndex).DropChance(1)
         .scrlNum.Value = NPC(EditorIndex).DropItem(1)
         .scrlValue.Value = NPC(EditorIndex).DropValue(1)
         
@@ -1257,10 +1257,10 @@ Public Sub ResourceEditorInit()
     Next
     
     With frmEditor_Resource
-        .txtName.text = Trim$(Resource(EditorIndex).name)
-        .txtSuccess.text = Trim$(Resource(EditorIndex).SuccessMessage)
-        .txtEmpty.text = Trim$(Resource(EditorIndex).EmptyMessage)
-        .txtFail.text = Trim$(Resource(EditorIndex).FailMessage)
+        .txtName.Text = Trim$(Resource(EditorIndex).Name)
+        .txtSuccess.Text = Trim$(Resource(EditorIndex).SuccessMessage)
+        .txtEmpty.Text = Trim$(Resource(EditorIndex).EmptyMessage)
+        .txtFail.Text = Trim$(Resource(EditorIndex).FailMessage)
         .scrlNormalPic.Value = Resource(EditorIndex).ResourceImage
         .scrlExhaustedPic.Value = Resource(EditorIndex).ExhaustedImage
         .scrlReward.Value = Resource(EditorIndex).ItemReward
@@ -1377,7 +1377,7 @@ Public Sub ShopEditorInit()
         EditorIndex = .lstIndex.ListIndex + 1
         Shop_Changed(EditorIndex) = True
         
-        .txtName.text = Trim$(Shop(EditorIndex).name)
+        .txtName.Text = Trim$(Shop(EditorIndex).Name)
         
         If Shop(EditorIndex).BuyRate > 0 And Shop(EditorIndex).BuyRate <= .scrlBuy.max Then
             .scrlBuy.Value = Shop(EditorIndex).BuyRate
@@ -1417,11 +1417,11 @@ Public Sub UpdateShopTrade(Optional ByVal tmpPos As Long = 0)
             If .Item = 0 Or .CostItem = 0 And .CostItem2 = 0 Then
                 frmEditor_Shop.lstTradeItem.AddItem "Empty Trade Slot"
             ElseIf .CostItem2 = 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).Name)
             ElseIf .CostItem = 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem2).name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem2).Name)
             ElseIf .CostItem > 0 And .CostItem2 > 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).name) & " & " & .CostValue2 & "X " & Trim$(Item(.CostItem2).name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).Name) & " & " & .CostValue2 & "X " & Trim$(Item(.CostItem2).Name)
             End If
         End With
     Next
@@ -1534,7 +1534,7 @@ Public Sub SpellEditorInit()
         SpellClassListInit
         
         ' Set values
-        .txtName.text = Trim$(Spell(EditorIndex).name)
+        .txtName.Text = Trim$(Spell(EditorIndex).Name)
         .cmbType.ListIndex = Spell(EditorIndex).Type
         .scrlMP.Value = Spell(EditorIndex).MPCost
         .scrlLevel.Value = Spell(EditorIndex).LevelReq
@@ -1542,7 +1542,7 @@ Public Sub SpellEditorInit()
         .scrlCast.Value = Spell(EditorIndex).CastTime
         
         If Spell(EditorIndex).CDTime = 0 Then Spell(EditorIndex).CDTime = 1
-        .txtCool.text = Spell(EditorIndex).CDTime
+        .txtCool.Text = Spell(EditorIndex).CDTime
         
         .scrlIcon.Value = Spell(EditorIndex).Icon
         .scrlMap.Value = Spell(EditorIndex).Map
@@ -1558,7 +1558,7 @@ Public Sub SpellEditorInit()
         .scrlAnim.Value = Spell(EditorIndex).SpellAnim
         .scrlStun.Value = Spell(EditorIndex).StunDuration
         .scrlSprite.Value = Spell(EditorIndex).Sprite
-        .txtDesc.text = Trim$(Spell(EditorIndex).Desc)
+        .txtDesc.Text = Trim$(Spell(EditorIndex).Desc)
         .scrlCastRequired.Value = Spell(EditorIndex).CastRequired
         .scrlRankUp.Value = Spell(EditorIndex).NewSpell
         
@@ -1700,7 +1700,7 @@ Public Sub MapPropertiesInit()
         .cmbMoral.Clear
         
         For i = 1 To MAX_MORALS
-            .cmbMoral.AddItem i & ": " & Trim$(Moral(i).name)
+            .cmbMoral.AddItem i & ": " & Trim$(Moral(i).Name)
         Next
 
         ' Find the music we have set
@@ -1736,10 +1736,10 @@ Public Sub MapPropertiesInit()
         
         ' Load all the npcs that can be selected into the combo box
         For i = 1 To MAX_NPCS
-            .cmbNpcs.AddItem i & ": " & Trim$(NPC(i).name)
+            .cmbNpcs.AddItem i & ": " & Trim$(NPC(i).Name)
         Next
         
-        .cmbWeather.ListIndex = Map.Weather
+        .CmbWeather.ListIndex = Map.Weather
         .scrlWeatherIntensity.Value = Map.WeatherIntensity
         
         .ScrlFog.Value = Map.Fog
@@ -1757,19 +1757,19 @@ Public Sub MapPropertiesInit()
         Call LoadMapPropertiesNpcs
         
         ' Reset of it
-        .txtUp.text = CStr(Map.Up)
-        .txtDown.text = CStr(Map.Down)
-        .txtLeft.text = CStr(Map.Left)
-        .txtRight.text = CStr(Map.Right)
+        .txtUp.Text = CStr(Map.Up)
+        .txtDown.Text = CStr(Map.Down)
+        .txtLeft.Text = CStr(Map.Left)
+        .txtRight.Text = CStr(Map.Right)
         .cmbMoral.ListIndex = Map.Moral - 1
-        .txtBootMap.text = CStr(Map.BootMap)
-        .txtBootX.text = CStr(Map.BootX)
-        .txtBootY.text = CStr(Map.BootY)
-        .txtName.text = Trim$(Map.name)
+        .txtBootMap.Text = CStr(Map.BootMap)
+        .txtBootX.Text = CStr(Map.BootX)
+        .txtBootY.Text = CStr(Map.BootY)
+        .txtName.Text = Trim$(Map.Name)
         .lblMap.Caption = "Current Map: " & GetPlayerMap(MyIndex)
         
-        .txtMaxX.text = Map.MaxX
-        .txtMaxY.text = Map.MaxY
+        .txtMaxX.Text = Map.MaxX
+        .txtMaxY.Text = Map.MaxY
     End With
     Exit Sub
     
@@ -1791,7 +1791,7 @@ Public Sub LoadMapPropertiesNpcs()
             If .NPC(i) < 1 Or .NPC(i) > MAX_NPCS Then
                 frmEditor_MapProperties.lstNpcs.AddItem i & ": None"
             Else
-                frmEditor_MapProperties.lstNpcs.AddItem i & ": " & Trim$(NPC(.NPC(i)).name)
+                frmEditor_MapProperties.lstNpcs.AddItem i & ": " & Trim$(NPC(.NPC(i)).Name)
             End If
         Next
     End With
@@ -1814,7 +1814,7 @@ Public Sub MapEditorInitShop()
     
     ' Set shops for the shop attribute
     For i = 1 To MAX_SHOPS
-        frmEditor_Map.cmbShop.AddItem i & ": " & Shop(i).name, i
+        frmEditor_Map.cmbShop.AddItem i & ": " & Shop(i).Name, i
     Next
     
     ' Reset the shop list Index
@@ -1841,14 +1841,14 @@ Public Sub BanEditorInit()
     If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
 
     With frmEditor_Ban
-        .txtName.text = Trim(Ban(EditorIndex).playerName)
-        .txtLogin.text = Trim(Ban(EditorIndex).PlayerLogin)
-        .txtIP.text = Trim(Ban(EditorIndex).IP)
-        .txtSerial.text = Trim(Ban(EditorIndex).HDSerial)
-        .txtReason.text = Trim(Ban(EditorIndex).Reason)
-        .txtDate.text = Trim(Ban(EditorIndex).Date)
-        .txtTime.text = Trim(Ban(EditorIndex).time)
-        .txtBy.text = Trim(Ban(EditorIndex).By)
+        .txtName.Text = Trim(Ban(EditorIndex).PlayerName)
+        .txtLogin.Text = Trim(Ban(EditorIndex).PlayerLogin)
+        .txtIP.Text = Trim(Ban(EditorIndex).IP)
+        .txtSerial.Text = Trim(Ban(EditorIndex).HDSerial)
+        .txtReason.Text = Trim(Ban(EditorIndex).Reason)
+        .txtDate.Text = Trim(Ban(EditorIndex).Date)
+        .txtTime.Text = Trim(Ban(EditorIndex).Time)
+        .txtBy.Text = Trim(Ban(EditorIndex).By)
     End With
     Exit Sub
 
@@ -1933,7 +1933,7 @@ Public Sub TitleEditorInit()
     If EditorIndex < 1 Or EditorIndex > MAX_TITLES Then Exit Sub
 
     With frmEditor_Title
-        .txtName.text = Trim$(title(EditorIndex).name)
+        .txtName.Text = Trim$(title(EditorIndex).Name)
         .scrlColor.Value = title(EditorIndex).Color
         .lblLevelReq.Caption = "Level Requirement: " & Trim$(title(EditorIndex).LevelReq)
         .scrlLevelReq.Value = title(EditorIndex).LevelReq
@@ -2075,7 +2075,7 @@ Public Sub MoralEditorInit()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
 
     With frmEditor_Moral
-        .txtName.text = Trim(Moral(EditorIndex).name)
+        .txtName.Text = Trim(Moral(EditorIndex).Name)
         If Moral(EditorIndex).Color = 0 Then Moral(EditorIndex).Color = 1
         .scrlColor.Value = Moral(EditorIndex).Color
         .chkCanCast.Value = Moral(EditorIndex).CanCast
@@ -2163,7 +2163,7 @@ Public Sub ClassEditorInit()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
 
     With frmEditor_Class
-        .txtName.text = Trim(Class(EditorIndex).name)
+        .txtName.Text = Trim(Class(EditorIndex).Name)
         .chkSwapGender = 0
         
         .chkLocked.Value = Class(EditorIndex).Locked
@@ -2233,7 +2233,7 @@ errorhandler:
 End Sub
 
 Public Sub UpdateAdminScrollBar()
-    frmAdmin.lblAItem.Caption = "Item: " & Trim$(Item(frmAdmin.scrlAItem.Value).name)
+    frmAdmin.lblAItem.Caption = "Item: " & Trim$(Item(frmAdmin.scrlAItem.Value).Name)
         
     If Item(frmAdmin.scrlAItem.Value).Type = ITEM_TYPE_CURRENCY Then
         frmAdmin.scrlAAmount.Enabled = True
@@ -2246,7 +2246,7 @@ Public Sub UpdateSpellScrollBars()
         If .scrlSpell.Value = 0 Then
             .lblSpellName.Caption = "Name: None"
         Else
-            .lblSpellName.Caption = "Name: " & Trim$(Spell(.scrlSpell.Value).name)
+            .lblSpellName.Caption = "Name: " & Trim$(Spell(.scrlSpell.Value).Name)
         End If
         
         .lblSpell.Caption = "Spell: " & .scrlSpell.Value
@@ -2263,7 +2263,7 @@ Public Sub SpellClassListInit()
         .cmbClass.AddItem "None"
         
         For i = 1 To MAX_CLASSES
-            .cmbClass.AddItem Trim$(Class(i).name)
+            .cmbClass.AddItem Trim$(Class(i).Name)
         Next
         .cmbClass.ListIndex = Spell(EditorIndex).ClassReq
     End With
@@ -2277,7 +2277,7 @@ Public Sub ItemClassReqListInit()
     frmEditor_Item.cmbClassReq.AddItem "None"
 
     For i = 1 To MAX_CLASSES
-        frmEditor_Item.cmbClassReq.AddItem Class(i).name
+        frmEditor_Item.cmbClassReq.AddItem Class(i).Name
     Next
     frmEditor_Item.cmbClassReq.ListIndex = Item(EditorIndex).ClassReq
 End Sub
@@ -2299,7 +2299,7 @@ Public Sub EmoticonEditorInit()
         ' Subscript out of range
         If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
-        .txtCommand.text = Trim$(Emoticon(EditorIndex).Command)
+        .txtCommand.Text = Trim$(Emoticon(EditorIndex).Command)
         
         If Emoticon(EditorIndex).Pic > NumEmoticons Then Emoticon(EditorIndex).Pic = NumEmoticons
         .scrlEmoticon.Value = Emoticon(EditorIndex).Pic
@@ -2366,18 +2366,18 @@ errorhandler:
 End Sub
 
 Sub CopyEvent_Map(X As Long, Y As Long)
-    Dim count As Long, i As Long
+    Dim Count As Long, i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    count = Map.EventCount
-    If count = 0 Then Exit Sub
+    Count = Map.EventCount
+    If Count = 0 Then Exit Sub
     
-    For i = 1 To count
-        If Map.events(i).X = X And Map.events(i).Y = Y Then
+    For i = 1 To Count
+        If Map.Events(i).X = X And Map.Events(i).Y = Y Then
             ' Copy it
-            cpEvent = Map.events(i)
+            cpEvent = Map.Events(i)
             Exit Sub
         End If
     Next
@@ -2390,16 +2390,16 @@ errorhandler:
 End Sub
 
 Sub PasteEvent_Map(X As Long, Y As Long)
-    Dim count As Long, i As Long, EventNum As Long
+    Dim Count As Long, i As Long, EventNum As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    count = Map.EventCount
+    Count = Map.EventCount
     
-    If count > 0 Then
-        For i = 1 To count
-            If Map.events(i).X = X And Map.events(i).Y = Y Then
+    If Count > 0 Then
+        For i = 1 To Count
+            If Map.Events(i).X = X And Map.Events(i).Y = Y Then
                 ' Already an event - paste over it
                 EventNum = i
             End If
@@ -2410,15 +2410,15 @@ Sub PasteEvent_Map(X As Long, Y As Long)
     If EventNum = 0 Then
         ' increment count
         AddEvent X, Y, True
-        EventNum = count + 1
+        EventNum = Count + 1
     End If
     
     ' Copy it
-    Map.events(EventNum) = cpEvent
+    Map.Events(EventNum) = cpEvent
     
     ' Set position
-    Map.events(EventNum).X = X
-    Map.events(EventNum).Y = Y
+    Map.Events(EventNum).X = X
+    Map.Events(EventNum).Y = Y
     Exit Sub
     
 ' Error handler
@@ -2428,18 +2428,18 @@ errorhandler:
 End Sub
 
 Sub DeleteEvent(X As Long, Y As Long)
-    Dim count As Long, i As Long, lowIndex As Long
+    Dim Count As Long, i As Long, lowIndex As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Not InMapEditor Then Exit Sub
-    If frmEditor_Events.Visible = True Then Exit Sub
+    If frmEditor_Events.Visible Then Exit Sub
     
-    count = Map.EventCount
+    Count = Map.EventCount
     
-    For i = 1 To count
-        If Map.events(i).X = X And Map.events(i).Y = Y Then
+    For i = 1 To Count
+        If Map.Events(i).X = X And Map.Events(i).Y = Y Then
             ' Delete it
             ClearEvent i
             lowIndex = i
@@ -2451,15 +2451,15 @@ Sub DeleteEvent(X As Long, Y As Long)
     If lowIndex = 0 Then Exit Sub
     
     ' Move everything down an index
-    For i = lowIndex To count - 1
+    For i = lowIndex To Count - 1
         CopyEvent i + 1, i
     Next
     
     ' Delete the last index
-    ClearEvent count
+    ClearEvent Count
     
     ' Set the new count
-    Map.EventCount = count - 1
+    Map.EventCount = Count - 1
     Exit Sub
     
 ' Error handler
@@ -2468,40 +2468,40 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub AddEvent(X As Long, Y As Long, Optional ByVal cancelLoad As Boolean = False)
-    Dim count As Long, PageCount As Long, i As Long
+Sub AddEvent(X As Long, Y As Long, Optional ByVal CancelLoad As Boolean = False)
+    Dim Count As Long, PageCount As Long, i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    count = Map.EventCount + 1
+    Count = Map.EventCount + 1
     
     ' Make sure there's not already an event
-    If count - 1 > 0 Then
-        For i = 1 To count - 1
-            If Map.events(i).X = X And Map.events(i).Y = Y Then
-                ' already an event - edit it
-                If Not cancelLoad Then EventEditorInit i
+    If Count - 1 > 0 Then
+        For i = 1 To Count - 1
+            If Map.Events(i).X = X And Map.Events(i).Y = Y Then
+                ' Already an event - edit it
+                If Not CancelLoad Then EventEditorInit i
                 Exit Sub
             End If
         Next
     End If
     
     ' Increment count
-    Map.EventCount = count
-    ReDim Preserve Map.events(0 To count)
+    Map.EventCount = Count
+    ReDim Preserve Map.Events(0 To Count)
     
     ' Set the new event
-    Map.events(count).X = X
-    Map.events(count).Y = Y
+    Map.Events(Count).X = X
+    Map.Events(Count).Y = Y
     
     ' Give it a new page
-    PageCount = Map.events(count).PageCount + 1
-    Map.events(count).PageCount = PageCount
-    ReDim Preserve Map.events(count).Pages(PageCount)
+    PageCount = Map.Events(Count).PageCount + 1
+    Map.Events(Count).PageCount = PageCount
+    ReDim Preserve Map.Events(Count).Pages(PageCount)
     
     ' Load the editor
-    If Not cancelLoad Then EventEditorInit count
+    If Not CancelLoad Then EventEditorInit Count
     Exit Sub
     
 ' Error handler
@@ -2514,7 +2514,7 @@ Sub ClearEvent(EventNum As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Call ZeroMemory(ByVal VarPtr(Map.events(EventNum)), LenB(Map.events(EventNum)))
+    Call ZeroMemory(ByVal VarPtr(Map.Events(EventNum)), LenB(Map.Events(EventNum)))
     Exit Sub
     
 ' Error handler
@@ -2527,7 +2527,7 @@ Sub CopyEvent(original As Long, newone As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    CopyMemory ByVal VarPtr(Map.events(newone)), ByVal VarPtr(Map.events(original)), LenB(Map.events(original))
+    CopyMemory ByVal VarPtr(Map.Events(newone)), ByVal VarPtr(Map.Events(original)), LenB(Map.Events(original))
     Exit Sub
     
 ' Error handler
@@ -2536,12 +2536,18 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub EventEditorInit(EventNum As Long)
+Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = False)
     Dim i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
+    If CommonEvent Then
+        frmEditor_Events.fraEvents.Visible = True
+    Else
+        frmEditor_Events.fraEvents.Visible = False
+    End If
+    
     ' Populate the cache if we need to
     If Not HasPopulated Then
         PopulateLists
@@ -2550,8 +2556,7 @@ Sub EventEditorInit(EventNum As Long)
     EditorEvent = EventNum
     
     ' Copy the event data to the temp event
-    tmpEvent = Map.events(EventNum)
-    frmEditor_Events.InitEventEditorForm
+    tmpEvent = Map.Events(EventNum)
     
     ' Populate form
     With frmEditor_Events
@@ -2566,7 +2571,7 @@ Sub EventEditorInit(EventNum As Long)
         .cmbHasItem.AddItem "None"
         
         For i = 1 To MAX_ITEMS
-            .cmbHasItem.AddItem i & ": " & Trim$(Item(i).name)
+            .cmbHasItem.AddItem i & ": " & Trim$(Item(i).Name)
         Next
         
         ' Variables
@@ -2586,7 +2591,7 @@ Sub EventEditorInit(EventNum As Long)
         Next
         
         ' Name
-        .txtName.text = tmpEvent.name
+        .txtName.Text = tmpEvent.Name
         
         ' Enable delete button
         If tmpEvent.PageCount > 1 Then
@@ -2601,9 +2606,6 @@ Sub EventEditorInit(EventNum As Long)
         curPageNum = 1
         EventEditorLoadPage curPageNum
     End With
-    
-    ' Show the editor
-    frmEditor_Events.Show
     Exit Sub
     
 ' Error handler
@@ -2706,7 +2708,7 @@ Sub EventEditorSave()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Copy the event data from the temp event
-    Map.events(EditorEvent) = tmpEvent
+    Map.Events(EditorEvent) = tmpEvent
     
     ' Unload the form
     Unload frmEditor_Events
@@ -2774,11 +2776,11 @@ newlist:
                                         frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] == " & "False"
                                     End If
                                 Case 2
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Has Item [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Has Item [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).Name) & "]"
                                 Case 3
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player's Class Is [" & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player's Class Is [" & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).Name) & "]"
                                 Case 4
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Knows Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Knows Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).Name) & "]"
                                 Case 5
                                     Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data2
                                         Case 0
@@ -2999,11 +3001,11 @@ newlist:
                         
                         Case EventType.evChangeItems
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Item Amount of [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "] to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Item Amount of [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "] to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "(s)"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "(s)"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 2 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Take " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "(s) from Player."
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Take " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "(s) from Player."
                             End If
                             
                         Case EventType.evRestoreHP
@@ -3016,12 +3018,12 @@ newlist:
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Player Level to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                         Case EventType.evChangeSkills
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Teach Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Teach Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Remove Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Remove Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
                             End If
                         Case EventType.evChangeClass
-                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Player Class to " & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name)
+                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Player Class to " & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name)
                         Case EventType.evChangeSprite
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Player Sprite to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                         Case EventType.evChangeGender
@@ -3053,17 +3055,17 @@ newlist:
                             End If
                         Case EventType.evSetMoveRoute
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 <= Map.EventCount Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Map.Events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
                             Else
                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for COULD NOT FIND EVENT!"
                             End If
                         Case EventType.evPlayAnimation
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Player"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]" & " on Player"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3).name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]" & " on Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " [" & Trim$(Map.Events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3).Name) & "]"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 2 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4 & ")"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]" & " on Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4 & ")"
                             End If
                         Case EventType.evCustomScript
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Execute Custom Script Case: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
@@ -3078,7 +3080,7 @@ newlist:
                         Case EventType.evOpenBank
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Open Bank"
                         Case EventType.evOpenShop
-                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Open Shop [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & Trim$(Shop(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
+                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Open Shop [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & Trim$(Shop(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
                         Case EventType.evSetAccess
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Player Access [" & frmEditor_Events.cmbSetAccess.List(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & "]"
                         Case EventType.evGiveExp
@@ -3091,10 +3093,10 @@ newlist:
                                     If Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) <= 0 Then
                                         frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". ]"
                                     Else
-                                        frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2)).name) & "]"
+                                        frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2)).Name) & "]"
                                     End If
                                 Case TARGET_TYPE_EVENT
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.Events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).Name) & "]"
                             End Select
                         Case EventType.evLabel
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"
@@ -3104,7 +3106,7 @@ newlist:
                             If Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) <= 0 Then
                                 frmEditor_Events.lstCommands.AddItem indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & "]"
                             Else
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1)).name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1)).Name) & "]"
                             End If
                         Case EventType.evFadeIn
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Fade In"
@@ -3240,7 +3242,7 @@ Sub AddCommand(Index As Long)
     Select Case Index
         Case EventType.evAddText
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtAddText_Text.text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtAddText_Text.Text
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlAddText_Colour.Value
             
             If frmEditor_Events.optAddText_Map.Value Then
@@ -3269,7 +3271,7 @@ Sub AddCommand(Index As Long)
                     tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Condition = 0
                     tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 = frmEditor_Events.cmbCondition_PlayerVarIndex.ListIndex + 1
                     tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data2 = frmEditor_Events.cmbCondition_PlayerVarCompare.ListIndex
-                    tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data3 = Val(frmEditor_Events.txtCondition_PlayerVarCondition.text)
+                    tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data3 = Val(frmEditor_Events.txtCondition_PlayerVarCondition.Text)
                 Case 1 ' Player Switch
                     tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Condition = 1
                     tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 = frmEditor_Events.cmbCondition_PlayerSwitch.ListIndex + 1
@@ -3285,7 +3287,7 @@ Sub AddCommand(Index As Long)
                     tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 = frmEditor_Events.cmbCondition_LearntSkill.ListIndex + 1
                 Case 5 ' Level Is
                     tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Condition = 5
-                    tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 = Val(frmEditor_Events.txtCondition_LevelAmount.text)
+                    tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 = Val(frmEditor_Events.txtCondition_LevelAmount.Text)
                     tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data2 = frmEditor_Events.cmbCondition_LevelCompare.ListIndex
                 Case 6 ' Self Switch
                     tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Condition = 6
@@ -3294,15 +3296,15 @@ Sub AddCommand(Index As Long)
             End Select
         Case EventType.evShowText
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtShowText.text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtShowText.Text
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlFace.Value
         Case EventType.evShowChoices
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtChoicePrompt.text
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text2 = frmEditor_Events.txtChoices(1).text
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text3 = frmEditor_Events.txtChoices(2).text
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text4 = frmEditor_Events.txtChoices(3).text
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text5 = frmEditor_Events.txtChoices(4).text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtChoicePrompt.Text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text2 = frmEditor_Events.txtChoices(1).Text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text3 = frmEditor_Events.txtChoices(2).Text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text4 = frmEditor_Events.txtChoices(3).Text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text5 = frmEditor_Events.txtChoices(4).Text
             
             tmpEvent.Pages(curPageNum).CommandListCount = tmpEvent.Pages(curPageNum).CommandListCount + 4
             ReDim Preserve tmpEvent.Pages(curPageNum).CommandList(tmpEvent.Pages(curPageNum).CommandListCount)
@@ -3325,10 +3327,10 @@ Sub AddCommand(Index As Long)
             Next
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = i
             If i = 3 Then
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtVariableData(i).text)
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data4 = Val(frmEditor_Events.txtVariableData(i + 1).text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtVariableData(i).Text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data4 = Val(frmEditor_Events.txtVariableData(i + 1).Text)
             Else
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtVariableData(i).text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtVariableData(i).Text)
             End If
         Case EventType.evPlayerSwitch
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
@@ -3350,7 +3352,7 @@ Sub AddCommand(Index As Long)
             ElseIf frmEditor_Events.optChangeItemRemove.Value = True Then
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = 2
             End If
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtChangeItemsAmount.text)
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtChangeItemsAmount.Text)
         Case EventType.evRestoreHP
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
         Case EventType.evRestoreMP
@@ -3440,7 +3442,7 @@ Sub AddCommand(Index As Long)
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlGiveExp.Value
         Case EventType.evShowChatBubble
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtChatbubbleText.text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtChatbubbleText.Text
             If frmEditor_Events.optChatBubbleTarget(0).Value = True Then
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = TARGET_TYPE_PLAYER
             ElseIf frmEditor_Events.optChatBubbleTarget(1).Value = True Then
@@ -3452,10 +3454,10 @@ Sub AddCommand(Index As Long)
             End If
         Case EventType.evLabel
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtLabelName.text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtLabelName.Text
         Case EventType.evGotoLabel
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtGotoLabel.text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtGotoLabel.Text
         Case EventType.evSpawnNpc
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbSpawnNPC.ListIndex + 1
@@ -3472,7 +3474,7 @@ Sub AddCommand(Index As Long)
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
@@ -3517,7 +3519,7 @@ Public Sub EditEventCommand()
     Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index
         Case EventType.evAddText
             isEdit = True
-            frmEditor_Events.txtAddText_Text.text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
+            frmEditor_Events.txtAddText_Text.Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
             frmEditor_Events.scrlAddText_Colour.Value = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
             
             Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2
@@ -3549,7 +3551,7 @@ Public Sub EditEventCommand()
                     frmEditor_Events.txtCondition_PlayerVarCondition.Enabled = True
                     frmEditor_Events.cmbCondition_PlayerVarIndex.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 - 1
                     frmEditor_Events.cmbCondition_PlayerVarCompare.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data2
-                    frmEditor_Events.txtCondition_PlayerVarCondition.text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data3
+                    frmEditor_Events.txtCondition_PlayerVarCondition.Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data3
                 Case 1
                     frmEditor_Events.cmbCondition_PlayerSwitch.Enabled = True
                     frmEditor_Events.cmbCondtion_PlayerSwitchCondition.Enabled = True
@@ -3567,7 +3569,7 @@ Public Sub EditEventCommand()
                 Case 5
                     frmEditor_Events.cmbCondition_LevelCompare.Enabled = True
                     frmEditor_Events.txtCondition_LevelAmount.Enabled = True
-                    frmEditor_Events.txtCondition_LevelAmount.text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data2
+                    frmEditor_Events.txtCondition_LevelAmount.Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data2
                     frmEditor_Events.cmbCondition_LevelCompare.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1
                 Case 6
                     frmEditor_Events.cmbCondition_SelfSwitch.Enabled = True
@@ -3577,18 +3579,18 @@ Public Sub EditEventCommand()
             End Select
         Case EventType.evShowText
             isEdit = True
-            frmEditor_Events.txtShowText.text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
+            frmEditor_Events.txtShowText.Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(0).Visible = True
             frmEditor_Events.fraCommands.Visible = False
             frmEditor_Events.scrlFace.Value = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
         Case EventType.evShowChoices
             isEdit = True
-            frmEditor_Events.txtChoicePrompt.text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
-            frmEditor_Events.txtChoices(1).text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text2
-            frmEditor_Events.txtChoices(2).text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text3
-            frmEditor_Events.txtChoices(3).text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text4
-            frmEditor_Events.txtChoices(4).text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text5
+            frmEditor_Events.txtChoicePrompt.Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
+            frmEditor_Events.txtChoices(1).Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text2
+            frmEditor_Events.txtChoices(2).Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text3
+            frmEditor_Events.txtChoices(3).Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text4
+            frmEditor_Events.txtChoices(4).Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text5
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(1).Visible = True
             frmEditor_Events.fraCommands.Visible = False
@@ -3600,17 +3602,17 @@ Public Sub EditEventCommand()
             Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2
                 Case 0
                     frmEditor_Events.optVariableAction(0).Value = True
-                    frmEditor_Events.txtVariableData(0).text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3
+                    frmEditor_Events.txtVariableData(0).Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3
                 Case 1
                     frmEditor_Events.optVariableAction(1).Value = True
-                    frmEditor_Events.txtVariableData(1).text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3
+                    frmEditor_Events.txtVariableData(1).Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3
                 Case 2
                     frmEditor_Events.optVariableAction(2).Value = True
-                    frmEditor_Events.txtVariableData(2).text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3
+                    frmEditor_Events.txtVariableData(2).Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3
                 Case 3
                     frmEditor_Events.optVariableAction(3).Value = True
-                    frmEditor_Events.txtVariableData(3).text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3
-                    frmEditor_Events.txtVariableData(4).text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data4
+                    frmEditor_Events.txtVariableData(3).Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3
+                    frmEditor_Events.txtVariableData(4).Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data4
             End Select
             
             frmEditor_Events.fraDialogue.Visible = True
@@ -3642,7 +3644,7 @@ Public Sub EditEventCommand()
                 frmEditor_Events.optChangeItemRemove.Value = True
             End If
             
-            frmEditor_Events.txtChangeItemsAmount.text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3
+            frmEditor_Events.txtChangeItemsAmount.Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(10).Visible = True
             frmEditor_Events.fraCommands.Visible = False
@@ -3723,7 +3725,7 @@ Public Sub EditEventCommand()
             
             For i = 1 To Map.EventCount
                 If i <> EditorEvent Then
-                    frmEditor_Events.cmbEvent.AddItem Trim$(Map.events(i).name)
+                    frmEditor_Events.cmbEvent.AddItem Trim$(Map.Events(i).Name)
                     X = X + 1
                     ListOfEvents(X) = i
                     If i = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 Then frmEditor_Events.cmbEvent.ListIndex = X
@@ -3846,7 +3848,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.cmbPlayAnimEvent.Clear
             
             For i = 1 To Map.EventCount
-                frmEditor_Events.cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).name)
+                frmEditor_Events.cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.Events(i).Name)
             Next
             
             frmEditor_Events.cmbPlayAnimEvent.ListIndex = 0
@@ -3916,7 +3918,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.fraCommands.Visible = False
         Case EventType.evShowChatBubble
             isEdit = True
-            frmEditor_Events.txtChatbubbleText.text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
+            frmEditor_Events.txtChatbubbleText.Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
             
             Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
                 Case TARGET_TYPE_PLAYER
@@ -3932,13 +3934,13 @@ Public Sub EditEventCommand()
             frmEditor_Events.fraCommands.Visible = False
         Case EventType.evLabel
             isEdit = True
-            frmEditor_Events.txtLabelName.text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
+            frmEditor_Events.txtLabelName.Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(8).Visible = True
             frmEditor_Events.fraCommands.Visible = False
         Case EventType.evGotoLabel
             isEdit = True
-            frmEditor_Events.txtGotoLabel.text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
+            frmEditor_Events.txtGotoLabel.Text = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(9).Visible = True
             frmEditor_Events.fraCommands.Visible = False
@@ -3958,7 +3960,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.fraCommands.Visible = False
         Case EventType.evSetWeather
             isEdit = True
-            frmEditor_Events.cmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
+            frmEditor_Events.CmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
             frmEditor_Events.scrlWeatherIntensity.Value = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(23).Visible = True
@@ -4091,7 +4093,7 @@ Public Sub EditCommand()
     
     Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index
         Case EventType.evAddText
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtAddText_Text.text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtAddText_Text.Text
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlAddText_Colour.Value
             
             If frmEditor_Events.optAddText_Player.Value Then
@@ -4106,7 +4108,7 @@ Public Sub EditCommand()
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Condition = 0
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 = frmEditor_Events.cmbCondition_PlayerVarIndex.ListIndex + 1
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data2 = frmEditor_Events.cmbCondition_PlayerVarCompare.ListIndex
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data3 = Val(frmEditor_Events.txtCondition_PlayerVarCondition.text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data3 = Val(frmEditor_Events.txtCondition_PlayerVarCondition.Text)
             ElseIf frmEditor_Events.optCondition_Index(1).Value = True Then
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Condition = 1
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 = frmEditor_Events.cmbCondition_PlayerSwitch.ListIndex + 1
@@ -4122,7 +4124,7 @@ Public Sub EditCommand()
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 = frmEditor_Events.cmbCondition_LearntSkill.ListIndex + 1
             ElseIf frmEditor_Events.optCondition_Index(5).Value = True Then
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Condition = 5
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 = Val(frmEditor_Events.txtCondition_LevelAmount.text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data1 = Val(frmEditor_Events.txtCondition_LevelAmount.Text)
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data2 = frmEditor_Events.cmbCondition_LevelCompare.ListIndex
             ElseIf frmEditor_Events.optCondition_Index(6).Value = True Then
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Condition = 6
@@ -4130,14 +4132,14 @@ Public Sub EditCommand()
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.Data2 = frmEditor_Events.cmbCondition_SelfSwitchCondition.ListIndex
             End If
         Case EventType.evShowText
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtShowText.text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtShowText.Text
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlFace.Value
         Case EventType.evShowChoices
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtChoicePrompt.text
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text2 = frmEditor_Events.txtChoices(1).text
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text3 = frmEditor_Events.txtChoices(2).text
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text4 = frmEditor_Events.txtChoices(3).text
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text5 = frmEditor_Events.txtChoices(4).text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtChoicePrompt.Text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text2 = frmEditor_Events.txtChoices(1).Text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text3 = frmEditor_Events.txtChoices(2).Text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text4 = frmEditor_Events.txtChoices(3).Text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text5 = frmEditor_Events.txtChoices(4).Text
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlFace2.Value
         Case EventType.evPlayerVar
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbVariable.ListIndex + 1
@@ -4148,10 +4150,10 @@ Public Sub EditCommand()
             Next
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = i
             If i = 3 Then
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtVariableData(i).text)
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data4 = Val(frmEditor_Events.txtVariableData(i + 1).text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtVariableData(i).Text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data4 = Val(frmEditor_Events.txtVariableData(i + 1).Text)
             Else
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtVariableData(i).text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtVariableData(i).Text)
             End If
         Case EventType.evPlayerSwitch
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbSwitch.ListIndex + 1
@@ -4168,7 +4170,7 @@ Public Sub EditCommand()
             ElseIf frmEditor_Events.optChangeItemRemove.Value = True Then
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = 2
             End If
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtChangeItemsAmount.text)
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = Val(frmEditor_Events.txtChangeItemsAmount.Text)
         Case EventType.evChangeLevel
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlChangeLevel.Value
         Case EventType.evChangeSkills
@@ -4230,7 +4232,7 @@ Public Sub EditCommand()
         Case EventType.evGiveExp
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlGiveExp.Value
         Case EventType.evShowChatBubble
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtChatbubbleText.text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtChatbubbleText.Text
             If frmEditor_Events.optChatBubbleTarget(0).Value = True Then
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = TARGET_TYPE_PLAYER
             ElseIf frmEditor_Events.optChatBubbleTarget(1).Value = True Then
@@ -4241,9 +4243,9 @@ Public Sub EditCommand()
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.cmbChatBubbleTarget.ListIndex + 1
             End If
         Case EventType.evLabel
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtLabelName.text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtLabelName.Text
         Case EventType.evGotoLabel
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtGotoLabel.text
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtGotoLabel.Text
         Case EventType.evSpawnNpc
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbSpawnNPC.ListIndex + 1
         Case EventType.evSetFog
@@ -4251,7 +4253,7 @@ Public Sub EditCommand()
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.ScrlFogData(1).Value
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlMapTintData(0).Value
@@ -4357,9 +4359,11 @@ End Sub
 ' *********************
 Public Function GetSubEventCount(ByVal Index As Long)
     GetSubEventCount = 0
+    
     If Index <= 0 Or Index > MAX_EVENTS Then Exit Function
-    If events(Index).HasSubEvents Then
-        GetSubEventCount = UBound(events(Index).SubEvents)
+    
+    If Events(Index).HasSubEvents Then
+        GetSubEventCount = UBound(Events(Index).SubEvents)
     End If
 End Function
 

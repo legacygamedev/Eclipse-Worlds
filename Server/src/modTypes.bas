@@ -22,7 +22,7 @@ Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
 Public Guild(1 To MAX_GUILDS) As GuildRec
 Public Party(1 To MAX_PARTYS) As PartyRec
 Public Ban(1 To MAX_BANS) As BanRec
-Public title(1 To MAX_TITLES) As TitleRec
+Public Title(1 To MAX_TITLES) As TitleRec
 Public Moral(1 To MAX_MORALS) As MoralRec
 Public Class(1 To MAX_CLASSES) As ClassRec
 Public Emoticon(1 To MAX_EMOTICONS) As EmoticonRec
@@ -240,7 +240,7 @@ Public Type PlayerRec
     CurrentTitle As Byte
     
     ' Titles - both
-    title(1 To MAX_TITLES) As Byte
+    Title(1 To MAX_TITLES) As Byte
     
     ' Worn equipment - both
     Equipment(1 To Equipment.Equipment_Count - 1) As PlayerItemRec
@@ -290,7 +290,7 @@ Public Type PlayerEditableRec
 
     ' Vitals
     Vital(1 To Vitals.Vital_Count - 1) As Long
-    ' Max Vitals are dynamically calculate on server
+    ' Max Vitals are dynamically calculated on server
     
     ' Stats
     Stat(1 To Stats.Stat_count - 1) As Integer
@@ -366,7 +366,7 @@ Private Type CommandListRec
 End Type
 
 Private Type EventPageRec
-    ' These are condition variables that decide if the event even appears to the player.
+    ' These are condition variables that decide if the event even appears to the player
     chkVariable As Long
     VariableIndex As Long
     VariableCondition As Long
@@ -384,7 +384,7 @@ Private Type EventPageRec
     SelfSwitchCompare As Long
     ' End Conditions
     
-    ' Handles the Event Sprite
+    ' Handles the event sprite
     GraphicType As Byte
     Graphic As Long
     GraphicX As Long
@@ -392,7 +392,7 @@ Private Type EventPageRec
     GraphicX2 As Long
     GraphicY2 As Long
     
-    ' Handles Movement - Move Routes to come soon.
+    ' Handles movement - move routes to come soon
     MoveType As Byte
     MoveSpeed As Byte
     MoveFreq As Byte
@@ -406,11 +406,11 @@ Private Type EventPageRec
     DirFix As Long
     WalkThrough As Long
     ShowName As Long
-    
+
     ' Trigger for the event
     Trigger As Byte
     
-    'Commands for the event
+    ' Commands for the event
     CommandListCount As Long
     CommandList() As CommandListRec
     
@@ -422,19 +422,20 @@ Private Type EventPageRec
 End Type
 
 Private Type EventRec
-    Name As String
+    Name As String * NAME_LENGTH
     Global As Byte
     PageCount As Long
     Pages() As EventPageRec
     X As Long
     Y As Long
-    ' Self Switches re-set on restart.
+    
+    ' Self switches re-set on restart
     SelfSwitches(0 To 4) As Long
 End Type
 
 Public Type GlobalMapEvents
-    eventID As Long
-    pageID As Long
+    EventID As Long
+    PageID As Long
     X As Long
     Y As Long
 End Type
@@ -456,11 +457,11 @@ Private Type MapEventRec
     GraphicY2 As Long
     GraphicNum As Long
     
-    movementspeed As Long
+    MovementSpeed As Long
     Position As Long
     Visible As Long
-    eventID As Long
-    pageID As Long
+    EventID As Long
+    PageID As Long
     
     ' Server Only Options
     MoveType As Long
@@ -485,8 +486,8 @@ End Type
 Private Type EventProcessingRec
     CurList As Long
     CurSlot As Long
-    eventID As Long
-    pageID As Long
+    EventID As Long
+    PageID As Long
     WaitingForResponse As Long
     ActionTimer As Long
     ListLeftOff() As Long
@@ -685,7 +686,7 @@ End Type
 
 Private Type NpcRec
     Name As String * NAME_LENGTH
-    title As String * NAME_LENGTH
+    Title As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     Sound As String * FILE_LENGTH
 

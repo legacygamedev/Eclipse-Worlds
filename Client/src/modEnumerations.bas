@@ -48,8 +48,8 @@ Public Enum ServerPackets
     SNpcDead
     SNpcEditor
     SUpdateNpc
-    SMapKey
     SEditMap
+    SEditEvent
     SShopEditor
     SUpdateShop
     SSpellEditor
@@ -126,10 +126,12 @@ Public Enum ServerPackets
     SMapEventData
     SChatBubble
     SSpecialEffect
-    'Character Editor
+    
+    ' Character editor
     SPlayersOnline
     SAllCharacters
     SExtendedPlayerData
+    
     ' Make sure SMSG_COUNT is below everything else
     SMSG_COUNT
 End Enum
@@ -170,6 +172,7 @@ Public Enum ClientPackets
     CRequestPlayerStats
     CRequestSpellCooldown
     CRequestEditMap
+    CRequestEditEvent
     CRequestEditItem
     CSaveItem
     CRequestEditNPC
@@ -269,13 +272,14 @@ Public Enum ClientPackets
     CSwitchesAndVariables
     CRequestSwitchesAndVariables
     
-    'Character Editor
+    ' Character editor
     CRequestAllCharacters
     CRequestPlayersOnline
     CRequestExtendedPlayerData
     CCharacterUpdate
     
     CTarget
+    
     ' Make sure CMSG_COUNT is below everything else
     CMSG_COUNT
 End Enum

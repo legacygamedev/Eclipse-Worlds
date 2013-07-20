@@ -583,24 +583,24 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
         
         If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
             For i = 1 To TempPlayer(Index).EventMap.CurrentEvents
-                If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Global = 1 Then
-                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).X = X And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).pageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then BeginEventProcessing = True
+                If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Global = 1 Then
+                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).X = X And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then BeginEventProcessing = True
                 Else
-                    If TempPlayer(Index).EventMap.EventPages(i).X = X And TempPlayer(Index).EventMap.EventPages(i).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).pageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then BeginEventProcessing = True
+                    If TempPlayer(Index).EventMap.EventPages(i).X = X And TempPlayer(Index).EventMap.EventPages(i).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then BeginEventProcessing = True
                 End If
                 
                 If BeginEventProcessing Then
                     ' Process this event, it is on-touch and everything checks out.
-                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).pageID).CommandListCount > 0 Then
+                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount > 0 Then
                         TempPlayer(Index).EventProcessingCount = TempPlayer(Index).EventProcessingCount + 1
                         ReDim Preserve TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount)
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ActionTimer = timeGetTime
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).CurList = 1
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).CurSlot = 1
-                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).eventID = TempPlayer(Index).EventMap.EventPages(i).eventID
-                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).pageID = TempPlayer(Index).EventMap.EventPages(i).pageID
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).EventID = TempPlayer(Index).EventMap.EventPages(i).EventID
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).PageID = TempPlayer(Index).EventMap.EventPages(i).PageID
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).WaitingForResponse = 0
-                        ReDim TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ListLeftOff(0 To Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).pageID).CommandListCount)
+                        ReDim TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ListLeftOff(0 To Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount)
                     End If
                     
                     BeginEventProcessing = False
@@ -672,9 +672,8 @@ End Function
 Function FindOpenBankSlot(ByVal Index As Long, ByVal ItemNum As Integer) As Byte
     Dim i As Long
 
-    If Not IsPlaying(Index) Then Exit Function
-    
-    If ItemNum < 1 Or ItemNum > MAX_ITEMS Then Exit Function
+    ' Check for subscript out of range
+    If Not IsPlaying(Index) Or ItemNum < 1 Or ItemNum > MAX_ITEMS Then Exit Function
 
     If Not Item(ItemNum).Type = ITEM_TYPE_EQUIPMENT Then
         For i = 1 To MAX_BANK
@@ -697,7 +696,7 @@ Function HasItem(ByVal Index As Long, ByVal ItemNum As Integer) As Long
     Dim i As Long
 
     ' Check for subscript out of range
-    If IsPlaying(Index) = False Or ItemNum <= 0 Or ItemNum > MAX_ITEMS Then Exit Function
+    If IsPlaying(Index) = False Or ItemNum < 1 Or ItemNum > MAX_ITEMS Then Exit Function
 
     For i = 1 To MAX_INV
         ' Check to see if the player has the item
@@ -858,7 +857,9 @@ Sub PlayerMapGetItem(ByVal Index As Long, ByVal i As Byte)
     Dim MapNum As Integer
     Dim Msg As String
 
+    ' Check for subscript out of range
     If Not IsPlaying(Index) Then Exit Sub
+    
     MapNum = GetPlayerMap(Index)
 
     ' See if there's even an item here
@@ -915,6 +916,9 @@ Function CanPlayerPickupItem(ByVal Index As Long, ByVal MapItemNum As Integer)
     Dim MapNum As Integer
 
     MapNum = GetPlayerMap(Index)
+    
+    ' Check for subscript out of range
+    If MapNum < 1 Or MapNum > MAX_MAPS Then Exit Function
     
     If Moral(Map(MapNum).Moral).CanPickupItem = 1 Then
         ' No lock or locked to player?
@@ -1150,7 +1154,7 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
             End If
         Next
         
-        ' Drop 10% of their gold
+        ' Drop 10% of their Gold
         For i = 1 To MAX_INV
             If GetPlayerInvItemNum(Index, i) = 1 Then
                 If Round(GetPlayerInvItemValue(Index, i) / 10) > 0 Then
@@ -1451,7 +1455,7 @@ Public Sub KillPlayer(ByVal Index As Long)
 End Sub
 
 Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
-    Dim n As Long, i As Long, X As Long, Y As Long, TotalPoints As Integer, filename As String, EquipSlot As Byte
+    Dim n As Long, i As Long, X As Long, Y As Long, TotalPoints As Integer, EquipSlot As Byte
     
     ' Check subscript out of range
     If InvNum < 1 Or InvNum > MAX_INV Then Exit Sub
@@ -1628,11 +1632,10 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
             
         Case ITEM_TYPE_RESETSTATS
             TotalPoints = GetPlayerPoints(Index)
-            filename = App.path & "\data\classes.ini"
             
-            For i = 1 To Stats.Stat_Count - 1
-                TotalPoints = TotalPoints + (GetPlayerStat(Index, i) - (Val(GetVar(filename, "Class" & Index, "" & i & ""))))
-                Call SetPlayerStat(Index, i, Val(GetVar(filename, "Class" & Index, "" & i & "")))
+            For i = 1 To Stats.Stat_count - 1
+                TotalPoints = TotalPoints + (GetPlayerStat(Index, i) - Class(GetPlayerClass(Index)).Stat(i))
+                Call SetPlayerStat(Index, i, Class(GetPlayerClass(Index)).Stat(i))
             Next
             
             ' Send the sound
@@ -1843,7 +1846,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal InvItem As Integer, Optiona
     End If
     
     ' Check if they have the stats required to use this item
-    For i = 1 To Stats.Stat_Count - 1
+    For i = 1 To Stats.Stat_count - 1
         If GetPlayerRawStat(Index, i) < Item(InvItem).Stat_Req(i) Then
             If Message Then
                 PlayerMsg Index, "You do not meet the stat requirements to use this item.", BrightRed

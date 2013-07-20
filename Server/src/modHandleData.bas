@@ -41,6 +41,7 @@ Public Sub InitMessages()
     HandleDataSub(CRequestBans) = GetAddress(AddressOf HandleRequestBans)
     HandleDataSub(CRequestSpellCooldown) = GetAddress(AddressOf HandleRequestSpellCooldown)
     HandleDataSub(CRequestEditMap) = GetAddress(AddressOf HandleRequestEditMap)
+    HandleDataSub(CRequestEditEvent) = GetAddress(AddressOf HandleRequestEditEvent)
     HandleDataSub(CRequestEditItem) = GetAddress(AddressOf HandleRequestEditItem)
     HandleDataSub(CSaveItem) = GetAddress(AddressOf HandleSaveItem)
     HandleDataSub(CRequestEditNPC) = GetAddress(AddressOf HandleRequestEditNpc)
@@ -149,7 +150,7 @@ Public Sub InitMessages()
     HandleDataSub(CTarget) = GetAddress(AddressOf HandleTarget)
 End Sub
 
-' Will handle the Packet data
+' Will handle the packet data
 Sub HandleData(ByVal Index As Long, ByRef Data() As Byte)
     Dim buffer As clsBuffer
     Dim MsgType As Long
@@ -251,7 +252,7 @@ Private Sub HandleNewAccount(ByVal Index As Long, ByRef Data() As Byte, ByVal St
 End Sub
 
 ' :::::::::::::::::::::::::::
-' :: Delete account Packet ::
+' :: Delete account packet ::
 ' :::::::::::::::::::::::::::
 Private Sub HandleDelAccount(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -319,7 +320,7 @@ Private Sub HandleDelAccount(ByVal Index As Long, ByRef Data() As Byte, ByVal St
 End Sub
 
 ' ::::::::::::::::::
-' :: Login Packet ::
+' :: Login packet ::
 ' ::::::::::::::::::
 Private Sub HandleLogin(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -400,7 +401,7 @@ Private Sub HandleLogin(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAd
 End Sub
 
 ' ::::::::::::::::::::::::::
-' :: Add character Packet ::
+' :: Add character packet ::
 ' ::::::::::::::::::::::::::
 Private Sub HandleAddChar(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -615,7 +616,7 @@ Private Sub HandlePrivateMsg(ByVal Index As Long, ByRef Data() As Byte, ByVal St
 End Sub
 
 ' :::::::::::::::::::::::::::::
-' :: Moving character Packet ::
+' :: Moving character packet ::
 ' :::::::::::::::::::::::::::::
 Sub HandlePlayerMove(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim Dir As Byte, i As Long
@@ -635,7 +636,7 @@ Sub HandlePlayerMove(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr 
 End Sub
 
 ' :::::::::::::::::::::::::::::
-' :: Moving character Packet ::
+' :: Moving character packet ::
 ' :::::::::::::::::::::::::::::
 Sub HandlePlayerDir(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim Dir As Byte
@@ -660,7 +661,7 @@ Sub HandlePlayerDir(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
 End Sub
 
 ' :::::::::::::::::::::
-' :: Use item Packet ::
+' :: Use item packet ::
 ' :::::::::::::::::::::
 Sub HandleUseItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim InvNum As Byte
@@ -681,7 +682,7 @@ Sub HandleUseItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
 End Sub
 
 ' ::::::::::::::::::::::::::
-' :: Player attack Packet ::
+' :: Player attack packet ::
 ' ::::::::::::::::::::::::::
 Sub HandleAttack(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim i As Long
@@ -745,7 +746,7 @@ Sub HandleAttack(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As L
 End Sub
 
 ' ::::::::::::::::::::::
-' :: Use stats Packet ::
+' :: Use stats packet ::
 ' ::::::::::::::::::::::
 Sub HandleUseStatPoint(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim PointType As Byte
@@ -800,7 +801,7 @@ Sub HandleUseStatPoint(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAdd
 End Sub
 
 ' ::::::::::::::::::::::::::::::::
-' :: Player info request Packet ::
+' :: Player info request packet ::
 ' ::::::::::::::::::::::::::::::::
 Sub HandlePlayerInfoRequest(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim Name As String
@@ -818,7 +819,7 @@ Sub HandlePlayerInfoRequest(ByVal Index As Long, ByRef Data() As Byte, ByVal Sta
 End Sub
 
 ' :::::::::::::::::::::::
-' :: Warp me to Packet ::
+' :: Warp me to packet ::
 ' :::::::::::::::::::::::
 Sub HandleWarpMeTo(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -851,7 +852,7 @@ Sub HandleWarpMeTo(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
 End Sub
 
 ' :::::::::::::::::::::::
-' :: Warp to me Packet ::
+' :: Warp to me packet ::
 ' :::::::::::::::::::::::
 Sub HandleWarpToMe(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -883,7 +884,7 @@ Sub HandleWarpToMe(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
 End Sub
 
 ' ::::::::::::::::::::::::
-' :: Warp to map Packet ::
+' :: Warp to map packet ::
 ' ::::::::::::::::::::::::
 Sub HandleWarpTo(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -907,7 +908,7 @@ Sub HandleWarpTo(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As L
 End Sub
 
 ' :::::::::::::::::::::::
-' :: Set sprite Packet ::
+' :: Set sprite packet ::
 ' :::::::::::::::::::::::
 Sub HandleSetSprite(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim SpriteNum As Long
@@ -968,7 +969,7 @@ Sub HandleRequestNewMap(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAd
 End Sub
 
 ' :::::::::::::::::::::
-' :: Map data Packet ::
+' :: Map data packet ::
 ' :::::::::::::::::::::
 Sub HandleMapData(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
    Dim i As Long
@@ -1105,8 +1106,8 @@ Sub HandleMapData(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
                                 .MoveRoute(Y).Data2 = buffer.ReadLong
                                 .MoveRoute(Y).Data3 = buffer.ReadLong
                                 .MoveRoute(Y).Data4 = buffer.ReadLong
-                                .MoveRoute(Y).data5 = buffer.ReadLong
-                                .MoveRoute(Y).data6 = buffer.ReadLong
+                                .MoveRoute(Y).Data5 = buffer.ReadLong
+                                .MoveRoute(Y).Data6 = buffer.ReadLong
                             Next
                         End If
                             
@@ -1139,8 +1140,8 @@ Sub HandleMapData(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
                                         .Data2 = buffer.ReadLong
                                         .Data3 = buffer.ReadLong
                                         .Data4 = buffer.ReadLong
-                                        .data5 = buffer.ReadLong
-                                        .data6 = buffer.ReadLong
+                                        .Data5 = buffer.ReadLong
+                                        .Data6 = buffer.ReadLong
                                         .ConditionalBranch.CommandList = buffer.ReadLong
                                         .ConditionalBranch.Condition = buffer.ReadLong
                                         .ConditionalBranch.Data1 = buffer.ReadLong
@@ -1156,8 +1157,8 @@ Sub HandleMapData(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
                                                 .MoveRoute(w).Data2 = buffer.ReadLong
                                                 .MoveRoute(w).Data3 = buffer.ReadLong
                                                 .MoveRoute(w).Data4 = buffer.ReadLong
-                                                .MoveRoute(w).data5 = buffer.ReadLong
-                                                .MoveRoute(w).data6 = buffer.ReadLong
+                                                .MoveRoute(w).Data5 = buffer.ReadLong
+                                                .MoveRoute(w).Data6 = buffer.ReadLong
                                             Next
                                         End If
                                     End With
@@ -1198,7 +1199,7 @@ Sub HandleMapData(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
 End Sub
 
 ' ::::::::::::::::::::::::::::
-' :: Need map yes/no Packet ::
+' :: Need map yes/no packet ::
 ' ::::::::::::::::::::::::::::
 Sub HandleNeedMap(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1224,7 +1225,7 @@ Sub HandleNeedMap(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
 End Sub
 
 ' :::::::::::::::::::::::::::::::::::::::::::::::
-' :: Player trying to pick up something Packet ::
+' :: Player trying to pick up something packet ::
 ' :::::::::::::::::::::::::::::::::::::::::::::::
 Sub HandleMapGetItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1236,7 +1237,7 @@ Sub HandleMapGetItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr 
 End Sub
 
 ' ::::::::::::::::::::::::::::::::::::::::::::
-' :: Player trying to drop something Packet ::
+' :: Player trying to drop something packet ::
 ' ::::::::::::::::::::::::::::::::::::::::::::
 Sub HandleMapDropItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim InvNum As Byte
@@ -1278,7 +1279,7 @@ Sub HandleMapDropItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr
 End Sub
 
 ' ::::::::::::::::::::::::
-' :: Respawn map Packet ::
+' :: Respawn map packet ::
 ' ::::::::::::::::::::::::
 Sub HandleMapRespawn(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim i As Long
@@ -1306,7 +1307,7 @@ Sub HandleMapRespawn(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr 
 End Sub
 
 ' :::::::::::::::::::::::
-' :: Map Report Packet ::
+' :: Map Report packet ::
 ' :::::::::::::::::::::::
 Sub HandleMapReport(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim i As Long
@@ -1360,7 +1361,7 @@ Sub HandleOpenMaps(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
 End Sub
 
 ' ::::::::::::::::::::::::
-' :: Kick player Packet ::
+' :: Kick player packet ::
 ' ::::::::::::::::::::::::
 Sub HandleKickPlayer(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -1397,7 +1398,7 @@ Sub HandleKickPlayer(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr 
 End Sub
 
 ' ::::::::::::::::::::::::
-' :: Mute Player Packet ::
+' :: Mute Player packet ::
 ' ::::::::::::::::::::::::
 Sub HandleMutePlayer(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1465,7 +1466,7 @@ Private Sub CheckBans()
 End Sub
 
 ' :::::::::::::::::::::::
-' :: Ban player Packet ::
+' :: Ban player packet ::
 ' :::::::::::::::::::::::
 Sub HandleBanPlayer(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -1497,11 +1498,10 @@ Sub HandleBanPlayer(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     Else
         Call PlayerMsg(Index, "You cannot ban yourself!", BrightRed)
     End If
-
 End Sub
 
 ' :::::::::::::::::::::::::::::
-' :: Request edit map Packet ::
+' :: Request edit map oacket ::
 ' :::::::::::::::::::::::::::::
 Sub HandleRequestEditMap(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1517,8 +1517,26 @@ Sub HandleRequestEditMap(ByVal Index As Long, ByRef Data() As Byte, ByVal StartA
     Set buffer = Nothing
 End Sub
 
+' :::::::::::::::::::::::::::::::
+' :: Request edit event packet ::
+' :::::::::::::::::::::::::::::::
+Sub HandleRequestEditEvent(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+    Dim buffer As clsBuffer
+
+    ' Prevent hacking
+    If GetPlayerAccess(Index) < STAFF_MAPPER Then Exit Sub
+
+    ' TODO Add common event sending
+    'SendMapEventData (Index)
+    
+    Set buffer = New clsBuffer
+    buffer.WriteLong SEditEvent
+    SendDataTo Index, buffer.ToArray()
+    Set buffer = Nothing
+End Sub
+
 ' ::::::::::::::::::::::::::::::
-' :: Request edit item Packet ::
+' :: Request edit item packet ::
 ' ::::::::::::::::::::::::::::::
 Sub HandleRequestEditItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1533,7 +1551,7 @@ Sub HandleRequestEditItem(ByVal Index As Long, ByRef Data() As Byte, ByVal Start
 End Sub
 
 ' ::::::::::::::::::::::
-' :: Save item Packet ::
+' :: Save item packet ::
 ' ::::::::::::::::::::::
 Sub HandleSaveItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -1566,7 +1584,7 @@ Sub HandleSaveItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
 End Sub
 
 ' :::::::::::::::::::::::::::::::::::
-' :: Request edit Animation Packet ::
+' :: Request edit animation packet ::
 ' :::::::::::::::::::::::::::::::::::
 Sub HandleRequestEditAnimation(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1581,7 +1599,7 @@ Sub HandleRequestEditAnimation(ByVal Index As Long, ByRef Data() As Byte, ByVal 
 End Sub
 
 ' :::::::::::::::::::::::::::
-' :: Save Animation Packet ::
+' :: Save animation packet ::
 ' :::::::::::::::::::::::::::
 Sub HandleSaveAnimation(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -1612,7 +1630,7 @@ Sub HandleSaveAnimation(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAd
 End Sub
 
 ' :::::::::::::::::::::::::::::
-' :: Request edit npc Packet ::
+' :: Request edit NPC packet ::
 ' :::::::::::::::::::::::::::::
 Sub HandleRequestEditNpc(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1627,7 +1645,7 @@ Sub HandleRequestEditNpc(ByVal Index As Long, ByRef Data() As Byte, ByVal StartA
 End Sub
 
 ' :::::::::::::::::::::
-' :: Save npc Packet ::
+' :: Save NPC packet ::
 ' :::::::::::::::::::::
 Private Sub HandleSaveNpc(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim npcnum As Long
@@ -1656,9 +1674,9 @@ Private Sub HandleSaveNpc(ByVal Index As Long, ByRef Data() As Byte, ByVal Start
     Call AddLog(GetPlayerName(Index) & " saved Npc #" & npcnum & ".", "Staff")
 End Sub
 
-' :::::::::::::::::::::::::::::
-' :: Request edit Resource Packet ::
-' :::::::::::::::::::::::::::::
+' ::::::::::::::::::::::::::::::::::
+' :: Request edit resource packet ::
+' ::::::::::::::::::::::::::::::::::
 Sub HandleRequestEditResource(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
 
@@ -1671,9 +1689,9 @@ Sub HandleRequestEditResource(ByVal Index As Long, ByRef Data() As Byte, ByVal S
     Set buffer = Nothing
 End Sub
 
-' :::::::::::::::::::::
-' :: Save Resource Packet ::
-' :::::::::::::::::::::
+' ::::::::::::::::::::::::::
+' :: Save resource packet ::
+' ::::::::::::::::::::::::::
 Private Sub HandleSaveResource(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim ResourceNum As Long
     Dim buffer As clsBuffer
@@ -1702,7 +1720,7 @@ Private Sub HandleSaveResource(ByVal Index As Long, ByRef Data() As Byte, ByVal 
 End Sub
 
 ' ::::::::::::::::::::::::::::::
-' :: Request edit shop Packet ::
+' :: Request edit shop packet ::
 ' ::::::::::::::::::::::::::::::
 Sub HandleRequestEditShop(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1717,7 +1735,7 @@ Sub HandleRequestEditShop(ByVal Index As Long, ByRef Data() As Byte, ByVal Start
 End Sub
 
 ' ::::::::::::::::::::::
-' :: Save shop Packet ::
+' :: Save shop packet ::
 ' ::::::::::::::::::::::
 Sub HandleSaveShop(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim ShopNum As Long
@@ -1742,15 +1760,16 @@ Sub HandleSaveShop(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
     CopyMemory ByVal VarPtr(Shop(ShopNum)), ByVal VarPtr(ShopData(0)), ShopSize
 
     Set buffer = Nothing
+    
     ' Save it
     Call SendUpdateShopToAll(ShopNum)
     Call SaveShop(ShopNum)
     Call AddLog(GetPlayerName(Index) & " saving shop #" & ShopNum & ".", "Staff")
 End Sub
 
-' :::::::::::::::::::::::::::::
-' :: Request edit spell Packet ::
-' :::::::::::::::::::::::::::::
+' :::::::::::::::::::::::::::::::
+' :: Request edit spell packet ::
+' :::::::::::::::::::::::::::::::
 Sub HandleRequestEditSpell(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
 
@@ -1764,7 +1783,7 @@ Sub HandleRequestEditSpell(ByVal Index As Long, ByRef Data() As Byte, ByVal Star
 End Sub
 
 ' :::::::::::::::::::::::
-' :: Save spell Packet ::
+' :: Save spell packet ::
 ' :::::::::::::::::::::::
 Sub HandleSaveSpell(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim SpellNum As Long
@@ -1786,6 +1805,7 @@ Sub HandleSaveSpell(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     ReDim SpellData(SpellSize - 1)
     SpellData = buffer.ReadBytes(SpellSize)
     CopyMemory ByVal VarPtr(Spell(SpellNum)), ByVal VarPtr(SpellData(0)), SpellSize
+    
     ' Save it
     Call SendUpdateSpellToAll(SpellNum)
     Call SaveSpell(SpellNum)
@@ -1793,7 +1813,7 @@ Sub HandleSaveSpell(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
 End Sub
 
 ' :::::::::::::::::::::::
-' :: Set access Packet ::
+' :: Set access packet ::
 ' :::::::::::::::::::::::
 Sub HandleSetAccess(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -1851,19 +1871,19 @@ Sub HandleSetAccess(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
 End Sub
 
 ' :::::::::::::::::::::::::
-' :: Who's online Packet ::
+' :: Who's online packet ::
 ' :::::::::::::::::::::::::
 Sub HandleWhosOnline(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Call SendWhosOnline(Index)
 End Sub
 
-'Character Editor
+' Character Editor
 Sub HandleRequestPlayersOnline(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Call SendPlayersOnline(Index)
 End Sub
 
 ' :::::::::::::::::::::
-' :: Set MOTD Packet ::
+' :: Set MOTD packet ::
 ' :::::::::::::::::::::
 Sub HandleSetMOTD(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1885,7 +1905,7 @@ Sub HandleSetMOTD(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
 End Sub
 
 ' ::::::::::::::::::::::
-' :: Set SMOTD Packet ::
+' :: Set SMOTD packet ::
 ' ::::::::::::::::::::::
 Sub HandleSetSMotd(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1907,7 +1927,7 @@ Sub HandleSetSMotd(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
 End Sub
 
 ' ::::::::::::::::::::::
-' :: Set GMOTD Packet ::
+' :: Set GMOTD packet ::
 ' ::::::::::::::::::::::
 Sub HandleSetGMotd(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -1930,7 +1950,7 @@ Sub HandleSetGMotd(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
 End Sub
 
 ' :::::::::::::::::::
-' :: Search Packet ::
+' :: Search packet ::
 ' :::::::::::::::::::
 Sub HandleSearch(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim X As Long
@@ -2020,14 +2040,14 @@ Sub HandleSearch(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As L
 End Sub
 
 ' :::::::::::::::::::
-' :: Spells Packet ::
+' :: Spells packet ::
 ' :::::::::::::::::::
 Sub HandleSpells(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Call SendPlayerSpells(Index)
 End Sub
 
 ' :::::::::::::::::
-' :: Cast Packet ::
+' :: Cast packet ::
 ' :::::::::::::::::
 Sub HandleCastSpell(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -2046,7 +2066,7 @@ Sub HandleCastSpell(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
 End Sub
 
 ' ::::::::::::::::::::::
-' :: Quit game Packet ::
+' :: Quit game packet ::
 ' ::::::::::::::::::::::
 Sub HandleLeaveGame(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     If IsPlaying(Index) Then
@@ -3616,7 +3636,7 @@ Private Sub HandleUpdateData(ByVal Index As Long, ByRef Data() As Byte, ByVal St
 End Sub
 
 ' ::::::::::::::::::::::
-' :: Save Ban Packet ::
+' :: Save Ban packet ::
 ' ::::::::::::::::::::::
 Sub HandleSaveBan(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -3671,7 +3691,7 @@ Sub HandleSetTitle(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
     
     ' Make sure they have the title
     If Not TitleNum = 0 Then
-        If Account(Index).Chars(GetPlayerChar(Index)).title(TitleNum) = 0 Then Exit Sub
+        If Account(Index).Chars(GetPlayerChar(Index)).Title(TitleNum) = 0 Then Exit Sub
     End If
     
     ' Set the current title
@@ -3682,7 +3702,7 @@ Sub HandleSetTitle(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
 End Sub
 
 ' ::::::::::::::::::::::
-' :: Save Title Packet ::
+' :: Save Title packet ::
 ' ::::::::::::::::::::::
 Sub HandleSaveTitle(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -3700,10 +3720,10 @@ Sub HandleSaveTitle(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     If n < 1 Or n > MAX_TITLES Then Exit Sub
 
     ' Update the Title
-    TitleSize = LenB(title(n))
+    TitleSize = LenB(Title(n))
     ReDim TitleData(TitleSize - 1)
     TitleData = buffer.ReadBytes(TitleSize)
-    CopyMemory ByVal VarPtr(title(n)), ByVal VarPtr(TitleData(0)), TitleSize
+    CopyMemory ByVal VarPtr(Title(n)), ByVal VarPtr(TitleData(0)), TitleSize
     Set buffer = Nothing
     
     ' Save it
@@ -3741,7 +3761,7 @@ Sub HandleChangeStatus(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAdd
 End Sub
 
 ' ::::::::::::::::::::::
-' :: Save Moral Packet ::
+' :: Save Moral packet ::
 ' ::::::::::::::::::::::
 Sub HandleSaveMoral(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
@@ -3785,7 +3805,7 @@ Sub HandleMoralEditor(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr
 End Sub
 
 ' ::::::::::::::::::::::
-' :: Save Class Packet ::
+' :: Save Class packet ::
 ' ::::::::::::::::::::::
 Sub HandleSaveClass(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long, i As Long
@@ -3853,7 +3873,7 @@ Sub HandleDestroyItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr
 End Sub
 
 ' :::::::::::::::::::::::::
-' :: Save Emoticon Packet ::
+' :: Save Emoticon packet ::
 ' :::::::::::::::::::::::::
 Sub HandleSaveEmoticon(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long, i As Long
@@ -3913,40 +3933,40 @@ End Sub
 
 Sub HandleEventChatReply(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim eventID As Long, pageID As Long, reply As Long, i As Long
+    Dim EventID As Long, PageID As Long, reply As Long, i As Long
     
     Set buffer = New clsBuffer
     buffer.WriteBytes Data()
-    eventID = buffer.ReadLong
-    pageID = buffer.ReadLong
+    EventID = buffer.ReadLong
+    PageID = buffer.ReadLong
     reply = buffer.ReadLong
     
     If TempPlayer(Index).EventProcessingCount > 0 Then
         For i = 1 To TempPlayer(Index).EventProcessingCount
-            If TempPlayer(Index).EventProcessing(i).eventID = eventID And TempPlayer(Index).EventProcessing(i).pageID = pageID Then
+            If TempPlayer(Index).EventProcessing(i).EventID = EventID And TempPlayer(Index).EventProcessing(i).PageID = PageID Then
                 If TempPlayer(Index).EventProcessing(i).WaitingForResponse = 1 Then
                     If reply = 0 Then
-                        If Map(GetPlayerMap(Index)).Events(eventID).Pages(pageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Index = EventType.evShowText Then
+                        If Map(GetPlayerMap(Index)).Events(EventID).Pages(PageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Index = EventType.evShowText Then
                             TempPlayer(Index).EventProcessing(i).WaitingForResponse = 0
                         End If
                     ElseIf reply > 0 Then
-                        If Map(GetPlayerMap(Index)).Events(eventID).Pages(pageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Index = EventType.evShowChoices Then
+                        If Map(GetPlayerMap(Index)).Events(EventID).Pages(PageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Index = EventType.evShowChoices Then
                             Select Case reply
                                 Case 1
                                     TempPlayer(Index).EventProcessing(i).ListLeftOff(TempPlayer(Index).EventProcessing(i).CurList) = TempPlayer(Index).EventProcessing(i).CurSlot
-                                    TempPlayer(Index).EventProcessing(i).CurList = Map(GetPlayerMap(Index)).Events(eventID).Pages(pageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Data1
+                                    TempPlayer(Index).EventProcessing(i).CurList = Map(GetPlayerMap(Index)).Events(EventID).Pages(PageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Data1
                                     TempPlayer(Index).EventProcessing(i).CurSlot = 1
                                 Case 2
                                     TempPlayer(Index).EventProcessing(i).ListLeftOff(TempPlayer(Index).EventProcessing(i).CurList) = TempPlayer(Index).EventProcessing(i).CurSlot
-                                    TempPlayer(Index).EventProcessing(i).CurList = Map(GetPlayerMap(Index)).Events(eventID).Pages(pageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Data2
+                                    TempPlayer(Index).EventProcessing(i).CurList = Map(GetPlayerMap(Index)).Events(EventID).Pages(PageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Data2
                                     TempPlayer(Index).EventProcessing(i).CurSlot = 1
                                 Case 3
                                     TempPlayer(Index).EventProcessing(i).ListLeftOff(TempPlayer(Index).EventProcessing(i).CurList) = TempPlayer(Index).EventProcessing(i).CurSlot
-                                    TempPlayer(Index).EventProcessing(i).CurList = Map(GetPlayerMap(Index)).Events(eventID).Pages(pageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Data3
+                                    TempPlayer(Index).EventProcessing(i).CurList = Map(GetPlayerMap(Index)).Events(EventID).Pages(PageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Data3
                                     TempPlayer(Index).EventProcessing(i).CurSlot = 1
                                 Case 4
                                     TempPlayer(Index).EventProcessing(i).ListLeftOff(TempPlayer(Index).EventProcessing(i).CurList) = TempPlayer(Index).EventProcessing(i).CurSlot
-                                    TempPlayer(Index).EventProcessing(i).CurList = Map(GetPlayerMap(Index)).Events(eventID).Pages(pageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Data4
+                                    TempPlayer(Index).EventProcessing(i).CurList = Map(GetPlayerMap(Index)).Events(EventID).Pages(PageID).CommandList(TempPlayer(Index).EventProcessing(i).CurList).Commands(TempPlayer(Index).EventProcessing(i).CurSlot - 1).Data4
                                     TempPlayer(Index).EventProcessing(i).CurSlot = 1
                             End Select
                         End If
@@ -3997,7 +4017,7 @@ Sub HandleEvent(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Lo
     
     If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
         For z = 1 To TempPlayer(Index).EventMap.CurrentEvents
-            If TempPlayer(Index).EventMap.EventPages(z).eventID = i Then
+            If TempPlayer(Index).EventMap.EventPages(z).EventID = i Then
                 i = z
                 BeginEventProcessing = True
                 Exit For
@@ -4006,7 +4026,7 @@ Sub HandleEvent(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Lo
     End If
     
     If BeginEventProcessing = True Then
-        If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).pageID).CommandListCount > 0 Then
+        If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount > 0 Then
             ' Process this event, it is action button and everything checks out.
             TempPlayer(Index).EventProcessingCount = TempPlayer(Index).EventProcessingCount + 1
             ReDim Preserve TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount)
@@ -4014,10 +4034,10 @@ Sub HandleEvent(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Lo
                 .ActionTimer = timeGetTime
                 .CurList = 1
                 .CurSlot = 1
-                .eventID = TempPlayer(Index).EventMap.EventPages(i).eventID
-                .pageID = TempPlayer(Index).EventMap.EventPages(i).pageID
+                .EventID = TempPlayer(Index).EventMap.EventPages(i).EventID
+                .PageID = TempPlayer(Index).EventMap.EventPages(i).PageID
                 .WaitingForResponse = 0
-                ReDim .ListLeftOff(0 To Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).pageID).CommandListCount)
+                ReDim .ListLeftOff(0 To Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount)
             End With
         End If
         BeginEventProcessing = False

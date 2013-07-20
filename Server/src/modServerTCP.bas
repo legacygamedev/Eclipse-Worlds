@@ -626,7 +626,7 @@ Function PlayerData(ByVal Index As Long) As Byte()
     
     ' Send player titles
     For i = 1 To Account(Index).Chars(GetPlayerChar(Index)).AmountOfTitles
-        buffer.WriteByte Account(Index).Chars(GetPlayerChar(Index)).title(i)
+        buffer.WriteByte Account(Index).Chars(GetPlayerChar(Index)).Title(i)
     Next
     
     ' Send the player's current title
@@ -946,7 +946,7 @@ Sub SendTitles(ByVal Index As Long)
     Dim i As Long
     
     For i = 1 To MAX_TITLES
-        If Len(Trim$(title(i).Name)) > 0 Then
+        If Len(Trim$(Title(i).Name)) > 0 Then
             Call SendUpdateTitleTo(Index, i)
         End If
     Next
@@ -1260,7 +1260,7 @@ Sub SendPlayerTitles(ByVal Index As Long)
     
     ' Send player titles
     For i = 1 To Account(Index).Chars(GetPlayerChar(Index)).AmountOfTitles
-        buffer.WriteByte Account(Index).Chars(GetPlayerChar(Index)).title(i)
+        buffer.WriteByte Account(Index).Chars(GetPlayerChar(Index)).Title(i)
     Next
     
     ' Send the player's current title
@@ -1798,34 +1798,6 @@ Sub SendBank(ByVal Index As Long)
     
     SendDataTo Index, buffer.ToArray()
     
-    Set buffer = Nothing
-End Sub
-
-Sub SendMapKey(ByVal Index As Long, ByVal X As Long, ByVal Y As Long, ByVal Value As Byte)
-    Dim buffer As clsBuffer
-    
-    Set buffer = New clsBuffer
-    buffer.WriteLong SMapKey
-    
-    buffer.WriteLong X
-    buffer.WriteLong Y
-    buffer.WriteByte Value
-    
-    SendDataTo Index, buffer.ToArray()
-    Set buffer = Nothing
-End Sub
-
-Sub SendMapKeyToMap(ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long, ByVal Value As Byte)
-    Dim buffer As clsBuffer
-    
-    Set buffer = New clsBuffer
-    buffer.WriteLong SMapKey
-    
-    buffer.WriteLong X
-    buffer.WriteLong Y
-    buffer.WriteByte Value
-    
-    SendDataToMap MapNum, buffer.ToArray()
     Set buffer = Nothing
 End Sub
 
@@ -2375,9 +2347,9 @@ Sub SendUpdateTitleToAll(ByVal TitleNum As Long)
     
     Set buffer = New clsBuffer
     
-    TitleSize = LenB(title(TitleNum))
+    TitleSize = LenB(Title(TitleNum))
     ReDim TitleData(TitleSize - 1)
-    CopyMemory TitleData(0), ByVal VarPtr(title(TitleNum)), TitleSize
+    CopyMemory TitleData(0), ByVal VarPtr(Title(TitleNum)), TitleSize
     buffer.WriteLong SUpdateTitle
     
     buffer.WriteLong TitleNum
@@ -2394,9 +2366,9 @@ Sub SendUpdateTitleTo(ByVal Index As Long, ByVal TitleNum As Long)
     
     Set buffer = New clsBuffer
     
-    TitleSize = LenB(title(TitleNum))
+    TitleSize = LenB(Title(TitleNum))
     ReDim TitleData(TitleSize - 1)
-    CopyMemory TitleData(0), ByVal VarPtr(title(TitleNum)), TitleSize
+    CopyMemory TitleData(0), ByVal VarPtr(Title(TitleNum)), TitleSize
     buffer.WriteLong SUpdateTitle
     
     buffer.WriteLong TitleNum

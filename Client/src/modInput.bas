@@ -7,7 +7,7 @@ Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Int
 
 Public Sub CheckKeys()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If GetAsyncKeyState(VK_W) >= 0 Then DirUp = False
     If GetAsyncKeyState(VK_S) >= 0 Then DirDown = False
@@ -21,11 +21,11 @@ Public Sub CheckKeys()
     
     If GetAsyncKeyState(VK_CONTROL) >= 0 Then ControlDown = False
     If GetAsyncKeyState(VK_SHIFT) >= 0 Then ShiftDown = False
-    If GetAsyncKeyState(VK_TAB) >= 0 Then tabDown = False
+    If GetAsyncKeyState(VK_TAB) >= 0 Then TabDown = False
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckKeys", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -35,7 +35,7 @@ Public Sub CheckInputKeys()
     Dim distanceY As Long
         
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If GetKeyState(vbKeyShift) < 0 Then
         ShiftDown = True
@@ -44,9 +44,9 @@ Public Sub CheckInputKeys()
     End If
     
     If GetKeyState(vbKeyTab) < 0 Then
-        tabDown = True
+        TabDown = True
     Else
-        tabDown = False
+        TabDown = False
     End If
 
     If GetKeyState(vbKeyControl) < 0 Then
@@ -199,22 +199,22 @@ Public Sub CheckInputKeys()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckInputKeys", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
     Dim ChatText As String
-    Dim name As String
-    Dim I As Long
+    Dim Name As String
+    Dim i As Long
     Dim n As Long
     Dim Command() As String
     Dim buffer As clsBuffer
     Dim StrInput As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ChatText = Trim$(MyText)
 
@@ -233,7 +233,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: ~message or /party message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.text = vbNullString
+                frmMain.txtMyChat.Text = vbNullString
                 Exit Sub
             End If
             ' Send the message to the player
@@ -243,7 +243,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 AddText "You are not in a party!", BrightRed
             End If
             MyText = vbNullString
-            frmMain.txtMyChat.text = vbNullString
+            frmMain.txtMyChat.Text = vbNullString
             Exit Sub
         End If
         
@@ -257,7 +257,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: @message or /guild message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.text = vbNullString
+                frmMain.txtMyChat.Text = vbNullString
                 Exit Sub
             End If
             ' Send the message to the player
@@ -267,7 +267,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 AddText "You are not in a guild!", BrightRed
             End If
             MyText = vbNullString
-            frmMain.txtMyChat.text = vbNullString
+            frmMain.txtMyChat.Text = vbNullString
             Exit Sub
         End If
 
@@ -281,13 +281,13 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: 'message or /global message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.text = vbNullString
+                frmMain.txtMyChat.Text = vbNullString
                 Exit Sub
             End If
             ' Send the message to the player
             Call GlobalMsg(ChatText)
             MyText = vbNullString
-            frmMain.txtMyChat.text = vbNullString
+            frmMain.txtMyChat.Text = vbNullString
             Exit Sub
         End If
             
@@ -301,7 +301,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: `message or /staff message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.text = vbNullString
+                frmMain.txtMyChat.Text = vbNullString
                 Exit Sub
             End If
             If GetPlayerAccess(MyIndex) > 0 Then
@@ -309,7 +309,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AdminMsg(GetPlayerName(MyIndex) & ": " & ChatText)
             End If
             MyText = vbNullString
-            frmMain.txtMyChat.text = vbNullString
+            frmMain.txtMyChat.Text = vbNullString
             Exit Sub
         End If
         
@@ -323,13 +323,13 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: -message or /emote message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.text = vbNullString
+                frmMain.txtMyChat.Text = vbNullString
                 Exit Sub
             End If
             ' Send the message to the player
             Call EmoteMsg(ChatText)
             MyText = vbNullString
-            frmMain.txtMyChat.text = vbNullString
+            frmMain.txtMyChat.Text = vbNullString
             Exit Sub
         End If
         
@@ -343,33 +343,33 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Else
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
                 MyText = vbNullString
-                frmMain.txtMyChat.text = vbNullString
+                frmMain.txtMyChat.Text = vbNullString
                 Exit Sub
             End If
             
-            name = vbNullString
+            Name = vbNullString
 
             ' Get the desired player from the user text
-            For I = 1 To Len(ChatText)
-                If Not Mid$(ChatText, I, 1) = " " Then
-                    name = name & Mid$(ChatText, I, 1)
+            For i = 1 To Len(ChatText)
+                If Not Mid$(ChatText, i, 1) = " " Then
+                    Name = Name & Mid$(ChatText, i, 1)
                 Else
                     Exit For
                 End If
             Next
             
             ' Make sure they are actually sending something
-            If Len(ChatText) - I > 0 Then
-                ChatText = Mid$(ChatText, I + 1, Len(ChatText) - I)
+            If Len(ChatText) - i > 0 Then
+                ChatText = Mid$(ChatText, i + 1, Len(ChatText) - i)
 
                 ' Send the message to the player
-                Call PrivateMsg(name, ChatText)
+                Call PrivateMsg(Name, ChatText)
             Else
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
             End If
             
             MyText = vbNullString
-            frmMain.txtMyChat.text = vbNullString
+            frmMain.txtMyChat.Text = vbNullString
             Exit Sub
         End If
 
@@ -398,7 +398,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendGuildCreate Command(1)
                     
                 Case "/clearchat"
-                    frmMain.txtChat.text = vbNullString
+                    frmMain.txtChat.Text = vbNullString
                     
                 Case "/trade"
                     SendCanTrade
@@ -438,18 +438,18 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     
                     ' Send the admin help commands
                     If GetPlayerAccess(MyIndex) > 0 Then
-                        Call AddText("Available Admin Commands: /admin, /motd, /smotd, /respawn, /loc, /warpmeto, /warptome, /warpto, /setsprite, /setplayersprite, /mapreport, /kick, /ban, /edititem, /editmap, /editshop, /editspell, /editresource, /editnpc, /editanimation, /editban, /editclass, /edittitle, /editmoral, /acp", HelpColor)
+                        Call AddText("Available Admin Commands: /admin, /motd, /smotd, /respawn, /loc, /warpmeto, /warptome, /warpto, /setsprite, /setplayersprite, /mapreport, /kick, /ban, /edititem, /editmap, /editevent, /editshop, /editspell, /editresource, /editnpc, /editanimation, /editban, /editclass, /edittitle, /editmoral, /acp", HelpColor)
                     End If
                     
                 Case "/emotes"
                     ' Empty out text
                     ChatText = vbNullString
-                    For I = 1 To MAX_EMOTICONS
-                        If Not Trim$(Emoticon(I).Command) = "/" Then
+                    For i = 1 To MAX_EMOTICONS
+                        If Not Trim$(Emoticon(i).Command) = "/" Then
                             If Not ChatText = vbNullString Then
                                 ChatText = ChatText & ", "
                             End If
-                            ChatText = ChatText & Trim$(Emoticon(I).Command)
+                            ChatText = ChatText & Trim$(Emoticon(i).Command)
                         End If
                     Next
                     AddText "Emotes: " & ChatText, BrightGreen
@@ -790,6 +790,15 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     End If
                     
                     SendRequestEditMap
+                
+                ' Event Editor
+                Case "/editmap"
+                    If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
+                        AddText "You have insufficent access to do this!", BrightRed
+                        GoTo Continue
+                    End If
+                    
+                    SendRequestEditEvent
                     
                 ' Moral Editor
                 Case "/editmoral"
@@ -839,10 +848,10 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendSetAccess Command(1), CLng(Command(2))
                 Case Else
                     ' Check for Emoticons
-                    For I = 1 To MAX_EMOTICONS
-                        If Not Trim$(Emoticon(I).Command) = "/" Then
-                            If Trim$(Emoticon(I).Command) = Command(0) Then
-                                SendCheckEmoticon I
+                    For i = 1 To MAX_EMOTICONS
+                        If Not Trim$(Emoticon(i).Command) = "/" Then
+                            If Trim$(Emoticon(i).Command) = Command(0) Then
+                                SendCheckEmoticon i
                                 n = n + 1
                                 Exit For
                             End If
@@ -856,7 +865,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 ' Continue label where we go instead of exiting the sub
 Continue:
             MyText = vbNullString
-            frmMain.txtMyChat.text = vbNullString
+            frmMain.txtMyChat.Text = vbNullString
             Exit Sub
         End If
 
@@ -897,7 +906,7 @@ Continue:
         End If
 
         MyText = vbNullString
-        frmMain.txtMyChat.text = vbNullString
+        frmMain.txtMyChat.Text = vbNullString
         Exit Sub
     End If
 
@@ -915,14 +924,14 @@ Continue:
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "HandleKeyPresses", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MouseMoveX()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Left movement
     If GetPlayerX(MyIndex) > MouseX Then
@@ -946,14 +955,14 @@ Public Sub MouseMoveX()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MouseMoveX", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MouseMoveY()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Up movement
     If GetPlayerY(MyIndex) > MouseY Then
@@ -977,7 +986,7 @@ Public Sub MouseMoveY()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "MouseMoveY", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
