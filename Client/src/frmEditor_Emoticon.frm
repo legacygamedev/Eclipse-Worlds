@@ -197,7 +197,7 @@ Begin VB.Form frmEditor_Emoticon
          Left            =   120
          TabIndex        =   13
          Top             =   240
-         Width           =   1935
+         Width           =   1815
       End
       Begin VB.ListBox lstIndex 
          Height          =   1815

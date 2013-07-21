@@ -82,6 +82,14 @@ Begin VB.Form frmMapReport
       TabIndex        =   0
       Top             =   0
       Width           =   4395
+      Begin VB.TextBox txtSearch 
+         CausesValidation=   0   'False
+         Height          =   270
+         Left            =   120
+         TabIndex        =   5
+         Top             =   240
+         Width           =   4095
+      End
       Begin VB.ListBox lstMaps 
          BeginProperty Font 
             Name            =   "Verdana"
@@ -92,10 +100,10 @@ Begin VB.Form frmMapReport
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   3480
+         Height          =   2940
          Left            =   120
          TabIndex        =   1
-         Top             =   240
+         Top             =   600
          Width           =   4155
       End
    End
@@ -157,5 +165,43 @@ Private Sub lstMaps_DblClick()
 ' Error handler
 errorhandler:
     HandleError "lstMaps_DblClick", "frmMapReport", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSearch_Change()
+    Dim Find As String, i As Long
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    For i = 0 To lstMaps.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
+        
+        ' Make sure we dont try to check a name that's too small
+        If Len(lstMaps.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstMaps.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstMaps.ListIndex = i
+                Exit For
+            End If
+        End If
+    Next
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSearch_Change", "frmMapReport", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSearch_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtSearch.SelStart = Len(txtSearch)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSearch_GotFocus", "frmMapReport", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

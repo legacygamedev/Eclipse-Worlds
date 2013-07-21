@@ -10,7 +10,7 @@ Public CurrentMusic As String
 ' Paperdoll rendering order
 Public PaperdollOrder() As Long
 
-' Music & Sound list cache
+' Music & sound list cache
 Public MusicCache() As String
 Public SoundCache() As String
 Public HasPopulated As Boolean

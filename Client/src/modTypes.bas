@@ -3,6 +3,7 @@ Option Explicit
 
 ' Public data structures
 Public Map As MapRec
+Public TempMap As MapRec
 Public bank As BankRec
 Public Player(1 To MAX_PLAYERS) As PlayerRec
 Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
