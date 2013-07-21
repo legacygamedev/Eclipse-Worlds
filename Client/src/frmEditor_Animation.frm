@@ -16,6 +16,7 @@ Begin VB.Form frmEditor_Animation
       Strikethrough   =   0   'False
    EndProperty
    Icon            =   "frmEditor_Animation.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -316,9 +317,25 @@ Begin VB.Form frmEditor_Animation
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
+         TabIndex        =   32
+         Top             =   240
+         Width           =   1455
+      End
+      Begin VB.CommandButton cmdCopy 
+         Caption         =   "Copy"
+         Height          =   315
+         Left            =   1680
+         TabIndex        =   31
+         Top             =   240
+         Width           =   615
+      End
+      Begin VB.CommandButton cmdPaste 
+         Caption         =   "Paste"
+         Height          =   315
+         Left            =   2400
          TabIndex        =   30
          Top             =   240
-         Width           =   2895
+         Width           =   615
       End
       Begin VB.ListBox lstIndex 
          BeginProperty Font 
@@ -347,9 +364,11 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private TmpIndex As Long
+
 Private Sub cmbSound_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If cmbSound.ListIndex > 0 Then
         Animation(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
@@ -359,7 +378,7 @@ Private Sub cmbSound_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdSound_Click", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -368,13 +387,13 @@ Private Sub cmdCancel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Unload frmEditor_Animation
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdCancel_Click", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -385,7 +404,7 @@ Private Sub cmdDelete_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ClearAnimation EditorIndex
     
@@ -398,7 +417,7 @@ Private Sub cmdDelete_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdDelete_Click", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -407,14 +426,14 @@ Private Sub cmdSave_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     EditorSave = True
     AnimationEditorSave
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdSave_Click", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -423,7 +442,7 @@ Private Sub Form_Load()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 0 To 1
         scrlSprite(i).max = NumAnimations
@@ -431,11 +450,13 @@ Private Sub Form_Load()
         scrlFrameCount(i).max = 100
         scrlLoopTime(i).max = 1000
     Next
+    
     txtName.MaxLength = NAME_LENGTH
+    txtSearch.MaxLength = NAME_LENGTH
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Form_Load", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -444,13 +465,13 @@ Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     AnimationEditorInit
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "lstIndex_Click", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -459,14 +480,14 @@ Private Sub scrlFrameCount_Change(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblFrameCount(Index).Caption = "Frame Count: " & scrlFrameCount(Index).Value
     Animation(EditorIndex).Frames(Index) = scrlFrameCount(Index).Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlFrameCount_Change", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -475,13 +496,13 @@ Private Sub scrlFrameCount_Scroll(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     scrlFrameCount_Change Index
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlFrameCount_Scroll", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -490,14 +511,14 @@ Private Sub scrlLoopCount_Change(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblLoopCount(Index).Caption = "Loop Count: " & scrlLoopCount(Index).Value
     Animation(EditorIndex).LoopCount(Index) = scrlLoopCount(Index).Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlLoopCount_Change", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -506,13 +527,13 @@ Private Sub scrlLoopCount_Scroll(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     scrlLoopCount_Change Index
     Exit Sub
         
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlLoopCount_Scroll", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -521,14 +542,14 @@ Private Sub scrlLoopTime_Change(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblLoopTime(Index).Caption = "Loop Time: " & scrlLoopTime(Index).Value
-    Animation(EditorIndex).looptime(Index) = scrlLoopTime(Index).Value
+    Animation(EditorIndex).LoopTime(Index) = scrlLoopTime(Index).Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlLoopTime_Change", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -537,13 +558,13 @@ Private Sub scrlLoopTime_Scroll(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     scrlLoopTime_Change Index
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlLoopTime_Scroll", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -552,14 +573,14 @@ Private Sub scrlSprite_Change(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblSprite(Index).Caption = "Sprite: " & scrlSprite(Index).Value
     Animation(EditorIndex).Sprite(Index) = scrlSprite(Index).Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlSprite_Change", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -568,13 +589,13 @@ Private Sub scrlSprite_Scroll(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     scrlSprite_Change Index
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlSprite_Scroll", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -585,7 +606,7 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
     Animation(EditorIndex).name = Trim$(txtName.text)
@@ -595,27 +616,27 @@ Private Sub txtName_Validate(Cancel As Boolean)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtName_Validate", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtName_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtName.SelStart = Len(txtName)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtName_GotFocus", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If EditorSave = False Then
         AnimationEditorCancel
@@ -625,7 +646,7 @@ Private Sub Form_Unload(Cancel As Integer)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Form_Unload", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -634,7 +655,7 @@ Private Sub txtSearch_Change()
     Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 0 To lstIndex.ListCount - 1
         Find = Trim$(i + 1 & ": " & txtSearch.text)
@@ -650,7 +671,70 @@ Private Sub txtSearch_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtSearch_Change", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSearch_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtSearch.SelStart = Len(txtSearch)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSearch_GotFocus", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    Dim buffer As clsBuffer
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If KeyAscii = vbKeyReturn Then
+        cmdSave_Click
+        KeyAscii = 0
+    ElseIf KeyAscii = vbKeyEscape Then
+        cmdCancel_Click
+        KeyAscii = 0
+    End If
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "Form_KeyPress", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdCopy_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    TmpIndex = lstIndex.ListIndex
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdCopy_Click", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdPaste_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    lstIndex.RemoveItem EditorIndex - 1
+    Call CopyMemory(ByVal VarPtr(Animation(EditorIndex)), ByVal VarPtr(Animation(TmpIndex + 1)), LenB(Animation(TmpIndex + 1)))
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Animation(EditorIndex).name), EditorIndex - 1
+    lstIndex.ListIndex = EditorIndex - 1
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdPaste_Click", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

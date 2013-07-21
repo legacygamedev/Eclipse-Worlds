@@ -7,6 +7,7 @@ Begin VB.Form frmEditor_Emoticon
    ClientTop       =   435
    ClientWidth     =   7800
    Icon            =   "frmEditor_Emoticon.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -174,13 +175,29 @@ Begin VB.Form frmEditor_Emoticon
       TabIndex        =   6
       Top             =   0
       Width           =   3495
+      Begin VB.CommandButton cmdPaste 
+         Caption         =   "Paste"
+         Height          =   315
+         Left            =   2760
+         TabIndex        =   15
+         Top             =   240
+         Width           =   615
+      End
+      Begin VB.CommandButton cmdCopy 
+         Caption         =   "Copy"
+         Height          =   315
+         Left            =   2040
+         TabIndex        =   14
+         Top             =   240
+         Width           =   615
+      End
       Begin VB.TextBox txtSearch 
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
          TabIndex        =   13
          Top             =   240
-         Width           =   3255
+         Width           =   1935
       End
       Begin VB.ListBox lstIndex 
          Height          =   1815
@@ -198,17 +215,19 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private TmpIndex As Long
+
 Private Sub cmdCancel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Unload frmEditor_Emoticon
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdCancel_Click", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -219,7 +238,7 @@ Private Sub cmdDelete_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ClearEmoticon EditorIndex
     
@@ -232,7 +251,7 @@ Private Sub cmdDelete_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdDelete_Click", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -243,7 +262,7 @@ Private Sub cmdSave_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_EMOTICONS
         ' Loop through a second time to compare if any match
@@ -265,7 +284,7 @@ Private Sub cmdSave_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdSave_Click", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -274,13 +293,13 @@ Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     EmoticonEditorInit
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "1stIndex_Click", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -289,14 +308,14 @@ Private Sub scrlEmoticon_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblEmoticon.Caption = "Emoticon: " & scrlEmoticon.Value
     Emoticon(EditorIndex).Pic = scrlEmoticon.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlEmoticon_Change", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -307,7 +326,7 @@ Private Sub txtCommand_Validate(Cancel As Boolean)
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Make sure we have a slash
     If Not Left$(txtCommand.text, 1) = "/" Then
@@ -327,7 +346,7 @@ Private Sub txtCommand_Validate(Cancel As Boolean)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtCommand_Validate", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -336,7 +355,7 @@ Private Sub Form_Unload(Cancel As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If EditorSave = False Then
         EmoticonEditorCancel
@@ -346,14 +365,14 @@ Private Sub Form_Unload(Cancel As Integer)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Form_Unload", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Set max values
     txtCommand.MaxLength = NAME_LENGTH
@@ -361,20 +380,20 @@ Private Sub Form_Load()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Form_Load", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtCommand_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtCommand.SelStart = Len(txtCommand)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtcommand_GotFocus", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -383,7 +402,7 @@ Private Sub txtSearch_Change()
     Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 0 To lstIndex.ListCount - 1
         Find = Trim$(i + 1 & ": " & txtSearch.text)
@@ -399,7 +418,70 @@ Private Sub txtSearch_Change()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtSearch_Change", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSearch_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtSearch.SelStart = Len(txtSearch)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSearch_GotFocus", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    Dim buffer As clsBuffer
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If KeyAscii = vbKeyReturn Then
+        cmdSave_Click
+        KeyAscii = 0
+    ElseIf KeyAscii = vbKeyEscape Then
+        cmdCancel_Click
+        KeyAscii = 0
+    End If
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "Form_KeyPress", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdCopy_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    TmpIndex = lstIndex.ListIndex
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdCopy_Click", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdPaste_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    lstIndex.RemoveItem EditorIndex - 1
+    Call CopyMemory(ByVal VarPtr(Emoticon(EditorIndex)), ByVal VarPtr(Emoticon(TmpIndex + 1)), LenB(Emoticon(TmpIndex + 1)))
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Emoticon(EditorIndex).Command), EditorIndex - 1
+    lstIndex.ListIndex = EditorIndex - 1
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdPaste_Click", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

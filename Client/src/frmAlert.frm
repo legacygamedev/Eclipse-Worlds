@@ -17,6 +17,9 @@ Begin VB.Form frmAlert
    EndProperty
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
+   Moveable        =   0   'False
    ScaleHeight     =   120
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   336

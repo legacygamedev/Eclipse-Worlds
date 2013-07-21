@@ -837,7 +837,7 @@ Public Sub DrawAnimation(ByVal Index As Long, ByVal Layer As Long)
     Dim dRect As RECT
     Dim i As Long
     Dim Width As Long, Height As Long
-    Dim looptime As Long
+    Dim LoopTime As Long
     Dim FrameCount As Long
     Dim x As Long, y As Long
     Dim lockIndex As Long
@@ -951,8 +951,8 @@ Public Sub DrawMapItem(ByVal ItemNum As Long)
     
     ' If it's not ours then don't render
     If x = 0 Then
-        If Not Trim$(MapItem(ItemNum).playerName) = GetPlayerName(MyIndex) Then
-            If Not Trim$(MapItem(ItemNum).playerName) = vbNullString Then Exit Sub
+        If Not Trim$(MapItem(ItemNum).PlayerName) = GetPlayerName(MyIndex) Then
+            If Not Trim$(MapItem(ItemNum).PlayerName) = vbNullString Then Exit Sub
         End If
     End If
 
@@ -1375,7 +1375,7 @@ Public Sub DrawHotbar()
     
         Select Case Hotbar(i).SType
             Case 1 ' Inventory
-                If Len(Item(Hotbar(i).Slot).name) > 0 Then
+                If Len(Item(Hotbar(i).Slot).Name) > 0 Then
                     If Item(Hotbar(i).Slot).Pic > 0 Then
                         If Item(Hotbar(i).Slot).Pic <= NumItems Then
                             Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 255), 1#, 0
@@ -1387,7 +1387,7 @@ Public Sub DrawHotbar()
                     End If
                 End If
             Case 2 ' Spell
-                If Len(Spell(Hotbar(i).Slot).name) > 0 Then
+                If Len(Spell(Hotbar(i).Slot).Name) > 0 Then
                     If Spell(Hotbar(i).Slot).Icon > 0 Then
                         With sRect
                             .Top = 0
@@ -3201,7 +3201,7 @@ Public Sub Render_Graphics()
     Next
 
     ' Draw map name
-    RenderText Font_Default, Map.name, DrawMapNameX, DrawMapNameY, DrawMapNameColor
+    RenderText Font_Default, Map.Name, DrawMapNameX, DrawMapNameY, DrawMapNameColor
     
     If InMapEditor And frmEditor_Map.OptEvents.Value Then DrawEvents
     If InMapEditor And frmEditor_Map.OptLayers Then DrawTileOutline
@@ -4195,7 +4195,7 @@ Public Sub EditorAnim_DrawAnim()
     Dim dRect As RECT
     Dim i As Long
     Dim Width As Long, Height As Long, srcRect As D3DRECT, destRECT As D3DRECT
-    Dim looptime As Long
+    Dim LoopTime As Long
     Dim FrameCount As Long
     Dim ShouldRender As Boolean
     
@@ -4208,13 +4208,13 @@ Public Sub EditorAnim_DrawAnim()
         If Animationnum < 1 Or Animationnum > NumAnimations Then
             frmEditor_Animation.picSprite(i).Cls
         Else
-            looptime = frmEditor_Animation.scrlLoopTime(i)
+            LoopTime = frmEditor_Animation.scrlLoopTime(i)
             FrameCount = frmEditor_Animation.scrlFrameCount(i)
             
             ShouldRender = False
             
             ' Check if we need to render new frame
-            If AnimEditorTimer(i) + looptime <= timeGetTime Then
+            If AnimEditorTimer(i) + LoopTime <= timeGetTime Then
                 ' Check if out of range
                 If AnimEditorFrame(i) >= FrameCount Then
                     AnimEditorFrame(i) = 1
@@ -5196,8 +5196,8 @@ Public Sub UpdateCamera()
 
     offsetX = TempPlayer(MyIndex).xOffset + PIC_X
     offsetY = TempPlayer(MyIndex).yOffset + PIC_Y
-    StartX = GetPlayerX(MyIndex) - ((MIN_MAPX + 1) \ 2) - 1
-    StartY = GetPlayerY(MyIndex) - ((MIN_MAPY + 1) \ 2) - 1
+    StartX = GetPlayerX(MyIndex) - (MIN_MAPX \ 2) - 1
+    StartY = GetPlayerY(MyIndex) - (MIN_MAPY \ 2) - 1
 
     If StartX < 0 Then
         offsetX = 0
@@ -5223,8 +5223,8 @@ Public Sub UpdateCamera()
         StartY = 0
     End If
 
-    EndX = StartX + (MIN_MAPX + 1)
-    EndY = StartY + (MIN_MAPY + 1)
+    EndX = StartX + MIN_MAPX
+    EndY = StartY + MIN_MAPY
 
     If EndX > Map.MaxX Then
         offsetX = 32

@@ -16,6 +16,7 @@ Begin VB.Form frmEditor_Shop
       Strikethrough   =   0   'False
    EndProperty
    Icon            =   "frmEditor_Shop.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -245,13 +246,29 @@ Begin VB.Form frmEditor_Shop
       TabIndex        =   16
       Top             =   0
       Width           =   3135
+      Begin VB.CommandButton cmdPaste 
+         Caption         =   "Paste"
+         Height          =   315
+         Left            =   2400
+         TabIndex        =   30
+         Top             =   240
+         Width           =   615
+      End
       Begin VB.TextBox txtSearch 
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
+         TabIndex        =   29
+         Top             =   240
+         Width           =   1455
+      End
+      Begin VB.CommandButton cmdCopy 
+         Caption         =   "Copy"
+         Height          =   315
+         Left            =   1680
          TabIndex        =   28
          Top             =   240
-         Width           =   2895
+         Width           =   615
       End
       Begin VB.ListBox lstIndex 
          Height          =   4200
@@ -284,6 +301,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+Private TmpIndex As Long
 
 Private Sub chkCanFix_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SHOPS Then Exit Sub
@@ -596,6 +615,7 @@ Private Sub Form_Load()
     
     ' Max values
     txtName.MaxLength = NAME_LENGTH
+    txtSearch.MaxLength = NAME_LENGTH
     
     ' Clear combo boxes
     frmEditor_Shop.cmbItem.Clear
@@ -674,5 +694,68 @@ Private Sub txtSearch_Change()
 ' Error handler
 errorhandler:
     HandleError "txtSearch_Change", "frmEditor_Shop", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSearch_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtSearch.SelStart = Len(txtSearch)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSearch_GotFocus", "frmEditor_Shop", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    Dim buffer As clsBuffer
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If KeyAscii = vbKeyReturn Then
+        cmdSave_Click
+        KeyAscii = 0
+    ElseIf KeyAscii = vbKeyEscape Then
+        cmdCancel_Click
+        KeyAscii = 0
+    End If
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "Form_KeyPress", "frmEditor_Shop", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdCopy_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    TmpIndex = lstIndex.ListIndex
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdCopy_Click", "frmEditor_Shop", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdPaste_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+      
+    lstIndex.RemoveItem EditorIndex - 1
+    Call CopyMemory(ByVal VarPtr(Shop(EditorIndex)), ByVal VarPtr(Shop(TmpIndex + 1)), LenB(Shop(TmpIndex + 1)))
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Shop(EditorIndex).name), EditorIndex - 1
+    lstIndex.ListIndex = EditorIndex - 1
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdPaste_Click", "frmEditor_Shop", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

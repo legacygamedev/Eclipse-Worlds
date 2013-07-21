@@ -84,7 +84,7 @@ Public Const ButtonBuzzer As String = "Buzzer3.ogg"
 Public PingToDraw As String
 
 ' Font variables
-Public Const FONT_NAME As String = "Georgia"
+Public Const FONT_Name As String = "Georgia"
 Public Const FONT_SIZE As Byte = 14
 
 ' Log Path and variables
@@ -236,7 +236,7 @@ Public Const EFFECT_TYPE_TINT As Long = 6
 ' ********************************************************
 
 ' General constants
-Public Const GAME_NAME As String = "EclipseWorlds"
+Public Const GAME_Name As String = "EclipseWorlds"
 Public Const MAX_MAPS As Byte = 100
 Public Const MAX_PLAYERS As Byte = 70
 Public Const MAX_ITEMS As Byte = 100

@@ -108,7 +108,7 @@ Global Const BASS_OBJECT_DS3DL = 2                  'IDirectSound3DListener
 
 ' Device info structure
 Type BASS_DEVICEINFO
-    name As Long          ' description
+    Name As Long          ' description
     driver As Long        ' driver
     flags As Long
 End Type
@@ -296,7 +296,7 @@ Global Const BASS_CTYPE_MUSIC_MO3 = &H100    ' MO3 flag
 
 Type BASS_PLUGINFORM
     ctype As Long         ' channel type
-    name As Long          ' Format description
+    Name As Long          ' Format description
     exts As Long          ' File extension filter (*.ext1;*.ext2;etc...)
 End Type
 

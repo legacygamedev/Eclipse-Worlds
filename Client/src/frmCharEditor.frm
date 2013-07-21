@@ -93,7 +93,7 @@ Begin VB.Form frmCharEditor
       End
       Begin VB.CommandButton cmdFastUpdate 
          BackColor       =   &H0080FF80&
-         Caption         =   "Update"
+         Caption         =   "Fast Update"
          Height          =   315
          Left            =   120
          MaskColor       =   &H0080FF80&
@@ -102,12 +102,12 @@ Begin VB.Form frmCharEditor
          Width           =   1185
       End
       Begin VB.CommandButton cmdFastCancel 
-         Caption         =   "<-- Cancel"
+         Caption         =   "Fast Cancel"
          Height          =   315
          Left            =   120
          TabIndex        =   46
          Top             =   210
-         Width           =   945
+         Width           =   1425
       End
       Begin VB.TextBox txtSprite 
          Alignment       =   2  'Center
@@ -129,7 +129,7 @@ Begin VB.Form frmCharEditor
          _ExtentY        =   979
          _Version        =   393216
          BuddyControl    =   "txtSprite"
-         BuddyDispid     =   196661
+         BuddyDispid     =   196615
          OrigLeft        =   3990
          OrigTop         =   1770
          OrigRight       =   4245
@@ -589,6 +589,7 @@ Attribute VB_Exposed = False
 Public currentSprite As Long
 Private textureNum As Long
 Public maxSprites As Long
+Private TmpIndex As Long
 
 Private Sub cmbAccess_LostFocus()
     requestedPlayer.Access = cmbAccess.ListIndex
@@ -623,6 +624,7 @@ Private Sub Form_Load()
     frmCharEditor.Width = 2865
     upSprite.max = NumCharacters
     upSprite.min = 0
+    txtFilter.MaxLength = NAME_LENGTH
 End Sub
 
 Public Sub ResetCharList()

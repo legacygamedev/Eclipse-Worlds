@@ -17,13 +17,64 @@ Begin VB.Form frmEditor_Events
       Strikethrough   =   0   'False
    EndProperty
    Icon            =   "frmEditor_Events.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   598
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   859
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
+   Begin VB.Frame fraEvents 
+      Caption         =   "Events List"
+      Height          =   4815
+      Left            =   360
+      TabIndex        =   430
+      Top             =   3480
+      Visible         =   0   'False
+      Width           =   5775
+      Begin VB.TextBox txtSearch 
+         CausesValidation=   0   'False
+         Height          =   270
+         Left            =   120
+         TabIndex        =   435
+         Top             =   240
+         Width           =   4095
+      End
+      Begin VB.CommandButton cmdCopy 
+         Caption         =   "Copy"
+         Height          =   315
+         Left            =   4320
+         TabIndex        =   434
+         Top             =   240
+         Width           =   615
+      End
+      Begin VB.CommandButton cmdPaste 
+         Caption         =   "Paste"
+         Height          =   315
+         Left            =   5040
+         TabIndex        =   433
+         Top             =   240
+         Width           =   615
+      End
+      Begin VB.ListBox lstIndex 
+         Height          =   3960
+         Left            =   120
+         TabIndex        =   431
+         Top             =   600
+         Width           =   5535
+      End
+   End
+   Begin VB.CommandButton cmdDelete 
+      Caption         =   "Delete"
+      Enabled         =   0   'False
+      Height          =   375
+      Left            =   9600
+      TabIndex        =   432
+      Top             =   8400
+      Width           =   1455
+   End
    Begin VB.Frame fraDialogue 
       Height          =   6975
       Left            =   6240
@@ -2892,7 +2943,7 @@ Begin VB.Form frmEditor_Events
    Begin VB.CommandButton cmdSave 
       Caption         =   "Save"
       Height          =   375
-      Left            =   9480
+      Left            =   8040
       TabIndex        =   36
       Top             =   8400
       Width           =   1455
@@ -3900,30 +3951,6 @@ Begin VB.Form frmEditor_Events
          EndProperty
       EndProperty
    End
-   Begin VB.Frame fraEvents 
-      Caption         =   "Events List"
-      Height          =   4815
-      Left            =   360
-      TabIndex        =   430
-      Top             =   3480
-      Visible         =   0   'False
-      Width           =   5775
-      Begin VB.ListBox lstIndex 
-         Height          =   3960
-         Left            =   120
-         TabIndex        =   432
-         Top             =   600
-         Width           =   5535
-      End
-      Begin VB.TextBox txtSearch 
-         CausesValidation=   0   'False
-         Height          =   270
-         Left            =   120
-         TabIndex        =   431
-         Top             =   240
-         Width           =   5535
-      End
-   End
    Begin VB.Label lblRandomLabel 
       Caption         =   "List of commands:"
       Height          =   255
@@ -3942,6 +3969,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private copyPage As EventPageRec
+Private TmpIndex As Long
 
 Private Sub chkDirFix_Click()
     tmpEvent.Pages(curPageNum).DirFix = chkDirFix.Value
@@ -4391,7 +4419,7 @@ Private Sub cmdClearPage_Click()
 End Sub
 
 Private Sub cmdCommands_Click(Index As Integer)
-    Dim i As Long, X As Long
+    Dim i As Long, x As Long
     
     Select Case Index
         Case 0
@@ -4503,7 +4531,7 @@ Private Sub cmdCommands_Click(Index As Integer)
                 If cmbChangeClass.ListCount = 0 Then
                 cmbChangeClass.Clear
                 For i = 1 To MAX_CLASSES
-                    cmbChangeClass.AddItem Trim$(Class(i).Name)
+                    cmbChangeClass.AddItem Trim$(Class(i).name)
                 Next
                 cmbChangeClass.ListIndex = 0
                 End If
@@ -4552,9 +4580,9 @@ Private Sub cmdCommands_Click(Index As Integer)
             cmbEvent.Enabled = True
             For i = 1 To Map.EventCount
                 If i <> EditorEvent Then
-                    cmbEvent.AddItem Trim$(Map.events(i).Name)
-                    X = X + 1
-                    ListOfEvents(X) = i
+                    cmbEvent.AddItem Trim$(Map.events(i).name)
+                    x = x + 1
+                    ListOfEvents(x) = i
                 End If
             Next
             IsMoveRouteCommand = True
@@ -4574,7 +4602,7 @@ Private Sub cmdCommands_Click(Index As Integer)
         Case 25
             cmbPlayAnimEvent.Clear
             For i = 1 To Map.EventCount
-                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).Name)
+                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).name)
             Next
             cmbPlayAnimEvent.ListIndex = 0
             optPlayAnimPlayer.Value = True
@@ -5539,7 +5567,7 @@ Public Sub InitEventEditorForm()
     cmbChangeItemIndex.Clear
     
     For i = 1 To MAX_ITEMS
-        cmbChangeItemIndex.AddItem Trim$(Item(i).Name)
+        cmbChangeItemIndex.AddItem Trim$(Item(i).name)
     Next
     
     cmbChangeItemIndex.ListIndex = 0
@@ -5550,7 +5578,7 @@ Public Sub InitEventEditorForm()
     cmbChangeSkills.Clear
     
     For i = 1 To MAX_SPELLS
-        cmbChangeSkills.AddItem Trim$(Spell(i).Name)
+        cmbChangeSkills.AddItem Trim$(Spell(i).name)
     Next
     
     cmbChangeSkills.ListIndex = 0
@@ -5558,7 +5586,7 @@ Public Sub InitEventEditorForm()
     
     If MAX_CLASSES > 0 Then
         For i = 1 To MAX_CLASSES
-            cmbChangeClass.AddItem Trim$(Class(i).Name)
+            cmbChangeClass.AddItem Trim$(Class(i).name)
         Next
         cmbChangeClass.ListIndex = 0
     End If
@@ -5566,7 +5594,7 @@ Public Sub InitEventEditorForm()
     cmbPlayAnim.Clear
     
     For i = 1 To MAX_ANIMATIONS
-        cmbPlayAnim.AddItem i & ". " & Trim$(Animation(i).Name)
+        cmbPlayAnim.AddItem i & ". " & Trim$(Animation(i).name)
     Next
     
     cmbPlayAnim.ListIndex = 0
@@ -5596,7 +5624,7 @@ Public Sub InitEventEditorForm()
     
     cmbOpenShop.Clear
     For i = 1 To MAX_SHOPS
-        cmbOpenShop.AddItem i & ". " & Trim$(Shop(i).Name)
+        cmbOpenShop.AddItem i & ". " & Trim$(Shop(i).name)
     Next
     
     cmbOpenShop.ListIndex = 0
@@ -5604,7 +5632,7 @@ Public Sub InitEventEditorForm()
     
     For i = 1 To MAX_MAP_NPCS
         If Map.NPC(i) > 0 Then
-            cmbSpawnNPC.AddItem i & ". " & Trim$(NPC(Map.NPC(i)).Name)
+            cmbSpawnNPC.AddItem i & ". " & Trim$(NPC(Map.NPC(i)).name)
         Else
             cmbSpawnNPC.AddItem i & ". "
         End If
@@ -5621,6 +5649,7 @@ Private Sub Form_Load()
     scrlChangeSprite.max = NumCharacters
     scrlChangeLevel.max = MAX_LEVEL
     txtName.MaxLength = NAME_LENGTH
+    txtSearch.MaxLength = NAME_LENGTH
     txtLabelName.MaxLength = NAME_LENGTH
     txtGotoLabel.MaxLength = NAME_LENGTH
     
@@ -5632,7 +5661,7 @@ Private Sub lstCommands_Click()
 End Sub
 
 Sub AddMoveRouteCommand(Index As Integer)
-    Dim i As Long, X As Long, Z As Long
+    Dim i As Long, x As Long, Z As Long
     
     Index = Index + 1
     
@@ -5641,8 +5670,8 @@ Sub AddMoveRouteCommand(Index As Integer)
         TempMoveRouteCount = TempMoveRouteCount + 1
         ReDim Preserve TempMoveRoute(TempMoveRouteCount)
         
-        For X = TempMoveRouteCount - 1 To i Step -1
-            TempMoveRoute(X + 1) = TempMoveRoute(X)
+        For x = TempMoveRouteCount - 1 To i Step -1
+            TempMoveRoute(x + 1) = TempMoveRoute(x)
         Next
         
         TempMoveRoute(i).Index = Index
@@ -5709,8 +5738,6 @@ Private Sub lstCommands_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub lstIndex_Click()
-    If EditorIndex < 1 Or EditorIndex > MAX_COMMON_EVENTS Then Exit Sub
-    
     EventEditorInit EditorIndex
 End Sub
 
@@ -5754,7 +5781,7 @@ Dim i As Long
             If Map.NPC(i) <= 0 Then
                 cmbChatBubbleTarget.AddItem CStr(i) & ". "
             Else
-                cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(NPC(Map.NPC(i)).Name)
+                cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(NPC(Map.NPC(i)).name)
             End If
         Next
         cmbChatBubbleTarget.ListIndex = 0
@@ -5762,19 +5789,19 @@ Dim i As Long
         cmbChatBubbleTarget.Visible = True
         cmbChatBubbleTarget.Clear
         For i = 1 To Map.EventCount
-            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.events(i).Name)
+            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.events(i).name)
         Next
         cmbChatBubbleTarget.ListIndex = 0
     End If
 End Sub
 
 Private Sub optCondition_Index_Click(Index As Integer)
-Dim i As Long, X As Long
+Dim i As Long, x As Long
     For i = 0 To 6
-        If optCondition_Index(i).Value = True Then X = i
+        If optCondition_Index(i).Value = True Then x = i
     Next
     ClearConditionFrame
-    Select Case X
+    Select Case x
         Case 0
             cmbCondition_PlayerVarIndex.Enabled = True
             cmbCondition_PlayerVarCompare.Enabled = True
@@ -5824,21 +5851,21 @@ Dim i As Long
     cmbCondition_HasItem.Enabled = False
     cmbCondition_HasItem.Clear
     For i = 1 To MAX_ITEMS
-        cmbCondition_HasItem.AddItem i & ". " & Trim$(Item(i).Name)
+        cmbCondition_HasItem.AddItem i & ". " & Trim$(Item(i).name)
     Next
     cmbCondition_HasItem.ListIndex = 0
     
     cmbCondition_ClassIs.Enabled = False
     cmbCondition_ClassIs.Clear
     For i = 1 To MAX_CLASSES
-        cmbCondition_ClassIs.AddItem i & ". " & CStr(Class(i).Name)
+        cmbCondition_ClassIs.AddItem i & ". " & CStr(Class(i).name)
     Next
     cmbCondition_ClassIs.ListIndex = 0
     
     cmbCondition_LearntSkill.Enabled = False
     cmbCondition_LearntSkill.Clear
     For i = 1 To MAX_SPELLS
-        cmbCondition_LearntSkill.AddItem i & ". " & Trim$(Spell(i).Name)
+        cmbCondition_LearntSkill.AddItem i & ". " & Trim$(Spell(i).name)
     Next
     cmbCondition_LearntSkill.ListIndex = 0
     cmbCondition_LevelCompare.Enabled = False
@@ -5913,26 +5940,26 @@ Private Sub picGraphic_Click()
     GraphicSelType = 0
 End Sub
 
-Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
 Dim i As Long
     If frmEditor_Events.cmbGraphic.ListIndex = 2 Then
         'Tileset... hard one....
         If ShiftDown Then
             If GraphicSelX > -1 And GraphicSelY > -1 Then
-                If CLng(X + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
-                    GraphicSelX2 = CLng(X + frmEditor_Events.hScrlGraphicSel.Value) / 32
-                    GraphicSelY2 = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) / 32
+                If CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
+                    GraphicSelX2 = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32
+                    GraphicSelY2 = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32
                 End If
             End If
         Else
-            GraphicSelX = CLng(X + frmEditor_Events.hScrlGraphicSel.Value) \ 32
-            GraphicSelY = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) \ 32
+            GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) \ 32
+            GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) \ 32
             GraphicSelX2 = 0
             GraphicSelY2 = 0
         End If
     ElseIf frmEditor_Events.cmbGraphic.ListIndex = 1 Then
-        GraphicSelX = CLng(X + frmEditor_Events.hScrlGraphicSel.Value)
-        GraphicSelY = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value)
+        GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value)
+        GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value)
         GraphicSelX2 = 0
         GraphicSelY2 = 0
         
@@ -6154,7 +6181,7 @@ Private Sub tabPages_Click()
 End Sub
 
 Private Sub txtName_Validate(Cancel As Boolean)
-    tmpEvent.Name = Trim$(txtName.text)
+    tmpEvent.name = Trim$(txtName.text)
 End Sub
 
 Private Sub txtPlayerVariable_Validate(Cancel As Boolean)
@@ -6175,4 +6202,38 @@ Private Sub txtSearch_Change()
             End If
         End If
     Next
+End Sub
+
+Private Sub txtSearch_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtSearch.SelStart = Len(txtSearch)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSearch_GotFocus", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    Dim buffer As clsBuffer
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If KeyAscii = vbKeyReturn Then
+        cmdSave_Click
+        KeyAscii = 0
+    ElseIf KeyAscii = vbKeyEscape Then
+        cmdCancel_Click
+        KeyAscii = 0
+    End If
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "Form_KeyPress", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
 End Sub

@@ -830,7 +830,7 @@ Private Sub cmdSave_Click()
         .Right = Val(txtRight.text)
         .Moral = cmbMoral.ListIndex + 1
 
-        .Weather = cmbWeather.ListIndex
+        .Weather = CmbWeather.ListIndex
         .WeatherIntensity = scrlWeatherIntensity.Value
         
         .Fog = ScrlFog.Value

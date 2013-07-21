@@ -7,6 +7,7 @@ Begin VB.Form frmEditor_Moral
    ClientTop       =   480
    ClientWidth     =   5865
    Icon            =   "frmEditor_Moral.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -19,7 +20,7 @@ Begin VB.Form frmEditor_Moral
       Caption         =   "Player Blocked"
       Height          =   255
       Left            =   4200
-      TabIndex        =   18
+      TabIndex        =   17
       TabStop         =   0   'False
       Top             =   2280
       Width           =   1455
@@ -216,13 +217,29 @@ Begin VB.Form frmEditor_Moral
       TabIndex        =   6
       Top             =   0
       Width           =   2535
+      Begin VB.CommandButton cmdPaste 
+         Caption         =   "Paste"
+         Height          =   315
+         Left            =   1800
+         TabIndex        =   20
+         Top             =   240
+         Width           =   615
+      End
       Begin VB.TextBox txtSearch 
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   17
+         TabIndex        =   19
          Top             =   240
-         Width           =   2295
+         Width           =   855
+      End
+      Begin VB.CommandButton cmdCopy 
+         Caption         =   "Copy"
+         Height          =   315
+         Left            =   1080
+         TabIndex        =   18
+         Top             =   240
+         Width           =   615
       End
       Begin VB.ListBox lstIndex 
          Height          =   2985
@@ -239,6 +256,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
+Private TmpIndex As Long
 
 Private Sub chkCanPickupItem_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
@@ -452,6 +471,7 @@ Private Sub Form_Load()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtName.MaxLength = NAME_LENGTH
+    txtSearch.MaxLength = NAME_LENGTH
     Exit Sub
     
 ' Error handler
@@ -530,5 +550,68 @@ Private Sub txtSearch_Change()
 ' Error handler
 errorhandler:
     HandleError "txtSearch_Change", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSearch_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtSearch.SelStart = Len(txtSearch)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSearch_GotFocus", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    Dim buffer As clsBuffer
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If KeyAscii = vbKeyReturn Then
+        cmdSave_Click
+        KeyAscii = 0
+    ElseIf KeyAscii = vbKeyEscape Then
+        cmdCancel_Click
+        KeyAscii = 0
+    End If
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "Form_KeyPress", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdCopy_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    TmpIndex = lstIndex.ListIndex
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdCopy_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdPaste_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+        
+    lstIndex.RemoveItem EditorIndex - 1
+    Call CopyMemory(ByVal VarPtr(Moral(EditorIndex)), ByVal VarPtr(Moral(TmpIndex + 1)), LenB(Moral(TmpIndex + 1)))
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Moral(EditorIndex).name), EditorIndex - 1
+    lstIndex.ListIndex = EditorIndex - 1
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdPaste_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

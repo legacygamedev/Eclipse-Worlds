@@ -7,6 +7,7 @@ Begin VB.Form frmEditor_Class
    ClientTop       =   480
    ClientWidth     =   7890
    Icon            =   "frmEditor_Class.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -77,9 +78,25 @@ Begin VB.Form frmEditor_Class
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   43
+         TabIndex        =   54
          Top             =   240
-         Width           =   2295
+         Width           =   975
+      End
+      Begin VB.CommandButton cmdCopy 
+         Caption         =   "Copy"
+         Height          =   315
+         Left            =   1080
+         TabIndex        =   53
+         Top             =   240
+         Width           =   615
+      End
+      Begin VB.CommandButton cmdPaste 
+         Caption         =   "Paste"
+         Height          =   315
+         Left            =   1800
+         TabIndex        =   52
+         Top             =   240
+         Width           =   615
       End
       Begin VB.ListBox lstIndex 
          Height          =   7665
@@ -100,7 +117,7 @@ Begin VB.Form frmEditor_Class
          Height          =   255
          Left            =   3720
          Max             =   3
-         TabIndex        =   48
+         TabIndex        =   47
          Top             =   4920
          Width           =   1215
       End
@@ -108,7 +125,7 @@ Begin VB.Form frmEditor_Class
          Height          =   255
          Left            =   3720
          Max             =   255
-         TabIndex        =   47
+         TabIndex        =   46
          Top             =   5280
          Width           =   1215
       End
@@ -116,7 +133,7 @@ Begin VB.Form frmEditor_Class
          Height          =   255
          Left            =   1080
          Max             =   255
-         TabIndex        =   46
+         TabIndex        =   45
          Top             =   5280
          Width           =   1215
       End
@@ -124,7 +141,7 @@ Begin VB.Form frmEditor_Class
          Height          =   255
          Left            =   1080
          Max             =   100
-         TabIndex        =   45
+         TabIndex        =   44
          Top             =   4920
          Width           =   1215
       End
@@ -143,7 +160,7 @@ Begin VB.Form frmEditor_Class
          Left            =   1680
          List            =   "frmEditor_Class.frx":03C4
          Style           =   2  'Dropdown List
-         TabIndex        =   44
+         TabIndex        =   43
          ToolTipText     =   "Color for login message if not a staff member."
          Top             =   3720
          Width           =   1575
@@ -425,7 +442,7 @@ Begin VB.Form frmEditor_Class
          Caption         =   "Direction: Up"
          Height          =   255
          Left            =   2400
-         TabIndex        =   52
+         TabIndex        =   51
          Top             =   4920
          Width           =   1335
       End
@@ -433,7 +450,7 @@ Begin VB.Form frmEditor_Class
          Caption         =   "Y: 0"
          Height          =   255
          Left            =   2400
-         TabIndex        =   51
+         TabIndex        =   50
          Top             =   5280
          Width           =   1215
       End
@@ -441,7 +458,7 @@ Begin VB.Form frmEditor_Class
          Caption         =   "X: 0"
          Height          =   255
          Left            =   120
-         TabIndex        =   50
+         TabIndex        =   49
          Top             =   5280
          Width           =   975
       End
@@ -449,7 +466,7 @@ Begin VB.Form frmEditor_Class
          Caption         =   "Map: 0"
          Height          =   255
          Left            =   120
-         TabIndex        =   49
+         TabIndex        =   48
          Top             =   4920
          Width           =   855
       End
@@ -569,6 +586,7 @@ Option Explicit
 
 Private ItemIndex As Long
 Private SpellIndex As Long
+Private TmpIndex As Long
 
 Private Sub chkLocked_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
@@ -735,6 +753,7 @@ Private Sub Form_Load()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtName.MaxLength = NAME_LENGTH
+    txtSearch.MaxLength = NAME_LENGTH
     scrlMSprite.max = NumCharacters
     scrlFSprite.max = NumCharacters
     scrlStartItem.max = MAX_INV
@@ -1013,7 +1032,7 @@ Private Sub scrlX_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblX.Caption = "X : " & scrlX.Value
-    Class(EditorIndex).X = scrlX.Value
+    Class(EditorIndex).x = scrlX.Value
     Exit Sub
     
 ' Error handler
@@ -1029,7 +1048,7 @@ Private Sub scrlY_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblY.Caption = "Y : " & scrlY.Value
-    Class(EditorIndex).Y = scrlY.Value
+    Class(EditorIndex).y = scrlY.Value
     Exit Sub
     
 ' Error handler
@@ -1094,5 +1113,68 @@ Private Sub txtSearch_Change()
 ' Error handler
 errorhandler:
     HandleError "frmEditor_Class", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSearch_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtSearch.SelStart = Len(txtSearch)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSearch_GotFocus", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    Dim buffer As clsBuffer
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If KeyAscii = vbKeyReturn Then
+        cmdSave_Click
+        KeyAscii = 0
+    ElseIf KeyAscii = vbKeyEscape Then
+        cmdCancel_Click
+        KeyAscii = 0
+    End If
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "Form_KeyPress", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdCopy_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    TmpIndex = lstIndex.ListIndex
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdCopy_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdPaste_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+     
+    lstIndex.RemoveItem EditorIndex - 1
+    Call CopyMemory(ByVal VarPtr(Class(EditorIndex)), ByVal VarPtr(Class(TmpIndex + 1)), LenB(Class(TmpIndex + 1)))
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Class(EditorIndex).name), EditorIndex - 1
+    lstIndex.ListIndex = EditorIndex - 1
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdPaste_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

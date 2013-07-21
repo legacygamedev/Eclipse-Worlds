@@ -92,7 +92,7 @@ Public Sub Main()
     vbQuote = ChrW$(34)
     
     ' Update the form with the game's Name before it's loaded
-    frmMain.Caption = GAME_NAME
+    frmMain.Caption = GAME_Name
     
     ' Initialize DirectX
     Call SetStatus("Initializing DirectX...")
@@ -544,12 +544,12 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Function IsLoginLegal(ByVal Username As String, ByVal Password As String) As Boolean
+Public Function IsLoginLegal(ByVal UserName As String, ByVal Password As String) As Boolean
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Len(Trim$(Username)) >= 3 Then
-        If Len(Trim$(Username)) > NAME_LENGTH Then
+    If Len(Trim$(UserName)) >= 3 Then
+        If Len(Trim$(UserName)) > NAME_LENGTH Then
             Call AlertMsg("Username needs to be 21 characters or less in length!")
             Exit Function
         End If
@@ -575,12 +575,12 @@ errorhandler:
     Err.Clear
 End Function
 
-Public Function IsNewCharLegal(ByVal Username As String) As Boolean
+Public Function IsNewCharLegal(ByVal UserName As String) As Boolean
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Len(Trim$(Username)) >= 3 Then
-        If Len(Trim$(Username)) <= NAME_LENGTH Then
+    If Len(Trim$(UserName)) >= 3 Then
+        If Len(Trim$(UserName)) <= NAME_LENGTH Then
             IsNewCharLegal = True
         Else
             Call AlertMsg("Username needs to be 21 characters or less in length!")

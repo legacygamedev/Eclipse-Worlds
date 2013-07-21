@@ -9,12 +9,12 @@ Public Sub GameLoop()
     Dim i As Long
     Dim WalkTimer As Long
     Dim tmr25 As Long, tmr100 As Long, tmr250 As Long, tmr10000 As Long, targetTmr As Long
-    Dim X As Long, y As Long
+    Dim x As Long, y As Long
     Dim tmr500, Fadetmr As Long
     Dim Fogtmr As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' *** Start GameLoop ***
     Do While InGame
@@ -242,7 +242,7 @@ Public Sub GameLoop()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "GameLoop", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -251,7 +251,7 @@ Sub ProcessPlayerMovement(ByVal Index As Long)
     Dim MovementSpeed As Long
 
    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Check if player is walking, and if so process moving them over
     Select Case TempPlayer(Index).Moving
@@ -289,14 +289,14 @@ Sub ProcessPlayerMovement(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ProcessPlayerMovement", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ProcessNpcMovement(ByVal MapNPCNum As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Check if Npc is walking, and if so process moving them over
     If MapNPC(MapNPCNum).Moving = MOVING_WALKING Then
@@ -344,7 +344,7 @@ Sub ProcessNpcMovement(ByVal MapNPCNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ProcessNpcMovement", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -354,14 +354,14 @@ Sub CheckMapGetItem()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
 
     If timeGetTime > TempPlayer(MyIndex).MapGetTimer + 250 Then
         For i = 1 To MAX_MAP_ITEMS
             If MapItem(i).Num > 0 Then
-                If MapItem(i).X = GetPlayerX(MyIndex) And MapItem(i).y = GetPlayerY(MyIndex) Then
+                If MapItem(i).x = GetPlayerX(MyIndex) And MapItem(i).y = GetPlayerY(MyIndex) Then
                     TempPlayer(MyIndex).MapGetTimer = timeGetTime
                     buffer.WriteLong CMapGetItem
                     buffer.WriteByte i
@@ -376,17 +376,17 @@ Sub CheckMapGetItem()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckMapGetItem", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub CheckAttack()
     Dim buffer As clsBuffer
-    Dim AttackSpeed As Long, i As Long, X As Long, y As Long
+    Dim AttackSpeed As Long, i As Long, x As Long, y As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If ControlDown Then
         If SpellBuffer > 0 Then Exit Sub ' Currently casting a spell, can't attack
@@ -416,23 +416,23 @@ Public Sub CheckAttack()
         
         Select Case Player(MyIndex).Dir
             Case DIR_UP
-                X = GetPlayerX(MyIndex)
+                x = GetPlayerX(MyIndex)
                 y = GetPlayerY(MyIndex) - 1
             Case DIR_DOWN
-                X = GetPlayerX(MyIndex)
+                x = GetPlayerX(MyIndex)
                 y = GetPlayerY(MyIndex) + 1
             Case DIR_LEFT
-                X = GetPlayerX(MyIndex) - 1
+                x = GetPlayerX(MyIndex) - 1
                 y = GetPlayerY(MyIndex)
             Case DIR_RIGHT
-                X = GetPlayerX(MyIndex) + 1
+                x = GetPlayerX(MyIndex) + 1
                 y = GetPlayerY(MyIndex)
         End Select
         
         If timeGetTime > TempPlayer(MyIndex).EventTimer Then
             For i = 1 To Map.CurrentEvents
                 If Map.MapEvents(i).Visible = 1 Then
-                    If Map.MapEvents(i).X = X And Map.MapEvents(i).y = y Then
+                    If Map.MapEvents(i).x = x And Map.MapEvents(i).y = y Then
                         Set buffer = New clsBuffer
                         buffer.WriteLong CEvent
                         buffer.WriteLong i
@@ -447,7 +447,7 @@ Public Sub CheckAttack()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckAttack", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -456,7 +456,7 @@ Function IsTryingToMove() As Boolean
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If DirUp Or DirDown Or DirLeft Or DirRight Then
         IsTryingToMove = True
@@ -472,7 +472,7 @@ Function IsTryingToMove() As Boolean
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "IsTryingToMove", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -481,7 +481,7 @@ Function CanMove() As Boolean
     Dim d As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     CanMove = True
     
@@ -650,18 +650,18 @@ Function CanMove() As Boolean
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CanMove", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Function CheckDirection(ByVal Direction As Byte) As Boolean
-    Dim X As Long
+    Dim x As Long
     Dim y As Long
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     CheckDirection = False
     
@@ -673,27 +673,27 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
 
     Select Case Direction
         Case DIR_UP
-            X = GetPlayerX(MyIndex)
+            x = GetPlayerX(MyIndex)
             y = GetPlayerY(MyIndex) - 1
         Case DIR_DOWN
-            X = GetPlayerX(MyIndex)
+            x = GetPlayerX(MyIndex)
             y = GetPlayerY(MyIndex) + 1
         Case DIR_LEFT
-            X = GetPlayerX(MyIndex) - 1
+            x = GetPlayerX(MyIndex) - 1
             y = GetPlayerY(MyIndex)
         Case DIR_RIGHT
-            X = GetPlayerX(MyIndex) + 1
+            x = GetPlayerX(MyIndex) + 1
             y = GetPlayerY(MyIndex)
     End Select
 
     ' Check to see if the map tile is blocked or not
-    If Map.Tile(X, y).Type = TILE_TYPE_BLOCKED Then
+    If Map.Tile(x, y).Type = TILE_TYPE_BLOCKED Then
         CheckDirection = True
         Exit Function
     End If
 
     ' Check to see if the map tile is a resource or not
-    If Map.Tile(X, y).Type = TILE_TYPE_RESOURCE Then
+    If Map.Tile(x, y).Type = TILE_TYPE_RESOURCE Then
         CheckDirection = True
         Exit Function
     End If
@@ -702,7 +702,7 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     For i = 1 To Player_HighIndex
         If IsPlaying(i) And GetPlayerMap(i) = GetPlayerMap(MyIndex) Then
             If Moral(Map.Moral).PlayerBlocked = 1 Then
-                If GetPlayerX(i) = X Then
+                If GetPlayerX(i) = x Then
                     If GetPlayerY(i) = y Then
                         CheckDirection = True
                         Exit Function
@@ -715,7 +715,7 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     ' Check to see if a npc is already on that tile
     For i = 1 To Map.Npc_HighIndex
         If MapNPC(i).Num > 0 Then
-            If MapNPC(i).X = X Then
+            If MapNPC(i).x = x Then
                 If MapNPC(i).y = y Then
                     CheckDirection = True
                     Exit Function
@@ -727,7 +727,7 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     ' Check to see if an event is already on that tile
     For i = 1 To Map.CurrentEvents
         If Map.MapEvents(i).Visible = 1 Then
-            If Map.MapEvents(i).X = X Then
+            If Map.MapEvents(i).x = x Then
                 If Map.MapEvents(i).y = y Then
                     If Map.MapEvents(i).WalkThrough = 0 Then
                         CheckDirection = True
@@ -740,14 +740,14 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckDirection", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Sub CheckMovement()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If IsTryingToMove Then
         If CanMove Then
@@ -774,14 +774,14 @@ Sub CheckMovement()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckMovement", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Function IsInBounds()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If (CurX >= 0) Then
         If (CurX <= Map.MaxX) Then
@@ -795,16 +795,16 @@ Public Function IsInBounds()
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "IsInBounds", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Sub UpdateDrawMapName()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    DrawMapNameX = ((MIN_MAPX + 1) * PIC_X / 2) - (GetFontWidth(Trim$(Map.name)) / 2)
+    DrawMapNameX = (MIN_MAPX * PIC_X / 2) - (GetFontWidth(Trim$(Map.name)) / 2)
     If GUIVisible Then
         DrawMapNameY = 48
     Else
@@ -815,14 +815,14 @@ Public Sub UpdateDrawMapName()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "UpdateDrawMapName", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub UseItem()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Check for subscript out of range
     If InventoryItemSelected < 1 Or InventoryItemSelected > MAX_INV Then Exit Sub
@@ -831,7 +831,7 @@ Public Sub UseItem()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "UseItem", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -840,7 +840,7 @@ Public Sub ForgetSpell(ByVal SpellSlot As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Check for subscript out of range
     If SpellSlot < 1 Or SpellSlot > MAX_PLAYER_SPELLS Then Exit Sub
@@ -869,16 +869,16 @@ Public Sub ForgetSpell(ByVal SpellSlot As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ForgetSpell", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub CastSpell(ByVal SpellSlot As Byte)
-    Dim X As Long, y As Long, SpellCastType As Byte
+    Dim x As Long, y As Long, SpellCastType As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Check for subscript out of range
     If SpellSlot < 1 Or SpellSlot > MAX_PLAYER_SPELLS Then Exit Sub
@@ -929,11 +929,11 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
             ' Check if they have a target if spell is not self cast
             If Spell(SpellSlot).Range > 0 Then
                 ' Set the X and Y used for function below
-                X = MapNPC(MyTarget).X
+                x = MapNPC(MyTarget).x
                 y = MapNPC(MyTarget).y
                     
                 ' Check if there in range
-                If Not IsInRange(Spell(SpellSlot).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), X, y) Then
+                If Not IsInRange(Spell(SpellSlot).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), x, y) Then
                     AddText "Target is not in range!", BrightRed
                     Exit Sub
                 End If
@@ -942,7 +942,7 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
             ' Check if they have a target if spell is not self cast
             If Spell(SpellSlot).Range > 0 Then
                 ' Set the X and Y used for function below
-                X = GetPlayerX(MyTarget)
+                x = GetPlayerX(MyTarget)
                 y = GetPlayerY(MyTarget)
  
                 ' Make sure we can only cast specific spells on ourselves
@@ -954,7 +954,7 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
                 End If
                 
                 ' Check if there in range
-                If Not IsInRange(Spell(SpellSlot).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), X, y) Then
+                If Not IsInRange(Spell(SpellSlot).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), x, y) Then
                     AddText "Target is not in range!", BrightRed
                     Exit Sub
                 End If
@@ -978,14 +978,14 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CastSpell", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Function TwipsToPixels(ByVal Twip_Val As Long, ByVal XorY As Byte) As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If XorY = 0 Then
         TwipsToPixels = Twip_Val / Screen.TwipsPerPixelX
@@ -995,14 +995,14 @@ Public Function TwipsToPixels(ByVal Twip_Val As Long, ByVal XorY As Byte) As Lon
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "TwipsToPixels", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function PixelsToTwips(ByVal Pixel_Val As Long, ByVal XorY As Byte) As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If XorY = 0 Then
         PixelsToTwips = Pixel_Val * Screen.TwipsPerPixelX
@@ -1012,14 +1012,14 @@ Public Function PixelsToTwips(ByVal Pixel_Val As Long, ByVal XorY As Byte) As Lo
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "PixelsToTwips", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function ConvertCurrency(ByVal Amount As Long) As String
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Int(Amount) < 1000 Then
         ConvertCurrency = Amount
@@ -1033,16 +1033,16 @@ Public Function ConvertCurrency(ByVal Amount As Long) As String
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ConvertCurrency", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
-Public Sub UpdateSpellDescWindow(ByVal SpellNum As Long, ByVal X As Long, ByVal y As Long)
+Public Sub UpdateSpellDescWindow(ByVal SpellNum As Long, ByVal x As Long, ByVal y As Long)
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Check for off-screen
     If y + frmMain.picSpellDesc.Height > frmMain.ScaleHeight Then
@@ -1051,7 +1051,7 @@ Public Sub UpdateSpellDescWindow(ByVal SpellNum As Long, ByVal X As Long, ByVal 
     
     With frmMain
         .picSpellDesc.Top = y
-        .picSpellDesc.Left = X
+        .picSpellDesc.Left = x
         .picSpellDesc.Visible = True
         .picSpellDesc.ZOrder (0)
         
@@ -1063,19 +1063,19 @@ Public Sub UpdateSpellDescWindow(ByVal SpellNum As Long, ByVal X As Long, ByVal 
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "UpdteSpellWindow", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal X As Long, ByVal y As Long, Optional ByVal IsShopWindow As Boolean = False, Optional ByVal ShopValue As Long = 0, Optional ByVal ShopItem As Long)
+Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal x As Long, ByVal y As Long, Optional ByVal IsShopWindow As Boolean = False, Optional ByVal ShopValue As Long = 0, Optional ByVal ShopItem As Long)
     Dim i As Long
     Dim FirstLetter As String * 1
     Dim name As String
     Dim Multiplier As Single
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     FirstLetter = LCase$(Left$(Trim$(Item(ItemNum).name), 1))
    
@@ -1095,7 +1095,7 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal X As Long, ByVal y 
 
     With frmMain
         .picItemDesc.Top = y
-        .picItemDesc.Left = X
+        .picItemDesc.Left = x
         .picItemDesc.Visible = True
         
         If LastItemDesc = ItemNum Then Exit Sub ' Exit out after setting X + Y so we don't reset values
@@ -1148,25 +1148,25 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal X As Long, ByVal y 
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "UpdateItemDescWindow", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub CacheResources()
-    Dim X As Long, y As Long, Resource_Count As Long
+    Dim x As Long, y As Long, Resource_Count As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Resource_Count = 0
 
-    For X = 0 To Map.MaxX
+    For x = 0 To Map.MaxX
         For y = 0 To Map.MaxY
-            If Map.Tile(X, y).Type = TILE_TYPE_RESOURCE Then
+            If Map.Tile(x, y).Type = TILE_TYPE_RESOURCE Then
                 Resource_Count = Resource_Count + 1
                 ReDim Preserve MapResource(0 To Resource_Count)
-                MapResource(Resource_Count).X = X
+                MapResource(Resource_Count).x = x
                 MapResource(Resource_Count).y = y
             End If
         Next
@@ -1176,16 +1176,16 @@ Public Sub CacheResources()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CacheResources", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal MsgType As Byte, ByVal X As Long, ByVal y As Long)
+Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal MsgType As Byte, ByVal x As Long, ByVal y As Long)
     Dim i As Long '
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ActionMsgIndex = 0
     
@@ -1208,30 +1208,30 @@ Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal M
         .Type = MsgType
         .Timer = timeGetTime
         .Scroll = 1
-        .X = X
+        .x = x
         .y = y
         .Alpha = 255
     End With
 
     If ActionMsg(ActionMsgIndex).Type = ACTIONMSG_SCROLL Then
         ActionMsg(ActionMsgIndex).y = ActionMsg(ActionMsgIndex).y + Random(-2, 6)
-        ActionMsg(ActionMsgIndex).X = ActionMsg(ActionMsgIndex).X + Random(-8, 8)
+        ActionMsg(ActionMsgIndex).x = ActionMsg(ActionMsgIndex).x + Random(-8, 8)
     End If
     
     SetActionHighIndex
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CreateActionMsg", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub CreateBlood(ByVal X As Long, ByVal y As Long)
+Public Sub CreateBlood(ByVal x As Long, ByVal y As Long)
     Dim i As Long, Sprite As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     BloodIndex = 0
     
@@ -1241,7 +1241,7 @@ Public Sub CreateBlood(ByVal X As Long, ByVal y As Long)
     ' Make sure tile doesn't already have blood
     For i = 1 To Blood_HighIndex
         ' Already have blood
-        If Blood(i).X = X And Blood(i).y = y Then
+        If Blood(i).x = x And Blood(i).y = y Then
             ' Refresh the timer
             Blood(i).Timer = timeGetTime
             Exit Sub
@@ -1263,7 +1263,7 @@ Public Sub CreateBlood(ByVal X As Long, ByVal y As Long)
     
     ' Set the blood up
     With Blood(BloodIndex)
-          .X = X
+          .x = x
           .y = y
           .Sprite = Sprite
           .Timer = timeGetTime
@@ -1274,7 +1274,7 @@ Public Sub CreateBlood(ByVal X As Long, ByVal y As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CreateBlood", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1283,7 +1283,7 @@ Public Sub CreateChatBubble(ByVal Target As Long, ByVal TargetType As Byte, ByVa
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Loop through and see if that player/npc already has a chat bubble
     For i = 1 To MAX_BYTE
@@ -1324,14 +1324,14 @@ Public Sub CreateChatBubble(ByVal Target As Long, ByVal TargetType As Byte, ByVa
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CreateChatBubble", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearActionMsg(ByVal Index As Byte, Optional ByVal SetHighIndex As Boolean = True)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     With ActionMsg(Index)
         .Message = vbNullString
@@ -1339,7 +1339,7 @@ Public Sub ClearActionMsg(ByVal Index As Byte, Optional ByVal SetHighIndex As Bo
         .Type = 0
         .Color = 0
         .Scroll = 0
-        .X = 0
+        .x = 0
         .y = 0
         .Alpha = 0
     End With
@@ -1350,17 +1350,17 @@ Public Sub ClearActionMsg(ByVal Index As Byte, Optional ByVal SetHighIndex As Bo
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearActionMsg", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearBlood(ByVal Index As Long, Optional ByVal SetHighIndex As Boolean = True)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     With Blood(Index)
-        .X = 0
+        .x = 0
         .y = 0
         .Sprite = 0
         .Timer = 0
@@ -1373,14 +1373,14 @@ Public Sub ClearBlood(ByVal Index As Long, Optional ByVal SetHighIndex As Boolea
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearBlood", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearChatBubble(ByVal Index As Long, Optional ByVal SetHighIndex As Boolean = True)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     With ChatBubble(Index)
         .Msg = vbNullString
@@ -1398,19 +1398,19 @@ Public Sub ClearChatBubble(ByVal Index As Long, Optional ByVal SetHighIndex As B
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearChatBubble", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub CheckAnimInstance(ByVal Index As Long)
-    Dim looptime As Long
+    Dim LoopTime As Long
     Dim Layer As Long
     Dim FrameCount As Long
     Dim lockIndex As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' If doesn't exist then exit sub
     If AnimInstance(Index).Animation < 1 Then Exit Sub
@@ -1418,7 +1418,7 @@ Public Sub CheckAnimInstance(ByVal Index As Long)
     
     For Layer = 0 To 1
         If AnimInstance(Index).Used(Layer) Then
-            looptime = Animation(AnimInstance(Index).Animation).looptime(Layer)
+            LoopTime = Animation(AnimInstance(Index).Animation).LoopTime(Layer)
             FrameCount = Animation(AnimInstance(Index).Animation).Frames(Layer)
             
             ' If zero'd then set so we don't have extra loop and/or frame
@@ -1426,7 +1426,7 @@ Public Sub CheckAnimInstance(ByVal Index As Long)
             If AnimInstance(Index).LoopIndex(Layer) = 0 Then AnimInstance(Index).LoopIndex(Layer) = 1
             
             ' Check if frame timer is set, and needs to have a frame change
-            If AnimInstance(Index).Timer(Layer) + looptime <= timeGetTime Then
+            If AnimInstance(Index).Timer(Layer) + LoopTime <= timeGetTime Then
                 ' Check if out of range
                 If AnimInstance(Index).frameIndex(Layer) >= FrameCount Then
                     AnimInstance(Index).LoopIndex(Layer) = AnimInstance(Index).LoopIndex(Layer) + 1
@@ -1448,14 +1448,14 @@ Public Sub CheckAnimInstance(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "checkAnimInstance", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub OpenShop(ByVal ShopNum As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     InShop = ShopNum
     TryingToFixItem = False
@@ -1470,14 +1470,14 @@ Public Sub OpenShop(ByVal ShopNum As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "OpenShop", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Function GetBankItemNum(ByVal BankSlot As Byte) As Integer
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If BankSlot = 0 Then
         GetBankItemNum = 0
@@ -1493,73 +1493,73 @@ Public Function GetBankItemNum(ByVal BankSlot As Byte) As Integer
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "GetBankItemNum", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Sub SetBankItemNum(ByVal BankSlot As Byte, ByVal ItemNum As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     bank.Item(BankSlot).Num = ItemNum
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SetBankItemNum", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Function GetBankItemValue(ByVal BankSlot As Byte) As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     GetBankItemValue = bank.Item(BankSlot).Value
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "GetBankItemValue", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Sub SetBankItemValue(ByVal BankSlot As Byte, ByVal ItemValue As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     bank.Item(BankSlot).Value = ItemValue
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SetBankItemValue", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Function GetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte) As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
     GetPlayerBankItemDurValue = bank.Item(Index).Durability
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "GetPlayerBankItemDurValue", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Sub SetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte, ByVal DurValue As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     bank.Item(Index).Durability = DurValue
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SetPlayerBankItemDurValue", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1567,7 +1567,7 @@ End Sub
 ' BitWise Operators for directional blocking
 Public Sub SetDirBlock(ByRef BlockVar As Byte, ByRef Dir As Byte, ByVal Block As Boolean)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Block Then
         BlockVar = BlockVar Or (2 ^ Dir)
@@ -1577,14 +1577,14 @@ Public Sub SetDirBlock(ByRef BlockVar As Byte, ByRef Dir As Byte, ByVal Block As
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "setDirBlock", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Function IsDirBlocked(ByRef BlockVar As Byte, ByRef Dir As Byte) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Not BlockVar And (2 ^ Dir) Then
         IsDirBlocked = False
@@ -1594,7 +1594,7 @@ Public Function IsDirBlocked(ByRef BlockVar As Byte, ByRef Dir As Byte) As Boole
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "isDirBlocked", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -1603,7 +1603,7 @@ Public Function CheckGrammar(ByVal Word As String, Optional ByVal caps As Byte =
     Dim FirstLetter As String * 1
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
    
     FirstLetter = LCase$(Left$(Word, 1))
    
@@ -1620,22 +1620,22 @@ Public Function CheckGrammar(ByVal Word As String, Optional ByVal caps As Byte =
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckGrammar", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
-Public Function IsHotbarSlot(ByVal X As Single, ByVal y As Single, Optional ByVal SType As Byte) As Long
+Public Function IsHotbarSlot(ByVal x As Single, ByVal y As Single, Optional ByVal SType As Byte) As Long
     Dim Top As Long, Left As Long
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_HOTBAR
         Top = HotbarTop
         Left = HotbarLeft + ((HotbarOffsetX + 32) * (((i - 1) Mod MAX_HOTBAR)))
-        If X >= Left And X <= Left + PIC_X Then
+        If x >= Left And x <= Left + PIC_X Then
             If y >= Top And y <= Top + PIC_Y Then
                 If SType > 0 Then
                     If Not Hotbar(i).SType = SType Then Exit Function
@@ -1648,16 +1648,16 @@ Public Function IsHotbarSlot(ByVal X As Single, ByVal y As Single, Optional ByVa
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "IsHotbarSlot", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
-Public Sub PlaySoundEntity(ByVal X As Long, ByVal y As Long, ByVal EntityType As Long, ByVal EntityNum As Long)
+Public Sub PlaySoundEntity(ByVal x As Long, ByVal y As Long, ByVal EntityType As Long, ByVal EntityNum As Long)
     Dim SoundName As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If EntityNum <= 0 Then Exit Sub
     
@@ -1701,14 +1701,14 @@ Public Sub PlaySoundEntity(ByVal X As Long, ByVal y As Long, ByVal EntityType As
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "PlayMusic", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub Dialogue(ByVal DiTitle As String, ByVal DiText As String, ByVal DiIndex As Long, Optional ByVal IsYesNo As Boolean = False, Optional ByVal Data1 As Long = 0)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Exit out if we've already got a dialogue open
     If DialogueIndex > 0 Then Exit Sub
@@ -1758,7 +1758,7 @@ Public Sub Dialogue(ByVal DiTitle As String, ByVal DiText As String, ByVal DiInd
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Dialogue", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1846,14 +1846,14 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     frmMain.picForm.Height = MIN_MAPY * PIC_Y
     
     ' Recalculate the other variables
-    HalfX = ((MIN_MAPX + 1) / 2) * PIC_X
-    HalfY = ((MIN_MAPY + 1) / 2) * PIC_Y
-    ScreenX = (MIN_MAPX + 1) * PIC_X
-    ScreenY = (MIN_MAPY + 1) * PIC_Y
-    StartXValue = ((MIN_MAPX + 1) / 2)
-    StartYValue = ((MIN_MAPY + 1) / 2)
-    EndXValue = (MIN_MAPX + 1)
-    EndYValue = (MIN_MAPY + 1)
+    HalfX = (MIN_MAPX / 2) * PIC_X
+    HalfY = (MIN_MAPY / 2) * PIC_Y
+    ScreenX = MIN_MAPX * PIC_X
+    ScreenY = MIN_MAPY * PIC_Y
+    StartXValue = (MIN_MAPX / 2)
+    StartYValue = (MIN_MAPY / 2)
+    EndXValue = MIN_MAPX
+    EndYValue = MIN_MAPY
     CameraEndXValue = EndXValue + 1
     CameraEndYValue = EndYValue + 1
     
@@ -1934,7 +1934,7 @@ Public Sub UpdatePlayerTitles()
     Dim i As Long, n As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Clear the list
     frmMain.lstTitles.Clear
@@ -1942,8 +1942,8 @@ Public Sub UpdatePlayerTitles()
     
     ' Build the combo list
     For i = 1 To Player(MyIndex).AmountOfTitles
-        If Player(MyIndex).title(i) > 0 Then
-            frmMain.lstTitles.AddItem Trim$(title(Player(MyIndex).title(i)).name)
+        If Player(MyIndex).Title(i) > 0 Then
+            frmMain.lstTitles.AddItem Trim$(Title(Player(MyIndex).Title(i)).name)
         End If
     Next
 
@@ -1951,17 +1951,17 @@ Public Sub UpdatePlayerTitles()
     If Player(MyIndex).CurTitle = 0 Then
         frmMain.lstTitles.ListIndex = 0
     Else
-        If Not Player(MyIndex).title(Player(MyIndex).CurTitle) = 0 Then
+        If Not Player(MyIndex).Title(Player(MyIndex).CurTitle) = 0 Then
             frmMain.lstTitles.ListIndex = Player(MyIndex).CurTitle
         End If
     End If
     
     With frmMain
         If .lstTitles.ListIndex > 0 Then
-            If Player(MyIndex).title(.lstTitles.ListIndex) = 0 Then Exit Sub
+            If Player(MyIndex).Title(.lstTitles.ListIndex) = 0 Then Exit Sub
             For i = 1 To MAX_TITLES
-                If .lstTitles.ListIndex = Player(MyIndex).title(i) Then
-                    frmMain.lblDesc.Caption = Trim$(title(.lstTitles.ListIndex).Desc)
+                If .lstTitles.ListIndex = Player(MyIndex).Title(i) Then
+                    frmMain.lblDesc.Caption = Trim$(Title(.lstTitles.ListIndex).Desc)
                 End If
             Next
         Else
@@ -1977,14 +1977,14 @@ Public Sub UpdatePlayerTitles()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "UpdatePlayerTitles", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub UpdateEquipPanel()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If frmMain.picEquipment.Visible Then
         frmMain.lblEquipCharName.Caption = GetPlayerName(MyIndex)
@@ -1992,7 +1992,7 @@ Public Sub UpdateEquipPanel()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "UpdateEquipPanel", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2001,7 +2001,7 @@ Public Sub ToggleButtons(ByVal Visible As Boolean)
     Dim i As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Erase and reset buttons
     CurButton_Main = 0
@@ -2026,14 +2026,14 @@ Public Sub ToggleButtons(ByVal Visible As Boolean)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ToggleButtons", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ToggleGUI(Visible As Boolean)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Visible Then
         frmMain.picGUI_Vitals_Base.Visible = True
@@ -2051,7 +2051,7 @@ Public Sub ToggleGUI(Visible As Boolean)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ToggleGUI", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2223,7 +2223,7 @@ End Sub
 
 Sub ProcessEventMovement(ByVal id As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Check if NPC is walking, and if so process moving them over
     If Map.MapEvents(id).Moving = 1 Then
@@ -2272,7 +2272,7 @@ Sub ProcessEventMovement(ByVal id As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ProcessNpcMovement", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2291,13 +2291,13 @@ Sub ProcessWeather()
                         WeatherParticle(i).InUse = True
                         WeatherParticle(i).Type = CurrentWeather
                         WeatherParticle(i).Velocity = Random(8, 14)
-                        WeatherParticle(i).X = (TileView.Left * 32) - 32
+                        WeatherParticle(i).x = (TileView.Left * 32) - 32
                         WeatherParticle(i).y = (TileView.Top * 32) + Random(-32, frmMain.picScreen.ScaleHeight)
                     Else
                         WeatherParticle(i).InUse = True
                         WeatherParticle(i).Type = CurrentWeather
                         WeatherParticle(i).Velocity = Random(10, 15)
-                        WeatherParticle(i).X = (TileView.Left * 32) + Random(-32, frmMain.picScreen.ScaleWidth)
+                        WeatherParticle(i).x = (TileView.Left * 32) + Random(-32, frmMain.picScreen.ScaleWidth)
                         WeatherParticle(i).y = (TileView.Top * 32) - 32
                     End If
                     Exit For
@@ -2317,10 +2317,10 @@ Sub ProcessWeather()
     
     For i = 1 To MAX_WEATHER_PARTICLES
         If WeatherParticle(i).InUse Then
-            If WeatherParticle(i).X > TileView.Right * 32 Or WeatherParticle(i).y > TileView.Bottom * 32 Then
+            If WeatherParticle(i).x > TileView.Right * 32 Or WeatherParticle(i).y > TileView.Bottom * 32 Then
                 WeatherParticle(i).InUse = False
             Else
-                WeatherParticle(i).X = WeatherParticle(i).X + WeatherParticle(i).Velocity
+                WeatherParticle(i).x = WeatherParticle(i).x + WeatherParticle(i).Velocity
                 WeatherParticle(i).y = WeatherParticle(i).y + WeatherParticle(i).Velocity
             End If
         End If
@@ -2344,7 +2344,7 @@ Function IsEven(Number As Long) As Boolean
 End Function
 
 Public Sub FindNearestTarget()
-    Dim i As Long, X As Long, y As Long, X2 As Long, Y2 As Long, xDif As Long, yDif As Long
+    Dim i As Long, x As Long, y As Long, X2 As Long, Y2 As Long, xDif As Long, yDif As Long
     Dim bestX As Long, bestY As Long, bestIndex As Long
 
     X2 = GetPlayerX(MyIndex)
@@ -2355,14 +2355,14 @@ Public Sub FindNearestTarget()
     
     For i = 1 To MAX_MAP_NPCS
         If MapNPC(i).Num > 0 Then
-            X = MapNPC(i).X
+            x = MapNPC(i).x
             y = MapNPC(i).y
             
             ' Find the difference - x
-            If X < X2 Then
-                xDif = X2 - X
-            ElseIf X > X2 Then
-                xDif = X - X2
+            If x < X2 Then
+                xDif = X2 - x
+            ElseIf x > X2 Then
+                xDif = x - X2
             Else
                 xDif = 0
             End If
@@ -2390,14 +2390,14 @@ Public Sub FindNearestTarget()
 End Sub
 
 Public Function FindTarget() As Boolean
-    Dim i As Long, X As Long, y As Long
+    Dim i As Long, x As Long, y As Long
 
     ' Check players
     For i = 1 To MAX_PLAYERS
         If IsPlaying(i) And GetPlayerMap(MyIndex) = GetPlayerMap(i) Then
-            X = (GetPlayerX(i) * 32) + TempPlayer(i).xOffset + 32
+            x = (GetPlayerX(i) * 32) + TempPlayer(i).xOffset + 32
             y = (GetPlayerY(i) * 32) + TempPlayer(i).yOffset + 32
-            If X >= CurX And X <= CurX + 32 Then
+            If x >= CurX And x <= CurX + 32 Then
                 If y >= CurY And y <= CurY + 32 Then
                     ' Found our target!
                     PlayerTarget i, TARGET_TYPE_PLAYER
@@ -2411,9 +2411,9 @@ Public Function FindTarget() As Boolean
     ' Check NPCs
     For i = 1 To Map.Npc_HighIndex
         If MapNPC(i).Num > 0 Then
-            X = (MapNPC(i).X * 32) + MapNPC(i).xOffset + 32
+            x = (MapNPC(i).x * 32) + MapNPC(i).xOffset + 32
             y = (MapNPC(i).y * 32) + MapNPC(i).yOffset + 32
-            If X >= CurX And X <= CurX + 32 Then
+            If x >= CurX And x <= CurX + 32 Then
                 If y >= CurY And y <= CurY + 32 Then
                     ' Found our target!
                     PlayerTarget i, TARGET_TYPE_NPC

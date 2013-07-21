@@ -6,13 +6,14 @@ Begin VB.Form frmEditor_Ban
    ClientLeft      =   165
    ClientTop       =   420
    ClientWidth     =   6795
-   ClipControls    =   0   'False
    Icon            =   "frmEditor_Ban.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   3600
    ScaleWidth      =   6795
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Begin VB.Frame Frame1 
       Caption         =   "Properties"
@@ -338,9 +339,25 @@ Begin VB.Form frmEditor_Ban
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
+         TabIndex        =   24
+         Top             =   240
+         Width           =   1095
+      End
+      Begin VB.CommandButton cmdCopy 
+         Caption         =   "Copy"
+         Height          =   315
+         Left            =   1320
+         TabIndex        =   23
+         Top             =   240
+         Width           =   615
+      End
+      Begin VB.CommandButton cmdPaste 
+         Caption         =   "Paste"
+         Height          =   315
+         Left            =   2040
          TabIndex        =   22
          Top             =   240
-         Width           =   2535
+         Width           =   615
       End
       Begin VB.ListBox lstIndex 
          Height          =   2595
@@ -384,7 +401,7 @@ Begin VB.Form frmEditor_Ban
       Top             =   3120
       Width           =   1095
    End
-   Begin VB.CommandButton cmdUnban 
+   Begin VB.CommandButton cmdDelete 
       Caption         =   "Delete"
       BeginProperty Font 
          Name            =   "Verdana"
@@ -409,6 +426,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private TmpIndex As Long
+
 Private Sub cmdSave_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -423,7 +442,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub cmdUnban_Click()
+Private Sub cmdDelete_Click()
     Dim TmpIndex As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
@@ -656,6 +675,7 @@ Private Sub Form_Load()
     txtLogin.MaxLength = NAME_LENGTH
     txtDate.MaxLength = NAME_LENGTH
     txtName.MaxLength = NAME_LENGTH
+    txtSearch.MaxLength = NAME_LENGTH
     Exit Sub
     
 ' Error handler
@@ -765,5 +785,68 @@ Private Sub txtDate_GotFocus()
 ' Error handler
 errorhandler:
     HandleError "txtDate_GotFocus", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub txtSearch_GotFocus()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    txtSearch.SelStart = Len(txtSearch)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "txtSearch_GotFocus", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_KeyPress(KeyAscii As Integer)
+    Dim buffer As clsBuffer
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If KeyAscii = vbKeyReturn Then
+        cmdSave_Click
+        KeyAscii = 0
+    ElseIf KeyAscii = vbKeyEscape Then
+        cmdCancel_Click
+        KeyAscii = 0
+    End If
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "Form_KeyPress", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdCopy_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    TmpIndex = lstIndex.ListIndex
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdCopy_Click", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdPaste_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    lstIndex.RemoveItem EditorIndex - 1
+    Call CopyMemory(ByVal VarPtr(Ban(EditorIndex)), ByVal VarPtr(Ban(TmpIndex + 1)), LenB(Ban(TmpIndex + 1)))
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).PlayerName), EditorIndex - 1
+    lstIndex.ListIndex = EditorIndex - 1
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmdPaste_Click", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

@@ -2,8 +2,8 @@ Attribute VB_Name = "modDatabase"
 Option Explicit
 
 ' Text API
-Private Declare Function WritePrivateProfileString Lib "kernel32" Alias "WritePrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpString As String, ByVal lpFileName As String) As Long
-Private Declare Function GetPrivateProfileString Lib "kernel32" Alias "GetPrivateProfileStringA" (ByVal lpApplicationname As String, ByVal lpKeyname As Any, ByVal lpdefault As String, ByVal lpreturnedstring As String, ByVal nsize As Long, ByVal lpFileName As String) As Long
+Private Declare Function WritePrivateProfileString Lib "kernel32" Alias "WritePrivateProfileStringA" (ByVal lpApplicationName As String, ByVal lpKeyname As Any, ByVal lpString As String, ByVal lpFileName As String) As Long
+Private Declare Function GetPrivateProfileString Lib "kernel32" Alias "GetPrivateProfileStringA" (ByVal lpApplicationName As String, ByVal lpKeyname As Any, ByVal lpdefault As String, ByVal lpreturnedstring As String, ByVal nsize As Long, ByVal lpFileName As String) As Long
 
 Public Declare Function GetVolumeInformation Lib "kernel32" Alias "GetVolumeInformationA" (ByVal lpRootPathName As String, _
     ByVal lpVolumeNameBuffer As String, _
@@ -18,7 +18,7 @@ Public Sub HandleError(ByVal ProcName As String, ByVal ContName As String, ByVal
     Dim FileName As String, F As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ChkDir(App.Path & "\logs\", Month(Now) & "-" & Day(Now) & "-" & year(Now))
     FileName = App.Path & "\logs\" & Month(Now) & "-" & Day(Now) & "-" & year(Now) & "\Errors.txt"
@@ -37,27 +37,27 @@ Public Sub HandleError(ByVal ProcName As String, ByVal ContName As String, ByVal
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "HandleError", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ChkDir(ByVal tDir As String, ByVal tName As String)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If LCase$(Dir(tDir & tName, vbDirectory)) <> tName Then Call MkDir(tDir & tName)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ChkDir", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Function FileExist(ByVal FileName As String, Optional RAW As Boolean = False) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If Not RAW Then
         If Len(Dir(App.Path & FileName)) > 0 Then
@@ -71,7 +71,7 @@ Public Function FileExist(ByVal FileName As String, Optional RAW As Boolean = Fa
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "FileExist", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -82,7 +82,7 @@ Public Function GetVar(file As String, Header As String, Var As String) As Strin
     Dim szReturn As String  ' Return default Value if not found
     
         ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     szReturn = vbNullString
     sSpaces = Space$(5000)
@@ -92,7 +92,7 @@ Public Function GetVar(file As String, Header As String, Var As String) As Strin
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "GetVar", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -101,13 +101,13 @@ End Function
 Public Sub PutVar(file As String, Header As String, Var As String, Value As String)
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call WritePrivateProfileString$(Header, Var, Value, file)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "PutVar", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -116,11 +116,11 @@ Public Sub SaveOptions()
     Dim FileName As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     FileName = App.Path & "\data files\config.ini"
     
-    Call PutVar(FileName, "Options", "Username", Trim$(Options.Username))
+    Call PutVar(FileName, "Options", "Username", Trim$(Options.UserName))
     Call PutVar(FileName, "Options", "Password", Trim$(Options.Password))
     Call PutVar(FileName, "Options", "SaveUsername", Trim$(Options.SaveUsername))
     Call PutVar(FileName, "Options", "SavePassword", Trim$(Options.SavePassword))
@@ -148,7 +148,7 @@ Public Sub SaveOptions()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "SaveOptions", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -160,10 +160,10 @@ Private Sub LoadOptionVariables()
 
     ' Load options
     If GetVar(FileName, "Options", "Username") = "" Then
-        Options.Username = vbNullString
-        Call PutVar(FileName, "Options", "Username", Trim$(Options.Username))
+        Options.UserName = vbNullString
+        Call PutVar(FileName, "Options", "Username", Trim$(Options.UserName))
     Else
-        Options.Username = GetVar(FileName, "Options", "Username")
+        Options.UserName = GetVar(FileName, "Options", "Username")
     End If
     
     If GetVar(FileName, "Options", "Password") = "" Then
@@ -345,13 +345,13 @@ End Sub
 
 Public Function TimeStamp() As String
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     TimeStamp = "[" & time & "]"
     Exit Function
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "TimeStamp", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -361,7 +361,7 @@ Public Sub AddLog(ByVal text As String, ByVal LogFile As String)
     Dim F As Integer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ChkDir(App.Path & "\logs\", Month(Now) & "-" & Day(Now) & "-" & year(Now))
     FileName = App.Path & "\logs\" & Month(Now) & "-" & Day(Now) & "-" & year(Now) & "\" & LogFile & ".log"
@@ -380,7 +380,7 @@ Public Sub AddLog(ByVal text As String, ByVal LogFile As String)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "AddLog", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -407,7 +407,7 @@ Public Sub LoadAnimatedSprites()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "LoadAnimatedSprites", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -416,7 +416,7 @@ Public Sub CheckTilesets()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     i = 1
     NumTileSets = 1
@@ -443,7 +443,7 @@ Public Sub CheckTilesets()
     Exit Sub
 
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckTilesets", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -452,7 +452,7 @@ Public Sub CheckCharacters()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     i = 1
     NumCharacters = 1
@@ -484,7 +484,7 @@ Public Sub CheckCharacters()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckCharacters", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -493,7 +493,7 @@ Public Sub CheckPaperdolls()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     i = 1
     NumPaperdolls = 1
@@ -520,7 +520,7 @@ Public Sub CheckPaperdolls()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckPaperdolls", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -529,7 +529,7 @@ Public Sub CheckAnimations()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     i = 1
     NumAnimations = 1
@@ -556,7 +556,7 @@ Public Sub CheckAnimations()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckAnimations", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -565,7 +565,7 @@ Public Sub CheckItems()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     i = 1
     NumItems = 1
@@ -592,7 +592,7 @@ Public Sub CheckItems()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckItems", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -601,7 +601,7 @@ Public Sub CheckResources()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     i = 1
     NumResources = 1
@@ -628,7 +628,7 @@ Public Sub CheckResources()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckResources", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -637,7 +637,7 @@ Public Sub CheckSpellIcons()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     i = 1
     NumSpellIcons = 1
@@ -664,7 +664,7 @@ Public Sub CheckSpellIcons()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckSpellIcons", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -673,7 +673,7 @@ Public Sub CheckFaces()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     i = 1
     NumFaces = 1
@@ -700,7 +700,7 @@ Public Sub CheckFaces()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckFaces", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -709,7 +709,7 @@ Public Sub CheckFogs()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     i = 1
     NumFogs = 1
@@ -736,7 +736,7 @@ Public Sub CheckFogs()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckFogs", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -745,7 +745,7 @@ Public Sub CheckPanoramas()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     i = 1
     NumPanoramas = 1
@@ -771,7 +771,7 @@ Public Sub CheckPanoramas()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckPanoramas", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -780,7 +780,7 @@ Public Sub CheckEmoticons()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     i = 1
     NumEmoticons = 1
@@ -807,32 +807,32 @@ Public Sub CheckEmoticons()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "CheckEmoticons", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearPlayer(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Call ZeroMemory(ByVal VarPtr(player(Index)), LenB(player(Index)))
-    player(Index).Login = vbNullString
-    player(Index).Password = vbNullString
-    player(Index).name = vbNullString
-    player(Index).Status = vbNullString
-    player(Index).Class = 1
+    Call ZeroMemory(ByVal VarPtr(Player(Index)), LenB(Player(Index)))
+    Player(Index).Login = vbNullString
+    Player(Index).Password = vbNullString
+    Player(Index).name = vbNullString
+    Player(Index).Status = vbNullString
+    Player(Index).Class = 1
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearPlayer", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearItem(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Item(Index)), LenB(Item(Index)))
     Item(Index).name = vbNullString
@@ -841,7 +841,7 @@ Sub ClearItem(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearItem", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -850,7 +850,7 @@ Sub ClearItems()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_ITEMS
         Call ClearItem(i)
@@ -858,27 +858,27 @@ Sub ClearItems()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearItems", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearAnimInstance(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(AnimInstance(Index)), LenB(AnimInstance(Index)))
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearAnimInstance", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearAnimation(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Animation(Index)), LenB(Animation(Index)))
     Animation(Index).name = vbNullString
@@ -886,7 +886,7 @@ Sub ClearAnimation(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearAnimation", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -895,7 +895,7 @@ Sub ClearAnimations()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_ANIMATIONS
         Call ClearAnimation(i)
@@ -903,25 +903,25 @@ Sub ClearAnimations()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearAnimations", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearNPC(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ZeroMemory(ByVal VarPtr(NPC(Index)), LenB(NPC(Index)))
     NPC(Index).name = vbNullString
-    NPC(Index).title = vbNullString
+    NPC(Index).Title = vbNullString
     NPC(Index).AttackSay = vbNullString
     NPC(Index).Music = vbNullString
     NPC(Index).Sound = vbNullString
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearNPC", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -930,7 +930,7 @@ Sub ClearNpcs()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_NPCS
         Call ClearNPC(i)
@@ -938,14 +938,14 @@ Sub ClearNpcs()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearNpcs", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearSpell(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Spell(Index)), LenB(Spell(Index)))
     Spell(Index).name = vbNullString
@@ -954,7 +954,7 @@ Sub ClearSpell(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearSpell", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -963,7 +963,7 @@ Sub ClearSpells()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_SPELLS
         Call ClearSpell(i)
@@ -971,21 +971,21 @@ Sub ClearSpells()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearSpells", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearShop(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Shop(Index)), LenB(Shop(Index)))
     Shop(Index).name = vbNullString
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearShop", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -994,7 +994,7 @@ Sub ClearShops()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_SHOPS
         Call ClearShop(i)
@@ -1002,14 +1002,14 @@ Sub ClearShops()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearShops", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearResource(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Resource(Index)), LenB(Resource(Index)))
     Resource(Index).name = vbNullString
@@ -1019,7 +1019,7 @@ Sub ClearResource(ByVal Index As Long)
     Resource(Index).Sound = vbNullString
     Exit Sub
     
-ErrorHandler:
+errorhandler:
     HandleError "ClearResource", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1028,7 +1028,7 @@ Sub ClearResources()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_RESOURCES
         Call ClearResource(i)
@@ -1036,28 +1036,28 @@ Sub ClearResources()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearResources", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearMapItem(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(MapItem(Index)), LenB(MapItem(Index)))
-    MapItem(Index).playerName = vbNullString
+    MapItem(Index).PlayerName = vbNullString
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearMapItem", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearMap()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Map), LenB(Map))
     Map.name = vbNullString
@@ -1071,7 +1071,7 @@ Sub ClearMap()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearMap", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1080,7 +1080,7 @@ Sub ClearMapItems()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_MAP_ITEMS
         Call ClearMapItem(i)
@@ -1088,20 +1088,20 @@ Sub ClearMapItems()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearMapItems", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearMapNpc(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(MapNPC(Index)), LenB(MapNPC(Index)))
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearMapNpc", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1110,7 +1110,7 @@ Sub ClearMapNpcs()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_MAP_NPCS
         Call ClearMapNpc(i)
@@ -1118,7 +1118,7 @@ Sub ClearMapNpcs()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearMapNpcs", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1127,7 +1127,7 @@ Sub ClearBans()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_BANS
         Call ClearBan(i)
@@ -1135,18 +1135,18 @@ Sub ClearBans()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearBans", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearBan(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ZeroMemory(ByVal VarPtr(Ban(Index)), LenB(Ban(Index)))
     Ban(Index).PlayerLogin = vbNullString
-    Ban(Index).playerName = vbNullString
+    Ban(Index).PlayerName = vbNullString
     Ban(Index).Reason = vbNullString
     Ban(Index).IP = vbNullString
     Ban(Index).HDSerial = vbNullString
@@ -1156,7 +1156,7 @@ Sub ClearBan(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearBan", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1165,7 +1165,7 @@ Sub ClearTitles()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_TITLES
         Call ClearTitle(i)
@@ -1173,35 +1173,35 @@ Sub ClearTitles()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearTitles", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearTitle(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Call ZeroMemory(ByVal VarPtr(title(Index)), LenB(title(Index)))
-    title(Index).name = vbNullString
+    Call ZeroMemory(ByVal VarPtr(Title(Index)), LenB(Title(Index)))
+    Title(Index).name = vbNullString
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearTitle", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearMoral(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Moral(Index)), LenB(Moral(Index)))
     Moral(Index).name = vbNullString
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearMoral", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1210,7 +1210,7 @@ Sub ClearMorals()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_MORALS
         Call ClearMoral(i)
@@ -1218,21 +1218,21 @@ Sub ClearMorals()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearMorals", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearClass(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ZeroMemory(ByVal VarPtr(Class(Index)), LenB(Class(Index)))
     Class(Index).name = vbNullString
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearClass", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1241,7 +1241,7 @@ Sub ClearClasses()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_CLASSES
         Call ClearClass(i)
@@ -1249,21 +1249,21 @@ Sub ClearClasses()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearClasses", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub ClearEmoticon(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Emoticon(Index)), LenB(Emoticon(Index)))
     Emoticon(Index).Command = "/"
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearEmoticon", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1272,7 +1272,7 @@ Sub ClearEmoticons()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_EMOTICONS
         Call ClearEmoticon(i)
@@ -1280,7 +1280,7 @@ Sub ClearEmoticons()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearEmoticons", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1288,7 +1288,7 @@ End Sub
 Public Sub ClearEvents()
     Dim i As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_EVENTS
         Call ClearEvent(i)
@@ -1296,14 +1296,14 @@ Public Sub ClearEvents()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearEvents", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ClearEvent(ByVal Index As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Index <= 0 Or Index > MAX_EVENTS Then Exit Sub
     
@@ -1312,7 +1312,7 @@ Public Sub ClearEvent(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ClearEvent", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

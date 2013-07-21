@@ -734,14 +734,14 @@ Option Explicit
 
 Private Sub cmbClass_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     NewCharClass = ClassSelection(cmbClass.ListIndex + 1)
     NewCharacterDrawSprite
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmbClass_Click", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -750,10 +750,10 @@ Private Sub Form_Load()
     Dim TmpTxt As String, TmpArray() As String, i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' General menu things
-    Me.Caption = GAME_NAME
+    Me.Caption = GAME_Name
     
     ' Set the maxes for the username and password
     txtLUser.MaxLength = NAME_LENGTH
@@ -765,8 +765,8 @@ Private Sub Form_Load()
     
     ' Load the username
     If Options.SaveUsername = 1 Then
-        txtLUser.text = Trim$(Options.Username)
-        txtLUser.SelStart = Len(Trim$(Options.Username))
+        txtLUser.text = Trim$(Options.UserName)
+        txtLUser.SelStart = Len(Trim$(Options.UserName))
         chkUsername.Value = Options.SaveUsername
     End If
     
@@ -779,41 +779,41 @@ Private Sub Form_Load()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Form_Load", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     LastButton_Menu = 0
     ResetMenuButtons
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Form_MouseMove", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Not EnteringGame Then DestroyGame
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Form_Unload", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub ImgButton_Click(Index As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Not CurButton_Menu = Index Then
         Call Audio.PlaySound(ButtonClick)
@@ -860,14 +860,14 @@ Private Sub ImgButton_Click(Index As Integer)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ImgButton_Click", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub ImgButton_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub ImgButton_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Not LastButton_Menu = Index And Not CurButton_Menu = Index Then
         ResetMenuButtons
@@ -879,14 +879,14 @@ Private Sub ImgButton_MouseMove(Index As Integer, Button As Integer, Shift As In
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "ImgButton_MouseMove", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblLAccept_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If IsLoginLegal(txtLUser.text, txtLPass.text) Then
         Call MenuState(MENU_STATE_LOGIN)
@@ -895,12 +895,12 @@ Private Sub lblLAccept_Click()
     ' Save options
     Options.SaveUsername = frmMenu.chkUsername.Value
     Options.SavePassword = frmMenu.chkPass.Value
-    Options.Username = Trim$(frmMenu.txtLUser.text)
+    Options.UserName = Trim$(frmMenu.txtLUser.text)
     
     If frmMenu.chkUsername.Value = 0 Then
-        Options.Username = vbNullString
+        Options.UserName = vbNullString
     Else
-        Options.Username = Trim$(frmMenu.txtLUser.text)
+        Options.UserName = Trim$(frmMenu.txtLUser.text)
     End If
     
     If frmMenu.chkPass.Value = 0 Then
@@ -912,21 +912,21 @@ Private Sub lblLAccept_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "lblLAccept_Click", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub optFemale_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     NewCharClass = ClassSelection(cmbClass.ListIndex + 1)
     NewCharacterDrawSprite
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "optFemale_Click", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -949,79 +949,79 @@ End Sub
 
 Private Sub optMale_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     NewCharClass = ClassSelection(cmbClass.ListIndex + 1)
     NewCharacterDrawSprite
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "optMale_Click", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub picCharacter_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picCharacter_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ResetMenuButtons
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "picCharacter_MouseMove", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub picCredits_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picCredits_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ResetMenuButtons
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "picCredits_MouseMove", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub picLogin_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picLogin_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ResetMenuButtons
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "picLogin_MouseMove", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub picMain_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picMain_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ResetMenuButtons
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "picMain_MouseMove", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub picRegister_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picRegister_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ResetMenuButtons
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "picRegister_MouseMove", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1056,25 +1056,25 @@ End Sub
 
 ' Register
 Private Sub txtRAccept_Click()
-    Dim name As String
+    Dim Name As String
     Dim Password As String
     Dim PasswordAgain As String, RndCharacters As String
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    name = Trim$(txtRUser.text)
+    Name = Trim$(txtRUser.text)
     Password = Trim$(txtRPass.text)
     PasswordAgain = Trim$(txtRPass2.text)
 
-    If IsLoginLegal(name, Password) Then
-        If IsLoginLegal(name, PasswordAgain) Then
+    If IsLoginLegal(Name, Password) Then
+        If IsLoginLegal(Name, PasswordAgain) Then
             If Not Password = PasswordAgain Then
                 Call AlertMsg("Passwords don't match.")
                 Exit Sub
             End If
     
-            If Not IsStringLegal(name) Then Exit Sub
+            If Not IsStringLegal(Name) Then Exit Sub
     
             Call MenuState(MENU_STATE_NEWACCOUNT)
         End If
@@ -1082,7 +1082,7 @@ Private Sub txtRAccept_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtRAccept_Click", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1090,7 +1090,7 @@ End Sub
 ' New Character
 Private Sub lblCAccept_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If IsNewCharLegal(txtCUser) Then
         Call MenuState(MENU_STATE_ADDCHAR)
@@ -1098,12 +1098,13 @@ Private Sub lblCAccept_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "lblCAccept_Click", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
+    
     If KeyAscii = vbKeyReturn Then
         If picLogin.Visible = True Then
             lblLAccept_Click
