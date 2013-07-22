@@ -5193,28 +5193,29 @@ End Function
 
 Public Sub UpdateCamera()
     Dim offsetX As Long, offsetY As Long, StartX As Long, StartY As Long, EndX As Long, EndY As Long
-
+    Dim centerX As Long, centerY As Long
+    
+    centerX = (ScreenX \ 32) / 2
+    centerY = ((ScreenY \ 32) + 1) / 2
     offsetX = TempPlayer(MyIndex).xOffset + PIC_X
     offsetY = TempPlayer(MyIndex).yOffset + PIC_Y
-    StartX = GetPlayerX(MyIndex) - (MIN_MAPX \ 2) - 1
-    StartY = GetPlayerY(MyIndex) - (MIN_MAPY \ 2) - 1
-
-    If StartX < 0 Then
+    StartX = GetPlayerX(MyIndex) - centerX
+    StartY = GetPlayerY(MyIndex) - centerY
+ 
+    If StartX <= 0 Then
         offsetX = 0
-
-        If StartX = -1 Then
+        If StartX = 0 Then
             If TempPlayer(MyIndex).xOffset > 0 Then
                 offsetX = TempPlayer(MyIndex).xOffset
             End If
         End If
-
         StartX = 0
     End If
 
-    If StartY < 0 Then
+    If StartY <= 0 Then
         offsetY = 0
 
-        If StartY = -1 Then
+        If StartY = 0 Then
             If TempPlayer(MyIndex).yOffset > 0 Then
                 offsetY = TempPlayer(MyIndex).yOffset
             End If
@@ -5225,31 +5226,46 @@ Public Sub UpdateCamera()
 
     EndX = StartX + MIN_MAPX
     EndY = StartY + MIN_MAPY
-
+    
+    If GetPlayerX(MyIndex) > centerX And EndX <= Map.MaxX Then
+            StartX = StartX - 1
+    End If
+    
+    If GetPlayerY(MyIndex) > centerY And EndY <= Map.MaxY Then
+            StartY = StartY - 1
+    End If
     If EndX > Map.MaxX Then
         offsetX = 32
-
         If EndX = Map.MaxX + 1 Then
             If TempPlayer(MyIndex).xOffset < 0 Then
                 offsetX = TempPlayer(MyIndex).xOffset + PIC_X
             End If
         End If
-
         EndX = Map.MaxX
         StartX = EndX - MIN_MAPX
     End If
 
     If EndY > Map.MaxY Then
-        offsetY = 32
+
 
         If EndY = Map.MaxY + 1 Then
-            If TempPlayer(MyIndex).yOffset < 0 Then
+            If TempPlayer(MyIndex).yOffset <= 0 Then
                 offsetY = TempPlayer(MyIndex).yOffset + PIC_Y
+                StartY = EndY - MIN_MAPY - 1
+                'Debug.Print "1st: " & StartY
+            Else
+                offsetY = 0
+                StartY = EndY - MIN_MAPY
+                'Debug.Print "2nd: " & StartY
             End If
+        Else
+            offsetY = 32
+            EndY = Map.MaxY
+            StartY = EndY - MIN_MAPY
         End If
-
         EndY = Map.MaxY
-        StartY = EndY - MIN_MAPY
+
+
     End If
 
     With TileView

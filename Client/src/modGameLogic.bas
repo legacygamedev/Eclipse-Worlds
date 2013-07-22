@@ -988,9 +988,9 @@ Public Function TwipsToPixels(ByVal Twip_Val As Long, ByVal XorY As Byte) As Lon
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If XorY = 0 Then
-        TwipsToPixels = Twip_Val / Screen.TwipsPerPixelX
+        TwipsToPixels = Twip_Val / screen.TwipsPerPixelX
     ElseIf XorY = 1 Then
-        TwipsToPixels = Twip_Val / Screen.TwipsPerPixelY
+        TwipsToPixels = Twip_Val / screen.TwipsPerPixelY
     End If
     Exit Function
     
@@ -1005,9 +1005,9 @@ Public Function PixelsToTwips(ByVal Pixel_Val As Long, ByVal XorY As Byte) As Lo
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If XorY = 0 Then
-        PixelsToTwips = Pixel_Val * Screen.TwipsPerPixelX
+        PixelsToTwips = Pixel_Val * screen.TwipsPerPixelX
     ElseIf XorY = 1 Then
-        PixelsToTwips = Pixel_Val * Screen.TwipsPerPixelY
+        PixelsToTwips = Pixel_Val * screen.TwipsPerPixelY
     End If
     Exit Function
     
@@ -1828,15 +1828,15 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     frmMain.Width = PixelsToTwips(MIN_MAPX * PIC_X, 0)
     
     Do While (frmMain.ScaleWidth < MIN_MAPX * PIC_X)
-        frmMain.Width = frmMain.Width + Screen.TwipsPerPixelX
-        frmMain.Left = (Screen.Width / 2) - (frmMain.Width / 2)
+        frmMain.Width = frmMain.Width + screen.TwipsPerPixelX
+        frmMain.Left = (screen.Width / 2) - (frmMain.Width / 2)
     Loop
     
     frmMain.Height = PixelsToTwips(MIN_MAPY * PIC_Y, 1)
     
     Do While (frmMain.ScaleHeight < MIN_MAPY * PIC_Y)
-        frmMain.Height = frmMain.Height + Screen.TwipsPerPixelY
-        frmMain.Top = (Screen.Height / 2) - (frmMain.Height / 2)
+        frmMain.Height = frmMain.Height + screen.TwipsPerPixelY
+        frmMain.Top = (screen.Height / 2) - (frmMain.Height / 2)
     Loop
     
     ' Resize and position the screen
@@ -1846,14 +1846,14 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     frmMain.picForm.Height = MIN_MAPY * PIC_Y
     
     ' Recalculate the other variables
-    HalfX = (MIN_MAPX / 2) * PIC_X
-    HalfY = (MIN_MAPY / 2) * PIC_Y
-    ScreenX = MIN_MAPX * PIC_X
-    ScreenY = MIN_MAPY * PIC_Y
-    StartXValue = (MIN_MAPX / 2)
-    StartYValue = (MIN_MAPY / 2)
-    EndXValue = MIN_MAPX
-    EndYValue = MIN_MAPY
+    HalfX = ((MIN_MAPX + 1) / 2) * PIC_X
+    HalfY = ((MIN_MAPY + 1) / 2) * PIC_Y
+    ScreenX = (MIN_MAPX) * PIC_X
+    ScreenY = (MIN_MAPY) * PIC_Y
+    StartXValue = ((MIN_MAPX + 1) / 2)
+    StartYValue = ((MIN_MAPY + 1) / 2)
+    EndXValue = (MIN_MAPX + 1)
+    EndYValue = (MIN_MAPY + 1)
     CameraEndXValue = EndXValue + 1
     CameraEndYValue = EndYValue + 1
     

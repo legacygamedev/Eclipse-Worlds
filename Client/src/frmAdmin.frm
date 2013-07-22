@@ -7,6 +7,7 @@ Begin VB.Form frmAdmin
    ClientTop       =   330
    ClientWidth     =   2820
    Icon            =   "frmAdmin.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -1252,6 +1253,17 @@ Private Sub cmdAMoral_Click()
 ErrorHandler:
     HandleError "cmdAMoral_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    Select Case KeyCode
+        Case vbKeyInsert
+            If Player(MyIndex).Access >= STAFF_MODERATOR Then
+                If frmAdmin.Visible = True And GetForegroundWindow = frmAdmin.hwnd Then
+                    Unload frmAdmin
+                End If
+            End If
+    End Select
 End Sub
 
 Private Sub scrlAItem_Change()
