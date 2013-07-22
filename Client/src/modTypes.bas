@@ -496,6 +496,8 @@ Private Type MapItemRec
     Value As Long
     Durability As Integer
     Frame As Byte
+    X As Long
+    Y As Long
 End Type
 
 Private Type NpcRec
