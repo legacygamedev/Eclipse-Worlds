@@ -1849,6 +1849,13 @@ Private Sub scrlDurability_Change()
     
     Item(EditorIndex).Data1 = frmEditor_Item.scrlDurability.Value
     lblDurability.Caption = "Durability: " & Item(EditorIndex).Data1
+    
+    If Item(EditorIndex).Data1 > 0 Then
+        chkStackable.Value = 0
+        chkStackable.Enabled = False
+    Else
+        chkStackable.Enabled = True
+    End If
     Exit Sub
     
 ' Error handler
