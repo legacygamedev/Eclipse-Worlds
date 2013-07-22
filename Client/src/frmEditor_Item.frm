@@ -1356,7 +1356,7 @@ Private Sub chkTwoHanded_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).isTwoHanded = chkTwoHanded.Value
+    Item(EditorIndex).TwoHanded = chkTwoHanded.Value
     Exit Sub
     
 ' Error handler

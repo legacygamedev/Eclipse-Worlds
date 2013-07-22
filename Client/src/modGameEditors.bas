@@ -2225,7 +2225,7 @@ End Sub
 Public Sub UpdateAdminScrollBar()
     frmAdmin.lblAItem.Caption = "Item: " & Trim$(Item(frmAdmin.scrlAItem.Value).Name)
         
-    If Item(frmAdmin.scrlAItem.Value).Type = ITEM_TYPE_CURRENCY Then
+    If Item(frmAdmin.scrlAItem.Value).Stackable = 1 Then
         frmAdmin.scrlAAmount.Enabled = True
         Exit Sub
     End If

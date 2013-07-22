@@ -1195,14 +1195,14 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub picBack_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Public Sub picBack_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    x = x + (frmEditor_Map.scrlPictureX.Value * PIC_X)
-    y = y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
+    X = X + (frmEditor_Map.scrlPictureX.Value * PIC_X)
+    Y = Y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
     
-    Call MapEditorChooseTile(Button, x, y)
+    Call MapEditorChooseTile(Button, X, Y)
     Exit Sub
     
 ' Error handler
@@ -1211,15 +1211,15 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picBack_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picBack_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    x = x + (frmEditor_Map.scrlPictureX.Value * PIC_X)
-    y = y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
+    X = X + (frmEditor_Map.scrlPictureX.Value * PIC_X)
+    Y = Y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
     
     If scrlAutotile.Value = 0 Then
-        Call MapEditorDrag(Button, x, y)
+        Call MapEditorDrag(Button, X, Y)
     End If
     Exit Sub
     
@@ -1599,7 +1599,7 @@ Private Sub optNpcSpawn_Click()
     
     For n = 1 To MAX_MAP_NPCS
         If Map.NPC(n) > 0 Then
-            lstNpc.AddItem n & ": " & NPC(Map.NPC(n)).name
+            lstNpc.AddItem n & ": " & NPC(Map.NPC(n)).Name
         Else
             lstNpc.AddItem n & ": No Npc"
         End If
@@ -1649,8 +1649,8 @@ Private Sub optResource_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ClearAttributeFrames
-    If Not Trim$(Resource(scrlResource.Value).name) = vbNullString Then
-        lblResource.Caption = Trim$(Resource(scrlResource.Value).name)
+    If Not Trim$(Resource(scrlResource.Value).Name) = vbNullString Then
+        lblResource.Caption = Trim$(Resource(scrlResource.Value).Name)
     End If
     picAttributes.Visible = True
     fraResource.Visible = True
@@ -1723,29 +1723,29 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub MapEditorDrag(Button As Integer, x As Single, y As Single)
+Public Sub MapEditorDrag(Button As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If Button = vbLeftButton Then
         ' Convert the pixel number to tile number
-        x = (x \ PIC_X) + 1
-        y = (y \ PIC_Y) + 1
+        X = (X \ PIC_X) + 1
+        Y = (Y \ PIC_Y) + 1
         
         ' Check it's not out of bounds
-        If x < 0 Then x = 0
-        If x > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X Then x = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X
-        If y < 0 Then y = 0
-        If y > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y Then y = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y
+        If X < 0 Then X = 0
+        If X > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X Then X = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X
+        If Y < 0 Then Y = 0
+        If Y > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y Then Y = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y
         
         ' Find out what to set the width + height of map editor to
-        If x > EditorTileX Then ' Drag right
-            EditorTileWidth = x - EditorTileX
+        If X > EditorTileX Then ' Drag right
+            EditorTileWidth = X - EditorTileX
         Else ' Drag left
             ' TO DO
         End If
-        If y > EditorTileY Then ' Drag down
-            EditorTileHeight = y - EditorTileY
+        If Y > EditorTileY Then ' Drag down
+            EditorTileHeight = Y - EditorTileY
         Else ' Drag up
             ' TO DO
         End If
@@ -1836,8 +1836,8 @@ Private Sub optItem_Click()
     picAttributes.Visible = True
     fraMapItem.Visible = True
     
-    If Not Trim$(Item(scrlMapItem.Value).name) = vbNullString Then
-        lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    If Not Trim$(Item(scrlMapItem.Value).Name) = vbNullString Then
+        lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).Name) & " x" & scrlMapItemValue.Value
     End If
     Exit Sub
     
@@ -1931,15 +1931,15 @@ Private Sub scrlMapItem_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Item(scrlMapItem.Value).Type = ITEM_TYPE_CURRENCY Then
+    If Item(scrlMapItem.Value).Stackable = 1 Then
         scrlMapItemValue.Enabled = True
     Else
         scrlMapItemValue.Value = 1
         scrlMapItemValue.Enabled = False
     End If
     
-    If Not Trim$(Item(scrlMapItem.Value).name) = vbNullString Then
-        lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    If Not Trim$(Item(scrlMapItem.Value).Name) = vbNullString Then
+        lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).Name) & " x" & scrlMapItemValue.Value
     Else
         lblMapItem.Caption = "None"
         frmEditor_Map.picMapItem.Cls
@@ -1969,7 +1969,7 @@ Private Sub scrlMapItemValue_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).Name) & " x" & scrlMapItemValue.Value
     Exit Sub
     
 ' Error handler
@@ -2108,8 +2108,8 @@ Private Sub scrlResource_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Not Trim$(Resource(scrlResource.Value).name) = vbNullString Then
-        lblResource.Caption = Resource(scrlResource.Value).name
+    If Not Trim$(Resource(scrlResource.Value).Name) = vbNullString Then
+        lblResource.Caption = Resource(scrlResource.Value).Name
     Else
         lblResource.Caption = "None"
     End If
