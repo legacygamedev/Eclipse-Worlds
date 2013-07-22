@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -3100,6 +3100,10 @@ Private MoveForm As Boolean
 Private PresentX As Long
 Private PresentY As Long
 
+Private Declare Function BringWindowToTop Lib "user32" (ByVal hwnd As Long) As Long
+Private Declare Function GetForegroundWindow Lib "user32.dll" () As Long
+Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As Any, ByVal lpWindowName _
+         As Any) As Long
 Private Sub Form_Paint()
     If frmCharEditor.Visible Then
         frmCharEditor.Show
@@ -3108,20 +3112,20 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     Cancel = True
     LogoutGame
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_Unload", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     picItemDesc.Visible = False
     picSpellDesc.Visible = False
@@ -3135,14 +3139,14 @@ Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y A
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub ImgAcceptTrade_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     picCurrency.Visible = False
     TmpCurrencyItem = 0
@@ -3151,14 +3155,14 @@ Private Sub ImgAcceptTrade_Click()
     Exit Sub
      
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "imgAcceptTrade_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub ImgFix_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If InShop = 0 Then Exit Sub
     If Shop(InShop).CanFix = 0 Then Exit Sub
@@ -3169,14 +3173,14 @@ Private Sub ImgFix_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ImgFix_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub imgShopBuy_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If ShopAction = 1 Then Exit Sub
     ShopAction = 1 ' buying an item
@@ -3184,14 +3188,14 @@ Private Sub imgShopBuy_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "imgShopBuy_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub imgShopSell_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If ShopAction = 2 Then Exit Sub
     ShopAction = 2 ' selling an item
@@ -3199,14 +3203,14 @@ Private Sub imgShopSell_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "imgShopSell_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblAddFriend_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Dialogue "Add Friend", "Who do you want to add as a friend?", DIALOGUE_TYPE_ADDFRIEND, True
     
@@ -3222,14 +3226,14 @@ Private Sub lblAddFriend_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblAddFriend_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblAddFoe_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Dialogue "Add Foe", "Who do you want to add as a foe?", DIALOGUE_TYPE_ADDFOE, True
     
@@ -3245,7 +3249,7 @@ Private Sub lblAddFoe_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblAddFoe_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3254,7 +3258,7 @@ Private Sub lblChoices_MouseDown(Index As Integer, Button As Integer, Shift As I
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Set buffer = New clsBuffer
     
@@ -3272,14 +3276,14 @@ Private Sub lblChoices_MouseDown(Index As Integer, Button As Integer, Shift As I
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblChoices_MouseDown", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblChoices_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call ClearChatButton(Index)
     If frmMain.lblChoices(Index).Visible = False Then Exit Sub
@@ -3289,7 +3293,7 @@ Private Sub lblChoices_MouseMove(Index As Integer, Button As Integer, Shift As I
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblChoices_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3298,7 +3302,7 @@ Private Sub ClearChatButton(Index As Integer)
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For i = 1 To 4
         If frmMain.lblChoices.Item(i).ForeColor = vbYellow And Not Index = i Then
@@ -3310,7 +3314,7 @@ Private Sub ClearChatButton(Index As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ClearChatButton", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3323,7 +3327,7 @@ End Sub
 
 Private Sub lblEventChatContinue_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If frmMain.lblEventChatContinue.Visible = False Then Exit Sub
     If frmMain.lblEventChatContinue.ForeColor = vbYellow Then Exit Sub
@@ -3332,7 +3336,7 @@ Private Sub lblEventChatContinue_MouseMove(Button As Integer, Shift As Integer, 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblEventChatContinue_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3341,7 +3345,7 @@ Public Sub lblEventChatContinue_Click()
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Set buffer = New clsBuffer
     buffer.WriteLong CEventChatReply
@@ -3355,7 +3359,7 @@ Public Sub lblEventChatContinue_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblEventChatContinue_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3390,7 +3394,7 @@ End Sub
 
 Private Sub lblGuildRemove_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Dialogue "Guild Remove", "Who do you want to remove from the guild?", DIALOGUE_TYPE_GUILDREMOVE, True
     
@@ -3406,7 +3410,7 @@ Private Sub lblGuildRemove_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblGuildRemove_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3423,7 +3427,7 @@ End Sub
 
 Private Sub lblRemoveFriend_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Dialogue "Remove Friend", "What friend do you want to remove?", DIALOGUE_TYPE_REMOVEFRIEND, True
     
@@ -3433,14 +3437,14 @@ Private Sub lblRemoveFriend_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblRemoveFriend_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblRemoveFoe_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Dialogue "Remove Foe", "What foe do you want to remove?", DIALOGUE_TYPE_REMOVEFOE, True
     
@@ -3450,27 +3454,27 @@ Private Sub lblRemoveFoe_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblRemoveFoe_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblChangeAccess_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Dialogue "Change Guild Access", "What access would you like to change this user to?", DIALOGUE_TYPE_CHANGEGUILDACCESS, True
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblChangeAccess_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblCurrencyCancel_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     picCurrency.Visible = False
     txtCurrency.text = vbNullString
@@ -3479,54 +3483,54 @@ Private Sub lblCurrencyCancel_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblCurrencyCancel_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub ImgDeclineTrade_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     CloseTrade
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ImgDeclineTrade_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblLeaveBank_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     CloseBank
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblLeaveBank_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub ImgLeaveShop_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If InShop = 0 Then Exit Sub
     CloseShop
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ImgLeaveShop_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblCurrencyOk_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If IsNumeric(txtCurrency.text) Then
         Select Case CurrencyMenu
@@ -3551,14 +3555,14 @@ Private Sub lblCurrencyOk_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblCurrencyOk_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblDialogue_Button_Click(Index As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Call the handler
     DialogueHandler Index
@@ -3570,14 +3574,14 @@ Private Sub lblDialogue_Button_Click(Index As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblDialogue_Button_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblPartyInvite_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Dialogue "Party Invite", "Who do you want to invite to the party?", DIALOGUE_TYPE_PARTYINVITE, True
     
@@ -3593,14 +3597,14 @@ Private Sub lblPartyInvite_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblPartyInvite_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblPartyLeave_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Party.Num > 0 Then
         SendPartyLeave
@@ -3610,14 +3614,14 @@ Private Sub lblPartyLeave_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblPartyInvite_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblGuildInvite_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Dialogue "Guild Invite", "Who do you want to invite to the guild?", DIALOGUE_TYPE_GUILDINVITE, True
     
@@ -3633,20 +3637,20 @@ Private Sub lblGuildInvite_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblGuildInvite_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lblResign_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     RequestGuildResign
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblResign_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3663,14 +3667,14 @@ End Sub
 
 Private Sub lblTrainStat_Click(Index As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerPOINTS(MyIndex) = 0 Then Exit Sub
     SendTrainStat Index
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblTrainStat_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4091,7 +4095,7 @@ End Sub
 
 Private Sub picEventChat_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call ClearChatButton(0)
     ClearButtons
@@ -4099,14 +4103,14 @@ Private Sub picEventChat_MouseMove(Button As Integer, Shift As Integer, x As Sin
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picEventChat_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ToggleChatLock(Optional ByVal ForceLock As Boolean, Optional ByVal SoundEffect As Boolean = True)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If ForceLock Then
         ChatLocked = True
@@ -4127,14 +4131,14 @@ Public Sub ToggleChatLock(Optional ByVal ForceLock As Boolean, Optional ByVal So
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ToggleChatLock", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picButton_Click(Index As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not CurButton_Main = Index Then
         Call Audio.PlaySound(ButtonClick)
@@ -4158,14 +4162,14 @@ Private Sub picButton_Click(Index As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picButton_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picButton_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not LastButton_Main = Index And Not CurButton_Main = Index Then
         Call ResetMainButtons
@@ -4177,7 +4181,7 @@ Private Sub picButton_MouseMove(Index As Integer, Button As Integer, Shift As In
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picButton_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4186,7 +4190,7 @@ Public Sub TogglePanel(ByVal PanelNum As Long)
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Don't close panels if it's the trade button
     If Not PanelNum = 5 Then
@@ -4258,7 +4262,7 @@ Public Sub TogglePanel(ByVal PanelNum As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "TogglePanel", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4267,7 +4271,7 @@ Public Sub ResetMainButtons()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For i = 1 To MAX_MAINBUTTONS
         If Not CurButton_Main = i Then
@@ -4277,14 +4281,14 @@ Public Sub ResetMainButtons()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ResetMainButtons", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picForm_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lstDropDownBox.Visible = False
     picItemDesc.Visible = False
@@ -4296,48 +4300,48 @@ Private Sub picForm_MouseMove(Button As Integer, Shift As Integer, x As Single, 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picForm_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picForm_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Call SetGameFocus
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picForm_MouseDown", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picFriends_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call ClearChatButton(0)
     ClearButtons
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picFriends_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picGuild_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call ClearChatButton(0)
     ClearButtons
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picGuild_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4346,7 +4350,7 @@ Private Sub picHotbar_MouseUp(Button As Integer, Shift As Integer, x As Single, 
     Dim i As Long, rec_pos As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ' Hotbar
     For i = 1 To MAX_HOTBAR
@@ -4370,7 +4374,7 @@ Private Sub picHotbar_MouseUp(Button As Integer, Shift As Integer, x As Single, 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picHotbar_MouseUp", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4379,7 +4383,7 @@ Private Sub picHotbar_MouseDown(Button As Integer, Shift As Integer, x As Single
     Dim SlotNum As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     SlotNum = IsHotbarSlot(x, y)
 
@@ -4397,7 +4401,7 @@ Private Sub picHotbar_MouseDown(Button As Integer, Shift As Integer, x As Single
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picHotbar_MouseDown", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4406,7 +4410,7 @@ Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, x As Single
     Dim SlotNum As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If DragHotbarSlot > 0 Then
         If Hotbar(DragHotbarSlot).SType = 1 Then
@@ -4451,56 +4455,56 @@ Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, x As Single
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picHotbar_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picOptions_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call ClearChatButton(0)
     ClearButtons
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picOptions_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picParty_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call ClearChatButton(0)
     ClearButtons
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picParty_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picPet_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call ClearChatButton(0)
     ClearButtons
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picPet_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If InMapEditor Then
         If frmEditor_Map.chkEyeDropper.Value = 1 Then
@@ -4548,14 +4552,14 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, x As Single
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picScreen_MouseDown", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picScreen_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     CurX = TileView.Left + ((x + Camera.Left) \ PIC_X)
     CurY = TileView.Top + ((y + Camera.Top) \ PIC_Y)
@@ -4587,7 +4591,7 @@ Private Sub picScreen_MouseMove(Button As Integer, Shift As Integer, x As Single
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picScreen_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4597,7 +4601,7 @@ Private Function IsShopItem(ByVal x As Single, ByVal y As Single) As Long
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     IsShopItem = 0
 
@@ -4621,14 +4625,14 @@ Private Function IsShopItem(ByVal x As Single, ByVal y As Single) As Long
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsShopItem", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Private Sub picShop_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     picItemDesc.Visible = False
     picSpellDesc.Visible = False
@@ -4640,7 +4644,7 @@ Private Sub picShop_MouseMove(Button As Integer, Shift As Integer, x As Single, 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picShop_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4649,7 +4653,7 @@ Private Sub picShopItems_MouseDown(Button As Integer, Shift As Integer, x As Sin
     Dim ShopItem As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ShopItem = IsShopItem(x, y)
     
@@ -4668,7 +4672,7 @@ Private Sub picShopItems_MouseDown(Button As Integer, Shift As Integer, x As Sin
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picShopItems_MouseDown", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4678,7 +4682,7 @@ Private Sub picShopItems_MouseMove(Button As Integer, Shift As Integer, x As Sin
     Dim X2 As Long, Y2 As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ShopSlot = IsShopItem(x, y)
 
@@ -4695,21 +4699,21 @@ Private Sub picShopItems_MouseMove(Button As Integer, Shift As Integer, x As Sin
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picShopItems_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picSpellDesc_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     picSpellDesc.Visible = False
     LastSpellDesc = 0 ' No spell was last loaded
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picSpellDesc_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4718,7 +4722,7 @@ Private Sub picSpells_DblClick()
     Dim SpellNum As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If InTrade > 0 Or InBank Or InShop > 0 Or InChat Then Exit Sub
 
@@ -4730,7 +4734,7 @@ Private Sub picSpells_DblClick()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picSpells_DblClick", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4740,7 +4744,7 @@ Private Sub picSpells_MouseMove(Button As Integer, Shift As Integer, x As Single
     Dim X2 As Long, Y2 As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     SpellX = x
     SpellY = y
@@ -4766,7 +4770,7 @@ Private Sub picSpells_MouseMove(Button As Integer, Shift As Integer, x As Single
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picSpells_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4776,7 +4780,7 @@ Private Sub picSpells_MouseUp(Button As Integer, Shift As Integer, x As Single, 
     Dim rec_pos As RECT
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If DragSpellSlot > 0 Then
         ' Drag and Drop
@@ -4825,7 +4829,7 @@ Private Sub picSpells_MouseUp(Button As Integer, Shift As Integer, x As Single, 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picSpells_MouseUp", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4834,7 +4838,7 @@ Private Sub picSpells_MouseDown(Button As Integer, Shift As Integer, x As Single
     Dim SpellNum As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     picSpellDesc.Visible = False
     LastSpellDesc = 0
@@ -4885,7 +4889,7 @@ Private Sub picSpells_MouseDown(Button As Integer, Shift As Integer, x As Single
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picSpells_MouseDown", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4896,21 +4900,21 @@ End Sub
 
 Private Sub picTitles_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call ClearChatButton(0)
     ClearButtons
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picTitles_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picTrade_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Hide the descriptions
     picItemDesc.Visible = False
@@ -4918,7 +4922,7 @@ Private Sub picTrade_MouseMove(Button As Integer, Shift As Integer, x As Single,
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picTrade_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4927,7 +4931,7 @@ Private Sub picYourTrade_DblClick()
 Dim TradeNum As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     TradeNum = IsTradeItem(TradeX, TradeY, True)
 
@@ -4937,7 +4941,7 @@ Dim TradeNum As Long
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picYourTrade_DlbClick", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4946,7 +4950,7 @@ Private Sub picYourTrade_MouseMove(Button As Integer, Shift As Integer, x As Sin
     Dim TradeNum As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     TradeX = x
     TradeY = y
@@ -4966,7 +4970,7 @@ Private Sub picYourTrade_MouseMove(Button As Integer, Shift As Integer, x As Sin
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picYourTrade_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4975,7 +4979,7 @@ Private Sub picTheirTrade_MouseMove(Button As Integer, Shift As Integer, x As Si
     Dim TradeNum As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     TradeNum = IsTradeItem(x, y, False)
     
@@ -4992,7 +4996,7 @@ Private Sub picTheirTrade_MouseMove(Button As Integer, Shift As Integer, x As Si
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picTheirTrade_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5001,7 +5005,7 @@ End Sub
 Private Sub Socket_DataArrival(ByVal bytesTotal As Long)
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If IsConnected Then
         Call IncomingData(bytesTotal)
@@ -5009,7 +5013,7 @@ Private Sub Socket_DataArrival(ByVal bytesTotal As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Socket_DataArrival", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5024,7 +5028,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Dim PlayerTarget As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GettingMap Then Exit Sub
 
@@ -5141,7 +5145,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_KeyPress", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5150,7 +5154,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Make sure they can't press keys until they are in the game
     If InGame = False Then Exit Sub
@@ -5158,8 +5162,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
-                If frmAdmin.Visible = True Then
+                If frmAdmin.Visible = True And GetForegroundWindow = frmAdmin.hwnd Then
                     Unload frmAdmin
+                ElseIf frmAdmin.Visible = True And GetForegroundWindow <> frmAdmin.hwnd Then
+                    BringWindowToTop (frmAdmin.hwnd)
                 Else
                     frmAdmin.Visible = True
                     frmAdmin.Left = frmMain.Width - frmAdmin.Width + frmMain.Left
@@ -5280,7 +5286,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_KeyUp", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5297,33 +5303,33 @@ End Sub
 
 Private Sub txtMyChat_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     MyText = txtMyChat
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtMyChat_Change", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtChat_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     SetGameFocus
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtChat_GotFocus", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtChat_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     picItemDesc.Visible = False
     picSpellDesc.Visible = False
@@ -5332,7 +5338,7 @@ Private Sub txtChat_MouseMove(Button As Integer, Shift As Integer, x As Single, 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtChat_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5342,13 +5348,13 @@ End Sub
 ' ***************
 Private Sub lblUseItem_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Call UseItem
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lblUseItem_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5360,7 +5366,7 @@ Private Sub picInventory_DblClick()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     InvNum = IsInvItem(InvX, InvY)
 
@@ -5447,7 +5453,7 @@ Private Sub picInventory_DblClick()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picInventory_DblClick", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
     Exit Sub
@@ -5458,7 +5464,7 @@ Private Function IsEqItem(ByVal x As Single, ByVal y As Single) As Long
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     IsEqItem = 0
 
@@ -5482,7 +5488,7 @@ Private Function IsEqItem(ByVal x As Single, ByVal y As Single) As Long
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsEqItem", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -5492,7 +5498,7 @@ Private Function IsInvItem(ByVal x As Single, ByVal y As Single) As Long
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     IsInvItem = 0
 
@@ -5516,7 +5522,7 @@ Private Function IsInvItem(ByVal x As Single, ByVal y As Single) As Long
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsInvItem", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -5526,7 +5532,7 @@ Private Function IsPlayerSpell(ByVal x As Single, ByVal y As Single) As Long
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     IsPlayerSpell = 0
 
@@ -5550,7 +5556,7 @@ Private Function IsPlayerSpell(ByVal x As Single, ByVal y As Single) As Long
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsPlayerSpell", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -5561,7 +5567,7 @@ Private Function IsTradeItem(ByVal x As Single, ByVal y As Single, ByVal Yours A
     Dim ItemNum As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     IsTradeItem = 0
 
@@ -5591,7 +5597,7 @@ Private Function IsTradeItem(ByVal x As Single, ByVal y As Single, ByVal Yours A
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsTradeItem", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -5600,7 +5606,7 @@ Private Sub picInventory_MouseDown(Button As Integer, Shift As Integer, x As Sin
     Dim InvNum As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If InTrade > 0 Then Exit Sub
     
@@ -5659,7 +5665,7 @@ Private Sub picInventory_MouseDown(Button As Integer, Shift As Integer, x As Sin
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picInventory_MouseDown", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5669,7 +5675,7 @@ Private Sub picInventory_MouseMove(Button As Integer, Shift As Integer, x As Sin
     Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     InvX = x
     InvY = y
@@ -5710,7 +5716,7 @@ Private Sub picInventory_MouseMove(Button As Integer, Shift As Integer, x As Sin
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picInventory_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5720,7 +5726,7 @@ Private Sub picInventory_MouseUp(Button As Integer, Shift As Integer, x As Singl
     Dim rec_pos As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If InTrade > 0 Then Exit Sub
     
@@ -5769,21 +5775,21 @@ Private Sub picInventory_MouseUp(Button As Integer, Shift As Integer, x As Singl
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picInventory_MouseUp", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub picItemDesc_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     picItemDesc.Visible = False
     LastItemDesc = 0 ' No item was last loaded
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picItemDesc_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5795,7 +5801,7 @@ Private Sub picVisEquip_Click()
     Dim EqNum As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     EqNum = IsEqItem(EqX, EqY)
 
@@ -5805,7 +5811,7 @@ Private Sub picVisEquip_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picCharacter_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5815,7 +5821,7 @@ Private Sub picVisEquip_MouseMove(Button As Integer, Shift As Integer, x As Sing
     Dim X2 As Long, Y2 As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     EqX = x
     EqY = y
@@ -5836,7 +5842,7 @@ Private Sub picVisEquip_MouseMove(Button As Integer, Shift As Integer, x As Sing
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picCharacter_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5846,7 +5852,7 @@ Private Sub picBank_DblClick()
     Dim BankNum As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     DragBankSlot = 0
 
@@ -5877,7 +5883,7 @@ Private Sub picBank_DblClick()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picBank_DlbClick", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5886,7 +5892,7 @@ Private Sub picBank_MouseDown(Button As Integer, Shift As Integer, x As Single, 
     Dim BankNum As Long
                         
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     BankNum = IsBankItem(x, y)
     
@@ -5898,7 +5904,7 @@ Private Sub picBank_MouseDown(Button As Integer, Shift As Integer, x As Single, 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picBank_MouseDown", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5908,7 +5914,7 @@ Private Sub picBank_MouseUp(Button As Integer, Shift As Integer, x As Single, y 
     Dim rec_pos As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If DragBankSlot > 0 Then
         For i = 1 To MAX_BANK
@@ -5935,7 +5941,7 @@ Private Sub picBank_MouseUp(Button As Integer, Shift As Integer, x As Single, y 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picBank_MouseUp", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5945,7 +5951,7 @@ Private Sub picBank_MouseMove(Button As Integer, Shift As Integer, x As Single, 
     Dim X2 As Long, Y2 As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     BankX = x
     BankY = y
@@ -5969,7 +5975,7 @@ Private Sub picBank_MouseMove(Button As Integer, Shift As Integer, x As Single, 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "picBank_MouseMove", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -5979,7 +5985,7 @@ Private Function IsBankItem(ByVal x As Single, ByVal y As Single) As Long
     Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     IsBankItem = 0
     
@@ -6003,27 +6009,27 @@ Private Function IsBankItem(ByVal x As Single, ByVal y As Single) As Long
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsBankItem", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Private Sub txtTransChat_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call SetGameFocus
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtTransChat_Change", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub CloseAllPanels()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     picInventory.Visible = False
     picSpells.Visible = False
@@ -6039,7 +6045,7 @@ Public Sub CloseAllPanels()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "CloseAllPanels", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
