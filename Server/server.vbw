@@ -1,7 +1,7 @@
 modConstants = 0, 0, 778, 625, 
 modDatabase = 44, 58, 822, 683, 
 modGameLogic = 198, 261, 1065, 828, 
-modGeneral = 208, 208, 1500, 858, Z
+modGeneral = 208, 208, 1500, 858, 
 modGlobals = 66, 87, 844, 712, 
 modHandleData = 208, 50, 986, 675, 
 modServerTCP = 110, 145, 888, 770, 

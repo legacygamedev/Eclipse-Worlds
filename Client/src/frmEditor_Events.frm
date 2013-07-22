@@ -5173,7 +5173,7 @@ Private Sub cmdNewPage_Click()
     cmdDeletePage.Enabled = True
 End Sub
 
-Private Sub cmdSave_Click()
+Public Sub cmdSave_Click()
     EventEditorSave
 End Sub
 
