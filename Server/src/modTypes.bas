@@ -668,6 +668,8 @@ Private Type ItemRec
     IsReusable As Boolean
     Tool As Integer
     HoT As Byte
+    TwoHanded As Byte
+    Stackable As Byte
 End Type
 
 Private Type MapItemRec

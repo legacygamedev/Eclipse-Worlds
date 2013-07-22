@@ -1406,36 +1406,36 @@ End Sub
 Sub SendAssociatedCharacters()
 
 End Sub
-Sub SendUpdateNpcToAll(ByVal npcnum As Long)
+Sub SendUpdateNpcToAll(ByVal NpcNum As Long)
     Dim buffer As clsBuffer
     Dim NpcSize As Long
     Dim NpcData() As Byte
     
     Set buffer = New clsBuffer
     
-    NpcSize = LenB(NPC(npcnum))
+    NpcSize = LenB(NPC(NpcNum))
     ReDim NpcData(NpcSize - 1)
-    CopyMemory NpcData(0), ByVal VarPtr(NPC(npcnum)), NpcSize
+    CopyMemory NpcData(0), ByVal VarPtr(NPC(NpcNum)), NpcSize
     buffer.WriteLong SUpdateNpc
-    buffer.WriteLong npcnum
+    buffer.WriteLong NpcNum
     buffer.WriteBytes NpcData
     
     SendDataToAll buffer.ToArray()
     Set buffer = Nothing
 End Sub
 
-Sub SendUpdateNpcTo(ByVal index As Long, ByVal npcnum As Long)
+Sub SendUpdateNpcTo(ByVal index As Long, ByVal NpcNum As Long)
     Dim buffer As clsBuffer
     Dim NpcSize As Long
     Dim NpcData() As Byte
     
     Set buffer = New clsBuffer
     
-    NpcSize = LenB(NPC(npcnum))
+    NpcSize = LenB(NPC(NpcNum))
     ReDim NpcData(NpcSize - 1)
-    CopyMemory NpcData(0), ByVal VarPtr(NPC(npcnum)), NpcSize
+    CopyMemory NpcData(0), ByVal VarPtr(NPC(NpcNum)), NpcSize
     buffer.WriteLong SUpdateNpc
-    buffer.WriteLong npcnum
+    buffer.WriteLong NpcNum
     buffer.WriteBytes NpcData
     
     SendDataTo index, buffer.ToArray()
@@ -1910,7 +1910,7 @@ Sub SendTradeUpdate(ByVal index As Long, ByVal DataType As Byte)
             ' add total worth
             If TempPlayer(index).TradeOffer(i).Num > 0 Then
                 ' currency?
-                If Item(TempPlayer(index).TradeOffer(i).Num).Type = ITEM_TYPE_CURRENCY Then
+                If Item(TempPlayer(index).TradeOffer(i).Num).Stackable = 1 Then
                     TotalWorth = TotalWorth + (Item(GetPlayerInvItemNum(index, TempPlayer(index).TradeOffer(i).Num)).Price * TempPlayer(index).TradeOffer(i).Value)
                 Else
                     TotalWorth = TotalWorth + Item(GetPlayerInvItemNum(index, TempPlayer(index).TradeOffer(i).Num)).Price
@@ -1924,7 +1924,7 @@ Sub SendTradeUpdate(ByVal index As Long, ByVal DataType As Byte)
             ' add total worth
             If GetPlayerInvItemNum(TradeTarget, TempPlayer(TradeTarget).TradeOffer(i).Num) > 0 Then
                 ' currency?
-                If Item(GetPlayerInvItemNum(TradeTarget, TempPlayer(TradeTarget).TradeOffer(i).Num)).Type = ITEM_TYPE_CURRENCY Then
+                If Item(GetPlayerInvItemNum(TradeTarget, TempPlayer(TradeTarget).TradeOffer(i).Num)).Stackable = 1 Then
                     TotalWorth = TotalWorth + (Item(GetPlayerInvItemNum(TradeTarget, TempPlayer(TradeTarget).TradeOffer(i).Num)).Price * TempPlayer(TradeTarget).TradeOffer(i).Value)
                 Else
                     TotalWorth = TotalWorth + Item(GetPlayerInvItemNum(TradeTarget, TempPlayer(TradeTarget).TradeOffer(i).Num)).Price

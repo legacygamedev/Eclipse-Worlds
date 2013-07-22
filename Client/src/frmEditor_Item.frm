@@ -40,6 +40,14 @@ Begin VB.Form frmEditor_Item
       TabIndex        =   56
       Top             =   0
       Width           =   6255
+      Begin VB.CheckBox chkStackable 
+         Caption         =   "Stackable"
+         Height          =   195
+         Left            =   720
+         TabIndex        =   116
+         Top             =   960
+         Width           =   1095
+      End
       Begin VB.ComboBox cmbSound 
          BeginProperty Font 
             Name            =   "Verdana"
@@ -54,8 +62,8 @@ Begin VB.Form frmEditor_Item
          Left            =   720
          Style           =   2  'Dropdown List
          TabIndex        =   3
-         Top             =   1320
-         Width           =   2055
+         Top             =   600
+         Width           =   1455
       End
       Begin VB.ComboBox cmbType 
          BeginProperty Font 
@@ -73,7 +81,7 @@ Begin VB.Form frmEditor_Item
          List            =   "frmEditor_Item.frx":03A9
          Style           =   2  'Dropdown List
          TabIndex        =   2
-         Top             =   960
+         Top             =   1200
          Width           =   1455
       End
       Begin VB.PictureBox Picture1 
@@ -90,13 +98,13 @@ Begin VB.Form frmEditor_Item
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   540
-         Left            =   2230
+         Left            =   2280
          ScaleHeight     =   34
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   34
          TabIndex        =   85
          TabStop         =   0   'False
-         Top             =   660
+         Top             =   360
          Width           =   540
          Begin VB.PictureBox Picture4 
             BackColor       =   &H00404040&
@@ -156,18 +164,18 @@ Begin VB.Form frmEditor_Item
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   4320
+         Left            =   4080
          TabIndex        =   4
          Top             =   240
-         Width           =   1815
+         Width           =   2055
       End
       Begin VB.HScrollBar scrlRarity 
          Height          =   255
-         Left            =   4320
+         Left            =   3000
          Max             =   6
          TabIndex        =   6
-         Top             =   960
-         Width           =   1815
+         Top             =   1200
+         Width           =   975
       End
       Begin VB.ComboBox cmbBind 
          BeginProperty Font 
@@ -180,21 +188,21 @@ Begin VB.Form frmEditor_Item
             Strikethrough   =   0   'False
          EndProperty
          Height          =   300
-         ItemData        =   "frmEditor_Item.frx":040C
-         Left            =   4320
-         List            =   "frmEditor_Item.frx":0419
+         ItemData        =   "frmEditor_Item.frx":0409
+         Left            =   4080
+         List            =   "frmEditor_Item.frx":0416
          Style           =   2  'Dropdown List
          TabIndex        =   5
          Top             =   600
-         Width           =   1815
+         Width           =   2055
       End
       Begin VB.HScrollBar scrlAnim 
          Height          =   255
-         Left            =   5040
+         Left            =   4080
          Max             =   5
          TabIndex        =   7
-         Top             =   1320
-         Width           =   1095
+         Top             =   1200
+         Width           =   2055
       End
       Begin VB.TextBox txtName 
          BeginProperty Font 
@@ -211,22 +219,22 @@ Begin VB.Form frmEditor_Item
          ScrollBars      =   1  'Horizontal
          TabIndex        =   0
          Top             =   240
-         Width           =   2055
+         Width           =   1455
       End
       Begin VB.HScrollBar scrlPic 
          Height          =   255
-         Left            =   1080
+         Left            =   2280
          Max             =   255
          TabIndex        =   1
-         Top             =   600
-         Width           =   1095
+         Top             =   1200
+         Width           =   495
       End
       Begin VB.Label Label5 
          Caption         =   "Type:"
          Height          =   255
          Left            =   120
          TabIndex        =   100
-         Top             =   960
+         Top             =   1200
          Width           =   495
       End
       Begin VB.Label Label4 
@@ -234,14 +242,14 @@ Begin VB.Form frmEditor_Item
          Height          =   255
          Left            =   120
          TabIndex        =   99
-         Top             =   1320
+         Top             =   600
          Width           =   615
       End
       Begin VB.Label lblRarity 
          AutoSize        =   -1  'True
          Caption         =   "Rarity: 1"
          Height          =   195
-         Left            =   2880
+         Left            =   3000
          TabIndex        =   62
          Top             =   960
          Width           =   585
@@ -250,7 +258,7 @@ Begin VB.Form frmEditor_Item
          AutoSize        =   -1  'True
          Caption         =   "Bind Type:"
          Height          =   195
-         Left            =   2880
+         Left            =   3000
          TabIndex        =   61
          Top             =   600
          Width           =   765
@@ -259,7 +267,7 @@ Begin VB.Form frmEditor_Item
          AutoSize        =   -1  'True
          Caption         =   "Price:"
          Height          =   195
-         Left            =   2880
+         Left            =   3000
          TabIndex        =   60
          Top             =   240
          Width           =   405
@@ -268,10 +276,10 @@ Begin VB.Form frmEditor_Item
          AutoSize        =   -1  'True
          Caption         =   "Animation: None"
          Height          =   195
-         Left            =   2880
+         Left            =   4080
          TabIndex        =   59
-         Top             =   1320
-         Width           =   2130
+         Top             =   960
+         Width           =   2010
       End
       Begin VB.Label Label1 
          AutoSize        =   -1  'True
@@ -287,9 +295,9 @@ Begin VB.Form frmEditor_Item
          AutoSize        =   -1  'True
          Caption         =   "Icon: 0"
          Height          =   195
-         Left            =   120
+         Left            =   2280
          TabIndex        =   57
-         Top             =   600
+         Top             =   960
          UseMnemonic     =   0   'False
          Width           =   495
       End
@@ -376,9 +384,9 @@ Begin VB.Form frmEditor_Item
             Strikethrough   =   0   'False
          EndProperty
          Height          =   300
-         ItemData        =   "frmEditor_Item.frx":0442
+         ItemData        =   "frmEditor_Item.frx":043F
          Left            =   4200
-         List            =   "frmEditor_Item.frx":0444
+         List            =   "frmEditor_Item.frx":0441
          Style           =   2  'Dropdown List
          TabIndex        =   108
          Top             =   720
@@ -395,9 +403,9 @@ Begin VB.Form frmEditor_Item
             Strikethrough   =   0   'False
          EndProperty
          Height          =   300
-         ItemData        =   "frmEditor_Item.frx":0446
+         ItemData        =   "frmEditor_Item.frx":0443
          Left            =   4200
-         List            =   "frmEditor_Item.frx":0453
+         List            =   "frmEditor_Item.frx":0450
          Style           =   2  'Dropdown List
          TabIndex        =   10
          Top             =   360
@@ -573,11 +581,19 @@ Begin VB.Form frmEditor_Item
       Top             =   4680
       Visible         =   0   'False
       Width           =   6255
+      Begin VB.CheckBox chkTwoHanded 
+         Caption         =   "Two Handed"
+         Height          =   255
+         Left            =   4800
+         TabIndex        =   117
+         Top             =   2640
+         Width           =   1335
+      End
       Begin VB.ComboBox cmbEquipSlot 
          Height          =   315
-         ItemData        =   "frmEditor_Item.frx":046B
+         ItemData        =   "frmEditor_Item.frx":0468
          Left            =   1680
-         List            =   "frmEditor_Item.frx":0499
+         List            =   "frmEditor_Item.frx":0496
          Style           =   2  'Dropdown List
          TabIndex        =   105
          Top             =   360
@@ -744,9 +760,9 @@ Begin VB.Form frmEditor_Item
       End
       Begin VB.ComboBox cmbTool 
          Height          =   315
-         ItemData        =   "frmEditor_Item.frx":0504
+         ItemData        =   "frmEditor_Item.frx":0501
          Left            =   4200
-         List            =   "frmEditor_Item.frx":0514
+         List            =   "frmEditor_Item.frx":0511
          Style           =   2  'Dropdown List
          TabIndex        =   34
          Top             =   360
@@ -1319,6 +1335,36 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub chkStackable_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Item(EditorIndex).Stackable = chkStackable.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "chkStackable_Click", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub chkTwoHanded_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Item(EditorIndex).isTwoHanded = chkTwoHanded.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "chkTwoHanded_Click", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub chkWarpAway_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
@@ -1490,7 +1536,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
 
     ItemEditorInit
@@ -1740,7 +1786,7 @@ Private Sub scrlAnim_Change()
     If scrlAnim.Value = 0 Then
         lblAnim.Caption = "Animation: None"
     Else
-        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).name)
+        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).Name)
     End If
     Item(EditorIndex).Animation = scrlAnim.Value
     Exit Sub
@@ -1758,7 +1804,7 @@ Private Sub scrlCastSpell_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlCastSpell.Value > 0 Then
-        lblCastSpell.Caption = "Cast Spell: " & Trim$(Spell(scrlCastSpell.Value).name)
+        lblCastSpell.Caption = "Cast Spell: " & Trim$(Spell(scrlCastSpell.Value).Name)
     Else
         lblCastSpell.Caption = "Cast Spell: None"
     End If
@@ -2134,9 +2180,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Item(EditorIndex).name = Trim$(txtName.text)
+    Item(EditorIndex).Name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -2281,7 +2327,7 @@ Private Sub cmdPaste_Click()
          
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Item(EditorIndex)), ByVal VarPtr(Item(TmpIndex + 1)), LenB(Item(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).Name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

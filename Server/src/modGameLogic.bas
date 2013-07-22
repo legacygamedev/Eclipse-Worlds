@@ -120,7 +120,7 @@ Sub SpawnMapItems(ByVal MapNum As Integer)
             ' Check if the tile type is an item or a saved tile incase someone drops something
             If (Map(MapNum).Tile(X, Y).Type = TILE_TYPE_ITEM) Then
                 ' Check to see if its a currency and if they set the value to 0 set it to 1 automatically
-                If Item(Map(MapNum).Tile(X, Y).Data1).Type = ITEM_TYPE_CURRENCY And Map(MapNum).Tile(X, Y).Data2 <= 0 Then
+                If Item(Map(MapNum).Tile(X, Y).Data1).Stackable = 1 And Map(MapNum).Tile(X, Y).Data2 <= 0 Then
                     Call SpawnItem(Map(MapNum).Tile(X, Y).Data1, 1, Item(Map(MapNum).Tile(X, Y).Data1).Data1, MapNum, X, Y)
                 Else
                     Call SpawnItem(Map(MapNum).Tile(X, Y).Data1, Map(MapNum).Tile(X, Y).Data2, Item(Map(MapNum).Tile(X, Y).Data1).Data1, MapNum, X, Y)
@@ -132,7 +132,7 @@ End Sub
 
 Public Sub SpawnNpc(ByVal MapNpcNum As Long, ByVal MapNum As Integer, Optional ForcedSpawn As Boolean = False, Optional ByVal SetX As Integer, Optional ByVal SetY As Integer)
     Dim buffer As clsBuffer
-    Dim npcnum As Long
+    Dim NpcNum As Long
     Dim i As Long
     Dim X As Long
     Dim Y As Long
@@ -141,17 +141,17 @@ Public Sub SpawnNpc(ByVal MapNpcNum As Long, ByVal MapNum As Integer, Optional F
     ' Check for subscript out of range
     If MapNpcNum <= 0 Or MapNpcNum > MAX_MAP_NPCS Or MapNum <= 0 Or MapNum > MAX_MAPS Then Exit Sub
     
-    npcnum = Map(MapNum).NPC(MapNpcNum)
-    If ForcedSpawn = False And Map(MapNum).NpcSpawnType(MapNpcNum) = 1 Then npcnum = 0
+    NpcNum = Map(MapNum).NPC(MapNpcNum)
+    If ForcedSpawn = False And Map(MapNum).NpcSpawnType(MapNpcNum) = 1 Then NpcNum = 0
     
-    If npcnum > 0 Then
-        MapNpc(MapNum).NPC(MapNpcNum).Num = npcnum
+    If NpcNum > 0 Then
+        MapNpc(MapNum).NPC(MapNpcNum).Num = NpcNum
         MapNpc(MapNum).NPC(MapNpcNum).Target = 0
         MapNpc(MapNum).NPC(MapNpcNum).TargetType = TARGET_TYPE_NONE ' Clear
         Call SendMapNpcTarget(MapNum, MapNpcNum, 0, 0)
        
-        MapNpc(MapNum).NPC(MapNpcNum).Vital(Vitals.HP) = GetNpcMaxVital(npcnum, Vitals.HP)
-        MapNpc(MapNum).NPC(MapNpcNum).Vital(Vitals.MP) = GetNpcMaxVital(npcnum, Vitals.MP)
+        MapNpc(MapNum).NPC(MapNpcNum).Vital(Vitals.HP) = GetNpcMaxVital(NpcNum, Vitals.HP)
+        MapNpc(MapNum).NPC(MapNpcNum).Vital(Vitals.MP) = GetNpcMaxVital(NpcNum, Vitals.MP)
 
         MapNpc(MapNum).NPC(MapNpcNum).Dir = Int(Rnd * 4)
         

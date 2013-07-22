@@ -1258,7 +1258,7 @@ Sub HandleMapDropItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr
     
     If GetPlayerInvItemNum(Index, InvNum) < 1 Or GetPlayerInvItemNum(Index, InvNum) > MAX_ITEMS Then Exit Sub
     
-    If Item(GetPlayerInvItemNum(Index, InvNum)).Type = ITEM_TYPE_CURRENCY Then
+    If Item(GetPlayerInvItemNum(Index, InvNum)).Stackable = 1 Then
         If GetPlayerInvItemValue(Index, InvNum) < Amount Then Amount = GetPlayerInvItemValue(Index, InvNum)
         If Amount < 1 Or Amount > GetPlayerInvItemValue(Index, InvNum) Then Exit Sub
     Else
@@ -1578,7 +1578,8 @@ Sub HandleSaveItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
     
     ' Save It
     Call SendUpdateItemToAll(n)
-    Call UpdateAllPlayerInvItems(n)
+    Call UpdateAllPlayerItems(n)
+    Call UpdateAllPlayerEquipmentItems
     Call SaveItem(n)
     Call AddLog(GetPlayerName(Index) & " saved Item #" & n & ".", "Staff")
 End Sub
@@ -1639,7 +1640,7 @@ Sub HandleRequestEditNpc(ByVal Index As Long, ByRef Data() As Byte, ByVal StartA
     If GetPlayerAccess(Index) < STAFF_DEVELOPER Then Exit Sub
 
     Set buffer = New clsBuffer
-    buffer.WriteLong SNPCEditor
+    buffer.WriteLong SNpcEditor
     SendDataTo Index, buffer.ToArray()
     Set buffer = Nothing
 End Sub
@@ -1648,7 +1649,7 @@ End Sub
 ' :: Save NPC packet ::
 ' :::::::::::::::::::::
 Private Sub HandleSaveNpc(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim npcnum As Long
+    Dim NpcNum As Long
     Dim buffer As clsBuffer
     Dim NpcSize As Long
     Dim NpcData() As Byte
@@ -1658,20 +1659,20 @@ Private Sub HandleSaveNpc(ByVal Index As Long, ByRef Data() As Byte, ByVal Start
 
     Set buffer = New clsBuffer
     buffer.WriteBytes Data()
-    npcnum = buffer.ReadLong
+    NpcNum = buffer.ReadLong
 
     ' Prevent hacking
-    If npcnum < 1 Or npcnum > MAX_NPCS Then Exit Sub
+    If NpcNum < 1 Or NpcNum > MAX_NPCS Then Exit Sub
     
-    NpcSize = LenB(NPC(npcnum))
+    NpcSize = LenB(NPC(NpcNum))
     ReDim NpcData(NpcSize - 1)
     NpcData = buffer.ReadBytes(NpcSize)
-    CopyMemory ByVal VarPtr(NPC(npcnum)), ByVal VarPtr(NpcData(0)), NpcSize
+    CopyMemory ByVal VarPtr(NPC(NpcNum)), ByVal VarPtr(NpcData(0)), NpcSize
     
     ' Save it
-    Call SendUpdateNpcToAll(npcnum)
-    Call SaveNpc(npcnum)
-    Call AddLog(GetPlayerName(Index) & " saved Npc #" & npcnum & ".", "Staff")
+    Call SendUpdateNpcToAll(NpcNum)
+    Call SaveNpc(NpcNum)
+    Call AddLog(GetPlayerName(Index) & " saved Npc #" & NpcNum & ".", "Staff")
 End Sub
 
 ' ::::::::::::::::::::::::::::::::::
@@ -2027,7 +2028,7 @@ Sub HandleSearch(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As L
         If MapItem(GetPlayerMap(Index), i).Num > 0 Then
             If MapItem(GetPlayerMap(Index), i).X = X And MapItem(GetPlayerMap(Index), i).Y = Y Then
                 If CanPlayerPickupItem(Index, i) Then
-                    If Item(MapItem(GetPlayerMap(Index), i).Num).Type = ITEM_TYPE_CURRENCY Then
+                    If Item(MapItem(GetPlayerMap(Index), i).Num).Stackable = 1 Then
                         Call PlayerMsg(Index, "You see " & MapItem(GetPlayerMap(Index), i).Value & " " & Trim$(Item(MapItem(GetPlayerMap(Index), i).Num).Name) & ".", Yellow)
                     Else
                         Call PlayerMsg(Index, "You see " & CheckGrammar(Trim$(Item(MapItem(GetPlayerMap(Index), i).Num).Name)) & ".", Yellow)
@@ -2489,16 +2490,14 @@ Sub HandleWithdrawItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAdd
     Dim buffer As clsBuffer
     Dim BankSlot As Byte
     Dim Amount As Long
-    Dim Durability As Integer
     
     Set buffer = New clsBuffer
     buffer.WriteBytes Data()
     
     BankSlot = buffer.ReadByte
     Amount = buffer.ReadLong
-    Durability = GetPlayerBankItemDur(Index, BankSlot)
     
-    TakeBankItem Index, BankSlot, Amount, Durability
+    TakeBankItem Index, BankSlot, Amount
     
     Set buffer = Nothing
 End Sub
@@ -2520,7 +2519,7 @@ Sub HandleDepositItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr
     If InvSlot < 1 Or InvSlot > MAX_INV Then Exit Sub
     
     ' Hack prevention
-    If Item(GetPlayerInvItemNum(Index, InvSlot)).Type = ITEM_TYPE_CURRENCY Then
+    If Item(GetPlayerInvItemNum(Index, InvSlot)).Stackable = 1 Then
         If GetPlayerInvItemValue(Index, InvSlot) < Amount Then Amount = GetPlayerInvItemValue(Index, InvSlot)
         If Amount < 1 Then Exit Sub
     Else
@@ -2858,14 +2857,14 @@ Sub HandleTradeItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     If ItemNum <= 0 Or ItemNum > MAX_ITEMS Then Exit Sub
     
     ' Hack prevention
-    If Item(GetPlayerInvItemNum(Index, InvSlot)).Type = ITEM_TYPE_CURRENCY Then
+    If Item(GetPlayerInvItemNum(Index, InvSlot)).Stackable = 1 Then
         If GetPlayerInvItemValue(Index, InvSlot) < Amount Then Amount = GetPlayerInvItemValue(Index, InvSlot)
         If Amount < 1 Then Exit Sub
     Else
         If Not Amount = 0 Then Exit Sub
     End If
 
-    If Item(ItemNum).Type = ITEM_TYPE_CURRENCY Then
+    If Item(ItemNum).Stackable = 1 Then
         ' Check if already offering same currency item
         For i = 1 To MAX_INV
             If TempPlayer(Index).TradeOffer(i).Num = InvSlot Then
@@ -2980,7 +2979,7 @@ Sub HandleHotbarChange(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAdd
         Case 1 ' Inventory
             If Slot > 0 And Slot <= MAX_INV Then
                 ' Don't add None/Currency/Auto Life type items
-                If Item(GetPlayerInvItemNum(Index, Slot)).Type = ITEM_TYPE_CURRENCY Or Item(GetPlayerInvItemNum(Index, Slot)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(Index, Slot)).Type = ITEM_TYPE_AUTOLIFE Then Exit Sub
+                If Item(GetPlayerInvItemNum(Index, Slot)).Stackable = 1 Or Item(GetPlayerInvItemNum(Index, Slot)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(Index, Slot)).Type = ITEM_TYPE_AUTOLIFE Then Exit Sub
                 
                 If Account(Index).Chars(GetPlayerChar(Index)).Inv(Slot).Num > 0 Then
                     If Len(Trim$(Item(GetPlayerInvItemNum(Index, Slot)).Name)) > 0 Then

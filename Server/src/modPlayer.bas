@@ -57,7 +57,10 @@ Sub JoinGame(ByVal Index As Long)
     Next
     
     ' Check for glitches in the inventory
-    Call UpdatePlayerInvItems(Index)
+    Call UpdatePlayerItems(Index)
+    
+    ' Check for glitches in equipment
+    Call UpdatePlayerEquipmentItems(Index)
     
     ' Send the player's data
     Call SendPlayerData(Index)
@@ -648,7 +651,7 @@ Function FindOpenInvSlot(ByVal Index As Long, ByVal ItemNum As Long) As Long
     ' Check for subscript out of range
     If IsPlaying(Index) = False Or ItemNum <= 0 Or ItemNum > MAX_ITEMS Then Exit Function
 
-    If Item(ItemNum).Type = ITEM_TYPE_CURRENCY Then
+    If Item(ItemNum).Stackable = 1 Then
 
         ' If currency then check to see if they already have an instance of the item and add it to that
         For i = 1 To MAX_INV
@@ -701,7 +704,7 @@ Function HasItem(ByVal Index As Long, ByVal ItemNum As Integer) As Long
     For i = 1 To MAX_INV
         ' Check to see if the player has the item
         If GetPlayerInvItemNum(Index, i) = ItemNum Then
-            If Item(ItemNum).Type = ITEM_TYPE_CURRENCY Then
+            If Item(ItemNum).Stackable = 1 Then
                 HasItem = GetPlayerInvItemValue(Index, i)
             Else
                 HasItem = 1
@@ -722,7 +725,7 @@ Function TakeInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVa
     For i = 1 To MAX_INV
         ' Check to see if the player has the item
         If GetPlayerInvItemNum(Index, i) = ItemNum Then
-            If Item(ItemNum).Type = ITEM_TYPE_CURRENCY Then
+            If Item(ItemNum).Stackable = 1 Then
                 ' Is what we are trying to take away more then what they have?  If so just set it to zero
                 If ItemVal >= GetPlayerInvItemValue(Index, i) Then
                     TakeInvItem = True
@@ -766,7 +769,7 @@ Function TakeInvSlot(ByVal Index As Long, ByVal InvSlot As Byte, ByVal ItemVal A
     ' Prevent subscript out of range
     If ItemNum < 1 Then Exit Function
     
-    If Item(ItemNum).Type = ITEM_TYPE_CURRENCY Then
+    If Item(ItemNum).Stackable = 1 Then
         ' Is what we are trying to take away more then what they have?  If so just set it to zero
         If ItemVal >= GetPlayerInvItemValue(Index, InvSlot) Then
             TakeInvSlot = True
@@ -877,7 +880,7 @@ Sub PlayerMapGetItem(ByVal Index As Long, ByVal i As Byte)
                         ' Set item in the player's inventory
                         Call SetPlayerInvItemNum(Index, n, MapItem(MapNum, i).Num)
 
-                        If Item(GetPlayerInvItemNum(Index, n)).Type = ITEM_TYPE_CURRENCY Then
+                        If Item(GetPlayerInvItemNum(Index, n)).Stackable = 1 Then
                             Call SetPlayerInvItemValue(Index, n, GetPlayerInvItemValue(Index, n) + MapItem(MapNum, i).Value)
                             Msg = MapItem(MapNum, i).Value & " " & Trim$(Item(GetPlayerInvItemNum(Index, n)).Name)
                         Else
@@ -951,7 +954,7 @@ Sub PlayerMapDropItem(ByVal Index As Long, ByVal InvNum As Byte, ByVal Amount As
                 MapItem(GetPlayerMap(Index), i).Durability = 0
             End If
             
-            If Item(GetPlayerInvItemNum(Index, InvNum)).Type = ITEM_TYPE_CURRENCY Then
+            If Item(GetPlayerInvItemNum(Index, InvNum)).Stackable = 1 Then
                 ' Check if its more then they have and if so drop it all
                 If Amount >= GetPlayerInvItemValue(Index, InvNum) Then
                     MapItem(GetPlayerMap(Index), i).Value = GetPlayerInvItemValue(Index, InvNum)
@@ -1353,13 +1356,13 @@ Sub CheckResource(ByVal Index As Long, ByVal X As Long, ByVal Y As Long)
     End If
 End Sub
 
-Sub GiveBankItem(ByVal Index As Long, ByVal InvSlot As Byte, ByVal Amount As Long, ByVal Durability As Integer)
+Sub GiveBankItem(ByVal Index As Long, ByVal InvSlot As Byte, ByVal Amount As Long, Optional ByVal Durability As Integer = 0)
     Dim BankSlot
     
     BankSlot = FindOpenBankSlot(Index, GetPlayerInvItemNum(Index, InvSlot))
         
     If BankSlot > 0 Then
-        If Item(GetPlayerInvItemNum(Index, InvSlot)).Type = ITEM_TYPE_CURRENCY Then
+        If Item(GetPlayerInvItemNum(Index, InvSlot)).Stackable = 1 Then
             If GetPlayerBankItemNum(Index, BankSlot) = GetPlayerInvItemNum(Index, InvSlot) Then
                 Call SetPlayerBankItemValue(Index, BankSlot, GetPlayerBankItemValue(Index, BankSlot) + Amount)
                 Call TakeInvItem(Index, GetPlayerInvItemNum(Index, InvSlot), Amount)
@@ -1388,13 +1391,13 @@ Sub GiveBankItem(ByVal Index As Long, ByVal InvSlot As Byte, ByVal Amount As Lon
     SendBank Index
 End Sub
 
-Sub TakeBankItem(ByVal Index As Long, ByVal BankSlot As Byte, ByVal Amount As Long, Durability As Integer)
+Sub TakeBankItem(ByVal Index As Long, ByVal BankSlot As Byte, ByVal Amount As Long)
     Dim InvSlot
 
     If BankSlot < 1 Or BankSlot > MAX_BANK Then Exit Sub
     
     ' Hack prevention
-    If Item(GetPlayerBankItemNum(Index, BankSlot)).Type = ITEM_TYPE_CURRENCY Then
+    If Item(GetPlayerBankItemNum(Index, BankSlot)).Stackable = 1 Then
         If GetPlayerBankItemValue(Index, BankSlot) < Amount Then Amount = GetPlayerBankItemValue(Index, BankSlot)
         If Amount < 1 Then Exit Sub
     Else
@@ -1404,7 +1407,7 @@ Sub TakeBankItem(ByVal Index As Long, ByVal BankSlot As Byte, ByVal Amount As Lo
     InvSlot = FindOpenInvSlot(Index, GetPlayerBankItemNum(Index, BankSlot))
         
     If InvSlot > 0 Then
-        If Item(GetPlayerBankItemNum(Index, BankSlot)).Type = ITEM_TYPE_CURRENCY Then
+        If Item(GetPlayerBankItemNum(Index, BankSlot)).Stackable = 1 Then
             Call GiveInvItem(Index, GetPlayerBankItemNum(Index, BankSlot), Amount)
             Call SetPlayerBankItemValue(Index, BankSlot, GetPlayerBankItemValue(Index, BankSlot) - Amount)
             
@@ -1678,27 +1681,43 @@ Public Sub SetCheckpoint(ByVal Index As Long, ByVal MapNum As Integer, ByVal X A
     Account(Index).Chars(GetPlayerChar(Index)).CheckPointY = Y
 End Sub
 
-Private Sub UpdatePlayerInvItems(ByVal Index As Long)
+Public Sub UpdatePlayerEquipmentItems(ByVal Index As Long)
+    If GetPlayerEquipment(Index, Shield) > 0 And Item(GetPlayerEquipment(Index, Weapon)).TwoHanded = 1 Then
+        Call PlayerUnequipItem(Index, Weapon)
+    End If
+End Sub
+
+Public Sub UpdateAllPlayerEquipmentItems()
+    Dim n As Long
+    
+    For n = 1 To Player_HighIndex
+        If IsPlaying(n) Then
+            If GetPlayerEquipment(n, Shield) > 0 And Item(GetPlayerEquipment(n, Weapon)).TwoHanded = 1 Then
+                Call PlayerUnequipItem(n, Weapon)
+            End If
+        End If
+    Next
+End Sub
+
+Public Sub UpdatePlayerItems(ByVal Index As Long)
     Dim TmpItem As Long
     Dim i As Byte, X As Byte
-    
-    X = 0
 
-    ' Make sure the inv items are not cached as a currency
+    ' Make sure the inventory items are not cached as a currency
     For i = 1 To MAX_INV
         If GetPlayerInvItemNum(Index, i) > 0 And GetPlayerInvItemNum(Index, i) <= MAX_INV Then
-            If Not Item(GetPlayerInvItemNum(Index, i)).Type = ITEM_TYPE_CURRENCY Then
+            If Not Item(GetPlayerInvItemNum(Index, i)).Stackable = 1 Then
                 If GetPlayerInvItemValue(Index, i) > 1 Then
-                    TmpItem = Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num
+                    TmpItem = GetPlayerInvItemNum(Index, i)
                     Call TakeInvItem(Index, TmpItem, 1)
                     Call GiveInvItem(Index, TmpItem, 1)
                 End If
             End If
             
             If GetPlayerInvItemNum(Index, i) > 0 And GetPlayerInvItemNum(Index, i) <= MAX_INV Then
-                If Item(GetPlayerInvItemNum(Index, i)).Type = ITEM_TYPE_CURRENCY Then
+                If Item(GetPlayerInvItemNum(Index, i)).Stackable = 1 Then
                     If GetPlayerInvItemValue(Index, i) = 0 Then
-                        TmpItem = Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num
+                        TmpItem = GetPlayerInvItemNum(Index, i)
                         Call TakeInvItem(Index, TmpItem, 1)
                         X = X + 1
                     End If
@@ -1710,9 +1729,38 @@ Private Sub UpdatePlayerInvItems(ByVal Index As Long)
     If X > 0 Then
         Call GiveInvItem(Index, TmpItem, X)
     End If
+    
+    X = 0
+    
+    ' Make sure the bank items are not cached as a currency
+    For i = 1 To MAX_BANK
+        If GetPlayerBankItemNum(Index, i) > 0 And GetPlayerBankItemNum(Index, i) <= MAX_BANK Then
+            If Not Item(GetPlayerBankItemNum(Index, i)).Stackable = 1 Then
+                If GetPlayerBankItemValue(Index, i) > 1 Then
+                    TmpItem = GetPlayerBankItemNum(Index, i)
+                    Call TakeBankItem(Index, TmpItem, 1)
+                    Call GiveBankItem(Index, TmpItem, 1)
+                End If
+            End If
+            
+            If GetPlayerBankItemNum(Index, i) > 0 And GetPlayerBankItemNum(Index, i) <= MAX_BANK Then
+                If Item(GetPlayerBankItemNum(Index, i)).Stackable = 1 Then
+                    If GetPlayerBankItemValue(Index, i) = 0 Then
+                        TmpItem = GetPlayerBankItemNum(Index, i)
+                        Call TakeBankItem(Index, TmpItem, 1)
+                        X = X + 1
+                    End If
+                End If
+            End If
+        End If
+    Next
+    
+    If X > 0 Then
+        Call GiveBankItem(Index, TmpItem, X)
+    End If
 End Sub
 
-Public Sub UpdateAllPlayerInvItems(ByVal ItemNum As Integer)
+Public Sub UpdateAllPlayerItems(ByVal ItemNum As Integer)
     Dim TmpItem As Long
     Dim n As Long, i As Byte, X As Byte
 
@@ -1722,8 +1770,9 @@ Public Sub UpdateAllPlayerInvItems(ByVal ItemNum As Integer)
             For i = 1 To MAX_INV
                 If GetPlayerInvItemNum(n, i) > 0 And GetPlayerInvItemNum(n, i) <= MAX_INV Then
                     If GetPlayerInvItemNum(n, i) = ItemNum Then
-                        TmpItem = Account(n).Chars(GetPlayerChar(i)).Inv(i).Num
-                        If Not Item(GetPlayerInvItemNum(n, i)).Type = ITEM_TYPE_CURRENCY Then
+                        TmpItem = GetPlayerInvItemNum(n, i)
+                        
+                        If Not Item(GetPlayerInvItemNum(n, i)).Stackable = 1 Then
                             If GetPlayerInvItemValue(n, i) > 1 Then
                                 Call TakeInvItem(n, TmpItem, 1)
                                 Call GiveInvItem(n, TmpItem, 1)
@@ -1731,7 +1780,7 @@ Public Sub UpdateAllPlayerInvItems(ByVal ItemNum As Integer)
                         End If
                         
                         If GetPlayerInvItemNum(n, i) > 0 And GetPlayerInvItemNum(n, i) <= MAX_INV Then
-                            If Item(GetPlayerInvItemNum(n, i)).Type = ITEM_TYPE_CURRENCY Then
+                            If Item(GetPlayerInvItemNum(n, i)).Stackable = 1 Then
                                 If GetPlayerInvItemValue(n, i) = 0 Then
                                     Call TakeInvItem(n, TmpItem, 1)
                                     X = X + 1
@@ -1745,14 +1794,43 @@ Public Sub UpdateAllPlayerInvItems(ByVal ItemNum As Integer)
             If X > 0 Then
                 Call GiveInvItem(n, TmpItem, X)
             End If
+            
+            X = 0
+            
+            ' Make sure the Bank items are not cached as a currency
+            For i = 1 To MAX_BANK
+                If GetPlayerBankItemNum(n, i) > 0 And GetPlayerBankItemNum(n, i) <= MAX_BANK Then
+                    If GetPlayerBankItemNum(n, i) = ItemNum Then
+                        TmpItem = GetPlayerBankItemNum(n, i)
+                        
+                        If Not Item(GetPlayerBankItemNum(n, i)).Stackable = 1 Then
+                            If GetPlayerBankItemValue(n, i) > 1 Then
+                                Call TakeBankItem(n, TmpItem, 1)
+                                Call GiveBankItem(n, TmpItem, 1)
+                            End If
+                        End If
+                        
+                        If GetPlayerBankItemNum(n, i) > 0 And GetPlayerBankItemNum(n, i) <= MAX_BANK Then
+                            If Item(GetPlayerBankItemNum(n, i)).Stackable = 1 Then
+                                If GetPlayerBankItemValue(n, i) = 0 Then
+                                    Call TakeBankItem(n, TmpItem, 1)
+                                    X = X + 1
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            Next
+            
+            If X > 0 Then
+                Call GiveBankItem(n, TmpItem, X)
+            End If
         End If
     Next
 End Sub
 
 Function CanPlayerTrade(ByVal Index As Long, ByVal TradeTarget As Long) As Boolean
     Dim sX As Long, sY As Long, tX As Long, tY As Long
-    
-    CanPlayerTrade = False
     
     ' Can't trade with yourself
     If TradeTarget = Index Then
@@ -1784,7 +1862,7 @@ Function CanPlayerTrade(ByVal Index As Long, ByVal TradeTarget As Long) As Boole
     CanPlayerTrade = True
 End Function
 
-Function CanPlayerUseItem(ByVal Index As Long, ByVal InvItem As Integer, Optional Message As Boolean = True) As Boolean
+Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optional Message As Boolean = True) As Boolean
     Dim LevelReq As Byte
     Dim AccessReq As Byte
     Dim ClassReq As Byte
@@ -1797,7 +1875,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal InvItem As Integer, Optiona
         Exit Function
     End If
     
-    LevelReq = Item(InvItem).LevelReq
+    LevelReq = Item(ItemNum).LevelReq
 
     ' Make sure they are the right level
     If LevelReq > GetPlayerLevel(Index) Then
@@ -1807,7 +1885,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal InvItem As Integer, Optiona
         Exit Function
     End If
     
-    AccessReq = Item(InvItem).AccessReq
+    AccessReq = Item(ItemNum).AccessReq
     
     ' Make sure they have the right access
     If AccessReq > GetPlayerAccess(Index) Then
@@ -1817,7 +1895,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal InvItem As Integer, Optiona
         Exit Function
     End If
     
-    ClassReq = Item(InvItem).ClassReq
+    ClassReq = Item(ItemNum).ClassReq
     
     ' Make sure the Classes req > 0
     If ClassReq > 0 Then ' 0 = no req
@@ -1829,7 +1907,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal InvItem As Integer, Optiona
         End If
     End If
     
-    GenderReq = Item(InvItem).GenderReq
+    GenderReq = Item(ItemNum).GenderReq
     
     ' Make sure the Gender req > 0
     If GenderReq > 0 Then ' 0 = no req
@@ -1847,7 +1925,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal InvItem As Integer, Optiona
     
     ' Check if they have the stats required to use this item
     For i = 1 To Stats.Stat_count - 1
-        If GetPlayerRawStat(Index, i) < Item(InvItem).Stat_Req(i) Then
+        If GetPlayerRawStat(Index, i) < Item(ItemNum).Stat_Req(i) Then
             If Message Then
                 PlayerMsg Index, "You do not meet the stat requirements to use this item.", BrightRed
             End If
@@ -1856,11 +1934,19 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal InvItem As Integer, Optiona
     Next
     
     ' Check if they have the proficiency required to use this item
-    If Item(InvItem).ProficiencyReq > 0 Then
-        If GetPlayerProficiency(Index, Item(InvItem).ProficiencyReq) = 0 Then
+    If Item(ItemNum).ProficiencyReq > 0 Then
+        If GetPlayerProficiency(Index, Item(ItemNum).ProficiencyReq) = 0 Then
             If Message Then
                 PlayerMsg Index, "You lack the proficiency to use this item!", BrightRed
             End If
+            Exit Function
+        End If
+    End If
+    
+    ' Don't let them equip a two handed weapon if they have a shield on
+     If Item(ItemNum).TwoHanded = 1 Then
+        If GetPlayerEquipment(Index, Shield) > 0 Then
+            PlayerMsg Index, "You must unequip your shield before equipping a two-handed weapon!", BrightRed
             Exit Function
         End If
     End If
