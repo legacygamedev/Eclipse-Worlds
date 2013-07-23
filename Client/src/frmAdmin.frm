@@ -1,5 +1,6 @@
 VERSION 5.00
 Begin VB.Form frmAdmin 
+   BackColor       =   &H80000002&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Admin Panel"
    ClientHeight    =   8625
@@ -35,10 +36,48 @@ Begin VB.Form frmAdmin
       ScaleHeight     =   576
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   189
-      TabIndex        =   6
+      TabIndex        =   5
       TabStop         =   0   'False
       Top             =   0
       Width           =   2835
+      Begin VB.ComboBox cmbPlayersOnline 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000001&
+         ForeColor       =   &H80000002&
+         Height          =   315
+         Left            =   660
+         TabIndex        =   45
+         Text            =   "Choose Player"
+         Top             =   390
+         Width           =   1515
+      End
+      Begin VB.TextBox txtAName 
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Left            =   210
+         TabIndex        =   44
+         Top             =   390
+         Width           =   375
+      End
+      Begin VB.PictureBox picRefresh 
+         BackColor       =   &H80000002&
+         BorderStyle     =   0  'None
+         Height          =   315
+         Left            =   2280
+         ScaleHeight     =   315
+         ScaleWidth      =   375
+         TabIndex        =   43
+         Top             =   390
+         Width           =   375
+      End
       Begin VB.CommandButton cmdCharEditor 
          Caption         =   "Character's Editor"
          BeginProperty Font 
@@ -52,9 +91,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   39
+         TabIndex        =   37
          TabStop         =   0   'False
-         Top             =   1800
+         Top             =   2100
          Width           =   2535
       End
       Begin VB.CommandButton cmdAEmoticon 
@@ -70,7 +109,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   38
+         TabIndex        =   36
          TabStop         =   0   'False
          Top             =   6660
          Width           =   1215
@@ -88,7 +127,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   31
+         TabIndex        =   30
          TabStop         =   0   'False
          Top             =   6660
          Width           =   1215
@@ -106,10 +145,10 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   30
+         TabIndex        =   29
          TabStop         =   0   'False
          Top             =   1500
-         Width           =   1185
+         Width           =   1215
       End
       Begin VB.CommandButton cmdATitle 
          Caption         =   "Title"
@@ -124,7 +163,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   29
+         TabIndex        =   28
          TabStop         =   0   'False
          Top             =   6300
          Width           =   1215
@@ -142,7 +181,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   28
+         TabIndex        =   27
          TabStop         =   0   'False
          Top             =   5940
          Width           =   1215
@@ -160,7 +199,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   27
+         TabIndex        =   26
          TabStop         =   0   'False
          Top             =   2400
          Width           =   2535
@@ -178,9 +217,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   26
+         TabIndex        =   25
          TabStop         =   0   'False
-         Top             =   1500
+         Top             =   1800
          Width           =   1215
       End
       Begin VB.CommandButton cmdAAnim 
@@ -196,7 +235,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   25
+         TabIndex        =   24
          TabStop         =   0   'False
          Top             =   5940
          Width           =   1215
@@ -214,10 +253,10 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   24
+         TabIndex        =   23
          TabStop         =   0   'False
-         Top             =   2100
-         Width           =   2535
+         Top             =   1800
+         Width           =   1215
       End
       Begin VB.TextBox txtAAccess 
          BeginProperty Font 
@@ -231,8 +270,8 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   285
          Left            =   1410
-         TabIndex        =   1
-         Top             =   480
+         TabIndex        =   0
+         Top             =   870
          Width           =   1215
       End
       Begin VB.TextBox txtASprite 
@@ -247,7 +286,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   285
          Left            =   960
-         TabIndex        =   3
+         TabIndex        =   2
          Top             =   2730
          Width           =   465
       End
@@ -264,7 +303,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   23
+         TabIndex        =   22
          TabStop         =   0   'False
          Top             =   4140
          Width           =   2535
@@ -282,7 +321,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1560
-         TabIndex        =   22
+         TabIndex        =   21
          TabStop         =   0   'False
          Top             =   2760
          Width           =   1215
@@ -300,7 +339,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   750
-         TabIndex        =   21
+         TabIndex        =   20
          TabStop         =   0   'False
          Top             =   8070
          Width           =   1215
@@ -309,7 +348,7 @@ Begin VB.Form frmAdmin
          Height          =   255
          Left            =   1320
          Min             =   1
-         TabIndex        =   5
+         TabIndex        =   4
          Top             =   7740
          Value           =   1
          Width           =   1335
@@ -318,7 +357,7 @@ Begin VB.Form frmAdmin
          Height          =   255
          Left            =   1350
          Min             =   1
-         TabIndex        =   4
+         TabIndex        =   3
          Top             =   7410
          Value           =   1
          Width           =   1305
@@ -336,7 +375,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   20
+         TabIndex        =   19
          TabStop         =   0   'False
          Top             =   5580
          Width           =   1215
@@ -354,7 +393,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   19
+         TabIndex        =   18
          TabStop         =   0   'False
          Top             =   5580
          Width           =   1215
@@ -372,7 +411,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   18
+         TabIndex        =   17
          TabStop         =   0   'False
          Top             =   5220
          Width           =   1215
@@ -390,7 +429,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   17
+         TabIndex        =   16
          TabStop         =   0   'False
          Top             =   5220
          Width           =   1215
@@ -408,7 +447,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   16
+         TabIndex        =   15
          TabStop         =   0   'False
          Top             =   4860
          Width           =   1215
@@ -426,7 +465,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   15
+         TabIndex        =   14
          TabStop         =   0   'False
          Top             =   4860
          Width           =   1215
@@ -444,7 +483,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   14
+         TabIndex        =   13
          TabStop         =   0   'False
          Top             =   3840
          Width           =   1215
@@ -462,7 +501,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   13
+         TabIndex        =   12
          TabStop         =   0   'False
          Top             =   3840
          Width           =   1215
@@ -480,7 +519,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   12
+         TabIndex        =   11
          TabStop         =   0   'False
          Top             =   3540
          Width           =   1215
@@ -497,7 +536,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   285
          Left            =   840
-         TabIndex        =   2
+         TabIndex        =   1
          Top             =   3480
          Width           =   465
       End
@@ -514,9 +553,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   11
+         TabIndex        =   10
          TabStop         =   0   'False
-         Top             =   1200
+         Top             =   1500
          Width           =   1215
       End
       Begin VB.CommandButton cmdAWarpToMe 
@@ -532,7 +571,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   10
+         TabIndex        =   9
          TabStop         =   0   'False
          Top             =   1200
          Width           =   1215
@@ -550,9 +589,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   9
+         TabIndex        =   8
          TabStop         =   0   'False
-         Top             =   900
+         Top             =   1200
          Width           =   1215
       End
       Begin VB.CommandButton cmdAKick 
@@ -568,25 +607,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   8
+         TabIndex        =   7
          TabStop         =   0   'False
          Top             =   900
-         Width           =   1215
-      End
-      Begin VB.TextBox txtAName 
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   285
-         Left            =   90
-         TabIndex        =   0
-         Top             =   480
          Width           =   1215
       End
       Begin VB.CommandButton cmdAMoral 
@@ -602,7 +625,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   7
+         TabIndex        =   6
          TabStop         =   0   'False
          Top             =   6300
          Width           =   1215
@@ -615,8 +638,9 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000008&
          Height          =   225
          Left            =   30
-         TabIndex        =   44
+         TabIndex        =   42
          Top             =   8370
+         Visible         =   0   'False
          Width           =   2760
       End
       Begin VB.Label lblMap 
@@ -635,7 +659,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   210
-         TabIndex        =   43
+         TabIndex        =   41
          Top             =   3090
          Width           =   2385
       End
@@ -655,7 +679,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   195
          Left            =   180
-         TabIndex        =   42
+         TabIndex        =   40
          Top             =   4470
          Width           =   2385
       End
@@ -675,11 +699,11 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   285
          Left            =   150
-         TabIndex        =   41
+         TabIndex        =   39
          Top             =   7050
          Width           =   2445
       End
-      Begin VB.Label Label1 
+      Begin VB.Label lblPlayers 
          Alignment       =   2  'Center
          BackColor       =   &H80000002&
          BackStyle       =   0  'Transparent
@@ -695,7 +719,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   150
-         TabIndex        =   40
+         TabIndex        =   38
          Top             =   0
          Width           =   2445
       End
@@ -718,11 +742,11 @@ Begin VB.Form frmAdmin
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   255
+         Height          =   165
          Left            =   1440
-         TabIndex        =   37
-         Top             =   300
-         Width           =   1095
+         TabIndex        =   35
+         Top             =   690
+         Width           =   645
       End
       Begin VB.Label Label31 
          BackStyle       =   0  'Transparent
@@ -738,7 +762,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   150
-         TabIndex        =   36
+         TabIndex        =   34
          Top             =   2760
          Width           =   855
       End
@@ -756,7 +780,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   150
-         TabIndex        =   35
+         TabIndex        =   33
          Top             =   7740
          Width           =   975
       End
@@ -774,7 +798,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   150
-         TabIndex        =   34
+         TabIndex        =   32
          Top             =   7440
          Width           =   1635
       End
@@ -806,7 +830,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   210
-         TabIndex        =   33
+         TabIndex        =   31
          Top             =   3510
          Width           =   735
       End
@@ -817,24 +841,6 @@ Begin VB.Form frmAdmin
          Y1              =   224
          Y2              =   224
       End
-      Begin VB.Label Label29 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Name:"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   120
-         TabIndex        =   32
-         Top             =   300
-         Width           =   1095
-      End
    End
 End
 Attribute VB_Name = "frmAdmin"
@@ -842,6 +848,21 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Dim refreshDown As Boolean
+
+Private Sub cmbPlayersOnline_Click()
+    Dim i As Long, length As Long
+
+    length = UBound(ignoreIndexes)
+    For i = 0 To length
+        If cmbPlayersOnline.ListIndex = ignoreIndexes(i) Then
+            cmbPlayersOnline.ListIndex = ignoreIndexes(i) + 1
+            cmbPlayersOnline.text = cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)
+            Exit Sub
+        End If
+    Next
+End Sub
+
 Private Sub cmdAEmoticon_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -870,12 +891,12 @@ Private Sub cmdASetPlayerSprite_Click()
     End If
 
     ' Subscript out of range
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
-    If IsNumeric(Trim$(txtAName.text)) Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
+    If IsNumeric(Trim$(cmbPlayersOnline.text)) Then Exit Sub
     If Not IsNumeric(Trim$(txtASprite.text)) Then Exit Sub
     If Int(txtASprite.text) > NumCharacters Or Int(txtASprite.text) < 1 Then Exit Sub
 
-    SendSetPlayerSprite Trim$(txtAName.text), Trim$(txtASprite.text)
+    SendSetPlayerSprite Trim$(cmbPlayersOnline.text), Trim$(txtASprite.text)
     Exit Sub
     
 ' Error handler
@@ -971,10 +992,10 @@ Private Sub cmdAWarpToMe_Click()
         Exit Sub
     End If
 
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
-    If IsNumeric(Trim$(txtAName.text)) Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
+    If IsNumeric(Trim$(cmbPlayersOnline.text)) Then Exit Sub
 
-    WarpToMe Trim$(txtAName.text)
+    WarpToMe Trim$(cmbPlayersOnline.text)
     Exit Sub
     
 ' Error handler
@@ -993,10 +1014,10 @@ Private Sub cmdAWarpMeTo_Click()
     End If
 
     ' Subscript out of range
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
-    If IsNumeric(Trim$(txtAName.text)) Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
+    If IsNumeric(Trim$(cmbPlayersOnline.text)) Then Exit Sub
 
-    WarpMeTo Trim$(txtAName.text)
+    WarpMeTo Trim$(cmbPlayersOnline.text)
     Exit Sub
     
 ' Error handler
@@ -1101,9 +1122,9 @@ Private Sub cmdAKick_Click()
         Exit Sub
     End If
 
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
 
-    SendKick Trim$(txtAName.text)
+    SendKick Trim$(cmbPlayersOnline.text)
     Exit Sub
     
 ' Error handler
@@ -1123,11 +1144,11 @@ Private Sub cmdABan_Click()
         Exit Sub
     End If
 
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
 
     StrInput = InputBox("Reason: ", "Ban")
 
-    SendBan Trim$(txtAName.text), Trim$(StrInput)
+    SendBan Trim$(cmbPlayersOnline.text), Trim$(StrInput)
     Exit Sub
     
 ' Error handler
@@ -1236,10 +1257,10 @@ Private Sub cmdAAccess_Click()
     End If
 
     ' Subscript out of range
-    If Len(Trim$(txtAName.text)) < 2 Then Exit Sub
-    If IsNumeric(Trim$(txtAName.text)) Or Not IsNumeric(Trim$(txtAAccess.text)) Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 2 Then Exit Sub
+    If IsNumeric(Trim$(cmbPlayersOnline.text)) Or Not IsNumeric(Trim$(txtAAccess.text)) Then Exit Sub
 
-    SendSetAccess Trim$(txtAName.text), CLng(Trim$(txtAAccess.text))
+    SendSetAccess Trim$(cmbPlayersOnline.text), CLng(Trim$(txtAAccess.text))
     Exit Sub
      
 ' Error handler
@@ -1293,9 +1314,9 @@ Private Sub cmdAMute_Click()
         Exit Sub
     End If
 
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
 
-    SendMute Trim$(txtAName.text)
+    SendMute Trim$(cmbPlayersOnline.text)
     Exit Sub
     
 ' Error handler
@@ -1369,6 +1390,32 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
+
+Private Sub picAdmin_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
+End Sub
+
+Private Sub picAdmin_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    refreshDown = False
+End Sub
+
+Private Sub picRefresh_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    refreshDown = True
+    picRefresh.Picture = LoadResPicture("REFRESH_DOWN", vbResBitmap)
+End Sub
+
+Private Sub picRefresh_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If Not refreshDown Then
+        picRefresh.Picture = LoadResPicture("REFRESH_OVER", vbResBitmap)
+    End If
+End Sub
+
+Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    refreshDown = False
+    refreshingAdminList = True
+    SendRequestPlayersOnline
+End Sub
+
 Private Sub scrlAItem_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1395,13 +1442,50 @@ errorhandler:
     HandleError "scrlAAmount_Change", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-
+Public Sub UpdatePlayersOnline()
+    Dim players() As String, length As Long, i As Long, currentIgnore As Long
+    Dim temp As String
+    temp = cmbPlayersOnline.text
+    cmbPlayersOnline.Clear
+    cmbPlayersOnline.text = temp
+    cmbPlayersOnline.AddItem ("----Staff: 1-----")
+    
+        ReDim Preserve ignoreIndexes(0)
+        ignoreIndexes(0) = currentIgnore
+        currentIgnore = currentIgnore + 1
+    
+    cmbPlayersOnline.AddItem (Trim(Player(MyIndex).name))
+    
+        currentIgnore = currentIgnore + 1
+        
+    players = Split(Trim(g_playersOnline), ",")
+    length = UBound(players)
+    If length >= 1 Then
+        cmbPlayersOnline.AddItem ("----Players: " & length & "----")
+        
+            ReDim Preserve ignoreIndexes(1)
+            ignoreIndexes(1) = currentIgnore
+            currentIgnore = currentIgnore + 1
+        For i = 0 To length
+            If Trim(Player(MyIndex).name) = Trim(players(i)) Then
+                GoTo end_loop
+            End If
+            cmbPlayersOnline.AddItem (Trim(players(i)))
+            currentIgnore = currentIgnore + 1
+end_loop:
+        Next
+    End If
+    lblPlayers.Caption = "Players: " & length + 1 ' +1 counting ourselfs
+End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     scrlAItem.max = MAX_ITEMS
     UpdateAdminScrollBar
+    picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
+    refreshingAdminList = True
+    SendRequestPlayersOnline
     Exit Sub
     
 ' Error handler

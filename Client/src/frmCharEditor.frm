@@ -630,9 +630,9 @@ End Sub
 Public Sub ResetCharList()
     listCharacters.Sorted = False
     listCharacters.ListItems.Clear
-    Dim Length As Long, i As Long
-    Length = UBound(charList)
-    For i = 0 To Length
+    Dim length As Long, i As Long
+    length = UBound(charList)
+    For i = 0 To length
         listCharacters.ListItems.Add , , charList(i, 0)
         listCharacters.ListItems.Item(i + 1).SubItems(1) = charList(i, 1)
     Next
@@ -772,12 +772,12 @@ Private Sub txtFilter_Change()
     If txtFilter.text <> "" Then
         listCharacters.ListItems.Clear
         
-        Dim content As String, Length As Long, i As Long
+        Dim content As String, length As Long, i As Long
         content = txtFilter.text
     
-        Length = UBound(charList)
+        length = UBound(charList)
         listCharacters.Sorted = False
-        For i = 0 To Length
+        For i = 0 To length
             If InStr(LCase(charList(i, 0)), LCase(content)) <> 0 Then
                 listCharacters.ListItems.Add , , charList(i, 0)
                 listCharacters.ListItems.Item(listCharacters.ListItems.count).SubItems(1) = charList(i, 1)
