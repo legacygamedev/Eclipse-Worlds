@@ -13,7 +13,7 @@ Private Declare Sub GetSystemTime Lib "kernel32.dll" Alias "GetSystemTimeAsFileT
 Public Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) As Long
 
 ' For Clear functions
-Public Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (Destination As Any, ByVal length As Long)
+Public Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (Destination As Any, ByVal Length As Long)
 
 ' Swear filter
 Public SwearString As String
@@ -216,13 +216,11 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     frmMenu.picCharacter.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\character.jpg")
     
     ' Main
-    frmMain.picInventory.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\base.jpg")
     frmMain.picCharacter.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\character.jpg")
     frmMain.picFriends.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\base.jpg")
     frmMain.picFoes.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\base.jpg")
     frmMain.picGuild.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\base.jpg")
     frmMain.picGuild_No.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\base.jpg")
-    frmMain.picSpells.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\base.jpg")
     frmMain.picOptions.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\base.jpg")
     frmMain.picParty.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\party.jpg")
     frmMain.picItemDesc.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\description_item.jpg")
@@ -238,7 +236,6 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     frmMain.picEventChat.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\eventchat.bmp")
     frmMain.picChatbox.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\chatbox.bmp")
     frmMain.picCurrency.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\currency.jpg")
-    frmMain.picEquipment.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\equip.jpg")
     frmMain.picTitles.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\base.jpg")
     frmMain.ImgFix.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\fix.bmp")
     
@@ -522,7 +519,7 @@ errorhandler:
     Err.Clear
 End Function
 
-Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, x As Single, y As Single)
     Dim GlobalX As Integer
     Dim GlobalY As Integer
 
@@ -533,8 +530,8 @@ Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, X 
     GlobalY = PB.Top
 
     If Button = 1 Then
-        PB.Left = GlobalX + X - SOffsetX
-        PB.Top = GlobalY + Y - SYOffset
+        PB.Left = GlobalX + x - SOffsetX
+        PB.Top = GlobalY + y - SYOffset
     End If
     Exit Sub
     

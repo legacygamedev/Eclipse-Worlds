@@ -1982,21 +1982,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub UpdateEquipPanel()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    If frmMain.picEquipment.Visible Then
-        frmMain.lblEquipCharName.Caption = GetPlayerName(MyIndex)
-    End If
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "UpdateEquipPanel", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
 Public Sub ToggleButtons(ByVal Visible As Boolean)
     Dim i As Byte
     

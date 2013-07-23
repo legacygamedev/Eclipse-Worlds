@@ -31,7 +31,7 @@ Private Const COLOR_DEPTH_32_BIT As Long = D3DFMT_X8R8G8B8
 
 Public RenderingMode As Long
 
-Private Direct3D_Window As D3DPRESENT_PARAMETERS 'Backbuffer and viewport description.
+Private Direct3D_Window As D3DPRESENT_PARAMETERS ' Backbuffer and viewport description.
 Private Display_Mode As D3DDISPLAYMODE
 
 ' Graphic Textures
@@ -56,10 +56,14 @@ Public Tex_White As DX8TextureRec
 Public Tex_Weather As DX8TextureRec
 Public Tex_ChatBubble As DX8TextureRec
 Public Tex_Fade As DX8TextureRec
-'Character Editor Sprite
+Public Tex_EquipPanel As DX8TextureRec
+Public Tex_Equip As DX8TextureRec
+
+' Character Editor Sprite
 Public Tex_CharSprite As DX8TextureRec
-Public lastCharSpriteTimer As Long
-Private charSpritePos As Byte
+Public LastCharSpriteTimer As Long
+Private CharSpritePos As Byte
+
 ' Number of graphic files
 Public NumTileSets As Long
 Public NumCharacters As Long
@@ -197,8 +201,8 @@ Public Sub DrawGDI()
         If frmMain.picInventory.Visible Then DrawInventory
         If frmMain.picCharacter.Visible Then DrawPlayerCharFace
         If frmMain.picEquipment.Visible Then
+            DrawEquipment
             DrawEquipmentPanel
-            DrawPlayerEquipFace
         End If
         If frmMain.picChatFace.Visible Then DrawEventChatFace
         If frmMain.picSpells.Visible Then DrawPlayerSpells
@@ -229,8 +233,8 @@ Public Sub DrawGDI()
     
     ' Character editor
     If frmCharEditor.Visible And Tex_CharSprite.Texture > 0 And requestedPlayer.Sprite > 0 Then
-        If lastCharSpriteTimer + 300 < timeGetTime Then
-            lastCharSpriteTimer = timeGetTime
+        If LastCharSpriteTimer + 300 < timeGetTime Then
+            LastCharSpriteTimer = timeGetTime
             Call EditorChar_AnimSprite
         End If
     End If
@@ -397,9 +401,15 @@ Private Sub LoadTextures()
     Call CheckPanoramas
     Call CheckEmoticons
     
-    NumTextures = NumTextures + 11
+    NumTextures = NumTextures + 12
     
     ReDim Preserve gTexture(NumTextures)
+    Tex_Equip.filepath = App.Path & "\data files\graphics\gui\main\equip.png"
+    Tex_Equip.Texture = NumTextures - 11
+    LoadTexture Tex_Equip
+    Tex_EquipPanel.filepath = App.Path & "\data files\graphics\gui\main\equip_panel.png"
+    Tex_EquipPanel.Texture = NumTextures - 10
+    LoadTexture Tex_EquipPanel
     Tex_Fade.filepath = App.Path & "\data files\graphics\misc\fader.png"
     Tex_Fade.Texture = NumTextures - 9
     LoadTexture Tex_Fade
@@ -493,6 +503,8 @@ Dim i As Long
         Tex_Emoticon(i).Texture = 0
     Next
 
+    Tex_Equip.Texture = 0
+    Tex_EquipPanel.Texture = 0
     Tex_Fade.Texture = 0
     Tex_ChatBubble.Texture = 0
     Tex_Weather.Texture = 0
@@ -2121,54 +2133,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub DrawPlayerEquipFace()
-    Dim rec As RECT, rec_pos As RECT, FaceNum As Long, srcRect As D3DRECT
-    
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If NumFaces = 0 Then Exit Sub
-    
-    FaceNum = Player(MyIndex).Face
-    
-    If FaceNum <= 0 Or FaceNum > NumFaces Then Exit Sub
-
-    Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
-    Direct3D_Device.BeginScene
-
-    With rec
-        .Top = 0
-        .Bottom = Tex_Face(FaceNum).Height
-        .Left = 0
-        .Right = Tex_Face(FaceNum).Width
-    End With
-
-    With rec_pos
-        .Top = 0
-        .Bottom = 100
-        .Left = 0
-        .Right = 100
-    End With
-
-    RenderTextureByRects Tex_Face(FaceNum), rec, rec_pos
-    
-    With srcRect
-        .X1 = 0
-        .X2 = frmMain.picEquipFace.Width
-        .Y1 = 0
-        .Y2 = frmMain.picEquipFace.Height
-    End With
-    
-    Direct3D_Device.EndScene
-    Direct3D_Device.Present srcRect, srcRect, frmMain.picEquipFace.hwnd, ByVal (0)
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "DrawPlayerEquipFace", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
 Sub DrawInventory()
     Dim i As Long, x As Long, y As Long, ItemNum As Long, ItemPic As Long
     Dim Amount As Long
@@ -3575,11 +3539,11 @@ Public Sub EditorChar_AnimSprite()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If charSpritePos > 15 Then charSpritePos = 0
+    If CharSpritePos > 15 Then CharSpritePos = 0
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
-    x = charSpritePos Mod 4
-    y = (charSpritePos - x) / 4
+    x = CharSpritePos Mod 4
+    y = (CharSpritePos - x) / 4
     
     sRect.Top = y * 48
     sRect.Bottom = sRect.Top + 48
@@ -3604,7 +3568,7 @@ Public Sub EditorChar_AnimSprite()
     Direct3D_Device.EndScene
     Direct3D_Device.Present destRECT, destRECT, frmCharEditor.picSprite.hwnd, ByVal (0)
 
-    charSpritePos = charSpritePos + 1
+    CharSpritePos = CharSpritePos + 1
     Exit Sub
     
 ' Error handler
@@ -4047,6 +4011,36 @@ Public Sub ResizeExpBar()
     End If
 End Sub
 
+Public Sub DrawEquipment()
+    Dim i As Long
+    Dim ItemNum As Long
+    Dim ItemPic As Long
+    Dim sRect As RECT
+    Dim dRect As RECT
+
+    Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
+    Direct3D_Device.BeginScene
+    
+    With sRect
+        .Top = 0
+        .Bottom = Tex_Equip.Height
+        .Left = 0
+        .Right = Tex_Equip.Width
+    End With
+    
+    With dRect
+        .Top = 0
+        .Bottom = frmMain.picEquipment.Height
+        .Left = 0
+        .Right = frmMain.picEquipment.Width
+    End With
+
+    RenderTextureByRects Tex_Equip, sRect, dRect
+    
+    Direct3D_Device.EndScene
+    Direct3D_Device.Present sRect, dRect, frmMain.picEquipment.hwnd, ByVal (0)
+End Sub
+
 Public Sub DrawEquipmentPanel()
     Dim i As Long
     Dim ItemNum As Long
@@ -4054,6 +4048,9 @@ Public Sub DrawEquipmentPanel()
     Dim sRect As RECT
     Dim dRect As RECT
 
+    Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
+    Direct3D_Device.BeginScene
+                
     ' Now lets make the image that we will be rendering today
     For i = 1 To Equipment.Equipment_Count - 1
         ItemNum = GetPlayerEquipment(MyIndex, i)
@@ -4068,19 +4065,17 @@ Public Sub DrawEquipmentPanel()
                 sRect.Bottom = PIC_Y
                 sRect.Left = 0
                 sRect.Right = PIC_X
-                
-                'TODO
-                'Call DDS_Equipment.BltFast(EquipSlotLeft(i), EquipSlotTop(i), DDS_Item(itempic), sRect, DDBLTFAST_WAIT Or DDBLTFAST_SRCCOLORKEY)
-                'RenderTexture Tex_Emoticon(EmoticonNum), GetPlayerTextX(i) - 16, GetPlayerTextY(i) - 16, sRect.Left, sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top, D3DColorRGBA(255, 255, 255, 255)
+
+                RenderTexture Tex_Item(ItemPic), EquipSlotLeft(i), EquipSlotTop(i), sRect.Left, sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top
             End If
         End If
     Next
     
     With sRect
         .Top = 0
-        .Bottom = 96
+        .Bottom = Tex_EquipPanel.Height
         .Left = 0
-        .Right = 128
+        .Right = Tex_EquipPanel.Width
     End With
     
     With dRect
@@ -4089,8 +4084,11 @@ Public Sub DrawEquipmentPanel()
         .Left = 0
         .Right = frmMain.picVisEquip.Width
     End With
+
+    RenderTextureByRects Tex_EquipPanel, sRect, dRect
     
-    'Call Engine_BltToDC(DDS_Equipment, sRect, dRect, frmMain.picVisEquip, True)
+    Direct3D_Device.EndScene
+    Direct3D_Device.Present sRect, dRect, frmMain.picVisEquip.hwnd, ByVal (0)
 End Sub
 
 Public Sub EditorEmoticon_DrawIcon()

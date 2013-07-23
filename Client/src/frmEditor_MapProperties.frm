@@ -749,6 +749,10 @@ Private Sub lstMusic_Click()
         If Options.Debug = 1 Then On Error GoTo errorhandler
         
         Call Audio.StopMusic
+        
+        ' Don't play none
+        If lstMusic.List(lstMusic.ListIndex) = 0 Then Exit Sub
+        
         Call Audio.PlayMusic(lstMusic.List(lstMusic.ListIndex))
         Exit Sub
         
