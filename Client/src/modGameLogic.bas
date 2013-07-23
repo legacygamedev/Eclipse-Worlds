@@ -46,7 +46,7 @@ Public Sub GameLoop()
             InGame = IsConnected
             Call CheckKeys ' Check to make sure they aren't trying to auto do anything
 
-            If GetForegroundWindow() = frmMain.hWnd Then
+            If GetForegroundWindow() = frmMain.hwnd Then
                 Call CheckInputKeys ' Check which keys were pressed
             End If
             
@@ -438,7 +438,7 @@ Public Sub CheckAttack()
                         buffer.WriteLong i
                         SendData buffer.ToArray()
                         Set buffer = Nothing
-                        TempPlayer(MyIndex).EventTimer = timeGetTime + 200
+                        TempPlayer(MyIndex).EventTimer = timeGetTime + 1000
                     End If
                 End If
             Next
@@ -988,9 +988,9 @@ Public Function TwipsToPixels(ByVal Twip_Val As Long, ByVal XorY As Byte) As Lon
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If XorY = 0 Then
-        TwipsToPixels = Twip_Val / screen.TwipsPerPixelX
+        TwipsToPixels = Twip_Val / Screen.TwipsPerPixelX
     ElseIf XorY = 1 Then
-        TwipsToPixels = Twip_Val / screen.TwipsPerPixelY
+        TwipsToPixels = Twip_Val / Screen.TwipsPerPixelY
     End If
     Exit Function
     
@@ -1005,9 +1005,9 @@ Public Function PixelsToTwips(ByVal Pixel_Val As Long, ByVal XorY As Byte) As Lo
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If XorY = 0 Then
-        PixelsToTwips = Pixel_Val * screen.TwipsPerPixelX
+        PixelsToTwips = Pixel_Val * Screen.TwipsPerPixelX
     ElseIf XorY = 1 Then
-        PixelsToTwips = Pixel_Val * screen.TwipsPerPixelY
+        PixelsToTwips = Pixel_Val * Screen.TwipsPerPixelY
     End If
     Exit Function
     
@@ -1828,15 +1828,15 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     frmMain.Width = PixelsToTwips(MIN_MAPX * PIC_X, 0)
     
     Do While (frmMain.ScaleWidth < MIN_MAPX * PIC_X)
-        frmMain.Width = frmMain.Width + screen.TwipsPerPixelX
-        frmMain.Left = (screen.Width / 2) - (frmMain.Width / 2)
+        frmMain.Width = frmMain.Width + Screen.TwipsPerPixelX
+        frmMain.Left = (Screen.Width / 2) - (frmMain.Width / 2)
     Loop
     
     frmMain.Height = PixelsToTwips(MIN_MAPY * PIC_Y, 1)
     
     Do While (frmMain.ScaleHeight < MIN_MAPY * PIC_Y)
-        frmMain.Height = frmMain.Height + screen.TwipsPerPixelY
-        frmMain.Top = (screen.Height / 2) - (frmMain.Height / 2)
+        frmMain.Height = frmMain.Height + Screen.TwipsPerPixelY
+        frmMain.Top = (Screen.Height / 2) - (frmMain.Height / 2)
     Loop
     
     ' Resize and position the screen
@@ -1942,8 +1942,8 @@ Public Sub UpdatePlayerTitles()
     
     ' Build the combo list
     For i = 1 To Player(MyIndex).AmountOfTitles
-        If Player(MyIndex).Title(i) > 0 Then
-            frmMain.lstTitles.AddItem Trim$(Title(Player(MyIndex).Title(i)).name)
+        If Player(MyIndex).title(i) > 0 Then
+            frmMain.lstTitles.AddItem Trim$(title(Player(MyIndex).title(i)).name)
         End If
     Next
 
@@ -1951,17 +1951,17 @@ Public Sub UpdatePlayerTitles()
     If Player(MyIndex).CurTitle = 0 Then
         frmMain.lstTitles.ListIndex = 0
     Else
-        If Not Player(MyIndex).Title(Player(MyIndex).CurTitle) = 0 Then
+        If Not Player(MyIndex).title(Player(MyIndex).CurTitle) = 0 Then
             frmMain.lstTitles.ListIndex = Player(MyIndex).CurTitle
         End If
     End If
     
     With frmMain
         If .lstTitles.ListIndex > 0 Then
-            If Player(MyIndex).Title(.lstTitles.ListIndex) = 0 Then Exit Sub
+            If Player(MyIndex).title(.lstTitles.ListIndex) = 0 Then Exit Sub
             For i = 1 To MAX_TITLES
-                If .lstTitles.ListIndex = Player(MyIndex).Title(i) Then
-                    frmMain.lblDesc.Caption = Trim$(Title(.lstTitles.ListIndex).Desc)
+                If .lstTitles.ListIndex = Player(MyIndex).title(i) Then
+                    frmMain.lblDesc.Caption = Trim$(title(.lstTitles.ListIndex).Desc)
                 End If
             Next
         Else
