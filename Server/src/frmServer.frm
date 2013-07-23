@@ -67,9 +67,9 @@ Begin VB.Form frmServer
       TabCaption(2)   =   "Control "
       TabPicture(2)   =   "frmServer.frx":170C2
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "fraServer"
+      Tab(2).Control(0)=   "fraDatabase"
       Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "fraDatabase"
+      Tab(2).Control(1)=   "fraServer"
       Tab(2).Control(1).Enabled=   0   'False
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "News"
@@ -619,7 +619,7 @@ Private Sub cmdReloadMaps_Click()
     
     For i = 1 To Player_HighIndex
         If IsPlaying(i) Then
-            PlayerWarp i, GetPlayerMap(i), GetPlayerX(i), GetPlayerY(i)
+            PlayerWarp i, GetPlayerMap(i), GetPlayerX(i), GetPlayerY(i), True
         End If
     Next
 End Sub

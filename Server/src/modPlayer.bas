@@ -1682,11 +1682,10 @@ Public Sub SetCheckpoint(ByVal index As Long, ByVal MapNum As Integer, ByVal X A
 End Sub
 
 Public Sub UpdatePlayerEquipmentItems(ByVal index As Long)
-    If GetPlayerEquipment(index, Weapon) > 0 Then
-    If GetPlayerEquipment(index, Shield) > 0 And Item(GetPlayerEquipment(index, Weapon)).TwoHanded = 1 Then
-        Call PlayerUnequipItem(index, Weapon)
-    End If
-    
+    If GetPlayerEquipment(index, Shield) > 0 And GetPlayerEquipment(index, Weapon) > 0Then
+        If Item(GetPlayerEquipment(index, Weapon)).TwoHanded = 1 Then
+            Call PlayerUnequipItem(index, Weapon)
+        End If
     End If
 End Sub
 
@@ -1695,8 +1694,10 @@ Public Sub UpdateAllPlayerEquipmentItems()
     
     For n = 1 To Player_HighIndex
         If IsPlaying(n) Then
-            If GetPlayerEquipment(n, Shield) > 0 And Item(GetPlayerEquipment(n, Weapon)).TwoHanded = 1 Then
-                Call PlayerUnequipItem(n, Weapon)
+            If GetPlayerEquipment(n, Shield) > 0 And GetPlayerEquipment(n, Weapon) Then
+                If Item(GetPlayerEquipment(n, Weapon)).TwoHanded = 1 Then
+                    Call PlayerUnequipItem(n, Weapon)
+                End If
             End If
         End If
     Next

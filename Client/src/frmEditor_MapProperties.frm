@@ -788,7 +788,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub cmdSave_Click()
+Public Sub cmdSave_Click()
     Dim i As Long
     Dim sTemp As Long
     Dim x As Long, X2 As Long
