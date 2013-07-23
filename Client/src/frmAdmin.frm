@@ -1,8 +1,9 @@
 VERSION 5.00
 Begin VB.Form frmAdmin 
+   BackColor       =   &H80000002&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Admin Panel"
-   ClientHeight    =   7890
+   ClientHeight    =   8625
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   2820
@@ -11,14 +12,15 @@ Begin VB.Form frmAdmin
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   526
+   ScaleHeight     =   575
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   188
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin VB.PictureBox picAdmin 
       Appearance      =   0  'Flat
-      BackColor       =   &H00B5B5B5&
+      BackColor       =   &H80000002&
+      BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Verdana"
          Size            =   8.25
@@ -29,17 +31,39 @@ Begin VB.Form frmAdmin
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   7920
+      Height          =   8640
       Left            =   0
-      ScaleHeight     =   526
+      ScaleHeight     =   576
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   187
-      TabIndex        =   6
+      ScaleWidth      =   189
+      TabIndex        =   5
       TabStop         =   0   'False
       Top             =   0
       Width           =   2835
+      Begin VB.ComboBox cmbPlayersOnline 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000001&
+         ForeColor       =   &H80000002&
+         Height          =   315
+         Left            =   120
+         TabIndex        =   44
+         Text            =   "Choose Player"
+         Top             =   390
+         Width           =   2055
+      End
+      Begin VB.PictureBox picRefresh 
+         BackColor       =   &H80000002&
+         BorderStyle     =   0  'None
+         Height          =   315
+         Left            =   2280
+         ScaleHeight     =   315
+         ScaleWidth      =   375
+         TabIndex        =   43
+         Top             =   390
+         Width           =   375
+      End
       Begin VB.CommandButton cmdCharEditor 
-         Caption         =   "Character Editor"
+         Caption         =   "Character's Editor"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -51,9 +75,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   39
+         TabIndex        =   37
          TabStop         =   0   'False
-         Top             =   1170
+         Top             =   2100
          Width           =   2535
       End
       Begin VB.CommandButton cmdAEmoticon 
@@ -69,9 +93,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   38
+         TabIndex        =   36
          TabStop         =   0   'False
-         Top             =   5160
+         Top             =   6660
          Width           =   1215
       End
       Begin VB.CommandButton cmdAClass 
@@ -87,9 +111,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   31
+         TabIndex        =   30
          TabStop         =   0   'False
-         Top             =   5160
+         Top             =   6660
          Width           =   1215
       End
       Begin VB.CommandButton cmdAMute 
@@ -105,10 +129,10 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   30
+         TabIndex        =   29
          TabStop         =   0   'False
-         Top             =   1440
-         Width           =   2535
+         Top             =   1500
+         Width           =   1215
       End
       Begin VB.CommandButton cmdATitle 
          Caption         =   "Title"
@@ -123,9 +147,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   29
+         TabIndex        =   28
          TabStop         =   0   'False
-         Top             =   4800
+         Top             =   6300
          Width           =   1215
       End
       Begin VB.CommandButton cmdABanE 
@@ -141,9 +165,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   28
+         TabIndex        =   27
          TabStop         =   0   'False
-         Top             =   4440
+         Top             =   5940
          Width           =   1215
       End
       Begin VB.CommandButton cmdASetPlayerSprite 
@@ -159,9 +183,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   27
+         TabIndex        =   26
          TabStop         =   0   'False
-         Top             =   2040
+         Top             =   2400
          Width           =   2535
       End
       Begin VB.CommandButton cmdLevelUp 
@@ -177,9 +201,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   26
+         TabIndex        =   25
          TabStop         =   0   'False
-         Top             =   7560
+         Top             =   1800
          Width           =   1215
       End
       Begin VB.CommandButton cmdAAnim 
@@ -195,9 +219,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   25
+         TabIndex        =   24
          TabStop         =   0   'False
-         Top             =   4440
+         Top             =   5940
          Width           =   1215
       End
       Begin VB.CommandButton cmdAAccess 
@@ -213,10 +237,10 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   24
+         TabIndex        =   23
          TabStop         =   0   'False
-         Top             =   1740
-         Width           =   2535
+         Top             =   1800
+         Width           =   1215
       End
       Begin VB.TextBox txtAAccess 
          BeginProperty Font 
@@ -229,9 +253,9 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   1440
-         TabIndex        =   1
-         Top             =   240
+         Left            =   1410
+         TabIndex        =   0
+         Top             =   870
          Width           =   1215
       End
       Begin VB.TextBox txtASprite 
@@ -245,10 +269,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   2280
-         TabIndex        =   3
-         Top             =   2520
-         Width           =   375
+         Left            =   960
+         TabIndex        =   2
+         Top             =   2730
+         Width           =   465
       End
       Begin VB.CommandButton cmdARespawn 
          Caption         =   "Respawn"
@@ -263,9 +287,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   23
+         TabIndex        =   22
          TabStop         =   0   'False
-         Top             =   5880
+         Top             =   4140
          Width           =   2535
       End
       Begin VB.CommandButton cmdASprite 
@@ -280,10 +304,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1440
-         TabIndex        =   22
+         Left            =   1560
+         TabIndex        =   21
          TabStop         =   0   'False
-         Top             =   2880
+         Top             =   2760
          Width           =   1215
       End
       Begin VB.CommandButton cmdASpawn 
@@ -298,29 +322,29 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   21
+         Left            =   750
+         TabIndex        =   20
          TabStop         =   0   'False
-         Top             =   7560
+         Top             =   8070
          Width           =   1215
       End
       Begin VB.HScrollBar scrlAAmount 
          Height          =   255
-         Left            =   120
+         Left            =   1320
          Min             =   1
-         TabIndex        =   5
-         Top             =   7200
+         TabIndex        =   4
+         Top             =   7740
          Value           =   1
-         Width           =   2535
+         Width           =   1335
       End
       Begin VB.HScrollBar scrlAItem 
          Height          =   255
-         Left            =   120
+         Left            =   1350
          Min             =   1
-         TabIndex        =   4
-         Top             =   6600
+         TabIndex        =   3
+         Top             =   7410
          Value           =   1
-         Width           =   2535
+         Width           =   1305
       End
       Begin VB.CommandButton cmdASpell 
          Caption         =   "Spell"
@@ -335,9 +359,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   20
+         TabIndex        =   19
          TabStop         =   0   'False
-         Top             =   4080
+         Top             =   5580
          Width           =   1215
       End
       Begin VB.CommandButton cmdAShop 
@@ -353,9 +377,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   19
+         TabIndex        =   18
          TabStop         =   0   'False
-         Top             =   4080
+         Top             =   5580
          Width           =   1215
       End
       Begin VB.CommandButton cmdAResource 
@@ -371,9 +395,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   18
+         TabIndex        =   17
          TabStop         =   0   'False
-         Top             =   3720
+         Top             =   5220
          Width           =   1215
       End
       Begin VB.CommandButton cmdANpc 
@@ -389,9 +413,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   17
+         TabIndex        =   16
          TabStop         =   0   'False
-         Top             =   3720
+         Top             =   5220
          Width           =   1215
       End
       Begin VB.CommandButton cmdAMap 
@@ -407,9 +431,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   16
+         TabIndex        =   15
          TabStop         =   0   'False
-         Top             =   3360
+         Top             =   4860
          Width           =   1215
       End
       Begin VB.CommandButton cmdAItem 
@@ -425,9 +449,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   15
+         TabIndex        =   14
          TabStop         =   0   'False
-         Top             =   3360
+         Top             =   4860
          Width           =   1215
       End
       Begin VB.CommandButton cmdAMapReport 
@@ -443,9 +467,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   14
+         TabIndex        =   13
          TabStop         =   0   'False
-         Top             =   5520
+         Top             =   3840
          Width           =   1215
       End
       Begin VB.CommandButton cmdALoc 
@@ -461,9 +485,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   13
+         TabIndex        =   12
          TabStop         =   0   'False
-         Top             =   5520
+         Top             =   3840
          Width           =   1215
       End
       Begin VB.CommandButton cmdAWarp 
@@ -478,10 +502,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   12
+         Left            =   1440
+         TabIndex        =   11
          TabStop         =   0   'False
-         Top             =   2880
+         Top             =   3540
          Width           =   1215
       End
       Begin VB.TextBox txtAMap 
@@ -495,10 +519,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   960
-         TabIndex        =   2
-         Top             =   2520
-         Width           =   375
+         Left            =   840
+         TabIndex        =   1
+         Top             =   3480
+         Width           =   465
       End
       Begin VB.CommandButton cmdAWarpMeTo 
          Caption         =   "Warp Me To"
@@ -513,9 +537,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   11
+         TabIndex        =   10
          TabStop         =   0   'False
-         Top             =   900
+         Top             =   1500
          Width           =   1215
       End
       Begin VB.CommandButton cmdAWarpToMe 
@@ -531,9 +555,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   10
+         TabIndex        =   9
          TabStop         =   0   'False
-         Top             =   900
+         Top             =   1200
          Width           =   1215
       End
       Begin VB.CommandButton cmdABan 
@@ -549,9 +573,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   9
+         TabIndex        =   8
          TabStop         =   0   'False
-         Top             =   600
+         Top             =   1200
          Width           =   1215
       End
       Begin VB.CommandButton cmdAKick 
@@ -567,25 +591,9 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   8
+         TabIndex        =   7
          TabStop         =   0   'False
-         Top             =   600
-         Width           =   1215
-      End
-      Begin VB.TextBox txtAName 
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   285
-         Left            =   120
-         TabIndex        =   0
-         Top             =   240
+         Top             =   900
          Width           =   1215
       End
       Begin VB.CommandButton cmdAMoral 
@@ -601,10 +609,110 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1440
-         TabIndex        =   7
+         TabIndex        =   6
          TabStop         =   0   'False
-         Top             =   4800
+         Top             =   6300
          Width           =   1215
+      End
+      Begin VB.Label lblStatus 
+         Alignment       =   2  'Center
+         Appearance      =   0  'Flat
+         BackColor       =   &H0000FF00&
+         Caption         =   "Status"
+         ForeColor       =   &H80000008&
+         Height          =   225
+         Left            =   30
+         TabIndex        =   42
+         Top             =   8370
+         Visible         =   0   'False
+         Width           =   2760
+      End
+      Begin VB.Label lblMap 
+         Alignment       =   2  'Center
+         BackColor       =   &H80000002&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Map"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   238
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   210
+         TabIndex        =   41
+         Top             =   3090
+         Width           =   2385
+      End
+      Begin VB.Label lblEditors 
+         Alignment       =   2  'Center
+         BackColor       =   &H80000002&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Editors"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   238
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Left            =   180
+         TabIndex        =   40
+         Top             =   4470
+         Width           =   2385
+      End
+      Begin VB.Label lblSpawning 
+         Alignment       =   2  'Center
+         BackColor       =   &H80000002&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Spawning"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   238
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   285
+         Left            =   150
+         TabIndex        =   39
+         Top             =   7050
+         Width           =   2445
+      End
+      Begin VB.Label lblPlayers 
+         Alignment       =   2  'Center
+         BackColor       =   &H80000002&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Players"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   238
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   150
+         TabIndex        =   38
+         Top             =   0
+         Width           =   2445
+      End
+      Begin VB.Line Line3 
+         BorderWidth     =   3
+         X1              =   4
+         X2              =   176
+         Y1              =   18
+         Y2              =   18
       End
       Begin VB.Label Label33 
          BackStyle       =   0  'Transparent
@@ -618,11 +726,11 @@ Begin VB.Form frmAdmin
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   255
+         Height          =   165
          Left            =   1440
-         TabIndex        =   37
-         Top             =   0
-         Width           =   1095
+         TabIndex        =   35
+         Top             =   690
+         Width           =   645
       End
       Begin VB.Label Label31 
          BackStyle       =   0  'Transparent
@@ -637,9 +745,9 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1440
-         TabIndex        =   36
-         Top             =   2520
+         Left            =   150
+         TabIndex        =   34
+         Top             =   2760
          Width           =   855
       End
       Begin VB.Label lblAAmount 
@@ -655,14 +763,14 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   35
-         Top             =   6960
-         Width           =   2295
+         Left            =   150
+         TabIndex        =   33
+         Top             =   7740
+         Width           =   975
       End
       Begin VB.Label lblAItem 
          BackStyle       =   0  'Transparent
-         Caption         =   "Spawn Item: None"
+         Caption         =   "Item: None"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -673,22 +781,24 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   34
-         Top             =   6360
-         Width           =   2535
+         Left            =   150
+         TabIndex        =   32
+         Top             =   7440
+         Width           =   1635
       End
       Begin VB.Line Line4 
+         BorderWidth     =   3
          X1              =   8
          X2              =   176
-         Y1              =   416
-         Y2              =   416
+         Y1              =   488
+         Y2              =   488
       End
       Begin VB.Line Line2 
+         BorderWidth     =   3
          X1              =   8
          X2              =   176
-         Y1              =   216
-         Y2              =   216
+         Y1              =   316
+         Y2              =   316
       End
       Begin VB.Label Label30 
          BackStyle       =   0  'Transparent
@@ -703,34 +813,17 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   33
-         Top             =   2520
+         Left            =   210
+         TabIndex        =   31
+         Top             =   3510
          Width           =   735
       End
       Begin VB.Line Line1 
-         X1              =   8
-         X2              =   176
-         Y1              =   160
-         Y2              =   160
-      End
-      Begin VB.Label Label29 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Name:"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   120
-         TabIndex        =   32
-         Top             =   0
-         Width           =   1095
+         BorderWidth     =   3
+         X1              =   10
+         X2              =   178
+         Y1              =   224
+         Y2              =   224
       End
    End
 End
@@ -739,9 +832,24 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Dim refreshDown As Boolean
+
+Private Sub cmbPlayersOnline_Click()
+    Dim i As Long, length As Long
+
+    length = UBound(ignoreIndexes)
+    For i = 0 To length
+        If cmbPlayersOnline.ListIndex = ignoreIndexes(i) Then
+            cmbPlayersOnline.ListIndex = ignoreIndexes(i) + 1
+            cmbPlayersOnline.text = cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)
+            Exit Sub
+        End If
+    Next
+End Sub
+
 Private Sub cmdAEmoticon_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -752,14 +860,14 @@ Private Sub cmdAEmoticon_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAEmoticon_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdASetPlayerSprite_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -767,23 +875,23 @@ Private Sub cmdASetPlayerSprite_Click()
     End If
 
     ' Subscript out of range
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
-    If IsNumeric(Trim$(txtAName.text)) Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
+    If IsNumeric(Trim$(cmbPlayersOnline.text)) Then Exit Sub
     If Not IsNumeric(Trim$(txtASprite.text)) Then Exit Sub
     If Int(txtASprite.text) > NumCharacters Or Int(txtASprite.text) < 1 Then Exit Sub
 
-    SendSetPlayerSprite Trim$(txtAName.text), Trim$(txtASprite.text)
+    SendSetPlayerSprite Trim$(cmbPlayersOnline.text), Trim$(txtASprite.text)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdASetPlayerSprite_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAAnim_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -794,7 +902,7 @@ Private Sub cmdAAnim_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAAnim_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -807,7 +915,7 @@ End Sub
 
 Private Sub cmdLevelUp_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -818,14 +926,14 @@ Private Sub cmdLevelUp_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdLevelUp_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdALoc_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -836,14 +944,14 @@ Private Sub cmdALoc_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdALoc_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAMap_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -854,35 +962,35 @@ Private Sub cmdAMap_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAMap_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAWarpToMe_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
         Exit Sub
     End If
 
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
-    If IsNumeric(Trim$(txtAName.text)) Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
+    If IsNumeric(Trim$(cmbPlayersOnline.text)) Then Exit Sub
 
-    WarpToMe Trim$(txtAName.text)
+    WarpToMe Trim$(cmbPlayersOnline.text)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAWarpToMe_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAWarpMeTo_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -890,14 +998,14 @@ Private Sub cmdAWarpMeTo_Click()
     End If
 
     ' Subscript out of range
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
-    If IsNumeric(Trim$(txtAName.text)) Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
+    If IsNumeric(Trim$(cmbPlayersOnline.text)) Then Exit Sub
 
-    WarpMeTo Trim$(txtAName.text)
+    WarpMeTo Trim$(cmbPlayersOnline.text)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAWarpMeTo_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -906,7 +1014,7 @@ Private Sub cmdAWarp_Click()
     Dim n As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -927,14 +1035,14 @@ Private Sub cmdAWarp_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAWarp_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdASprite_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -948,14 +1056,14 @@ Private Sub cmdASprite_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdASprite_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAMapReport_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -966,14 +1074,14 @@ Private Sub cmdAMapReport_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAMapReport_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdARespawn_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -984,27 +1092,27 @@ Private Sub cmdARespawn_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdARespawn_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAKick_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
         AddText "You have insufficent access to do this!", BrightRed
         Exit Sub
     End If
 
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
 
-    SendKick Trim$(txtAName.text)
+    SendKick Trim$(cmbPlayersOnline.text)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAKick_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1013,29 +1121,29 @@ Private Sub cmdABan_Click()
     Dim StrInput As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
         AddText "You have insufficent access to do this!", BrightRed
         Exit Sub
     End If
 
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
 
     StrInput = InputBox("Reason: ", "Ban")
 
-    SendBan Trim$(txtAName.text), Trim$(StrInput)
+    SendBan Trim$(cmbPlayersOnline.text), Trim$(StrInput)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdABan_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAItem_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1046,14 +1154,14 @@ Private Sub cmdAItem_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAItem_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdANpc_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1064,14 +1172,14 @@ Private Sub cmdANpc_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdANpc_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAResource_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1082,14 +1190,14 @@ Private Sub cmdAResource_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAResource_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAShop_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1100,14 +1208,14 @@ Private Sub cmdAShop_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAShop_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdASpell_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1118,14 +1226,14 @@ Private Sub cmdASpell_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdASpell_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAAccess_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1133,21 +1241,21 @@ Private Sub cmdAAccess_Click()
     End If
 
     ' Subscript out of range
-    If Len(Trim$(txtAName.text)) < 2 Then Exit Sub
-    If IsNumeric(Trim$(txtAName.text)) Or Not IsNumeric(Trim$(txtAAccess.text)) Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 2 Then Exit Sub
+    If IsNumeric(Trim$(cmbPlayersOnline.text)) Or Not IsNumeric(Trim$(txtAAccess.text)) Then Exit Sub
 
-    SendSetAccess Trim$(txtAName.text), CLng(Trim$(txtAAccess.text))
+    SendSetAccess Trim$(cmbPlayersOnline.text), CLng(Trim$(txtAAccess.text))
     Exit Sub
      
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAAccess_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdASpawn_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1158,14 +1266,14 @@ Private Sub cmdASpawn_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdASpawn_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdABanE_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1176,34 +1284,34 @@ Private Sub cmdABanE_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdABanE_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAMute_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
         AddText "You have insufficent access to do this!", BrightRed
         Exit Sub
     End If
 
-    If Len(Trim$(txtAName.text)) < 1 Then Exit Sub
+    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
 
-    SendMute Trim$(txtAName.text)
+    SendMute Trim$(cmbPlayersOnline.text)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAMute_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAClass_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1214,14 +1322,14 @@ Private Sub cmdAClass_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAClass_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdATitle_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1232,14 +1340,14 @@ Private Sub cmdATitle_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdATitle_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAMoral_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1250,7 +1358,7 @@ Private Sub cmdAMoral_Click()
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "cmdAMoral_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1266,95 +1374,158 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
+
+Private Sub picAdmin_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
+End Sub
+
+Private Sub picAdmin_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    refreshDown = False
+End Sub
+
+Private Sub picRefresh_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    refreshDown = True
+    picRefresh.Picture = LoadResPicture("REFRESH_DOWN", vbResBitmap)
+End Sub
+
+Private Sub picRefresh_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If Not refreshDown Then
+        picRefresh.Picture = LoadResPicture("REFRESH_OVER", vbResBitmap)
+    End If
+End Sub
+
+Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    refreshDown = False
+    refreshingAdminList = True
+    SendRequestPlayersOnline
+End Sub
+
 Private Sub scrlAItem_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     UpdateAdminScrollBar
     scrlAAmount.Enabled = False
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlAItem_Change", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub scrlAAmount_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
 
     lblAAmount.Caption = "Amount: " & scrlAAmount.Value
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "scrlAAmount_Change", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-
+Public Sub UpdatePlayersOnline()
+    Dim players() As String, length As Long, i As Long, currentIgnore As Long
+    Dim temp As String
+    temp = cmbPlayersOnline.text
+    cmbPlayersOnline.Clear
+    cmbPlayersOnline.text = temp
+    cmbPlayersOnline.AddItem ("----Staff: 1-----")
+    
+        ReDim Preserve ignoreIndexes(0)
+        ignoreIndexes(0) = currentIgnore
+        currentIgnore = currentIgnore + 1
+    
+    cmbPlayersOnline.AddItem (Trim(Player(MyIndex).name))
+    
+        currentIgnore = currentIgnore + 1
+        
+    players = Split(Trim(g_playersOnline), ",")
+    length = UBound(players)
+    If length >= 1 Then
+        cmbPlayersOnline.AddItem ("----Players: " & length & "----")
+        
+            ReDim Preserve ignoreIndexes(1)
+            ignoreIndexes(1) = currentIgnore
+            currentIgnore = currentIgnore + 1
+        For i = 0 To length
+            If Trim(Player(MyIndex).name) = Trim(players(i)) Then
+                GoTo end_loop
+            End If
+            cmbPlayersOnline.AddItem (Trim(players(i)))
+            currentIgnore = currentIgnore + 1
+end_loop:
+        Next
+    End If
+    lblPlayers.Caption = "Players: " & length + 1 ' +1 counting ourselfs
+End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     scrlAItem.max = MAX_ITEMS
     UpdateAdminScrollBar
+    picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
+    refreshingAdminList = True
+    SendRequestPlayersOnline
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "Form_Load", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtAAccess_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtAAccess.SelStart = Len(txtAAccess)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtAAccess_GotFocus", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtASprite_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtASprite.SelStart = Len(txtASprite)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtASprite_GotFocus", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtAMap_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtAMap.SelStart = Len(txtAMap)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtAMap_GotFocus", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtAName_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If Options.Debug = 1 Then On Error GoTo errorhandler
     
     txtAName.SelStart = Len(txtAName)
     Exit Sub
     
 ' Error handler
-ErrorHandler:
+errorhandler:
     HandleError "txtAName_GotFocus", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

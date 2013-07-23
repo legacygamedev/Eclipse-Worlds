@@ -4,8 +4,11 @@ Option Explicit
 Public cpEvent As EventRec
 
 Const LB_SETHORIZONTALEXTENT = &H194
-Private Declare Function SendMessageByNum Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
+Private Declare Function SendMessageByNum Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
 Public charList() As String
+Public g_playersOnline As String
+Public ignoreIndexes() As Long
+Public refreshingAdminList As Boolean
 Public requestedPlayer As PlayerEditableRec
 Public EventList() As EventListRec
 
@@ -730,7 +733,7 @@ Public Sub ItemEditorInit()
         If .Pic > frmEditor_Item.scrlPic.max Then .Pic = frmEditor_Item.scrlPic.max
         
         ' Basic data
-        frmEditor_Item.txtName.text = Trim$(.Name)
+        frmEditor_Item.txtName.text = Trim$(.name)
         frmEditor_Item.scrlPic.Value = .Pic
         frmEditor_Item.cmbType.ListIndex = .Type
         frmEditor_Item.scrlAnim.Value = .Animation
@@ -868,7 +871,7 @@ Public Sub ItemEditorInit()
         frmEditor_Item.cmbBind.ListIndex = .BindType
         
         ' Rarity
-        If Trim$(.Name) = vbNullString Then
+        If Trim$(.name) = vbNullString Then
             frmEditor_Item.scrlRarity.Value = 1
         Else
             frmEditor_Item.scrlRarity.Value = .Rarity
@@ -964,7 +967,7 @@ Public Sub AnimationEditorInit()
     Next
 
     With Animation(EditorIndex)
-        frmEditor_Animation.txtName.text = Trim$(.Name)
+        frmEditor_Animation.txtName.text = Trim$(.name)
         
         ' Find the sound we have set
         If frmEditor_Animation.cmbSound.ListCount > 0 Then
@@ -1100,9 +1103,9 @@ Public Sub NPCEditorInit()
         ' Check for an invalid Value
         If NPC(EditorIndex).Sprite < 0 Or NPC(EditorIndex).Sprite > .scrlSprite.max Then NPC(EditorIndex).Sprite = 0
         
-        .txtName.text = Trim$(NPC(EditorIndex).Name)
+        .txtName.text = Trim$(NPC(EditorIndex).name)
         .txtAttackSay.text = Trim$(NPC(EditorIndex).AttackSay)
-        .txtTitle.text = Trim$(NPC(EditorIndex).Title)
+        .txtTitle.text = Trim$(NPC(EditorIndex).title)
         
         If NumCharacters < NPC(EditorIndex).Sprite Then NPC(EditorIndex).Sprite = NumCharacters
         .scrlSprite.Value = NPC(EditorIndex).Sprite
@@ -1113,7 +1116,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtExp.text = NPC(EditorIndex).Exp
+        .txtEXP.text = NPC(EditorIndex).Exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -1259,7 +1262,7 @@ Public Sub ResourceEditorInit()
     Next
     
     With frmEditor_Resource
-        .txtName.text = Trim$(Resource(EditorIndex).Name)
+        .txtName.text = Trim$(Resource(EditorIndex).name)
         .txtSuccess.text = Trim$(Resource(EditorIndex).SuccessMessage)
         .txtEmpty.text = Trim$(Resource(EditorIndex).EmptyMessage)
         .txtFail.text = Trim$(Resource(EditorIndex).FailMessage)
@@ -1379,7 +1382,7 @@ Public Sub ShopEditorInit()
         EditorIndex = .lstIndex.ListIndex + 1
         Shop_Changed(EditorIndex) = True
         
-        .txtName.text = Trim$(Shop(EditorIndex).Name)
+        .txtName.text = Trim$(Shop(EditorIndex).name)
         
         If Shop(EditorIndex).BuyRate > 0 And Shop(EditorIndex).BuyRate <= .scrlBuy.max Then
             .scrlBuy.Value = Shop(EditorIndex).BuyRate
@@ -1419,11 +1422,11 @@ Public Sub UpdateShopTrade(Optional ByVal tmpPos As Long = 0)
             If .Item = 0 Or .CostItem = 0 And .CostItem2 = 0 Then
                 frmEditor_Shop.lstTradeItem.AddItem "Empty Trade Slot"
             ElseIf .CostItem2 = 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).Name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).name)
             ElseIf .CostItem = 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem2).Name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem2).name)
             ElseIf .CostItem > 0 And .CostItem2 > 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).Name) & " & " & .CostValue2 & "X " & Trim$(Item(.CostItem2).Name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).name) & " & " & .CostValue2 & "X " & Trim$(Item(.CostItem2).name)
             End If
         End With
     Next
@@ -1536,7 +1539,7 @@ Public Sub SpellEditorInit()
         SpellClassListInit
         
         ' Set values
-        .txtName.text = Trim$(Spell(EditorIndex).Name)
+        .txtName.text = Trim$(Spell(EditorIndex).name)
         .cmbType.ListIndex = Spell(EditorIndex).Type
         .scrlMP.Value = Spell(EditorIndex).MPCost
         .scrlLevel.Value = Spell(EditorIndex).LevelReq
@@ -1702,7 +1705,7 @@ Public Sub MapPropertiesInit()
         .cmbMoral.Clear
         
         For i = 1 To MAX_MORALS
-            .cmbMoral.AddItem i & ": " & Trim$(Moral(i).Name)
+            .cmbMoral.AddItem i & ": " & Trim$(Moral(i).name)
         Next
 
         ' Find the music we have set
@@ -1738,7 +1741,7 @@ Public Sub MapPropertiesInit()
         
         ' Load all the npcs that can be selected into the combo box
         For i = 1 To MAX_NPCS
-            .cmbNpcs.AddItem i & ": " & Trim$(NPC(i).Name)
+            .cmbNpcs.AddItem i & ": " & Trim$(NPC(i).name)
         Next
         
         .CmbWeather.ListIndex = Map.Weather
@@ -1767,7 +1770,7 @@ Public Sub MapPropertiesInit()
         .txtBootMap.text = CStr(Map.BootMap)
         .txtBootX.text = CStr(Map.BootX)
         .txtBootY.text = CStr(Map.BootY)
-        .txtName.text = Trim$(Map.Name)
+        .txtName.text = Trim$(Map.name)
         .lblMap.Caption = "Current Map: " & GetPlayerMap(MyIndex)
         
         .txtMaxX.text = Map.MaxX
@@ -1793,7 +1796,7 @@ Public Sub LoadMapPropertiesNpcs()
             If .NPC(i) < 1 Or .NPC(i) > MAX_NPCS Then
                 frmEditor_MapProperties.lstNpcs.AddItem i & ": None"
             Else
-                frmEditor_MapProperties.lstNpcs.AddItem i & ": " & Trim$(NPC(.NPC(i)).Name)
+                frmEditor_MapProperties.lstNpcs.AddItem i & ": " & Trim$(NPC(.NPC(i)).name)
             End If
         Next
     End With
@@ -1816,7 +1819,7 @@ Public Sub MapEditorInitShop()
     
     ' Set shops for the shop attribute
     For i = 1 To MAX_SHOPS
-        frmEditor_Map.cmbShop.AddItem i & ": " & Shop(i).Name, i
+        frmEditor_Map.cmbShop.AddItem i & ": " & Shop(i).name, i
     Next
     
     ' Reset the shop list Index
@@ -1846,7 +1849,7 @@ Public Sub BanEditorInit()
         .txtSerial.text = Trim(Ban(EditorIndex).HDSerial)
         .txtReason.text = Trim(Ban(EditorIndex).Reason)
         .txtDate.text = Trim(Ban(EditorIndex).Date)
-        .txtTime.text = Trim(Ban(EditorIndex).Time)
+        .txtTime.text = Trim(Ban(EditorIndex).time)
         .txtBy.text = Trim(Ban(EditorIndex).By)
     End With
     Exit Sub
@@ -1929,12 +1932,12 @@ Public Sub TitleEditorInit()
     Title_Changed(EditorIndex) = True
     
     With frmEditor_Title
-        .txtName.text = Trim$(Title(EditorIndex).Name)
-        .scrlColor.Value = Title(EditorIndex).Color
-        .lblLevelReq.Caption = "Level Requirement: " & Trim$(Title(EditorIndex).LevelReq)
-        .scrlLevelReq.Value = Title(EditorIndex).LevelReq
-        .txtDesc = Trim$(Title(EditorIndex).Desc)
-        .scrlPKReq = Title(EditorIndex).PKReq
+        .txtName.text = Trim$(title(EditorIndex).name)
+        .scrlColor.Value = title(EditorIndex).Color
+        .lblLevelReq.Caption = "Level Requirement: " & Trim$(title(EditorIndex).LevelReq)
+        .scrlLevelReq.Value = title(EditorIndex).LevelReq
+        .txtDesc = Trim$(title(EditorIndex).Desc)
+        .scrlPKReq = title(EditorIndex).PKReq
     End With
     Exit Sub
     
@@ -2068,7 +2071,7 @@ Public Sub MoralEditorInit()
     Moral_Changed(EditorIndex) = True
     
     With frmEditor_Moral
-        .txtName.text = Trim(Moral(EditorIndex).Name)
+        .txtName.text = Trim(Moral(EditorIndex).name)
         If Moral(EditorIndex).Color = 0 Then Moral(EditorIndex).Color = 1
         .scrlColor.Value = Moral(EditorIndex).Color
         .chkCanCast.Value = Moral(EditorIndex).CanCast
@@ -2153,7 +2156,7 @@ Public Sub ClassEditorInit()
     Class_Changed(EditorIndex) = True
     
     With frmEditor_Class
-        .txtName.text = Trim(Class(EditorIndex).Name)
+        .txtName.text = Trim(Class(EditorIndex).name)
         .chkSwapGender = 0
         
         .chkLocked.Value = Class(EditorIndex).Locked
@@ -2223,7 +2226,7 @@ errorhandler:
 End Sub
 
 Public Sub UpdateAdminScrollBar()
-    frmAdmin.lblAItem.Caption = "Item: " & Trim$(Item(frmAdmin.scrlAItem.Value).Name)
+    frmAdmin.lblAItem.Caption = "Item: " & Trim$(Item(frmAdmin.scrlAItem.Value).name)
         
     If Item(frmAdmin.scrlAItem.Value).Stackable = 1 Then
         frmAdmin.scrlAAmount.Enabled = True
@@ -2236,7 +2239,7 @@ Public Sub UpdateSpellScrollBars()
         If .scrlSpell.Value = 0 Then
             .lblSpellName.Caption = "Name: None"
         Else
-            .lblSpellName.Caption = "Name: " & Trim$(Spell(.scrlSpell.Value).Name)
+            .lblSpellName.Caption = "Name: " & Trim$(Spell(.scrlSpell.Value).name)
         End If
         
         .lblSpell.Caption = "Spell: " & .scrlSpell.Value
@@ -2253,7 +2256,7 @@ Public Sub SpellClassListInit()
         .cmbClass.AddItem "None"
         
         For i = 1 To MAX_CLASSES
-            .cmbClass.AddItem Trim$(Class(i).Name)
+            .cmbClass.AddItem Trim$(Class(i).name)
         Next
         .cmbClass.ListIndex = Spell(EditorIndex).ClassReq
     End With
@@ -2267,7 +2270,7 @@ Public Sub ItemClassReqListInit()
     frmEditor_Item.cmbClassReq.AddItem "None"
 
     For i = 1 To MAX_CLASSES
-        frmEditor_Item.cmbClassReq.AddItem Class(i).Name
+        frmEditor_Item.cmbClassReq.AddItem Class(i).name
     Next
     frmEditor_Item.cmbClassReq.ListIndex = Item(EditorIndex).ClassReq
 End Sub
@@ -2576,11 +2579,11 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
         .cmbHasItem.AddItem "None"
         
         For i = 1 To MAX_ITEMS
-            .cmbHasItem.AddItem i & ": " & Trim$(Item(i).Name)
+            .cmbHasItem.AddItem i & ": " & Trim$(Item(i).name)
         Next
         
         ' Name
-        .txtName.text = tmpEvent.Name
+        .txtName.text = tmpEvent.name
         
         ' Enable delete button
         If tmpEvent.PageCount > 1 Then
@@ -2769,11 +2772,11 @@ newlist:
                                         frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] == " & "False"
                                     End If
                                 Case 2
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Has Item [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).Name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Has Item [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).name) & "]"
                                 Case 3
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player's Class Is [" & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).Name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player's Class Is [" & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).name) & "]"
                                 Case 4
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Knows Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).Name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Knows Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).name) & "]"
                                 Case 5
                                     Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data2
                                         Case 0
@@ -2995,11 +2998,11 @@ newlist:
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Exit Event Processing"
                         Case EventType.evChangeItems
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Item Amount of [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "] to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Item Amount of [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "] to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "(s)"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "(s)"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 2 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Take " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "(s) from Player."
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Take " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "(s) from Player."
                             End If
                         Case EventType.evRestoreHP
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Restore Player HP"
@@ -3011,12 +3014,12 @@ newlist:
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Player Level to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                         Case EventType.evChangeSkills
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Teach Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Teach Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Remove Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Remove Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
                             End If
                         Case EventType.evChangeClass
-                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Player Class to " & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name)
+                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Player Class to " & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name)
                         Case EventType.evChangeSprite
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Player Sprite to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                         Case EventType.evChangeGender
@@ -3048,17 +3051,17 @@ newlist:
                             End If
                         Case EventType.evSetMoveRoute
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 <= Map.EventCount Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
                             Else
                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for COULD NOT FIND EVENT!"
                             End If
                         Case EventType.evPlayAnimation
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]" & " on Player"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Player"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]" & " on Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3).Name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3).name) & "]"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 2 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]" & " on Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4 & ")"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4 & ")"
                             End If
                         Case EventType.evCustomScript
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Execute Custom Script Case: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
@@ -3073,7 +3076,7 @@ newlist:
                         Case EventType.evOpenBank
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Open Bank"
                         Case EventType.evOpenShop
-                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Open Shop [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & Trim$(Shop(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
+                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Open Shop [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & Trim$(Shop(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
                         Case EventType.evSetAccess
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Player Access [" & frmEditor_Events.cmbSetAccess.List(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & "]"
                         Case EventType.evGiveExp
@@ -3086,10 +3089,10 @@ newlist:
                                     If Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) <= 0 Then
                                         frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". ]"
                                     Else
-                                        frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2)).Name) & "]"
+                                        frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2)).name) & "]"
                                     End If
                                 Case TARGET_TYPE_EVENT
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).Name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).name) & "]"
                             End Select
                         Case EventType.evLabel
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"
@@ -3099,7 +3102,7 @@ newlist:
                             If Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) <= 0 Then
                                 frmEditor_Events.lstCommands.AddItem indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & "]"
                             Else
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1)).Name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1)).name) & "]"
                             End If
                         Case EventType.evFadeIn
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Fade In"
@@ -3171,7 +3174,7 @@ Sub ListCommandAdd(S As String)
     If X < frmEditor_Events.TextWidth(S & "  ") Then
        X = frmEditor_Events.TextWidth(S & "  ")
       If frmEditor_Events.ScaleMode = vbTwips Then X = X / Screen.TwipsPerPixelX ' if twips change to pixels
-      SendMessageByNum frmEditor_Events.lstCommands.hWnd, LB_SETHORIZONTALEXTENT, X, 0
+      SendMessageByNum frmEditor_Events.lstCommands.hwnd, LB_SETHORIZONTALEXTENT, X, 0
     End If
     Exit Sub
     
@@ -3718,7 +3721,7 @@ Public Sub EditEventCommand()
             
             For i = 1 To Map.EventCount
                 If i <> EditorEvent Then
-                    frmEditor_Events.cmbEvent.AddItem Trim$(Map.events(i).Name)
+                    frmEditor_Events.cmbEvent.AddItem Trim$(Map.events(i).name)
                     X = X + 1
                     ListOfEvents(X) = i
                     If i = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 Then frmEditor_Events.cmbEvent.ListIndex = X
@@ -3841,7 +3844,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.cmbPlayAnimEvent.Clear
             
             For i = 1 To Map.EventCount
-                frmEditor_Events.cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).Name)
+                frmEditor_Events.cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).name)
             Next
             
             frmEditor_Events.cmbPlayAnimEvent.ListIndex = 0
