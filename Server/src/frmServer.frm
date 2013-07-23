@@ -35,7 +35,6 @@ Begin VB.Form frmServer
       _Version        =   393216
       Style           =   1
       Tabs            =   4
-      Tab             =   2
       TabsPerRow      =   4
       TabHeight       =   503
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -49,7 +48,7 @@ Begin VB.Form frmServer
       EndProperty
       TabCaption(0)   =   "Console"
       TabPicture(0)   =   "frmServer.frx":1708A
-      Tab(0).ControlEnabled=   0   'False
+      Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "lblCPSLock"
       Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "lblCPS"
@@ -67,7 +66,7 @@ Begin VB.Form frmServer
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "Control "
       TabPicture(2)   =   "frmServer.frx":170C2
-      Tab(2).ControlEnabled=   -1  'True
+      Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "fraDatabase"
       Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "fraServer"
@@ -76,9 +75,9 @@ Begin VB.Form frmServer
       TabCaption(3)   =   "News"
       TabPicture(3)   =   "frmServer.frx":170DE
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "cmdLoadNews"
+      Tab(3).Control(0)=   "txtNews"
       Tab(3).Control(1)=   "cmdSaveNews"
-      Tab(3).Control(2)=   "txtNews"
+      Tab(3).Control(2)=   "cmdLoadNews"
       Tab(3).ControlCount=   3
       Begin VB.CommandButton cmdLoadNews 
          Caption         =   "Load News"
@@ -120,14 +119,14 @@ Begin VB.Form frmServer
       End
       Begin VB.TextBox txtChat 
          Height          =   375
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   16
          Top             =   2880
          Width           =   6855
       End
       Begin VB.TextBox txtText 
          Height          =   2175
-         Left            =   -74880
+         Left            =   120
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
          TabIndex        =   15
@@ -137,7 +136,7 @@ Begin VB.Form frmServer
       Begin VB.Frame fraServer 
          Caption         =   "Server"
          Height          =   2775
-         Left            =   5520
+         Left            =   -69480
          TabIndex        =   1
          Top             =   480
          Width           =   1455
@@ -202,7 +201,7 @@ Begin VB.Form frmServer
       Begin VB.Frame fraDatabase 
          Caption         =   "Reload"
          Height          =   2775
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   4
          Top             =   480
          Width           =   4215
@@ -395,7 +394,7 @@ Begin VB.Form frmServer
       Begin VB.Label lblCPS 
          Caption         =   "CPS: Calculating"
          Height          =   255
-         Left            =   -74040
+         Left            =   960
          TabIndex        =   18
          Top             =   360
          Width           =   1815
@@ -406,7 +405,7 @@ Begin VB.Form frmServer
          Caption         =   "[Unlock]"
          ForeColor       =   &H00FF0000&
          Height          =   195
-         Left            =   -74820
+         Left            =   180
          TabIndex        =   17
          Top             =   360
          Width           =   600

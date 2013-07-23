@@ -5614,7 +5614,6 @@ Public Sub InitEventEditorForm()
     
     ' Sounds
     frmEditor_Events.cmbPlaySound.Clear
-    frmEditor_Events.cmbPlaySound.AddItem "None"
 
     For i = 1 To UBound(SoundCache)
         frmEditor_Events.cmbPlaySound.AddItem SoundCache(i)
