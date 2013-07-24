@@ -559,9 +559,9 @@ Sub SendPlayersOnline(ByVal index As Long)
     For i = 1 To Player_HighIndex
         If IsPlaying(i) Then
                 If i <> Player_HighIndex Then
-                    list = list & GetPlayerName(i) & ":" & Account(i).Chars(GetPlayerChar(i)).Access & ", "
+                    list = list & GetPlayerName(i) & ":" & Account(i).Chars(GetPlayerChar(i)).Access & ":" & Account(i).Chars(GetPlayerChar(i)).Sprite & ", "
                 Else
-                    list = list & GetPlayerName(i) & ":" & Account(i).Chars(GetPlayerChar(i)).Access
+                    list = list & GetPlayerName(i) & ":" & Account(i).Chars(GetPlayerChar(i)).Access & ":" & Account(i).Chars(GetPlayerChar(i)).Sprite
                 End If
         End If
     Next

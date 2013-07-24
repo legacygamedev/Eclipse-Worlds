@@ -62,7 +62,9 @@ Public Tex_Base As DX8TextureRec
 ' Character Editor Sprite
 Public Tex_CharSprite As DX8TextureRec
 Public LastCharSpriteTimer As Long
+Public LastAdminSpriteTimer As Long
 Private CharSpritePos As Byte
+Private AdminSpritePos As Byte
 
 ' Number of graphic files
 Public NumTileSets As Long
@@ -232,10 +234,17 @@ Public Sub DrawGDI()
     If frmCharEditor.Visible And Tex_CharSprite.Texture > 0 And requestedPlayer.Sprite > 0 Then
         If LastCharSpriteTimer + 300 < timeGetTime Then
             LastCharSpriteTimer = timeGetTime
-            Call EditorChar_AnimSprite
+            EditorChar_AnimSprite frmCharEditor.picSprite, frmCharEditor.txtSprite.text, CharSpritePos
         End If
     End If
-
+    
+    If frmAdmin.Visible And frmAdmin.txtSprite.text > 0 Then
+        If LastAdminSpriteTimer + 300 < timeGetTime Then
+            LastAdminSpriteTimer = timeGetTime
+            EditorChar_AnimSprite frmAdmin.picSprite, frmAdmin.txtSprite.text, AdminSpritePos
+        End If
+    End If
+    
     If frmEditor_MapProperties.Visible Then
         EditorMapProperties_DrawPanorama
     End If
@@ -959,8 +968,8 @@ Public Sub DrawMapItem(ByVal ItemNum As Long)
     
     ' If it's not ours then don't render
     If x = 0 Then
-        If Not Trim$(MapItem(ItemNum).PlayerName) = GetPlayerName(MyIndex) Then
-            If Not Trim$(MapItem(ItemNum).PlayerName) = vbNullString Then Exit Sub
+        If Not Trim$(MapItem(ItemNum).playerName) = GetPlayerName(MyIndex) Then
+            If Not Trim$(MapItem(ItemNum).playerName) = vbNullString Then Exit Sub
         End If
     End If
 
@@ -3552,7 +3561,7 @@ errorhandler:
 End Sub
 
 ' Character Editor
-Public Sub EditorChar_AnimSprite()
+Public Sub EditorChar_AnimSprite(container As PictureBox, spriteNum As String, ByRef spritePosition As Byte)
     Dim srcRect As D3DRECT, destRECT As D3DRECT
     Dim sRect As RECT
     Dim dRect As RECT
@@ -3561,11 +3570,11 @@ Public Sub EditorChar_AnimSprite()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If CharSpritePos > 15 Then CharSpritePos = 0
+    If spritePosition > 15 Then spritePosition = 0
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
-    x = CharSpritePos Mod 4
-    y = (CharSpritePos - x) / 4
+    x = spritePosition Mod 4
+    y = (spritePosition - x) / 4
     
     sRect.Top = y * 48
     sRect.Bottom = sRect.Top + 48
@@ -3578,19 +3587,19 @@ Public Sub EditorChar_AnimSprite()
     dRect.Left = 0
     dRect.Right = 32
     
-    RenderTextureByRects Tex_CharSprite, sRect, dRect
+    RenderTextureByRects Tex_Character(CLng(spriteNum)), sRect, dRect
           
     With destRECT
         .X1 = 0
-        .X2 = frmCharEditor.picSprite.ScaleWidth
+        .X2 = container.ScaleWidth
         .Y1 = 0
-        .Y2 = frmCharEditor.picSprite.ScaleHeight
+        .Y2 = container.ScaleHeight
     End With
 
     Direct3D_Device.EndScene
-    Direct3D_Device.Present destRECT, destRECT, frmCharEditor.picSprite.hwnd, ByVal (0)
+    Direct3D_Device.Present destRECT, destRECT, container.hwnd, ByVal (0)
 
-    CharSpritePos = CharSpritePos + 1
+    spritePosition = spritePosition + 1
     Exit Sub
     
 ' Error handler

@@ -10,7 +10,7 @@ Begin VB.Form frmCharEditor
    ClientWidth     =   9780
    BeginProperty Font 
       Name            =   "Tahoma"
-      Size            =   8,25
+      Size            =   8.25
       Charset         =   238
       Weight          =   400
       Underline       =   0   'False
@@ -197,7 +197,7 @@ Begin VB.Form frmCharEditor
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -299,7 +299,7 @@ Begin VB.Form frmCharEditor
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -642,7 +642,7 @@ End Sub
 Public Sub fetchPlayerData()
     textureNum = -1
     txtLevel = requestedPlayer.Level
-    txtExp = requestedPlayer.Exp
+    txtEXP = requestedPlayer.Exp
     txtHP.text = requestedPlayer.Vital(1)
     txtMP.text = requestedPlayer.Vital(2)
     txtStr.text = requestedPlayer.Stat(1)
@@ -752,19 +752,19 @@ Private Sub txtEnd_LostFocus()
 End Sub
 
 Private Sub txtExp_Change()
-     correctValue txtExp, requestedPlayer.Exp, 0, 9999999
+     correctValue txtEXP, requestedPlayer.Exp, 0, 9999999
 End Sub
 
 Private Sub txtExp_Click()
-    selectValue txtExp
+    selectValue txtEXP
 End Sub
 
 Private Sub txtEXP_GotFocus()
-    selectValue txtExp
+    selectValue txtEXP
 End Sub
 
 Private Sub txtExp_LostFocus()
-    reviseValue txtExp, requestedPlayer.Exp
+    reviseValue txtEXP, requestedPlayer.Exp
 End Sub
 
 Private Sub txtFilter_Change()
@@ -1038,3 +1038,4 @@ End Sub
 Private Sub txtStr_LostFocus()
     reviseValue txtStr, requestedPlayer.Stat(1)
 End Sub
+
