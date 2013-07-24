@@ -1872,11 +1872,12 @@ Sub HandleSetAccess(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
                 Call GlobalMsg(GetPlayerName(n) & " has been blessed with administrative access.", BrightBlue)
             End If
             
-            SendAccessVerificator index, 1, "Access level saved!:" & playerToChange, GetPlayerAccess(n)
-            
             Call SetPlayerAccess(n, i)
             Call SendPlayerData(n)
+            
+            SendAccessVerificator index, 1, "Access level saved!:" & playerToChange, GetPlayerAccess(n)
             Call AddLog(GetPlayerName(index) & " has modified " & GetPlayerName(n) & "'s access.", "Staff")
+            
 
         Else
             Call PlayerMsg(index, "Player is not online!", BrightRed)

@@ -1149,6 +1149,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -4435,7 +4436,7 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, x As Single
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If InMapEditor Then
-        If frmEditor_Map.chkEyeDropper.value = 1 Then
+        If frmEditor_Map.chkEyeDropper.Value = 1 Then
             Call MapEditorEyeDropper
         Else
             If ControlDown And Button = 1 Then
@@ -5092,8 +5093,6 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     BringWindowToTop (frmAdmin.hwnd)
                 Else
                     frmAdmin.Visible = True
-                    frmAdmin.Left = frmMain.Width - frmAdmin.Width + frmMain.Left
-                    frmAdmin.Top = frmMain.Top
                 End If
             End If
         
@@ -5285,7 +5284,7 @@ End Sub
 
 Private Sub picInventory_DblClick()
     Dim InvNum As Long
-    Dim value As Long
+    Dim Value As Long
     Dim Multiplier As Double
     Dim i As Long
     
@@ -5334,7 +5333,7 @@ Private Sub picInventory_DblClick()
                     ' Is currency?
                     If Item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)).Stackable = 1 Then
                         ' Only exit out if we're offering all of it
-                        If TradeYourOffer(i).value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
+                        If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
                     Else
                         Exit Sub
                     End If
@@ -5618,7 +5617,7 @@ Private Sub picInventory_MouseMove(Button As Integer, Shift As Integer, x As Sin
                         ' is currency?
                         If Item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)).Stackable = 1 Then
                             ' Only exit out if we're offering all of it
-                            If TradeYourOffer(i).value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
+                            If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
                         Else
                             Exit Sub
                         End If

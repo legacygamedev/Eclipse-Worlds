@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "Tabctl32.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmServer 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Loading..."
@@ -11,7 +11,7 @@ Begin VB.Form frmServer
    ClientWidth     =   7320
    BeginProperty Font 
       Name            =   "Microsoft Sans Serif"
-      Size            =   8.25
+      Size            =   8,25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -38,8 +38,8 @@ Begin VB.Form frmServer
       TabsPerRow      =   4
       TabHeight       =   503
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Microsoft Sans Serif"
-         Size            =   8.25
+         Name            =   "Tahoma"
+         Size            =   9
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -62,15 +62,12 @@ Begin VB.Form frmServer
       TabPicture(1)   =   "frmServer.frx":170A6
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "lvwInfo"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).ControlCount=   1
       TabCaption(2)   =   "Control "
       TabPicture(2)   =   "frmServer.frx":170C2
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "fraDatabase"
-      Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "fraServer"
-      Tab(2).Control(1).Enabled=   0   'False
+      Tab(2).Control(0)=   "fraServer"
+      Tab(2).Control(1)=   "fraDatabase"
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "News"
       TabPicture(3)   =   "frmServer.frx":170DE
@@ -82,6 +79,15 @@ Begin VB.Form frmServer
       Begin VB.CommandButton cmdLoadNews 
          Caption         =   "Load News"
          Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   -69720
          TabIndex        =   22
@@ -91,6 +97,15 @@ Begin VB.Form frmServer
       Begin VB.CommandButton cmdSaveNews 
          Caption         =   "Save News"
          Enabled         =   0   'False
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   -74880
          TabIndex        =   21
@@ -135,6 +150,15 @@ Begin VB.Form frmServer
       End
       Begin VB.Frame fraServer 
          Caption         =   "Server"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2775
          Left            =   -69480
          TabIndex        =   1
@@ -143,6 +167,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdSet 
             Caption         =   "Set"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   120
             TabIndex        =   30
@@ -152,6 +185,15 @@ Begin VB.Form frmServer
          Begin VB.TextBox txtExpRate 
             Alignment       =   2  'Center
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   285
             Left            =   120
             TabIndex        =   29
@@ -162,6 +204,15 @@ Begin VB.Form frmServer
          Begin VB.CheckBox chkServerLog 
             Caption         =   "Server Log"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   120
             TabIndex        =   26
@@ -172,6 +223,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdExit 
             Caption         =   "Exit"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   120
             TabIndex        =   3
@@ -181,6 +241,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdShutDown 
             Caption         =   "Shut Down"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   120
             TabIndex        =   2
@@ -191,6 +260,15 @@ Begin VB.Form frmServer
             Alignment       =   2  'Center
             Caption         =   "Exp Rate:"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   120
             TabIndex        =   25
@@ -200,6 +278,15 @@ Begin VB.Form frmServer
       End
       Begin VB.Frame fraDatabase 
          Caption         =   "Reload"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2775
          Left            =   -74880
          TabIndex        =   4
@@ -208,6 +295,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadEmoticons 
             Caption         =   "Emoticons"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   2760
             TabIndex        =   31
@@ -217,6 +313,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadTitles 
             Caption         =   "Titles"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   2760
             TabIndex        =   28
@@ -226,6 +331,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadMorals 
             Caption         =   "Morals"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   2760
             TabIndex        =   27
@@ -235,6 +349,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadBans 
             Caption         =   "Bans"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   2760
             TabIndex        =   24
@@ -244,6 +367,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadAll 
             Caption         =   "All"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   120
             TabIndex        =   19
@@ -253,6 +385,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadGuilds 
             Caption         =   "Guilds"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   1440
             TabIndex        =   14
@@ -262,6 +403,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadOptions 
             Caption         =   "Options"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   2760
             TabIndex        =   13
@@ -271,6 +421,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadAnimations 
             Caption         =   "Animations"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   1440
             TabIndex        =   12
@@ -280,6 +439,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadResources 
             Caption         =   "Resources"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   1440
             TabIndex        =   11
@@ -289,6 +457,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadItems 
             Caption         =   "Items"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   1440
             TabIndex        =   10
@@ -298,6 +475,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadNPCs 
             Caption         =   "NPCs"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   1440
             TabIndex        =   9
@@ -307,6 +493,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadShops 
             Caption         =   "Shops"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   120
             TabIndex        =   8
@@ -316,6 +511,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton CmdReloadSpells 
             Caption         =   "Spells"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   120
             TabIndex        =   7
@@ -325,6 +529,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadMaps 
             Caption         =   "Maps"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   120
             TabIndex        =   6
@@ -334,6 +547,15 @@ Begin VB.Form frmServer
          Begin VB.CommandButton cmdReloadClasses 
             Caption         =   "Classes"
             Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   120
             TabIndex        =   5
@@ -363,7 +585,7 @@ Begin VB.Form frmServer
          Appearance      =   1
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Microsoft Sans Serif"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -393,6 +615,15 @@ Begin VB.Form frmServer
       End
       Begin VB.Label lblCPS 
          Caption         =   "CPS: Calculating"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   960
          TabIndex        =   18
@@ -403,12 +634,21 @@ Begin VB.Form frmServer
          Alignment       =   2  'Center
          AutoSize        =   -1  'True
          Caption         =   "[Unlock]"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   9
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H00FF0000&
-         Height          =   195
-         Left            =   180
+         Height          =   210
+         Left            =   135
          TabIndex        =   17
          Top             =   360
-         Width           =   600
+         Width           =   690
       End
    End
    Begin MSWinsockLib.Winsock Socket 

@@ -10,7 +10,7 @@ Begin VB.Form frmCharEditor
    ClientWidth     =   9780
    BeginProperty Font 
       Name            =   "Tahoma"
-      Size            =   8.25
+      Size            =   8,25
       Charset         =   238
       Weight          =   400
       Underline       =   0   'False
@@ -197,7 +197,7 @@ Begin VB.Form frmCharEditor
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -299,7 +299,7 @@ Begin VB.Form frmCharEditor
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -950,7 +950,7 @@ Private Sub displayStatus(ByVal msg As String, msgType As Byte)
     End Select
 End Sub
 
-Private Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
+Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
     Select Case msgType
     
         Case Status.Error:
