@@ -330,21 +330,21 @@ Begin VB.Form frmAdmin
       End
       Begin VB.HScrollBar scrlAAmount 
          Height          =   255
-         Left            =   1320
+         Left            =   1800
          Min             =   1
          TabIndex        =   4
          Top             =   7740
          Value           =   1
-         Width           =   1335
+         Width           =   855
       End
       Begin VB.HScrollBar scrlAItem 
          Height          =   255
-         Left            =   1350
+         Left            =   1830
          Min             =   1
          TabIndex        =   3
          Top             =   7410
          Value           =   1
-         Width           =   1305
+         Width           =   825
       End
       Begin VB.CommandButton cmdASpell 
          Caption         =   "Spell"
@@ -633,7 +633,7 @@ Begin VB.Form frmAdmin
          BackStyle       =   0  'Transparent
          Caption         =   "Map"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Arial"
             Size            =   9.75
             Charset         =   238
             Weight          =   700
@@ -653,7 +653,7 @@ Begin VB.Form frmAdmin
          BackStyle       =   0  'Transparent
          Caption         =   "Editors"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Arial"
             Size            =   9.75
             Charset         =   238
             Weight          =   700
@@ -673,7 +673,7 @@ Begin VB.Form frmAdmin
          BackStyle       =   0  'Transparent
          Caption         =   "Spawning"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Arial"
             Size            =   9.75
             Charset         =   238
             Weight          =   700
@@ -693,7 +693,7 @@ Begin VB.Form frmAdmin
          BackStyle       =   0  'Transparent
          Caption         =   "Players"
          BeginProperty Font 
-            Name            =   "MS Sans Serif"
+            Name            =   "Arial"
             Size            =   9.75
             Charset         =   238
             Weight          =   700
@@ -835,10 +835,10 @@ Attribute VB_Exposed = False
 Dim refreshDown As Boolean
 
 Private Sub cmbPlayersOnline_Click()
-    Dim i As Long, length As Long
+    Dim i As Long, Length As Long
 
-    length = UBound(ignoreIndexes)
-    For i = 0 To length
+    Length = UBound(ignoreIndexes)
+    For i = 0 To Length
         If cmbPlayersOnline.ListIndex = ignoreIndexes(i) Then
             cmbPlayersOnline.ListIndex = ignoreIndexes(i) + 1
             cmbPlayersOnline.text = cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)
@@ -1375,26 +1375,26 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 End Sub
 
 
-Private Sub picAdmin_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picAdmin_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
 End Sub
 
-Private Sub picAdmin_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picAdmin_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     refreshDown = False
 End Sub
 
-Private Sub picRefresh_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picRefresh_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     refreshDown = True
     picRefresh.Picture = LoadResPicture("REFRESH_DOWN", vbResBitmap)
 End Sub
 
-Private Sub picRefresh_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picRefresh_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     If Not refreshDown Then
         picRefresh.Picture = LoadResPicture("REFRESH_OVER", vbResBitmap)
     End If
 End Sub
 
-Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     refreshDown = False
     refreshingAdminList = True
     SendRequestPlayersOnline
@@ -1427,7 +1427,7 @@ errorhandler:
     Err.Clear
 End Sub
 Public Sub UpdatePlayersOnline()
-    Dim players() As String, length As Long, i As Long, currentIgnore As Long
+    Dim players() As String, Length As Long, i As Long, currentIgnore As Long
     Dim temp As String
     temp = cmbPlayersOnline.text
     cmbPlayersOnline.Clear
@@ -1443,14 +1443,14 @@ Public Sub UpdatePlayersOnline()
         currentIgnore = currentIgnore + 1
         
     players = Split(Trim(g_playersOnline), ",")
-    length = UBound(players)
-    If length >= 1 Then
-        cmbPlayersOnline.AddItem ("----Players: " & length & "----")
+    Length = UBound(players)
+    If Length >= 1 Then
+        cmbPlayersOnline.AddItem ("----Players: " & Length & "----")
         
             ReDim Preserve ignoreIndexes(1)
             ignoreIndexes(1) = currentIgnore
             currentIgnore = currentIgnore + 1
-        For i = 0 To length
+        For i = 0 To Length
             If Trim(Player(MyIndex).name) = Trim(players(i)) Then
                 GoTo end_loop
             End If
@@ -1459,7 +1459,7 @@ Public Sub UpdatePlayersOnline()
 end_loop:
         Next
     End If
-    lblPlayers.Caption = "Players: " & length + 1 ' +1 counting ourselfs
+    lblPlayers.Caption = "Players: " & Length + 1 ' +1 counting ourselfs
 End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out

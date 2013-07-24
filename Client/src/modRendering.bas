@@ -56,8 +56,8 @@ Public Tex_White As DX8TextureRec
 Public Tex_Weather As DX8TextureRec
 Public Tex_ChatBubble As DX8TextureRec
 Public Tex_Fade As DX8TextureRec
-Public Tex_EquipPanel As DX8TextureRec
 Public Tex_Equip As DX8TextureRec
+Public Tex_Base As DX8TextureRec
 
 ' Character Editor Sprite
 Public Tex_CharSprite As DX8TextureRec
@@ -200,10 +200,7 @@ Public Sub DrawGDI()
         If frmMain.picHotbar.Visible Then DrawHotbar
         If frmMain.picInventory.Visible Then DrawInventory
         If frmMain.picCharacter.Visible Then DrawPlayerCharFace
-        If frmMain.picEquipment.Visible Then
-            DrawEquipment
-            DrawEquipmentPanel
-        End If
+        If frmMain.picEquipment.Visible Then DrawEquipment
         If frmMain.picChatFace.Visible Then DrawEventChatFace
         If frmMain.picSpells.Visible Then DrawPlayerSpells
         If frmMain.picShop.Visible Then DrawShop
@@ -401,15 +398,15 @@ Private Sub LoadTextures()
     Call CheckPanoramas
     Call CheckEmoticons
     
-    NumTextures = NumTextures + 12
+    NumTextures = NumTextures + 13
     
     ReDim Preserve gTexture(NumTextures)
+    Tex_Base.filepath = App.Path & "\data files\graphics\gui\main\base.png"
+    Tex_Base.Texture = NumTextures - 11
+    LoadTexture Tex_Base
     Tex_Equip.filepath = App.Path & "\data files\graphics\gui\main\equip.png"
-    Tex_Equip.Texture = NumTextures - 11
+    Tex_Equip.Texture = NumTextures - 10
     LoadTexture Tex_Equip
-    Tex_EquipPanel.filepath = App.Path & "\data files\graphics\gui\main\equip_panel.png"
-    Tex_EquipPanel.Texture = NumTextures - 10
-    LoadTexture Tex_EquipPanel
     Tex_Fade.filepath = App.Path & "\data files\graphics\misc\fader.png"
     Tex_Fade.Texture = NumTextures - 9
     LoadTexture Tex_Fade
@@ -504,7 +501,6 @@ Dim i As Long
     Next
 
     Tex_Equip.Texture = 0
-    Tex_EquipPanel.Texture = 0
     Tex_Fade.Texture = 0
     Tex_ChatBubble.Texture = 0
     Tex_Weather.Texture = 0
@@ -2219,18 +2215,34 @@ Sub DrawInventory()
 NextLoop:
     Next
     
+    With rec
+        .Top = 0
+        .Bottom = Tex_Base.Height
+        .Left = 0
+        .Right = Tex_Base.Width
+    End With
+    
+    With rec_pos
+        .Top = 0
+        .Bottom = frmMain.picInventory.Height
+        .Left = 0
+        .Right = frmMain.picInventory.Width
+    End With
+
+    RenderTextureByRects Tex_Base, rec, rec_pos
+    
     With srcRect
         .X1 = 0
         .X2 = frmMain.picInventory.Width
-        .Y1 = 32
-        .Y2 = frmMain.picInventory.Height + .Y1
+        .Y1 = 0
+        .Y2 = frmMain.picInventory.Height
     End With
     
     With destRECT
         .X1 = 0
         .X2 = frmMain.picInventory.Width
-        .Y1 = 32
-        .Y2 = frmMain.picInventory.Height + .Y1
+        .Y1 = 0
+        .Y2 = frmMain.picInventory.Height
     End With
     
     Direct3D_Device.EndScene
@@ -2383,26 +2395,40 @@ errorhandler:
 End Sub
 
 Sub DrawPlayerSpells()
-    Dim i As Long, x As Long, y As Long, SpellNum As Long, spellicon As Long, srcRect As D3DRECT, destRECT As D3DRECT
+    Dim i As Long, x As Long, y As Long, SpellNum As Long, SpellIcon As Long, srcRect As D3DRECT, destRECT As D3DRECT
     Dim Amount As String
     Dim rec As RECT, rec_pos As RECT
     Dim Color As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If Not InGame Then Exit Sub
+    
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
+    
+    With rec
+        .Top = 0
+        .Bottom = Tex_Base.Height
+        .Left = 0
+        .Right = Tex_Base.Width
+    End With
+    
+    With rec_pos
+        .Top = 0
+        .Bottom = frmMain.picSpells.Height
+        .Left = 0
+        .Right = frmMain.picSpells.Width
+    End With
+
+    RenderTextureByRects Tex_Base, rec, rec_pos
 
     For i = 1 To MAX_PLAYER_SPELLS
         SpellNum = PlayerSpells(i)
 
         If SpellNum > 0 And SpellNum <= MAX_SPELLS Then
-            spellicon = Spell(SpellNum).Icon
+            SpellIcon = Spell(SpellNum).Icon
 
-            If spellicon > 0 And spellicon <= NumSpellIcons Then
-            
+            If SpellIcon > 0 And SpellIcon <= NumSpellIcons Then
                 With rec
                     .Top = 0
                     .Bottom = 32
@@ -2422,7 +2448,7 @@ Sub DrawPlayerSpells()
                     .Right = .Left + PIC_X
                 End With
 
-                RenderTextureByRects Tex_SpellIcon(spellicon), rec, rec_pos
+                RenderTextureByRects Tex_SpellIcon(SpellIcon), rec, rec_pos
             End If
         End If
     Next
@@ -2430,15 +2456,15 @@ Sub DrawPlayerSpells()
     With srcRect
         .X1 = 0
         .X2 = frmMain.picSpells.Width
-        .Y1 = 28
-        .Y2 = frmMain.picSpells.Height + .Y1
+        .Y1 = 0
+        .Y2 = frmMain.picSpells.Height
     End With
     
     With destRECT
         .X1 = 0
         .X2 = frmMain.picSpells.Width
-        .Y1 = 32
-        .Y2 = frmMain.picSpells.Height + .Y1
+        .Y1 = 0
+        .Y2 = frmMain.picSpells.Height
     End With
     
     Direct3D_Device.EndScene
@@ -4037,20 +4063,6 @@ Public Sub DrawEquipment()
 
     RenderTextureByRects Tex_Equip, sRect, dRect
     
-    Direct3D_Device.EndScene
-    Direct3D_Device.Present sRect, dRect, frmMain.picEquipment.hwnd, ByVal (0)
-End Sub
-
-Public Sub DrawEquipmentPanel()
-    Dim i As Long
-    Dim ItemNum As Long
-    Dim ItemPic As Long
-    Dim sRect As RECT
-    Dim dRect As RECT
-
-    Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
-    Direct3D_Device.BeginScene
-                
     ' Now lets make the image that we will be rendering today
     For i = 1 To Equipment.Equipment_Count - 1
         ItemNum = GetPlayerEquipment(MyIndex, i)
@@ -4073,22 +4085,20 @@ Public Sub DrawEquipmentPanel()
     
     With sRect
         .Top = 0
-        .Bottom = Tex_EquipPanel.Height
+        .Bottom = Tex_Equip.Height
         .Left = 0
-        .Right = Tex_EquipPanel.Width
+        .Right = Tex_Equip.Width
     End With
     
     With dRect
         .Top = 0
-        .Bottom = frmMain.picVisEquip.Height
+        .Bottom = frmMain.picEquipment.Height
         .Left = 0
-        .Right = frmMain.picVisEquip.Width
+        .Right = frmMain.picEquipment.Width
     End With
-
-    RenderTextureByRects Tex_EquipPanel, sRect, dRect
     
     Direct3D_Device.EndScene
-    Direct3D_Device.Present sRect, dRect, frmMain.picVisEquip.hwnd, ByVal (0)
+    Direct3D_Device.Present sRect, dRect, frmMain.picEquipment.hwnd, ByVal (0)
 End Sub
 
 Public Sub EditorEmoticon_DrawIcon()
@@ -4666,14 +4676,14 @@ Sub DrawSelectionBox(dRect As D3DRECT)
     
     If Width > 6 And Height > 6 Then
         ' Draw Box 32 by 32 at graphicselx and graphicsely
-        RenderTexture Tex_Selection, x, y, 1, 1, 2, 2, 2, 2, -1 'top left corner
+        RenderTexture Tex_Selection, x, y, 1, 1, 2, 2, 2, 2, -1 ' Top left corner
         RenderTexture Tex_Selection, x + 2, y, 3, 1, Width - 4, 2, 32 - 6, 2, -1 ' Top line
-        RenderTexture Tex_Selection, x + 2 + (Width - 4), y, 29, 1, 2, 2, 2, 2, -1 'top right corner
-        RenderTexture Tex_Selection, x, y + 2, 1, 3, 2, Height - 4, 2, 32 - 6, -1 'Left Line
-        RenderTexture Tex_Selection, x + 2 + (Width - 4), y + 2, 32 - 3, 3, 2, Height - 4, 2, 32 - 6, -1 'right line
-        RenderTexture Tex_Selection, x, y + 2 + (Height - 4), 1, 32 - 3, 2, 2, 2, 2, -1 'bottom left corner
-        RenderTexture Tex_Selection, x + 2 + (Width - 4), y + 2 + (Height - 4), 32 - 3, 32 - 3, 2, 2, 2, 2, -1 'bottom right corner
-        RenderTexture Tex_Selection, x + 2, y + 2 + (Height - 4), 3, 32 - 3, Width - 4, 2, 32 - 6, 2, -1 'bottom line
+        RenderTexture Tex_Selection, x + 2 + (Width - 4), y, 29, 1, 2, 2, 2, 2, -1 ' Top right corner
+        RenderTexture Tex_Selection, x, y + 2, 1, 3, 2, Height - 4, 2, 32 - 6, -1 ' Left Line
+        RenderTexture Tex_Selection, x + 2 + (Width - 4), y + 2, 32 - 3, 3, 2, Height - 4, 2, 32 - 6, -1 ' Right line
+        RenderTexture Tex_Selection, x, y + 2 + (Height - 4), 1, 32 - 3, 2, 2, 2, 2, -1 ' Bottom left corner
+        RenderTexture Tex_Selection, x + 2 + (Width - 4), y + 2 + (Height - 4), 32 - 3, 32 - 3, 2, 2, 2, 2, -1 ' Bottom right corner
+        RenderTexture Tex_Selection, x + 2, y + 2 + (Height - 4), 3, 32 - 3, Width - 4, 2, 32 - 6, 2, -1 ' Bottom line
     End If
 End Sub
 

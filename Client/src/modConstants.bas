@@ -3,7 +3,7 @@ Option Explicit
 
 ' API Declares
 Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
-Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lparam As Long) As Long
+Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lparam As Long) As Long
 Public Declare Function GetForegroundWindow Lib "user32" () As Long
 
 ' Sounds
@@ -25,7 +25,7 @@ Public Const HotbarLeft As Byte = 2
 Public Const HotbarOffsetX As Byte = 8
 
 ' Inventory constants
-Public Const InvTop As Long = 32
+Public Const InvTop As Long = 24
 Public Const InvLeft As Long = 12
 Public Const InvOffsetY As Long = 3
 Public Const InvOffsetX As Long = 3
@@ -39,11 +39,11 @@ Public Const BankOffsetY As Long = 4
 Public Const BankColumns As Long = 11
 
 ' Spells constants
-Public Const SpellTop As Byte = 32
-Public Const SpellLeft As Byte = 12
-Public Const SpellOffsetX As Byte = 3
-Public Const SpellOffsetY As Byte = 3
-Public Const SpellColumns As Byte = 5
+Public Const SpellTop As Long = 24
+Public Const SpellLeft As Long = 12
+Public Const SpellOffsetY As Long = 3
+Public Const SpellOffsetX As Long = 3
+Public Const SpellColumns As Long = 5
 
 ' Shop constants
 Public Const ShopTop As Byte = 6
