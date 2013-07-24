@@ -1360,6 +1360,9 @@ Public Sub DrawHotbar()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To MAX_HOTBAR
+        Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 255), 1#, 0
+        Direct3D_Device.BeginScene
+    
         With dRect
             .Top = HotbarTop
             .Left = HotbarLeft + ((HotbarOffsetX + 32) * (((i - 1) Mod MAX_HOTBAR)))
@@ -1386,11 +1389,7 @@ Public Sub DrawHotbar()
                 If Len(Item(Hotbar(i).Slot).name) > 0 Then
                     If Item(Hotbar(i).Slot).Pic > 0 Then
                         If Item(Hotbar(i).Slot).Pic <= NumItems Then
-                            Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 255), 1#, 0
-                            Direct3D_Device.BeginScene
                             RenderTextureByRects Tex_Item(Item(Hotbar(i).Slot).Pic), sRect, dRect
-                            Direct3D_Device.EndScene
-                            Direct3D_Device.Present destRECT, destRECT, frmMain.picHotbar.hwnd, ByVal (0)
                         End If
                     End If
                 End If
@@ -1415,15 +1414,11 @@ Public Sub DrawHotbar()
                                 End If
                             End If
                         Next
-                        Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 255), 1#, 0
-                        Direct3D_Device.BeginScene
                         RenderTextureByRects Tex_SpellIcon(Spell(Hotbar(i).Slot).Icon), sRect, dRect
-                        Direct3D_Device.EndScene
-                        Direct3D_Device.Present destRECT, destRECT, frmMain.picHotbar.hwnd, ByVal (0)
                     End If
                 End If
         End Select
-
+    
         ' Render the letters
         If Options.WASD = 1 Then
             If i = 10 Then
@@ -1439,6 +1434,9 @@ Public Sub DrawHotbar()
             Num = " F" & Trim$(i)
         End If
         RenderText Font_Default, Num, dRect.Left + 2, dRect.Top + 16, White
+        
+        Direct3D_Device.EndScene
+        Direct3D_Device.Present destRECT, destRECT, frmMain.picHotbar.hwnd, ByVal (0)
     Next
     Exit Sub
     
@@ -2138,11 +2136,25 @@ Sub DrawInventory()
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If Not InGame Then Exit Sub
     
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
+    
+    With rec
+        .Top = 0
+        .Bottom = Tex_Base.Height
+        .Left = 0
+        .Right = Tex_Base.Width
+    End With
+    
+    With rec_pos
+        .Top = 0
+        .Bottom = frmMain.picInventory.Height
+        .Left = 0
+        .Right = frmMain.picInventory.Width
+    End With
+
+    RenderTextureByRects Tex_Base, rec, rec_pos
 
     For i = 1 To MAX_INV
         ItemNum = GetPlayerInvItemNum(MyIndex, i)
@@ -2214,22 +2226,6 @@ Sub DrawInventory()
         
 NextLoop:
     Next
-    
-    With rec
-        .Top = 0
-        .Bottom = Tex_Base.Height
-        .Left = 0
-        .Right = Tex_Base.Width
-    End With
-    
-    With rec_pos
-        .Top = 0
-        .Bottom = frmMain.picInventory.Height
-        .Left = 0
-        .Right = frmMain.picInventory.Width
-    End With
-
-    RenderTextureByRects Tex_Base, rec, rec_pos
     
     With srcRect
         .X1 = 0

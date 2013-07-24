@@ -25,7 +25,7 @@ Public Const HotbarLeft As Byte = 2
 Public Const HotbarOffsetX As Byte = 8
 
 ' Inventory constants
-Public Const InvTop As Long = 24
+Public Const InvTop As Long = 16
 Public Const InvLeft As Long = 12
 Public Const InvOffsetY As Long = 3
 Public Const InvOffsetX As Long = 3
@@ -39,7 +39,7 @@ Public Const BankOffsetY As Long = 4
 Public Const BankColumns As Long = 11
 
 ' Spells constants
-Public Const SpellTop As Long = 24
+Public Const SpellTop As Long = 16
 Public Const SpellLeft As Long = 12
 Public Const SpellOffsetY As Long = 3
 Public Const SpellOffsetX As Long = 3
