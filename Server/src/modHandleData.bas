@@ -4016,6 +4016,11 @@ Sub HandleEvent(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Lo
     
     If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
         For z = 1 To TempPlayer(Index).EventMap.CurrentEvents
+            ' Don't process events that are already processing
+            If TempPlayer(Index).EventProcessingCount > 0 Then
+                If TempPlayer(Index).EventProcessing(z).EventID = i Then Exit Sub
+            End If
+            
             If TempPlayer(Index).EventMap.EventPages(z).EventID = i Then
                 i = z
                 BeginEventProcessing = True
@@ -4026,9 +4031,10 @@ Sub HandleEvent(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Lo
     
     If BeginEventProcessing = True Then
         If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount > 0 Then
-            ' Process this event, it is action button and everything checks out.
+            ' Process this event, it is action button and everything checks out
             TempPlayer(Index).EventProcessingCount = TempPlayer(Index).EventProcessingCount + 1
             ReDim Preserve TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount)
+            
             With TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount)
                 .ActionTimer = timeGetTime
                 .CurList = 1

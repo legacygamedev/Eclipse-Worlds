@@ -56,7 +56,6 @@ ResFile32="src\Client.RES"
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
-NoControlUpgrade=1
 Title="Legends of Arteix"
 ExeName32="Client.exe"
 Path32="..\..\..\..\Dropbox\EclipseWorlds\Client"

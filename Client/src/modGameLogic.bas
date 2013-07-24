@@ -516,19 +516,13 @@ Function CanMove() As Boolean
     End If
     
     ' Close if in a shop
-    If InShop > 0 Then
-        CloseShop
-    End If
+    If InShop > 0 Then CloseShop
 
     ' Close if in bank
-    If InBank Then
-        CloseBank
-    End If
-    
+    If InBank Then CloseBank
+
     ' Close if in trade
-    If frmMain.picTrade.Visible Then
-        CloseTrade
-    End If
+    If frmMain.picTrade.Visible Then CloseTrade
 
     d = GetPlayerDir(MyIndex)
 
@@ -659,13 +653,14 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     Dim x As Long
     Dim y As Long
     Dim i As Long
+    Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     CheckDirection = False
     
-    ' check directional blocking
+    ' Check directional blocking
     If IsDirBlocked(Map.Tile(GetPlayerX(MyIndex), GetPlayerY(MyIndex)).DirBlock, Direction + 1) Then
         CheckDirection = True
         Exit Function
@@ -685,6 +680,22 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
             x = GetPlayerX(MyIndex) + 1
             y = GetPlayerY(MyIndex)
     End Select
+    
+    ' Check if event is touched
+    If timeGetTime > TempPlayer(MyIndex).EventTimer Then
+        For i = 1 To Map.CurrentEvents
+            If Map.MapEvents(i).Visible = 1 Then
+                If Map.MapEvents(i).x = x And Map.MapEvents(i).y = y Then
+                    Set buffer = New clsBuffer
+                    buffer.WriteLong CEvent
+                    buffer.WriteLong i
+                    SendData buffer.ToArray()
+                    Set buffer = Nothing
+                    TempPlayer(MyIndex).EventTimer = timeGetTime + 1000
+                End If
+            End If
+        Next
+    End If
 
     ' Check to see if the map tile is blocked or not
     If Map.Tile(x, y).Type = TILE_TYPE_BLOCKED Then
@@ -712,7 +723,7 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
         End If
     Next
 
-    ' Check to see if a npc is already on that tile
+    ' Check to see if a NPC is already on that tile
     For i = 1 To Map.Npc_HighIndex
         If MapNPC(i).Num > 0 Then
             If MapNPC(i).x = x Then
