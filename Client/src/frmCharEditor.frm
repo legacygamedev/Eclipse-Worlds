@@ -932,9 +932,8 @@ Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
     End If
 End Function
 
-Private Sub displayStatus(ByVal msg As String, msgType As Byte)
+Private Sub DisplayStatus(ByVal msg As String, msgType As Byte)
     Select Case msgType
-    
         Case Status.Error:
             lStatus.BackColor = &H8080FF
             lStatus.Caption = msg

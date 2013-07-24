@@ -808,11 +808,6 @@ Dim refreshDown As Boolean
 Dim autoAccess As Boolean
 
 Private Sub cmbAccess_Click()
-    If Trim$(cmbPlayersOnline.text) = GetPlayerName(MyIndex) Then
-        lblStatus.Caption = "You can't change your own access!"
-        Exit Sub
-    End If
-    
     If autoAccess Then
         autoAccess = False
     Else
@@ -822,28 +817,28 @@ Private Sub cmbAccess_Click()
     End If
 End Sub
 
-Public Sub verifyAccess(playerName As String, success As Byte, message As String, currentAccess As Byte)
-    If playerName = cmbPlayersOnline.text Then
-        If success = 0 Then
+Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String, CurrentAccess As Byte)
+    If PlayerName = cmbPlayersOnline.text Then
+        If Success = 0 Then
             For i = 0 To UBound(g_playersOnline)
-                If InStr(1, g_playersOnline(i), playerName) Then
-                    Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & currentAccess
+                If InStr(1, g_playersOnline(i), PlayerName) Then
+                    Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
                     setAdminAccessLevel
                     
-                    displayStatus message, Status.Error
+                    DisplayStatus Message, Status.Error
                 End If
             Next i
-        ElseIf success = 1 Then
-            Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & currentAccess
+        ElseIf Success = 1 Then
+            Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
             setAdminAccessLevel
             
-            displayStatus message, Status.Correct
+            DisplayStatus Message, Status.Correct
         End If
     End If
     cmbPlayersOnline.Enabled = True
 End Sub
 
-Public Sub displayStatus(ByVal msg As String, msgType As Status)
+Public Sub DisplayStatus(ByVal msg As String, msgType As Status)
     Select Case msgType
         Case Status.Error:
             lblStatus.BackColor = &H8080FF
@@ -864,6 +859,11 @@ End Sub
 Private Sub cmbPlayersOnline_Click()
     Dim i As Long, Length As Long
     
+    If cmbPlayersOnline.text = GetPlayerName(MyIndex) Then
+        DisplayStatus "You can't change your own access!", Status.Error
+        Exit Sub
+    End If
+    
     Length = UBound(ignoreIndexes)
     For i = 0 To Length
         If cmbPlayersOnline.ListIndex = ignoreIndexes(i) Then
@@ -874,15 +874,14 @@ Private Sub cmbPlayersOnline_Click()
     Next
     autoAccess = True
     setAdminAccessLevel
-    
 End Sub
 
 Private Sub setAdminAccessLevel()
     Dim accessLvl As String, tempTxt As String
-    'Set Access Level
+    
+    ' Set Access Level
     For i = 0 To UBound(g_playersOnline)
         If InStr(1, g_playersOnline(i), cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)) Then
-
             accessLvl = Split(g_playersOnline(i), ":")(1)
 
             If accessLvl = "5" Then
@@ -902,7 +901,6 @@ Private Sub setAdminAccessLevel()
             
             cmbAccess.ListIndex = accessLvl
             cmbAccess.text = tempTxt
-            
         End If
     Next i
 End Sub
@@ -1406,13 +1404,12 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
-                If frmAdmin.Visible = True And GetForegroundWindow = frmAdmin.hwnd Then
+                If frmAdmin.Visible And GetForegroundWindow = frmAdmin.hwnd Then
                     Unload frmAdmin
                 End If
             End If
     End Select
 End Sub
-
 
 Private Sub picAdmin_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
@@ -1465,6 +1462,7 @@ errorhandler:
     HandleError "scrlAAmount_Change", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
 Public Sub UpdatePlayersOnline()
     Dim players() As String, staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
     Dim stuffCounter As Long, playersCounter As Long, overallCounter As Long, foundStuff As Boolean, foundPlayer As Boolean
@@ -1473,7 +1471,7 @@ Public Sub UpdatePlayersOnline()
     cmbPlayersOnline.Clear
     cmbPlayersOnline.text = tempTxt
     
-    'Get Stuff
+    ' Get Stuff
     For i = 0 To UBound(g_playersOnline)
         If CByte(Split(g_playersOnline(i), ":")(1)) > 0 Then
             foundStuff = True
@@ -1482,6 +1480,7 @@ Public Sub UpdatePlayersOnline()
             stuffCounter = stuffCounter + 1
         End If
     Next
+    
     'Get Players
     For i = 0 To UBound(g_playersOnline)
         If CByte(Split(g_playersOnline(i), ":")(1)) = 0 Then
@@ -1507,7 +1506,6 @@ Public Sub UpdatePlayersOnline()
     End If
 
     If foundPlayer Then
-
         cmbPlayersOnline.AddItem ("----Players: " & playersCounter & "----")
         
             ReDim Preserve ignoreIndexes(1)
@@ -1522,6 +1520,7 @@ Public Sub UpdatePlayersOnline()
     
     lblPlayers.Caption = "Players: " & overallCounter
 End Sub
+
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1540,7 +1539,6 @@ errorhandler:
     HandleError "Form_Load", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-
 
 Private Sub txtASprite_GotFocus()
     ' If debug mode, handle error then exit out

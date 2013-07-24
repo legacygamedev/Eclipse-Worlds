@@ -206,7 +206,7 @@ End Sub
 
 Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
     Dim ChatText As String
-    Dim Name As String
+    Dim name As String
     Dim i As Long
     Dim n As Long
     Dim Command() As String
@@ -347,12 +347,12 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Exit Sub
             End If
             
-            Name = vbNullString
+            name = vbNullString
 
             ' Get the desired player from the user text
             For i = 1 To Len(ChatText)
                 If Not Mid$(ChatText, i, 1) = " " Then
-                    Name = Name & Mid$(ChatText, i, 1)
+                    name = name & Mid$(ChatText, i, 1)
                 Else
                     Exit For
                 End If
@@ -363,7 +363,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 ChatText = Mid$(ChatText, i + 1, Len(ChatText) - i)
 
                 ' Send the message to the player
-                Call PrivateMsg(Name, ChatText)
+                Call PrivateMsg(name, ChatText)
             Else
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
             End If
@@ -467,12 +467,10 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                         GoTo Continue
                     End If
                     
-                    If frmAdmin.Visible = True Then
+                    If frmAdmin.Visible Then
                         Unload frmAdmin
                     Else
-                        frmAdmin.Visible = True
-                        frmAdmin.Left = frmMain.Width - frmAdmin.Width + frmMain.Left
-                        frmAdmin.Top = frmMain.Top
+                        InitAdminPanel
                     End If
                     
                 ' Who's Online

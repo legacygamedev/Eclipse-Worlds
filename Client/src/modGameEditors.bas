@@ -4446,3 +4446,9 @@ errorhandler:
     HandleError "MapEditorEyeDropper", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
+Public Sub InitAdminPanel()
+    frmAdmin.Visible = True
+    frmAdmin.Left = frmMain.Left + frmMain.Width - frmAdmin.Width
+    frmAdmin.Top = frmMain.Top
+End Sub

@@ -24,9 +24,7 @@ Public Sub Main()
         AlertMsg "This application is already running!"
         End
     End If
-    'Character Editor
-    'frmCharEditor.Visible = True
-    'Exit Sub
+
     ' Set the high-resolution timer
     timeBeginPeriod 1
     
@@ -462,14 +460,14 @@ errorhandler:
 End Sub
 
 ' Used for adding text to packet debugger
-Public Sub TextAdd(ByVal txt As textBox, Msg As String, NewLine As Boolean)
+Public Sub TextAdd(ByVal txt As textBox, msg As String, NewLine As Boolean)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If NewLine Then
-        txt.text = txt.text + Msg + vbCrLf
+        txt.text = txt.text + msg + vbCrLf
     Else
-        txt.text = txt.text + Msg
+        txt.text = txt.text + msg
     End If
 
     txt.SelStart = Len(txt.text) - 1
@@ -901,13 +899,13 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Function CheckMessage(ByVal Msg As String) As String
+Public Function CheckMessage(ByVal msg As String) As String
     Dim i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    CheckMessage = Msg
+    CheckMessage = msg
     
     ' Do nothing if the filter is turned off
     If Options.SwearFilter = 0 Then Exit Function
