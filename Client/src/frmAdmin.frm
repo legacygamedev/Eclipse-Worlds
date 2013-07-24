@@ -330,21 +330,21 @@ Begin VB.Form frmAdmin
       End
       Begin VB.HScrollBar scrlAAmount 
          Height          =   255
-         Left            =   1920
+         Left            =   2040
          Min             =   1
          TabIndex        =   4
          Top             =   7740
          Value           =   1
-         Width           =   735
+         Width           =   615
       End
       Begin VB.HScrollBar scrlAItem 
          Height          =   255
-         Left            =   1950
+         Left            =   2070
          Min             =   1
          TabIndex        =   3
          Top             =   7410
          Value           =   1
-         Width           =   705
+         Width           =   585
       End
       Begin VB.CommandButton cmdASpell 
          Caption         =   "Spell"
@@ -763,7 +763,7 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   150
+         Left            =   120
          TabIndex        =   33
          Top             =   7740
          Width           =   975
@@ -781,7 +781,7 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   150
+         Left            =   120
          TabIndex        =   32
          Top             =   7440
          Width           =   1875

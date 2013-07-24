@@ -1126,7 +1126,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtEXP.text = NPC(EditorIndex).Exp
+        .txtExp.text = NPC(EditorIndex).Exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -2375,9 +2375,9 @@ Sub CopyEvent_Map(x As Long, y As Long)
     If count = 0 Then Exit Sub
     
     For i = 1 To count
-        If Map.events(i).x = x And Map.events(i).y = y Then
+        If Map.Events(i).x = x And Map.Events(i).y = y Then
             ' Copy it
-            cpEvent = Map.events(i)
+            cpEvent = Map.Events(i)
             Exit Sub
         End If
     Next
@@ -2399,7 +2399,7 @@ Sub PasteEvent_Map(x As Long, y As Long)
     
     If count > 0 Then
         For i = 1 To count
-            If Map.events(i).x = x And Map.events(i).y = y Then
+            If Map.Events(i).x = x And Map.Events(i).y = y Then
                 ' Already an event - paste over it
                 EventNum = i
             End If
@@ -2414,11 +2414,11 @@ Sub PasteEvent_Map(x As Long, y As Long)
     End If
     
     ' Copy it
-    Map.events(EventNum) = cpEvent
+    Map.Events(EventNum) = cpEvent
     
     ' Set position
-    Map.events(EventNum).x = x
-    Map.events(EventNum).y = y
+    Map.Events(EventNum).x = x
+    Map.Events(EventNum).y = y
     Exit Sub
     
 ' Error handler
@@ -2439,7 +2439,7 @@ Sub DeleteEvent(x As Long, y As Long)
     count = Map.EventCount
     
     For i = 1 To count
-        If Map.events(i).x = x And Map.events(i).y = y Then
+        If Map.Events(i).x = x And Map.Events(i).y = y Then
             ' Delete it
             ClearEvent i
             lowIndex = i
@@ -2479,7 +2479,7 @@ Sub AddEvent(x As Long, y As Long, Optional ByVal CancelLoad As Boolean = False)
     ' Make sure there's not already an event
     If count - 1 > 0 Then
         For i = 1 To count - 1
-            If Map.events(i).x = x And Map.events(i).y = y Then
+            If Map.Events(i).x = x And Map.Events(i).y = y Then
                 ' Already an event - edit it
                 If Not CancelLoad Then EventEditorInit i
                 Exit Sub
@@ -2489,16 +2489,16 @@ Sub AddEvent(x As Long, y As Long, Optional ByVal CancelLoad As Boolean = False)
     
     ' Increment count
     Map.EventCount = count
-    ReDim Preserve Map.events(0 To count)
+    ReDim Preserve Map.Events(0 To count)
     
     ' Set the new event
-    Map.events(count).x = x
-    Map.events(count).y = y
+    Map.Events(count).x = x
+    Map.Events(count).y = y
     
     ' Give it a new page
-    PageCount = Map.events(count).PageCount + 1
-    Map.events(count).PageCount = PageCount
-    ReDim Preserve Map.events(count).Pages(PageCount)
+    PageCount = Map.Events(count).PageCount + 1
+    Map.Events(count).PageCount = PageCount
+    ReDim Preserve Map.Events(count).Pages(PageCount)
     
     ' Load the editor
     If Not CancelLoad Then EventEditorInit count
@@ -2514,7 +2514,7 @@ Sub ClearEvent(EventNum As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Call ZeroMemory(ByVal VarPtr(Map.events(EventNum)), LenB(Map.events(EventNum)))
+    Call ZeroMemory(ByVal VarPtr(Map.Events(EventNum)), LenB(Map.Events(EventNum)))
     Exit Sub
     
 ' Error handler
@@ -2527,7 +2527,7 @@ Sub CopyEvent(original As Long, newone As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    CopyMemory ByVal VarPtr(Map.events(newone)), ByVal VarPtr(Map.events(original)), LenB(Map.events(original))
+    CopyMemory ByVal VarPtr(Map.Events(newone)), ByVal VarPtr(Map.Events(original)), LenB(Map.Events(original))
     Exit Sub
     
 ' Error handler
@@ -2557,7 +2557,7 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
     EditorEvent = EventNum
     
     ' Copy the event data to the temp event
-    tmpEvent = Map.events(EventNum)
+    tmpEvent = Map.Events(EventNum)
     
     ' Populate form
     With frmEditor_Events
@@ -2593,7 +2593,7 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
         Next
         
         ' Name
-        .txtName.text = tmpEvent.name
+        .txtName.text = Trim$(tmpEvent.name)
         
         ' Enable delete button
         If tmpEvent.PageCount > 1 Then
@@ -2712,7 +2712,7 @@ Sub EventEditorSave()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Copy the event data from the temp event
-    Map.events(EditorEvent) = tmpEvent
+    Map.Events(EditorEvent) = tmpEvent
     
     ' Unload the form
     Unload frmEditor_Events
@@ -3061,7 +3061,7 @@ newlist:
                             End If
                         Case EventType.evSetMoveRoute
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 <= Map.EventCount Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Map.Events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]"
                             Else
                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Move Route for COULD NOT FIND EVENT!"
                             End If
@@ -3069,7 +3069,7 @@ newlist:
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
                                 frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Player"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3).name) & "]"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " [" & Trim$(Map.Events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3).name) & "]"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 2 Then
                                 frmEditor_Events.lstCommands.AddItem indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "]" & " on Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4 & ")"
                             End If
@@ -3102,7 +3102,7 @@ newlist:
                                         frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2)).name) & "]"
                                     End If
                                 Case TARGET_TYPE_EVENT
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.Events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).name) & "]"
                             End Select
                         Case EventType.evLabel
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"
@@ -3731,7 +3731,7 @@ Public Sub EditEventCommand()
             
             For i = 1 To Map.EventCount
                 If i <> EditorEvent Then
-                    frmEditor_Events.cmbEvent.AddItem Trim$(Map.events(i).name)
+                    frmEditor_Events.cmbEvent.AddItem Trim$(Map.Events(i).name)
                     x = x + 1
                     ListOfEvents(x) = i
                     If i = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 Then frmEditor_Events.cmbEvent.ListIndex = x
@@ -3854,7 +3854,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.cmbPlayAnimEvent.Clear
             
             For i = 1 To Map.EventCount
-                frmEditor_Events.cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).name)
+                frmEditor_Events.cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.Events(i).name)
             Next
             
             frmEditor_Events.cmbPlayAnimEvent.ListIndex = 0
@@ -4368,8 +4368,8 @@ Public Function GetSubEventCount(ByVal Index As Long)
     
     If Index <= 0 Or Index > MAX_EVENTS Then Exit Function
     
-    If events(Index).HasSubEvents Then
-        GetSubEventCount = UBound(events(Index).SubEvents)
+    If Events(Index).HasSubEvents Then
+        GetSubEventCount = UBound(Events(Index).SubEvents)
     End If
 End Function
 
