@@ -7,8 +7,8 @@ Begin VB.Form frmEditor_Shop
    ClientTop       =   330
    ClientWidth     =   8775
    BeginProperty Font 
-      Name            =   "Verdana"
-      Size            =   6.75
+      Name            =   "Tahoma"
+      Size            =   8,25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -105,7 +105,7 @@ Begin VB.Form frmEditor_Shop
          Width           =   3015
       End
       Begin VB.ListBox lstTradeItem 
-         Height          =   1320
+         Height          =   1230
          ItemData        =   "frmEditor_Shop.frx":038A
          Left            =   120
          List            =   "frmEditor_Shop.frx":03A6
@@ -271,7 +271,7 @@ Begin VB.Form frmEditor_Shop
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
-         Height          =   4200
+         Height          =   4155
          Left            =   120
          TabIndex        =   0
          Top             =   600
@@ -310,7 +310,7 @@ Private Sub chkCanFix_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Shop(EditorIndex).CanFix = chkCanFix.Value
+    Shop(EditorIndex).CanFix = chkCanFix.value
     Exit Sub
     
 ' Error handler
@@ -484,8 +484,8 @@ Private Sub scrlBuy_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblBuy.Caption = "Buy Rate: " & scrlBuy.Value & "%"
-    Shop(EditorIndex).BuyRate = scrlBuy.Value
+    lblBuy.Caption = "Buy Rate: " & scrlBuy.value & "%"
+    Shop(EditorIndex).BuyRate = scrlBuy.value
     Exit Sub
     
 ' Error handler
@@ -500,8 +500,8 @@ Private Sub scrlSell_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblSell.Caption = "Sell Rate: " & scrlSell.Value & "%"
-    Shop(EditorIndex).SellRate = scrlSell.Value
+    lblSell.Caption = "Sell Rate: " & scrlSell.value & "%"
+    Shop(EditorIndex).SellRate = scrlSell.value
     Exit Sub
     
 ' Error handler

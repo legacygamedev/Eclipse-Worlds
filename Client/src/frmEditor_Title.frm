@@ -106,7 +106,7 @@ Begin VB.Form frmEditor_Title
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -221,7 +221,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Title(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & title(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     TitleEditorInit
@@ -268,8 +268,8 @@ Private Sub scrlLevelReq_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Title(EditorIndex).LevelReq = Trim$(scrlLevelReq.Value)
-    lblLevelReq.Caption = "Level Requirement: " & scrlLevelReq.Value
+    title(EditorIndex).LevelReq = Trim$(scrlLevelReq.value)
+    lblLevelReq.Caption = "Level Requirement: " & scrlLevelReq.value
     Exit Sub
     
 ' Error handler
@@ -282,8 +282,8 @@ Private Sub scrlPKReq_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Title(EditorIndex).PKReq = Trim$(scrlPKReq.Value)
-    lblPKReq.Caption = "Player Kill Requirement: " & scrlPKReq.Value
+    title(EditorIndex).PKReq = Trim$(scrlPKReq.value)
+    lblPKReq.Caption = "Player Kill Requirement: " & scrlPKReq.value
     Exit Sub
     
 ' Error handler
@@ -296,8 +296,8 @@ Private Sub scrlColor_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblColor.Caption = "Color: " & GetColorName(scrlColor.Value)
-    Title(EditorIndex).Color = scrlColor.Value
+    lblColor.Caption = "Color: " & GetColorName(scrlColor.value)
+    title(EditorIndex).Color = scrlColor.value
     Exit Sub
     
 ' Error handler
@@ -312,7 +312,7 @@ Private Sub txtDesc_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Title(EditorIndex).Desc = Trim$(txtDesc.text)
+    title(EditorIndex).Desc = Trim$(txtDesc.text)
     Exit Sub
     
 ' Error handler
@@ -330,9 +330,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Title(EditorIndex).name = Trim$(txtName.text)
+    title(EditorIndex).name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Title(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & title(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -479,8 +479,8 @@ Private Sub cmdPaste_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
       
     lstIndex.RemoveItem EditorIndex - 1
-    Call CopyMemory(ByVal VarPtr(Title(EditorIndex)), ByVal VarPtr(Title(TmpIndex + 1)), LenB(Title(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Title(EditorIndex).name), EditorIndex - 1
+    Call CopyMemory(ByVal VarPtr(title(EditorIndex)), ByVal VarPtr(title(TmpIndex + 1)), LenB(title(TmpIndex + 1)))
+    lstIndex.AddItem EditorIndex & ": " & Trim$(title(EditorIndex).name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

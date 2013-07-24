@@ -8,7 +8,7 @@ Begin VB.Form frmEditor_Item
    ClientWidth     =   9720
    BeginProperty Font 
       Name            =   "Microsoft Sans Serif"
-      Size            =   8.25
+      Size            =   8,25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -51,7 +51,7 @@ Begin VB.Form frmEditor_Item
       Begin VB.ComboBox cmbSound 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -68,7 +68,7 @@ Begin VB.Form frmEditor_Item
       Begin VB.ComboBox cmbType 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -89,7 +89,7 @@ Begin VB.Form frmEditor_Item
          BackColor       =   &H80000005&
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -111,7 +111,7 @@ Begin VB.Form frmEditor_Item
             BorderStyle     =   0  'None
             BeginProperty Font 
                Name            =   "Arial"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   204
                Weight          =   400
                Underline       =   0   'False
@@ -134,7 +134,7 @@ Begin VB.Form frmEditor_Item
                BorderStyle     =   0  'None
                BeginProperty Font 
                   Name            =   "Arial"
-                  Size            =   8.25
+                  Size            =   8,25
                   Charset         =   204
                   Weight          =   400
                   Underline       =   0   'False
@@ -156,7 +156,7 @@ Begin VB.Form frmEditor_Item
       Begin VB.TextBox txtPrice 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -180,7 +180,7 @@ Begin VB.Form frmEditor_Item
       Begin VB.ComboBox cmbBind 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -207,7 +207,7 @@ Begin VB.Form frmEditor_Item
       Begin VB.TextBox txtName 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -376,7 +376,7 @@ Begin VB.Form frmEditor_Item
       Begin VB.ComboBox cmbProficiencyReq 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -395,7 +395,7 @@ Begin VB.Form frmEditor_Item
       Begin VB.ComboBox cmbGenderReq 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -611,7 +611,7 @@ Begin VB.Form frmEditor_Item
          BackColor       =   &H80000005&
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -633,7 +633,7 @@ Begin VB.Form frmEditor_Item
             BorderStyle     =   0  'None
             BeginProperty Font 
                Name            =   "Arial"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   204
                Weight          =   400
                Underline       =   0   'False
@@ -656,7 +656,7 @@ Begin VB.Form frmEditor_Item
                BorderStyle     =   0  'None
                BeginProperty Font 
                   Name            =   "Arial"
-                  Size            =   8.25
+                  Size            =   8,25
                   Charset         =   204
                   Weight          =   400
                   Underline       =   0   'False
@@ -878,7 +878,7 @@ Begin VB.Form frmEditor_Item
          Caption         =   "Chance: 1"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -923,7 +923,7 @@ Begin VB.Form frmEditor_Item
          Caption         =   "Name: None"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -941,7 +941,7 @@ Begin VB.Form frmEditor_Item
          Caption         =   "Spell: 0"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -965,7 +965,7 @@ Begin VB.Form frmEditor_Item
       Begin VB.TextBox txtDesc 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -1106,7 +1106,7 @@ Begin VB.Form frmEditor_Item
          Caption         =   "Reusable"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -1284,9 +1284,9 @@ Private Sub chkHoT_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).HoT = chkHoT.Value
+    Item(EditorIndex).HoT = chkHoT.value
     
-    If chkHoT.Value = 1 Then
+    If chkHoT.value = 1 Then
         lblDuration.Enabled = True
         scrlDuration.Enabled = True
     Else
@@ -1307,7 +1307,7 @@ Private Sub chkInstaCast_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).InstaCast = chkInstaCast.Value
+    Item(EditorIndex).InstaCast = chkInstaCast.value
     Exit Sub
     
 ' Error handler
@@ -1341,7 +1341,7 @@ Private Sub chkStackable_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).Stackable = chkStackable.Value
+    Item(EditorIndex).Stackable = chkStackable.value
     Exit Sub
     
 ' Error handler
@@ -1356,7 +1356,7 @@ Private Sub chkTwoHanded_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).TwoHanded = chkTwoHanded.Value
+    Item(EditorIndex).TwoHanded = chkTwoHanded.value
     Exit Sub
     
 ' Error handler
@@ -1373,7 +1373,7 @@ Private Sub chkWarpAway_Click()
     
     If fraAutoLife.Visible = False Then Exit Sub
     
-    Item(EditorIndex).Data1 = chkWarpAway.Value
+    Item(EditorIndex).Data1 = chkWarpAway.value
     Exit Sub
     
 ' Error handler
@@ -1407,7 +1407,7 @@ Private Sub cmbEquipSlot_Click()
     
     With frmEditor_Item
         ' Specific options when selecting the weapon type
-        lblDamage.Caption = "Damage: " & scrlDamage.Value
+        lblDamage.Caption = "Damage: " & scrlDamage.value
         
         If .cmbEquipSlot.ListIndex = Equipment.Weapon Then
             .cmbTool.Enabled = True
@@ -1415,14 +1415,14 @@ Private Sub cmbEquipSlot_Click()
             .lblDamage.Enabled = True
             .scrlSpeed.Enabled = True
             .lblSpeed.Enabled = True
-            .lblDamage.Caption = "Damage: " & scrlDamage.Value
+            .lblDamage.Caption = "Damage: " & scrlDamage.value
         Else
             cmbTool.ListIndex = 0
             .scrlSpeed.Enabled = False
             .lblSpeed.Enabled = False
             .cmbTool.Enabled = False
             .lblTool.Enabled = False
-            .lblDamage.Caption = "Defense: " & scrlDamage.Value
+            .lblDamage.Caption = "Defense: " & scrlDamage.value
         End If
     End With
     
@@ -1536,7 +1536,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
 
     ItemEditorInit
@@ -1653,7 +1653,7 @@ Private Sub cmbType_Click()
     
     With frmEditor_Item
         ' Specific options when selecting the weapon type
-        lblDamage.Caption = "Damage: " & scrlDamage.Value
+        lblDamage.Caption = "Damage: " & scrlDamage.value
         
         If .cmbEquipSlot.ListIndex = Equipment.Weapon Then
             .cmbTool.Enabled = True
@@ -1661,14 +1661,14 @@ Private Sub cmbType_Click()
             .lblDamage.Enabled = True
             .scrlSpeed.Enabled = True
             .lblSpeed.Enabled = True
-            .lblDamage.Caption = "Damage: " & scrlDamage.Value
+            .lblDamage.Caption = "Damage: " & scrlDamage.value
         Else
             cmbTool.ListIndex = 0
             .scrlSpeed.Enabled = False
             .lblSpeed.Enabled = False
             .cmbTool.Enabled = False
             .lblTool.Enabled = False
-            .lblDamage.Caption = "Defense: " & scrlDamage.Value
+            .lblDamage.Caption = "Defense: " & scrlDamage.value
         End If
     End With
     
@@ -1719,8 +1719,8 @@ Private Sub scrlAccessReq_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblAccessReq.Caption = "Access: " & scrlAccessReq.Value
-    Item(EditorIndex).AccessReq = scrlAccessReq.Value
+    lblAccessReq.Caption = "Access: " & scrlAccessReq.value
+    Item(EditorIndex).AccessReq = scrlAccessReq.value
     Exit Sub
     
 ' Error handler
@@ -1735,8 +1735,8 @@ Private Sub scrlAddEXP_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblAddEXP.Caption = "Add Exp: " & scrlAddEXP.Value
-    Item(EditorIndex).AddEXP = scrlAddEXP.Value
+    lblAddEXP.Caption = "Add Exp: " & scrlAddEXP.value
+    Item(EditorIndex).AddEXP = scrlAddEXP.value
     Exit Sub
     
 ' Error handler
@@ -1751,8 +1751,8 @@ Private Sub scrlAddHP_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblAddHP.Caption = "Add HP: " & scrlAddHP.Value
-    Item(EditorIndex).AddHP = scrlAddHP.Value
+    lblAddHP.Caption = "Add HP: " & scrlAddHP.value
+    Item(EditorIndex).AddHP = scrlAddHP.value
     Exit Sub
     
 ' Error handler
@@ -1767,8 +1767,8 @@ Private Sub scrlAddMP_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblAddMP.Caption = "Add MP: " & scrlAddMP.Value
-    Item(EditorIndex).AddMP = scrlAddMP.Value
+    lblAddMP.Caption = "Add MP: " & scrlAddMP.value
+    Item(EditorIndex).AddMP = scrlAddMP.value
     Exit Sub
     
 ' Error handler
@@ -1783,12 +1783,12 @@ Private Sub scrlAnim_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If scrlAnim.Value = 0 Then
+    If scrlAnim.value = 0 Then
         lblAnim.Caption = "Animation: None"
     Else
-        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).Name)
+        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.value).name)
     End If
-    Item(EditorIndex).Animation = scrlAnim.Value
+    Item(EditorIndex).Animation = scrlAnim.value
     Exit Sub
     
 ' Error handler
@@ -1803,12 +1803,12 @@ Private Sub scrlCastSpell_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If scrlCastSpell.Value > 0 Then
-        lblCastSpell.Caption = "Cast Spell: " & Trim$(Spell(scrlCastSpell.Value).Name)
+    If scrlCastSpell.value > 0 Then
+        lblCastSpell.Caption = "Cast Spell: " & Trim$(Spell(scrlCastSpell.value).name)
     Else
         lblCastSpell.Caption = "Cast Spell: None"
     End If
-    Item(EditorIndex).CastSpell = scrlCastSpell.Value
+    Item(EditorIndex).CastSpell = scrlCastSpell.value
     Exit Sub
     
 ' Error handler
@@ -1826,11 +1826,11 @@ Private Sub scrlDamage_Change()
     If fraEquipment.Visible = False Then Exit Sub
     
     If (cmbEquipSlot.ListIndex = Equipment.Weapon) Then
-        lblDamage.Caption = "Damage: " & scrlDamage.Value
+        lblDamage.Caption = "Damage: " & scrlDamage.value
     Else
-        lblDamage.Caption = "Defense: " & scrlDamage.Value
+        lblDamage.Caption = "Defense: " & scrlDamage.value
     End If
-    Item(EditorIndex).Data2 = scrlDamage.Value
+    Item(EditorIndex).Data2 = scrlDamage.value
     Exit Sub
     
 ' Error handler
@@ -1847,11 +1847,11 @@ Private Sub scrlDurability_Change()
     
     If fraEquipment.Visible = False Then Exit Sub
     
-    Item(EditorIndex).Data1 = frmEditor_Item.scrlDurability.Value
+    Item(EditorIndex).Data1 = frmEditor_Item.scrlDurability.value
     lblDurability.Caption = "Durability: " & Item(EditorIndex).Data1
     
     If Item(EditorIndex).Data1 > 0 Then
-        chkStackable.Value = 0
+        chkStackable.value = 0
         chkStackable.Enabled = False
     Else
         chkStackable.Enabled = True
@@ -1872,8 +1872,8 @@ Private Sub scrlDuration_Change()
     
     If fraConsume.Visible = False Then Exit Sub
     
-    lblDuration.Caption = "Duration: " & scrlDuration.Value & " s"
-    Item(EditorIndex).Data1 = scrlDuration.Value
+    lblDuration.Caption = "Duration: " & scrlDuration.value & " s"
+    Item(EditorIndex).Data1 = scrlDuration.value
     Exit Sub
     
 ' Error handler
@@ -1890,8 +1890,8 @@ Private Sub scrlHP_Change()
     
     If fraAutoLife.Visible = False Then Exit Sub
     
-    lblHP.Caption = "HP: " & scrlHP.Value
-    Item(EditorIndex).AddHP = scrlHP.Value
+    lblHP.Caption = "HP: " & scrlHP.value
+    Item(EditorIndex).AddHP = scrlHP.value
     Exit Sub
     
 ' Error handler
@@ -1906,8 +1906,8 @@ Private Sub scrlMP_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblMP.Caption = "MP: " & scrlMP.Value
-    Item(EditorIndex).AddMP = scrlMP.Value
+    lblMP.Caption = "MP: " & scrlMP.value
+    Item(EditorIndex).AddMP = scrlMP.value
     Exit Sub
     
 ' Error handler
@@ -1923,7 +1923,7 @@ Private Sub scrlLevelReq_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblLevelReq.Caption = "Level: " & scrlLevelReq
-    Item(EditorIndex).LevelReq = scrlLevelReq.Value
+    Item(EditorIndex).LevelReq = scrlLevelReq.value
     Exit Sub
     
 ' Error handler
@@ -1940,8 +1940,8 @@ Private Sub scrlMap_Change()
     
     If fraTeleport.Visible Then Exit Sub
     
-    lblMap.Caption = "Map: " & scrlMap.Value
-    Item(EditorIndex).Data1 = scrlMap.Value
+    lblMap.Caption = "Map: " & scrlMap.value
+    Item(EditorIndex).Data1 = scrlMap.value
     Exit Sub
     
 ' Error handler
@@ -1956,8 +1956,8 @@ Private Sub scrlChanceModifier_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblChance.Caption = "Chance: " & scrlChanceModifier.Value
-    Item(EditorIndex).ChanceModifier = scrlChanceModifier.Value
+    lblChance.Caption = "Chance: " & scrlChanceModifier.value
+    Item(EditorIndex).ChanceModifier = scrlChanceModifier.value
     Exit Sub
     
 ' Error handler
@@ -1972,8 +1972,8 @@ Private Sub scrlPaperdoll_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblPaperdoll.Caption = "Paperdoll: " & scrlPaperdoll.Value
-    Item(EditorIndex).Paperdoll = scrlPaperdoll.Value
+    lblPaperdoll.Caption = "Paperdoll: " & scrlPaperdoll.value
+    Item(EditorIndex).Paperdoll = scrlPaperdoll.value
     Exit Sub
     
 ' Error handler
@@ -1988,8 +1988,8 @@ Private Sub scrlPic_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblPic.Caption = "Icon: " & scrlPic.Value
-    Item(EditorIndex).Pic = scrlPic.Value
+    lblPic.Caption = "Icon: " & scrlPic.value
+    Item(EditorIndex).Pic = scrlPic.value
     Exit Sub
     
 ' Error handler
@@ -2004,8 +2004,8 @@ Private Sub scrlRarity_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblRarity.Caption = "Rarity: " & scrlRarity.Value
-    Item(EditorIndex).Rarity = scrlRarity.Value
+    lblRarity.Caption = "Rarity: " & scrlRarity.value
+    Item(EditorIndex).Rarity = scrlRarity.value
     Exit Sub
     
 ' Error handler
@@ -2020,8 +2020,8 @@ Private Sub scrlSpeed_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblSpeed.Caption = "Speed: " & scrlSpeed.Value / 1000 & " s"
-    Item(EditorIndex).WeaponSpeed = scrlSpeed.Value
+    lblSpeed.Caption = "Speed: " & scrlSpeed.value / 1000 & " s"
+    Item(EditorIndex).WeaponSpeed = scrlSpeed.value
     Exit Sub
     
 ' Error handler
@@ -2038,8 +2038,8 @@ Private Sub scrlSprite_Change()
     
     If fraSprite.Visible = False Then Exit Sub
     
-    lblSprite.Caption = "Sprite: " & scrlSprite.Value
-    Item(EditorIndex).Data1 = scrlSprite.Value
+    lblSprite.Caption = "Sprite: " & scrlSprite.value
+    Item(EditorIndex).Data1 = scrlSprite.value
     Exit Sub
     
 ' Error handler
@@ -2069,8 +2069,8 @@ Private Sub scrlStatBonus_Change(Index As Integer)
             text = "+ Spi: "
     End Select
             
-    lblStatBonus(Index).Caption = text & scrlStatBonus(Index).Value
-    Item(EditorIndex).Add_Stat(Index) = scrlStatBonus(Index).Value
+    lblStatBonus(Index).Caption = text & scrlStatBonus(Index).value
+    Item(EditorIndex).Add_Stat(Index) = scrlStatBonus(Index).value
     Exit Sub
     
 ' Error handler
@@ -2100,8 +2100,8 @@ Private Sub scrlStatReq_Change(Index As Integer)
             text = "Spi: "
     End Select
     
-    lblStatReq(Index).Caption = text & scrlStatReq(Index).Value
-    Item(EditorIndex).Stat_Req(Index) = scrlStatReq(Index).Value
+    lblStatReq(Index).Caption = text & scrlStatReq(Index).value
+    Item(EditorIndex).Stat_Req(Index) = scrlStatReq(Index).value
     Exit Sub
     
 ' Error handler
@@ -2135,8 +2135,8 @@ Private Sub scrlX_Change()
     
     If fraTeleport.Visible = False Then Exit Sub
     
-    lblX.Caption = "X: " & scrlX.Value
-    Item(EditorIndex).Data2 = scrlX.Value
+    lblX.Caption = "X: " & scrlX.value
+    Item(EditorIndex).Data2 = scrlX.value
     Exit Sub
     
 ' Error handler
@@ -2151,8 +2151,8 @@ Private Sub scrlY_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblY.Caption = "Y: " & scrlY.Value
-    Item(EditorIndex).Data3 = scrlY.Value
+    lblY.Caption = "Y: " & scrlY.value
+    Item(EditorIndex).Data3 = scrlY.value
     Exit Sub
     
 ' Error handler
@@ -2187,9 +2187,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Item(EditorIndex).Name = Trim$(txtName.text)
+    Item(EditorIndex).name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -2334,7 +2334,7 @@ Private Sub cmdPaste_Click()
          
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Item(EditorIndex)), ByVal VarPtr(Item(TmpIndex + 1)), LenB(Item(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).Name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

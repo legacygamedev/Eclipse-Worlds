@@ -4,7 +4,12 @@ Option Explicit
 ' Text API
 Private Declare Function WritePrivateProfileString Lib "kernel32" Alias "WritePrivateProfileStringA" (ByVal lpApplicationName As String, ByVal lpKeyname As Any, ByVal lpString As String, ByVal lpFileName As String) As Long
 Private Declare Function GetPrivateProfileString Lib "kernel32" Alias "GetPrivateProfileStringA" (ByVal lpApplicationName As String, ByVal lpKeyname As Any, ByVal lpdefault As String, ByVal lpreturnedstring As String, ByVal nsize As Long, ByVal lpFileName As String) As Long
-
+Private Const LOCALE_USER_DEFAULT& = &H400
+    Private Const LOCALE_SDECIMAL& = &HE
+    Private Const LOCALE_STHOUSAND& = &HF
+    Private Declare Function GetLocaleInfo& Lib "kernel32" Alias _
+        "GetLocaleInfoA" (ByVal Locale As Long, ByVal LCType As Long, _
+        ByVal lpLCData As String, ByVal cchData As Long)
 Public Declare Function GetVolumeInformation Lib "kernel32" Alias "GetVolumeInformationA" (ByVal lpRootPathName As String, _
     ByVal lpVolumeNameBuffer As String, _
     ByVal nVolumeNameSize As Long, _
@@ -13,6 +18,12 @@ Public Declare Function GetVolumeInformation Lib "kernel32" Alias "GetVolumeInfo
     lpFileSystemFlags As Long, _
     ByVal lpFileSystemNameBuffer As String, _
     ByVal nFileSystemNameSize As Long) As Long
+Private Function DecimalSeparator() As String
+      Dim r As Long, s As String
+      s = String(10, "a")
+      r = GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_SDECIMAL, s, 10)
+      DecimalSeparator = Left$(s, r)
+End Function
 
 Public Sub HandleError(ByVal ProcName As String, ByVal ContName As String, ByVal ErNumber, ByVal ErDesc, ByVal ErSource, ByVal ErHelpContext)
     Dim FileName As String, F As Long
@@ -75,12 +86,34 @@ errorhandler:
     HandleError "FileExist", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
-
+Private Function InternationalizeDoubles(value As String) As String
+    InternationalizeDoubles = value
+    Dim i As Long, b() As Byte, dotsCounter As Long, commasCounter As Long, test As Double
+    b = value
+    For i = 0 To UBound(b) Step 2
+        If b(i) = 44 Then
+            commasCounter = commasCounter + 1
+            Mid(value, i / 2 + 1, 1) = DecimalSeparator
+        ElseIf b(i) = 46 Then
+            dotsCounter = dotsCounter + 1
+            Mid(value, i / 2 + 1, 1) = DecimalSeparator
+        ElseIf b(i) >= 48 And b(i) <= 57 Then
+        
+        Else
+            Exit Function
+        End If
+    Next i
+    If (commasCounter <> 0 And dotsCounter <> 0) Or (commasCounter > 1) Or (dotsCounter > 1) Then
+        Exit Function
+    End If
+    test = CDbl(value)
+    InternationalizeDoubles = test
+End Function
 ' Gets a string from a text File
 Public Function GetVar(file As String, Header As String, Var As String) As String
     Dim sSpaces As String   ' Max string length
     Dim szReturn As String  ' Return default Value if not found
-    
+    Dim retrivedValue As String, test As Boolean
         ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
@@ -88,7 +121,12 @@ Public Function GetVar(file As String, Header As String, Var As String) As Strin
     sSpaces = Space$(5000)
     Call GetPrivateProfileString$(Header, Var, szReturn, sSpaces, Len(sSpaces), file)
     GetVar = RTrim$(sSpaces)
-    GetVar = Left$(GetVar, Len(GetVar) - 1)
+    retrivedValue = Left$(GetVar, Len(GetVar) - 1)
+    If InStr(retrivedValue, ",") <> 0 Or InStr(retrivedValue, ".") <> 0 Then
+        retrivedValue = InternationalizeDoubles(retrivedValue)
+    End If
+
+    GetVar = retrivedValue
     Exit Function
     
 ' Error handler
@@ -98,12 +136,12 @@ errorhandler:
 End Function
 
 ' Writes a variable to a text File
-Public Sub PutVar(file As String, Header As String, Var As String, Value As String)
+Public Sub PutVar(file As String, Header As String, Var As String, value As String)
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Call WritePrivateProfileString$(Header, Var, Value, file)
+    Call WritePrivateProfileString$(Header, Var, value, file)
     Exit Sub
     
 ' Error handler
@@ -321,14 +359,14 @@ Private Sub LoadOptionVariables()
     End If
     
     If GetVar(FileName, "Options", "MusicVolume") = "" Then
-        Options.MusicVolume = "0.5"
+        Options.MusicVolume = InternationalizeDoubles("0.5")
         Call PutVar(FileName, "Options", "MusicVolume", Trim$(Options.MusicVolume))
     Else
         Options.MusicVolume = GetVar(FileName, "Options", "MusicVolume")
     End If
     
     If GetVar(FileName, "Options", "SoundVolume") = "" Then
-        Options.SoundVolume = "0.8"
+        Options.SoundVolume = InternationalizeDoubles("0.8")
         Call PutVar(FileName, "Options", "SoundVolume", Trim$(Options.SoundVolume))
     Else
         Options.SoundVolume = GetVar(FileName, "Options", "SoundVolume")
@@ -386,7 +424,7 @@ errorhandler:
 End Sub
 
 Public Sub LoadAnimatedSprites()
-    Dim i As Integer, n As Integer
+    Dim i As Integer, N As Integer
     Dim TmpArray() As String
     
     If AnimatedSpriteNumbers = vbNullString Then Exit Sub
@@ -398,8 +436,8 @@ Public Sub LoadAnimatedSprites()
 
     ' Loop through converting strings to values and store in the sprite array
     For i = 1 To NumCharacters
-        For n = 0 To UBound(TmpArray)
-            If i = Trim$(TmpArray(n)) Then
+        For N = 0 To UBound(TmpArray)
+            If i = Trim$(TmpArray(N)) Then
                 AnimatedSprites(i) = 1
             End If
         Next
@@ -914,7 +952,7 @@ Sub ClearNPC(ByVal Index As Long)
     
     Call ZeroMemory(ByVal VarPtr(NPC(Index)), LenB(NPC(Index)))
     NPC(Index).name = vbNullString
-    NPC(Index).Title = vbNullString
+    NPC(Index).title = vbNullString
     NPC(Index).AttackSay = vbNullString
     NPC(Index).Music = vbNullString
     NPC(Index).Sound = vbNullString
@@ -1182,8 +1220,8 @@ Sub ClearTitle(ByVal Index As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Call ZeroMemory(ByVal VarPtr(Title(Index)), LenB(Title(Index)))
-    Title(Index).name = vbNullString
+    Call ZeroMemory(ByVal VarPtr(title(Index)), LenB(title(Index)))
+    title(Index).name = vbNullString
     Exit Sub
     
 ' Error handler

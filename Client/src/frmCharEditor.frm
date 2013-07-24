@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmCharEditor 
    BorderStyle     =   3  'Fixed Dialog
@@ -10,7 +10,7 @@ Begin VB.Form frmCharEditor
    ClientWidth     =   9780
    BeginProperty Font 
       Name            =   "Tahoma"
-      Size            =   8.25
+      Size            =   8,25
       Charset         =   238
       Weight          =   400
       Underline       =   0   'False
@@ -197,7 +197,7 @@ Begin VB.Form frmCharEditor
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -299,7 +299,7 @@ Begin VB.Form frmCharEditor
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -620,7 +620,7 @@ End Sub
 Private Sub Form_Load()
     listCharacters.ListItems.Clear
     listCharacters.ColumnHeaders.Item(1).Width = frmCharEditor.listCharacters.Width - 800
-    lastCharSpriteTimer = timeGetTime
+    LastCharSpriteTimer = timeGetTime
     frmCharEditor.Width = 2865
     upSprite.max = NumCharacters
     upSprite.min = 0

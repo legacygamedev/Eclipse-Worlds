@@ -44,7 +44,7 @@ Begin VB.Form frmEditor_Moral
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -126,7 +126,7 @@ Begin VB.Form frmEditor_Moral
          Caption         =   "Color: Black"
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -145,7 +145,7 @@ Begin VB.Form frmEditor_Moral
          Caption         =   "Name:"
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -163,7 +163,7 @@ Begin VB.Form frmEditor_Moral
       Caption         =   "Cancel"
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   6.75
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -180,7 +180,7 @@ Begin VB.Form frmEditor_Moral
       Caption         =   "Delete"
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   6.75
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -197,7 +197,7 @@ Begin VB.Form frmEditor_Moral
       Caption         =   "Save"
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   6.75
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -265,7 +265,7 @@ Private Sub chkCanPickupItem_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Moral(EditorIndex).CanPickupItem = chkCanPickupItem.Value
+    Moral(EditorIndex).CanPickupItem = chkCanPickupItem.value
     Exit Sub
     
 ' Error handler
@@ -280,7 +280,7 @@ Private Sub chkCanCast_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Moral(EditorIndex).CanCast = chkCanCast.Value
+    Moral(EditorIndex).CanCast = chkCanCast.value
     Exit Sub
     
 ' Error handler
@@ -295,7 +295,7 @@ Private Sub chkCanDropItem_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Moral(EditorIndex).CanDropItem = chkCanDropItem.Value
+    Moral(EditorIndex).CanDropItem = chkCanDropItem.value
     Exit Sub
     
 ' Error handler
@@ -310,7 +310,7 @@ Private Sub chkCanPK_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Moral(EditorIndex).CanPK = chkCanPK.Value
+    Moral(EditorIndex).CanPK = chkCanPK.value
     Exit Sub
     
 ' Error handler
@@ -325,7 +325,7 @@ Private Sub chkCanUseItem_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Moral(EditorIndex).CanUseItem = chkCanUseItem.Value
+    Moral(EditorIndex).CanUseItem = chkCanUseItem.value
     Exit Sub
     
 ' Error handler
@@ -340,7 +340,7 @@ Private Sub chkDropItems_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Moral(EditorIndex).DropItems = chkDropItems.Value
+    Moral(EditorIndex).DropItems = chkDropItems.value
     Exit Sub
     
 ' Error handler
@@ -355,7 +355,7 @@ Private Sub chkLoseExp_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Moral(EditorIndex).LoseExp = chkLoseExp.Value
+    Moral(EditorIndex).LoseExp = chkLoseExp.value
     Exit Sub
     
 ' Error handler
@@ -370,7 +370,7 @@ Private Sub chkPlayerBlocked_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Moral(EditorIndex).PlayerBlocked = chkPlayerBlocked.Value
+    Moral(EditorIndex).PlayerBlocked = chkPlayerBlocked.value
     Exit Sub
     
 ' Error handler
@@ -484,8 +484,8 @@ Private Sub scrlColor_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblColor.Caption = "Color: " & GetColorName(scrlColor.Value)
-    Moral(EditorIndex).Color = scrlColor.Value
+    lblColor.Caption = "Color: " & GetColorName(scrlColor.value)
+    Moral(EditorIndex).Color = scrlColor.value
     Exit Sub
     
 ' Error handler

@@ -8,7 +8,7 @@ Begin VB.Form frmEditor_Resource
    ClientWidth     =   8535
    BeginProperty Font 
       Name            =   "Verdana"
-      Size            =   6.75
+      Size            =   8,25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -141,8 +141,8 @@ Begin VB.Form frmEditor_Resource
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
+            Size            =   8,25
+            Charset         =   238
             Weight          =   400
             Underline       =   0   'False
             Italic          =   0   'False
@@ -206,8 +206,8 @@ Begin VB.Form frmEditor_Resource
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
+            Size            =   8,25
+            Charset         =   238
             Weight          =   400
             Underline       =   0   'False
             Italic          =   0   'False
@@ -346,15 +346,6 @@ Begin VB.Form frmEditor_Resource
       Begin VB.Label lblNormalPic 
          AutoSize        =   -1  'True
          Caption         =   "Normal Image: 0"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   195
          Left            =   120
          TabIndex        =   29
@@ -441,7 +432,7 @@ Begin VB.Form frmEditor_Resource
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
-         Height          =   7800
+         Height          =   7665
          Left            =   120
          TabIndex        =   0
          Top             =   600
@@ -505,12 +496,12 @@ Private Sub cmdSave_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If frmEditor_Resource.scrlLowChance.Value >= frmEditor_Resource.scrlHighChance.Value Then
+    If frmEditor_Resource.scrlLowChance.value >= frmEditor_Resource.scrlHighChance.value Then
         AlertMsg "The high chance must be greater than the low chance!"
         Exit Sub
     End If
     
-    If frmEditor_Resource.scrlRewardMin.Value > frmEditor_Resource.scrlRewardMax.Value Then
+    If frmEditor_Resource.scrlRewardMin.value > frmEditor_Resource.scrlRewardMax.value Then
         AlertMsg "The maximum reward must be greater than or equal to the minimum reward!"
         Exit Sub
     End If
@@ -601,9 +592,9 @@ Private Sub scrlAnimation_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).name)
+    If scrlAnimation.value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.value).name)
     lblAnim.Caption = "Animation: " & sString
-    Resource(EditorIndex).Animation = scrlAnimation.Value
+    Resource(EditorIndex).Animation = scrlAnimation.value
     Exit Sub
     
 ' Error handler
@@ -618,8 +609,8 @@ Private Sub scrlExhaustedPic_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblExhaustedPic.Caption = "Exhausted Image: " & scrlExhaustedPic.Value
-    Resource(EditorIndex).ExhaustedImage = scrlExhaustedPic.Value
+    lblExhaustedPic.Caption = "Exhausted Image: " & scrlExhaustedPic.value
+    Resource(EditorIndex).ExhaustedImage = scrlExhaustedPic.value
     Exit Sub
     
 ' Error handler
@@ -634,8 +625,8 @@ Private Sub scrlExp_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblExp.Caption = "Exp: " & scrlExp.Value
-    Resource(EditorIndex).Exp = scrlExp.Value
+    lblExp.Caption = "Exp: " & scrlExp.value
+    Resource(EditorIndex).Exp = scrlExp.value
     Exit Sub
     
 ' Error handler
@@ -650,8 +641,8 @@ Private Sub scrlRewardMax_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblRewardMax.Caption = "Maximum Reward: " & scrlRewardMax.Value
-    Resource(EditorIndex).Reward_Max = scrlRewardMax.Value
+    lblRewardMax.Caption = "Maximum Reward: " & scrlRewardMax.value
+    Resource(EditorIndex).Reward_Max = scrlRewardMax.value
     Exit Sub
     
 ' Error handler
@@ -666,8 +657,8 @@ Private Sub scrlRewardMin_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblRewardMin.Caption = "Minimum Reward: " & scrlRewardMin.Value
-    Resource(EditorIndex).Reward_Min = scrlRewardMin.Value
+    lblRewardMin.Caption = "Minimum Reward: " & scrlRewardMin.value
+    Resource(EditorIndex).Reward_Min = scrlRewardMin.value
     Exit Sub
     
 ' Error handler
@@ -682,8 +673,8 @@ Private Sub scrlHighChance_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblHighChance.Caption = "High Chance: " & scrlHighChance.Value
-    Resource(EditorIndex).HighChance = scrlHighChance.Value
+    lblHighChance.Caption = "High Chance: " & scrlHighChance.value
+    Resource(EditorIndex).HighChance = scrlHighChance.value
     Exit Sub
     
 ' Error handler
@@ -698,8 +689,8 @@ Private Sub scrlLowChance_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblLowChance.Caption = "Low Chance: " & scrlLowChance.Value
-    Resource(EditorIndex).LowChance = scrlLowChance.Value
+    lblLowChance.Caption = "Low Chance: " & scrlLowChance.value
+    Resource(EditorIndex).LowChance = scrlLowChance.value
     Exit Sub
     
 ' Error handler
@@ -714,8 +705,8 @@ Private Sub scrlNormalPic_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblNormalPic.Caption = "Normal Image: " & scrlNormalPic.Value
-    Resource(EditorIndex).ResourceImage = scrlNormalPic.Value
+    lblNormalPic.Caption = "Normal Image: " & scrlNormalPic.value
+    Resource(EditorIndex).ResourceImage = scrlNormalPic.value
     Exit Sub
     
 ' Error handler
@@ -730,8 +721,8 @@ Private Sub scrlRespawn_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblRespawn.Caption = "Respawn Time: " & scrlRespawn.Value & " s"
-    Resource(EditorIndex).RespawnTime = scrlRespawn.Value
+    lblRespawn.Caption = "Respawn Time: " & scrlRespawn.value & " s"
+    Resource(EditorIndex).RespawnTime = scrlRespawn.value
     Exit Sub
     
 ' Error handler
@@ -746,13 +737,13 @@ Private Sub scrlReward_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If scrlReward.Value > 0 Then
-        lblReward.Caption = "Reward: " & Trim$(Item(scrlReward.Value).name)
+    If scrlReward.value > 0 Then
+        lblReward.Caption = "Reward: " & Trim$(Item(scrlReward.value).name)
     Else
         lblReward.Caption = "Reward: None"
     End If
     
-    Resource(EditorIndex).ItemReward = scrlReward.Value
+    Resource(EditorIndex).ItemReward = scrlReward.value
     Exit Sub
     
 ' Error handler
@@ -767,8 +758,8 @@ Private Sub scrlSkill_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblSkill.Caption = "Skill: " & GetSkillName(scrlSkill.Value)
-    Resource(EditorIndex).Skill = scrlSkill.Value
+    lblSkill.Caption = "Skill: " & GetSkillName(scrlSkill.value)
+    Resource(EditorIndex).Skill = scrlSkill.value
     Exit Sub
     
 ' Error handler
@@ -785,7 +776,7 @@ Private Sub scrlTool_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Select Case scrlTool.Value
+    Select Case scrlTool.value
         Case 0
             name = "None"
         Case 1
@@ -797,7 +788,7 @@ Private Sub scrlTool_Change()
     End Select
 
     lblTool.Caption = "Tool Required: " & name
-    Resource(EditorIndex).ToolRequired = scrlTool.Value
+    Resource(EditorIndex).ToolRequired = scrlTool.value
     Exit Sub
     
 ' Error handler

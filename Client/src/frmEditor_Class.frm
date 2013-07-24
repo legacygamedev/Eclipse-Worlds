@@ -20,7 +20,7 @@ Begin VB.Form frmEditor_Class
       Caption         =   "Cancel"
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   6.75
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -37,7 +37,7 @@ Begin VB.Form frmEditor_Class
       Caption         =   "Delete"
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   6.75
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -54,7 +54,7 @@ Begin VB.Form frmEditor_Class
       Caption         =   "Save"
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   6.75
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -148,7 +148,7 @@ Begin VB.Form frmEditor_Class
       Begin VB.ComboBox cmbColor 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -265,7 +265,7 @@ Begin VB.Form frmEditor_Class
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -594,7 +594,7 @@ Private Sub chkLocked_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Class(EditorIndex).Locked = chkLocked.Value
+    Class(EditorIndex).Locked = chkLocked.value
     Exit Sub
     
 ' Error handler
@@ -793,7 +793,7 @@ Private Sub scrlDir_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Select Case scrlDir.Value
+    Select Case scrlDir.value
         Case 0
             sDir = "Up"
         Case 1
@@ -805,7 +805,7 @@ Private Sub scrlDir_Change()
     End Select
     
     lblDir.Caption = "Direction: " & sDir
-    Class(EditorIndex).Dir = scrlDir.Value
+    Class(EditorIndex).Dir = scrlDir.value
     Exit Sub
     
 ' Error handler
@@ -820,8 +820,8 @@ Private Sub scrlMap_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblMap.Caption = "Map : " & scrlMap.Value
-    Class(EditorIndex).Map = scrlMap.Value
+    lblMap.Caption = "Map : " & scrlMap.value
+    Class(EditorIndex).Map = scrlMap.value
     Exit Sub
     
 ' Error handler
@@ -838,8 +838,8 @@ Private Sub scrlMFace_Change()
     
     If scrlMFace.Visible = False Then Exit Sub
     
-    lblMFace.Caption = "Face: " & scrlMFace.Value
-    Class(EditorIndex).MaleFace = scrlMFace.Value
+    lblMFace.Caption = "Face: " & scrlMFace.value
+    Class(EditorIndex).MaleFace = scrlMFace.value
     Exit Sub
     
 ' Error handler
@@ -856,8 +856,8 @@ Private Sub scrlFFace_Change()
     
     If scrlFFace.Visible = False Then Exit Sub
     
-    lblFFace.Caption = "Face: " & scrlFFace.Value
-    Class(EditorIndex).FemaleFace = scrlFFace.Value
+    lblFFace.Caption = "Face: " & scrlFFace.value
+    Class(EditorIndex).FemaleFace = scrlFFace.value
     Exit Sub
     
 ' Error handler
@@ -872,15 +872,15 @@ Private Sub scrlItemNum_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblItemNum.Caption = "Number: " & scrlItemNum.Value
+    lblItemNum.Caption = "Number: " & scrlItemNum.value
 
-    If scrlItemNum.Value > 0 Then
-        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.Value).name)
+    If scrlItemNum.value > 0 Then
+        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.value).name)
     Else
         lblItemName.Caption = "Item: None"
     End If
     
-    Class(EditorIndex).StartItem(ItemIndex) = scrlItemNum.Value
+    Class(EditorIndex).StartItem(ItemIndex) = scrlItemNum.value
     Exit Sub
     
 ' Error handler
@@ -895,8 +895,8 @@ Private Sub scrlItemValue_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblItemValue.Caption = "Value: " & scrlItemValue.Value
-    Class(EditorIndex).StartItemValue(ItemIndex) = scrlItemValue.Value
+    lblItemValue.Caption = "Value: " & scrlItemValue.value
+    Class(EditorIndex).StartItemValue(ItemIndex) = scrlItemValue.value
     Exit Sub
     
 ' Error handler
@@ -911,14 +911,14 @@ Private Sub scrlSpellNum_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblSpellNum.Caption = "Number: " & scrlSpellNum.Value
+    lblSpellNum.Caption = "Number: " & scrlSpellNum.value
 
-    If scrlSpellNum.Value > 0 Then
-        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).name)
+    If scrlSpellNum.value > 0 Then
+        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.value).name)
     Else
         lblSpellName.Caption = "Spell: None"
     End If
-    Class(EditorIndex).StartSpell(SpellIndex) = scrlSpellNum.Value
+    Class(EditorIndex).StartSpell(SpellIndex) = scrlSpellNum.value
     Exit Sub
     
 ' Error handler
@@ -933,8 +933,8 @@ Private Sub scrlMSprite_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblMSprite.Caption = "Male Sprite: " & scrlMSprite.Value
-    Class(EditorIndex).MaleSprite = scrlMSprite.Value
+    lblMSprite.Caption = "Male Sprite: " & scrlMSprite.value
+    Class(EditorIndex).MaleSprite = scrlMSprite.value
     Exit Sub
     
 ' Error handler
@@ -949,8 +949,8 @@ Private Sub scrlFSprite_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblFSprite.Caption = "Female Sprite: " & scrlFSprite.Value
-    Class(EditorIndex).FemaleSprite = scrlFSprite.Value
+    lblFSprite.Caption = "Female Sprite: " & scrlFSprite.value
+    Class(EditorIndex).FemaleSprite = scrlFSprite.value
     Exit Sub
     
 ' Error handler
@@ -965,10 +965,10 @@ Private Sub scrlStartItem_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    ItemIndex = scrlStartItem.Value
+    ItemIndex = scrlStartItem.value
     fraStartItem.Caption = "Start Item: " & ItemIndex
-    scrlItemNum.Value = Class(EditorIndex).StartItem(ItemIndex)
-    scrlItemValue.Value = Class(EditorIndex).StartItemValue(ItemIndex)
+    scrlItemNum.value = Class(EditorIndex).StartItem(ItemIndex)
+    scrlItemValue.value = Class(EditorIndex).StartItemValue(ItemIndex)
     Exit Sub
     
 ' Error handler
@@ -983,9 +983,9 @@ Private Sub scrlStartSpell_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    SpellIndex = scrlStartSpell.Value
+    SpellIndex = scrlStartSpell.value
     fraStartSpell.Caption = "Start Spell: " & SpellIndex
-    scrlSpellNum.Value = Class(EditorIndex).StartSpell(SpellIndex)
+    scrlSpellNum.value = Class(EditorIndex).StartSpell(SpellIndex)
     Exit Sub
     
 ' Error handler
@@ -1015,8 +1015,8 @@ Private Sub scrlStat_Change(Index As Integer)
             text = "Spi: "
     End Select
     
-    lblStat(Index).Caption = text & scrlStat(Index).Value
-    Class(EditorIndex).Stat(Index) = scrlStat(Index).Value
+    lblStat(Index).Caption = text & scrlStat(Index).value
+    Class(EditorIndex).Stat(Index) = scrlStat(Index).value
     Exit Sub
     
 ' Error handler
@@ -1031,8 +1031,8 @@ Private Sub scrlX_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblX.Caption = "X : " & scrlX.Value
-    Class(EditorIndex).x = scrlX.Value
+    lblX.Caption = "X : " & scrlX.value
+    Class(EditorIndex).x = scrlX.value
     Exit Sub
     
 ' Error handler
@@ -1047,8 +1047,8 @@ Private Sub scrlY_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblY.Caption = "Y : " & scrlY.Value
-    Class(EditorIndex).y = scrlY.Value
+    lblY.Caption = "Y : " & scrlY.value
+    Class(EditorIndex).y = scrlY.value
     Exit Sub
     
 ' Error handler

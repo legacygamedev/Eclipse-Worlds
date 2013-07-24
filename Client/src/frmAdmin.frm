@@ -23,7 +23,7 @@ Begin VB.Form frmAdmin
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -66,7 +66,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Character's Editor"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -84,7 +84,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Emoticon"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -102,7 +102,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Class"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -120,7 +120,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Mute"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -138,7 +138,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Title"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -156,7 +156,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Ban"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -174,7 +174,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Set Player Sprite"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -192,7 +192,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Level Up"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -210,7 +210,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Animation"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -228,7 +228,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Set Access"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -245,7 +245,7 @@ Begin VB.Form frmAdmin
       Begin VB.TextBox txtAAccess 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -261,7 +261,7 @@ Begin VB.Form frmAdmin
       Begin VB.TextBox txtASprite 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -278,7 +278,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Respawn"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -296,7 +296,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Set Sprite"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -314,7 +314,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Spawn Item"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -350,7 +350,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Spell"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -368,7 +368,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Shop"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -386,7 +386,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Resource"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -404,7 +404,7 @@ Begin VB.Form frmAdmin
          Caption         =   "NPC"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -422,7 +422,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Map"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -440,7 +440,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Item"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -458,7 +458,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Map Report"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -476,7 +476,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Location"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -494,7 +494,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Warp To"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -511,7 +511,7 @@ Begin VB.Form frmAdmin
       Begin VB.TextBox txtAMap 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -528,7 +528,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Warp Me To"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -546,7 +546,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Warp To Me"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -564,7 +564,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Ban"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -582,7 +582,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Kick"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -600,7 +600,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Moral"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -634,7 +634,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Map"
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   700
             Underline       =   0   'False
@@ -654,7 +654,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Editors"
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   700
             Underline       =   0   'False
@@ -674,7 +674,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Spawning"
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   700
             Underline       =   0   'False
@@ -694,7 +694,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Players"
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   700
             Underline       =   0   'False
@@ -719,7 +719,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Access:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -737,7 +737,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Sprite #:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -755,7 +755,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Amount: 1"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -773,7 +773,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Item: None"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -805,7 +805,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Map #:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -835,10 +835,10 @@ Attribute VB_Exposed = False
 Dim refreshDown As Boolean
 
 Private Sub cmbPlayersOnline_Click()
-    Dim i As Long, Length As Long
+    Dim i As Long, length As Long
 
-    Length = UBound(ignoreIndexes)
-    For i = 0 To Length
+    length = UBound(ignoreIndexes)
+    For i = 0 To length
         If cmbPlayersOnline.ListIndex = ignoreIndexes(i) Then
             cmbPlayersOnline.ListIndex = ignoreIndexes(i) + 1
             cmbPlayersOnline.text = cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)
@@ -1011,7 +1011,7 @@ errorhandler:
 End Sub
 
 Private Sub cmdAWarp_Click()
-    Dim n As Long
+    Dim N As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1024,11 +1024,11 @@ Private Sub cmdAWarp_Click()
     If Len(Trim$(txtAMap.text)) < 1 Then Exit Sub
     If Not IsNumeric(Trim$(txtAMap.text)) Then Exit Sub
     
-    n = CLng(Trim$(txtAMap.text))
+    N = CLng(Trim$(txtAMap.text))
 
     ' Check to make sure its a valid map #
-    If n > 0 And n <= MAX_MAPS Then
-        Call WarpTo(n)
+    If N > 0 And N <= MAX_MAPS Then
+        Call WarpTo(N)
     Else
         Call AddText("Invalid map number.", Red)
     End If
@@ -1262,7 +1262,7 @@ Private Sub cmdASpawn_Click()
         Exit Sub
     End If
     
-    SendSpawnItem scrlAItem.Value, scrlAAmount.Value
+    SendSpawnItem scrlAItem.value, scrlAAmount.value
     Exit Sub
     
 ' Error handler
@@ -1418,7 +1418,7 @@ Private Sub scrlAAmount_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    lblAAmount.Caption = "Amount: " & scrlAAmount.Value
+    lblAAmount.Caption = "Amount: " & scrlAAmount.value
     Exit Sub
     
 ' Error handler
@@ -1427,7 +1427,7 @@ errorhandler:
     Err.Clear
 End Sub
 Public Sub UpdatePlayersOnline()
-    Dim players() As String, Length As Long, i As Long, currentIgnore As Long
+    Dim players() As String, length As Long, i As Long, currentIgnore As Long
     Dim temp As String
     temp = cmbPlayersOnline.text
     cmbPlayersOnline.Clear
@@ -1443,14 +1443,14 @@ Public Sub UpdatePlayersOnline()
         currentIgnore = currentIgnore + 1
         
     players = Split(Trim(g_playersOnline), ",")
-    Length = UBound(players)
-    If Length >= 1 Then
-        cmbPlayersOnline.AddItem ("----Players: " & Length & "----")
+    length = UBound(players)
+    If length >= 1 Then
+        cmbPlayersOnline.AddItem ("----Players: " & length & "----")
         
             ReDim Preserve ignoreIndexes(1)
             ignoreIndexes(1) = currentIgnore
             currentIgnore = currentIgnore + 1
-        For i = 0 To Length
+        For i = 0 To length
             If Trim(Player(MyIndex).name) = Trim(players(i)) Then
                 GoTo end_loop
             End If
@@ -1459,7 +1459,7 @@ Public Sub UpdatePlayersOnline()
 end_loop:
         Next
     End If
-    lblPlayers.Caption = "Players: " & Length + 1 ' +1 counting ourselfs
+    lblPlayers.Caption = "Players: " & length + 1 ' +1 counting ourselfs
 End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out

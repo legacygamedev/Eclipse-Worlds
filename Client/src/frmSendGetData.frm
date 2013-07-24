@@ -23,7 +23,7 @@ Begin VB.Form frmLoad
       BackStyle       =   0  'Transparent
       BeginProperty Font 
          Name            =   "Georgia"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False

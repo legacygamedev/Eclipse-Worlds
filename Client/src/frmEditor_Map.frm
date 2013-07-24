@@ -7,8 +7,8 @@ Begin VB.Form frmEditor_Map
    ClientTop       =   330
    ClientWidth     =   14985
    BeginProperty Font 
-      Name            =   "Verdana"
-      Size            =   6.75
+      Name            =   "Tahoma"
+      Size            =   8,25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -45,8 +45,8 @@ Begin VB.Form frmEditor_Map
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
+         Size            =   8,25
+         Charset         =   238
          Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
@@ -78,6 +78,15 @@ Begin VB.Form frmEditor_Map
          Width           =   3375
          Begin VB.CommandButton cmdSoundEffect 
             Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   240
             TabIndex        =   102
@@ -85,7 +94,16 @@ Begin VB.Form frmEditor_Map
             Width           =   1215
          End
          Begin VB.ComboBox cmbSoundEffect 
-            Height          =   300
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   315
             ItemData        =   "frmEditor_Map.frx":038A
             Left            =   240
             List            =   "frmEditor_Map.frx":038C
@@ -97,6 +115,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.Frame fraSlide 
          Caption         =   "Slide"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2655
          Left            =   2040
          TabIndex        =   65
@@ -105,6 +132,15 @@ Begin VB.Form frmEditor_Map
          Width           =   3375
          Begin VB.CommandButton cmdSlide 
             Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   240
             TabIndex        =   66
@@ -112,7 +148,16 @@ Begin VB.Form frmEditor_Map
             Width           =   1215
          End
          Begin VB.ComboBox cmbSlide 
-            Height          =   300
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   315
             ItemData        =   "frmEditor_Map.frx":038E
             Left            =   240
             List            =   "frmEditor_Map.frx":039E
@@ -124,6 +169,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.Frame fraResource 
          Caption         =   "Resource"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2655
          Left            =   2040
          TabIndex        =   31
@@ -132,6 +186,15 @@ Begin VB.Form frmEditor_Map
          Width           =   3375
          Begin VB.CommandButton cmdResourceOk 
             Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   240
             TabIndex        =   34
@@ -150,6 +213,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.Label lblResource 
             Caption         =   "None"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   240
             TabIndex        =   32
@@ -159,6 +231,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.Frame fraMapItem 
          Caption         =   "Item"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2655
          Left            =   2040
          TabIndex        =   40
@@ -168,6 +249,15 @@ Begin VB.Form frmEditor_Map
          Begin VB.PictureBox Picture2 
             Appearance      =   0  'Flat
             BackColor       =   &H80000005&
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             ForeColor       =   &H80000008&
             Height          =   540
             Left            =   2640
@@ -182,7 +272,7 @@ Begin VB.Form frmEditor_Map
                BorderStyle     =   0  'None
                BeginProperty Font 
                   Name            =   "Arial"
-                  Size            =   8.25
+                  Size            =   8,25
                   Charset         =   204
                   Weight          =   400
                   Underline       =   0   'False
@@ -204,8 +294,8 @@ Begin VB.Form frmEditor_Map
                   BorderStyle     =   0  'None
                   BeginProperty Font 
                      Name            =   "MS Sans Serif"
-                     Size            =   8.25
-                     Charset         =   0
+                     Size            =   8,25
+                     Charset         =   238
                      Weight          =   400
                      Underline       =   0   'False
                      Italic          =   0   'False
@@ -225,6 +315,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.CommandButton cmdMapItem 
             Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   240
             TabIndex        =   44
@@ -252,6 +351,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.Label lblMapItem 
             Caption         =   "None"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   240
             TabIndex        =   41
@@ -261,6 +369,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.Frame fraHeal 
          Caption         =   "Heal"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2655
          Left            =   2040
          TabIndex        =   56
@@ -268,7 +385,16 @@ Begin VB.Form frmEditor_Map
          Visible         =   0   'False
          Width           =   3375
          Begin VB.ComboBox cmbHeal 
-            Height          =   300
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   315
             ItemData        =   "frmEditor_Map.frx":03B9
             Left            =   240
             List            =   "frmEditor_Map.frx":03C3
@@ -279,6 +405,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.CommandButton cmdHeal 
             Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   240
             TabIndex        =   58
@@ -296,6 +431,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.Label lblHeal 
             Caption         =   "Amount: 1"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   240
             TabIndex        =   59
@@ -305,6 +449,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.Frame fraTrap 
          Caption         =   "Trap"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2655
          Left            =   2040
          TabIndex        =   61
@@ -312,7 +465,16 @@ Begin VB.Form frmEditor_Map
          Visible         =   0   'False
          Width           =   3375
          Begin VB.ComboBox cmbTrap 
-            Height          =   300
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   315
             ItemData        =   "frmEditor_Map.frx":03D5
             Left            =   240
             List            =   "frmEditor_Map.frx":03DF
@@ -332,6 +494,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.CommandButton cmdTrap 
             Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   240
             TabIndex        =   62
@@ -340,6 +511,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.Label lblDamage 
             Caption         =   "Amount: 1"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   240
             TabIndex        =   64
@@ -349,6 +529,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.Frame fraShop 
          Caption         =   "Shop"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2655
          Left            =   2040
          TabIndex        =   53
@@ -357,6 +546,15 @@ Begin VB.Form frmEditor_Map
          Width           =   3375
          Begin VB.CommandButton cmdShop 
             Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   240
             TabIndex        =   55
@@ -364,7 +562,16 @@ Begin VB.Form frmEditor_Map
             Width           =   1215
          End
          Begin VB.ComboBox cmbShop 
-            Height          =   300
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   315
             ItemData        =   "frmEditor_Map.frx":03F1
             Left            =   240
             List            =   "frmEditor_Map.frx":03F3
@@ -376,6 +583,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.Frame fraNpcSpawn 
          Caption         =   "Npc Spawn"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2655
          Left            =   2040
          TabIndex        =   35
@@ -383,7 +599,16 @@ Begin VB.Form frmEditor_Map
          Visible         =   0   'False
          Width           =   3375
          Begin VB.ListBox lstNpc 
-            Height          =   780
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   645
             Left            =   240
             TabIndex        =   39
             Top             =   360
@@ -399,6 +624,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.CommandButton cmdNpcSpawn 
             Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   240
             TabIndex        =   36
@@ -407,6 +641,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.Label lblNpcDir 
             Caption         =   "Direction: Up"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   240
             TabIndex        =   38
@@ -416,6 +659,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.Frame fraMapWarp 
          Caption         =   "Warp"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   2655
          Left            =   2040
          TabIndex        =   45
@@ -424,6 +676,15 @@ Begin VB.Form frmEditor_Map
          Width           =   3375
          Begin VB.CommandButton cmdMapWarp 
             Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   375
             Left            =   240
             TabIndex        =   52
@@ -457,6 +718,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.Label lblMapWarpY 
             Caption         =   "Y: 0"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   240
             TabIndex        =   50
@@ -465,6 +735,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.Label lblMapWarpX 
             Caption         =   "X: 0"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   240
             TabIndex        =   48
@@ -473,6 +752,15 @@ Begin VB.Form frmEditor_Map
          End
          Begin VB.Label lblMapWarp 
             Caption         =   "Map: 1"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8,25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
             Height          =   255
             Left            =   240
             TabIndex        =   46
@@ -486,8 +774,8 @@ Begin VB.Form frmEditor_Map
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
+         Size            =   8,25
+         Charset         =   238
          Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
@@ -552,9 +840,9 @@ Begin VB.Form frmEditor_Map
    Begin VB.Frame fraType 
       Caption         =   "Type"
       Height          =   1575
-      Left            =   4320
+      Left            =   4290
       TabIndex        =   86
-      Top             =   5880
+      Top             =   5820
       Width           =   1455
       Begin VB.CheckBox chkGrid 
          Alignment       =   1  'Right Justify
@@ -606,15 +894,33 @@ Begin VB.Form frmEditor_Map
    End
    Begin VB.Frame fraRandom 
       Caption         =   "Random"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8,25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   1575
-      Left            =   4320
+      Left            =   4290
       TabIndex        =   76
-      Top             =   5880
+      Top             =   5820
       Visible         =   0   'False
       Width           =   1455
       Begin VB.PictureBox Picture7 
          Appearance      =   0  'Flat
          BackColor       =   &H80000005&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   540
          Left            =   800
@@ -629,7 +935,7 @@ Begin VB.Form frmEditor_Map
             BorderStyle     =   0  'None
             BeginProperty Font 
                Name            =   "Arial"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   204
                Weight          =   400
                Underline       =   0   'False
@@ -648,6 +954,15 @@ Begin VB.Form frmEditor_Map
                AutoRedraw      =   -1  'True
                BackColor       =   &H00000000&
                BorderStyle     =   0  'None
+               BeginProperty Font 
+                  Name            =   "Verdana"
+                  Size            =   8,25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
                Height          =   480
                Index           =   1
                Left            =   0
@@ -663,6 +978,15 @@ Begin VB.Form frmEditor_Map
       Begin VB.PictureBox Picture11 
          Appearance      =   0  'Flat
          BackColor       =   &H80000005&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   540
          Left            =   800
@@ -677,7 +1001,7 @@ Begin VB.Form frmEditor_Map
             BorderStyle     =   0  'None
             BeginProperty Font 
                Name            =   "Arial"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   204
                Weight          =   400
                Underline       =   0   'False
@@ -696,6 +1020,15 @@ Begin VB.Form frmEditor_Map
                AutoRedraw      =   -1  'True
                BackColor       =   &H00000000&
                BorderStyle     =   0  'None
+               BeginProperty Font 
+                  Name            =   "Verdana"
+                  Size            =   8,25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
                Height          =   480
                Index           =   3
                Left            =   0
@@ -711,6 +1044,15 @@ Begin VB.Form frmEditor_Map
       Begin VB.PictureBox Picture9 
          Appearance      =   0  'Flat
          BackColor       =   &H80000005&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   540
          Left            =   120
@@ -725,7 +1067,7 @@ Begin VB.Form frmEditor_Map
             BorderStyle     =   0  'None
             BeginProperty Font 
                Name            =   "Arial"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   204
                Weight          =   400
                Underline       =   0   'False
@@ -744,6 +1086,15 @@ Begin VB.Form frmEditor_Map
                AutoRedraw      =   -1  'True
                BackColor       =   &H00000000&
                BorderStyle     =   0  'None
+               BeginProperty Font 
+                  Name            =   "Verdana"
+                  Size            =   8,25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
                Height          =   480
                Index           =   2
                Left            =   0
@@ -759,6 +1110,15 @@ Begin VB.Form frmEditor_Map
       Begin VB.PictureBox Picture5 
          Appearance      =   0  'Flat
          BackColor       =   &H80000005&
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          ForeColor       =   &H80000008&
          Height          =   540
          Left            =   120
@@ -773,7 +1133,7 @@ Begin VB.Form frmEditor_Map
             BorderStyle     =   0  'None
             BeginProperty Font 
                Name            =   "Arial"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   204
                Weight          =   400
                Underline       =   0   'False
@@ -792,6 +1152,15 @@ Begin VB.Form frmEditor_Map
                AutoRedraw      =   -1  'True
                BackColor       =   &H00000000&
                BorderStyle     =   0  'None
+               BeginProperty Font 
+                  Name            =   "Verdana"
+                  Size            =   8,25
+                  Charset         =   0
+                  Weight          =   400
+                  Underline       =   0   'False
+                  Italic          =   0   'False
+                  Strikethrough   =   0   'False
+               EndProperty
                Height          =   480
                Index           =   0
                Left            =   0
@@ -807,6 +1176,15 @@ Begin VB.Form frmEditor_Map
    End
    Begin VB.Frame fraTileSet 
       Caption         =   "Tileset: 0"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8,25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   1215
       Left            =   120
       TabIndex        =   27
@@ -853,6 +1231,15 @@ Begin VB.Form frmEditor_Map
       Begin VB.Label lblRevision 
          BackStyle       =   0  'Transparent
          Caption         =   "Revision:"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   240
          TabIndex        =   74
@@ -872,11 +1259,11 @@ Begin VB.Form frmEditor_Map
          Alignment       =   1  'Right Justify
          Caption         =   "Display Always"
          Height          =   495
-         Left            =   240
+         Left            =   60
          TabIndex        =   104
          ToolTipText     =   "Will show the attribute's text on the map."
          Top             =   4320
-         Width           =   975
+         Width           =   1365
       End
       Begin VB.OptionButton optSound 
          Caption         =   "Sound"
@@ -1002,6 +1389,15 @@ Begin VB.Form frmEditor_Map
    End
    Begin VB.Frame fraLayers 
       Caption         =   "Layers"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8,25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   5775
       Left            =   5760
       TabIndex        =   29
@@ -1010,24 +1406,42 @@ Begin VB.Form frmEditor_Map
       Begin VB.CheckBox ChkDimLayers 
          Alignment       =   1  'Right Justify
          Caption         =   "Dim Layers"
+         BeginProperty Font 
+            Name            =   "Tahoma"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Left            =   120
          TabIndex        =   103
          ToolTipText     =   "Will dim tiles of layers that are below your curent layer."
          Top             =   4440
          Value           =   1  'Checked
-         Width           =   1155
+         Width           =   1125
       End
       Begin VB.HScrollBar scrlAutotile 
          Height          =   255
-         Left            =   240
+         Left            =   210
          Max             =   5
          TabIndex        =   92
-         Top             =   4080
+         Top             =   3960
          Width           =   975
       End
       Begin VB.OptionButton optLayer 
          Caption         =   "Fringe"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Index           =   4
          Left            =   120
@@ -1037,6 +1451,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.OptionButton optLayer 
          Caption         =   "Mask"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Index           =   2
          Left            =   120
@@ -1046,6 +1469,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.OptionButton optLayer 
          Caption         =   "Ground"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Index           =   1
          Left            =   120
@@ -1056,6 +1488,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.OptionButton optLayer 
          Caption         =   "Roof"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Index           =   5
          Left            =   120
@@ -1065,6 +1506,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.OptionButton optLayer 
          Caption         =   "Cover"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
          Index           =   3
          Left            =   120
@@ -1074,6 +1524,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.CommandButton cmdClear 
          Caption         =   "Clear"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   240
          TabIndex        =   26
@@ -1082,6 +1541,15 @@ Begin VB.Form frmEditor_Map
       End
       Begin VB.CommandButton cmdFill 
          Caption         =   "Fill"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   375
          Left            =   240
          TabIndex        =   25
@@ -1093,10 +1561,19 @@ Begin VB.Form frmEditor_Map
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
          Caption         =   "Normal"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8,25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
          Height          =   255
-         Left            =   120
+         Left            =   90
          TabIndex        =   93
-         Top             =   3840
+         Top             =   3720
          Width           =   1215
       End
    End
@@ -1199,8 +1676,8 @@ Public Sub picBack_MouseDown(Button As Integer, Shift As Integer, x As Single, y
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    x = x + (frmEditor_Map.scrlPictureX.Value * PIC_X)
-    y = y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
+    x = x + (frmEditor_Map.scrlPictureX.value * PIC_X)
+    y = y + (frmEditor_Map.scrlPictureY.value * PIC_Y)
     
     Call MapEditorChooseTile(Button, x, y)
     Exit Sub
@@ -1215,10 +1692,10 @@ Private Sub picBack_MouseMove(Button As Integer, Shift As Integer, x As Single, 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    x = x + (frmEditor_Map.scrlPictureX.Value * PIC_X)
-    y = y + (frmEditor_Map.scrlPictureY.Value * PIC_Y)
+    x = x + (frmEditor_Map.scrlPictureX.value * PIC_X)
+    y = y + (frmEditor_Map.scrlPictureY.value * PIC_Y)
     
-    If scrlAutotile.Value = 0 Then
+    If scrlAutotile.value = 0 Then
         Call MapEditorDrag(Button, x, y)
     End If
     Exit Sub
@@ -1230,7 +1707,7 @@ errorhandler:
 End Sub
 
 Private Sub scrlAutotile_Change()
-    Select Case scrlAutotile.Value
+    Select Case scrlAutotile.value
         Case 0 ' Normal
             lblAutoTile.Caption = "Normal"
         Case 1 ' Autotile
@@ -1293,7 +1770,7 @@ Private Sub cmdHeal_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     MapEditorVitalType = cmbHeal.ListIndex + 1
-    MapEditorVitalAmount = scrlHeal.Value
+    MapEditorVitalAmount = scrlHeal.value
     picAttributes.Visible = False
     fraHeal.Visible = False
     Exit Sub
@@ -1308,8 +1785,8 @@ Private Sub cmdMapItem_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    ItemEditorNum = scrlMapItem.Value
-    ItemEditorValue = scrlMapItemValue.Value
+    ItemEditorNum = scrlMapItem.value
+    ItemEditorValue = scrlMapItemValue.value
     picAttributes.Visible = False
     fraMapItem.Visible = False
     Exit Sub
@@ -1324,9 +1801,9 @@ Private Sub cmdMapWarp_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    EditorWarpMap = scrlMapWarp.Value
-    EditorWarpX = scrlMapWarpX.Value
-    EditorWarpY = scrlMapWarpY.Value
+    EditorWarpMap = scrlMapWarp.value
+    EditorWarpX = scrlMapWarpX.value
+    EditorWarpY = scrlMapWarpY.value
     picAttributes.Visible = False
     fraMapWarp.Visible = False
     Exit Sub
@@ -1342,7 +1819,7 @@ Private Sub cmdNpcSpawn_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     SpawnNpcNum = lstNpc.ListIndex + 1
-    SpawnNpcDir = scrlNpcDir.Value
+    SpawnNpcDir = scrlNpcDir.value
     picAttributes.Visible = False
     fraNpcSpawn.Visible = False
     Exit Sub
@@ -1357,7 +1834,7 @@ Private Sub cmdResourceOk_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    ResourceEditorNum = scrlResource.Value
+    ResourceEditorNum = scrlResource.value
     picAttributes.Visible = False
     fraResource.Visible = False
     Exit Sub
@@ -1403,7 +1880,7 @@ Private Sub cmdTrap_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     MapEditorVitalType = cmbTrap.ListIndex + 1
-    MapEditorVitalAmount = scrlDamage.Value
+    MapEditorVitalAmount = scrlDamage.value
     picAttributes.Visible = False
     fraTrap.Visible = False
     Exit Sub
@@ -1559,7 +2036,7 @@ Private Sub optLayers_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    If OptLayers.Value Then
+    If OptLayers.value Then
         fraLayers.Visible = True
         fraAttribs.Visible = False
     End If
@@ -1578,7 +2055,7 @@ Private Sub optAttributes_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    If OptAttributes.Value Then
+    If OptAttributes.value Then
         fraLayers.Visible = False
         fraAttribs.Visible = True
     End If
@@ -1595,22 +2072,22 @@ errorhandler:
 End Sub
 
 Private Sub optNpcSpawn_Click()
-    Dim n As Long
+    Dim N As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lstNpc.Clear
     
-    For n = 1 To MAX_MAP_NPCS
-        If Map.NPC(n) > 0 Then
-            lstNpc.AddItem n & ": " & NPC(Map.NPC(n)).name
+    For N = 1 To MAX_MAP_NPCS
+        If Map.NPC(N) > 0 Then
+            lstNpc.AddItem N & ": " & NPC(Map.NPC(N)).name
         Else
-            lstNpc.AddItem n & ": No Npc"
+            lstNpc.AddItem N & ": No Npc"
         End If
-    Next n
+    Next N
     
-    scrlNpcDir.Value = 0
+    scrlNpcDir.value = 0
     lstNpc.ListIndex = 0
     
     ClearAttributeFrames
@@ -1634,12 +2111,12 @@ Private Sub chkRandom_Click()
     frmEditor_Map.fraType.Visible = Not frmEditor_Map.fraType.Visible
     fraLayers.Visible = True
     fraAttribs.Visible = False
-    frmEditor_Map.OptLayers.Value = True
+    frmEditor_Map.OptLayers.value = True
     
     If frmEditor_Map.chkRandom = 1 Then
         EditorTileX = 1
         EditorTileY = 1
-        frmEditor_Map.optLayer(MapLayer.Ground).Value = 1
+        frmEditor_Map.optLayer(MapLayer.Ground).value = 1
     End If
     Exit Sub
     
@@ -1654,8 +2131,8 @@ Private Sub optResource_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ClearAttributeFrames
-    If Not Trim$(Resource(scrlResource.Value).name) = vbNullString Then
-        lblResource.Caption = Trim$(Resource(scrlResource.Value).name)
+    If Not Trim$(Resource(scrlResource.value).name) = vbNullString Then
+        lblResource.Caption = Trim$(Resource(scrlResource.value).name)
     End If
     picAttributes.Visible = True
     fraResource.Visible = True
@@ -1739,9 +2216,9 @@ Public Sub MapEditorDrag(Button As Integer, x As Single, y As Single)
         
         ' Check it's not out of bounds
         If x < 0 Then x = 0
-        If x > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X Then x = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width / PIC_X
+        If x > Tex_Tileset(frmEditor_Map.scrlTileSet.value).Width / PIC_X Then x = Tex_Tileset(frmEditor_Map.scrlTileSet.value).Width / PIC_X
         If y < 0 Then y = 0
-        If y > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y Then y = Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height / PIC_Y
+        If y > Tex_Tileset(frmEditor_Map.scrlTileSet.value).Height / PIC_Y Then y = Tex_Tileset(frmEditor_Map.scrlTileSet.value).Height / PIC_Y
         
         ' Find out what to set the width + height of map editor to
         If x > EditorTileX Then ' Drag right
@@ -1841,8 +2318,8 @@ Private Sub optItem_Click()
     picAttributes.Visible = True
     fraMapItem.Visible = True
     
-    If Not Trim$(Item(scrlMapItem.Value).name) = vbNullString Then
-        lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    If Not Trim$(Item(scrlMapItem.value).name) = vbNullString Then
+        lblMapItem.Caption = Trim$(Item(scrlMapItem.value).name) & " x" & scrlMapItemValue.value
     End If
     Exit Sub
     
@@ -1908,8 +2385,8 @@ Private Sub scrlHeal_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    MapEditorVitalAmount = scrlHeal.Value
-    lblHeal.Caption = "Amount: " & scrlHeal.Value
+    MapEditorVitalAmount = scrlHeal.value
+    lblHeal.Caption = "Amount: " & scrlHeal.value
     Exit Sub
     
 ' Error handler
@@ -1922,8 +2399,8 @@ Private Sub scrlDamage_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    MapEditorVitalAmount = scrlDamage.Value
-    lblDamage.Caption = "Amount: " & scrlDamage.Value
+    MapEditorVitalAmount = scrlDamage.value
+    lblDamage.Caption = "Amount: " & scrlDamage.value
     Exit Sub
     
 ' Error handler
@@ -1936,15 +2413,15 @@ Private Sub scrlMapItem_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Item(scrlMapItem.Value).Stackable = 1 Then
+    If Item(scrlMapItem.value).Stackable = 1 Then
         scrlMapItemValue.Enabled = True
     Else
-        scrlMapItemValue.Value = 1
+        scrlMapItemValue.value = 1
         scrlMapItemValue.Enabled = False
     End If
     
-    If Not Trim$(Item(scrlMapItem.Value).name) = vbNullString Then
-        lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    If Not Trim$(Item(scrlMapItem.value).name) = vbNullString Then
+        lblMapItem.Caption = Trim$(Item(scrlMapItem.value).name) & " x" & scrlMapItemValue.value
     Else
         lblMapItem.Caption = "None"
         frmEditor_Map.picMapItem.Cls
@@ -1974,7 +2451,7 @@ Private Sub scrlMapItemValue_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    lblMapItem.Caption = Trim$(Item(scrlMapItem.value).name) & " x" & scrlMapItemValue.value
     Exit Sub
     
 ' Error handler
@@ -2000,7 +2477,7 @@ Private Sub scrlMapWarp_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblMapWarp.Caption = "Map: " & scrlMapWarp.Value
+    lblMapWarp.Caption = "Map: " & scrlMapWarp.value
     Exit Sub
     
 ' Error handler
@@ -2026,7 +2503,7 @@ Private Sub scrlMapWarpX_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblMapWarpX.Caption = "X: " & scrlMapWarpX.Value
+    lblMapWarpX.Caption = "X: " & scrlMapWarpX.value
     Exit Sub
     
 ' Error handler
@@ -2052,7 +2529,7 @@ Private Sub scrlMapWarpY_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblMapWarpY.Caption = "Y: " & scrlMapWarpY.Value
+    lblMapWarpY.Caption = "Y: " & scrlMapWarpY.value
     Exit Sub
     
 ' Error handler
@@ -2078,7 +2555,7 @@ Private Sub scrlNpcDir_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Select Case scrlNpcDir.Value
+    Select Case scrlNpcDir.value
         Case DIR_UP
             lblNpcDir = "Direction: Up"
         Case DIR_DOWN
@@ -2113,8 +2590,8 @@ Private Sub scrlResource_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Not Trim$(Resource(scrlResource.Value).name) = vbNullString Then
-        lblResource.Caption = Resource(scrlResource.Value).name
+    If Not Trim$(Resource(scrlResource.value).name) = vbNullString Then
+        lblResource.Caption = Resource(scrlResource.value).name
     Else
         lblResource.Caption = "None"
     End If
@@ -2195,10 +2672,10 @@ Private Sub scrlTileSet_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    fraTileSet.Caption = "Tileset: " & scrlTileSet.Value
+    fraTileSet.Caption = "Tileset: " & scrlTileSet.value
     
-    frmEditor_Map.scrlPictureY.max = (Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height \ PIC_Y) - (frmEditor_Map.picBack.Height \ PIC_Y)
-    frmEditor_Map.scrlPictureX.max = (Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width \ PIC_X) - (frmEditor_Map.picBack.Width \ PIC_X)
+    frmEditor_Map.scrlPictureY.max = (Tex_Tileset(frmEditor_Map.scrlTileSet.value).Height \ PIC_Y) - (frmEditor_Map.picBack.Height \ PIC_Y)
+    frmEditor_Map.scrlPictureX.max = (Tex_Tileset(frmEditor_Map.scrlTileSet.value).Width \ PIC_X) - (frmEditor_Map.picBack.Width \ PIC_X)
     
     MapEditorTileScroll
     

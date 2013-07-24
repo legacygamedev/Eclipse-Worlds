@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -10,7 +10,7 @@ Begin VB.Form frmMain
    ClientWidth     =   12000
    BeginProperty Font 
       Name            =   "Georgia"
-      Size            =   8.25
+      Size            =   8,25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -71,7 +71,7 @@ Begin VB.Form frmMain
          Caption         =   "N/A"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -103,7 +103,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   9.75
+         Size            =   8,25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -141,7 +141,7 @@ Begin VB.Form frmMain
          Caption         =   "N/A"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -241,7 +241,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -266,7 +266,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   9.75
+         Size            =   8,25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -293,7 +293,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   9.75
+         Size            =   8,25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -320,7 +320,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   9.75
+         Size            =   8,25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -346,7 +346,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -399,7 +399,7 @@ Begin VB.Form frmMain
             Caption         =   "[Option 1]"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -421,7 +421,7 @@ Begin VB.Form frmMain
             Caption         =   "[Option 2]"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -443,7 +443,7 @@ Begin VB.Form frmMain
             Caption         =   "[Option 3]"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -465,7 +465,7 @@ Begin VB.Form frmMain
             Caption         =   "[Option 4]"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -487,7 +487,7 @@ Begin VB.Form frmMain
             Caption         =   "Continue..."
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -508,7 +508,7 @@ Begin VB.Form frmMain
             Caption         =   "[Text]"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -769,7 +769,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -869,7 +869,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -896,7 +896,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -920,7 +920,7 @@ Begin VB.Form frmMain
             Enabled         =   0   'False
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -941,7 +941,7 @@ Begin VB.Form frmMain
             Caption         =   "None."
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -962,7 +962,7 @@ Begin VB.Form frmMain
             Caption         =   "Description:"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -985,7 +985,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -1012,7 +1012,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -1036,7 +1036,7 @@ Begin VB.Form frmMain
             Enabled         =   0   'False
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1058,7 +1058,7 @@ Begin VB.Form frmMain
             Caption         =   "Remove Friend"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1079,7 +1079,7 @@ Begin VB.Form frmMain
             Caption         =   "Add Friend"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1149,13 +1149,12 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
             BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   400
                Underline       =   0   'False
@@ -1172,7 +1171,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -1336,7 +1335,7 @@ Begin VB.Form frmMain
             Caption         =   "Music"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1356,7 +1355,7 @@ Begin VB.Form frmMain
             Caption         =   "Sound"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1376,7 +1375,7 @@ Begin VB.Form frmMain
             Caption         =   "Guilds"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1396,7 +1395,7 @@ Begin VB.Form frmMain
             Caption         =   "Levels"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1416,7 +1415,7 @@ Begin VB.Form frmMain
             Caption         =   "WASD"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1436,7 +1435,7 @@ Begin VB.Form frmMain
             Caption         =   "Mouse"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1456,7 +1455,7 @@ Begin VB.Form frmMain
             Caption         =   "Titles"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1476,7 +1475,7 @@ Begin VB.Form frmMain
             Caption         =   "Npc Vitals"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1496,7 +1495,7 @@ Begin VB.Form frmMain
             Caption         =   "Battle Music"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1516,7 +1515,7 @@ Begin VB.Form frmMain
             Caption         =   "Player Vitals"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1539,7 +1538,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -1564,7 +1563,7 @@ Begin VB.Form frmMain
             BorderStyle     =   0  'None
             BeginProperty Font 
                Name            =   "Verdana"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   400
                Underline       =   0   'False
@@ -1589,7 +1588,7 @@ Begin VB.Form frmMain
             Caption         =   "Lv: 1"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1610,7 +1609,7 @@ Begin VB.Form frmMain
             Caption         =   "Empty"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1630,7 +1629,7 @@ Begin VB.Form frmMain
             Caption         =   "999"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1651,7 +1650,7 @@ Begin VB.Form frmMain
             Caption         =   "999"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1672,7 +1671,7 @@ Begin VB.Form frmMain
             Caption         =   "999"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1693,7 +1692,7 @@ Begin VB.Form frmMain
             Caption         =   "999"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1714,7 +1713,7 @@ Begin VB.Form frmMain
             Caption         =   "999"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1735,7 +1734,7 @@ Begin VB.Form frmMain
             Caption         =   "+"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1756,7 +1755,7 @@ Begin VB.Form frmMain
             Caption         =   "+"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1777,7 +1776,7 @@ Begin VB.Form frmMain
             Caption         =   "+"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1798,7 +1797,7 @@ Begin VB.Form frmMain
             Caption         =   "+"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1819,7 +1818,7 @@ Begin VB.Form frmMain
             Caption         =   "+"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1840,7 +1839,7 @@ Begin VB.Form frmMain
             Caption         =   "999"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1860,7 +1859,7 @@ Begin VB.Form frmMain
             Caption         =   "Str:"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1880,7 +1879,7 @@ Begin VB.Form frmMain
             Caption         =   "End:"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1900,7 +1899,7 @@ Begin VB.Form frmMain
             Caption         =   "Int:"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1920,7 +1919,7 @@ Begin VB.Form frmMain
             Caption         =   "Spi:"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1940,7 +1939,7 @@ Begin VB.Form frmMain
             Caption         =   "Agi:"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1960,7 +1959,7 @@ Begin VB.Form frmMain
             Caption         =   "Points:"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -1983,7 +1982,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -2008,7 +2007,7 @@ Begin VB.Form frmMain
             Caption         =   "You are not in a guild!"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2031,7 +2030,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -2055,7 +2054,7 @@ Begin VB.Form frmMain
             Enabled         =   0   'False
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2075,7 +2074,7 @@ Begin VB.Form frmMain
             Caption         =   "Guild Name"
             BeginProperty Font 
                Name            =   "Verdana"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2096,7 +2095,7 @@ Begin VB.Form frmMain
             Caption         =   "Remove"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2117,7 +2116,7 @@ Begin VB.Form frmMain
             Caption         =   "Invite"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2138,7 +2137,7 @@ Begin VB.Form frmMain
             Caption         =   "Resign"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2159,7 +2158,7 @@ Begin VB.Form frmMain
             Caption         =   "Change Access"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2182,7 +2181,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -2269,7 +2268,7 @@ Begin VB.Form frmMain
             BackStyle       =   0  'Transparent
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2288,7 +2287,7 @@ Begin VB.Form frmMain
             BackStyle       =   0  'Transparent
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2354,7 +2353,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -2381,7 +2380,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -2405,7 +2404,7 @@ Begin VB.Form frmMain
             Enabled         =   0   'False
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2427,7 +2426,7 @@ Begin VB.Form frmMain
             Caption         =   "Add Foe"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2448,7 +2447,7 @@ Begin VB.Form frmMain
             Caption         =   "Remove Foe"
             BeginProperty Font 
                Name            =   "Georgia"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   0
                Weight          =   700
                Underline       =   0   'False
@@ -2487,7 +2486,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -2512,7 +2511,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -2555,7 +2554,7 @@ Begin VB.Form frmMain
          BackStyle       =   0  'Transparent
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2588,7 +2587,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -2622,7 +2621,7 @@ Begin VB.Form frmMain
          Caption         =   "Cancel"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2643,7 +2642,7 @@ Begin VB.Form frmMain
          Caption         =   "Ok"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2664,7 +2663,7 @@ Begin VB.Form frmMain
          Caption         =   "How many do you want to drop?"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2685,7 +2684,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -2719,7 +2718,7 @@ Begin VB.Form frmMain
          Caption         =   "No"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2740,7 +2739,7 @@ Begin VB.Form frmMain
          Caption         =   "Trade Request"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2773,7 +2772,7 @@ Begin VB.Form frmMain
          Caption         =   "Ok"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2796,7 +2795,7 @@ Begin VB.Form frmMain
          Caption         =   "Yes"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -2820,7 +2819,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Georgia"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -2846,7 +2845,7 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -2871,7 +2870,7 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8,25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -2920,7 +2919,7 @@ Begin VB.Form frmMain
       Caption         =   "Swear Filter"
       BeginProperty Font 
          Name            =   "Georgia"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -2940,7 +2939,7 @@ Begin VB.Form frmMain
       Caption         =   "Weather"
       BeginProperty Font 
          Name            =   "Georgia"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -2960,7 +2959,7 @@ Begin VB.Form frmMain
       Caption         =   "Auto Tile"
       BeginProperty Font 
          Name            =   "Georgia"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -2980,7 +2979,7 @@ Begin VB.Form frmMain
       Caption         =   "Debug"
       BeginProperty Font 
          Name            =   "Georgia"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -3000,7 +2999,7 @@ Begin VB.Form frmMain
       Caption         =   "Blood"
       BeginProperty Font 
          Name            =   "Georgia"
-         Size            =   8.25
+         Size            =   8,25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
@@ -4436,7 +4435,7 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, x As Single
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If InMapEditor Then
-        If frmEditor_Map.chkEyeDropper.Value = 1 Then
+        If frmEditor_Map.chkEyeDropper.value = 1 Then
             Call MapEditorEyeDropper
         Else
             If ControlDown And Button = 1 Then
@@ -5286,7 +5285,7 @@ End Sub
 
 Private Sub picInventory_DblClick()
     Dim InvNum As Long
-    Dim Value As Long
+    Dim value As Long
     Dim Multiplier As Double
     Dim i As Long
     
@@ -5335,7 +5334,7 @@ Private Sub picInventory_DblClick()
                     ' Is currency?
                     If Item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)).Stackable = 1 Then
                         ' Only exit out if we're offering all of it
-                        If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
+                        If TradeYourOffer(i).value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
                     Else
                         Exit Sub
                     End If
@@ -5619,7 +5618,7 @@ Private Sub picInventory_MouseMove(Button As Integer, Shift As Integer, x As Sin
                         ' is currency?
                         If Item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)).Stackable = 1 Then
                             ' Only exit out if we're offering all of it
-                            If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
+                            If TradeYourOffer(i).value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
                         Else
                             Exit Sub
                         End If

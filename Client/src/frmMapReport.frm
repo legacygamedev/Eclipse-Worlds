@@ -19,7 +19,7 @@ Begin VB.Form frmMapReport
       Caption         =   "Open Maps"
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   6.75
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -36,7 +36,7 @@ Begin VB.Form frmMapReport
       Caption         =   "Warp"
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   6.75
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -53,7 +53,7 @@ Begin VB.Form frmMapReport
       Caption         =   "Close"
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   6.75
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -70,7 +70,7 @@ Begin VB.Form frmMapReport
       Caption         =   "Maps"
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   6.75
+         Size            =   8,25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -93,14 +93,14 @@ Begin VB.Form frmMapReport
       Begin VB.ListBox lstMaps 
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   6.75
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   2940
+         Height          =   2790
          Left            =   120
          TabIndex        =   1
          Top             =   600

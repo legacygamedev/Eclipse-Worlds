@@ -8,7 +8,7 @@ Begin VB.Form frmEditor_Animation
    ClientWidth     =   10095
    BeginProperty Font 
       Name            =   "Verdana"
-      Size            =   6.75
+      Size            =   8,25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -114,15 +114,6 @@ Begin VB.Form frmEditor_Animation
       Begin VB.PictureBox picSprite 
          AutoRedraw      =   -1  'True
          BackColor       =   &H80000012&
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   3135
          Index           =   1
          Left            =   3360
@@ -165,15 +156,6 @@ Begin VB.Form frmEditor_Animation
       Begin VB.PictureBox picSprite 
          AutoRedraw      =   -1  'True
          BackColor       =   &H80000012&
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   3135
          Index           =   0
          Left            =   120
@@ -338,15 +320,6 @@ Begin VB.Form frmEditor_Animation
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          Height          =   6690
          ItemData        =   "frmEditor_Animation.frx":038A
          Left            =   120
@@ -482,8 +455,8 @@ Private Sub scrlFrameCount_Change(Index As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblFrameCount(Index).Caption = "Frame Count: " & scrlFrameCount(Index).Value
-    Animation(EditorIndex).Frames(Index) = scrlFrameCount(Index).Value
+    lblFrameCount(Index).Caption = "Frame Count: " & scrlFrameCount(Index).value
+    Animation(EditorIndex).Frames(Index) = scrlFrameCount(Index).value
     Exit Sub
     
 ' Error handler
@@ -513,8 +486,8 @@ Private Sub scrlLoopCount_Change(Index As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblLoopCount(Index).Caption = "Loop Count: " & scrlLoopCount(Index).Value
-    Animation(EditorIndex).LoopCount(Index) = scrlLoopCount(Index).Value
+    lblLoopCount(Index).Caption = "Loop Count: " & scrlLoopCount(Index).value
+    Animation(EditorIndex).LoopCount(Index) = scrlLoopCount(Index).value
     Exit Sub
     
 ' Error handler
@@ -544,8 +517,8 @@ Private Sub scrlLoopTime_Change(Index As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblLoopTime(Index).Caption = "Loop Time: " & scrlLoopTime(Index).Value
-    Animation(EditorIndex).LoopTime(Index) = scrlLoopTime(Index).Value
+    lblLoopTime(Index).Caption = "Loop Time: " & scrlLoopTime(Index).value
+    Animation(EditorIndex).LoopTime(Index) = scrlLoopTime(Index).value
     Exit Sub
     
 ' Error handler
@@ -575,8 +548,8 @@ Private Sub scrlSprite_Change(Index As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblSprite(Index).Caption = "Sprite: " & scrlSprite(Index).Value
-    Animation(EditorIndex).Sprite(Index) = scrlSprite(Index).Value
+    lblSprite(Index).Caption = "Sprite: " & scrlSprite(Index).value
+    Animation(EditorIndex).Sprite(Index) = scrlSprite(Index).value
     Exit Sub
     
 ' Error handler

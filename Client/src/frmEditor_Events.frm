@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmEditor_Events 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Event Editor"
@@ -9,7 +9,7 @@ Begin VB.Form frmEditor_Events
    ClientWidth     =   12885
    BeginProperty Font 
       Name            =   "Verdana"
-      Size            =   8.25
+      Size            =   8,25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -655,15 +655,6 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.Label lblRandomLabel 
             Caption         =   "*** These commands will not process on global events."
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   6.75
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
             ForeColor       =   &H000000FF&
             Height          =   255
             Index           =   15
@@ -3045,8 +3036,8 @@ Begin VB.Form frmEditor_Events
             BorderStyle     =   0  'None
             BeginProperty Font 
                Name            =   "MS Sans Serif"
-               Size            =   8.25
-               Charset         =   0
+               Size            =   8,25
+               Charset         =   238
                Weight          =   400
                Underline       =   0   'False
                Italic          =   0   'False
@@ -3127,8 +3118,8 @@ Begin VB.Form frmEditor_Events
             BorderStyle     =   0  'None
             BeginProperty Font 
                Name            =   "MS Sans Serif"
-               Size            =   8.25
-               Charset         =   0
+               Size            =   8,25
+               Charset         =   238
                Weight          =   400
                Underline       =   0   'False
                Italic          =   0   'False
@@ -3973,26 +3964,26 @@ Private copyPage As EventPageRec
 Private TmpIndex As Long
 
 Private Sub chkDirFix_Click()
-    tmpEvent.Pages(curPageNum).DirFix = chkDirFix.Value
+    tmpEvent.Pages(curPageNum).DirFix = chkDirFix.value
 End Sub
 
 Private Sub chkGlobal_Click()
-    tmpEvent.Global = chkGlobal.Value
+    tmpEvent.Global = chkGlobal.value
 End Sub
 
 Private Sub chkHasItem_Click()
-    tmpEvent.Pages(curPageNum).chkHasItem = chkHasItem.Value
-    If chkHasItem.Value = 0 Then cmbHasItem.Enabled = False Else cmbHasItem.Enabled = True
+    tmpEvent.Pages(curPageNum).chkHasItem = chkHasItem.value
+    If chkHasItem.value = 0 Then cmbHasItem.Enabled = False Else cmbHasItem.Enabled = True
 End Sub
 
 Private Sub chkIgnoreMove_Click()
-    tmpEvent.Pages(curPageNum).IgnoreMoveRoute = chkIgnoreMove.Value
+    tmpEvent.Pages(curPageNum).IgnoreMoveRoute = chkIgnoreMove.value
 End Sub
 
 Private Sub chkPlayerSwitch_Click()
-    tmpEvent.Pages(curPageNum).chkSwitch = chkPlayerSwitch.Value
+    tmpEvent.Pages(curPageNum).chkSwitch = chkPlayerSwitch.value
     
-    If chkPlayerSwitch.Value = 0 Then
+    If chkPlayerSwitch.value = 0 Then
         cmbPlayerSwitch.Enabled = False
         cmbPlayerSwitchCompare.Enabled = False
     Else
@@ -4002,9 +3993,9 @@ Private Sub chkPlayerSwitch_Click()
 End Sub
 
 Private Sub chkPlayerVar_Click()
-    tmpEvent.Pages(curPageNum).chkVariable = chkPlayerVar.Value
+    tmpEvent.Pages(curPageNum).chkVariable = chkPlayerVar.value
     
-    If chkPlayerVar.Value = 0 Then
+    If chkPlayerVar.value = 0 Then
         cmbPlayerVar.Enabled = False
         txtPlayerVariable.Enabled = False
         cmbPlayerVarCompare.Enabled = False
@@ -4016,13 +4007,13 @@ Private Sub chkPlayerVar_Click()
 End Sub
 
 Private Sub chkRepeatRoute_Click()
-    tmpEvent.Pages(curPageNum).RepeatMoveRoute = chkRepeatRoute.Value
+    tmpEvent.Pages(curPageNum).RepeatMoveRoute = chkRepeatRoute.value
 End Sub
 
 Private Sub chkSelfSwitch_Click()
-    tmpEvent.Pages(curPageNum).chkSelfSwitch = chkSelfSwitch.Value
+    tmpEvent.Pages(curPageNum).chkSelfSwitch = chkSelfSwitch.value
     
-    If chkSelfSwitch.Value = 0 Then
+    If chkSelfSwitch.value = 0 Then
         cmbSelfSwitch.Enabled = False
         cmbSelfSwitchCompare.Enabled = False
     Else
@@ -4032,15 +4023,15 @@ Private Sub chkSelfSwitch_Click()
 End Sub
 
 Private Sub chkShowName_Click()
-    tmpEvent.Pages(curPageNum).ShowName = chkShowName.Value
+    tmpEvent.Pages(curPageNum).ShowName = chkShowName.value
 End Sub
 
 Private Sub chkWalkAnim_Click()
-    tmpEvent.Pages(curPageNum).WalkAnim = chkWalkAnim.Value
+    tmpEvent.Pages(curPageNum).WalkAnim = chkWalkAnim.value
 End Sub
 
 Private Sub chkWalkThrough_Click()
-    tmpEvent.Pages(curPageNum).WalkThrough = chkWalkThrough.Value
+    tmpEvent.Pages(curPageNum).WalkThrough = chkWalkThrough.value
 End Sub
 
 Private Sub cmbGraphic_Click()
@@ -4051,7 +4042,7 @@ Private Sub cmbGraphic_Click()
     ' Set the max on the scrollbar
     Select Case cmbGraphic.ListIndex
         Case 0 ' None
-            scrlGraphic.Value = 1
+            scrlGraphic.value = 1
             scrlGraphic.Enabled = False
         Case 1 ' Character
             scrlGraphic.max = NumCharacters
@@ -4061,45 +4052,45 @@ Private Sub cmbGraphic_Click()
             scrlGraphic.Enabled = True
     End Select
     
-    If scrlGraphic.Value = 0 Then
+    If scrlGraphic.value = 0 Then
         lblGraphic.Caption = "Number: None"
     Else
-        lblGraphic.Caption = "Number: " & scrlGraphic.Value
+        lblGraphic.Caption = "Number: " & scrlGraphic.value
     End If
     
     If tmpEvent.Pages(curPageNum).GraphicType = 1 Then
-        If frmEditor_Events.scrlGraphic.Value <= 0 Or frmEditor_Events.scrlGraphic.Value > NumCharacters Then Exit Sub
+        If frmEditor_Events.scrlGraphic.value <= 0 Or frmEditor_Events.scrlGraphic.value > NumCharacters Then Exit Sub
                     
-        If Tex_Character(frmEditor_Events.scrlGraphic.Value).Width > 793 Then
+        If Tex_Character(frmEditor_Events.scrlGraphic.value).Width > 793 Then
             frmEditor_Events.hScrlGraphicSel.Visible = True
-            frmEditor_Events.hScrlGraphicSel.Value = 0
-            frmEditor_Events.hScrlGraphicSel.max = Tex_Character(frmEditor_Events.scrlGraphic.Value).Width - 800
+            frmEditor_Events.hScrlGraphicSel.value = 0
+            frmEditor_Events.hScrlGraphicSel.max = Tex_Character(frmEditor_Events.scrlGraphic.value).Width - 800
         Else
             frmEditor_Events.hScrlGraphicSel.Visible = False
         End If
                     
-        If Tex_Character(frmEditor_Events.scrlGraphic.Value).Height > 472 Then
+        If Tex_Character(frmEditor_Events.scrlGraphic.value).Height > 472 Then
             frmEditor_Events.vScrlGraphicSel.Visible = True
-            frmEditor_Events.vScrlGraphicSel.Value = 0
-            frmEditor_Events.vScrlGraphicSel.max = Tex_Character(frmEditor_Events.scrlGraphic.Value).Height - 512
+            frmEditor_Events.vScrlGraphicSel.value = 0
+            frmEditor_Events.vScrlGraphicSel.max = Tex_Character(frmEditor_Events.scrlGraphic.value).Height - 512
         Else
             frmEditor_Events.vScrlGraphicSel.Visible = False
         End If
     ElseIf tmpEvent.Pages(curPageNum).GraphicType = 2 Then
-        If frmEditor_Events.scrlGraphic.Value <= 0 Or frmEditor_Events.scrlGraphic.Value > NumTileSets Then Exit Sub
+        If frmEditor_Events.scrlGraphic.value <= 0 Or frmEditor_Events.scrlGraphic.value > NumTileSets Then Exit Sub
                     
-        If Tex_Tileset(frmEditor_Events.scrlGraphic.Value).Width > 793 Then
+        If Tex_Tileset(frmEditor_Events.scrlGraphic.value).Width > 793 Then
             frmEditor_Events.hScrlGraphicSel.Visible = True
-            frmEditor_Events.hScrlGraphicSel.Value = 0
-            frmEditor_Events.hScrlGraphicSel.max = Tex_Tileset(frmEditor_Events.scrlGraphic.Value).Width - 800
+            frmEditor_Events.hScrlGraphicSel.value = 0
+            frmEditor_Events.hScrlGraphicSel.max = Tex_Tileset(frmEditor_Events.scrlGraphic.value).Width - 800
         Else
             frmEditor_Events.hScrlGraphicSel.Visible = False
         End If
                     
-        If Tex_Tileset(frmEditor_Events.scrlGraphic.Value).Height > 472 Then
+        If Tex_Tileset(frmEditor_Events.scrlGraphic.value).Height > 472 Then
             frmEditor_Events.vScrlGraphicSel.Visible = True
-            frmEditor_Events.vScrlGraphicSel.Value = 0
-            frmEditor_Events.vScrlGraphicSel.max = Tex_Tileset(frmEditor_Events.scrlGraphic.Value).Height - 512
+            frmEditor_Events.vScrlGraphicSel.value = 0
+            frmEditor_Events.vScrlGraphicSel.max = Tex_Tileset(frmEditor_Events.scrlGraphic.value).Height - 512
         Else
             frmEditor_Events.vScrlGraphicSel.Visible = False
         End If
@@ -4428,7 +4419,7 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraDialogue.Visible = True
             fraCommand(0).Visible = True
             fraCommands.Visible = False
-            scrlFace.Value = 0
+            scrlFace.value = 0
         Case 1
             txtChoicePrompt.text = vbNullString
             txtChoices(1).text = vbNullString
@@ -4438,17 +4429,17 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraDialogue.Visible = True
             fraCommand(1).Visible = True
             fraCommands.Visible = False
-            scrlFace2.Value = 0
+            scrlFace2.value = 0
         Case 2
             txtAddText_Text.text = vbNullString
-            scrlAddText_Colour.Value = 0
-            optAddText_Player.Value = True
+            scrlAddText_Colour.value = 0
+            optAddText_Player.value = True
             fraDialogue.Visible = True
             fraCommand(2).Visible = True
             fraCommands.Visible = False
         Case 3
             txtChatbubbleText.text = ""
-            optChatBubbleTarget(0).Value = True
+            optChatBubbleTarget(0).value = True
             cmbChatBubbleTarget.Visible = False
             fraDialogue.Visible = True
             fraCommand(3).Visible = True
@@ -4458,7 +4449,7 @@ Private Sub cmdCommands_Click(Index As Integer)
                 txtVariableData(i).text = 0
             Next
             cmbVariable.ListIndex = 0
-            optVariableAction(0).Value = True
+            optVariableAction(0).value = True
             fraDialogue.Visible = True
             fraCommand(4).Visible = True
             fraCommands.Visible = False
@@ -4477,7 +4468,7 @@ Private Sub cmdCommands_Click(Index As Integer)
         Case 7
             fraDialogue.Visible = True
             fraCommand(7).Visible = True
-            optCondition_Index(0).Value = True
+            optCondition_Index(0).value = True
             ClearConditionFrame
             cmbCondition_PlayerVarIndex.Enabled = True
             cmbCondition_PlayerVarCompare.Enabled = True
@@ -4499,7 +4490,7 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraDialogue.Visible = True
         Case 11
             cmbChangeItemIndex.ListIndex = 0
-            optChangeItemSet.Value = True
+            optChangeItemSet.value = True
             txtChangeItemsAmount.text = "0"
             fraDialogue.Visible = True
             fraCommand(10).Visible = True
@@ -4517,7 +4508,7 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraCommands.Visible = False
             fraDialogue.Visible = False
         Case 15
-            scrlChangeLevel.Value = 1
+            scrlChangeLevel.value = 1
             lblChangeLevel.Caption = "Level: 1"
             fraDialogue.Visible = True
             fraCommand(11).Visible = True
@@ -4541,31 +4532,31 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraCommand(13).Visible = True
             fraCommands.Visible = False
         Case 18
-            scrlChangeSprite.Value = 1
+            scrlChangeSprite.value = 1
             lblChangeSprite.Caption = "Sprite: 1"
             fraDialogue.Visible = True
             fraCommand(14).Visible = True
             fraCommands.Visible = False
         Case 19
-            optChangeSexMale.Value = True
+            optChangeSexMale.value = True
             fraDialogue.Visible = True
             fraCommand(15).Visible = True
             fraCommands.Visible = False
         Case 20
-            optChangePKYes.Value = True
+            optChangePKYes.value = True
             fraDialogue.Visible = True
             fraCommand(16).Visible = True
             fraCommands.Visible = False
         Case 21
-            scrlGiveExp.Value = 0
+            scrlGiveExp.value = 0
             lblGiveExp.Caption = "Give Exp: 0"
             fraDialogue.Visible = True
             fraCommand(17).Visible = True
             fraCommands.Visible = False
         Case 22
-            scrlWPMap.Value = 0
-            scrlWPX.Value = 0
-            scrlWPY.Value = 0
+            scrlWPMap.value = 0
+            scrlWPX.value = 0
+            scrlWPY.value = 0
             cmbWarpPlayerDir.ListIndex = 0
             fraDialogue.Visible = True
             fraCommand(18).Visible = True
@@ -4587,8 +4578,8 @@ Private Sub cmdCommands_Click(Index As Integer)
                 End If
             Next
             IsMoveRouteCommand = True
-            chkIgnoreMove.Value = 0
-            chkRepeatRoute.Value = 0
+            chkIgnoreMove.value = 0
+            chkRepeatRoute.value = 0
             TempMoveRouteCount = 0
             ReDim TempMoveRoute(0)
             fraMoveRoute.Width = 841
@@ -4606,12 +4597,12 @@ Private Sub cmdCommands_Click(Index As Integer)
                 cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).name)
             Next
             cmbPlayAnimEvent.ListIndex = 0
-            optPlayAnimPlayer.Value = True
+            optPlayAnimPlayer.value = True
             cmbPlayAnim.ListIndex = 0
             lblPlayAnimX.Caption = "Map Tile X: 0"
             lblPlayAnimY.Caption = "Map Tile Y: 0"
-            scrlPlayAnimTileX.Value = 0
-            scrlPlayAnimTileY.Value = 0
+            scrlPlayAnimTileX.value = 0
+            scrlPlayAnimTileY.value = 0
             scrlPlayAnimTileX.max = Map.MaxX
             scrlPlayAnimTileY.max = Map.MaxY
             fraDialogue.Visible = True
@@ -4644,23 +4635,23 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraCommands.Visible = False
             fraDialogue.Visible = False
         Case 31
-            ScrlFogData(0).Value = 0
-            ScrlFogData(0).Value = 0
-            ScrlFogData(0).Value = 0
+            ScrlFogData(0).value = 0
+            ScrlFogData(0).value = 0
+            ScrlFogData(0).value = 0
             fraDialogue.Visible = True
             fraCommand(22).Visible = True
             fraCommands.Visible = False
         Case 32
             CmbWeather.ListIndex = 0
-            scrlWeatherIntensity.Value = 0
+            scrlWeatherIntensity.value = 0
             fraDialogue.Visible = True
             fraCommand(23).Visible = True
             fraCommands.Visible = False
         Case 33
-            scrlMapTintData(0).Value = 0
-            scrlMapTintData(1).Value = 0
-            scrlMapTintData(2).Value = 0
-            scrlMapTintData(3).Value = 0
+            scrlMapTintData(0).value = 0
+            scrlMapTintData(1).value = 0
+            scrlMapTintData(2).value = 0
+            scrlMapTintData(3).value = 0
             fraDialogue.Visible = True
             fraCommand(24).Visible = True
             fraCommands.Visible = False
@@ -4683,7 +4674,7 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraCommands.Visible = False
             fraDialogue.Visible = False
         Case 38
-            scrlWaitAmount.Value = 1
+            scrlWaitAmount.value = 1
             fraDialogue.Visible = True
             fraCommand(27).Visible = True
             fraCommands.Visible = False
@@ -4693,7 +4684,7 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraCommand(28).Visible = True
             fraCommands.Visible = False
         Case 40
-            scrlCustomScript.Value = 1
+            scrlCustomScript.value = 1
             fraDialogue.Visible = True
             fraCommand(29).Visible = True
             fraCommands.Visible = False
@@ -4859,7 +4850,7 @@ End Sub
 Private Sub cmdGraphicOK_Click()
     If GraphicSelType = 0 Then
         tmpEvent.Pages(curPageNum).GraphicType = cmbGraphic.ListIndex
-        tmpEvent.Pages(curPageNum).Graphic = scrlGraphic.Value
+        tmpEvent.Pages(curPageNum).Graphic = scrlGraphic.value
         tmpEvent.Pages(curPageNum).GraphicX = GraphicSelX
         tmpEvent.Pages(curPageNum).GraphicY = GraphicSelY
         tmpEvent.Pages(curPageNum).GraphicX2 = GraphicSelX2
@@ -4931,8 +4922,8 @@ Private Sub cmdMoveRoute_Click()
     cmbEvent.ListIndex = 0
     cmbEvent.Enabled = False
     
-    chkIgnoreMove.Value = tmpEvent.Pages(curPageNum).IgnoreMoveRoute
-    chkRepeatRoute.Value = tmpEvent.Pages(curPageNum).RepeatMoveRoute
+    chkIgnoreMove.value = tmpEvent.Pages(curPageNum).IgnoreMoveRoute
+    chkRepeatRoute.value = tmpEvent.Pages(curPageNum).RepeatMoveRoute
     TempMoveRouteCount = tmpEvent.Pages(curPageNum).MoveRouteCount
     TempMoveRoute = tmpEvent.Pages(curPageNum).MoveRoute
     
@@ -5553,7 +5544,7 @@ Public Sub InitEventEditorForm()
     
     ' Level
     scrlChangeLevel.min = 1
-    scrlChangeLevel.Value = 1
+    scrlChangeLevel.value = 1
     lblChangeLevel.Caption = "Level: 1"
     
     ' Switches
@@ -5678,7 +5669,7 @@ Sub AddMoveRouteCommand(Index As Integer)
         ' If set graphic then
         If Index = 43 Then
             TempMoveRoute(i).Data1 = cmbGraphic.ListIndex
-            TempMoveRoute(i).Data2 = scrlGraphic.Value
+            TempMoveRoute(i).Data2 = scrlGraphic.value
             TempMoveRoute(i).Data3 = GraphicSelX
             TempMoveRoute(i).Data4 = GraphicSelX2
             TempMoveRoute(i).Data5 = GraphicSelY
@@ -5694,7 +5685,7 @@ Sub AddMoveRouteCommand(Index As Integer)
         ' If set graphic then
         If Index = 43 Then
             TempMoveRoute(TempMoveRouteCount).Data1 = cmbGraphic.ListIndex
-            TempMoveRoute(TempMoveRouteCount).Data2 = scrlGraphic.Value
+            TempMoveRoute(TempMoveRouteCount).Data2 = scrlGraphic.value
             TempMoveRoute(TempMoveRouteCount).Data3 = GraphicSelX
             TempMoveRoute(TempMoveRouteCount).Data4 = GraphicSelX2
             TempMoveRoute(TempMoveRouteCount).Data5 = GraphicSelY
@@ -5797,7 +5788,7 @@ End Sub
 Private Sub optCondition_Index_Click(Index As Integer)
 Dim i As Long, x As Long
     For i = 0 To 6
-        If optCondition_Index(i).Value = True Then x = i
+        If optCondition_Index(i).value = True Then x = i
     Next
     ClearConditionFrame
     Select Case x
@@ -5905,7 +5896,7 @@ End Sub
 Private Sub optVariableAction_Click(Index As Integer)
     Dim i As Long
     For i = 0 To 3
-        If optVariableAction(i).Value = True Then
+        If optVariableAction(i).value = True Then
             Exit For
         End If
     Next
@@ -5945,34 +5936,34 @@ Dim i As Long
         'Tileset... hard one....
         If ShiftDown Then
             If GraphicSelX > -1 And GraphicSelY > -1 Then
-                If CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
-                    GraphicSelX2 = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32
-                    GraphicSelY2 = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32
+                If CLng(x + frmEditor_Events.hScrlGraphicSel.value) / 32 > GraphicSelX And CLng(y + frmEditor_Events.vScrlGraphicSel.value) / 32 > GraphicSelY Then
+                    GraphicSelX2 = CLng(x + frmEditor_Events.hScrlGraphicSel.value) / 32
+                    GraphicSelY2 = CLng(y + frmEditor_Events.vScrlGraphicSel.value) / 32
                 End If
             End If
         Else
-            GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) \ 32
-            GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) \ 32
+            GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.value) \ 32
+            GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.value) \ 32
             GraphicSelX2 = 0
             GraphicSelY2 = 0
         End If
     ElseIf frmEditor_Events.cmbGraphic.ListIndex = 1 Then
-        GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value)
-        GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value)
+        GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.value)
+        GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.value)
         GraphicSelX2 = 0
         GraphicSelY2 = 0
         
-        If frmEditor_Events.scrlGraphic.Value <= 0 Or frmEditor_Events.scrlGraphic.Value > NumCharacters Then Exit Sub
+        If frmEditor_Events.scrlGraphic.value <= 0 Or frmEditor_Events.scrlGraphic.value > NumCharacters Then Exit Sub
         
         
         For i = 0 To 3
-            If GraphicSelX >= ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Width / 4) * i) And GraphicSelX < ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Width / 4) * (i + 1)) Then
+            If GraphicSelX >= ((Tex_Character(frmEditor_Events.scrlGraphic.value).Width / 4) * i) And GraphicSelX < ((Tex_Character(frmEditor_Events.scrlGraphic.value).Width / 4) * (i + 1)) Then
                 GraphicSelX = i
             End If
         Next
         
         For i = 0 To 3
-            If GraphicSelY >= ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Height / 4) * i) And GraphicSelY < ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Height / 4) * (i + 1)) Then
+            If GraphicSelY >= ((Tex_Character(frmEditor_Events.scrlGraphic.value).Height / 4) * i) And GraphicSelY < ((Tex_Character(frmEditor_Events.scrlGraphic.value).Height / 4) * (i + 1)) Then
                 GraphicSelY = i
             End If
         Next
@@ -5982,42 +5973,42 @@ Dim i As Long
 End Sub
 
 Private Sub scrlGraphic_Click()
-    lblGraphic.Caption = "Graphic: " & scrlGraphic.Value
-    tmpEvent.Pages(curPageNum).Graphic = scrlGraphic.Value
+    lblGraphic.Caption = "Graphic: " & scrlGraphic.value
+    tmpEvent.Pages(curPageNum).Graphic = scrlGraphic.value
     
     If tmpEvent.Pages(curPageNum).GraphicType = 1 Then
-        If frmEditor_Events.scrlGraphic.Value <= 0 Or frmEditor_Events.scrlGraphic.Value > NumCharacters Then Exit Sub
+        If frmEditor_Events.scrlGraphic.value <= 0 Or frmEditor_Events.scrlGraphic.value > NumCharacters Then Exit Sub
    
-        If Tex_Character(frmEditor_Events.scrlGraphic.Value).Width > 793 Then
+        If Tex_Character(frmEditor_Events.scrlGraphic.value).Width > 793 Then
             frmEditor_Events.hScrlGraphicSel.Visible = True
-            frmEditor_Events.hScrlGraphicSel.Value = 0
-            frmEditor_Events.hScrlGraphicSel.max = Tex_Character(frmEditor_Events.scrlGraphic.Value).Width - 800
+            frmEditor_Events.hScrlGraphicSel.value = 0
+            frmEditor_Events.hScrlGraphicSel.max = Tex_Character(frmEditor_Events.scrlGraphic.value).Width - 800
         Else
             frmEditor_Events.hScrlGraphicSel.Visible = False
         End If
                     
-        If Tex_Character(frmEditor_Events.scrlGraphic.Value).Height > 472 Then
+        If Tex_Character(frmEditor_Events.scrlGraphic.value).Height > 472 Then
             frmEditor_Events.vScrlGraphicSel.Visible = True
-            frmEditor_Events.vScrlGraphicSel.Value = 0
-            frmEditor_Events.vScrlGraphicSel.max = Tex_Character(frmEditor_Events.scrlGraphic.Value).Height - 512
+            frmEditor_Events.vScrlGraphicSel.value = 0
+            frmEditor_Events.vScrlGraphicSel.max = Tex_Character(frmEditor_Events.scrlGraphic.value).Height - 512
         Else
             frmEditor_Events.vScrlGraphicSel.Visible = False
         End If
     ElseIf tmpEvent.Pages(curPageNum).GraphicType = 2 Then
-        If frmEditor_Events.scrlGraphic.Value <= 0 Or frmEditor_Events.scrlGraphic.Value > NumTileSets Then Exit Sub
+        If frmEditor_Events.scrlGraphic.value <= 0 Or frmEditor_Events.scrlGraphic.value > NumTileSets Then Exit Sub
                     
-        If Tex_Tileset(frmEditor_Events.scrlGraphic.Value).Width > 793 Then
+        If Tex_Tileset(frmEditor_Events.scrlGraphic.value).Width > 793 Then
             frmEditor_Events.hScrlGraphicSel.Visible = True
-            frmEditor_Events.hScrlGraphicSel.Value = 0
-            frmEditor_Events.hScrlGraphicSel.max = Tex_Tileset(frmEditor_Events.scrlGraphic.Value).Width - 800
+            frmEditor_Events.hScrlGraphicSel.value = 0
+            frmEditor_Events.hScrlGraphicSel.max = Tex_Tileset(frmEditor_Events.scrlGraphic.value).Width - 800
         Else
             frmEditor_Events.hScrlGraphicSel.Visible = False
         End If
                     
-        If Tex_Tileset(frmEditor_Events.scrlGraphic.Value).Height > 472 Then
+        If Tex_Tileset(frmEditor_Events.scrlGraphic.value).Height > 472 Then
             frmEditor_Events.vScrlGraphicSel.Visible = True
-            frmEditor_Events.vScrlGraphicSel.Value = 0
-            frmEditor_Events.vScrlGraphicSel.max = Tex_Tileset(frmEditor_Events.scrlGraphic.Value).Height - 512
+            frmEditor_Events.vScrlGraphicSel.value = 0
+            frmEditor_Events.vScrlGraphicSel.max = Tex_Tileset(frmEditor_Events.scrlGraphic.value).Height - 512
         Else
             frmEditor_Events.vScrlGraphicSel.Visible = False
         End If
@@ -6025,34 +6016,34 @@ Private Sub scrlGraphic_Click()
 End Sub
 
 Private Sub scrlAddText_Colour_Click()
-    frmEditor_Events.lblAddText_Colour.Caption = "Color: " & GetColorName(frmEditor_Events.scrlAddText_Colour.Value)
+    frmEditor_Events.lblAddText_Colour.Caption = "Color: " & GetColorName(frmEditor_Events.scrlAddText_Colour.value)
 End Sub
 
 Private Sub scrlAddText_Colour_Change()
-    frmEditor_Events.lblAddText_Colour.Caption = "Color: " & GetColorName(frmEditor_Events.scrlAddText_Colour.Value)
+    frmEditor_Events.lblAddText_Colour.Caption = "Color: " & GetColorName(frmEditor_Events.scrlAddText_Colour.value)
 End Sub
 
 Private Sub scrlChangeLevel_Change()
-    lblChangeLevel.Caption = "Level: " & scrlChangeLevel.Value
+    lblChangeLevel.Caption = "Level: " & scrlChangeLevel.value
 End Sub
 
 Private Sub scrlChangeSprite_Change()
-    lblChangeSprite.Caption = "Sprite: " & scrlChangeSprite.Value
+    lblChangeSprite.Caption = "Sprite: " & scrlChangeSprite.value
 End Sub
 
 Private Sub scrlCustomScript_Change()
-    lblCustomScript.Caption = "Case: " & scrlCustomScript.Value
+    lblCustomScript.Caption = "Case: " & scrlCustomScript.value
 End Sub
 
 Private Sub scrlGiveExp_Click()
-    lblGiveExp.Caption = "Give Exp: " & scrlGiveExp.Value
+    lblGiveExp.Caption = "Give Exp: " & scrlGiveExp.value
 End Sub
 
 Private Sub scrlFace_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblFace.Caption = "Face: " & scrlFace.Value
+    lblFace.Caption = "Face: " & scrlFace.value
     Exit Sub
     
 ' Error handler
@@ -6065,7 +6056,7 @@ Private Sub scrlFace2_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblFace2.Caption = "Face: " & scrlFace2.Value
+    lblFace2.Caption = "Face: " & scrlFace2.value
     Exit Sub
     
 ' Error handler
@@ -6080,15 +6071,15 @@ Private Sub ScrlFogData_Change(Index As Integer)
     
     Select Case Index
         Case 0
-            If ScrlFogData(0).Value = 0 Then
+            If ScrlFogData(0).value = 0 Then
                 lblFogData(0).Caption = "None."
             Else
-                lblFogData(0).Caption = "Fog: " & ScrlFogData(0).Value
+                lblFogData(0).Caption = "Fog: " & ScrlFogData(0).value
             End If
         Case 1
-            lblFogData(1).Caption = "Fog Speed: " & ScrlFogData(1).Value
+            lblFogData(1).Caption = "Fog Speed: " & ScrlFogData(1).value
         Case 2
-            lblFogData(2).Caption = "Fog Opacity: " & ScrlFogData(2).Value
+            lblFogData(2).Caption = "Fog Opacity: " & ScrlFogData(2).value
     End Select
     
     ' Error handler
@@ -6100,14 +6091,14 @@ errorhandler:
 End Sub
 
 Private Sub scrlGiveExp_Change()
-    lblGiveExp.Caption = "Experience: " & scrlGiveExp.Value
+    lblGiveExp.Caption = "Experience: " & scrlGiveExp.value
 End Sub
 
 Private Sub scrlGraphic_Change()
-    If scrlGraphic.Value = 0 Then
+    If scrlGraphic.value = 0 Then
         lblGraphic.Caption = "Number: None"
     Else
-        lblGraphic.Caption = "Number: " & scrlGraphic.Value
+        lblGraphic.Caption = "Number: " & scrlGraphic.value
     End If
     Call cmbGraphic_Click
 End Sub
@@ -6118,13 +6109,13 @@ Private Sub scrlMapTintData_Change(Index As Integer)
     
     Select Case Index
         Case 0
-            lblMapTintData(0).Caption = "Red: " & scrlMapTintData(0).Value
+            lblMapTintData(0).Caption = "Red: " & scrlMapTintData(0).value
         Case 1
-            lblMapTintData(1).Caption = "Green: " & scrlMapTintData(1).Value
+            lblMapTintData(1).Caption = "Green: " & scrlMapTintData(1).value
         Case 2
-            lblMapTintData(2).Caption = "Blue: " & scrlMapTintData(2).Value
+            lblMapTintData(2).Caption = "Blue: " & scrlMapTintData(2).value
         Case 3
-            lblMapTintData(3).Caption = "Opacity: " & scrlMapTintData(3).Value
+            lblMapTintData(3).Caption = "Opacity: " & scrlMapTintData(3).value
     End Select
     
     ' Error handler
@@ -6136,31 +6127,31 @@ errorhandler:
 End Sub
 
 Private Sub scrlPlayAnimTileX_Change()
-    lblPlayAnimX.Caption = "Map Tile X: " & scrlPlayAnimTileX.Value
+    lblPlayAnimX.Caption = "Map Tile X: " & scrlPlayAnimTileX.value
 End Sub
 
 Private Sub scrlPlayAnimTileY_Change()
-    lblPlayAnimY.Caption = "Map Tile Y: " & scrlPlayAnimTileY.Value
+    lblPlayAnimY.Caption = "Map Tile Y: " & scrlPlayAnimTileY.value
 End Sub
 
 Private Sub scrlWaitAmount_Change()
-    lblWaitAmount.Caption = "Wait: " & scrlWaitAmount.Value & " ms"
+    lblWaitAmount.Caption = "Wait: " & scrlWaitAmount.value & " ms"
 End Sub
 
 Private Sub scrlWeatherIntensity_Change()
-    lblWeatherIntensity.Caption = "Intensity: " & scrlWeatherIntensity.Value
+    lblWeatherIntensity.Caption = "Intensity: " & scrlWeatherIntensity.value
 End Sub
 
 Private Sub scrlWPMap_Change()
-    lblWPMap.Caption = "Map: " & scrlWPMap.Value
+    lblWPMap.Caption = "Map: " & scrlWPMap.value
 End Sub
 
 Private Sub scrlWPX_Change()
-    lblWPX.Caption = "X: " & scrlWPX.Value
+    lblWPX.Caption = "X: " & scrlWPX.value
 End Sub
 
 Private Sub scrlWPY_Change()
-    lblWPY.Caption = "Y: " & scrlWPY.Value
+    lblWPY.Caption = "Y: " & scrlWPY.value
 End Sub
 
 Private Sub tabCommands_Click()

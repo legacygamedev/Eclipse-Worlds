@@ -64,7 +64,7 @@ Begin VB.Form frmEditor_Emoticon
             BorderStyle     =   0  'None
             BeginProperty Font 
                Name            =   "Arial"
-               Size            =   8.25
+               Size            =   8,25
                Charset         =   204
                Weight          =   400
                Underline       =   0   'False
@@ -87,7 +87,7 @@ Begin VB.Form frmEditor_Emoticon
                BorderStyle     =   0  'None
                BeginProperty Font 
                   Name            =   "Arial"
-                  Size            =   8.25
+                  Size            =   8,25
                   Charset         =   204
                   Weight          =   400
                   Underline       =   0   'False
@@ -118,7 +118,7 @@ Begin VB.Form frmEditor_Emoticon
       Begin VB.TextBox txtCommand 
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -137,7 +137,7 @@ Begin VB.Form frmEditor_Emoticon
          Caption         =   "Command:"
          BeginProperty Font 
             Name            =   "Microsoft Sans Serif"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -154,7 +154,7 @@ Begin VB.Form frmEditor_Emoticon
          Caption         =   "Emoticon: 0"
          BeginProperty Font 
             Name            =   "Microsoft Sans Serif"
-            Size            =   8.25
+            Size            =   8,25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -257,7 +257,7 @@ errorhandler:
 End Sub
 
 Private Sub cmdSave_Click()
-    Dim i As Long, n As Long
+    Dim i As Long, N As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
@@ -266,11 +266,11 @@ Private Sub cmdSave_Click()
     
     For i = 1 To MAX_EMOTICONS
         ' Loop through a second time to compare if any match
-        For n = 1 To MAX_EMOTICONS
-            If Not Trim$(Emoticon(i).Command) = "/" And Not Trim$(Emoticon(n).Command) = "/" Then
+        For N = 1 To MAX_EMOTICONS
+            If Not Trim$(Emoticon(i).Command) = "/" And Not Trim$(Emoticon(N).Command) = "/" Then
                 ' Make sure they are not the same one
-                If Not i = n Then
-                    If Trim$(Emoticon(i).Command) = Trim$(Emoticon(n).Command) Then
+                If Not i = N Then
+                    If Trim$(Emoticon(i).Command) = Trim$(Emoticon(N).Command) Then
                         AlertMsg "There is more than one command that uses " & Trim$(txtCommand.text) & "!", True
                         Exit Sub
                     End If
@@ -310,8 +310,8 @@ Private Sub scrlEmoticon_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblEmoticon.Caption = "Emoticon: " & scrlEmoticon.Value
-    Emoticon(EditorIndex).Pic = scrlEmoticon.Value
+    lblEmoticon.Caption = "Emoticon: " & scrlEmoticon.value
+    Emoticon(EditorIndex).Pic = scrlEmoticon.value
     Exit Sub
     
 ' Error handler
