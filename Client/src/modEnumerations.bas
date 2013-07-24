@@ -132,6 +132,7 @@ Public Enum ServerPackets
     SAllCharacters
     SExtendedPlayerData
     
+    SAccessVerificator
     ' Make sure SMSG_COUNT is below everything else
     SMSG_COUNT
 End Enum
@@ -411,7 +412,7 @@ Public Enum Proficiency
     Mace
     Axe
     Spear
-    Staff
+    staff
     
     ' Make sure Proficiency_Count is below everything else
     Proficiency_Count

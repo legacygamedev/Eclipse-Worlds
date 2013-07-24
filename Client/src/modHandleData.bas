@@ -150,6 +150,8 @@ Public Sub InitMessages()
     HandleDataSub(SPlayersOnline) = GetAddress(AddressOf HandlePlayersOnline)
     HandleDataSub(SAllCharacters) = GetAddress(AddressOf HandleAllCharacters)
     HandleDataSub(SExtendedPlayerData) = GetAddress(AddressOf HandleExtendedPlayerData)
+    HandleDataSub(SAccessVerificator) = GetAddress(AddressOf HandleAccessVerificator)
+    
     Exit Sub
     
 ' Error handler
@@ -173,7 +175,7 @@ Sub HandleData(ByRef data() As Byte)
 
     If MsgType >= SMSG_COUNT Then DestroyGame
     
-    CallWindowProc HandleDataSub(MsgType), 1, buffer.ReadBytes(buffer.Length), 0, 0
+    CallWindowProc HandleDataSub(MsgType), 1, buffer.ReadBytes(buffer.length), 0, 0
     Exit Sub
     
 ' Error handler
@@ -1226,7 +1228,7 @@ Dim buffer As clsBuffer
 
     For i = 1 To MAX_MAP_ITEMS
         With MapItem(i)
-            .PlayerName = buffer.ReadString
+            .playerName = buffer.ReadString
             .Num = buffer.ReadLong
             .Value = buffer.ReadLong
             .Durability = buffer.ReadInteger
@@ -1453,7 +1455,7 @@ Private Sub HandleSpawnItem(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     n = buffer.ReadLong
 
     With MapItem(n)
-        .PlayerName = buffer.ReadString
+        .playerName = buffer.ReadString
         .Num = buffer.ReadLong
         .Value = buffer.ReadLong
         .Durability = buffer.ReadInteger
@@ -2033,7 +2035,7 @@ End Sub
 
 Private Sub HandleActionMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim x As Long, y As Long, Message As String, Color As Long, TmpType As Long
+    Dim x As Long, y As Long, message As String, Color As Long, TmpType As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -2041,7 +2043,7 @@ Private Sub HandleActionMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    Message = buffer.ReadString
+    message = buffer.ReadString
     Color = buffer.ReadLong
     TmpType = buffer.ReadLong
     x = buffer.ReadLong
@@ -2049,7 +2051,7 @@ Private Sub HandleActionMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
 
     Set buffer = Nothing
     
-    CreateActionMsg Message, Color, TmpType, x, y
+    CreateActionMsg message, Color, TmpType, x, y
     Exit Sub
     
 ' Error handler
@@ -2217,7 +2219,7 @@ Private Sub HandleSayMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
     Dim buffer As clsBuffer
     Dim Access As Long
     Dim name As String
-    Dim Message As String
+    Dim message As String
     Dim Color As Long
     Dim Header As String
     Dim PK As Long
@@ -2233,19 +2235,19 @@ Private Sub HandleSayMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
     name = buffer.ReadString
     Access = buffer.ReadLong
     PK = buffer.ReadLong
-    Message = CheckMessage(buffer.ReadString)
+    message = CheckMessage(buffer.ReadString)
     Header = buffer.ReadString
     SayColor = buffer.ReadLong
     
     ' Prevent ascii characters
-    For i = 1 To Len(Message)
+    For i = 1 To Len(message)
         ' limit the ASCII
-        If AscW(Mid$(Message, i, 1)) < 32 Or AscW(Mid$(Message, i, 1)) > 126 Then
+        If AscW(Mid$(message, i, 1)) < 32 Or AscW(Mid$(message, i, 1)) > 126 Then
             ' limit the extended ASCII
-            If AscW(Mid$(Message, i, 1)) < 128 Or AscW(Mid$(Message, i, 1)) > 168 Then
+            If AscW(Mid$(message, i, 1)) < 128 Or AscW(Mid$(message, i, 1)) > 168 Then
                 ' limit the extended ASCII
-                If AscW(Mid$(Message, i, 1)) < 224 Or AscW(Mid$(Message, i, 1)) > 253 Then
-                    Mid$(Message, i, 1) = ""
+                If AscW(Mid$(message, i, 1)) < 224 Or AscW(Mid$(message, i, 1)) > 253 Then
+                    Mid$(message, i, 1) = ""
                 End If
             End If
         End If
@@ -2281,7 +2283,7 @@ Private Sub HandleSayMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
         frmMain.txtChat.SelColor = SayColor
     End If
     
-    frmMain.txtChat.SelText = Message
+    frmMain.txtChat.SelText = message
     frmMain.txtChat.SelStart = Len(frmMain.txtChat.text) - 1
     Set buffer = Nothing
     Exit Sub
@@ -3170,7 +3172,7 @@ errorhandler:
 End Sub
 
 Private Sub HandleChatBubble(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim buffer As clsBuffer, TargetType As Long, Target As Long, Message As String, colour As Long
+    Dim buffer As clsBuffer, TargetType As Long, Target As Long, message As String, colour As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -3180,10 +3182,10 @@ Private Sub HandleChatBubble(ByVal Index As Long, ByRef data() As Byte, ByVal St
     
     Target = buffer.ReadLong
     TargetType = buffer.ReadLong
-    Message = buffer.ReadString
+    message = buffer.ReadString
     colour = buffer.ReadLong
     
-    CreateChatBubble Target, TargetType, Message, colour
+    CreateChatBubble Target, TargetType, message, colour
     Set buffer = Nothing
     Exit Sub
     
@@ -3194,7 +3196,7 @@ errorhandler:
 End Sub
 'Character Editor
 Private Sub HandlePlayersOnline(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim buffer As clsBuffer, playersOnline As String, Length As Long, i As Long
+    Dim buffer As clsBuffer, playersOnline As String, length As Long, i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -3204,8 +3206,8 @@ Private Sub HandlePlayersOnline(ByVal Index As Long, ByRef data() As Byte, ByVal
     
     playersOnline = buffer.ReadString
     If frmCharEditor.Visible = True Then
-        Length = UBound(charList)
-        For i = 0 To Length
+        length = UBound(charList)
+        For i = 0 To length
             If InStr(playersOnline, charList(i, 0)) Then
                 charList(i, 1) = "Online"
             End If
@@ -3215,7 +3217,7 @@ Private Sub HandlePlayersOnline(ByVal Index As Long, ByRef data() As Byte, ByVal
     End If
     If refreshingAdminList Then
         refreshingAdminList = False
-        g_playersOnline = playersOnline
+        g_playersOnline = Split(playersOnline, ",")
         frmAdmin.UpdatePlayersOnline
     End If
 
@@ -3229,7 +3231,7 @@ errorhandler:
 End Sub
 'Character Editor
 Private Sub HandleAllCharacters(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim buffer As clsBuffer, temp As String, allCharacters() As String, Length As Long, i As Long
+    Dim buffer As clsBuffer, temp As String, allCharacters() As String, length As Long, i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -3240,9 +3242,9 @@ Private Sub HandleAllCharacters(ByVal Index As Long, ByRef data() As Byte, ByVal
     temp = buffer.ReadString
     allCharacters = Split(temp, ",")
     
-    Length = UBound(allCharacters)
-    ReDim charList(0 To Length, 1)
-    For i = 0 To Length
+    length = UBound(allCharacters)
+    ReDim charList(0 To length, 1)
+    For i = 0 To length
             charList(i, 0) = allCharacters(i)
             charList(i, 1) = "Offline"
     Next
@@ -3256,6 +3258,37 @@ errorhandler:
     HandleError "HandleSpecialEffect", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
+Private Sub HandleAccessVerificator(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+    Dim buffer As clsBuffer, success As Byte, message As String, currentAccess As Byte, playerName As String, realMessage As String
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    If frmAdmin.Visible Then
+    
+        Set buffer = New clsBuffer
+        buffer.WriteBytes data()
+        
+        success = buffer.ReadByte
+        message = buffer.ReadString
+        currentAccess = buffer.ReadByte
+        
+        playerName = Split(message, ":")(1)
+        realMessage = Split(message, ":")(0)
+        
+        frmAdmin.verifyAccess playerName, success, realMessage, currentAccess
+    
+    End If
+    
+    Set buffer = Nothing
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "HandleAccessVerificator", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 'Character Editor
 Private Sub HandleExtendedPlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
@@ -3278,7 +3311,7 @@ Private Sub HandleExtendedPlayerData(ByVal Index As Long, ByRef data() As Byte, 
     
 ' Error handler
 errorhandler:
-    HandleError "HandleSpecialEffect", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "HandleExtendedPlayerData", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 Private Sub HandleSpecialEffect(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
@@ -3612,7 +3645,7 @@ Private Sub HandleBanEditor(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
         
         ' Add the names
         For i = 1 To MAX_BANS
-            .lstIndex.AddItem i & ": " & Trim$(Ban(i).PlayerName)
+            .lstIndex.AddItem i & ": " & Trim$(Ban(i).playerName)
         Next
 
         .Show

@@ -132,6 +132,8 @@ Public Enum ServerPackets
     SAllCharacters
     SExtendedPlayerData
     
+    SAccessVerificator
+    
     ' Make sure SMSG_COUNT is below everything else
     SMSG_COUNT
 End Enum

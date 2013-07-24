@@ -10,7 +10,7 @@ Begin VB.Form frmCharEditor
    ClientWidth     =   9780
    BeginProperty Font 
       Name            =   "Tahoma"
-      Size            =   8,25
+      Size            =   8.25
       Charset         =   238
       Weight          =   400
       Underline       =   0   'False
@@ -197,7 +197,7 @@ Begin VB.Form frmCharEditor
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -299,7 +299,7 @@ Begin VB.Form frmCharEditor
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -921,50 +921,50 @@ Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
-    Dim Msg As String
+    Dim msg As String
     
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
     Else
-        Msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
-        displayFieldStatus txtBox, Msg, Status.Error
+        msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
+        displayFieldStatus txtBox, msg, Status.Error
         verifyValue = False
     End If
 End Function
 
-Private Sub displayStatus(ByVal Msg As String, MsgType As Byte)
-    Select Case MsgType
+Private Sub displayStatus(ByVal msg As String, msgType As Byte)
+    Select Case msgType
     
         Case Status.Error:
             lStatus.BackColor = &H8080FF
-            lStatus.Caption = Msg
+            lStatus.Caption = msg
         Case Status.Correct:
             lStatus.BackColor = &H80FF80
-            lStatus.Caption = Msg
+            lStatus.Caption = msg
         Case Status.Neutral:
             lStatus.BackColor = &H80FFFF
-            lStatus.Caption = Msg
+            lStatus.Caption = msg
         Case Status.Info_:
             lStatus.BackColor = &H8000000F
-            lStatus.Caption = Msg
+            lStatus.Caption = msg
     End Select
 End Sub
 
-Private Sub displayFieldStatus(ByVal txtBox As textBox, ByVal Msg As String, MsgType As Status)
-    Select Case MsgType
+Private Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
+    Select Case msgType
     
         Case Status.Error:
             lStatus.BackColor = &H8080FF
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
+            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
         Case Status.Correct:
             lStatus.BackColor = &H80FF80
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
+            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
         Case Status.Neutral:
             lStatus.BackColor = &H80FFFF
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
+            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
         Case Status.Info_:
             lStatus.BackColor = &H8000000F
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
+            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
     End Select
 End Sub
 

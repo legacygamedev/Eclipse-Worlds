@@ -559,9 +559,9 @@ Sub SendPlayersOnline(ByVal index As Long)
     For i = 1 To Player_HighIndex
         If IsPlaying(i) Then
                 If i <> Player_HighIndex Then
-                    list = list & GetPlayerName(i) & ", "
+                    list = list & GetPlayerName(i) & ":" & Account(i).Chars(GetPlayerChar(i)).Access & ", "
                 Else
-                    list = list & GetPlayerName(i)
+                    list = list & GetPlayerName(i) & ":" & Account(i).Chars(GetPlayerChar(i)).Access
                 End If
         End If
     Next
@@ -687,6 +687,20 @@ End Sub
 
 Sub SendPlayerData(ByVal index As Long)
     SendDataToMap GetPlayerMap(index), PlayerData(index)
+End Sub
+
+Sub SendAccessVerificator(ByVal index As Long, success As Byte, message As String, currentAccess As Byte)
+    Dim buffer As clsBuffer
+    Set buffer = New clsBuffer
+    
+    buffer.WriteLong SAccessVerificator
+    buffer.WriteByte success
+    buffer.WriteString message
+    buffer.WriteByte currentAccess
+    
+    SendDataTo index, buffer.ToArray()
+    
+    Set buffer = Nothing
 End Sub
 
 'Character Editor
@@ -1088,21 +1102,21 @@ Sub SendVital(ByVal index As Long, ByVal Vital As Vitals)
     Set buffer = Nothing
 End Sub
 
-Sub SendVitalTo(ByVal index As Long, Player As Long, ByVal Vital As Vitals)
+Sub SendVitalTo(ByVal index As Long, player As Long, ByVal Vital As Vitals)
     Dim buffer As clsBuffer
     Set buffer = New clsBuffer
 
     Select Case Vital
         Case HP
             buffer.WriteLong SPlayerHP
-            buffer.WriteLong Player
-            buffer.WriteLong GetPlayerMaxVital(Player, Vitals.HP)
-            buffer.WriteLong GetPlayerVital(Player, Vitals.HP)
+            buffer.WriteLong player
+            buffer.WriteLong GetPlayerMaxVital(player, Vitals.HP)
+            buffer.WriteLong GetPlayerVital(player, Vitals.HP)
         Case MP
             buffer.WriteLong SPlayerMP
-            buffer.WriteLong Player
-            buffer.WriteLong GetPlayerMaxVital(Player, Vitals.MP)
-            buffer.WriteLong GetPlayerVital(Player, Vitals.MP)
+            buffer.WriteLong player
+            buffer.WriteLong GetPlayerMaxVital(player, Vitals.MP)
+            buffer.WriteLong GetPlayerVital(player, Vitals.MP)
     End Select
 
     SendDataTo index, buffer.ToArray()
@@ -1655,12 +1669,12 @@ Sub SendDoorAnimation(ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long)
     Set buffer = Nothing
 End Sub
 
-Sub SendActionMsg(ByVal MapNum As Integer, ByVal Message As String, ByVal Color As Long, ByVal MsgType As Long, ByVal X As Long, ByVal Y As Long, Optional PlayerOnlyNum As Long = 0)
+Sub SendActionMsg(ByVal MapNum As Integer, ByVal message As String, ByVal Color As Long, ByVal MsgType As Long, ByVal X As Long, ByVal Y As Long, Optional PlayerOnlyNum As Long = 0)
     Dim buffer As clsBuffer
     
     Set buffer = New clsBuffer
     buffer.WriteLong SActionMsg
-    buffer.WriteString Message
+    buffer.WriteString message
     buffer.WriteLong Color
     buffer.WriteLong MsgType
     buffer.WriteLong X
@@ -1729,7 +1743,7 @@ Sub SendClearAccountSpellBuffer(ByVal index As Long)
     Set buffer = Nothing
 End Sub
 
-Sub SayMsg_Map(ByVal MapNum As Integer, ByVal index As Long, ByVal Message As String, ByVal SayColor As Long)
+Sub SayMsg_Map(ByVal MapNum As Integer, ByVal index As Long, ByVal message As String, ByVal SayColor As Long)
     Dim buffer As clsBuffer
     
     Set buffer = New clsBuffer
@@ -1737,7 +1751,7 @@ Sub SayMsg_Map(ByVal MapNum As Integer, ByVal index As Long, ByVal Message As St
     buffer.WriteString GetPlayerName(index)
     buffer.WriteLong GetPlayerAccess(index)
     buffer.WriteLong GetPlayerPK(index)
-    buffer.WriteString Message
+    buffer.WriteString message
     buffer.WriteString "[Map] "
     buffer.WriteLong SayColor
     
@@ -1745,7 +1759,7 @@ Sub SayMsg_Map(ByVal MapNum As Integer, ByVal index As Long, ByVal Message As St
     Set buffer = Nothing
 End Sub
 
-Sub SayMsg_Global(ByVal index As Long, ByVal Message As String, ByVal SayColor As Long)
+Sub SayMsg_Global(ByVal index As Long, ByVal message As String, ByVal SayColor As Long)
     Dim buffer As clsBuffer
     
     Set buffer = New clsBuffer
@@ -1754,7 +1768,7 @@ Sub SayMsg_Global(ByVal index As Long, ByVal Message As String, ByVal SayColor A
     buffer.WriteString GetPlayerName(index)
     buffer.WriteLong GetPlayerAccess(index)
     buffer.WriteLong GetPlayerPK(index)
-    buffer.WriteString Message
+    buffer.WriteString message
     buffer.WriteString "[Global] "
     buffer.WriteLong SayColor
     
@@ -2495,7 +2509,7 @@ Sub SendCheckEmoticon(ByVal index As Long, ByVal MapNum As Long, ByVal EmoticonN
     SendDataToMap MapNum, buffer.ToArray()
 End Sub
 
-Sub SendChatBubble(ByVal MapNum As Long, ByVal Target As Long, ByVal TargetType As Long, ByVal Message As String, ByVal Color As Long)
+Sub SendChatBubble(ByVal MapNum As Long, ByVal Target As Long, ByVal TargetType As Long, ByVal message As String, ByVal Color As Long)
     Dim buffer As clsBuffer
 
     Set buffer = New clsBuffer
@@ -2503,7 +2517,7 @@ Sub SendChatBubble(ByVal MapNum As Long, ByVal Target As Long, ByVal TargetType 
     
     buffer.WriteLong Target
     buffer.WriteLong TargetType
-    buffer.WriteString Message
+    buffer.WriteString message
     buffer.WriteLong Color
     
     SendDataToMap MapNum, buffer.ToArray()
