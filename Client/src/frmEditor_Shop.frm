@@ -8,7 +8,7 @@ Begin VB.Form frmEditor_Shop
    ClientWidth     =   8775
    BeginProperty Font 
       Name            =   "Tahoma"
-      Size            =   8,25
+      Size            =   8.25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -310,7 +310,7 @@ Private Sub chkCanFix_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Shop(EditorIndex).CanFix = chkCanFix.value
+    Shop(EditorIndex).CanFix = chkCanFix.Value
     Exit Sub
     
 ' Error handler
@@ -484,8 +484,8 @@ Private Sub scrlBuy_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblBuy.Caption = "Buy Rate: " & scrlBuy.value & "%"
-    Shop(EditorIndex).BuyRate = scrlBuy.value
+    lblBuy.Caption = "Buy Rate: " & scrlBuy.Value & "%"
+    Shop(EditorIndex).BuyRate = scrlBuy.Value
     Exit Sub
     
 ' Error handler
@@ -500,8 +500,8 @@ Private Sub scrlSell_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblSell.Caption = "Sell Rate: " & scrlSell.value & "%"
-    Shop(EditorIndex).SellRate = scrlSell.value
+    lblSell.Caption = "Sell Rate: " & scrlSell.Value & "%"
+    Shop(EditorIndex).SellRate = scrlSell.Value
     Exit Sub
     
 ' Error handler

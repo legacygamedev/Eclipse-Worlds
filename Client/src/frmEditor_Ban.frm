@@ -27,7 +27,7 @@ Begin VB.Form frmEditor_Ban
          BackColor       =   &H00FFFFFF&
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -46,7 +46,7 @@ Begin VB.Form frmEditor_Ban
          BackColor       =   &H00FFFFFF&
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -65,7 +65,7 @@ Begin VB.Form frmEditor_Ban
          BackColor       =   &H00FFFFFF&
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -84,7 +84,7 @@ Begin VB.Form frmEditor_Ban
          BackColor       =   &H00FFFFFF&
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -103,7 +103,7 @@ Begin VB.Form frmEditor_Ban
          BackColor       =   &H00FFFFFF&
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -122,7 +122,7 @@ Begin VB.Form frmEditor_Ban
          BackColor       =   &H00FFFFFF&
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -141,7 +141,7 @@ Begin VB.Form frmEditor_Ban
          BackColor       =   &H00FFFFFF&
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -160,7 +160,7 @@ Begin VB.Form frmEditor_Ban
          BackColor       =   &H00FFFFFF&
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -180,7 +180,7 @@ Begin VB.Form frmEditor_Ban
          Caption         =   "Login:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -200,7 +200,7 @@ Begin VB.Form frmEditor_Ban
          Caption         =   "Name:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -219,7 +219,7 @@ Begin VB.Form frmEditor_Ban
          Caption         =   "IP:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -238,7 +238,7 @@ Begin VB.Form frmEditor_Ban
          Caption         =   "Serial:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -257,7 +257,7 @@ Begin VB.Form frmEditor_Ban
          Caption         =   "Reason:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -276,7 +276,7 @@ Begin VB.Form frmEditor_Ban
          Caption         =   "Date:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -295,7 +295,7 @@ Begin VB.Form frmEditor_Ban
          Caption         =   "Time:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -314,7 +314,7 @@ Begin VB.Form frmEditor_Ban
          Caption         =   "By:"
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -371,7 +371,7 @@ Begin VB.Form frmEditor_Ban
       Caption         =   "Save"
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   8,25
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -388,7 +388,7 @@ Begin VB.Form frmEditor_Ban
       Caption         =   "Cancel"
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   8,25
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -405,7 +405,7 @@ Begin VB.Form frmEditor_Ban
       Caption         =   "Delete"
       BeginProperty Font 
          Name            =   "Verdana"
-         Size            =   8,25
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -454,7 +454,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).PlayerName), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).playerName), EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     BanEditorInit
@@ -563,9 +563,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Ban(EditorIndex).PlayerName = Trim$(txtName.text)
+    Ban(EditorIndex).playerName = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).PlayerName), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).playerName), EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -841,7 +841,7 @@ Private Sub cmdPaste_Click()
     
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Ban(EditorIndex)), ByVal VarPtr(Ban(TmpIndex + 1)), LenB(Ban(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).PlayerName), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).playerName), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

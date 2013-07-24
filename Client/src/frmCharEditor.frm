@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmCharEditor 
    BorderStyle     =   3  'Fixed Dialog
@@ -10,7 +10,7 @@ Begin VB.Form frmCharEditor
    ClientWidth     =   9780
    BeginProperty Font 
       Name            =   "Tahoma"
-      Size            =   8,25
+      Size            =   8.25
       Charset         =   238
       Weight          =   400
       Underline       =   0   'False
@@ -197,7 +197,7 @@ Begin VB.Form frmCharEditor
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -299,7 +299,7 @@ Begin VB.Form frmCharEditor
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Verdana"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -630,9 +630,9 @@ End Sub
 Public Sub ResetCharList()
     listCharacters.Sorted = False
     listCharacters.ListItems.Clear
-    Dim length As Long, i As Long
-    length = UBound(charList)
-    For i = 0 To length
+    Dim Length As Long, i As Long
+    Length = UBound(charList)
+    For i = 0 To Length
         listCharacters.ListItems.Add , , charList(i, 0)
         listCharacters.ListItems.Item(i + 1).SubItems(1) = charList(i, 1)
     Next
@@ -772,12 +772,12 @@ Private Sub txtFilter_Change()
     If txtFilter.text <> "" Then
         listCharacters.ListItems.Clear
         
-        Dim content As String, length As Long, i As Long
+        Dim content As String, Length As Long, i As Long
         content = txtFilter.text
     
-        length = UBound(charList)
+        Length = UBound(charList)
         listCharacters.Sorted = False
-        For i = 0 To length
+        For i = 0 To Length
             If InStr(LCase(charList(i, 0)), LCase(content)) <> 0 Then
                 listCharacters.ListItems.Add , , charList(i, 0)
                 listCharacters.ListItems.Item(listCharacters.ListItems.count).SubItems(1) = charList(i, 1)

@@ -8,7 +8,7 @@ Begin VB.Form frmEditor_MapProperties
    ClientWidth     =   12105
    BeginProperty Font 
       Name            =   "Verdana"
-      Size            =   8,25
+      Size            =   8.25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -470,7 +470,7 @@ Begin VB.Form frmEditor_MapProperties
          Caption         =   "Current Map: 0"
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -606,7 +606,7 @@ Private Sub chkDoNotAutoSpawn_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If lstNpcs.ListIndex > -1 Then
-        Map.NPCSpawnType(lstNpcs.ListIndex + 1) = chkDoNotAutoSpawn.value
+        Map.NPCSpawnType(lstNpcs.ListIndex + 1) = chkDoNotAutoSpawn.Value
     End If
     Exit Sub
     
@@ -744,7 +744,7 @@ errorhandler:
 End Sub
 
 Private Sub lstMusic_Click()
-    If chkAutoPlay.value = 1 Then
+    If chkAutoPlay.Value = 1 Then
         ' If debug mode, handle error then exit out
         If Options.Debug = 1 Then On Error GoTo errorhandler
         
@@ -835,18 +835,18 @@ Public Sub cmdSave_Click()
         .Moral = cmbMoral.ListIndex + 1
 
         .Weather = CmbWeather.ListIndex
-        .WeatherIntensity = scrlWeatherIntensity.value
+        .WeatherIntensity = scrlWeatherIntensity.Value
         
-        .Fog = ScrlFog.value
-        .FogSpeed = ScrlFogSpeed.value
-        .FogOpacity = scrlFogOpacity.value
+        .Fog = ScrlFog.Value
+        .FogSpeed = ScrlFogSpeed.Value
+        .FogOpacity = scrlFogOpacity.Value
         
-        .Panorama = scrlPanorama.value
+        .Panorama = scrlPanorama.Value
         
-        .Red = ScrlR.value
-        .Green = ScrlG.value
-        .Blue = ScrlB.value
-        .Alpha = scrlA.value
+        .Red = ScrlR.Value
+        .Green = ScrlG.Value
+        .Blue = ScrlB.Value
+        .Alpha = scrlA.Value
 
         TempArr = Map.Tile
         X2 = Map.MaxX
@@ -940,7 +940,7 @@ Private Sub lstNpcs_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    chkDoNotAutoSpawn.value = Map.NPCSpawnType(lstNpcs.ListIndex + 1)
+    chkDoNotAutoSpawn.Value = Map.NPCSpawnType(lstNpcs.ListIndex + 1)
     Exit Sub
     
 ' Error handler
@@ -953,7 +953,7 @@ Private Sub scrlA_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblA.Caption = "Alpha: " & scrlA.value
+    lblA.Caption = "Alpha: " & scrlA.Value
     Exit Sub
      
 ' Error handler
@@ -966,7 +966,7 @@ Private Sub ScrlB_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblB.Caption = "Blue: " & ScrlB.value
+    lblB.Caption = "Blue: " & ScrlB.Value
     Exit Sub
     
 ' Error handler
@@ -979,7 +979,7 @@ Private Sub ScrlFog_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblFog.Caption = "Fog: " & ScrlFog.value
+    lblFog.Caption = "Fog: " & ScrlFog.Value
     Exit Sub
     
 ' Error handler
@@ -992,7 +992,7 @@ Private Sub scrlFogOpacity_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblFogOpacity.Caption = "Fog Opacity: " & scrlFogOpacity.value
+    lblFogOpacity.Caption = "Fog Opacity: " & scrlFogOpacity.Value
     Exit Sub
         
 ' Error handler
@@ -1005,7 +1005,7 @@ Private Sub ScrlFogSpeed_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblFogSpeed.Caption = "Fog Speed: " & ScrlFogSpeed.value
+    lblFogSpeed.Caption = "Fog Speed: " & ScrlFogSpeed.Value
     Exit Sub
     
 ' Error handler
@@ -1018,7 +1018,7 @@ Private Sub ScrlG_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblG.Caption = "Green: " & ScrlG.value
+    lblG.Caption = "Green: " & ScrlG.Value
     Exit Sub
     
 ' Error handler
@@ -1028,14 +1028,14 @@ errorhandler:
 End Sub
 
 Private Sub scrlPanorama_Change()
-    lblPanorama.Caption = "Panorama: " & CStr(scrlPanorama.value)
+    lblPanorama.Caption = "Panorama: " & CStr(scrlPanorama.Value)
 End Sub
 
 Private Sub ScrlR_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblR.Caption = "Red: " & ScrlR.value
+    lblR.Caption = "Red: " & ScrlR.Value
     Exit Sub
 
 ' Error handler
@@ -1048,7 +1048,7 @@ Private Sub scrlWeatherIntensity_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblWeatherIntensity.Caption = "Intensity: " & scrlWeatherIntensity.value
+    lblWeatherIntensity.Caption = "Intensity: " & scrlWeatherIntensity.Value
     Exit Sub
         
 ' Error handler

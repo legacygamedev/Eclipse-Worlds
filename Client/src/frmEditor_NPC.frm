@@ -8,7 +8,7 @@ Begin VB.Form frmEditor_NPC
    ClientWidth     =   8505
    BeginProperty Font 
       Name            =   "Verdana"
-      Size            =   8,25
+      Size            =   8.25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -31,8 +31,8 @@ Begin VB.Form frmEditor_NPC
       BackColor       =   &H00000000&
       BorderStyle     =   0  'None
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8,25
+         Name            =   "Arial"
+         Size            =   8.25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -665,7 +665,7 @@ Private Sub chkFactionThreat_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If chkFactionThreat.value = 1 Then
+    If chkFactionThreat.Value = 1 Then
         NPC(EditorIndex).FactionThreat = True
     Else
         NPC(EditorIndex).FactionThreat = False
@@ -877,9 +877,9 @@ Private Sub scrlAnimation_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If scrlAnimation.value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.value).name)
+    If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).name)
     lblAnimation.Caption = "Animation: " & sString
-    NPC(EditorIndex).Animation = scrlAnimation.value
+    NPC(EditorIndex).Animation = scrlAnimation.Value
     Exit Sub
     
 ' Error handler
@@ -894,8 +894,8 @@ Private Sub scrlDamage_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblDamage.Caption = "Damage: " & scrlDamage.value
-    NPC(EditorIndex).Damage = scrlDamage.value
+    lblDamage.Caption = "Damage: " & scrlDamage.Value
+    NPC(EditorIndex).Damage = scrlDamage.Value
     Exit Sub
     
 ' Error handler
@@ -910,8 +910,8 @@ Private Sub scrlLevel_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblLevel.Caption = "Level: " & scrlLevel.value
-    NPC(EditorIndex).Level = scrlLevel.value
+    lblLevel.Caption = "Level: " & scrlLevel.Value
+    NPC(EditorIndex).Level = scrlLevel.Value
     Exit Sub
     
 ' Error handler
@@ -926,9 +926,9 @@ Private Sub scrlSpell_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    SpellIndex = scrlSpell.value
+    SpellIndex = scrlSpell.Value
     fraSpell.Caption = "Spell: " & SpellIndex
-    scrlSpellNum.value = NPC(EditorIndex).Spell(SpellIndex)
+    scrlSpellNum.Value = NPC(EditorIndex).Spell(SpellIndex)
     Exit Sub
     
 ' Error handler
@@ -943,14 +943,14 @@ Private Sub scrlSpellNum_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblSpellNum.Caption = "Number: " & scrlSpellNum.value
+    lblSpellNum.Caption = "Number: " & scrlSpellNum.Value
 
-    If scrlSpellNum.value > 0 Then
-        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.value).name)
+    If scrlSpellNum.Value > 0 Then
+        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).name)
     Else
         lblSpellName.Caption = "Spell: None"
     End If
-    NPC(EditorIndex).Spell(SpellIndex) = scrlSpellNum.value
+    NPC(EditorIndex).Spell(SpellIndex) = scrlSpellNum.Value
     Exit Sub
     
 ' Error handler
@@ -965,8 +965,8 @@ Private Sub scrlSprite_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblSprite.Caption = "Sprite: " & scrlSprite.value
-    NPC(EditorIndex).Sprite = scrlSprite.value
+    lblSprite.Caption = "Sprite: " & scrlSprite.Value
+    NPC(EditorIndex).Sprite = scrlSprite.Value
     Exit Sub
     
 ' Error handler
@@ -981,11 +981,11 @@ Private Sub scrlDrop_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    DropIndex = scrlDrop.value
+    DropIndex = scrlDrop.Value
     fraDrop.Caption = "Drop: " & DropIndex
     txtChance.text = NPC(EditorIndex).DropChance(DropIndex)
-    scrlNum.value = NPC(EditorIndex).DropItem(DropIndex)
-    scrlValue.value = NPC(EditorIndex).DropValue(DropIndex)
+    scrlNum.Value = NPC(EditorIndex).DropItem(DropIndex)
+    scrlValue.Value = NPC(EditorIndex).DropValue(DropIndex)
     Exit Sub
     
 ' Error handler
@@ -1000,8 +1000,8 @@ Private Sub scrlRange_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblRange.Caption = "Range: " & scrlRange.value
-    NPC(EditorIndex).Range = scrlRange.value
+    lblRange.Caption = "Range: " & scrlRange.Value
+    NPC(EditorIndex).Range = scrlRange.Value
     Exit Sub
     
 ' Error handler
@@ -1016,14 +1016,14 @@ Private Sub scrlNum_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblNum.Caption = "Number: " & scrlNum.value
+    lblNum.Caption = "Number: " & scrlNum.Value
 
-    If scrlNum.value > 0 Then
-        lblItemName.Caption = "Item: " & Trim$(Item(scrlNum.value).name)
+    If scrlNum.Value > 0 Then
+        lblItemName.Caption = "Item: " & Trim$(Item(scrlNum.Value).name)
     Else
         lblItemName.Caption = "Item: None"
     End If
-    NPC(EditorIndex).DropItem(DropIndex) = scrlNum.value
+    NPC(EditorIndex).DropItem(DropIndex) = scrlNum.Value
     Exit Sub
     
 ' Error handler
@@ -1052,8 +1052,8 @@ Private Sub scrlStat_Change(Index As Integer)
         Case 5
             prefix = "Spi: "
     End Select
-    lblStat(Index).Caption = prefix & scrlStat(Index).value
-    NPC(EditorIndex).Stat(Index) = scrlStat(Index).value
+    lblStat(Index).Caption = prefix & scrlStat(Index).Value
+    NPC(EditorIndex).Stat(Index) = scrlStat(Index).Value
     Exit Sub
     
 ' Error handler
@@ -1068,8 +1068,8 @@ Private Sub scrlValue_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblValue.Caption = "Value: " & scrlValue.value
-    NPC(EditorIndex).DropValue(DropIndex) = scrlValue.value
+    lblValue.Caption = "Value: " & scrlValue.Value
+    NPC(EditorIndex).DropValue(DropIndex) = scrlValue.Value
     Exit Sub
     
 ' Error handler

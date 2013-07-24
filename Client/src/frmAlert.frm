@@ -8,7 +8,7 @@ Begin VB.Form frmAlert
    ClientWidth     =   5040
    BeginProperty Font 
       Name            =   "Georgia"
-      Size            =   8,25
+      Size            =   8.25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -29,8 +29,8 @@ Begin VB.Form frmAlert
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8,25
+         Name            =   "Arial"
+         Size            =   8.25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -47,8 +47,8 @@ Begin VB.Form frmAlert
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8,25
+         Name            =   "Arial"
+         Size            =   8.25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -65,8 +65,8 @@ Begin VB.Form frmAlert
       Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8,25
+         Name            =   "Arial"
+         Size            =   8.25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -84,7 +84,7 @@ Begin VB.Form frmAlert
       BackStyle       =   0  'Transparent
       BeginProperty Font 
          Name            =   "Georgia"
-         Size            =   8,25
+         Size            =   8.25
          Charset         =   0
          Weight          =   700
          Underline       =   0   'False
