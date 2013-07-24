@@ -106,7 +106,7 @@ Begin VB.Form frmEditor_Title
          Appearance      =   0  'Flat
          BeginProperty Font 
             Name            =   "Tahoma"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -268,8 +268,8 @@ Private Sub scrlLevelReq_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    title(EditorIndex).LevelReq = Trim$(scrlLevelReq.value)
-    lblLevelReq.Caption = "Level Requirement: " & scrlLevelReq.value
+    title(EditorIndex).LevelReq = Trim$(scrlLevelReq.Value)
+    lblLevelReq.Caption = "Level Requirement: " & scrlLevelReq.Value
     Exit Sub
     
 ' Error handler
@@ -282,8 +282,8 @@ Private Sub scrlPKReq_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    title(EditorIndex).PKReq = Trim$(scrlPKReq.value)
-    lblPKReq.Caption = "Player Kill Requirement: " & scrlPKReq.value
+    title(EditorIndex).PKReq = Trim$(scrlPKReq.Value)
+    lblPKReq.Caption = "Player Kill Requirement: " & scrlPKReq.Value
     Exit Sub
     
 ' Error handler
@@ -296,8 +296,8 @@ Private Sub scrlColor_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblColor.Caption = "Color: " & GetColorName(scrlColor.value)
-    title(EditorIndex).Color = scrlColor.value
+    lblColor.Caption = "Color: " & GetColorName(scrlColor.Value)
+    title(EditorIndex).Color = scrlColor.Value
     Exit Sub
     
 ' Error handler

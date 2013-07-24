@@ -112,11 +112,11 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1110
+         Left            =   1050
          TabIndex        =   30
          TabStop         =   0   'False
          Top             =   1800
-         Width           =   1665
+         Width           =   1725
       End
       Begin VB.CommandButton cmdAEmoticon 
          Caption         =   "Emoticon"
@@ -488,11 +488,11 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1110
+         Left            =   1050
          TabIndex        =   8
          TabStop         =   0   'False
          Top             =   1500
-         Width           =   1665
+         Width           =   1725
       End
       Begin VB.CommandButton cmdAWarpToMe 
          Caption         =   "Summon Player"
@@ -506,11 +506,11 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1110
+         Left            =   1050
          TabIndex        =   7
          TabStop         =   0   'False
          Top             =   1200
-         Width           =   1665
+         Width           =   1725
       End
       Begin VB.CommandButton cmdABan 
          Caption         =   "Ban"
@@ -576,7 +576,7 @@ Begin VB.Form frmAdmin
          _ExtentY        =   979
          _Version        =   393216
          BuddyControl    =   "txtSprite"
-         BuddyDispid     =   196622
+         BuddyDispid     =   196611
          OrigLeft        =   3990
          OrigTop         =   1770
          OrigRight       =   4245
@@ -787,33 +787,31 @@ Private Sub cmbAccess_Click()
         cmbPlayersOnline.Enabled = False
         SendSetAccess cmbPlayersOnline.text, cmbAccess.ListIndex
     End If
-
 End Sub
 
-Public Sub verifyAccess(playerName As String, success As Byte, message As String, currentAccess As Byte)
-    If playerName = cmbPlayersOnline.text Then
-        If success = 0 Then
+Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String, CurrentAccess As Byte)
+    If PlayerName = cmbPlayersOnline.text Then
+        If Success = 0 Then
             For i = 0 To UBound(g_playersOnline)
-                If InStr(1, g_playersOnline(i), playerName) Then
-                    Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & currentAccess
+                If InStr(1, g_playersOnline(i), PlayerName) Then
+                    Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
                     setAdminAccessLevel
                     
-                    displayStatus message, Status.Error
+                    DisplayStatus Message, Status.Error
                 End If
             Next i
-        ElseIf success = 1 Then
-            Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & currentAccess
+        ElseIf Success = 1 Then
+            Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
             setAdminAccessLevel
             
-            displayStatus message, Status.Correct
+            DisplayStatus Message, Status.Correct
         End If
     End If
     cmbPlayersOnline.Enabled = True
 End Sub
-Public Sub displayStatus(ByVal msg As String, msgType As Status)
 
+Public Sub DisplayStatus(ByVal msg As String, msgType As Status)
     Select Case msgType
-    
         Case Status.Error:
             lblStatus.BackColor = &H8080FF
             lblStatus.Caption = msg
@@ -831,10 +829,10 @@ Public Sub displayStatus(ByVal msg As String, msgType As Status)
 End Sub
 
 Private Sub cmbPlayersOnline_Click()
-    Dim i As Long, length As Long
+    Dim i As Long, Length As Long
     
-    length = UBound(ignoreIndexes)
-    For i = 0 To length
+    Length = UBound(ignoreIndexes)
+    For i = 0 To Length
         If cmbPlayersOnline.ListIndex = ignoreIndexes(i) Then
             cmbPlayersOnline.ListIndex = ignoreIndexes(i) + 1
             cmbPlayersOnline.text = cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)
@@ -859,12 +857,13 @@ Private Sub cmbPlayersOnline_Click()
 
     
 End Sub
+
 Private Sub setAdminAccessLevel()
     Dim accessLvl As String, tempTxt As String
-    'Set Access Level
+    
+    ' Set Access Level
     For i = 0 To UBound(g_playersOnline)
         If InStr(1, g_playersOnline(i), cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)) Then
-
             accessLvl = Split(g_playersOnline(i), ":")(1)
             txtSprite.text = Split(g_playersOnline(i), ":")(2)
             
@@ -877,7 +876,7 @@ Private Sub setAdminAccessLevel()
 
             End If
             
-            If (Player(MyIndex).Access > CLng(accessLvl) Or Trim(Player(MyIndex).name) = cmbPlayersOnline.text) And Player(MyIndex).Access >= 4 Then
+            If Player(MyIndex).Access > CLng(accessLvl) And Player(MyIndex).Access >= 4 And Trim(Player(MyIndex).name) <> cmbPlayersOnline.text Then
                 cmbAccess.Enabled = True
             Else
                 cmbAccess.Enabled = False
@@ -891,7 +890,6 @@ Private Sub setAdminAccessLevel()
             End If
             cmbAccess.ListIndex = accessLvl
             cmbAccess.text = tempTxt
-            
         End If
     Next i
 End Sub
@@ -1394,13 +1392,12 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
-                If frmAdmin.Visible = True And GetForegroundWindow = frmAdmin.hwnd Then
+                If frmAdmin.Visible And GetForegroundWindow = frmAdmin.hwnd Then
                     Unload frmAdmin
                 End If
             End If
     End Select
 End Sub
-
 
 Private Sub picAdmin_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
@@ -1453,15 +1450,16 @@ errorhandler:
     HandleError "scrlAAmount_Change", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
 Public Sub UpdatePlayersOnline()
-    Dim players() As String, staff() As String, tempTxt As String, temp() As String, length As Long, i As Long, currentIgnore As Long
+    Dim players() As String, staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
     Dim stuffCounter As Long, playersCounter As Long, overallCounter As Long, foundStuff As Boolean, foundPlayer As Boolean
     
     tempTxt = cmbPlayersOnline.text
     cmbPlayersOnline.Clear
     cmbPlayersOnline.text = tempTxt
     
-    'Get Stuff
+    ' Get Stuff
     For i = 0 To UBound(g_playersOnline)
         If CByte(Split(g_playersOnline(i), ":")(1)) > 0 Then
             foundStuff = True
@@ -1470,6 +1468,7 @@ Public Sub UpdatePlayersOnline()
             stuffCounter = stuffCounter + 1
         End If
     Next
+    
     'Get Players
     For i = 0 To UBound(g_playersOnline)
         If CByte(Split(g_playersOnline(i), ":")(1)) = 0 Then
@@ -1495,7 +1494,6 @@ Public Sub UpdatePlayersOnline()
     End If
 
     If foundPlayer Then
-
         cmbPlayersOnline.AddItem ("----Players: " & playersCounter & "----")
         
             ReDim Preserve ignoreIndexes(1)
@@ -1515,7 +1513,7 @@ Public Sub Form_Load()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     frmAdmin.picRefresh.BorderStyle = 0
-    Me.Move frmMain.Left + frmMain.Width + 150, frmMain.Top
+    'Me.Move frmMain.Left + frmMain.Width, frmMain.Top
     If Trim(cmbPlayersOnline.text) = "Choose Player" Then
         txtSprite.Enabled = False
         upSprite.Enabled = False
@@ -1537,7 +1535,6 @@ errorhandler:
     HandleError "Form_Load", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-
 
 Private Sub txtASprite_GotFocus()
     ' If debug mode, handle error then exit out

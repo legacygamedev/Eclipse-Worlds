@@ -8,7 +8,7 @@ Begin VB.Form frmMenu
    ClientWidth     =   7725
    BeginProperty Font 
       Name            =   "Verdana"
-      Size            =   8,25
+      Size            =   8.25
       Charset         =   0
       Weight          =   400
       Underline       =   0   'False
@@ -50,7 +50,7 @@ Begin VB.Form frmMenu
          Caption         =   "Male"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -85,7 +85,7 @@ Begin VB.Form frmMenu
          BackColor       =   &H00FFFFFF&
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -107,7 +107,7 @@ Begin VB.Form frmMenu
          Caption         =   "Female"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -127,7 +127,7 @@ Begin VB.Form frmMenu
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -147,7 +147,7 @@ Begin VB.Form frmMenu
          Caption         =   "Gender:"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -168,7 +168,7 @@ Begin VB.Form frmMenu
          Caption         =   "Class:"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -189,7 +189,7 @@ Begin VB.Form frmMenu
          Caption         =   "Name:"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -210,7 +210,7 @@ Begin VB.Form frmMenu
          Caption         =   "Accept"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -244,7 +244,7 @@ Begin VB.Form frmMenu
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -264,7 +264,7 @@ Begin VB.Form frmMenu
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -284,7 +284,7 @@ Begin VB.Form frmMenu
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -302,7 +302,7 @@ Begin VB.Form frmMenu
          Caption         =   "Retype:"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -323,7 +323,7 @@ Begin VB.Form frmMenu
          Caption         =   "Accept"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -342,7 +342,7 @@ Begin VB.Form frmMenu
          Caption         =   "Password:"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -362,7 +362,7 @@ Begin VB.Form frmMenu
          Caption         =   "Username:"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -384,7 +384,7 @@ Begin VB.Form frmMenu
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   8,25
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -407,7 +407,7 @@ Begin VB.Form frmMenu
          Caption         =   "Delete Character"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -426,7 +426,7 @@ Begin VB.Form frmMenu
          Caption         =   "Add Character"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -446,7 +446,7 @@ Begin VB.Form frmMenu
          Caption         =   "Use Character"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -467,7 +467,7 @@ Begin VB.Form frmMenu
       BorderStyle     =   0  'None
       BeginProperty Font 
          Name            =   "Tahoma"
-         Size            =   8,25
+         Size            =   8.25
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -490,7 +490,7 @@ Begin VB.Form frmMenu
          Caption         =   "Save Username"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -512,7 +512,7 @@ Begin VB.Form frmMenu
          Caption         =   "Save Password"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -532,7 +532,7 @@ Begin VB.Form frmMenu
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -553,7 +553,7 @@ Begin VB.Form frmMenu
          BorderStyle     =   0  'None
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   400
             Underline       =   0   'False
@@ -573,7 +573,7 @@ Begin VB.Form frmMenu
          Caption         =   "Accept"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -592,7 +592,7 @@ Begin VB.Form frmMenu
          Caption         =   "Password:"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -612,7 +612,7 @@ Begin VB.Form frmMenu
          Caption         =   "Username:"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -659,7 +659,7 @@ Begin VB.Form frmMenu
          Caption         =   "Offline"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -680,7 +680,7 @@ Begin VB.Form frmMenu
          Caption         =   "Connecting to server..."
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8,25
+            Size            =   8.25
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -767,14 +767,14 @@ Private Sub Form_Load()
     If Options.SaveUsername = 1 Then
         txtLUser.text = Trim$(Options.UserName)
         txtLUser.SelStart = Len(Trim$(Options.UserName))
-        chkUsername.value = Options.SaveUsername
+        chkUsername.Value = Options.SaveUsername
     End If
     
     ' Load the password
     If Options.SavePassword = 1 Then
         txtLPass.text = Trim$(Options.Password)
         txtLPass.SelStart = Len(Trim$(Options.Password))
-        chkPass.value = Options.SavePassword
+        chkPass.Value = Options.SavePassword
     End If
     Exit Sub
     
@@ -893,17 +893,17 @@ Private Sub lblLAccept_Click()
     End If
     
     ' Save options
-    Options.SaveUsername = frmMenu.chkUsername.value
-    Options.SavePassword = frmMenu.chkPass.value
+    Options.SaveUsername = frmMenu.chkUsername.Value
+    Options.SavePassword = frmMenu.chkPass.Value
     Options.UserName = Trim$(frmMenu.txtLUser.text)
     
-    If frmMenu.chkUsername.value = 0 Then
+    If frmMenu.chkUsername.Value = 0 Then
         Options.UserName = vbNullString
     Else
         Options.UserName = Trim$(frmMenu.txtLUser.text)
     End If
     
-    If frmMenu.chkPass.value = 0 Then
+    If frmMenu.chkPass.Value = 0 Then
         Options.Password = vbNullString
     Else
         Options.Password = Trim$(frmMenu.txtLPass.text)
@@ -934,16 +934,16 @@ End Sub
 Private Sub optFemale_GotFocus()
     txtCUser.SetFocus
     
-    If optFemale.value = False Then
-        optFemale.value = True
+    If optFemale.Value = False Then
+        optFemale.Value = True
     End If
 End Sub
 
 Private Sub optMale_GotFocus()
     txtCUser.SetFocus
     
-    If optMale.value = False Then
-        optMale.value = True
+    If optMale.Value = False Then
+        optMale.Value = True
     End If
 End Sub
 

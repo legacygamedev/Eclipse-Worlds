@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmCharEditor 
    BorderStyle     =   3  'Fixed Dialog
@@ -630,9 +630,9 @@ End Sub
 Public Sub ResetCharList()
     listCharacters.Sorted = False
     listCharacters.ListItems.Clear
-    Dim length As Long, i As Long
-    length = UBound(charList)
-    For i = 0 To length
+    Dim Length As Long, i As Long
+    Length = UBound(charList)
+    For i = 0 To Length
         listCharacters.ListItems.Add , , charList(i, 0)
         listCharacters.ListItems.Item(i + 1).SubItems(1) = charList(i, 1)
     Next
@@ -772,12 +772,12 @@ Private Sub txtFilter_Change()
     If txtFilter.text <> "" Then
         listCharacters.ListItems.Clear
         
-        Dim content As String, length As Long, i As Long
+        Dim content As String, Length As Long, i As Long
         content = txtFilter.text
     
-        length = UBound(charList)
+        Length = UBound(charList)
         listCharacters.Sorted = False
-        For i = 0 To length
+        For i = 0 To Length
             If InStr(LCase(charList(i, 0)), LCase(content)) <> 0 Then
                 listCharacters.ListItems.Add , , charList(i, 0)
                 listCharacters.ListItems.Item(listCharacters.ListItems.count).SubItems(1) = charList(i, 1)
@@ -932,9 +932,8 @@ Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
     End If
 End Function
 
-Private Sub displayStatus(ByVal msg As String, msgType As Byte)
+Private Sub DisplayStatus(ByVal msg As String, msgType As Byte)
     Select Case msgType
-    
         Case Status.Error:
             lStatus.BackColor = &H8080FF
             lStatus.Caption = msg

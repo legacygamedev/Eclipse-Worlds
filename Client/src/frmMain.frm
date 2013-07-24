@@ -1149,6 +1149,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -5086,14 +5087,13 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
-                If frmAdmin.Visible = True And GetForegroundWindow = frmAdmin.hwnd Then
+                If frmAdmin.Visible And GetForegroundWindow = frmAdmin.hwnd Then
                     Unload frmAdmin
-                ElseIf frmAdmin.Visible = True And GetForegroundWindow <> frmAdmin.hwnd Then
+                ElseIf frmAdmin.Visible And GetForegroundWindow <> frmAdmin.hwnd Then
                     BringWindowToTop (frmAdmin.hwnd)
-                    frmAdmin.Form_Load
+                    InitAdminPanel
                 Else
-                    frmAdmin.Visible = True
-                    frmAdmin.Form_Load
+                    InitAdminPanel
                 End If
             End If
         
