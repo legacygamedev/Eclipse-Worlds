@@ -1951,7 +1951,7 @@ End Sub
 ' ::::::::::::::::::::::
 Sub HandleSetGMotd(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim message As String
+    Dim Message As String
     
     Set buffer = New clsBuffer
     buffer.WriteBytes Data()
@@ -1960,13 +1960,13 @@ Sub HandleSetGMotd(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As
     If GetPlayerGuild(index) = 0 Then Exit Sub
     If GetPlayerGuildAccess(index) < 3 Then Exit Sub
         
-    message = buffer.ReadString
-    Guild(GetPlayerGuild(index)).MOTD = message
+    Message = buffer.ReadString
+    Guild(GetPlayerGuild(index)).MOTD = Message
 
     Set buffer = Nothing
     
-    Call GuildMsg(index, GetPlayerName(index) & " has changed the MOTD to: " & message, BrightGreen, True)
-    Call AddLog(GetPlayerName(index) & " changed MOTD to: " & message, "Player")
+    Call GuildMsg(index, GetPlayerName(index) & " has changed the MOTD to: " & Message, BrightGreen, True)
+    Call AddLog(GetPlayerName(index) & " changed MOTD to: " & Message, "Player")
 End Sub
 
 ' :::::::::::::::::::
@@ -2303,8 +2303,12 @@ Sub HandleSpawnItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
     
     If Moral(GetPlayerMap(index)).CanDropItem = 0 Then
         SpawnItem TmpItem, TmpAmount, Item(TmpItem).Data1, GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index), GetPlayerName(index)
+        Call PlayerMsg(index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been dropped beneath you.", BrightGreen)
+            
     Else
         GiveInvItem index, TmpItem, TmpAmount
+        Call PlayerMsg(index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been added to you Inventory.", BrightGreen)
+            
     End If
     
     Set buffer = Nothing

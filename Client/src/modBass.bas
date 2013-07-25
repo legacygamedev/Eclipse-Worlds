@@ -108,7 +108,7 @@ Global Const BASS_OBJECT_DS3DL = 2                  'IDirectSound3DListener
 
 ' Device info structure
 Type BASS_DEVICEINFO
-    Name As Long          ' description
+    name As Long          ' description
     driver As Long        ' driver
     flags As Long
 End Type
@@ -272,7 +272,7 @@ Type BASS_CHANNELINFO
     origres As Long       ' original resolution
     plugin As Long        ' plugin
     sample As Long        ' sample
-    FileName As Long      ' Filename
+    filename As Long      ' Filename
 End Type
 
 ' BASS_CHANNELINFO types
@@ -296,7 +296,7 @@ Global Const BASS_CTYPE_MUSIC_MO3 = &H100    ' MO3 flag
 
 Type BASS_PLUGINFORM
     ctype As Long         ' channel type
-    Name As Long          ' Format description
+    name As Long          ' Format description
     exts As Long          ' File extension filter (*.ext1;*.ext2;etc...)
 End Type
 
@@ -614,7 +614,7 @@ Global Const BASS_DX8_PHASE_ZERO = 2
 Global Const BASS_DX8_PHASE_90 = 3
 Global Const BASS_DX8_PHASE_180 = 4
 
-Type GUID       ' used with BASS_Init - use VarPtr(guid) in clsid parameter
+Type Guid       ' used with BASS_Init - use VarPtr(guid) in clsid parameter
     Data1 As Long
     Data2 As Integer
     Data3 As Integer
@@ -643,7 +643,7 @@ Declare Function BASS_Pause Lib "bass.dll" () As Long
 Declare Function BASS_SetVolume Lib "bass.dll" (ByVal volume As Single) As Long
 Declare Function BASS_GetVolume Lib "bass.dll" () As Single
 
-Declare Function BASS_PluginLoad Lib "bass.dll" (ByVal FileName As String, ByVal flags As Long) As Long
+Declare Function BASS_PluginLoad Lib "bass.dll" (ByVal filename As String, ByVal flags As Long) As Long
 Declare Function BASS_PluginFree Lib "bass.dll" (ByVal handle As Long) As Long
 Declare Function BASS_PluginGetInfo_ Lib "bass.dll" Alias "BASS_PluginGetInfo" (ByVal handle As Long) As Long
 
@@ -727,7 +727,7 @@ Declare Function BASS_FXSetParameters Lib "bass.dll" (ByVal handle As Long, ByRe
 Declare Function BASS_FXGetParameters Lib "bass.dll" (ByVal handle As Long, ByRef par As Any) As Long
 Declare Function BASS_FXReset Lib "bass.dll" (ByVal handle As Long) As Long
 
-Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef Destination As Any, ByRef Source As Any, ByVal Length As Long)
+'Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByRef Destination As Any, ByRef Source As Any, ByVal Length As Long)
 Private Declare Function lstrlen Lib "kernel32" Alias "lstrlenA" (ByVal lpString As Long) As Long
 
 Public Function BASS_SPEAKER_N(ByVal n As Long) As Long

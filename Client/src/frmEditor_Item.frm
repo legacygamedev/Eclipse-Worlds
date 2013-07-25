@@ -1275,7 +1275,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private LastIndex As Long
+Private lastIndex As Long
 Private TmpIndex As Long
 
 Private Sub chkHoT_Click()

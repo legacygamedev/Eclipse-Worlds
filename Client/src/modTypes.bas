@@ -7,7 +7,7 @@ Public TempMap As MapRec
 Public bank As BankRec
 Public Player(1 To MAX_PLAYERS) As PlayerRec
 Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
-Public Item(1 To MAX_ITEMS) As ItemRec
+Public item(1 To MAX_ITEMS) As ItemRec
 Public NPC(1 To MAX_NPCS) As NpcRec
 Public MapItem(1 To MAX_MAP_ITEMS) As MapItemRec
 Public MapNPC(1 To MAX_MAP_NPCS) As MapNpcRec
@@ -15,7 +15,7 @@ Public Shop(1 To MAX_SHOPS) As ShopRec
 Public Spell(1 To MAX_SPELLS) As SpellRec
 Public Resource(1 To MAX_RESOURCES) As ResourceRec
 Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
-Public Events(1 To MAX_EVENTS) As EventWrapperRec
+Public events(1 To MAX_EVENTS) As EventWrapperRec
 Public Ban(1 To MAX_BANS) As BanRec
 Public title(1 To MAX_TITLES) As TitleRec
 Public Moral(1 To MAX_MORALS) As MoralRec
@@ -102,7 +102,7 @@ Public Type PlayerItemRec
 End Type
 
 Private Type BankRec
-    Item(1 To MAX_BANK) As PlayerItemRec
+    item(1 To MAX_BANK) As PlayerItemRec
 End Type
 
 Private Type SpellAnim
@@ -143,7 +143,7 @@ Public Type PlayerRec
     Exp As Long
     Access As Byte
     PK As Byte
-    Status As String * NAME_LENGTH
+    status As String * NAME_LENGTH
     
     ' Position
     Map As Integer
@@ -156,7 +156,7 @@ Public Type PlayerRec
     MaxVital(1 To Vitals.Vital_Count - 1) As Long
     
     ' Stats
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    stat(1 To Stats.Stat_Count - 1) As Integer
     Points As Integer
     
     ' Amount of titles
@@ -207,7 +207,7 @@ Public Type PlayerEditableRec
     Vital(1 To Vitals.Vital_Count - 1) As Long
     
     ' Stats
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    stat(1 To Stats.Stat_Count - 1) As Integer
     Points As Integer
 End Type
 
@@ -415,7 +415,7 @@ Private Type MapRec
     NPC(1 To MAX_MAP_NPCS) As Long
     NPCSpawnType(1 To MAX_MAP_NPCS) As Long
     EventCount As Long
-    Events() As EventRec
+    events() As EventRec
     
     ' Client side only
     CurrentEvents As Long
@@ -424,7 +424,7 @@ End Type
 
 Private Type ClassRec
     name As String * NAME_LENGTH
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    stat(1 To Stats.Stat_Count - 1) As Integer
     MaleSprite As Integer
     FemaleSprite As Integer
     
@@ -448,7 +448,7 @@ Private Type ClassRec
     Dir As Byte
 End Type
 
-Private Type ItemRec
+Public Type ItemRec
     name As String * NAME_LENGTH
     Desc As String * 256
     Sound As String * FILE_LENGTH
@@ -514,7 +514,7 @@ Private Type NpcRec
     DropItem(1 To MAX_NPC_DROPS) As Byte
     DropValue(1 To MAX_NPC_DROPS) As Integer
     Damage As Long
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    stat(1 To Stats.Stat_Count - 1) As Integer
     HP As Long
     MP As Long
     Exp As Long
@@ -549,7 +549,7 @@ Private Type MapNpcRec
 End Type
 
 Private Type TradeItemRec
-    Item As Long
+    item As Long
     ItemValue As Long
     CostItem As Long
     CostValue As Long
@@ -714,7 +714,7 @@ End Type
 
 Public Type HotbarRec
     Slot As Byte
-    SType As Byte
+    sType As Byte
 End Type
 
 Type DropRec
@@ -736,7 +736,7 @@ Private Type EmoticonRec
 End Type
 
 Public Type LogRec
-    Msg As String * 512
+    msg As String * 512
     file As String * NAME_LENGTH
 End Type
 
@@ -771,7 +771,7 @@ Public Type AutotileRec
 End Type
 
 Public Type ChatBubbleRec
-    Msg As String
+    msg As String
     Color As Long
     Target As Long
     TargetType As Byte

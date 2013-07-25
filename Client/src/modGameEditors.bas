@@ -4,13 +4,41 @@ Option Explicit
 Public cpEvent As EventRec
 
 Const LB_SETHORIZONTALEXTENT = &H194
-Private Declare Function SendMessageByNum Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
+Private Declare Function SendMessageByNum Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
 Public charList() As String
 Public g_playersOnline() As String
 Public ignoreIndexes() As Long
 Public refreshingAdminList As Boolean
 Public requestedPlayer As PlayerEditableRec
+
+'Item Editor - davemax © 07.2013 :D
+Public lastSpawnedItems(0 To 20) As Byte
+Public lastSpawnedItemsCounter As Byte
+Public currentlyListedIndexes() As Long
+
 Public EventList() As EventListRec
+ 'fghgghj
+Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
+    (ByVal hWnd As Long, ByVal nIndex As Long) As Long
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, _
+ByVal dwNewLong As Long) As Long
+Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, _
+ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Declare Function DefWindowProc Lib "user32" Alias "DefWindowProcA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Declare Function GetClassInfoEx Lib "user32.dll" Alias "GetClassInfoExA" (ByVal hinst As Long, ByVal lpszClass As String, lpwcx As WNDCLASSEX) As Long
+Private Declare Function GetClassName Lib "user32.dll" Alias "GetClassNameA" (ByVal hWnd As Long, ByVal lpClassName As String, ByVal nMaxCount As Long) As Long
+Public Declare Function BringWindowToTop Lib "user32" (ByVal hWnd As Long) As Long
+Dim classinfo As WNDCLASSEX
+Dim classname As String
+Dim sLength As Long
+Dim retval As Long
+
+
+Private Const GWL_WNDPROC   As Long = (-4)
+Private Const WM_NOTIFY     As Long = &H4E
+Private Const WM_DESTROY    As Long = &H2
+Private Const WM_SETFOCUS   As Long = &H7
+Private Const WM_KILLFOCUS  As Long = &H8
 
 ' ////////////////
 ' // Map Editor //
@@ -45,6 +73,22 @@ Public Sub MapEditorInit()
 errorhandler:
     HandleError "MapEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+End Sub
+Private Function WindowProc(ByVal hWnd As Long, ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+    
+        Select Case Msg
+        Case WM_SETFOCUS
+            Exit Function
+        Case WM_DESTROY
+            WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, Msg, wParam, lParam)
+            Call SetWindowLong(hWnd, GWL_WNDPROC, GetWindowLong(hWnd, -21))
+            Exit Function
+    End Select
+    WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, Msg, wParam, lParam)
+End Function
+ 
+Public Sub SubClassHwnd(ByVal hWnd As Long)
+        SetWindowLong hWnd, -21, SetWindowLong(hWnd, GWL_WNDPROC, AddressOf WindowProc)
 End Sub
 
 Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal x As Long, ByVal y As Long, Optional ByVal MovedMouse As Boolean = True)
@@ -2236,12 +2280,7 @@ errorhandler:
 End Sub
 
 Public Sub UpdateAdminScrollBar()
-    frmAdmin.lblAItem.Caption = "Item: " & Trim$(Item(frmAdmin.scrlAItem.Value).name)
-        
-    If Item(frmAdmin.scrlAItem.Value).Stackable = 1 Then
-        frmAdmin.scrlAAmount.Enabled = True
-        Exit Sub
-    End If
+
 End Sub
 
 Public Sub UpdateSpellScrollBars()
@@ -2256,6 +2295,25 @@ Public Sub UpdateSpellScrollBars()
         Item(EditorIndex).Data1 = .scrlSpell.Value
     End With
 End Sub
+'Item Spawner davemax © 07.2013
+Public Function populateSpecificType(ByRef tempItems() As ItemRec, ItemType As Byte) As Boolean
+    Dim i As Long, counter As Long, found As Boolean
+    For i = 1 To MAX_ITEMS
+        If Item(i).Type = ItemType And Item(i).Pic > 0 And Len(Item(i).name) > 0 Then
+            found = True
+            ReDim Preserve tempItems(counter)
+            tempItems(counter) = Item(i)
+            ReDim Preserve currentlyListedIndexes(counter)
+            currentlyListedIndexes(counter) = i
+            frmItemSpawner.itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & Item(i).Pic & GFX_EXT, False, 32, 32, 16777215)
+
+            counter = counter + 1
+        End If
+    Next
+    If found Then
+        populateSpecificType = True
+    End If
+End Function
 
 Public Sub SpellClassListInit()
     Dim i As Long
@@ -3184,7 +3242,7 @@ Sub ListCommandAdd(S As String)
     If x < frmEditor_Events.TextWidth(S & "  ") Then
        x = frmEditor_Events.TextWidth(S & "  ")
       If frmEditor_Events.ScaleMode = vbTwips Then x = x / Screen.TwipsPerPixelX ' if twips change to pixels
-      SendMessageByNum frmEditor_Events.lstCommands.hwnd, LB_SETHORIZONTALEXTENT, x, 0
+      SendMessageByNum frmEditor_Events.lstCommands.hWnd, LB_SETHORIZONTALEXTENT, x, 0
     End If
     Exit Sub
     
@@ -3503,7 +3561,7 @@ errorhandler:
 End Sub
 
 Public Sub EditEventCommand()
-    Dim i As Long, x As Long, Z As Long, CurList As Long, CurSlot As Long
+    Dim i As Long, x As Long, z As Long, CurList As Long, CurSlot As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -3996,7 +4054,7 @@ errorhandler:
 End Sub
 
 Public Sub DeleteEventCommand()
-    Dim i As Long, x As Long, Z As Long, CurList As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
+    Dim i As Long, x As Long, z As Long, CurList As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -4078,7 +4136,7 @@ errorhandler:
 End Sub
 
 Public Sub EditCommand()
-    Dim i As Long, x As Long, Z As Long, CurList As Long, CurSlot As Long
+    Dim i As Long, x As Long, z As Long, CurList As Long, CurSlot As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
