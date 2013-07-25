@@ -968,8 +968,8 @@ Public Sub DrawMapItem(ByVal ItemNum As Long)
     
     ' If it's not ours then don't render
     If x = 0 Then
-        If Not Trim$(MapItem(ItemNum).playerName) = GetPlayerName(MyIndex) Then
-            If Not Trim$(MapItem(ItemNum).playerName) = vbNullString Then Exit Sub
+        If Not Trim$(MapItem(ItemNum).PlayerName) = GetPlayerName(MyIndex) Then
+            If Not Trim$(MapItem(ItemNum).PlayerName) = vbNullString Then Exit Sub
         End If
     End If
 
@@ -3206,9 +3206,15 @@ Public Sub Render_Graphics()
     
     ' Draw loc
     If BLoc Then
-        RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 8, 85, Yellow
-        RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 8, 100, Yellow
-        RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 8, 115, Yellow
+        If GUIVisible Then
+            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 8, 85, Yellow
+            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 8, 100, Yellow
+            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 8, 115, Yellow
+        Else
+            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 8, 5, Yellow
+            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 8, 20, Yellow
+            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 8, 35, Yellow
+        End If
     End If
     
     ' Draw fps
@@ -3561,7 +3567,7 @@ errorhandler:
 End Sub
 
 ' Character Editor
-Public Sub EditorChar_AnimSprite(container As PictureBox, spriteNum As String, ByRef spritePosition As Byte)
+Public Sub EditorChar_AnimSprite(container As PictureBox, SpriteNum As String, ByRef spritePosition As Byte)
     Dim srcRect As D3DRECT, destRECT As D3DRECT
     Dim sRect As RECT
     Dim dRect As RECT
@@ -3587,7 +3593,7 @@ Public Sub EditorChar_AnimSprite(container As PictureBox, spriteNum As String, B
     dRect.Left = 0
     dRect.Right = 32
     
-    RenderTextureByRects Tex_Character(CLng(spriteNum)), sRect, dRect
+    RenderTextureByRects Tex_Character(CLng(SpriteNum)), sRect, dRect
           
     With destRECT
         .X1 = 0
