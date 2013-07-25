@@ -372,10 +372,9 @@ Public Enum Skills
 End Enum
 
 Public Enum Proficiency
-    Cloth = 1
-    Leather
-    Mail
-    Plate
+    Light = 1
+    Medium
+    Heavy
     Sword
     Dagger
     Bow

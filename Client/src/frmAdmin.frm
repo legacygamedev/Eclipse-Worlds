@@ -1451,7 +1451,7 @@ errorhandler:
 End Sub
 
 Public Sub UpdatePlayersOnline()
-    Dim players() As String, staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
+    Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
     Dim stuffCounter As Long, playersCounter As Long, overallCounter As Long, foundStuff As Boolean, foundPlayer As Boolean
     
     tempTxt = cmbPlayersOnline.text
@@ -1462,8 +1462,8 @@ Public Sub UpdatePlayersOnline()
     For i = 0 To UBound(g_playersOnline)
         If CByte(Split(g_playersOnline(i), ":")(1)) > 0 Then
             foundStuff = True
-            ReDim Preserve staff(stuffCounter)
-            staff(stuffCounter) = Split(g_playersOnline(i), ":")(0)
+            ReDim Preserve Staff(stuffCounter)
+            Staff(stuffCounter) = Split(g_playersOnline(i), ":")(0)
             stuffCounter = stuffCounter + 1
         End If
     Next
@@ -1485,8 +1485,8 @@ Public Sub UpdatePlayersOnline()
             ignoreIndexes(0) = currentIgnore
             currentIgnore = currentIgnore + 1
             
-        For i = 0 To UBound(staff)
-            cmbPlayersOnline.AddItem (Trim(staff(i)))
+        For i = 0 To UBound(Staff)
+            cmbPlayersOnline.AddItem (Trim(Staff(i)))
             currentIgnore = currentIgnore + 1
         Next
         overallCounter = overallCounter + stuffCounter

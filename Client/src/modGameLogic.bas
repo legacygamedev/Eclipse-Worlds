@@ -815,7 +815,7 @@ Public Sub UpdateDrawMapName()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    DrawMapNameX = (MIN_MAPX * PIC_X / 2) - (GetFontWidth(Trim$(Map.name)) / 2)
+    DrawMapNameX = (MIN_MAPX * PIC_X / 2) - (GetFontWidth(Trim$(Map.Name)) / 2)
     If GUIVisible Then
         DrawMapNameY = 48
     Else
@@ -875,7 +875,7 @@ Public Sub ForgetSpell(ByVal SpellSlot As Byte)
         SendData buffer.ToArray()
         Set buffer = Nothing
     Else
-        AddText "There is no spell here, report this to a staff member.", BrightRed
+        AddText "There is no spell here, report this to a Staff member.", BrightRed
     End If
     Exit Sub
     
@@ -907,7 +907,7 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
     If PlayerSpells(SpellSlot) > 0 Then
         ' Check if player has enough MP
         If GetPlayerVital(MyIndex, Vitals.MP) < Spell(PlayerSpells(SpellSlot)).MPCost Then
-            Call AddText("Not enough mana to cast " & Trim$(Spell(PlayerSpells(SpellSlot)).name) & ".", BrightRed)
+            Call AddText("Not enough mana to cast " & Trim$(Spell(PlayerSpells(SpellSlot)).Name) & ".", BrightRed)
             Exit Sub
         End If
         
@@ -984,7 +984,7 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
             Call AddText("Cannot cast while moving!", BrightRed)
         End If
     Else
-        Call AddText("There is no spell here, report this to a staff member!", BrightRed)
+        Call AddText("There is no spell here, report this to a Staff member!", BrightRed)
     End If
     Exit Sub
     
@@ -1068,7 +1068,7 @@ Public Sub UpdateSpellDescWindow(ByVal SpellNum As Long, ByVal x As Long, ByVal 
         
         If LastSpellDesc = SpellNum Then Exit Sub
 
-        .lblSpellName.Caption = Trim$(Spell(SpellNum).name)
+        .lblSpellName.Caption = Trim$(Spell(SpellNum).Name)
         .lblSpellDesc.Caption = Trim$(Spell(SpellNum).Desc)
     End With
     Exit Sub
@@ -1082,18 +1082,18 @@ End Sub
 Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal x As Long, ByVal y As Long, Optional ByVal IsShopWindow As Boolean = False, Optional ByVal ShopValue As Long = 0, Optional ByVal ShopItem As Long)
     Dim i As Long
     Dim FirstLetter As String * 1
-    Dim name As String
+    Dim Name As String
     Dim Multiplier As Single
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    FirstLetter = LCase$(Left$(Trim$(Item(ItemNum).name), 1))
+    FirstLetter = LCase$(Left$(Trim$(Item(ItemNum).Name), 1))
    
     If FirstLetter = "$" Then
-        name = (Mid$(Trim$(Item(ItemNum).name), 2, Len(Trim$(Item(ItemNum).name)) - 1))
+        Name = (Mid$(Trim$(Item(ItemNum).Name), 2, Len(Trim$(Item(ItemNum).Name)) - 1))
     Else
-        name = Trim$(Item(ItemNum).name)
+        Name = Trim$(Item(ItemNum).Name)
     End If
     
     ' Check for off-screen
@@ -1150,7 +1150,7 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal x As Long, ByVal y 
         End Select
         
         ' Set captions
-        .lblItemName.Caption = name
+        .lblItemName.Caption = Name
         .lblItemDesc.Caption = Trim$(Item(ItemNum).Desc)
         .lblItemDesc = .lblItemDesc & vbNewLine
         
@@ -1192,7 +1192,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal MsgType As Byte, ByVal x As Long, ByVal y As Long)
+Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal msgType As Byte, ByVal x As Long, ByVal y As Long)
     Dim i As Long '
 
     ' If debug mode, handle error then exit out
@@ -1216,7 +1216,7 @@ Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal M
     With ActionMsg(ActionMsgIndex)
         .Message = Message
         .Color = Color
-        .Type = MsgType
+        .Type = msgType
         .Timer = timeGetTime
         .Scroll = 1
         .x = x
@@ -1290,7 +1290,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub CreateChatBubble(ByVal Target As Long, ByVal TargetType As Byte, ByVal Msg As String, ByVal Color As Long)
+Public Sub CreateChatBubble(ByVal Target As Long, ByVal TargetType As Byte, ByVal msg As String, ByVal Color As Long)
     Dim i As Long
     
     ' If debug mode, handle error then exit out
@@ -1324,7 +1324,7 @@ Public Sub CreateChatBubble(ByVal Target As Long, ByVal TargetType As Byte, ByVa
     With ChatBubble(ChatBubbleIndex)
         .Target = Target
         .TargetType = TargetType
-        .Msg = Msg
+        .msg = msg
         .Color = Color
         .Timer = timeGetTime
         .active = True
@@ -1394,7 +1394,7 @@ Public Sub ClearChatBubble(ByVal Index As Long, Optional ByVal SetHighIndex As B
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     With ChatBubble(Index)
-        .Msg = vbNullString
+        .msg = vbNullString
         .Color = 0
         .Target = 0
         .TargetType = 0
@@ -1903,16 +1903,15 @@ End Function
 
 Public Function GetProficiencyName(ByVal ProficiencyNum As Byte) As String
     Select Case ProficiencyNum
-        Case Proficiency.Leather: GetProficiencyName = "Leather"
+        Case Proficiency.Medium: GetProficiencyName = "Medium"
         Case Proficiency.Sword: GetProficiencyName = "Sword"
         Case Proficiency.Staff: GetProficiencyName = "Staff"
         Case Proficiency.Spear: GetProficiencyName = "Spear"
-        Case Proficiency.Plate: GetProficiencyName = "Plate"
-        Case Proficiency.Mail: GetProficiencyName = "Mail"
+        Case Proficiency.Heavy: GetProficiencyName = "Heavy"
         Case Proficiency.Mace: GetProficiencyName = "Mace"
         Case Proficiency.Dagger: GetProficiencyName = "Dagger"
         Case Proficiency.Crossbow: GetProficiencyName = "Crossbow"
-        Case Proficiency.Cloth: GetProficiencyName = "Cloth"
+        Case Proficiency.Light: GetProficiencyName = "Light"
         Case Proficiency.Bow: GetProficiencyName = "Bow"
         Case Proficiency.Axe: GetProficiencyName = "Axe"
     End Select
@@ -1941,6 +1940,17 @@ Public Function GetColorName(ByVal ColorNum As Byte) As String
     End Select
 End Function
 
+Public Function GetCombatTreeName(ByVal CombatNum As Byte) As String
+    Select Case CombatNum
+        Case 1:
+            GetCombatTreeName = "Melee"
+        Case 2:
+            GetCombatTreeName = "Range"
+        Case 3:
+            GetCombatTreeName = "Magic"
+    End Select
+End Function
+
 Public Sub UpdatePlayerTitles()
     Dim i As Long, n As Long
     
@@ -1954,7 +1964,7 @@ Public Sub UpdatePlayerTitles()
     ' Build the combo list
     For i = 1 To Player(MyIndex).AmountOfTitles
         If Player(MyIndex).title(i) > 0 Then
-            frmMain.lstTitles.AddItem Trim$(title(Player(MyIndex).title(i)).name)
+            frmMain.lstTitles.AddItem Trim$(title(Player(MyIndex).title(i)).Name)
         End If
     Next
 

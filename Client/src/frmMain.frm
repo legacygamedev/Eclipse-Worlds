@@ -1149,7 +1149,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -3620,7 +3619,7 @@ Private Sub lstDropDownBox_MouseDown(Button As Integer, Shift As Integer, x As S
             Call DropItem(TmpInvNum)
         'ElseIf lstDropDownBox.List(lstDropDownBox.ListIndex) = "Examine" Then
         '    If Trim$(Item(GetPlayerInvItemNum(MyIndex, TmpInvNum)).Desc) = vbNullString Then
-        '        Call AddText("This item does not have a description, report this to a staff member!", BrightRed)
+        '        Call AddText("This item does not have a description, report this to a Staff member!", BrightRed)
         '    Else
         '        Call AddText(Trim$(Item(GetPlayerInvItemNum(MyIndex, TmpInvNum)).Desc), Yellow)
         '    End If
@@ -3632,7 +3631,7 @@ Private Sub lstDropDownBox_MouseDown(Button As Integer, Shift As Integer, x As S
             Dialogue "Forget Spell", "Are you sure you want to forget how to cast " & Trim$(Spell(PlayerSpells(TmpSpellSlot)).name) & "?", DIALOGUE_TYPE_FORGET, True, TmpSpellSlot
         'ElseIf lstDropDownBox.List(lstDropDownBox.ListIndex) = "Examine" Then
         '    If Trim$(Spell(PlayerSpells(TmpSpellSlot)).Desc) = vbNullString Then
-        '        Call AddText("This spell does not have a description, report this to a staff member!", BrightRed)
+        '        Call AddText("This spell does not have a description, report this to a Staff member!", BrightRed)
         '    Else
         '        Call AddText(Trim$(Spell(PlayerSpells(TmpSpellSlot)).Desc), Yellow)
         '    End If

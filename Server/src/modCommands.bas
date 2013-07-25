@@ -438,16 +438,6 @@ Function GetPlayerHDSerial(ByVal Index As Long) As String
     GetPlayerHDSerial = Trim$(TempPlayer(Index).HDSerial)
 End Function
 
-Function GetPlayerCombatTree(ByVal Index As Long) As Long
-
-    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
-    GetPlayerCombatTree = Account(Index).Chars(GetPlayerChar(Index)).CurrentCombatTree
-End Function
-
-Sub SetPlayerCombatSkill(ByVal Index As Long, ByVal CombatNum As Long)
-    Account(Index).Chars(GetPlayerChar(Index)).CurrentCombatTree = CombatNum
-End Sub
-
 Function GetClassName(ByVal ClassesNum As Long) As String
     GetClassName = Trim$(Class(ClassesNum).Name)
 End Function
@@ -459,26 +449,24 @@ End Function
 Function GetPlayerProficiency(ByVal Index As Long, ByVal ProficiencyNum As Byte) As Long
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
     
-    ' Melee
-    If Account(Index).Chars(GetPlayerChar(Index)).CurrentCombatTree = 1 Then
-        If ProficiencyNum = Proficiency.Axe Or ProficiencyNum = Proficiency.Dagger Or ProficiencyNum = Proficiency.Mace Or ProficiencyNum = Proficiency.Spear Or ProficiencyNum = Proficiency.Sword Or ProficiencyNum = Proficiency.Mail Or (ProficiencyNum = Proficiency.Plate And GetPlayerLevel(Index) >= 50) Or ProficiencyNum = Proficiency.Cloth Or ProficiencyNum = Proficiency.Leather Then
-            GetPlayerProficiency = 1
-        Else
-            GetPlayerProficiency = 0
-        End If
-    ' Range
-    ElseIf Account(Index).Chars(GetPlayerChar(Index)).CurrentCombatTree = 2 Then
-        If ProficiencyNum = Proficiency.Dagger Or ProficiencyNum = Proficiency.Bow Or ProficiencyNum = Proficiency.Crossbow Or (ProficiencyNum = Proficiency.Mail And GetPlayerLevel(Index) >= 50) Or ProficiencyNum = Proficiency.Cloth Or ProficiencyNum = Proficiency.Leather Then
-            GetPlayerProficiency = 1
-        Else
-            GetPlayerProficiency = 0
-        End If
-    ' Magic
-    ElseIf Account(Index).Chars(GetPlayerChar(Index)).CurrentCombatTree = 3 Then
-        If ProficiencyNum = Proficiency.Staff Or ProficiencyNum = Proficiency.Mace Or ProficiencyNum = Proficiency.Cloth Then
-            GetPlayerProficiency = 1
-        Else
-            GetPlayerProficiency = 0
-        End If
-    End If
+    Select Case Class(GetPlayerClass(Index)).CombatTree
+        Case 1: ' Melee
+            If ProficiencyNum = Proficiency.Axe Or ProficiencyNum = Proficiency.Dagger Or ProficiencyNum = Proficiency.Mace Or ProficiencyNum = Proficiency.Spear Or ProficiencyNum = Proficiency.Sword Or ProficiencyNum = Proficiency.Heavy Or ProficiencyNum = Proficiency.Light Or ProficiencyNum = Proficiency.Medium Then
+                GetPlayerProficiency = 1
+            Else
+                GetPlayerProficiency = 0
+            End If
+        Case 2: ' Range
+            If ProficiencyNum = Proficiency.Dagger Or ProficiencyNum = Proficiency.Bow Or ProficiencyNum = Proficiency.Crossbow Or ProficiencyNum = Proficiency.Light Or ProficiencyNum = Proficiency.Medium Then
+                GetPlayerProficiency = 1
+            Else
+                GetPlayerProficiency = 0
+            End If
+        Case 3: ' Magic
+            If ProficiencyNum = Proficiency.Staff Or ProficiencyNum = Proficiency.Mace Or ProficiencyNum = Proficiency.Light Then
+                GetPlayerProficiency = 1
+            Else
+                GetPlayerProficiency = 0
+            End If
+    End Select
 End Function

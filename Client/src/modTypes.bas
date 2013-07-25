@@ -15,7 +15,7 @@ Public Shop(1 To MAX_SHOPS) As ShopRec
 Public Spell(1 To MAX_SPELLS) As SpellRec
 Public Resource(1 To MAX_RESOURCES) As ResourceRec
 Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
-Public Events(1 To MAX_EVENTS) As EventWrapperRec
+Public events(1 To MAX_EVENTS) As EventWrapperRec
 Public Ban(1 To MAX_BANS) As BanRec
 Public title(1 To MAX_TITLES) As TitleRec
 Public Moral(1 To MAX_MORALS) As MoralRec
@@ -119,11 +119,11 @@ Public Type BuffRec
 End Type
 
 Type FriendsRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
 End Type
 
 Type FoesRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
 End Type
 
 Public Type PlayerRec
@@ -135,7 +135,7 @@ Public Type PlayerRec
     Face As Integer
     
     ' General
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Gender As Byte
     Class As Byte
     Sprite As Integer
@@ -195,7 +195,7 @@ Public Type PlayerEditableRec
     Password As String * NAME_LENGTH
   
     ' General
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Gender As Byte
     Class As Byte
     Sprite As Integer
@@ -331,7 +331,7 @@ Public Type EventPageRec
 End Type
 
 Public Type EventRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Global As Long
     PageCount As Long
     Pages() As EventPageRec
@@ -351,7 +351,7 @@ Public Type TileRec
 End Type
 
 Private Type MapEventRec
-    name As String
+    Name As String
     Dir As Long
     x As Long
     y As Long
@@ -376,7 +376,7 @@ Private Type MapEventRec
 End Type
 
 Private Type MapRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     BGS As String * FILE_LENGTH
     
@@ -415,7 +415,7 @@ Private Type MapRec
     NPC(1 To MAX_MAP_NPCS) As Long
     NPCSpawnType(1 To MAX_MAP_NPCS) As Long
     EventCount As Long
-    Events() As EventRec
+    events() As EventRec
     
     ' Client side only
     CurrentEvents As Long
@@ -423,7 +423,7 @@ Private Type MapRec
 End Type
 
 Private Type ClassRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Stat(1 To Stats.Stat_Count - 1) As Integer
     MaleSprite As Integer
     FemaleSprite As Integer
@@ -446,10 +446,13 @@ Private Type ClassRec
     x As Byte
     y As Byte
     Dir As Byte
+    
+    ' Combat tree
+    CombatTree As Byte
 End Type
 
 Private Type ItemRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Desc As String * 256
     Sound As String * FILE_LENGTH
     
@@ -501,7 +504,7 @@ Private Type MapItemRec
 End Type
 
 Private Type NpcRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     title As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     Sound As String * FILE_LENGTH
@@ -558,7 +561,7 @@ Private Type TradeItemRec
 End Type
 
 Private Type ShopRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     BuyRate As Integer
     SellRate As Integer
     TradeItem(1 To MAX_TRADES) As TradeItemRec
@@ -566,7 +569,7 @@ Private Type ShopRec
 End Type
 
 Private Type SpellRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Desc As String * 256
     Sound As String * FILE_LENGTH
     
@@ -604,7 +607,7 @@ Public Type MapResourceRec
 End Type
 
 Private Type ResourceRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     SuccessMessage As String * NAME_LENGTH
     EmptyMessage As String * NAME_LENGTH
     FailMessage As String * NAME_LENGTH
@@ -644,7 +647,7 @@ Private Type BloodRec
 End Type
 
 Private Type AnimationRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Sound As String * FILE_LENGTH
     
     Sprite(0 To 1) As Long
@@ -692,7 +695,7 @@ Private Type BanRec
 End Type
 
 Public Type TitleRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Color As Byte
     LevelReq As Byte
     PKReq As Integer
@@ -700,7 +703,7 @@ Public Type TitleRec
 End Type
 
 Public Type MoralRec
-    name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Color As Byte
     CanPK As Byte
     CanCast As Byte
@@ -736,7 +739,7 @@ Private Type EmoticonRec
 End Type
 
 Public Type LogRec
-    Msg As String * 512
+    msg As String * 512
     file As String * NAME_LENGTH
 End Type
 
@@ -771,7 +774,7 @@ Public Type AutotileRec
 End Type
 
 Public Type ChatBubbleRec
-    Msg As String
+    msg As String
     Color As Long
     Target As Long
     TargetType As Byte
@@ -789,7 +792,7 @@ Public Type SubEventRec
 End Type
 
 Public Type EventWrapperRec
-    name As String
+    Name As String
     chkSwitch As Byte
     chkVariable As Byte
     chkHasItem As Byte

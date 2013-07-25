@@ -212,9 +212,6 @@ Public Type PlayerRec
     SpellCD(1 To MAX_PLAYER_SPELLS) As Long
     AmountOfCasts(1 To MAX_PLAYER_SPELLS) As Integer
     
-    ' Tree - server only
-    CurrentCombatTree As Byte
-    
     ' General - both
     Name As String * NAME_LENGTH
     Gender As Byte
@@ -434,7 +431,7 @@ Private Type EventRec
 End Type
 
 Public Type GlobalMapEvents
-    EventID As Long
+    eventID As Long
     PageID As Long
     X As Long
     Y As Long
@@ -460,7 +457,7 @@ Private Type MapEventRec
     MovementSpeed As Long
     Position As Long
     Visible As Long
-    EventID As Long
+    eventID As Long
     PageID As Long
     
     ' Server Only Options
@@ -486,7 +483,7 @@ End Type
 Private Type EventProcessingRec
     CurList As Long
     CurSlot As Long
-    EventID As Long
+    eventID As Long
     PageID As Long
     WaitingForResponse As Long
     ActionTimer As Long
@@ -495,7 +492,7 @@ End Type
 
 Public Type TempPlayerRec
     ' Non saved local vars
-    buffer As clsBuffer
+    Buffer As clsBuffer
     HDSerial As String * NAME_LENGTH
     InGame As Boolean
     AttackTimer As Long
@@ -628,6 +625,9 @@ Private Type ClassRec
     X As Byte
     Y As Byte
     Dir As Byte
+    
+    ' Combat tree
+    CombatTree As Byte
 End Type
 
 Private Type ItemRec

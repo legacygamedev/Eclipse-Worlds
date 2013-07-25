@@ -401,10 +401,9 @@ Public Enum OptionButtons
 End Enum
 
 Public Enum Proficiency
-    Cloth = 1
-    Leather
-    Mail
-    Plate
+    Light = 1
+    Medium
+    Heavy
     Sword
     Dagger
     Bow
@@ -412,7 +411,7 @@ Public Enum Proficiency
     Mace
     Axe
     Spear
-    staff
+    Staff
     
     ' Make sure Proficiency_Count is below everything else
     Proficiency_Count
