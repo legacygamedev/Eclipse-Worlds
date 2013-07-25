@@ -590,7 +590,7 @@ Begin VB.Form frmAdmin
          Appearance      =   0  'Flat
          BackColor       =   &H0000FF00&
          BeginProperty Font 
-            Name            =   "Myriad Arabic"
+            Name            =   "Arial"
             Size            =   9.75
             Charset         =   238
             Weight          =   400
@@ -710,7 +710,7 @@ Begin VB.Form frmAdmin
          Left            =   120
          TabIndex        =   28
          Top             =   7740
-         Width           =   975
+         Width           =   1335
       End
       Begin VB.Label lblAItem 
          BackStyle       =   0  'Transparent
@@ -1429,7 +1429,6 @@ Private Sub scrlAItem_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     UpdateAdminScrollBar
-    scrlAAmount.Enabled = False
     Exit Sub
     
 ' Error handler

@@ -2238,6 +2238,8 @@ End Sub
 Public Sub UpdateAdminScrollBar()
     frmAdmin.lblAItem.Caption = "Item: " & Trim$(Item(frmAdmin.scrlAItem.Value).name)
         
+    frmAdmin.scrlAAmount.Enabled = False
+    
     If Item(frmAdmin.scrlAItem.Value).Stackable = 1 Then
         frmAdmin.scrlAAmount.Enabled = True
         Exit Sub
