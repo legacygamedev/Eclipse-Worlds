@@ -227,7 +227,7 @@ Begin VB.Form frmEditor_Item
          Max             =   255
          TabIndex        =   1
          Top             =   1200
-         Width           =   495
+         Width           =   615
       End
       Begin VB.Label Label5 
          Caption         =   "Type:"
@@ -383,7 +383,7 @@ Begin VB.Form frmEditor_Item
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   300
+         Height          =   315
          ItemData        =   "frmEditor_Item.frx":043F
          Left            =   4200
          List            =   "frmEditor_Item.frx":0441

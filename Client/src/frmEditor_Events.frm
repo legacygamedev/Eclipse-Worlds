@@ -1227,6 +1227,13 @@ Begin VB.Form frmEditor_Events
          Width           =   1335
       End
    End
+   Begin VB.ListBox lstCommands 
+      Height          =   6105
+      Left            =   6240
+      TabIndex        =   1
+      Top             =   1440
+      Width           =   6255
+   End
    Begin VB.Frame fraDialogue 
       Height          =   6975
       Left            =   6240
@@ -3916,13 +3923,6 @@ Begin VB.Form frmEditor_Events
          EndProperty
       End
    End
-   Begin VB.ListBox lstCommands 
-      Height          =   6105
-      Left            =   6240
-      TabIndex        =   1
-      Top             =   1440
-      Width           =   6255
-   End
    Begin MSComctlLib.TabStrip tabPages 
       Height          =   8055
       Left            =   120
@@ -4199,6 +4199,9 @@ Private Sub cmdAddCommand_Click()
         picCommands(1).Visible = True
         picCommands(2).Visible = False
     End If
+    
+    fraRandom(9).Visible = False
+    lstCommands.Visible = False
 End Sub
 
 Private Sub cmdAddMoveRoute_Click(Index As Integer)
@@ -4215,6 +4218,8 @@ End Sub
 Private Sub cmdAddText_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(2).Visible = False
 End Sub
@@ -4238,11 +4243,15 @@ End Sub
 
 Private Sub cmdCancelCommand_Click()
     fraCommands.Visible = False
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
 End Sub
 
 Private Sub cmdChangeClass_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(13).Visible = False
 End Sub
@@ -4263,6 +4272,8 @@ End Sub
 Private Sub cmdChangeItems_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(10).Visible = False
 End Sub
@@ -4283,6 +4294,8 @@ End Sub
 Private Sub cmdChangeLevel_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(11).Visible = False
 End Sub
@@ -4303,6 +4316,8 @@ End Sub
 Private Sub cmdChangePK_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(16).Visible = False
 End Sub
@@ -4323,6 +4338,8 @@ End Sub
 Private Sub cmdChangeSex_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(15).Visible = False
 End Sub
@@ -4343,6 +4360,8 @@ End Sub
 Private Sub cmdChangeSkills_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(12).Visible = False
 End Sub
@@ -4363,6 +4382,8 @@ End Sub
 Private Sub cmdChangeSprite_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(14).Visible = False
 End Sub
@@ -4383,6 +4404,8 @@ End Sub
 Private Sub cmdChoices_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(1).Visible = False
 End Sub
@@ -4694,6 +4717,8 @@ End Sub
 Private Sub cmdCondition_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(7).Visible = False
 End Sub
@@ -4719,6 +4744,8 @@ End Sub
 Private Sub cmdCreateLabel_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(8).Visible = False
 End Sub
@@ -4739,6 +4766,8 @@ End Sub
 Private Sub cmdCustomScript_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(29).Visible = False
 End Sub
@@ -4806,6 +4835,8 @@ End Sub
 Private Sub cmdGiveExp_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(17).Visible = False
 End Sub
@@ -4826,6 +4857,8 @@ End Sub
 Private Sub cmdGotoLabel_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(9).Visible = False
 End Sub
@@ -4893,6 +4926,8 @@ End Sub
 Private Sub cmdMapTint_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(24).Visible = False
 End Sub
@@ -5171,6 +5206,8 @@ End Sub
 Private Sub cmdOpenShop_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(21).Visible = False
 End Sub
@@ -5196,6 +5233,8 @@ End Sub
 Private Sub cmdPlayAnim_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(20).Visible = False
 End Sub
@@ -5216,6 +5255,8 @@ End Sub
 Private Sub cmdPlayBGM_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(25).Visible = False
 End Sub
@@ -5236,6 +5277,8 @@ End Sub
 Private Sub cmdPlayerSwitch_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(5).Visible = False
 End Sub
@@ -5243,6 +5286,8 @@ End Sub
 Private Sub cmdPlaySound_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(26).Visible = False
 End Sub
@@ -5343,6 +5388,8 @@ End Sub
 Private Sub cmdSelfSwitch_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(6).Visible = False
 End Sub
@@ -5363,6 +5410,8 @@ End Sub
 Private Sub cmdSetAccess_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(28).Visible = False
 End Sub
@@ -5383,6 +5432,8 @@ End Sub
 Private Sub cmdSetFog_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(22).Visible = False
 End Sub
@@ -5403,6 +5454,8 @@ End Sub
 Private Sub cmdSetWeather_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(23).Visible = False
 End Sub
@@ -5423,6 +5476,8 @@ End Sub
 Private Sub cmdShowChatBubble_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(3).Visible = False
 End Sub
@@ -5443,6 +5498,8 @@ End Sub
 Private Sub cmdShowText_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(0).Visible = False
 End Sub
@@ -5463,6 +5520,8 @@ End Sub
 Private Sub cmdSpawnNpc_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(19).Visible = False
 End Sub
@@ -5483,6 +5542,8 @@ End Sub
 Private Sub cmdVariableCancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(4).Visible = False
 End Sub
@@ -5503,6 +5564,8 @@ End Sub
 Private Sub cmdWait_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(27).Visible = False
 End Sub
@@ -5522,6 +5585,9 @@ End Sub
 
 Private Sub cmdWPCancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
+    
+    frmEditor_Events.fraRandom(9).Visible = True
+    frmEditor_Events.lstCommands.Visible = True
     fraDialogue.Visible = False
     fraCommand(18).Visible = False
 End Sub

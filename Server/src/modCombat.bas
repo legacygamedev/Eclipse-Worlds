@@ -7,9 +7,13 @@ Option Explicit
 Function GetPlayerMaxVital(ByVal index As Long, ByVal Vital As Vitals) As Long
     If index > Player_HighIndex Or index < 1 Then Exit Function
     
+    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Endurance) / 3)) * 15 + 135
+    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Intelligence) / 3)) * 5 + 75
+    Exit Function
+    
     Select Case Vital
         Case HP
-            Select Case Account(index).Chars(GetPlayerChar(index)).CurrentCombatTree
+            Select Case Class(GetPlayerClass(index)).CombatTree
                 Case 1 ' Melee
                     GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Endurance) / 3)) * 15 + 135
                 Case 2 ' Range
@@ -19,7 +23,7 @@ Function GetPlayerMaxVital(ByVal index As Long, ByVal Vital As Vitals) As Long
             End Select
 
         Case MP
-            Select Case Account(index).Chars(GetPlayerChar(index)).CurrentCombatTree
+            Select Case Class(GetPlayerClass(index)).CombatTree
                 Case 1 ' Melee
                     GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Intelligence) / 3)) * 5 + 75
                 Case 2 ' Range

@@ -10,6 +10,7 @@ Private Const LOCALE_USER_DEFAULT& = &H400
     Private Declare Function GetLocaleInfo& Lib "kernel32" Alias _
         "GetLocaleInfoA" (ByVal Locale As Long, ByVal LCType As Long, _
         ByVal lpLCData As String, ByVal cchData As Long)
+        
 Public Declare Function GetVolumeInformation Lib "kernel32" Alias "GetVolumeInformationA" (ByVal lpRootPathName As String, _
     ByVal lpVolumeNameBuffer As String, _
     ByVal nVolumeNameSize As Long, _
@@ -18,11 +19,12 @@ Public Declare Function GetVolumeInformation Lib "kernel32" Alias "GetVolumeInfo
     lpFileSystemFlags As Long, _
     ByVal lpFileSystemNameBuffer As String, _
     ByVal nFileSystemNameSize As Long) As Long
+    
 Private Function DecimalSeparator() As String
-      Dim r As Long, s As String
-      s = String(10, "a")
-      r = GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_SDECIMAL, s, 10)
-      DecimalSeparator = Left$(s, r)
+      Dim R As Long, S As String
+      S = String(10, "a")
+      R = GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_SDECIMAL, S, 10)
+      DecimalSeparator = Left$(S, R)
 End Function
 
 Public Sub HandleError(ByVal ProcName As String, ByVal ContName As String, ByVal ErNumber, ByVal ErDesc, ByVal ErSource, ByVal ErHelpContext)
@@ -86,18 +88,18 @@ errorhandler:
     HandleError "FileExist", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
-Private Function InternationalizeDoubles(value As String) As String
-    InternationalizeDoubles = value
-    Dim i As Long, b() As Byte, dotsCounter As Long, commasCounter As Long, test As Double
-    b = value
-    For i = 0 To UBound(b) Step 2
-        If b(i) = 44 Then
+Private Function InternationalizeDoubles(Value As String) As String
+    InternationalizeDoubles = Value
+    Dim i As Long, B() As Byte, dotsCounter As Long, commasCounter As Long, test As Double
+    B = Value
+    For i = 0 To UBound(B) Step 2
+        If B(i) = 44 Then
             commasCounter = commasCounter + 1
-            Mid(value, i / 2 + 1, 1) = DecimalSeparator
-        ElseIf b(i) = 46 Then
+            Mid(Value, i / 2 + 1, 1) = DecimalSeparator
+        ElseIf B(i) = 46 Then
             dotsCounter = dotsCounter + 1
-            Mid(value, i / 2 + 1, 1) = DecimalSeparator
-        ElseIf b(i) >= 48 And b(i) <= 57 Then
+            Mid(Value, i / 2 + 1, 1) = DecimalSeparator
+        ElseIf B(i) >= 48 And B(i) <= 57 Then
         
         Else
             Exit Function
@@ -106,7 +108,7 @@ Private Function InternationalizeDoubles(value As String) As String
     If (commasCounter <> 0 And dotsCounter <> 0) Or (commasCounter > 1) Or (dotsCounter > 1) Then
         Exit Function
     End If
-    test = CDbl(value)
+    test = CDbl(Value)
     InternationalizeDoubles = test
 End Function
 ' Gets a string from a text File
@@ -136,12 +138,12 @@ errorhandler:
 End Function
 
 ' Writes a variable to a text File
-Public Sub PutVar(file As String, Header As String, Var As String, value As String)
+Public Sub PutVar(file As String, Header As String, Var As String, Value As String)
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Call WritePrivateProfileString$(Header, Var, value, file)
+    Call WritePrivateProfileString$(Header, Var, Value, file)
     Exit Sub
     
 ' Error handler
@@ -424,7 +426,7 @@ errorhandler:
 End Sub
 
 Public Sub LoadAnimatedSprites()
-    Dim i As Integer, N As Integer
+    Dim i As Integer, n As Integer
     Dim TmpArray() As String
     
     If AnimatedSpriteNumbers = vbNullString Then Exit Sub
@@ -436,8 +438,8 @@ Public Sub LoadAnimatedSprites()
 
     ' Loop through converting strings to values and store in the sprite array
     For i = 1 To NumCharacters
-        For N = 0 To UBound(TmpArray)
-            If i = Trim$(TmpArray(N)) Then
+        For n = 0 To UBound(TmpArray)
+            If i = Trim$(TmpArray(n)) Then
                 AnimatedSprites(i) = 1
             End If
         Next
@@ -857,7 +859,7 @@ Sub ClearPlayer(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Player(Index)), LenB(Player(Index)))
     Player(Index).Login = vbNullString
     Player(Index).Password = vbNullString
-    Player(Index).name = vbNullString
+    Player(Index).Name = vbNullString
     Player(Index).Status = vbNullString
     Player(Index).Class = 1
     Exit Sub
@@ -873,7 +875,7 @@ Sub ClearItem(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Item(Index)), LenB(Item(Index)))
-    Item(Index).name = vbNullString
+    Item(Index).Name = vbNullString
     Item(Index).Desc = vbNullString
     Item(Index).Sound = vbNullString
     Exit Sub
@@ -919,7 +921,7 @@ Sub ClearAnimation(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Animation(Index)), LenB(Animation(Index)))
-    Animation(Index).name = vbNullString
+    Animation(Index).Name = vbNullString
     Animation(Index).Sound = vbNullString
     Exit Sub
     
@@ -951,7 +953,7 @@ Sub ClearNPC(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ZeroMemory(ByVal VarPtr(NPC(Index)), LenB(NPC(Index)))
-    NPC(Index).name = vbNullString
+    NPC(Index).Name = vbNullString
     NPC(Index).title = vbNullString
     NPC(Index).AttackSay = vbNullString
     NPC(Index).Music = vbNullString
@@ -986,7 +988,7 @@ Sub ClearSpell(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Spell(Index)), LenB(Spell(Index)))
-    Spell(Index).name = vbNullString
+    Spell(Index).Name = vbNullString
     Spell(Index).Desc = vbNullString
     Spell(Index).Sound = vbNullString
     Exit Sub
@@ -1019,7 +1021,7 @@ Sub ClearShop(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Shop(Index)), LenB(Shop(Index)))
-    Shop(Index).name = vbNullString
+    Shop(Index).Name = vbNullString
     Exit Sub
     
 ' Error handler
@@ -1050,7 +1052,7 @@ Sub ClearResource(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Resource(Index)), LenB(Resource(Index)))
-    Resource(Index).name = vbNullString
+    Resource(Index).Name = vbNullString
     Resource(Index).SuccessMessage = vbNullString
     Resource(Index).EmptyMessage = vbNullString
     Resource(Index).FailMessage = vbNullString
@@ -1098,7 +1100,7 @@ Sub ClearMap()
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Map), LenB(Map))
-    Map.name = vbNullString
+    Map.Name = vbNullString
     Map.Music = vbNullString
     Map.BGS = vbNullString
     Map.Moral = 1
@@ -1221,7 +1223,7 @@ Sub ClearTitle(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ZeroMemory(ByVal VarPtr(title(Index)), LenB(title(Index)))
-    title(Index).name = vbNullString
+    title(Index).Name = vbNullString
     Exit Sub
     
 ' Error handler
@@ -1235,7 +1237,7 @@ Sub ClearMoral(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Moral(Index)), LenB(Moral(Index)))
-    Moral(Index).name = vbNullString
+    Moral(Index).Name = vbNullString
     Exit Sub
     
 ' Error handler
@@ -1266,7 +1268,8 @@ Sub ClearClass(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ZeroMemory(ByVal VarPtr(Class(Index)), LenB(Class(Index)))
-    Class(Index).name = vbNullString
+    Class(Index).Name = vbNullString
+    Class(Index).CombatTree = 1
     Exit Sub
     
 ' Error handler
@@ -1346,7 +1349,7 @@ Public Sub ClearEvent(ByVal Index As Long)
     If Index <= 0 Or Index > MAX_EVENTS Then Exit Sub
     
     Call ZeroMemory(ByVal VarPtr(events(Index)), LenB(events(Index)))
-    events(Index).name = vbNullString
+    events(Index).Name = vbNullString
     Exit Sub
     
 ' Error handler

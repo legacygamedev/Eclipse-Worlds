@@ -46,7 +46,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   54
+         TabIndex        =   53
          ToolTipText     =   "Change sprites via dbl click."
          Top             =   6225
          Width           =   420
@@ -59,7 +59,7 @@ Begin VB.Form frmAdmin
          Left            =   195
          ScaleHeight     =   450
          ScaleWidth      =   450
-         TabIndex        =   53
+         TabIndex        =   52
          Top             =   6870
          Width           =   480
       End
@@ -69,7 +69,7 @@ Begin VB.Form frmAdmin
          Left            =   990
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   51
+         TabIndex        =   50
          ToolTipText     =   "Auto Life ?? "
          Top             =   5790
          Width           =   420
@@ -80,7 +80,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   50
+         TabIndex        =   49
          ToolTipText     =   "Reset Scrolls"
          Top             =   5790
          Width           =   420
@@ -91,7 +91,7 @@ Begin VB.Form frmAdmin
          Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   49
+         TabIndex        =   48
          ToolTipText     =   "Teleport scrolls"
          Top             =   5790
          Width           =   420
@@ -102,7 +102,7 @@ Begin VB.Form frmAdmin
          Left            =   990
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   48
+         TabIndex        =   47
          ToolTipText     =   "Spells, scrolls, magic."
          Top             =   5355
          Width           =   420
@@ -113,7 +113,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   47
+         TabIndex        =   46
          ToolTipText     =   "No idea???"
          Top             =   5355
          Width           =   420
@@ -124,7 +124,7 @@ Begin VB.Form frmAdmin
          Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   46
+         TabIndex        =   45
          ToolTipText     =   "Potions, elixirs, food."
          Top             =   5355
          Width           =   420
@@ -135,7 +135,7 @@ Begin VB.Form frmAdmin
          Left            =   990
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   45
+         TabIndex        =   44
          ToolTipText     =   "Things you can wear"
          Top             =   4920
          Width           =   420
@@ -146,7 +146,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   44
+         TabIndex        =   43
          ToolTipText     =   "Things without a type"
          Top             =   4920
          Width           =   420
@@ -157,7 +157,7 @@ Begin VB.Form frmAdmin
          Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   43
+         TabIndex        =   42
          ToolTipText     =   "Recently spawned items"
          Top             =   4920
          Width           =   420
@@ -165,7 +165,7 @@ Begin VB.Form frmAdmin
       Begin MSComCtl2.UpDown UpDown1 
          Height          =   255
          Left            =   765
-         TabIndex        =   41
+         TabIndex        =   40
          Top             =   6990
          Width           =   480
          _ExtentX        =   847
@@ -179,7 +179,7 @@ Begin VB.Form frmAdmin
          Enabled         =   0   'False
          Height          =   255
          Left            =   30
-         TabIndex        =   40
+         TabIndex        =   39
          Top             =   7935
          Width           =   1380
       End
@@ -190,7 +190,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   285
          Left            =   30
-         TabIndex        =   39
+         TabIndex        =   38
          Text            =   "Recent Amount"
          Top             =   7620
          Width           =   1350
@@ -204,7 +204,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   46
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   36
+         TabIndex        =   35
          Top             =   2160
          Width           =   510
       End
@@ -213,7 +213,7 @@ Begin VB.Form frmAdmin
          Appearance      =   0  'Flat
          Height          =   285
          Left            =   1770
-         TabIndex        =   35
+         TabIndex        =   34
          Text            =   "0"
          Top             =   2940
          Width           =   600
@@ -227,7 +227,7 @@ Begin VB.Form frmAdmin
          ItemData        =   "frmAdmin.frx":038A
          Left            =   480
          List            =   "frmAdmin.frx":039D
-         TabIndex        =   34
+         TabIndex        =   33
          Text            =   "Player's Access"
          Top             =   810
          Width           =   1695
@@ -238,7 +238,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000002&
          Height          =   315
          Left            =   120
-         TabIndex        =   33
+         TabIndex        =   32
          Text            =   "Choose Player"
          Top             =   390
          Width           =   2055
@@ -251,12 +251,12 @@ Begin VB.Form frmAdmin
          Left            =   2280
          ScaleHeight     =   285
          ScaleWidth      =   345
-         TabIndex        =   32
+         TabIndex        =   31
          Top             =   390
          Width           =   375
       End
       Begin VB.CommandButton cmdCharEditor 
-         Caption         =   "Character's Editor"
+         Caption         =   "Character Editor"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -268,7 +268,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1050
-         TabIndex        =   26
+         TabIndex        =   25
          TabStop         =   0   'False
          Top             =   1800
          Width           =   1725
@@ -286,13 +286,13 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1590
-         TabIndex        =   25
+         TabIndex        =   24
          TabStop         =   0   'False
          Top             =   4500
          Width           =   1215
       End
       Begin VB.CommandButton cmdAClass 
-         Caption         =   "Classes"
+         Caption         =   "Class"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -304,7 +304,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1590
-         TabIndex        =   23
+         TabIndex        =   22
          TabStop         =   0   'False
          Top             =   4230
          Width           =   1215
@@ -322,7 +322,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   22
+         TabIndex        =   21
          TabStop         =   0   'False
          Top             =   1500
          Width           =   855
@@ -340,7 +340,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1590
-         TabIndex        =   21
+         TabIndex        =   20
          TabStop         =   0   'False
          Top             =   6645
          Width           =   1215
@@ -358,7 +358,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1590
-         TabIndex        =   20
+         TabIndex        =   19
          TabStop         =   0   'False
          Top             =   3960
          Width           =   1215
@@ -376,7 +376,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   19
+         TabIndex        =   18
          TabStop         =   0   'False
          Top             =   2100
          Width           =   855
@@ -394,7 +394,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1590
-         TabIndex        =   18
+         TabIndex        =   17
          TabStop         =   0   'False
          Top             =   3690
          Width           =   1215
@@ -412,28 +412,10 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   165
-         TabIndex        =   17
+         TabIndex        =   16
          TabStop         =   0   'False
          Top             =   4065
          Width           =   1155
-      End
-      Begin VB.CommandButton cmdASpawn 
-         Caption         =   "Spawn Item"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   1050
-         TabIndex        =   16
-         TabStop         =   0   'False
-         Top             =   2250
-         Width           =   645
       End
       Begin VB.CommandButton cmdASpell 
          Caption         =   "Spell"
@@ -706,7 +688,7 @@ Begin VB.Form frmAdmin
       Begin MSComCtl2.UpDown upSprite 
          Height          =   555
          Left            =   2430
-         TabIndex        =   37
+         TabIndex        =   36
          Top             =   2280
          Width           =   255
          _ExtentX        =   450
@@ -738,7 +720,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   315
          Left            =   435
-         TabIndex        =   52
+         TabIndex        =   51
          Top             =   6600
          Width           =   555
       End
@@ -750,7 +732,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   195
          Left            =   -45
-         TabIndex        =   42
+         TabIndex        =   41
          Top             =   7380
          Width           =   1470
       End
@@ -771,7 +753,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   255
          Left            =   105
-         TabIndex        =   38
+         TabIndex        =   37
          Top             =   4635
          Width           =   1260
       End
@@ -780,7 +762,7 @@ Begin VB.Form frmAdmin
          Appearance      =   0  'Flat
          BackColor       =   &H0000FF00&
          BeginProperty Font 
-            Name            =   "Myriad Arabic"
+            Name            =   "Arial"
             Size            =   9.75
             Charset         =   238
             Weight          =   400
@@ -791,7 +773,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000008&
          Height          =   375
          Left            =   45
-         TabIndex        =   31
+         TabIndex        =   30
          Top             =   8235
          Visible         =   0   'False
          Width           =   2760
@@ -813,7 +795,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   270
-         TabIndex        =   30
+         TabIndex        =   29
          Top             =   2475
          Width           =   975
       End
@@ -834,7 +816,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H000000C0&
          Height          =   195
          Left            =   1425
-         TabIndex        =   29
+         TabIndex        =   28
          Top             =   3345
          Width           =   1410
       End
@@ -855,7 +837,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   285
          Left            =   150
-         TabIndex        =   28
+         TabIndex        =   27
          Top             =   4380
          Width           =   1140
       End
@@ -875,7 +857,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   27
+         TabIndex        =   26
          Top             =   0
          Width           =   2505
       End
@@ -916,7 +898,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   195
-         TabIndex        =   24
+         TabIndex        =   23
          Top             =   2880
          Width           =   735
       End
@@ -1650,7 +1632,7 @@ End Sub
 
 
 Public Sub UpdatePlayersOnline()
-    Dim players() As String, staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
+    Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
     Dim stuffCounter As Long, playersCounter As Long, overallCounter As Long, foundStuff As Boolean, foundPlayer As Boolean
     
     tempTxt = cmbPlayersOnline.text
@@ -1661,8 +1643,8 @@ Public Sub UpdatePlayersOnline()
     For i = 0 To UBound(g_playersOnline)
         If CByte(Split(g_playersOnline(i), ":")(1)) > 0 Then
             foundStuff = True
-            ReDim Preserve staff(stuffCounter)
-            staff(stuffCounter) = Split(g_playersOnline(i), ":")(0)
+            ReDim Preserve Staff(stuffCounter)
+            Staff(stuffCounter) = Split(g_playersOnline(i), ":")(0)
             stuffCounter = stuffCounter + 1
         End If
     Next
@@ -1684,8 +1666,8 @@ Public Sub UpdatePlayersOnline()
             ignoreIndexes(0) = currentIgnore
             currentIgnore = currentIgnore + 1
             
-        For i = 0 To UBound(staff)
-            cmbPlayersOnline.AddItem (Trim(staff(i)))
+        For i = 0 To UBound(Staff)
+            cmbPlayersOnline.AddItem (Trim(Staff(i)))
             currentIgnore = currentIgnore + 1
         Next
         overallCounter = overallCounter + stuffCounter

@@ -292,14 +292,14 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
         End If
             
         ' Admin message
-        If Left$(ChatText, 1) = "`" Or Left$(MyText, 7) = "/staff " Then
+        If Left$(ChatText, 1) = "`" Or Left$(MyText, 7) = "/Staff " Then
             ' Make sure they are actually sending something
-            If Left$(MyText, 7) = "/staff " And Len(MyText) > 7 Then
+            If Left$(MyText, 7) = "/Staff " And Len(MyText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
             ElseIf Left$(MyText, 1) = "`" And Len(MyText) > 2 Then
                 ChatText = Mid$(ChatText, 2, Len(ChatText) - 1)
             Else
-                Call AddText("Usage: `message or /staff message", BrightRed)
+                Call AddText("Usage: `message or /Staff message", BrightRed)
                 MyText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
                 Exit Sub
@@ -430,7 +430,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     Call AddText("@message or /guild message = Guild Message", HelpColor)
                     
                     If GetPlayerAccess(MyIndex) > 0 Then
-                        Call AddText("`message or /staff message = Staff Message", HelpColor)
+                        Call AddText("`message or /Staff message = Staff Message", HelpColor)
                     End If
                     
                     ' Send regular help commands

@@ -1549,10 +1549,7 @@ Private Sub HandleUpdateItem(ByVal Index As Long, ByRef data() As Byte, ByVal St
     frmMain.txtCurrency.text = vbNullString
     TmpCurrencyItem = 0
     CurrencyMenu = 0 ' Clear
-    
-    If frmAdmin.Visible = True Then
-            UpdateAdminScrollBar
-    End If
+
     Exit Sub
     
 ' Error handler

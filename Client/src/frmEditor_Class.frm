@@ -113,6 +113,16 @@ Begin VB.Form frmEditor_Class
       TabIndex        =   16
       Top             =   0
       Width           =   5055
+      Begin VB.HScrollBar scrlCombatTree 
+         Height          =   255
+         Left            =   3720
+         Max             =   3
+         Min             =   1
+         TabIndex        =   55
+         Top             =   5640
+         Value           =   1
+         Width           =   1215
+      End
       Begin VB.HScrollBar scrlDir 
          Height          =   255
          Left            =   3720
@@ -438,6 +448,14 @@ Begin VB.Form frmEditor_Class
          Top             =   2880
          Width           =   3255
       End
+      Begin VB.Label lblCombatTree 
+         Caption         =   "Combat Tree: Melee"
+         Height          =   255
+         Left            =   1920
+         TabIndex        =   56
+         Top             =   5640
+         Width           =   1695
+      End
       Begin VB.Label lblDir 
          Caption         =   "Direction: Up"
          Height          =   255
@@ -673,7 +691,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     ClassEditorInit
@@ -785,6 +803,22 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub scrlCombatTree_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    lblCombatTree.Caption = "Combat Tree : " & GetCombatTreeName(scrlCombatTree.Value)
+    Class(EditorIndex).CombatTree = scrlCombatTree.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "scrlCombatTree_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub scrlDir_Change()
     Dim sDir As String
     
@@ -875,7 +909,7 @@ Private Sub scrlItemNum_Change()
     lblItemNum.Caption = "Number: " & scrlItemNum.Value
 
     If scrlItemNum.Value > 0 Then
-        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.Value).name)
+        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.Value).Name)
     Else
         lblItemName.Caption = "Item: None"
     End If
@@ -914,7 +948,7 @@ Private Sub scrlSpellNum_Change()
     lblSpellNum.Caption = "Number: " & scrlSpellNum.Value
 
     If scrlSpellNum.Value > 0 Then
-        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).name)
+        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).Name)
     Else
         lblSpellName.Caption = "Spell: None"
     End If
@@ -1066,9 +1100,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Class(EditorIndex).name = Trim$(txtName.text)
+    Class(EditorIndex).Name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -1169,7 +1203,7 @@ Private Sub cmdPaste_Click()
      
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Class(EditorIndex)), ByVal VarPtr(Class(TmpIndex + 1)), LenB(Class(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Class(EditorIndex).name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Class(EditorIndex).Name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

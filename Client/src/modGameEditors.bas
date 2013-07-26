@@ -17,21 +17,13 @@ Public lastSpawnedItemsCounter As Byte
 Public currentlyListedIndexes() As Long
 
 Public EventList() As EventListRec
- 'fghgghj
 Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
     (ByVal hWnd As Long, ByVal nIndex As Long) As Long
 Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, _
 ByVal dwNewLong As Long) As Long
 Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, _
 ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
-Private Declare Function DefWindowProc Lib "user32" Alias "DefWindowProcA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
-Private Declare Function GetClassInfoEx Lib "user32.dll" Alias "GetClassInfoExA" (ByVal hinst As Long, ByVal lpszClass As String, lpwcx As WNDCLASSEX) As Long
-Private Declare Function GetClassName Lib "user32.dll" Alias "GetClassNameA" (ByVal hWnd As Long, ByVal lpClassName As String, ByVal nMaxCount As Long) As Long
 Public Declare Function BringWindowToTop Lib "user32" (ByVal hWnd As Long) As Long
-Dim classinfo As WNDCLASSEX
-Dim classname As String
-Dim sLength As Long
-Dim retval As Long
 
 
 Private Const GWL_WNDPROC   As Long = (-4)
@@ -2251,6 +2243,9 @@ Public Sub ClassEditorInit()
         .lblMFace.Visible = True
         .lblMSprite.Visible = True
         
+        ' Set combat tree
+        .scrlCombatTree.Value = Class(EditorIndex).CombatTree
+        
         ' Sprites
         If Class(EditorIndex).MaleSprite > NumCharacters Then Class(EditorIndex).MaleSprite = NumCharacters
         .scrlMSprite.Value = Class(EditorIndex).MaleSprite
@@ -3258,6 +3253,9 @@ Sub AddCommand(Index As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
+    frmEditor_Events.fraRandom(9).Visible = False
+    frmEditor_Events.lstCommands.Visible = False
+    
     If tmpEvent.Pages(curPageNum).CommandListCount = 0 Then
         tmpEvent.Pages(curPageNum).CommandListCount = 1
         ReDim tmpEvent.Pages(curPageNum).CommandList(1)
@@ -3579,6 +3577,9 @@ Public Sub EditEventCommand()
     
     If CurList > tmpEvent.Pages(curPageNum).CommandListCount Then Exit Sub
     If CurSlot > tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount Then Exit Sub
+    
+    frmEditor_Events.fraRandom(9).Visible = False
+    frmEditor_Events.lstCommands.Visible = False
     
     Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index
         Case EventType.evAddText
@@ -4145,6 +4146,9 @@ Public Sub EditCommand()
     If i = -1 Then Exit Sub
     
     If i > UBound(EventList) Then Exit Sub
+    
+    frmEditor_Events.fraRandom(9).Visible = False
+    frmEditor_Events.lstCommands.Visible = False
 
     CurList = EventList(i).CommandList
     CurSlot = EventList(i).CommandNum

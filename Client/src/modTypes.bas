@@ -7,7 +7,7 @@ Public TempMap As MapRec
 Public bank As BankRec
 Public Player(1 To MAX_PLAYERS) As PlayerRec
 Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
-Public item(1 To MAX_ITEMS) As ItemRec
+Public Item(1 To MAX_ITEMS) As ItemRec
 Public NPC(1 To MAX_NPCS) As NpcRec
 Public MapItem(1 To MAX_MAP_ITEMS) As MapItemRec
 Public MapNPC(1 To MAX_MAP_NPCS) As MapNpcRec
@@ -102,7 +102,7 @@ Public Type PlayerItemRec
 End Type
 
 Private Type BankRec
-    item(1 To MAX_BANK) As PlayerItemRec
+    Item(1 To MAX_BANK) As PlayerItemRec
 End Type
 
 Private Type SpellAnim
@@ -156,7 +156,7 @@ Public Type PlayerRec
     MaxVital(1 To Vitals.Vital_Count - 1) As Long
     
     ' Stats
-    stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     Points As Integer
     
     ' Amount of titles
@@ -207,7 +207,7 @@ Public Type PlayerEditableRec
     Vital(1 To Vitals.Vital_Count - 1) As Long
     
     ' Stats
-    stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     Points As Integer
 End Type
 
@@ -424,7 +424,7 @@ End Type
 
 Private Type ClassRec
     name As String * NAME_LENGTH
-    stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     MaleSprite As Integer
     FemaleSprite As Integer
     
@@ -446,6 +446,9 @@ Private Type ClassRec
     x As Byte
     y As Byte
     Dir As Byte
+    
+    ' Combat tree
+    CombatTree As Byte
 End Type
 
 Public Type ItemRec
@@ -514,7 +517,7 @@ Private Type NpcRec
     DropItem(1 To MAX_NPC_DROPS) As Byte
     DropValue(1 To MAX_NPC_DROPS) As Integer
     Damage As Long
-    stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     HP As Long
     MP As Long
     Exp As Long
@@ -549,7 +552,7 @@ Private Type MapNpcRec
 End Type
 
 Private Type TradeItemRec
-    item As Long
+    Item As Long
     ItemValue As Long
     CostItem As Long
     CostValue As Long
@@ -736,7 +739,7 @@ Private Type EmoticonRec
 End Type
 
 Public Type LogRec
-    msg As String * 512
+    Msg As String * 512
     file As String * NAME_LENGTH
 End Type
 
@@ -762,8 +765,8 @@ End Type
 Public Type QuarterTileRec
     QuarterTile(1 To 4) As PointRec
     RenderState As Byte
-    srcX(1 To 4) As Long
-    srcY(1 To 4) As Long
+    srcx(1 To 4) As Long
+    srcy(1 To 4) As Long
 End Type
 
 Public Type AutotileRec
@@ -771,7 +774,7 @@ Public Type AutotileRec
 End Type
 
 Public Type ChatBubbleRec
-    msg As String
+    Msg As String
     Color As Long
     Target As Long
     TargetType As Byte

@@ -240,7 +240,7 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     Dim ShopNum As Long
     Dim OldMap As Long
     Dim i As Long
-    Dim buffer As clsBuffer
+    Dim Buffer As clsBuffer
 
     ' Check for subscript out of range
     If IsPlaying(Index) = False Or MapNum <= 0 Or MapNum > MAX_MAPS Then Exit Sub
@@ -317,12 +317,12 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     ' Sets it so we know to process npcs on the map
     PlayersOnMap(MapNum) = YES
     TempPlayer(Index).GettingMap = YES
-    Set buffer = New clsBuffer
+    Set Buffer = New clsBuffer
     Call SendCheckForMap(Index, MapNum)
 End Sub
 
 Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, Optional ByVal SendToSelf As Boolean = False)
-    Dim buffer As clsBuffer, MapNum As Integer
+    Dim Buffer As clsBuffer, MapNum As Integer
     Dim X As Long, Y As Long, i As Long
     Dim Moved As Byte, MovedSoFar As Boolean
     Dim TileType As Long, VitalType As Long, Color As Long, Amount As Long
@@ -598,24 +598,24 @@ Sub EventTouch(ByVal Index As Long, ByVal X As Long, ByVal Y As Long)
     
     If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
             For i = 1 To TempPlayer(Index).EventMap.CurrentEvents
-                If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Global = 1 Then
-                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).X = X And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then EventTouched = True
+                If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Global = 1 Then
+                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).X = X And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then EventTouched = True
                 Else
-                    If TempPlayer(Index).EventMap.EventPages(i).X = X And TempPlayer(Index).EventMap.EventPages(i).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then EventTouched = True
+                    If TempPlayer(Index).EventMap.EventPages(i).X = X And TempPlayer(Index).EventMap.EventPages(i).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then EventTouched = True
                 End If
                 
                 If EventTouched Then
                     ' Process this event, it is on-touch and everything checks out.
-                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount > 0 Then
+                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount > 0 Then
                         TempPlayer(Index).EventProcessingCount = TempPlayer(Index).EventProcessingCount + 1
                         ReDim Preserve TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount)
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ActionTimer = timeGetTime
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).CurList = 1
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).CurSlot = 1
-                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).EventID = TempPlayer(Index).EventMap.EventPages(i).EventID
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).eventID = TempPlayer(Index).EventMap.EventPages(i).eventID
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).PageID = TempPlayer(Index).EventMap.EventPages(i).PageID
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).WaitingForResponse = 0
-                        ReDim TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ListLeftOff(0 To Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).EventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount)
+                        ReDim TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ListLeftOff(0 To Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount)
                     End If
                     
                     EventTouched = False
@@ -1877,7 +1877,7 @@ Function CanPlayerTrade(ByVal Index As Long, ByVal TradeTarget As Long) As Boole
     CanPlayerTrade = True
 End Function
 
-Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optional Message As Boolean = True) As Boolean
+Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optional message As Boolean = True) As Boolean
     Dim LevelReq As Byte
     Dim AccessReq As Byte
     Dim ClassReq As Byte
@@ -1894,7 +1894,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
 
     ' Make sure they are the right level
     If LevelReq > GetPlayerLevel(Index) Then
-        If Message Then
+        If message Then
             Call PlayerMsg(Index, "You must be level " & LevelReq & " to use this item.", BrightRed)
         End If
         Exit Function
@@ -1904,7 +1904,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     
     ' Make sure they have the right access
     If AccessReq > GetPlayerAccess(Index) Then
-        If Message Then
+        If message Then
             Call PlayerMsg(Index, "You must be a staff member to use this item.", BrightRed)
         End If
         Exit Function
@@ -1915,7 +1915,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     ' Make sure the Classes req > 0
     If ClassReq > 0 Then ' 0 = no req
         If Not ClassReq = GetPlayerClass(Index) Then
-            If Message Then
+            If message Then
                 Call PlayerMsg(Index, "Only " & CheckGrammar(Trim$(Class(ClassReq).Name)) & " can use this item.", BrightRed)
             End If
             Exit Function
@@ -1927,7 +1927,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     ' Make sure the Gender req > 0
     If GenderReq > 0 Then ' 0 = no req
         If Not GenderReq - 1 = GetPlayerGender(Index) Then
-            If Message Then
+            If message Then
                 If GetPlayerGender(Index) = 0 Then
                     Call PlayerMsg(Index, "You need to be a female to use this item!", BrightRed)
                 Else
@@ -1941,7 +1941,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     ' Check if they have the stats required to use this item
     For i = 1 To Stats.Stat_count - 1
         If GetPlayerRawStat(Index, i) < Item(ItemNum).Stat_Req(i) Then
-            If Message Then
+            If message Then
                 PlayerMsg Index, "You do not meet the stat requirements to use this item.", BrightRed
             End If
             Exit Function
@@ -1951,7 +1951,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     ' Check if they have the proficiency required to use this item
     If Item(ItemNum).ProficiencyReq > 0 Then
         If GetPlayerProficiency(Index, Item(ItemNum).ProficiencyReq) = 0 Then
-            If Message Then
+            If message Then
                 PlayerMsg Index, "You lack the proficiency to use this item!", BrightRed
             End If
             Exit Function
