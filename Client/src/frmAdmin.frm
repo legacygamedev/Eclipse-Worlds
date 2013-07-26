@@ -101,7 +101,7 @@ Begin VB.Form frmAdmin
          Width           =   375
       End
       Begin VB.CommandButton cmdCharEditor 
-         Caption         =   "Character's Editor"
+         Caption         =   "Character Editor"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -137,7 +137,7 @@ Begin VB.Form frmAdmin
          Width           =   1215
       End
       Begin VB.CommandButton cmdAClass 
-         Caption         =   "Classes"
+         Caption         =   "Class"
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -1399,26 +1399,26 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
-Private Sub picAdmin_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picAdmin_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
 End Sub
 
-Private Sub picAdmin_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picAdmin_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     refreshDown = False
 End Sub
 
-Private Sub picRefresh_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picRefresh_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     refreshDown = True
     picRefresh.Picture = LoadResPicture("REFRESH_DOWN", vbResBitmap)
 End Sub
 
-Private Sub picRefresh_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picRefresh_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Not refreshDown Then
         picRefresh.Picture = LoadResPicture("REFRESH_OVER", vbResBitmap)
     End If
 End Sub
 
-Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     refreshDown = False
     refreshingAdminList = True
     SendRequestPlayersOnline
