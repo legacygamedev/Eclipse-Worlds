@@ -1,5 +1,5 @@
 Type=Exe
-Reference=*\G{E1211242-8E94-11D1-8808-00C04FC2C603}#1.0#0#..\..\..\..\Dropbox\EclipseWorlds\Client\dx8vb.dll#DirectX 8 for Visual Basic Type Library
+Reference=*\G{E1211242-8E94-11D1-8808-00C04FC2C603}#1.0#0#..\..\..\..\..\..\Windows\SysWow64\dx8vb.dll#DirectX 8 for Visual Basic Type Library
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
 Reference=*\G{00025E01-0000-0000-C000-000000000046}#4.0#0#..\..\..\..\..\..\Program Files (x86)\Common Files\Microsoft Shared\DAO\DAO350.DLL#Microsoft DAO 3.51 Object Library
 Reference=*\G{6BC096BB-0CE6-11D1-BAAE-00C04FC2E20D}#1.0#0#..\..\..\..\..\..\Windows\SysWOW64\iashlpr.dll#IAS Helper COM Component 1.0 Type Library
