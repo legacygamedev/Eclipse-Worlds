@@ -1905,9 +1905,7 @@ Public Sub UpdatePlayersOnline()
     
     lblPlayers.Caption = "Players: " & overallCounter
 End Sub
-Function ProcAdr(addr As Long) As Long
-      ProcAdr = addr
-End Function
+
 Public Sub styleButtons()
 Dim i As Long, temp1 As Long, temp2 As Long
     For i = 0 To optCat.UBound
@@ -1918,8 +1916,8 @@ Dim i As Long, temp1 As Long, temp2 As Long
         picEye(i).Visible = False
         picEye(i).Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
     Next
-    
-    If GetWindowLong(optCat(0).hWnd, -4) <> ProcAdr(AddressOf WindowProc) Then
+    temp1 = getWndProcAddr
+    If GetWindowLong(optCat(0).hWnd, -4) <> temp1 Then
         For i = 0 To optCat.UBound
             SubClassHwnd optCat(i).hWnd
         Next

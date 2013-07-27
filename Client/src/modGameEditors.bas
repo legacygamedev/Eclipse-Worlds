@@ -72,6 +72,12 @@ errorhandler:
     HandleError "MapEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+Function ProcAdr(addr As Long) As Long
+      ProcAdr = addr
+End Function
+Public Function getWndProcAddr() As Long
+    getWndProcAddr = ProcAdr(AddressOf WindowProc)
+End Function
 Private Function WindowProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
     
         Select Case msg
