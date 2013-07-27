@@ -38,7 +38,7 @@ Begin VB.Form frmAdmin
       ScaleWidth      =   191
       TabIndex        =   1
       TabStop         =   0   'False
-      Top             =   15
+      Top             =   0
       Width           =   2865
       Begin VB.OptionButton optCat 
          Height          =   420
@@ -285,10 +285,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   24
          TabStop         =   0   'False
-         Top             =   4500
+         Top             =   4320
          Width           =   1215
       End
       Begin VB.CommandButton cmdAClass 
@@ -303,10 +303,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   22
          TabStop         =   0   'False
-         Top             =   4230
+         Top             =   4080
          Width           =   1215
       End
       Begin VB.CommandButton cmdAMute 
@@ -339,10 +339,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   20
          TabStop         =   0   'False
-         Top             =   6645
+         Top             =   6240
          Width           =   1215
       End
       Begin VB.CommandButton cmdABanE 
@@ -357,10 +357,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   19
          TabStop         =   0   'False
-         Top             =   3960
+         Top             =   3840
          Width           =   1215
       End
       Begin VB.CommandButton cmdLevelUp 
@@ -392,11 +392,11 @@ Begin VB.Form frmAdmin
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   255
+         Height          =   315
          Left            =   1560
          TabIndex        =   17
          TabStop         =   0   'False
-         Top             =   3720
+         Top             =   3540
          Width           =   1215
       End
       Begin VB.CommandButton cmdARespawn 
@@ -429,10 +429,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   15
          TabStop         =   0   'False
-         Top             =   6390
+         Top             =   6000
          Width           =   1215
       End
       Begin VB.CommandButton cmdAShop 
@@ -447,10 +447,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   14
          TabStop         =   0   'False
-         Top             =   6120
+         Top             =   5760
          Width           =   1215
       End
       Begin VB.CommandButton cmdAResource 
@@ -465,10 +465,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   13
          TabStop         =   0   'False
-         Top             =   5850
+         Top             =   5520
          Width           =   1215
       End
       Begin VB.CommandButton cmdANpc 
@@ -483,10 +483,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   12
          TabStop         =   0   'False
-         Top             =   5580
+         Top             =   5280
          Width           =   1215
       End
       Begin VB.CommandButton cmdAMap 
@@ -501,10 +501,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   11
          TabStop         =   0   'False
-         Top             =   5040
+         Top             =   4800
          Width           =   1215
       End
       Begin VB.CommandButton cmdAItem 
@@ -519,10 +519,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   10
          TabStop         =   0   'False
-         Top             =   4770
+         Top             =   4560
          Width           =   1215
       End
       Begin VB.CommandButton cmdAMapReport 
@@ -679,10 +679,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   2
          TabStop         =   0   'False
-         Top             =   5310
+         Top             =   5040
          Width           =   1215
       End
       Begin MSComCtl2.UpDown upSprite 
@@ -815,9 +815,9 @@ Begin VB.Form frmAdmin
          EndProperty
          ForeColor       =   &H000000C0&
          Height          =   195
-         Left            =   1425
+         Left            =   1440
          TabIndex        =   28
-         Top             =   3345
+         Top             =   3240
          Width           =   1410
       End
       Begin VB.Label lblSpawning 
@@ -881,8 +881,8 @@ Begin VB.Form frmAdmin
          BorderWidth     =   3
          X1              =   103
          X2              =   186
-         Y1              =   240
-         Y2              =   240
+         Y1              =   232
+         Y2              =   232
       End
       Begin VB.Label Label30 
          BackStyle       =   0  'Transparent
@@ -968,33 +968,33 @@ Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String
                     Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
                     setAdminAccessLevel
                     
-                    DisplayStatus Message, status.Error
+                    DisplayStatus Message, Status.Error
                 End If
             Next i
         ElseIf Success = 1 Then
             Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
             setAdminAccessLevel
             
-            DisplayStatus Message, status.Correct
+            DisplayStatus Message, Status.Correct
         End If
     End If
     cmbPlayersOnline.Enabled = True
 End Sub
 
-Public Sub DisplayStatus(ByVal Msg As String, msgType As status)
+Public Sub DisplayStatus(ByVal msg As String, msgType As Status)
     Select Case msgType
-        Case status.Error:
+        Case Status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Msg
-        Case status.Correct:
+            lblStatus.Caption = msg
+        Case Status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Msg
-        Case status.Neutral:
+            lblStatus.Caption = msg
+        Case Status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Msg
-        Case status.Info_:
+            lblStatus.Caption = msg
+        Case Status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Msg
+            lblStatus.Caption = msg
     End Select
     lblStatus.Visible = True
 End Sub
@@ -1406,9 +1406,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-
-
-
 Private Sub cmdABanE_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1546,38 +1543,35 @@ Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integ
     End Select
 End Sub
 
-
 Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
     If optCat(Index).Value = False Then
         optCat(Index).Picture = LoadResPicture(100 + Index, vbResBitmap)
-        
     Else
-
         optCat(Index).Picture = LoadResPicture(110 + Index, vbResBitmap)
 
-    Select Case Index
+        Select Case Index
+            Case 0
+                currentCategory = "Recent"
+            Case 1
+                currentCategory = "None"
+            Case 2
+                currentCategory = "Equipment"
+            Case 3
+                currentCategory = "Consumable"
+            Case 4
+                currentCategory = "Title"
+            Case 5
+                currentCategory = "Spell"
+            Case 6
+                currentCategory = "Teleport"
+            Case 7
+                currentCategory = "Reset Stats"
+            Case 8
+                currentCategory = "Auto Life"
+            Case 9
+                currentCategory = "Change Sprite"
+        End Select
     
-        Case 0
-            currentCategory = "Recent"
-        Case 1
-            currentCategory = "None"
-        Case 2
-            currentCategory = "Equipment"
-        Case 3
-            currentCategory = "Consumable"
-        Case 4
-            currentCategory = "Title"
-        Case 5
-            currentCategory = "Spell"
-        Case 6
-            currentCategory = "Teleport"
-        Case 7
-            currentCategory = "Reset Stats"
-        Case 8
-            currentCategory = "Auto Life"
-        Case 9
-            currentCategory = "Change Sprite"
-    End Select
         If lastIndex <> -1 Then
             If optCat(lastIndex).Value = False Then
                 optCat(lastIndex).Picture = LoadResPicture(100 + lastIndex, vbResBitmap)
@@ -1598,7 +1592,6 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
             End If
         End If
 
-        
         lastIndex = Index
     End If
 End Sub
@@ -1606,7 +1599,6 @@ End Sub
 Private Sub picPanel_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
     lblCat.Caption = currentCategory
-    
 End Sub
 
 Private Sub picPanel_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
@@ -1629,7 +1621,6 @@ Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, x As Single,
     refreshingAdminList = True
     SendRequestPlayersOnline
 End Sub
-
 
 Public Sub UpdatePlayersOnline()
     Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
@@ -1688,6 +1679,7 @@ Public Sub UpdatePlayersOnline()
     
     lblPlayers.Caption = "Players: " & overallCounter
 End Sub
+
 Public Sub styleButtons()
 Dim i As Long, temp1 As Long, temp2 As Long
     For i = 0 To optCat.UBound
@@ -1701,6 +1693,7 @@ Dim i As Long, temp1 As Long, temp2 As Long
         Next
     End If
 End Sub
+
 Public Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1733,7 +1726,6 @@ errorhandler:
     HandleError "Form_Load", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-
 
 Private Sub txtAMap_GotFocus()
     ' If debug mode, handle error then exit out
@@ -1804,42 +1796,44 @@ End Function
 Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
     If Not IsNumeric(textBox.text) Then
         textBox.text = CStr(valueToChange)
-        displayFieldStatus textBox, " field accepts only Numbers!" & vbCrLf & "Reverting to last correct value...", status.Correct
+        displayFieldStatus textBox, " field accepts only Numbers!" & vbCrLf & "Reverting to last correct value...", Status.Correct
     Else
         textBox.text = CStr(valueToChange)
-        displayFieldStatus textBox, " field is correct. Saving...", status.Correct
+        displayFieldStatus textBox, " field is correct. Saving...", Status.Correct
     End If
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
-    Dim Msg As String
+    Dim msg As String
     
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
     Else
-        Msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
-        displayFieldStatus txtBox, Msg, status.Error
+        msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
+        displayFieldStatus txtBox, msg, Status.Error
         verifyValue = False
     End If
 End Function
-Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal Msg As String, msgType As status)
+
+Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
     lblStatus.Visible = True
     Select Case msgType
 
-        Case status.Error:
+        Case Status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
-        Case status.Correct:
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+        Case Status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
-        Case status.Neutral:
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+        Case Status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
-        Case status.Info_:
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+        Case Status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
     End Select
 End Sub
+
 Private Sub selectValue(ByRef textBox As textBox)
     textBox.SelStart = 0
     textBox.SelLength = Len(textBox.text)
@@ -1866,10 +1860,7 @@ Private Sub txtSprite_Change()
 
             SendSetPlayerSprite Trim$(cmbPlayersOnline.text), currentSprite
         End If
-
-
      End If
-
 End Sub
 
 Private Sub txtSprite_Click()

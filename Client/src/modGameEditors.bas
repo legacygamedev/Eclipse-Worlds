@@ -22,7 +22,7 @@ Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
 Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, _
 ByVal dwNewLong As Long) As Long
 Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, _
-ByVal Msg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
+ByVal msg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
 Public Declare Function BringWindowToTop Lib "user32" (ByVal hWnd As Long) As Long
 
 
@@ -66,17 +66,17 @@ errorhandler:
     HandleError "MapEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-Private Function WindowProc(ByVal hWnd As Long, ByVal Msg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
+Private Function WindowProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
     
-        Select Case Msg
+        Select Case msg
         Case WM_SETFOCUS
             Exit Function
         Case WM_DESTROY
-            WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, Msg, wParam, lparam)
+            WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, msg, wParam, lparam)
             Call SetWindowLong(hWnd, GWL_WNDPROC, GetWindowLong(hWnd, -21))
             Exit Function
     End Select
-    WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, Msg, wParam, lparam)
+    WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, msg, wParam, lparam)
 End Function
  
 Public Sub SubClassHwnd(ByVal hWnd As Long)
@@ -2290,7 +2290,8 @@ Public Sub UpdateSpellScrollBars()
         Item(EditorIndex).Data1 = .scrlSpell.Value
     End With
 End Sub
-'Item Spawner davemax © 07.2013
+
+' Item Spawner davemax © 07.2013
 Public Function populateSpecificType(ByRef tempItems() As ItemRec, ItemType As Byte) As Boolean
     Dim i As Long, counter As Long, found As Boolean
     For i = 1 To MAX_ITEMS
@@ -2305,6 +2306,7 @@ Public Function populateSpecificType(ByRef tempItems() As ItemRec, ItemType As B
             counter = counter + 1
         End If
     Next
+    
     If found Then
         populateSpecificType = True
     End If

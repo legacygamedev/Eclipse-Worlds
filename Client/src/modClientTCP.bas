@@ -1698,6 +1698,7 @@ Public Sub CloseBank()
     Set buffer = Nothing
     InBank = False
     frmMain.picBank.Visible = False
+    frmMain.picChatbox.Visible = True
     Exit Sub
         
 ' Error handler
@@ -1875,13 +1876,13 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub SendHotbarChange(ByVal SType As Byte, ByVal Slot As Byte, ByVal HotbarNum As Byte)
+Public Sub SendHotbarChange(ByVal sType As Byte, ByVal Slot As Byte, ByVal HotbarNum As Byte)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If SType = 1 Then
+    If sType = 1 Then
         ' Don't add None/Currency/Auto Life type items
         If Item(GetPlayerInvItemNum(MyIndex, Slot)).Stackable = 1 Or Item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_AUTOLIFE Then
             Call AddText("You can't add that type of item to your hotbar!", BrightRed)
@@ -1891,7 +1892,7 @@ Public Sub SendHotbarChange(ByVal SType As Byte, ByVal Slot As Byte, ByVal Hotba
     
     Set buffer = New clsBuffer
     buffer.WriteLong CHotbarChange
-    buffer.WriteByte SType
+    buffer.WriteByte sType
     buffer.WriteByte Slot
     buffer.WriteByte HotbarNum
     SendData buffer.ToArray()
@@ -1911,7 +1912,7 @@ Public Sub SendHotbarUse(ByVal Slot As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Check the hotbar type
-    If Hotbar(Slot).SType = 1 Then ' Item
+    If Hotbar(Slot).sType = 1 Then ' Item
         For X = 1 To MAX_INV
             ' Is the item matching the hotbar
             If GetPlayerInvItemNum(MyIndex, X) = Hotbar(Slot).Slot Then
@@ -1926,7 +1927,7 @@ Public Sub SendHotbarUse(ByVal Slot As Long)
                 Exit Sub
             End If
         Next
-    ElseIf Hotbar(Slot).SType = 2 Then ' Spell
+    ElseIf Hotbar(Slot).sType = 2 Then ' Spell
         For X = 1 To MAX_PLAYER_SPELLS
             ' Is the spell matching the hotbar
             If PlayerSpells(X) = Hotbar(Slot).Slot Then

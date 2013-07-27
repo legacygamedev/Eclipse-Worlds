@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.OCX"
 Begin VB.Form frmItemSpawner 
    Appearance      =   0  'Flat
    BorderStyle     =   4  'Fixed ToolWindow
@@ -75,7 +75,7 @@ Begin VB.Form frmItemSpawner
       Appearance      =   0  'Flat
       BackColor       =   &H0000C0C0&
       BeginProperty Font 
-         Name            =   "Myriad Arabic"
+         Name            =   "Arial"
          Size            =   11.25
          Charset         =   238
          Weight          =   400
@@ -190,7 +190,7 @@ Begin VB.Form frmItemSpawner
       BackStyle       =   0  'Transparent
       Caption         =   "and ""Spawn It""."
       BeginProperty Font 
-         Name            =   "Myriad Arabic"
+         Name            =   "Arial"
          Size            =   11.25
          Charset         =   238
          Weight          =   400
@@ -210,7 +210,7 @@ Begin VB.Form frmItemSpawner
       BackStyle       =   0  'Transparent
       Caption         =   "Options"
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   238
          Weight          =   700
@@ -244,7 +244,7 @@ Begin VB.Form frmItemSpawner
    Begin VB.Label lblAmount 
       Caption         =   "Amount"
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   238
          Weight          =   700
@@ -263,7 +263,7 @@ Begin VB.Form frmItemSpawner
       BackStyle       =   0  'Transparent
       Caption         =   "Choose the item, input Amount"
       BeginProperty Font 
-         Name            =   "Myriad Arabic"
+         Name            =   "Arial"
          Size            =   11.25
          Charset         =   238
          Weight          =   400
@@ -291,7 +291,7 @@ Begin VB.Form frmItemSpawner
       Alignment       =   1  'Right Justify
       Caption         =   "How to use it"
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   238
          Weight          =   700
@@ -317,7 +317,7 @@ Begin VB.Form frmItemSpawner
    Begin VB.Label lblWhere 
       Caption         =   "Where to Spawn It"
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Arial"
          Size            =   8.25
          Charset         =   238
          Weight          =   700
@@ -345,35 +345,34 @@ Private currentAmount As Long
 Private picked As Boolean
 Private Declare Function SendMessage Lib "user32" Alias _
  "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, _
- ByVal wParam As Long, lParam As Any) As Long
+ ByVal wParam As Long, lparam As Any) As Long
  
-Public Function ListView_SetIconSpacing(hWndLV As Long, cx As Long, cy As Long) As Long
+Public Function ListView_SetIconSpacing(hWndLV As Long, cX As Long, cY As Long) As Long
     Dim LVM_SETICONSPACING As Long
+    
     LVM_SETICONSPACING = 4149
-  ListView_SetIconSpacing = SendMessage(hWndLV, LVM_SETICONSPACING, 0, ByVal MakeLong(cx, cy))
+    ListView_SetIconSpacing = SendMessage(hWndLV, LVM_SETICONSPACING, 0, ByVal MakeLong(cX, cY))
 End Function
 
-Private Sub styleListwView(sType As status, Optional Msg As String)
-    
+Private Sub styleListwView(sType As Status, Optional msg As String)
     Select Case sType
-    
-        Case status.Correct
+        Case Status.Correct
             listItems.BackColor = &H8000000E
             listItems.BorderStyle = ccFixedSingle
             picInfo.Visible = False
             picInfo.ZOrder 1
-        Case status.Error
+        Case Status.Error
             listItems.BackColor = &H8000000F
             listItems.BorderStyle = ccNone
             picInfo.Visible = True
             picInfo.ZOrder 0
-            lblInfo.Caption = Msg
+            lblInfo.Caption = msg
     End Select
-
 End Sub
 
 Private Function generateItemsForTab(tabNum As Byte) As Boolean
-Dim i As Long, z As Long, tempItems() As ItemRec, ret As Boolean
+    Dim i As Long, Z As Long, tempItems() As ItemRec, ret As Boolean
+    
     tabNum = tabNum - 2
     
     Select Case tabNum
@@ -396,6 +395,7 @@ Dim i As Long, z As Long, tempItems() As ItemRec, ret As Boolean
        Case ITEM_TYPE_SPRITE
             ret = populateSpecificType(tempItems, ITEM_TYPE_SPRITE)
     End Select
+    
     If ret Then
         Set listItems.Icons = itemsImageList
                 
@@ -404,19 +404,17 @@ Dim i As Long, z As Long, tempItems() As ItemRec, ret As Boolean
         Next
         generateItemsForTab = True
     End If
-
-
 End Function
+
 Private Sub generateLastItems()
     If lastSpawnedItemsCounter = 0 Then
-        styleListwView status.Error, "You haven't spawned any items yet!"
+        styleListwView Status.Error, "You haven't spawned any items yet!"
     Else
-        styleListwView status.Correct
+        styleListwView Status.Correct
     End If
 End Sub
 
 Private Sub cmdSpawn_Click()
-
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
@@ -433,8 +431,8 @@ Private Sub cmdSpawn_Click()
         lastTab = 0
         currentItemId = 0
     End If
-    
     Exit Sub
+    
 ' Error handler
 errorhandler:
     HandleError "cmdSpawn_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
@@ -459,6 +457,7 @@ End Sub
 
 Private Sub tabItems_Click()
     If lastTab = tabItems.SelectedItem.Index Then Exit Sub
+    
     cmdSpawn.Enabled = False
     listItems.listItems.Clear
     Set listItems.Icons = Nothing
@@ -471,9 +470,9 @@ Private Sub tabItems_Click()
     End If
     
     If generateItemsForTab(tabItems.SelectedItem.Index) Then
-        styleListwView status.Correct
+        styleListwView Status.Correct
     Else
-        styleListwView status.Error, "No items available in this category!"
+        styleListwView Status.Error, "No items available in this category!"
     End If
     frmAdmin.lastIndex = lastTab - 1
     frmAdmin.optCat(tabItems.SelectedItem.Index - 1).Value = True
@@ -483,6 +482,7 @@ Private Sub tabItems_Click()
     
     lastTab = tabItems.SelectedItem.Index
 End Sub
+
 Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min As Long, max As Long, Optional defaultVal As Long = 0) As Boolean
     Dim test As textBox, TempValue As String
     
@@ -516,7 +516,6 @@ Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min
             textBox.SelStart = Len(textBox.text)
             correctValue = False
         End If
-
     ElseIf Len(textBox.text) > 1 And InStr(1, textBox.text, "-") = 1 And InStrRev(textBox.text, "-") = 1 And IsNumeric(textBox.text) Then
 
         If verifyValue(textBox, min, max) Then
@@ -528,7 +527,6 @@ Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min
             textBox.SelStart = Len(textBox.text)
         correctValue = False
         End If
-        
     Else
         textBox.text = CStr(valueToChange)
         textBox.SelStart = Len(textBox.text)
@@ -545,7 +543,7 @@ Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
-    Dim Msg As String
+    Dim msg As String
     
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
@@ -553,6 +551,7 @@ Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
         verifyValue = False
     End If
 End Function
+
 Private Sub selectValue(ByRef textBox As textBox)
     textBox.SelStart = 0
     textBox.SelLength = Len(textBox.text)

@@ -104,7 +104,7 @@ Begin VB.Form frmEditor_Item
          ScaleWidth      =   34
          TabIndex        =   85
          TabStop         =   0   'False
-         Top             =   360
+         Top             =   240
          Width           =   540
          Begin VB.PictureBox Picture4 
             BackColor       =   &H00404040&
@@ -223,11 +223,11 @@ Begin VB.Form frmEditor_Item
       End
       Begin VB.HScrollBar scrlPic 
          Height          =   255
-         Left            =   2280
+         Left            =   2200
          Max             =   255
          TabIndex        =   1
-         Top             =   1200
-         Width           =   615
+         Top             =   1080
+         Width           =   735
       End
       Begin VB.Label Label5 
          Caption         =   "Type:"
@@ -297,7 +297,7 @@ Begin VB.Form frmEditor_Item
          Height          =   195
          Left            =   2280
          TabIndex        =   57
-         Top             =   960
+         Top             =   840
          UseMnemonic     =   0   'False
          Width           =   495
       End
@@ -1536,7 +1536,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
 
     ItemEditorInit
@@ -1786,7 +1786,7 @@ Private Sub scrlAnim_Change()
     If scrlAnim.Value = 0 Then
         lblAnim.Caption = "Animation: None"
     Else
-        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).name)
+        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).Name)
     End If
     Item(EditorIndex).Animation = scrlAnim.Value
     Exit Sub
@@ -1804,7 +1804,7 @@ Private Sub scrlCastSpell_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlCastSpell.Value > 0 Then
-        lblCastSpell.Caption = "Cast Spell: " & Trim$(Spell(scrlCastSpell.Value).name)
+        lblCastSpell.Caption = "Cast Spell: " & Trim$(Spell(scrlCastSpell.Value).Name)
     Else
         lblCastSpell.Caption = "Cast Spell: None"
     End If
@@ -2187,9 +2187,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Item(EditorIndex).name = Trim$(txtName.text)
+    Item(EditorIndex).Name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -2334,7 +2334,7 @@ Private Sub cmdPaste_Click()
          
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Item(EditorIndex)), ByVal VarPtr(Item(TmpIndex + 1)), LenB(Item(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).Name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

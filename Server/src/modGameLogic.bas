@@ -1384,6 +1384,7 @@ Public Sub SpawnMapEventsFor(Index As Long, MapNum As Long)
                             .WalkThrough = Map(MapNum).Events(i).Pages(z).WalkThrough
                             .ShowName = Map(MapNum).Events(i).Pages(z).ShowName
                             .FixedDir = Map(MapNum).Events(i).Pages(z).DirFix
+                            .Trigger = Map(MapNum).Events(i).Pages(z).Trigger
                         End With
                         GoTo nextevent
                     End If
@@ -1418,6 +1419,7 @@ nextevent:
                 Buffer.WriteLong Map(MapNum).Events(.eventID).Pages(.PageID).DirFix
                 Buffer.WriteLong Map(MapNum).Events(.eventID).Pages(.PageID).WalkThrough
                 Buffer.WriteLong Map(MapNum).Events(.eventID).Pages(.PageID).ShowName
+                Buffer.WriteByte Map(MapNum).Events(.eventID).Pages(.PageID).Trigger
             End With
             
             SendDataTo Index, Buffer.ToArray
@@ -1432,7 +1434,6 @@ Sub SpawnAllMapGlobalEvents()
     For i = 1 To MAX_MAPS
         Call SpawnGlobalEvents(i)
     Next
-
 End Sub
 
 Sub SpawnGlobalEvents(ByVal MapNum As Long)
@@ -1485,6 +1486,7 @@ Sub SpawnGlobalEvents(ByVal MapNum As Long)
                     TempEventMap(MapNum).Events(TempEventMap(MapNum).EventCount).FixedDir = Map(MapNum).Events(i).Pages(1).DirFix
                     TempEventMap(MapNum).Events(TempEventMap(MapNum).EventCount).WalkingAnim = Map(MapNum).Events(i).Pages(1).WalkAnim
                     TempEventMap(MapNum).Events(TempEventMap(MapNum).EventCount).ShowName = Map(MapNum).Events(i).Pages(1).ShowName
+                    TempEventMap(MapNum).Events(TempEventMap(MapNum).EventCount).Trigger = Map(MapNum).Events(i).Pages(1).Trigger
                 End If
             End If
         Next

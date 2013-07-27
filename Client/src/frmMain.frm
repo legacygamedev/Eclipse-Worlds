@@ -339,124 +339,6 @@ Begin VB.Form frmMain
       Visible         =   0   'False
       Width           =   540
    End
-   Begin VB.PictureBox picTrade 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      BackColor       =   &H00E0E0E0&
-      BorderStyle     =   0  'None
-      ForeColor       =   &H80000008&
-      Height          =   5760
-      Left            =   1800
-      ScaleHeight     =   384
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   480
-      TabIndex        =   13
-      TabStop         =   0   'False
-      Top             =   1440
-      Visible         =   0   'False
-      Width           =   7200
-      Begin VB.PictureBox picYourTrade 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   3705
-         Left            =   435
-         ScaleHeight     =   247
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   193
-         TabIndex        =   15
-         TabStop         =   0   'False
-         Top             =   480
-         Width           =   2895
-      End
-      Begin VB.PictureBox picTheirTrade 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   3705
-         Left            =   3840
-         ScaleHeight     =   247
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   193
-         TabIndex        =   14
-         TabStop         =   0   'False
-         Top             =   480
-         Width           =   2895
-      End
-      Begin VB.Label lblYourWorth 
-         BackStyle       =   0  'Transparent
-         Caption         =   "1234567890"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   1680
-         TabIndex        =   18
-         Top             =   4500
-         Width           =   1815
-      End
-      Begin VB.Label lblTheirWorth 
-         BackStyle       =   0  'Transparent
-         Caption         =   "1234567890"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   5160
-         TabIndex        =   17
-         Top             =   4500
-         Width           =   1815
-      End
-      Begin VB.Label lblTradeStatus 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H000000C0&
-         Height          =   255
-         Left            =   600
-         TabIndex        =   16
-         Top             =   5520
-         Width           =   5895
-      End
-      Begin VB.Image imgAcceptTrade 
-         Height          =   435
-         Left            =   2475
-         Top             =   5040
-         Width           =   1035
-      End
-      Begin VB.Image imgDeclineTrade 
-         Height          =   435
-         Left            =   3675
-         Top             =   5040
-         Width           =   1035
-      End
-   End
    Begin VB.PictureBox picCurrency 
       Appearance      =   0  'Flat
       BackColor       =   &H000C0E10&
@@ -686,33 +568,6 @@ Begin VB.Form frmMain
          Top             =   1440
          Width           =   345
       End
-   End
-   Begin VB.PictureBox picBank 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      AutoSize        =   -1  'True
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Georgia"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   5760
-      Left            =   240
-      ScaleHeight     =   384
-      ScaleMode       =   0  'User
-      ScaleWidth      =   480
-      TabIndex        =   9
-      TabStop         =   0   'False
-      Top             =   360
-      Visible         =   0   'False
-      Width           =   7200
    End
    Begin VB.PictureBox picShop 
       Appearance      =   0  'Flat
@@ -1312,22 +1167,6 @@ Begin VB.Form frmMain
          _ExtentY        =   741
          _Version        =   393216
       End
-      Begin VB.PictureBox picScreen 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H00181C21&
-         BorderStyle     =   0  'None
-         ForeColor       =   &H80000008&
-         Height          =   5760
-         Left            =   0
-         ScaleHeight     =   384
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   512
-         TabIndex        =   101
-         TabStop         =   0   'False
-         Top             =   0
-         Width           =   7680
-      End
       Begin VB.PictureBox picChatbox 
          Appearance      =   0  'Flat
          BorderStyle     =   0  'None
@@ -1367,6 +1206,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -2912,6 +2752,167 @@ Begin VB.Form frmMain
             Width           =   1155
          End
       End
+      Begin VB.PictureBox picScreen 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         BackColor       =   &H00181C21&
+         BorderStyle     =   0  'None
+         ForeColor       =   &H80000008&
+         Height          =   5760
+         Left            =   0
+         ScaleHeight     =   384
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   512
+         TabIndex        =   101
+         TabStop         =   0   'False
+         Top             =   0
+         Width           =   7680
+      End
+   End
+   Begin VB.PictureBox picBank 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      AutoSize        =   -1  'True
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Georgia"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   5760
+      Left            =   150
+      ScaleHeight     =   384
+      ScaleMode       =   0  'User
+      ScaleWidth      =   480
+      TabIndex        =   9
+      TabStop         =   0   'False
+      Top             =   2760
+      Visible         =   0   'False
+      Width           =   7200
+   End
+   Begin VB.PictureBox picTrade 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H00E0E0E0&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H80000008&
+      Height          =   5760
+      Left            =   1800
+      ScaleHeight     =   384
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   480
+      TabIndex        =   13
+      TabStop         =   0   'False
+      Top             =   1440
+      Visible         =   0   'False
+      Width           =   7200
+      Begin VB.PictureBox picYourTrade 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   238
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   3705
+         Left            =   435
+         ScaleHeight     =   247
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   193
+         TabIndex        =   15
+         TabStop         =   0   'False
+         Top             =   480
+         Width           =   2895
+      End
+      Begin VB.PictureBox picTheirTrade 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   238
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   3705
+         Left            =   3840
+         ScaleHeight     =   247
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   193
+         TabIndex        =   14
+         TabStop         =   0   'False
+         Top             =   480
+         Width           =   2895
+      End
+      Begin VB.Label lblYourWorth 
+         BackStyle       =   0  'Transparent
+         Caption         =   "1234567890"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   1680
+         TabIndex        =   18
+         Top             =   4500
+         Width           =   1815
+      End
+      Begin VB.Label lblTheirWorth 
+         BackStyle       =   0  'Transparent
+         Caption         =   "1234567890"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   5160
+         TabIndex        =   17
+         Top             =   4500
+         Width           =   1815
+      End
+      Begin VB.Label lblTradeStatus 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H000000C0&
+         Height          =   255
+         Left            =   600
+         TabIndex        =   16
+         Top             =   5520
+         Width           =   5895
+      End
+      Begin VB.Image imgAcceptTrade 
+         Height          =   435
+         Left            =   2475
+         Top             =   5040
+         Width           =   1035
+      End
+      Begin VB.Image imgDeclineTrade 
+         Height          =   435
+         Left            =   3675
+         Top             =   5040
+         Width           =   1035
+      End
    End
    Begin VB.Label lblSwearFilter 
       AutoSize        =   -1  'True
@@ -3360,7 +3361,7 @@ Private Sub lblRemoveFriend_Click()
     Dialogue "Remove Friend", "What friend do you want to remove?", DIALOGUE_TYPE_REMOVEFRIEND, True
     
     If (lstFriends.ListIndex + 1) > 0 And lstFriends.ListIndex + 1 <= MAX_PEOPLE Then
-        txtDialogue.text = Trim$(Player(MyIndex).Friends(lstFriends.ListIndex + 1).name)
+        txtDialogue.text = Trim$(Player(MyIndex).Friends(lstFriends.ListIndex + 1).Name)
     End If
     Exit Sub
     
@@ -3377,7 +3378,7 @@ Private Sub lblRemoveFoe_Click()
     Dialogue "Remove Foe", "What foe do you want to remove?", DIALOGUE_TYPE_REMOVEFOE, True
     
     If (lstFoes.ListIndex + 1) > 0 And lstFoes.ListIndex + 1 <= MAX_PEOPLE Then
-        txtDialogue.text = Trim$(Player(MyIndex).Foes(lstFoes.ListIndex + 1).name)
+        txtDialogue.text = Trim$(Player(MyIndex).Foes(lstFoes.ListIndex + 1).Name)
     End If
     Exit Sub
     
@@ -3627,7 +3628,7 @@ Private Sub lstDropDownBox_MouseDown(Button As Integer, Shift As Integer, X As S
         If lstDropDownBox.List(lstDropDownBox.ListIndex) = "Cast" Then
             Call SendCastSpell(TmpSpellSlot)
         ElseIf lstDropDownBox.List(lstDropDownBox.ListIndex) = "Forget" Then
-            Dialogue "Forget Spell", "Are you sure you want to forget how to cast " & Trim$(Spell(PlayerSpells(TmpSpellSlot)).name) & "?", DIALOGUE_TYPE_FORGET, True, TmpSpellSlot
+            Dialogue "Forget Spell", "Are you sure you want to forget how to cast " & Trim$(Spell(PlayerSpells(TmpSpellSlot)).Name) & "?", DIALOGUE_TYPE_FORGET, True, TmpSpellSlot
         'ElseIf lstDropDownBox.List(lstDropDownBox.ListIndex) = "Examine" Then
         '    If Trim$(Spell(PlayerSpells(TmpSpellSlot)).Desc) = vbNullString Then
         '        Call AddText("This spell does not have a description, report this to a Staff member!", BrightRed)
@@ -3648,8 +3649,8 @@ Private Sub lstTitles_Click()
         
     If Not lstTitles.ListIndex = 0 Then
         For i = 1 To MAX_TITLES
-            If lstTitles.ListIndex = Player(MyIndex).title(i) Then
-                lblDesc.Caption = Trim$(title(lstTitles.ListIndex).Desc)
+            If lstTitles.ListIndex = Player(MyIndex).Title(i) Then
+                lblDesc.Caption = Trim$(Title(lstTitles.ListIndex).Desc)
             End If
         Next
         Call SendSetTitle(lstTitles.ListIndex)
@@ -4341,7 +4342,7 @@ Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, X As Single
 
     If DragHotbarSlot > 0 Then
         If Hotbar(DragHotbarSlot).sType = 1 Then
-            Call DrawDraggedItem(x + picHotbar.Left - 16, y + picHotbar.Top - 16, True)
+            Call DrawDraggedItem(X + picHotbar.Left - 16, Y + picHotbar.Top - 16, True)
         Else
             Call DrawDraggedSpell(X + picHotbar.Left - 16, Y + picHotbar.Top - 16, True)
         End If
@@ -4355,15 +4356,15 @@ Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, X As Single
         
         If SlotNum <> 0 Then
               If Hotbar(SlotNum).sType = 1 Then ' item
-                x = x + picHotbar.Left - picItemDesc.Width - 1
-                y = y + picHotbar.Top
-                UpdateItemDescWindow Hotbar(SlotNum).Slot, x, y
+                X = X + picHotbar.Left - picItemDesc.Width - 1
+                Y = Y + picHotbar.Top
+                UpdateItemDescWindow Hotbar(SlotNum).Slot, X, Y
                 LastItemDesc = Hotbar(SlotNum).Slot ' Set it so you don't re-set values
                 Exit Sub
               ElseIf Hotbar(SlotNum).sType = 2 Then ' spell
-                x = x + picHotbar.Left - picSpellDesc.Width - 1
-                y = y + picHotbar.Top
-                UpdateSpellDescWindow Hotbar(SlotNum).Slot, x, y
+                X = X + picHotbar.Left - picSpellDesc.Width - 1
+                Y = Y + picHotbar.Top
+                UpdateSpellDescWindow Hotbar(SlotNum).Slot, X, Y
                 LastSpellDesc = Hotbar(SlotNum).Slot
                 LastSpellSlotDesc = SlotNum
                 Exit Sub
@@ -4585,7 +4586,7 @@ Private Sub picShopItems_MouseDown(Button As Integer, Shift As Integer, X As Sin
             Case 0 ' no action, give cost
                 With Shop(InShop).TradeItem(ShopItem)
                     If .CostItem = 0 Then Exit Sub
-                    AddText "You can buy this item for " & .CostValue & " " & Trim$(Item(.CostItem).name) & ".", White
+                    AddText "You can buy this item for " & .CostValue & " " & Trim$(Item(.CostItem).Name) & ".", White
                 End With
             Case 1 ' buy item
                 ' buy item code
@@ -5227,7 +5228,7 @@ Private Sub txtMyChat_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Mytext = txtMyChat
+    MyText = txtMyChat
     Exit Sub
     
 ' Error handler
@@ -5887,7 +5888,7 @@ Private Sub picBank_MouseMove(Button As Integer, Shift As Integer, X As Single, 
             
             X2 = X + picBank.Left + 1
             Y2 = Y + picBank.Top + 1
-            UpdateItemDescWindow bank.Item(BankNum).Num, X2, Y2
+            UpdateItemDescWindow Bank.Item(BankNum).Num, X2, Y2
             Exit Sub
         End If
     End If

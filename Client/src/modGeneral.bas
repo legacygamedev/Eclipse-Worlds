@@ -964,6 +964,8 @@ Public Sub LogoutGame()
     ' Send logout packet
     Call SendLeaveGame
 
+    CloseInterfaces
+    
     GUIVisible = True
     ButtonsVisible = False
     
@@ -1054,3 +1056,14 @@ Dim CurrentTime As Currency
     ' Calculate the difference between the 64-bit times, return as a 32-bit time
     timeGetTime = CurrentTime - GetSystemTimeOffset
 End Function
+
+Public Sub CloseInterfaces()
+    ' Close if in a shop
+    If InShop > 0 Then CloseShop
+
+    ' Close if in bank
+    If InBank Then CloseBank
+
+    ' Close if in trade
+    If frmMain.picTrade.Visible Then CloseTrade
+End Sub

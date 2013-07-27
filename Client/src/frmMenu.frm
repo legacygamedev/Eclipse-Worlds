@@ -737,7 +737,7 @@ Private Sub cmbClass_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     NewCharClass = ClassSelection(cmbClass.ListIndex + 1)
-    NewCharacterDrawSprite
+    Menu_DrawCharacter
     Exit Sub
     
 ' Error handler
@@ -922,7 +922,7 @@ Private Sub optFemale_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     NewCharClass = ClassSelection(cmbClass.ListIndex + 1)
-    NewCharacterDrawSprite
+    Menu_DrawCharacter
     Exit Sub
     
 ' Error handler
@@ -952,7 +952,7 @@ Private Sub optMale_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     NewCharClass = ClassSelection(cmbClass.ListIndex + 1)
-    NewCharacterDrawSprite
+    Menu_DrawCharacter
     Exit Sub
     
 ' Error handler
