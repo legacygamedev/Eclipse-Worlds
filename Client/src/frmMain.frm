@@ -1367,7 +1367,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -3029,7 +3028,6 @@ Private MoveForm As Boolean
 Private PresentX As Long
 Private PresentY As Long
 
-Private Declare Function BringWindowToTop Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Function GetForegroundWindow Lib "user32.dll" () As Long
 Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As Any, ByVal lpWindowName _
          As Any) As Long
@@ -4342,8 +4340,8 @@ Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, X As Single
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If DragHotbarSlot > 0 Then
-        If Hotbar(DragHotbarSlot).SType = 1 Then
-            Call DrawDraggedItem(X + picHotbar.Left - 16, Y + picHotbar.Top - 16, True)
+        If Hotbar(DragHotbarSlot).sType = 1 Then
+            Call DrawDraggedItem(x + picHotbar.Left - 16, y + picHotbar.Top - 16, True)
         Else
             Call DrawDraggedSpell(X + picHotbar.Left - 16, Y + picHotbar.Top - 16, True)
         End If
@@ -4356,16 +4354,16 @@ Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, X As Single
         SlotNum = IsHotbarSlot(X, Y)
         
         If SlotNum <> 0 Then
-              If Hotbar(SlotNum).SType = 1 Then ' item
-                X = X + picHotbar.Left - picItemDesc.Width - 1
-                Y = Y + picHotbar.Top
-                UpdateItemDescWindow Hotbar(SlotNum).Slot, X, Y
+              If Hotbar(SlotNum).sType = 1 Then ' item
+                x = x + picHotbar.Left - picItemDesc.Width - 1
+                y = y + picHotbar.Top
+                UpdateItemDescWindow Hotbar(SlotNum).Slot, x, y
                 LastItemDesc = Hotbar(SlotNum).Slot ' Set it so you don't re-set values
                 Exit Sub
-              ElseIf Hotbar(SlotNum).SType = 2 Then ' spell
-                X = X + picHotbar.Left - picSpellDesc.Width - 1
-                Y = Y + picHotbar.Top
-                UpdateSpellDescWindow Hotbar(SlotNum).Slot, X, Y
+              ElseIf Hotbar(SlotNum).sType = 2 Then ' spell
+                x = x + picHotbar.Left - picSpellDesc.Width - 1
+                y = y + picHotbar.Top
+                UpdateSpellDescWindow Hotbar(SlotNum).Slot, x, y
                 LastSpellDesc = Hotbar(SlotNum).Slot
                 LastSpellSlotDesc = SlotNum
                 Exit Sub
@@ -5087,10 +5085,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
-                If frmAdmin.Visible And GetForegroundWindow = frmAdmin.hwnd Then
+                If frmAdmin.Visible And GetForegroundWindow = frmAdmin.hWnd Then
                     Unload frmAdmin
-                ElseIf frmAdmin.Visible And GetForegroundWindow <> frmAdmin.hwnd Then
-                    BringWindowToTop (frmAdmin.hwnd)
+                ElseIf frmAdmin.Visible And GetForegroundWindow <> frmAdmin.hWnd Then
+                    BringWindowToTop (frmAdmin.hWnd)
                     InitAdminPanel
                 Else
                     InitAdminPanel
@@ -5229,7 +5227,7 @@ Private Sub txtMyChat_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    MyText = txtMyChat
+    Mytext = txtMyChat
     Exit Sub
     
 ' Error handler

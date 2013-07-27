@@ -4,20 +4,20 @@ Begin VB.Form frmAdmin
    BackColor       =   &H80000002&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Admin Panel"
-   ClientHeight    =   8625
+   ClientHeight    =   8715
    ClientLeft      =   810
    ClientTop       =   330
-   ClientWidth     =   2850
+   ClientWidth     =   2985
    Icon            =   "frmAdmin.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   575
+   ScaleHeight     =   581
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   190
+   ScaleWidth      =   199
    ShowInTaskbar   =   0   'False
-   Begin VB.PictureBox picAdmin 
+   Begin VB.PictureBox picPanel 
       Appearance      =   0  'Flat
       BackColor       =   &H80000002&
       BorderStyle     =   0  'None
@@ -31,36 +31,191 @@ Begin VB.Form frmAdmin
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   8640
-      Left            =   30
-      ScaleHeight     =   576
+      Height          =   8655
+      Left            =   60
+      ScaleHeight     =   577
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   189
-      TabIndex        =   3
+      ScaleWidth      =   191
+      TabIndex        =   1
       TabStop         =   0   'False
-      Top             =   0
-      Width           =   2835
+      Top             =   15
+      Width           =   2865
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   9
+         Left            =   540
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   53
+         ToolTipText     =   "Change sprites via dbl click."
+         Top             =   6225
+         Width           =   420
+      End
+      Begin VB.PictureBox picRecentItem 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000001&
+         ForeColor       =   &H80000008&
+         Height          =   480
+         Left            =   195
+         ScaleHeight     =   450
+         ScaleWidth      =   450
+         TabIndex        =   52
+         Top             =   6870
+         Width           =   480
+      End
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   8
+         Left            =   990
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   50
+         ToolTipText     =   "Auto Life ?? "
+         Top             =   5790
+         Width           =   420
+      End
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   7
+         Left            =   540
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   49
+         ToolTipText     =   "Reset Scrolls"
+         Top             =   5790
+         Width           =   420
+      End
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   6
+         Left            =   90
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   48
+         ToolTipText     =   "Teleport scrolls"
+         Top             =   5790
+         Width           =   420
+      End
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   5
+         Left            =   990
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   47
+         ToolTipText     =   "Spells, scrolls, magic."
+         Top             =   5355
+         Width           =   420
+      End
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   4
+         Left            =   540
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   46
+         ToolTipText     =   "No idea???"
+         Top             =   5355
+         Width           =   420
+      End
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   3
+         Left            =   90
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   45
+         ToolTipText     =   "Potions, elixirs, food."
+         Top             =   5355
+         Width           =   420
+      End
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   2
+         Left            =   990
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   44
+         ToolTipText     =   "Things you can wear"
+         Top             =   4920
+         Width           =   420
+      End
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   1
+         Left            =   540
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   43
+         ToolTipText     =   "Things without a type"
+         Top             =   4920
+         Width           =   420
+      End
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   0
+         Left            =   90
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   42
+         ToolTipText     =   "Recently spawned items"
+         Top             =   4920
+         Width           =   420
+      End
+      Begin MSComCtl2.UpDown UpDown1 
+         Height          =   255
+         Left            =   765
+         TabIndex        =   40
+         Top             =   6990
+         Width           =   480
+         _ExtentX        =   847
+         _ExtentY        =   450
+         _Version        =   393216
+         Orientation     =   1
+         Enabled         =   0   'False
+      End
+      Begin VB.CommandButton cmdSpawnLast 
+         Caption         =   "Spawn Recent"
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   30
+         TabIndex        =   39
+         Top             =   7935
+         Width           =   1380
+      End
+      Begin VB.TextBox txtLastAmount 
+         Alignment       =   2  'Center
+         Appearance      =   0  'Flat
+         Enabled         =   0   'False
+         ForeColor       =   &H00800080&
+         Height          =   285
+         Left            =   30
+         TabIndex        =   38
+         Text            =   "Recent Amount"
+         Top             =   7620
+         Width           =   1350
+      End
       Begin VB.PictureBox picSprite 
          Appearance      =   0  'Flat
          BackColor       =   &H00000000&
          ForeColor       =   &H80000008&
          Height          =   720
-         Left            =   1650
+         Left            =   1830
          ScaleHeight     =   46
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   40
-         Top             =   2310
+         TabIndex        =   35
+         Top             =   2160
          Width           =   510
       End
       Begin VB.TextBox txtSprite 
          Alignment       =   2  'Center
          Appearance      =   0  'Flat
          Height          =   285
-         Left            =   1590
-         TabIndex        =   39
+         Left            =   1770
+         TabIndex        =   34
          Text            =   "0"
-         Top             =   3090
+         Top             =   2940
          Width           =   600
       End
       Begin VB.ComboBox cmbAccess 
@@ -72,7 +227,7 @@ Begin VB.Form frmAdmin
          ItemData        =   "frmAdmin.frx":038A
          Left            =   480
          List            =   "frmAdmin.frx":039D
-         TabIndex        =   38
+         TabIndex        =   33
          Text            =   "Player's Access"
          Top             =   810
          Width           =   1695
@@ -83,7 +238,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000002&
          Height          =   315
          Left            =   120
-         TabIndex        =   37
+         TabIndex        =   32
          Text            =   "Choose Player"
          Top             =   390
          Width           =   2055
@@ -96,7 +251,7 @@ Begin VB.Form frmAdmin
          Left            =   2280
          ScaleHeight     =   285
          ScaleWidth      =   345
-         TabIndex        =   36
+         TabIndex        =   31
          Top             =   390
          Width           =   375
       End
@@ -113,7 +268,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1050
-         TabIndex        =   30
+         TabIndex        =   25
          TabStop         =   0   'False
          Top             =   1800
          Width           =   1725
@@ -130,10 +285,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1440
-         TabIndex        =   29
+         Left            =   1590
+         TabIndex        =   24
          TabStop         =   0   'False
-         Top             =   6780
+         Top             =   4500
          Width           =   1215
       End
       Begin VB.CommandButton cmdAClass 
@@ -148,11 +303,11 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   25
+         Left            =   1590
+         TabIndex        =   22
          TabStop         =   0   'False
-         Top             =   6780
-         Width           =   1200
+         Top             =   4230
+         Width           =   1215
       End
       Begin VB.CommandButton cmdAMute 
          Caption         =   "Mute"
@@ -167,7 +322,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   24
+         TabIndex        =   21
          TabStop         =   0   'False
          Top             =   1500
          Width           =   855
@@ -184,10 +339,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   23
+         Left            =   1590
+         TabIndex        =   20
          TabStop         =   0   'False
-         Top             =   6480
+         Top             =   6645
          Width           =   1215
       End
       Begin VB.CommandButton cmdABanE 
@@ -202,10 +357,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1440
-         TabIndex        =   22
+         Left            =   1590
+         TabIndex        =   19
          TabStop         =   0   'False
-         Top             =   6180
+         Top             =   3960
          Width           =   1215
       End
       Begin VB.CommandButton cmdLevelUp 
@@ -221,7 +376,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   21
+         TabIndex        =   18
          TabStop         =   0   'False
          Top             =   2100
          Width           =   855
@@ -238,10 +393,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   20
+         Left            =   1590
+         TabIndex        =   17
          TabStop         =   0   'False
-         Top             =   6180
+         Top             =   3690
          Width           =   1215
       End
       Begin VB.CommandButton cmdARespawn 
@@ -256,47 +411,11 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   19
+         Left            =   165
+         TabIndex        =   16
          TabStop         =   0   'False
-         Top             =   4650
-         Width           =   2535
-      End
-      Begin VB.CommandButton cmdASpawn 
-         Caption         =   "Spawn Item"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   750
-         TabIndex        =   18
-         TabStop         =   0   'False
-         Top             =   7980
-         Width           =   1215
-      End
-      Begin VB.HScrollBar scrlAAmount 
-         Height          =   255
-         Left            =   1530
-         Min             =   1
-         TabIndex        =   2
-         Top             =   7680
-         Value           =   1
+         Top             =   4065
          Width           =   1155
-      End
-      Begin VB.HScrollBar scrlAItem 
-         Height          =   255
-         Left            =   1830
-         Min             =   1
-         TabIndex        =   1
-         Top             =   7410
-         Value           =   1
-         Width           =   825
       End
       Begin VB.CommandButton cmdASpell 
          Caption         =   "Spell"
@@ -310,10 +429,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   17
+         Left            =   1590
+         TabIndex        =   15
          TabStop         =   0   'False
-         Top             =   5880
+         Top             =   6390
          Width           =   1215
       End
       Begin VB.CommandButton cmdAShop 
@@ -328,10 +447,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1440
-         TabIndex        =   16
+         Left            =   1590
+         TabIndex        =   14
          TabStop         =   0   'False
-         Top             =   5880
+         Top             =   6120
          Width           =   1215
       End
       Begin VB.CommandButton cmdAResource 
@@ -346,10 +465,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   15
+         Left            =   1590
+         TabIndex        =   13
          TabStop         =   0   'False
-         Top             =   5580
+         Top             =   5850
          Width           =   1215
       End
       Begin VB.CommandButton cmdANpc 
@@ -364,8 +483,8 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1440
-         TabIndex        =   14
+         Left            =   1590
+         TabIndex        =   12
          TabStop         =   0   'False
          Top             =   5580
          Width           =   1215
@@ -382,10 +501,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   13
+         Left            =   1590
+         TabIndex        =   11
          TabStop         =   0   'False
-         Top             =   5280
+         Top             =   5040
          Width           =   1215
       End
       Begin VB.CommandButton cmdAItem 
@@ -400,10 +519,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1440
-         TabIndex        =   12
+         Left            =   1590
+         TabIndex        =   10
          TabStop         =   0   'False
-         Top             =   5280
+         Top             =   4770
          Width           =   1215
       End
       Begin VB.CommandButton cmdAMapReport 
@@ -418,11 +537,11 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   11
+         Left            =   180
+         TabIndex        =   9
          TabStop         =   0   'False
-         Top             =   4350
-         Width           =   1215
+         Top             =   3495
+         Width           =   1140
       End
       Begin VB.CommandButton cmdALoc 
          Caption         =   "Location"
@@ -436,11 +555,11 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1440
-         TabIndex        =   10
+         Left            =   165
+         TabIndex        =   8
          TabStop         =   0   'False
-         Top             =   4350
-         Width           =   1215
+         Top             =   3780
+         Width           =   1155
       End
       Begin VB.CommandButton cmdAWarp 
          Caption         =   "Warp To"
@@ -454,11 +573,11 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1440
-         TabIndex        =   9
+         Left            =   195
+         TabIndex        =   7
          TabStop         =   0   'False
-         Top             =   4050
-         Width           =   1215
+         Top             =   3210
+         Width           =   1125
       End
       Begin VB.TextBox txtAMap 
          BeginProperty Font 
@@ -471,9 +590,9 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   285
-         Left            =   840
+         Left            =   825
          TabIndex        =   0
-         Top             =   3990
+         Top             =   2850
          Width           =   465
       End
       Begin VB.CommandButton cmdAWarpMeTo 
@@ -489,7 +608,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1050
-         TabIndex        =   8
+         TabIndex        =   6
          TabStop         =   0   'False
          Top             =   1500
          Width           =   1725
@@ -507,7 +626,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1050
-         TabIndex        =   7
+         TabIndex        =   5
          TabStop         =   0   'False
          Top             =   1200
          Width           =   1725
@@ -525,7 +644,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   6
+         TabIndex        =   4
          TabStop         =   0   'False
          Top             =   1200
          Width           =   855
@@ -543,7 +662,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   5
+         TabIndex        =   3
          TabStop         =   0   'False
          Top             =   1800
          Width           =   855
@@ -560,23 +679,23 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1440
-         TabIndex        =   4
+         Left            =   1590
+         TabIndex        =   2
          TabStop         =   0   'False
-         Top             =   6480
+         Top             =   5310
          Width           =   1215
       End
       Begin MSComCtl2.UpDown upSprite 
          Height          =   555
-         Left            =   2250
-         TabIndex        =   41
-         Top             =   2430
+         Left            =   2430
+         TabIndex        =   36
+         Top             =   2280
          Width           =   255
          _ExtentX        =   450
          _ExtentY        =   979
          _Version        =   393216
          BuddyControl    =   "txtSprite"
-         BuddyDispid     =   196611
+         BuddyDispid     =   196615
          OrigLeft        =   3990
          OrigTop         =   1770
          OrigRight       =   4245
@@ -584,6 +703,59 @@ Begin VB.Form frmAdmin
          SyncBuddy       =   -1  'True
          BuddyProperty   =   65547
          Enabled         =   -1  'True
+      End
+      Begin VB.Label lblRecent 
+         BackColor       =   &H80000002&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Recent"
+         BeginProperty Font 
+            Name            =   "Myriad Arabic"
+            Size            =   12
+            Charset         =   238
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00800080&
+         Height          =   315
+         Left            =   435
+         TabIndex        =   51
+         Top             =   6600
+         Width           =   555
+      End
+      Begin VB.Label lblItemName 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Item Name: None"
+         Enabled         =   0   'False
+         ForeColor       =   &H00800080&
+         Height          =   195
+         Left            =   -45
+         TabIndex        =   41
+         Top             =   7380
+         Width           =   1470
+      End
+      Begin VB.Label lblCat 
+         Alignment       =   2  'Center
+         BackColor       =   &H80000002&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Categories"
+         BeginProperty Font 
+            Name            =   "Myriad Arabic"
+            Size            =   12
+            Charset         =   238
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00800080&
+         Height          =   255
+         Left            =   105
+         TabIndex        =   37
+         Top             =   4635
+         Width           =   1260
       End
       Begin VB.Label lblStatus 
          Alignment       =   2  'Center
@@ -600,9 +772,9 @@ Begin VB.Form frmAdmin
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   375
-         Left            =   30
-         TabIndex        =   35
-         Top             =   8250
+         Left            =   45
+         TabIndex        =   30
+         Top             =   8235
          Visible         =   0   'False
          Width           =   2760
          WordWrap        =   -1  'True
@@ -622,10 +794,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   210
-         TabIndex        =   34
-         Top             =   3600
-         Width           =   2385
+         Left            =   270
+         TabIndex        =   29
+         Top             =   2475
+         Width           =   975
       End
       Begin VB.Label lblEditors 
          Alignment       =   2  'Center
@@ -641,11 +813,12 @@ Begin VB.Form frmAdmin
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         ForeColor       =   &H000000C0&
          Height          =   195
-         Left            =   180
-         TabIndex        =   33
-         Top             =   4920
-         Width           =   2385
+         Left            =   1425
+         TabIndex        =   28
+         Top             =   3345
+         Width           =   1410
       End
       Begin VB.Label lblSpawning 
          Alignment       =   2  'Center
@@ -661,11 +834,12 @@ Begin VB.Form frmAdmin
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         ForeColor       =   &H00800080&
          Height          =   285
          Left            =   150
-         TabIndex        =   32
-         Top             =   7050
-         Width           =   2445
+         TabIndex        =   27
+         Top             =   4380
+         Width           =   1140
       End
       Begin VB.Label lblPlayers 
          Alignment       =   2  'Center
@@ -683,7 +857,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   31
+         TabIndex        =   26
          Top             =   0
          Width           =   2505
       End
@@ -694,55 +868,21 @@ Begin VB.Form frmAdmin
          Y1              =   18
          Y2              =   18
       End
-      Begin VB.Label lblAAmount 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Amount: 1"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   120
-         TabIndex        =   28
-         Top             =   7740
-         Width           =   1335
-      End
-      Begin VB.Label lblAItem 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Item: None"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   120
-         TabIndex        =   27
-         Top             =   7440
-         Width           =   1875
-      End
       Begin VB.Line Line4 
+         BorderColor     =   &H00800080&
          BorderWidth     =   3
          X1              =   8
-         X2              =   176
-         Y1              =   488
-         Y2              =   488
+         X2              =   89
+         Y1              =   311
+         Y2              =   311
       End
       Begin VB.Line Line2 
+         BorderColor     =   &H000000C0&
          BorderWidth     =   3
-         X1              =   8
-         X2              =   176
-         Y1              =   344
-         Y2              =   344
+         X1              =   103
+         X2              =   186
+         Y1              =   240
+         Y2              =   240
       End
       Begin VB.Label Label30 
          BackStyle       =   0  'Transparent
@@ -757,17 +897,17 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   210
-         TabIndex        =   26
-         Top             =   4020
+         Left            =   195
+         TabIndex        =   23
+         Top             =   2880
          Width           =   735
       End
       Begin VB.Line Line1 
          BorderWidth     =   3
          X1              =   10
-         X2              =   178
-         Y1              =   258
-         Y2              =   258
+         X2              =   90
+         Y1              =   183
+         Y2              =   183
       End
    End
 End
@@ -776,9 +916,39 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
+
 Dim refreshDown As Boolean
 Dim autoAccess As Boolean, autoSprite As Boolean
 Dim currentSprite As Long
+Private catSub As Boolean
+Public lastIndex As Integer
+Public currentCategory As String
+
+Private Const WM_ChangeUIState As Long = &H127
+Private Const UIS_HideRectangle As Integer = &H1
+Private Const UIS_ShowRectangle As Integer = &H2
+Private Const UISF_FocusRectangle As Integer = &H1
+
+
+ 
+Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, _
+ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+
+ 
+Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
+
+'Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" ( _
+'    ByVal hWnd As Long, ByVal wMsg As Long, _
+'    ByVal wParam As Long, lParam As Any) As Long
+'
+'Private Function MakeLong(ByVal wLow As Integer, _
+'    ByVal wHigh As Integer) As Long
+'    MakeLong = wHigh * &H10000 + wLow
+'End Function
+
+
+
 Private Sub cmbAccess_Click()
     If autoAccess Then
         autoAccess = False
@@ -790,6 +960,7 @@ Private Sub cmbAccess_Click()
 End Sub
 
 Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String, CurrentAccess As Byte)
+    Dim i As Long
     If PlayerName = cmbPlayersOnline.text Then
         If Success = 0 Then
             For i = 0 To UBound(g_playersOnline)
@@ -797,33 +968,33 @@ Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String
                     Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
                     setAdminAccessLevel
                     
-                    DisplayStatus Message, Status.Error
+                    DisplayStatus Message, status.Error
                 End If
             Next i
         ElseIf Success = 1 Then
             Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
             setAdminAccessLevel
             
-            DisplayStatus Message, Status.Correct
+            DisplayStatus Message, status.Correct
         End If
     End If
     cmbPlayersOnline.Enabled = True
 End Sub
 
-Public Sub DisplayStatus(ByVal msg As String, msgType As Status)
+Public Sub DisplayStatus(ByVal Msg As String, msgType As status)
     Select Case msgType
-        Case Status.Error:
+        Case status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = msg
-        Case Status.Correct:
+            lblStatus.Caption = Msg
+        Case status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = msg
-        Case Status.Neutral:
+            lblStatus.Caption = Msg
+        Case status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = msg
-        Case Status.Info_:
+            lblStatus.Caption = Msg
+        Case status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = msg
+            lblStatus.Caption = Msg
     End Select
     lblStatus.Visible = True
 End Sub
@@ -859,7 +1030,7 @@ Private Sub cmbPlayersOnline_Click()
 End Sub
 
 Private Sub setAdminAccessLevel()
-    Dim accessLvl As String, tempTxt As String
+    Dim accessLvl As String, tempTxt As String, i As Long
     
     ' Set Access Level
     For i = 0 To UBound(g_playersOnline)
@@ -912,28 +1083,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub cmdASetPlayerSprite_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-
-    ' Subscript out of range
-    If Len(Trim$(cmbPlayersOnline.text)) < 1 Then Exit Sub
-    If IsNumeric(Trim$(cmbPlayersOnline.text)) Then Exit Sub
-    If Not IsNumeric(Trim$(txtASprite.text)) Then Exit Sub
-    If Int(txtASprite.text) > NumCharacters Or Int(txtASprite.text) < 1 Then Exit Sub
-
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdASetPlayerSprite_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
 Private Sub cmdAAnim_Click()
     ' If debug mode, handle error then exit out
@@ -1086,26 +1235,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub cmdASprite_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-
-    If Len(Trim$(txtASprite.text)) < 1 Then Exit Sub
-    If Not IsNumeric(Trim$(txtASprite.text)) Then Exit Sub
-
-    SendSetSprite CLng(Trim$(txtASprite.text))
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdASprite_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
 Private Sub cmdAMapReport_Click()
     ' If debug mode, handle error then exit out
@@ -1278,23 +1407,7 @@ errorhandler:
 End Sub
 
 
-Private Sub cmdASpawn_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-    
-    SendSpawnItem scrlAItem.Value, scrlAAmount.Value
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdASpawn_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
 Private Sub cmdABanE_Click()
     ' If debug mode, handle error then exit out
@@ -1388,67 +1501,135 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub Command1_Click()
+    frmItemSpawner.Visible = True
+End Sub
+
+Private Sub cmdRecent_Click()
+    frmItemSpawner.Visible = True
+End Sub
+
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
-                If frmAdmin.Visible And GetForegroundWindow = frmAdmin.hwnd Then
+                If frmAdmin.Visible And GetForegroundWindow = frmAdmin.hWnd Then
                     Unload frmAdmin
                 End If
             End If
     End Select
 End Sub
 
-Private Sub picAdmin_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
+Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+    Select Case Index
+    
+        Case 0
+            lblCat.Caption = "Recent"
+        Case 1
+            lblCat.Caption = "None"
+        Case 2
+            lblCat.Caption = "Equipment"
+        Case 3
+            lblCat.Caption = "Consumable"
+        Case 4
+            lblCat.Caption = "Title"
+        Case 5
+            lblCat.Caption = "Spell"
+        Case 6
+            lblCat.Caption = "Teleport"
+        Case 7
+            lblCat.Caption = "Reset Stats"
+        Case 8
+            lblCat.Caption = "Auto Life"
+        Case 9
+            lblCat.Caption = "Change Sprite"
+    End Select
 End Sub
 
-Private Sub picAdmin_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+
+Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+    If optCat(Index).Value = False Then
+        optCat(Index).Picture = LoadResPicture(100 + Index, vbResBitmap)
+        
+    Else
+
+        optCat(Index).Picture = LoadResPicture(110 + Index, vbResBitmap)
+
+    Select Case Index
+    
+        Case 0
+            currentCategory = "Recent"
+        Case 1
+            currentCategory = "None"
+        Case 2
+            currentCategory = "Equipment"
+        Case 3
+            currentCategory = "Consumable"
+        Case 4
+            currentCategory = "Title"
+        Case 5
+            currentCategory = "Spell"
+        Case 6
+            currentCategory = "Teleport"
+        Case 7
+            currentCategory = "Reset Stats"
+        Case 8
+            currentCategory = "Auto Life"
+        Case 9
+            currentCategory = "Change Sprite"
+    End Select
+        If lastIndex <> -1 Then
+            If optCat(lastIndex).Value = False Then
+                optCat(lastIndex).Picture = LoadResPicture(100 + lastIndex, vbResBitmap)
+            End If
+        End If
+        
+        If Button <> 0 Then
+            If lastIndex = Index Then
+                frmItemSpawner.Visible = False
+                optCat(Index).Value = False
+                optCat(Index).Picture = LoadResPicture(100 + lastIndex, vbResBitmap)
+                lastIndex = -1
+                Exit Sub
+            Else
+                frmItemSpawner.Visible = True
+                frmItemSpawner.tabItems.Tabs(Index + 1).Selected = True
+                BringWindowToTop (frmItemSpawner.hWnd)
+            End If
+        End If
+
+        
+        lastIndex = Index
+    End If
+End Sub
+
+Private Sub picPanel_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+    picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
+    lblCat.Caption = currentCategory
+    
+End Sub
+
+Private Sub picPanel_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     refreshDown = False
 End Sub
 
-Private Sub picRefresh_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picRefresh_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
     refreshDown = True
     picRefresh.Picture = LoadResPicture("REFRESH_DOWN", vbResBitmap)
 End Sub
 
-Private Sub picRefresh_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picRefresh_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     If Not refreshDown Then
         picRefresh.Picture = LoadResPicture("REFRESH_OVER", vbResBitmap)
     End If
 End Sub
 
-Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
     refreshDown = False
     refreshingAdminList = True
     SendRequestPlayersOnline
 End Sub
 
-Private Sub scrlAItem_Change()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    UpdateAdminScrollBar
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "scrlAItem_Change", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
-Private Sub scrlAAmount_Change()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    lblAAmount.Caption = "Amount: " & scrlAAmount.Value
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "scrlAAmount_Change", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
 Public Sub UpdatePlayersOnline()
     Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
@@ -1507,6 +1688,19 @@ Public Sub UpdatePlayersOnline()
     
     lblPlayers.Caption = "Players: " & overallCounter
 End Sub
+Public Sub styleButtons()
+Dim i As Long, temp1 As Long, temp2 As Long
+    For i = 0 To optCat.UBound
+        optCat(i).Value = False
+        optCat(i).Picture = LoadResPicture(100 + i, vbResBitmap)
+    Next
+    If Not catSub Then
+        catSub = True
+        For i = 0 To optCat.UBound
+            SubClassHwnd optCat(i).hWnd
+        Next
+    End If
+End Sub
 Public Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1517,12 +1711,17 @@ Public Sub Form_Load()
         txtSprite.Enabled = False
         upSprite.Enabled = False
     End If
+    
+    lastIndex = -1
+    styleButtons
+        
     upSprite.max = NumCharacters
     upSprite.min = 0
     
+    currentCategory = lblCat.Caption
+    
     LastAdminSpriteTimer = timeGetTime
 
-    scrlAItem.max = MAX_ITEMS
     UpdateAdminScrollBar
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
     refreshingAdminList = True
@@ -1535,18 +1734,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub txtASprite_GotFocus()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    txtASprite.SelStart = Len(txtASprite)
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "txtASprite_GotFocus", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
 Private Sub txtAMap_GotFocus()
     ' If debug mode, handle error then exit out
@@ -1561,20 +1748,8 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub txtAName_GotFocus()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    txtAName.SelStart = Len(txtAName)
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "txtAName_GotFocus", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min As Long, max As Long, Optional defaultVal As Long = 0) As Boolean
-    Dim test As textBox
+    Dim test As textBox, TempValue As String
     
     If textBox.text = "" Then
         textBox.text = CStr(defaultVal)
@@ -1629,40 +1804,40 @@ End Function
 Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
     If Not IsNumeric(textBox.text) Then
         textBox.text = CStr(valueToChange)
-        displayFieldStatus textBox, " field accepts only Numbers!" & vbCrLf & "Reverting to last correct value...", Status.Correct
+        displayFieldStatus textBox, " field accepts only Numbers!" & vbCrLf & "Reverting to last correct value...", status.Correct
     Else
         textBox.text = CStr(valueToChange)
-        displayFieldStatus textBox, " field is correct. Saving...", Status.Correct
+        displayFieldStatus textBox, " field is correct. Saving...", status.Correct
     End If
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
-    Dim msg As String
+    Dim Msg As String
     
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
     Else
-        msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
-        displayFieldStatus txtBox, msg, Status.Error
+        Msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
+        displayFieldStatus txtBox, Msg, status.Error
         verifyValue = False
     End If
 End Function
-Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
+Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal Msg As String, msgType As status)
     lblStatus.Visible = True
     Select Case msgType
 
-        Case Status.Error:
+        Case status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
-        Case Status.Correct:
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
+        Case status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
-        Case Status.Neutral:
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
+        Case status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
-        Case Status.Info_:
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
+        Case status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
     End Select
 End Sub
 Private Sub selectValue(ByRef textBox As textBox)
@@ -1671,6 +1846,7 @@ Private Sub selectValue(ByRef textBox As textBox)
 End Sub
 
 Private Sub txtSprite_Change()
+    Dim i As Long
     If autoSprite Then
         autoSprite = False
         Exit Sub

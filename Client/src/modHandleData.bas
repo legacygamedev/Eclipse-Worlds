@@ -185,7 +185,7 @@ errorhandler:
 End Sub
 
 Sub HandleAlertMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim msg As String
+    Dim Msg As String
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -194,7 +194,7 @@ Sub HandleAlertMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
 
-    msg = buffer.ReadString
+    Msg = buffer.ReadString
     Set buffer = Nothing
     
     frmLoad.Visible = False
@@ -203,7 +203,7 @@ Sub HandleAlertMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As
         frmMain.Visible = False
     End If
     
-    Call AlertMsg(msg)
+    Call AlertMsg(Msg)
     
     If InGame Then
         LogoutGame
@@ -608,7 +608,7 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
     Player(i).CurTitle = buffer.ReadByte
     
     ' Status
-    Player(i).Status = buffer.ReadString
+    Player(i).status = buffer.ReadString
     
     ' Check if the player is the client player
     If i = MyIndex Then
@@ -770,7 +770,7 @@ Private Sub HandlePlayerStatus(ByVal Index As Long, ByRef data() As Byte, ByVal 
     
     Index = buffer.ReadLong
     
-    Player(Index).Status = buffer.ReadString
+    Player(Index).status = buffer.ReadString
     Set buffer = Nothing
     Exit Sub
     
@@ -1118,7 +1118,7 @@ Sub HandleMapData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As 
     Dim n As Long
     Dim X As Long
     Dim Y As Long
-    Dim i As Long, Z As Long, w As Long
+    Dim i As Long, z As Long, w As Long
     Dim buffer As clsBuffer
     Dim MapNum As Long
     
@@ -1172,8 +1172,8 @@ Sub HandleMapData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As 
                 Map.Tile(X, Y).Layer(i).Tileset = buffer.ReadLong
             Next
             
-            For Z = 1 To MapLayer.Layer_Count - 1
-                Map.Tile(X, Y).Autotile(Z) = buffer.ReadLong
+            For z = 1 To MapLayer.Layer_Count - 1
+                Map.Tile(X, Y).Autotile(z) = buffer.ReadLong
             Next
             
             Map.Tile(X, Y).Type = buffer.ReadByte
@@ -1345,7 +1345,7 @@ End Sub
 
 Private Sub HandleGlobalMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim msg As String
+    Dim Msg As String
     Dim Color As Long
 
     ' If debug mode, handle error then exit out
@@ -1353,9 +1353,9 @@ Private Sub HandleGlobalMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
-    msg = buffer.ReadString
+    Msg = buffer.ReadString
     Color = buffer.ReadLong
-    Call AddText(CheckMessage(msg), Color)
+    Call AddText(CheckMessage(Msg), Color)
     Exit Sub
     
 ' Error handler
@@ -1366,7 +1366,7 @@ End Sub
 
 Private Sub HandlePlayerMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim msg As String
+    Dim Msg As String
     Dim Color As Byte
     Dim i As Long
 
@@ -1375,24 +1375,24 @@ Private Sub HandlePlayerMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
-    msg = buffer.ReadString
+    Msg = buffer.ReadString
     Color = buffer.ReadByte
     
     ' Prevent ascii characters
-    For i = 1 To Len(msg)
+    For i = 1 To Len(Msg)
         ' limit the ASCII
-        If AscW(Mid$(msg, i, 1)) < 32 Or AscW(Mid$(msg, i, 1)) > 126 Then
+        If AscW(Mid$(Msg, i, 1)) < 32 Or AscW(Mid$(Msg, i, 1)) > 126 Then
             ' limit the extended ASCII
-            If AscW(Mid$(msg, i, 1)) < 128 Or AscW(Mid$(msg, i, 1)) > 168 Then
+            If AscW(Mid$(Msg, i, 1)) < 128 Or AscW(Mid$(Msg, i, 1)) > 168 Then
                 ' limit the extended ASCII
-                If AscW(Mid$(msg, i, 1)) < 224 Or AscW(Mid$(msg, i, 1)) > 253 Then
-                    Mid$(msg, i, 1) = ""
+                If AscW(Mid$(Msg, i, 1)) < 224 Or AscW(Mid$(Msg, i, 1)) > 253 Then
+                    Mid$(Msg, i, 1) = ""
                 End If
             End If
         End If
     Next
     
-    Call AddText(CheckMessage(msg), Color)
+    Call AddText(CheckMessage(Msg), Color)
     Exit Sub
     
 ' Error handler
@@ -1403,7 +1403,7 @@ End Sub
 
 Private Sub HandleMapMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim msg As String
+    Dim Msg As String
     Dim Color As Byte
 
     ' If debug mode, handle error then exit out
@@ -1411,9 +1411,9 @@ Private Sub HandleMapMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
     
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
-    msg = buffer.ReadString
+    Msg = buffer.ReadString
     Color = buffer.ReadByte
-    Call AddText(CheckMessage(msg), Color)
+    Call AddText(CheckMessage(Msg), Color)
     Exit Sub
     
 ' Error handler
@@ -1424,7 +1424,7 @@ End Sub
 
 Private Sub HandleAdminMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim msg As String
+    Dim Msg As String
     Dim Color As Byte
 
     ' If debug mode, handle error then exit out
@@ -1432,9 +1432,9 @@ Private Sub HandleAdminMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Star
     
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
-    msg = buffer.ReadString
+    Msg = buffer.ReadString
     Color = buffer.ReadByte
-    Call AddText(CheckMessage(msg), Color)
+    Call AddText(CheckMessage(Msg), Color)
     Exit Sub
     
 ' Error handler
@@ -1482,7 +1482,7 @@ Private Sub HandleItemEditor()
 
         ' Add the names
         For i = 1 To MAX_ITEMS
-            .lstIndex.AddItem i & ": " & Trim$(Item(i).name)
+            .lstIndex.AddItem i & ": " & Trim$(item(i).name)
         Next
 
         .Show
@@ -1538,10 +1538,10 @@ Private Sub HandleUpdateItem(ByVal Index As Long, ByRef data() As Byte, ByVal St
     n = buffer.ReadLong
     
     ' Update the item
-    ItemSize = LenB(Item(n))
+    ItemSize = LenB(item(n))
     ReDim ItemData(ItemSize - 1)
     ItemData = buffer.ReadBytes(ItemSize)
-    CopyMemory ByVal VarPtr(Item(n)), ByVal VarPtr(ItemData(0)), ItemSize
+    CopyMemory ByVal VarPtr(item(n)), ByVal VarPtr(ItemData(0)), ItemSize
     Set buffer = Nothing
 
     ' Changes to inventory, need to clear any drop menu
@@ -1549,12 +1549,7 @@ Private Sub HandleUpdateItem(ByVal Index As Long, ByRef data() As Byte, ByVal St
     frmMain.txtCurrency.text = vbNullString
     TmpCurrencyItem = 0
     CurrencyMenu = 0 ' Clear
-    
-    If frmAdmin.Visible = True Then
-        If n = frmAdmin.scrlAItem Then
-            UpdateAdminScrollBar
-        End If
-    End If
+
     Exit Sub
     
 ' Error handler
@@ -2362,8 +2357,8 @@ Private Sub HandleBank(ByVal Index As Long, ByRef data() As Byte, ByVal StartAdd
     buffer.WriteBytes data()
     
     For i = 1 To MAX_BANK
-        bank.Item(i).Num = buffer.ReadLong
-        bank.Item(i).Value = buffer.ReadLong
+        bank.item(i).Num = buffer.ReadLong
+        bank.item(i).Value = buffer.ReadLong
     Next
     
     InBank = True
@@ -2434,14 +2429,14 @@ Private Sub HandleTradeUpdate(ByVal Index As Long, ByRef data() As Byte, ByVal S
             TradeYourOffer(i).Value = buffer.ReadLong
         Next
         
-        frmMain.lblYourWorth.Caption = buffer.ReadLong & " " & Trim$(Item(1).name)
+        frmMain.lblYourWorth.Caption = buffer.ReadLong & " " & Trim$(item(1).name)
     ElseIf DataType = 1 Then ' Theirs
         For i = 1 To MAX_INV
             TradeTheirOffer(i).Num = buffer.ReadLong
             TradeTheirOffer(i).Value = buffer.ReadLong
         Next
         
-        frmMain.lblTheirWorth.Caption = buffer.ReadLong & " " & Trim$(Item(1).name)
+        frmMain.lblTheirWorth.Caption = buffer.ReadLong & " " & Trim$(item(1).name)
     End If
     
     Set buffer = Nothing
@@ -2537,7 +2532,7 @@ Private Sub HandleHotbar(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
         
     For i = 1 To MAX_HOTBAR
         Hotbar(i).Slot = buffer.ReadByte
-        Hotbar(i).SType = buffer.ReadByte
+        Hotbar(i).sType = buffer.ReadByte
     Next
     
     frmMain.picHotbar.Refresh
@@ -2703,7 +2698,7 @@ errorhandler:
 End Sub
 
 Private Sub HandleSpawnEventPage(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim id As Long, i As Long, Z As Long, X As Long, Y As Long
+    Dim id As Long, i As Long, z As Long, X As Long, Y As Long
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -3030,7 +3025,7 @@ End Sub
 
 Private Sub HandleMapEventData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim str As String, i As Long, X As Long, Y As Long, Z As Long, w As Long
+    Dim str As String, i As Long, X As Long, Y As Long, z As Long, w As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -3117,8 +3112,8 @@ Private Sub HandleMapEventData(ByVal Index As Long, ByRef data() As Byte, ByVal 
                             Map.events(i).Pages(X).CommandList(Y).ParentList = buffer.ReadLong
                             If Map.events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
                                 ReDim Map.events(i).Pages(X).CommandList(Y).Commands(1 To Map.events(i).Pages(X).CommandList(Y).CommandCount)
-                                For Z = 1 To Map.events(i).Pages(X).CommandList(Y).CommandCount
-                                    With Map.events(i).Pages(X).CommandList(Y).Commands(Z)
+                                For z = 1 To Map.events(i).Pages(X).CommandList(Y).CommandCount
+                                    With Map.events(i).Pages(X).CommandList(Y).Commands(z)
                                         .Index = buffer.ReadLong
                                         .Text1 = buffer.ReadString
                                         .Text2 = buffer.ReadString
@@ -3456,7 +3451,7 @@ Public Sub HandleUpdateLogs(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     Set buffer = Nothing
     
     ' Update the Log
-    Call AddLog(Trim$(Log.msg), Trim$(Log.file))
+    Call AddLog(Trim$(Log.Msg), Trim$(Log.file))
     Exit Sub
     
 ' Error handler
