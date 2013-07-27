@@ -31,7 +31,7 @@ Sub SetPlayerName(ByVal Index As Long, ByVal Name As String)
     Account(Index).Chars(GetPlayerChar(Index)).Name = Name
 End Sub
 
-Function GetPlayerChar(ByVal Index As Byte) As String
+Function GetPlayerChar(ByVal Index As Byte) As Byte
 
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
     GetPlayerChar = Account(Index).CurrentChar

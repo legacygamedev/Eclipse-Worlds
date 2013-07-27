@@ -1767,13 +1767,13 @@ Public Sub DialogueHandler(ByVal Index As Long)
             Case DIALOGUE_TYPE_RESETSTATS
                 Call SendUseItem(DialogueData1)
             Case DIALOGUE_TYPE_ADDFRIEND
-                Call SendAddFriend(frmMain.txtDialogue.text)
+                Call SendAddFriend(frmMain.txtDialogue.Text)
             Case DIALOGUE_TYPE_REMOVEFRIEND
-                Call SendRemoveFriend(frmMain.txtDialogue.text)
+                Call SendRemoveFriend(frmMain.txtDialogue.Text)
             Case DIALOGUE_TYPE_ADDFOE
-                Call SendAddFoe(frmMain.txtDialogue.text)
+                Call SendAddFoe(frmMain.txtDialogue.Text)
             Case DIALOGUE_TYPE_REMOVEFOE
-                Call SendRemoveFoe(frmMain.txtDialogue.text)
+                Call SendRemoveFoe(frmMain.txtDialogue.Text)
             Case DIALOGUE_TYPE_GUILD
                 Call SendGuildAccept
             Case DIALOGUE_TYPE_GUILDDISBAND
@@ -1782,14 +1782,14 @@ Public Sub DialogueHandler(ByVal Index As Long)
                 Call SendDestroyItem(DialogueData1)
             Case DIALOGUE_TYPE_CHANGEGUILDACCESS
                 If Not frmMain.lstGuild.ListIndex = -1 Then
-                    Call SendGuildChangeAccess(frmMain.lstGuild.List(frmMain.lstGuild.ListIndex), frmMain.txtDialogue.text)
+                    Call SendGuildChangeAccess(frmMain.lstGuild.List(frmMain.lstGuild.ListIndex), frmMain.txtDialogue.Text)
                 End If
             Case DIALOGUE_TYPE_GUILDINVITE
-                Call SendGuildInvite(frmMain.txtDialogue.text)
+                Call SendGuildInvite(frmMain.txtDialogue.Text)
             Case DIALOGUE_TYPE_GUILDREMOVE
-                Call SendGuildRemove(frmMain.txtDialogue.text)
+                Call SendGuildRemove(frmMain.txtDialogue.Text)
             Case DIALOGUE_TYPE_PARTYINVITE
-                Call SendPartyRequest(frmMain.txtDialogue.text)
+                Call SendPartyRequest(frmMain.txtDialogue.Text)
         End Select
     ElseIf Index = 3 Then ' No button
         ' Dialogue Index
@@ -1937,30 +1937,23 @@ Public Sub UpdatePlayerTitles()
     
     ' Build the combo list
     For i = 1 To Player(MyIndex).AmountOfTitles
-        If Player(MyIndex).title(i) > 0 Then
-            frmMain.lstTitles.AddItem Trim$(title(Player(MyIndex).title(i)).name)
+        If Player(MyIndex).Title(i) > 0 Then
+            frmMain.lstTitles.AddItem Trim$(Title(Player(MyIndex).Title(i)).name)
         End If
     Next
 
-    ' Set the list Index
-    If Player(MyIndex).CurTitle = 0 Then
-        frmMain.lstTitles.ListIndex = 0
-    Else
-        If Not Player(MyIndex).title(Player(MyIndex).CurTitle) = 0 Then
-            frmMain.lstTitles.ListIndex = Player(MyIndex).CurTitle
-        End If
-    End If
-    
     With frmMain
-        If .lstTitles.ListIndex > 0 Then
-            If Player(MyIndex).title(.lstTitles.ListIndex) = 0 Then Exit Sub
+        If Player(MyIndex).CurTitle > 0 Then
             For i = 1 To MAX_TITLES
-                If .lstTitles.ListIndex = Player(MyIndex).title(i) Then
-                    frmMain.lblDesc.Caption = Trim$(title(.lstTitles.ListIndex).Desc)
+                If Player(MyIndex).CurTitle = Player(MyIndex).Title(i) Then
+                    frmMain.lblDesc.Caption = Trim$(Title(Player(MyIndex).Title(i)).Desc)
+                    frmMain.lstTitles.ListIndex = i
+                    Exit For
                 End If
             Next
         Else
             .lblDesc.Caption = "None."
+            frmMain.lstTitles.ListIndex = 0
         End If
         
         If .lstTitles.ListCount > 0 Then

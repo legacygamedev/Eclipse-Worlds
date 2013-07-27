@@ -773,7 +773,7 @@ Function TakeInvSlot(ByVal Index As Long, ByVal InvSlot As Byte, ByVal ItemVal A
     Dim ItemNum As Integer
 
     ' Check for subscript out of range
-    If IsPlaying(Index) = False Or InvSlot <= 0 Or InvSlot > MAX_ITEMS Then Exit Function
+    If IsPlaying(Index) = False Or InvSlot < 1 Or InvSlot > MAX_ITEMS Then Exit Function
     
     ItemNum = GetPlayerInvItemNum(Index, InvSlot)
 

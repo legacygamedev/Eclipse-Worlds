@@ -57,6 +57,7 @@ Public Tex_Weather As DX8TextureRec
 Public Tex_ChatBubble As DX8TextureRec
 Public Tex_Fade As DX8TextureRec
 Public Tex_Equip As DX8TextureRec
+Public Tex_EquipPanel As DX8TextureRec
 Public Tex_Base As DX8TextureRec
 
 ' Character Editor Sprite
@@ -202,7 +203,10 @@ Public Sub DrawGDI()
         If frmMain.picHotbar.Visible Then DrawHotbar
         If frmMain.picInventory.Visible Then DrawInventory
         If frmMain.picCharacter.Visible Then DrawPlayerCharFace
-        If frmMain.picEquipment.Visible Then DrawEquipment
+        If frmMain.picEquipment.Visible Then
+            DrawEquipmentPanel
+            DrawEquipment
+        End If
         If frmMain.picChatFace.Visible Then DrawEventChatFace
         If frmMain.picSpells.Visible Then DrawPlayerSpells
         If frmMain.picShop.Visible Then DrawShop
@@ -336,7 +340,7 @@ Public Sub LoadTexture(ByRef TextureRec As DX8TextureRec)
         Set GDIToken = New cGDIpToken
         
         ' Make sure it loaded correctly
-        If GDIToken.token = 0& Then MsgBox "GDI+ failed to load, exiting game!": DestroyGame
+        If GDIToken.Token = 0& Then MsgBox "GDI+ failed to load, exiting game!": DestroyGame
         
         Set SourceBitmap = New cGDIpImage
         Call SourceBitmap.LoadPicture_FileName(TextureRec.filepath, GDIToken)
@@ -410,8 +414,11 @@ Private Sub LoadTextures()
     
     ReDim Preserve gTexture(NumTextures)
     Tex_Base.filepath = App.Path & "\data files\graphics\gui\main\base.png"
-    Tex_Base.Texture = NumTextures - 11
+    Tex_Base.Texture = NumTextures - 12
     LoadTexture Tex_Base
+    Tex_EquipPanel.filepath = App.Path & "\data files\graphics\gui\main\equip2.png"
+    Tex_EquipPanel.Texture = NumTextures - 11
+    LoadTexture Tex_EquipPanel
     Tex_Equip.filepath = App.Path & "\data files\graphics\gui\main\equip.png"
     Tex_Equip.Texture = NumTextures - 10
     LoadTexture Tex_Equip
@@ -508,7 +515,9 @@ Dim i As Long
         Tex_Emoticon(i).Texture = 0
     Next
 
+    Tex_EquipPanel.Texture = 0
     Tex_Equip.Texture = 0
+    Tex_Base.Texture = 0
     Tex_Fade.Texture = 0
     Tex_ChatBubble.Texture = 0
     Tex_Weather.Texture = 0
@@ -532,7 +541,7 @@ End Sub
 ' **************
 ' ** Drawing **
 ' **************
-Public Sub RenderTexture(ByRef TextureRec As DX8TextureRec, ByVal dx As Single, ByVal dy As Single, ByVal Sx As Single, ByVal Sy As Single, ByVal dWidth As Single, ByVal dHeight As Single, ByVal sWidth As Single, ByVal sHeight As Single, Optional Color As Long = -1)
+Public Sub RenderTexture(ByRef TextureRec As DX8TextureRec, ByVal dX As Single, ByVal dY As Single, ByVal Sx As Single, ByVal Sy As Single, ByVal dWidth As Single, ByVal dHeight As Single, ByVal sWidth As Single, ByVal sHeight As Single, Optional Color As Long = -1)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
@@ -550,8 +559,8 @@ Public Sub RenderTexture(ByRef TextureRec As DX8TextureRec, ByVal dx As Single, 
 
     Sx = Sx - 0.5
     Sy = Sy - 0.5
-    dy = dy - 0.5
-    dx = dx - 0.5
+    dY = dY - 0.5
+    dX = dX - 0.5
     sWidth = sWidth
     sHeight = sHeight
     dWidth = dWidth
@@ -561,10 +570,10 @@ Public Sub RenderTexture(ByRef TextureRec As DX8TextureRec, ByVal dx As Single, 
     sourceWidth = ((Sx + sWidth) / textureWidth)
     sourceHeight = ((Sy + sHeight) / textureHeight)
     
-    Vertex_List(0) = Create_TLVertex(dx, dy, 0, 1, Color, 0, sourceX + 0.000003, sourceY + 0.000003)
-    Vertex_List(1) = Create_TLVertex(dx + dWidth, dy, 0, 1, Color, 0, sourceWidth + 0.000003, sourceY + 0.000003)
-    Vertex_List(2) = Create_TLVertex(dx, dy + dHeight, 0, 1, Color, 0, sourceX + 0.000003, sourceHeight + 0.000003)
-    Vertex_List(3) = Create_TLVertex(dx + dWidth, dy + dHeight, 0, 1, Color, 0, sourceWidth + 0.000003, sourceHeight + 0.000003)
+    Vertex_List(0) = Create_TLVertex(dX, dY, 0, 1, Color, 0, sourceX + 0.000003, sourceY + 0.000003)
+    Vertex_List(1) = Create_TLVertex(dX + dWidth, dY, 0, 1, Color, 0, sourceWidth + 0.000003, sourceY + 0.000003)
+    Vertex_List(2) = Create_TLVertex(dX, dY + dHeight, 0, 1, Color, 0, sourceX + 0.000003, sourceHeight + 0.000003)
+    Vertex_List(3) = Create_TLVertex(dX + dWidth, dY + dHeight, 0, 1, Color, 0, sourceWidth + 0.000003, sourceHeight + 0.000003)
     
     Direct3D_Device.SetTexture 0, gTexture(textureNum).Texture
     Direct3D_Device.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, Vertex_List(0), Len(Vertex_List(0))
@@ -1058,7 +1067,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub DrawResource(ByVal Resource As Long, ByVal dx As Long, dy As Long, rec As RECT)
+Private Sub DrawResource(ByVal Resource As Long, ByVal dX As Long, dY As Long, rec As RECT)
     Dim x As Long
     Dim y As Long
     Dim Width As Long
@@ -1070,8 +1079,8 @@ Private Sub DrawResource(ByVal Resource As Long, ByVal dx As Long, dy As Long, r
 
     If Resource < 1 Or Resource > NumResources Then Exit Sub
 
-    x = ConvertMapX(dx)
-    y = ConvertMapY(dy)
+    x = ConvertMapX(dX)
+    y = ConvertMapY(dY)
     
     Width = (rec.Right - rec.Left)
     Height = (rec.Bottom - rec.Top)
@@ -3520,7 +3529,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub DrawAutoTile(ByVal layerNum As Long, ByVal DestX As Long, ByVal DestY As Long, ByVal quarterNum As Long, ByVal x As Long, ByVal y As Long, Optional ByVal Alpha As Byte = 255)
+Public Sub DrawAutoTile(ByVal layerNum As Long, ByVal destX As Long, ByVal destY As Long, ByVal quarterNum As Long, ByVal x As Long, ByVal y As Long, Optional ByVal Alpha As Byte = 255)
     Dim yOffset As Long, xOffset As Long
     
     ' If debug mode, handle error then exit out
@@ -3537,7 +3546,7 @@ Public Sub DrawAutoTile(ByVal layerNum As Long, ByVal DestX As Long, ByVal DestY
     End Select
     
     ' Draw the quarter
-    RenderTexture Tex_Tileset(Map.Tile(x, y).Layer(layerNum).Tileset), DestX, DestY, Autotile(x, y).Layer(layerNum).srcx(quarterNum) + xOffset, Autotile(x, y).Layer(layerNum).srcy(quarterNum) + yOffset, 16, 16, 16, 16, D3DColorARGB(Alpha, 255, 255, 255)
+    RenderTexture Tex_Tileset(Map.Tile(x, y).Layer(layerNum).Tileset), destX, destY, Autotile(x, y).Layer(layerNum).srcX(quarterNum) + xOffset, Autotile(x, y).Layer(layerNum).srcY(quarterNum) + yOffset, 16, 16, 16, 16, D3DColorARGB(Alpha, 255, 255, 255)
     Exit Sub
     
 ' Error handler
@@ -4071,6 +4080,43 @@ Public Sub ResizeExpBar()
     End If
 End Sub
 
+Public Sub DrawEquipmentPanel()
+    Dim sRect As RECT
+    Dim dRect As RECT
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
+    Direct3D_Device.BeginScene
+    
+    ' Render equipment panel
+    With sRect
+        .Top = 0
+        .Bottom = Tex_EquipPanel.Height
+        .Left = 0
+        .Right = Tex_EquipPanel.Width
+    End With
+    
+    With dRect
+        .Top = 0
+        .Bottom = frmMain.picEquipmentPanel.Height
+        .Left = 0
+        .Right = frmMain.picEquipmentPanel.Width
+    End With
+
+    RenderTextureByRects Tex_EquipPanel, sRect, dRect
+    
+    Direct3D_Device.EndScene
+    Direct3D_Device.Present sRect, dRect, frmMain.picEquipmentPanel.hWnd, ByVal (0)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "DrawEquipmentPanel", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Public Sub DrawEquipment()
     Dim i As Long
     Dim ItemNum As Long
@@ -4078,9 +4124,13 @@ Public Sub DrawEquipment()
     Dim sRect As RECT
     Dim dRect As RECT
 
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
     
+    ' Render equipment base
     With sRect
         .Top = 0
         .Bottom = Tex_Equip.Height
@@ -4091,7 +4141,7 @@ Public Sub DrawEquipment()
     With dRect
         .Top = 0
         .Bottom = frmMain.picEquipment.Height
-        .Left = 0
+        .Left = 32
         .Right = frmMain.picEquipment.Width
     End With
 
@@ -4133,6 +4183,12 @@ Public Sub DrawEquipment()
     
     Direct3D_Device.EndScene
     Direct3D_Device.Present sRect, dRect, frmMain.picEquipment.hWnd, ByVal (0)
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "DrawEquipment", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
 End Sub
 
 Public Sub EditorEmoticon_DrawIcon()
@@ -5457,8 +5513,8 @@ Public Sub CacheRenderState(ByVal x As Long, ByVal y As Long, ByVal layerNum As 
             Autotile(x, y).Layer(layerNum).RenderState = RENDER_STATE_AUTOTILE
             ' cache tileset positioning
             For quarterNum = 1 To 4
-                Autotile(x, y).Layer(layerNum).srcx(quarterNum) = (Map.Tile(x, y).Layer(layerNum).x * 32) + Autotile(x, y).Layer(layerNum).QuarterTile(quarterNum).x
-                Autotile(x, y).Layer(layerNum).srcy(quarterNum) = (Map.Tile(x, y).Layer(layerNum).y * 32) + Autotile(x, y).Layer(layerNum).QuarterTile(quarterNum).y
+                Autotile(x, y).Layer(layerNum).srcX(quarterNum) = (Map.Tile(x, y).Layer(layerNum).x * 32) + Autotile(x, y).Layer(layerNum).QuarterTile(quarterNum).x
+                Autotile(x, y).Layer(layerNum).srcY(quarterNum) = (Map.Tile(x, y).Layer(layerNum).y * 32) + Autotile(x, y).Layer(layerNum).QuarterTile(quarterNum).y
             Next
         End If
     End With

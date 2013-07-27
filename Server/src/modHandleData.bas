@@ -383,7 +383,7 @@ Private Sub HandleLogin(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAd
         TempPlayer(Index).HDSerial = HDSerial
         
         ' Check if character data has been created
-        If Len(Trim$(Account(Index).Chars(GetPlayerChar(Index)).Name)) > 0 Then
+        If Len(GetPlayerName(Index)) > 0 Then
             ' Load character
             HandleUseChar Index
         Else
@@ -2372,11 +2372,11 @@ Sub HandleBuyItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
     Dim Buffer As clsBuffer
     Dim ShopSlot As Long
     Dim ShopNum As Long
-    Dim ItemAmount As Long
-    Dim ItemAmount2 As Long
+    Dim ItemAmount As Integer
+    Dim ItemAmount2 As Integer
     Dim Multiplier As Integer
-    Dim ItemPrice As Long
-    Dim ItemPrice2 As Long
+    Dim ItemPrice As Integer
+    Dim ItemPrice2 As Integer
    
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
@@ -2386,41 +2386,45 @@ Sub HandleBuyItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
     
     ' Exit shop if not in it
     If ShopNum < 1 Or ShopNum > MAX_SHOPS Then Exit Sub
-   
+    
     With Shop(ShopNum).TradeItem(ShopSlot)
         ' Check that trade exists
         If .Item < 1 Then Exit Sub
         
+        ' Work out price
+        Multiplier = Shop(TempPlayer(Index).InShop).BuyRate / 100
+        
         If .CostItem > 0 Then
-            ItemPrice = Item(.CostItem).Price * Multiplier
+            ItemPrice = .CostValue * Multiplier
         End If
         
         If .CostItem2 > 0 Then
-            ItemPrice2 = Item(.CostItem2).Price * Multiplier
+            ItemPrice2 = .CostValue2 * Multiplier
         End If
-        
-        ' Work out price
-        Multiplier = Shop(TempPlayer(Index).InShop).BuyRate / 100
         
         ' Calculate how much of the item they have
         ItemAmount = HasItem(Index, .CostItem)
         ItemAmount2 = HasItem(Index, .CostItem2)
         
-        If .CostItem > 0 And .CostItem2 = 0 Then
-            If ItemAmount = 0 Or ItemAmount < ItemPrice Then
-                PlayerMsg Index, "You do not have enough " & Trim$(Item(1).Name) & " to buy this item.", BrightRed
+        If .CostItem2 = 0 And .CostItem > 0 Then
+            If ItemAmount < ItemPrice Then
+                PlayerMsg Index, "You do not have enough " & Trim$(Item(.CostItem).Name) & " to buy this item.", BrightRed
                 ResetShopAction Index
                 Exit Sub
             End If
         ElseIf .CostItem = 0 And .CostItem2 > 0 Then
-            If ItemAmount2 = 0 Or ItemAmount2 < ItemPrice2 Then
-                PlayerMsg Index, "You do not have enough " & Trim$(Item(1).Name) & " to buy this item.", BrightRed
+            If ItemAmount2 < ItemPrice2 Then
+                PlayerMsg Index, "You do not have enough " & Trim$(Item(.CostItem2).Name) & " to buy this item.", BrightRed
                 ResetShopAction Index
                 Exit Sub
             End If
         ElseIf .CostItem > 0 And .CostItem2 > 0 Then
-            If ItemAmount2 = 0 Or ItemAmount2 < ItemPrice2 Or ItemAmount = 0 Or ItemAmount < ItemPrice Then
-                PlayerMsg Index, "You do not have enough " & Trim$(Item(1).Name) & " to buy this item.", BrightRed
+            If ItemAmount < ItemPrice Then
+                PlayerMsg Index, "You do not have enough " & Trim$(Item(.CostItem).Name) & " to buy this item.", BrightRed
+                ResetShopAction Index
+                Exit Sub
+            ElseIf ItemAmount2 < ItemPrice2 Then
+                PlayerMsg Index, "You do not have enough " & Trim$(Item(.CostItem2).Name) & "s to buy this item.", BrightRed
                 ResetShopAction Index
                 Exit Sub
             End If
@@ -2614,14 +2618,14 @@ Private Sub HandleFixItem(ByVal Index As Integer, ByRef Data() As Byte, ByVal St
     n = Buffer.ReadByte
     
     ' Prevent hacking
-    If n <= 0 Or n > MAX_INV Then Exit Sub
+    If n < 1 Or n > MAX_INV Then Exit Sub
     
     ' Check for bad data
     If GetPlayerInvItemNum(Index, n) <= 0 Or GetPlayerInvItemNum(Index, n) > MAX_ITEMS Then Exit Sub
 
     ' Make sure its a equipable item
     If Not Item(GetPlayerInvItemNum(Index, n)).Type = ITEM_TYPE_EQUIPMENT Then
-        Call PlayerMsg(Index, "You can only fix weapons, armors, helmets, and shields.", BrightRed)
+        Call PlayerMsg(Index, "You may only fix equipment items!", BrightRed)
         Exit Sub
     End If
     
@@ -2636,7 +2640,7 @@ Private Sub HandleFixItem(ByVal Index As Integer, ByRef Data() As Byte, ByVal St
     
     ' Check if they even need it repaired
     If DurNeeded <= 0 Then
-        Call PlayerMsg(Index, "This item is in perfect condition!", White)
+        Call PlayerMsg(Index, "This item is in perfect condition!", BrightRed)
         Exit Sub
     End If
     
@@ -2880,7 +2884,7 @@ Sub HandleTradeItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     
     Set Buffer = Nothing
     
-    If InvSlot <= 0 Or InvSlot > MAX_INV Then Exit Sub
+    If InvSlot < 1 Or InvSlot > MAX_INV Then Exit Sub
     
     ItemNum = GetPlayerInvItemNum(Index, InvSlot)
     If ItemNum <= 0 Or ItemNum > MAX_ITEMS Then Exit Sub
@@ -3708,6 +3712,7 @@ End Sub
 Sub HandleSetTitle(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim Buffer As clsBuffer
     Dim TitleNum As Byte
+    Dim i As Long
    
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
@@ -3719,7 +3724,13 @@ Sub HandleSetTitle(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As
     
     ' Make sure they have the title
     If Not TitleNum = 0 Then
-        If Account(Index).Chars(GetPlayerChar(Index)).Title(TitleNum) = 0 Then Exit Sub
+        For i = 1 To MAX_TITLES
+            If Account(Index).Chars(GetPlayerChar(Index)).Title(i) = TitleNum Then
+                Exit For
+            End If
+            
+            If i = MAX_TITLES Then Exit Sub
+        Next
     End If
     
     ' Set the current title
