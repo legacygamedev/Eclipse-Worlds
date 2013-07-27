@@ -1104,26 +1104,6 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal x As Long, ByVal y 
         .picItemDesc.Visible = True
         
         If LastItemDesc = ItemNum Then Exit Sub ' Exit out after setting X + Y so we don't reset values
-        
-        ' Find out what caption we want
-        'If InShop > 0 Then
-        '    If IsShopWindow Then
-                'frmMain.lblShopBuySellCaption.Caption = "The shop will sell for:"
-        '        If ShopItem > 0 And ShopValue > 0 Then
-                    'frmMain.lblShopBuySellValue.Caption = ShopValue & " " & Trim$(Item(ShopItem).name)
-        '        Else
-        '            'frmMain.lblShopBuySellValue.Caption = "Free"
-        '        End If
-        '    Else
-        '        Multiplier = Shop(InShop).SellRate / 100
-                'frmMain.lblShopBuySellCaption.Caption = "The shop will buy for:"
-        '        If Item(ItemNum).Price * Multiplier > 0 Then
-                    'frmMain.lblShopBuySellValue.Caption = (Item(ItemNum).Price * Multiplier) & " " & Trim$(Item(1).name)
-        '        Else
-                    'frmMain.lblShopBuySellValue.Caption = "Shop won't buy!"
-        '        End If
-        '    End If
-        'End If
     
         ' Set the Name
         Select Case Item(ItemNum).Rarity
