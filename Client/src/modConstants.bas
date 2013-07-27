@@ -3,7 +3,7 @@ Option Explicit
 
 ' API Declares
 Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
-Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lParam As Long) As Long
+Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByRef msg() As Byte, ByVal wParam As Long, ByVal lparam As Long) As Long
 Public Declare Function GetForegroundWindow Lib "user32" () As Long
 
 ' Sounds
@@ -236,7 +236,7 @@ Public Const EFFECT_TYPE_TINT As Long = 6
 ' ********************************************************
 
 ' General constants
-Public Const GAME_Name As String = "EclipseWorlds"
+Public Const GAME_Name As String = "Eclipse Worlds"
 Public Const MAX_MAPS As Byte = 100
 Public Const MAX_PLAYERS As Byte = 70
 Public Const MAX_ITEMS As Byte = 100
@@ -249,7 +249,7 @@ Public Const MAX_SHOPS As Byte = 50
 Public Const MAX_SPELLS As Byte = 100
 Public Const MAX_TRADES As Byte = 30
 Public Const MAX_RESOURCES As Byte = 100
-Public Const MAX_BANK As Byte = 100
+Public Const MAX_BANK As Byte = 88
 Public Const MAX_NPC_DROPS As Byte = 25
 Public Const MAX_PARTYS As Byte = 35
 Public Const MAX_PARTY_MEMBERS As Byte = 4
@@ -384,7 +384,6 @@ Public Const NPC_BEHAVIOR_FRIENDLY As Byte = 2
 Public Const NPC_BEHAVIOR_SHOPKEEPER As Byte = 3
 Public Const NPC_BEHAVIOR_GUARD As Byte = 4
 Public Const NPC_BEHAVIOR_QUEST As Byte = 5
-Public Const NPC_BEHAVIOR_GUIDE As Byte = 6
 
 ' Spell constants
 Public Const SPELL_TYPE_DAMAGEHP As Byte = 0

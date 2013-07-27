@@ -17,7 +17,7 @@ Public Resource(1 To MAX_RESOURCES) As ResourceRec
 Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
 Public events(1 To MAX_EVENTS) As EventWrapperRec
 Public Ban(1 To MAX_BANS) As BanRec
-Public title(1 To MAX_TITLES) As TitleRec
+Public Title(1 To MAX_TITLES) As TitleRec
 Public Moral(1 To MAX_MORALS) As MoralRec
 Public Class(1 To MAX_CLASSES) As ClassRec
 Public Emoticon(1 To MAX_EMOTICONS) As EmoticonRec
@@ -143,7 +143,7 @@ Public Type PlayerRec
     Exp As Long
     Access As Byte
     PK As Byte
-    status As String * NAME_LENGTH
+    Status As String * NAME_LENGTH
     
     ' Position
     Map As Integer
@@ -163,7 +163,7 @@ Public Type PlayerRec
     AmountOfTitles As Byte
     
     ' Titles
-    title(1 To MAX_TITLES) As Byte
+    Title(1 To MAX_TITLES) As Byte
     
     ' Current title
     CurTitle As Byte
@@ -373,6 +373,7 @@ Private Type MapEventRec
     ShowDir As Long
     WalkThrough As Long
     ShowName As Long
+    Trigger As Byte
 End Type
 
 Private Type MapRec
@@ -505,7 +506,7 @@ End Type
 
 Private Type NpcRec
     name As String * NAME_LENGTH
-    title As String * NAME_LENGTH
+    Title As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     Sound As String * FILE_LENGTH
     
@@ -739,7 +740,7 @@ Private Type EmoticonRec
 End Type
 
 Public Type LogRec
-    Msg As String * 512
+    msg As String * 512
     file As String * NAME_LENGTH
 End Type
 
@@ -765,8 +766,8 @@ End Type
 Public Type QuarterTileRec
     QuarterTile(1 To 4) As PointRec
     RenderState As Byte
-    srcx(1 To 4) As Long
-    srcy(1 To 4) As Long
+    srcX(1 To 4) As Long
+    srcY(1 To 4) As Long
 End Type
 
 Public Type AutotileRec
@@ -774,7 +775,7 @@ Public Type AutotileRec
 End Type
 
 Public Type ChatBubbleRec
-    Msg As String
+    msg As String
     Color As Long
     Target As Long
     TargetType As Byte
@@ -786,9 +787,9 @@ End Type
 Public Type SubEventRec
     Type As EventType
     HasText As Boolean
-    text() As String
+    Text() As String
     HasData As Boolean
-    data() As Long
+    Data() As Long
 End Type
 
 Public Type EventWrapperRec

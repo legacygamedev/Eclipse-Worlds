@@ -53,8 +53,6 @@ Private Declare Function DeleteDC Lib "gdi32" (ByVal hdc As Long) As Long
 
 Private Declare Function CreateBitmap Lib "gdi32" (ByVal nWidth As Long, ByVal nHeight As Long, ByVal nPlanes As Long, ByVal nBitCount As Long, lpBits As Any) As Long
 
-
-
 Private Declare Function CreateSolidBrush Lib "gdi32" (ByVal crColor As Long) As Long
 
 Private Declare Function GetDeviceCaps Lib "gdi32" (ByVal hdc As Long, ByVal nIndex As Long) As Long
@@ -90,7 +88,6 @@ Public Type tFXDCS 'you need to store these
   hdc As Long 'you need these
   hBitmap As Long 'you need these
 End Type
-
 
 ' Initialises GDI Plus
 Public Function InitGDIPlus() As Long
@@ -175,7 +172,6 @@ Public Function LoadPictureGDIPlus(ByVal PicFile As String, Optional ByVal AutoL
 
    On Error GoTo 0
    Exit Function
-   
     
 LoadPictureGDIPlus_Error:
     GdipDisposeImage Img
@@ -241,12 +237,10 @@ Public Sub LoadPictureFXDC(ByVal PicFile As String, fxDC As tFXDCS, Optional ByV
    On Error GoTo 0
    Exit Sub
    
-    
 LoadPictureFXDC_Error:
     GdipDisposeImage Img
     DeleteObject SelectObject(hdc, hBitmap)
     DeleteDC hdc
-
 End Sub
 
 ' Initialises the hDC to draw
@@ -302,13 +296,12 @@ Private Sub gdipResize(Img As Long, hdc As Long, Width As Long, Height As Long, 
         ' Calculate destination coordinates
         DestWidth = IIf(DesRatio < OrRatio, Width, Height * OrRatio)
         DestHeight = IIf(DesRatio < OrRatio, Width / OrRatio, Height)
-        DestX = (Width - DestWidth) / 2
-        DestY = (Height - DestHeight) / 2
+        DestX = (Width - DestWidth)
+        DestY = (Height - DestHeight)
 
         GdipDrawImageRectRectI graphics, Img, DestX, DestY, DestWidth, DestHeight, 0, 0, 32, 32, UnitPixel, 0, 0, 0
     Else
-
-        GdipDrawImageI graphics, Img, -32, 0
+        GdipDrawImageI graphics, Img, 0, 0
     End If
     GdipDeleteGraphics graphics
 End Sub
@@ -363,7 +356,6 @@ Public Sub AlphaTransBlt(ByVal dhDC As Long, ByVal dx As Long, ByVal dy As Long,
 Dim tmpHDC As Long, hBitmap As Long, bitmap As Long
 Dim Blend As BLENDFUNCTION, BlendLng As Long
     
-
 Blend.SourceConstantAlpha = AlphaConstant
 If PerPixelAlpha Then Blend.AlphaFormat = 1
 CopyMemory BlendLng, Blend, 4
@@ -397,13 +389,9 @@ End If
 End Sub
 
 Public Property Get GDIpSmoothMode() As Long
-
   GDIpSmoothMode = m_lGDIpSmoothMode
-
 End Property
 
 Public Property Let GDIpSmoothMode(ByVal lGDIpSmoothMode As Long)
-
   m_lGDIpSmoothMode = lGDIpSmoothMode
-
 End Property

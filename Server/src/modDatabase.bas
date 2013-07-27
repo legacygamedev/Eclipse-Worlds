@@ -881,15 +881,15 @@ Sub SaveNpcs()
     Next
 End Sub
 
-Sub SaveNpc(ByVal NpcNum As Long)
+Sub SaveNpc(ByVal npcnum As Long)
     Dim filename As String
     Dim F As Long
     
-    filename = App.path & "\data\npcs\" & NpcNum & ".dat"
+    filename = App.path & "\data\npcs\" & npcnum & ".dat"
     F = FreeFile
     
     Open filename For Binary As #F
-        Put #F, , NPC(NpcNum)
+        Put #F, , NPC(npcnum)
     Close #F
 End Sub
 
@@ -903,15 +903,15 @@ Sub LoadNpcs()
     Next
 End Sub
 
-Sub LoadNpc(NpcNum As Long)
+Sub LoadNpc(npcnum As Long)
     Dim F As Long
     Dim filename As String
     
-    filename = App.path & "\data\npcs\" & NpcNum & ".dat"
+    filename = App.path & "\data\npcs\" & npcnum & ".dat"
     F = FreeFile
     
     Open filename For Binary As #F
-        Get #F, , NPC(NpcNum)
+        Get #F, , NPC(npcnum)
     Close #F
 End Sub
 

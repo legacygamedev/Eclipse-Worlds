@@ -540,7 +540,7 @@ Begin VB.Form frmAdmin
          Left            =   1770
          TabIndex        =   22
          Text            =   "0"
-         Top             =   2940
+         Top             =   2880
          Width           =   600
       End
       Begin VB.ComboBox cmbAccess 
@@ -1050,7 +1050,7 @@ Private Const UISF_FocusRectangle As Integer = &H1
 
  
 Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, _
-ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+ByVal wMsg As Long, ByVal wParam As Long, lparam As Any) As Long
 
  
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
@@ -1327,33 +1327,33 @@ Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String
                     Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
                     setAdminAccessLevel
                     
-                    DisplayStatus Message, status.Error
+                    DisplayStatus Message, Status.Error
                 End If
             Next i
         ElseIf Success = 1 Then
             Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
             setAdminAccessLevel
             
-            DisplayStatus Message, status.Correct
+            DisplayStatus Message, Status.Correct
         End If
     End If
     cmbPlayersOnline.Enabled = True
 End Sub
 
-Public Sub DisplayStatus(ByVal Msg As String, msgType As status)
+Public Sub DisplayStatus(ByVal msg As String, msgType As Status)
     Select Case msgType
-        Case status.Error:
+        Case Status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Msg
-        Case status.Correct:
+            lblStatus.Caption = msg
+        Case Status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Msg
-        Case status.Neutral:
+            lblStatus.Caption = msg
+        Case Status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Msg
-        Case status.Info_:
+            lblStatus.Caption = msg
+        Case Status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Msg
+            lblStatus.Caption = msg
     End Select
     lblStatus.Visible = True
 End Sub
@@ -1699,13 +1699,10 @@ Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integ
     End Select
 End Sub
 
-
 Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
     If optCat(Index).Value = False Then
         optCat(Index).Picture = LoadResPicture(100 + Index, vbResBitmap)
-        
     Else
-
         optCat(Index).Picture = LoadResPicture(110 + Index, vbResBitmap)
     If lastIndex = Index And optCat(Index).Value = True Then
         frmAdmin.currentCategory = "Categories"
@@ -1755,7 +1752,6 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
             End If
         End If
 
-        
         lastIndex = Index
     End If
 End Sub
@@ -1829,7 +1825,6 @@ End Sub
 Private Sub picPanel_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
     lblCat.Caption = currentCategory
-    
 End Sub
 
 Private Sub picPanel_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
@@ -1852,7 +1847,6 @@ Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, x As Single,
     refreshingAdminList = True
     SendRequestPlayersOnline
 End Sub
-
 
 Public Sub UpdatePlayersOnline()
     Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
@@ -2049,7 +2043,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-
 Private Sub txtAMap_GotFocus()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -2119,42 +2112,44 @@ End Function
 Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
     If Not IsNumeric(textBox.text) Then
         textBox.text = CStr(valueToChange)
-        displayFieldStatus textBox, " field accepts only Numbers!" & vbCrLf & "Reverting to last correct value...", status.Correct
+        displayFieldStatus textBox, " field accepts only Numbers!" & vbCrLf & "Reverting to last correct value...", Status.Correct
     Else
         textBox.text = CStr(valueToChange)
-        displayFieldStatus textBox, " field is correct. Saving...", status.Correct
+        displayFieldStatus textBox, " field is correct. Saving...", Status.Correct
     End If
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
-    Dim Msg As String
+    Dim msg As String
     
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
     Else
-        Msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
-        displayFieldStatus txtBox, Msg, status.Error
+        msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
+        displayFieldStatus txtBox, msg, Status.Error
         verifyValue = False
     End If
 End Function
-Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal Msg As String, msgType As status)
+
+Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
     lblStatus.Visible = True
     Select Case msgType
 
-        Case status.Error:
+        Case Status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
-        Case status.Correct:
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+        Case Status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
-        Case status.Neutral:
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+        Case Status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
-        Case status.Info_:
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+        Case Status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & Msg
+            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
     End Select
 End Sub
+
 Private Sub selectValue(ByRef textBox As textBox)
     textBox.SelStart = 0
     textBox.SelLength = Len(textBox.text)
@@ -2181,10 +2176,7 @@ Private Sub txtSprite_Change()
 
             SendSetPlayerSprite Trim$(cmbPlayersOnline.text), currentSprite
         End If
-
-
      End If
-
 End Sub
 
 Private Sub txtSprite_Click()

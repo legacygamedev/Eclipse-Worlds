@@ -84,6 +84,7 @@ Private Type GlobalEventRec
     IgnoreIfCannotMove As Long
     
     MoveTimer As Long
+    Trigger As Byte
 End Type
 
 Public Type GlobalEventsRec
@@ -473,6 +474,7 @@ Private Type MapEventRec
     
     MoveTimer As Long
     SelfSwitches(0 To 4) As Long
+    Trigger As Byte
 End Type
 
 Private Type EventMapRec

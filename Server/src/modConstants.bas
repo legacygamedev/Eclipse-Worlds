@@ -26,7 +26,7 @@ Public Const MAX_SHOPS As Byte = 50
 Public Const MAX_SPELLS As Byte = 100
 Public Const MAX_TRADES As Byte = 30
 Public Const MAX_RESOURCES As Byte = 100
-Public Const MAX_BANK As Byte = 100
+Public Const MAX_BANK As Byte = 88
 Public Const MAX_NPC_DROPS As Byte = 25
 Public Const MAX_BUFFS As Byte = 30
 Public Const MAX_PARTYS As Byte = 35
@@ -155,7 +155,6 @@ Public Const NPC_BEHAVIOR_FRIENDLY As Byte = 2
 Public Const NPC_BEHAVIOR_SHOPKEEPER As Byte = 3
 Public Const NPC_BEHAVIOR_GUARD As Byte = 4
 Public Const NPC_BEHAVIOR_QUEST As Byte = 5
-Public Const NPC_BEHAVIOR_GUIDE As Byte = 6
 
 ' Spell constants
 Public Const SPELL_TYPE_DAMAGEHP As Byte = 0

@@ -26,6 +26,537 @@ Begin VB.Form frmEditor_Events
    ScaleWidth      =   859
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Frame fraCommands 
+      Caption         =   "Commands"
+      Height          =   6975
+      Left            =   6240
+      TabIndex        =   37
+      Top             =   1320
+      Visible         =   0   'False
+      Width           =   6375
+      Begin VB.CommandButton cmdCancelCommand 
+         Caption         =   "Cancel"
+         Height          =   375
+         Left            =   4440
+         TabIndex        =   72
+         Top             =   6360
+         Width           =   1455
+      End
+      Begin VB.PictureBox picCommands 
+         BorderStyle     =   0  'None
+         Height          =   6135
+         Index           =   1
+         Left            =   240
+         ScaleHeight     =   6135
+         ScaleWidth      =   5775
+         TabIndex        =   39
+         Top             =   600
+         Width           =   5775
+         Begin VB.Frame fraRandom 
+            Caption         =   "Message"
+            Height          =   2175
+            Index           =   21
+            Left            =   0
+            TabIndex        =   41
+            Top             =   0
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Show Chat Bubble"
+               Height          =   375
+               Index           =   3
+               Left            =   120
+               TabIndex        =   345
+               Top             =   1680
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Add Chatbox Text"
+               Height          =   375
+               Index           =   2
+               Left            =   120
+               TabIndex        =   42
+               Top             =   1200
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Show Text"
+               Height          =   375
+               Index           =   0
+               Left            =   120
+               TabIndex        =   43
+               Top             =   240
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Show Choices"
+               Height          =   375
+               Index           =   1
+               Left            =   120
+               TabIndex        =   44
+               Top             =   720
+               Width           =   2535
+            End
+         End
+         Begin VB.Frame fraRandom 
+            Caption         =   "Flow Control"
+            Height          =   2175
+            Index           =   2
+            Left            =   0
+            TabIndex        =   49
+            Top             =   3840
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Go To Label"
+               Height          =   375
+               Index           =   10
+               Left            =   120
+               TabIndex        =   350
+               Top             =   1680
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Label"
+               Height          =   375
+               Index           =   9
+               Left            =   120
+               TabIndex        =   349
+               Top             =   1200
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Conditional Branch"
+               Height          =   375
+               Index           =   7
+               Left            =   120
+               TabIndex        =   51
+               Top             =   240
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Exit Event Process"
+               Height          =   375
+               Index           =   8
+               Left            =   120
+               TabIndex        =   50
+               Top             =   720
+               Width           =   2535
+            End
+         End
+         Begin VB.Frame fraRandom 
+            Caption         =   "Event Progression"
+            Height          =   1695
+            Index           =   1
+            Left            =   0
+            TabIndex        =   45
+            Top             =   2160
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Player Switch"
+               Height          =   375
+               Index           =   5
+               Left            =   120
+               TabIndex        =   47
+               Top             =   720
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Player Variable"
+               Height          =   375
+               Index           =   4
+               Left            =   120
+               TabIndex        =   46
+               Top             =   240
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Self Switch"
+               Height          =   375
+               Index           =   6
+               Left            =   120
+               TabIndex        =   48
+               Top             =   1200
+               Width           =   2535
+            End
+         End
+         Begin VB.Frame fraRandom 
+            Caption         =   "Player Control"
+            Height          =   5535
+            Index           =   3
+            Left            =   3000
+            TabIndex        =   52
+            Top             =   0
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Change Class"
+               Height          =   375
+               Index           =   17
+               Left            =   120
+               TabIndex        =   59
+               Top             =   3120
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Give EXP"
+               Height          =   375
+               Index           =   21
+               Left            =   120
+               TabIndex        =   334
+               Top             =   5040
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Change PK"
+               Height          =   375
+               Index           =   20
+               Left            =   120
+               TabIndex        =   214
+               Top             =   4560
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Change Sex"
+               Height          =   375
+               Index           =   19
+               Left            =   120
+               TabIndex        =   61
+               Top             =   4080
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Change Sprite"
+               Height          =   375
+               Index           =   18
+               Left            =   120
+               TabIndex        =   60
+               Top             =   3600
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Change Level"
+               Height          =   375
+               Index           =   15
+               Left            =   120
+               TabIndex        =   57
+               Top             =   2160
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Level Up"
+               Height          =   375
+               Index           =   14
+               Left            =   120
+               TabIndex        =   56
+               Top             =   1680
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Restore MP"
+               Height          =   375
+               Index           =   13
+               Left            =   120
+               TabIndex        =   55
+               Top             =   1200
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Restore HP"
+               Height          =   375
+               Index           =   12
+               Left            =   120
+               TabIndex        =   54
+               Top             =   720
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Change Items"
+               Height          =   375
+               Index           =   11
+               Left            =   120
+               TabIndex        =   53
+               Top             =   240
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Change Spells"
+               Height          =   375
+               Index           =   16
+               Left            =   120
+               TabIndex        =   58
+               Top             =   2640
+               Width           =   2535
+            End
+         End
+      End
+      Begin VB.PictureBox picCommands 
+         BorderStyle     =   0  'None
+         Height          =   6015
+         Index           =   2
+         Left            =   240
+         ScaleHeight     =   6015
+         ScaleWidth      =   5775
+         TabIndex        =   40
+         Top             =   600
+         Visible         =   0   'False
+         Width           =   5775
+         Begin VB.Frame fraRandom 
+            Caption         =   "Map Functions"
+            Height          =   1695
+            Index           =   12
+            Left            =   3000
+            TabIndex        =   354
+            Top             =   0
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Set Fog"
+               Height          =   375
+               Index           =   31
+               Left            =   120
+               TabIndex        =   357
+               Top             =   240
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Set Weather"
+               Height          =   375
+               Index           =   32
+               Left            =   120
+               TabIndex        =   356
+               Top             =   720
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Set Map Tinting"
+               Height          =   375
+               Index           =   33
+               Left            =   120
+               TabIndex        =   355
+               Top             =   1200
+               Width           =   2535
+            End
+         End
+         Begin VB.Frame fraRandom 
+            Caption         =   "Cut-Scene Options"
+            Height          =   1695
+            Index           =   11
+            Left            =   0
+            TabIndex        =   347
+            Top             =   3840
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Flash White"
+               Height          =   375
+               Index           =   30
+               Left            =   120
+               TabIndex        =   353
+               Top             =   1200
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Fade Out"
+               Height          =   375
+               Index           =   29
+               Left            =   120
+               TabIndex        =   352
+               Top             =   720
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Fade In"
+               Height          =   375
+               Index           =   28
+               Left            =   120
+               TabIndex        =   348
+               Top             =   240
+               Width           =   2535
+            End
+         End
+         Begin VB.Frame fraRandom 
+            Caption         =   "Scenes"
+            Height          =   1215
+            Index           =   6
+            Left            =   0
+            TabIndex        =   306
+            Top             =   2520
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Open Shop"
+               Height          =   375
+               Index           =   27
+               Left            =   120
+               TabIndex        =   308
+               Top             =   720
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Open Bank"
+               Height          =   375
+               Index           =   26
+               Left            =   120
+               TabIndex        =   307
+               Top             =   240
+               Width           =   2535
+            End
+         End
+         Begin VB.Frame fraRandom 
+            Caption         =   "Etc..."
+            Height          =   1695
+            Index           =   8
+            Left            =   3000
+            TabIndex        =   267
+            Top             =   3840
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Wait..."
+               Height          =   375
+               Index           =   38
+               Left            =   120
+               TabIndex        =   346
+               Top             =   240
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Set Access"
+               Height          =   375
+               Index           =   39
+               Left            =   120
+               TabIndex        =   309
+               Top             =   720
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Custom Script"
+               Height          =   375
+               Index           =   40
+               Left            =   120
+               TabIndex        =   268
+               Top             =   1200
+               Width           =   2535
+            End
+         End
+         Begin VB.Frame fraRandom 
+            Caption         =   "Music and Sound"
+            Height          =   2175
+            Index           =   7
+            Left            =   3000
+            TabIndex        =   67
+            Top             =   1680
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Stop Sounds"
+               Height          =   375
+               Index           =   37
+               Left            =   120
+               TabIndex        =   71
+               Top             =   1680
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Play Sound"
+               Height          =   375
+               Index           =   36
+               Left            =   120
+               TabIndex        =   70
+               Top             =   1200
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Fadeout BGM"
+               Height          =   375
+               Index           =   35
+               Left            =   120
+               TabIndex        =   69
+               Top             =   720
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Play BGM"
+               Height          =   375
+               Index           =   34
+               Left            =   120
+               TabIndex        =   68
+               Top             =   240
+               Width           =   2535
+            End
+         End
+         Begin VB.Frame fraRandom 
+            Caption         =   "Animation"
+            Height          =   735
+            Index           =   5
+            Left            =   0
+            TabIndex        =   65
+            Top             =   1680
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Play Animation"
+               Height          =   375
+               Index           =   25
+               Left            =   120
+               TabIndex        =   66
+               Top             =   240
+               Width           =   2535
+            End
+         End
+         Begin VB.Frame fraRandom 
+            Caption         =   "Movement"
+            Height          =   1695
+            Index           =   4
+            Left            =   0
+            TabIndex        =   62
+            Top             =   0
+            Width           =   2775
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Force Spawn NPC"
+               Height          =   375
+               Index           =   24
+               Left            =   120
+               TabIndex        =   351
+               Top             =   1200
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Set Move Route"
+               Height          =   375
+               Index           =   23
+               Left            =   120
+               TabIndex        =   64
+               Top             =   720
+               Width           =   2535
+            End
+            Begin VB.CommandButton cmdCommands 
+               Caption         =   "Warp Player"
+               Height          =   375
+               Index           =   22
+               Left            =   120
+               TabIndex        =   63
+               Top             =   240
+               Width           =   2535
+            End
+         End
+      End
+      Begin MSComctlLib.TabStrip tabCommands 
+         Height          =   6615
+         Left            =   120
+         TabIndex        =   38
+         Top             =   240
+         Width           =   6015
+         _ExtentX        =   10610
+         _ExtentY        =   11668
+         MultiRow        =   -1  'True
+         TabMinWidth     =   1764
+         _Version        =   393216
+         BeginProperty Tabs {1EFB6598-857C-11D1-B16A-00C0F0283628} 
+            NumTabs         =   2
+            BeginProperty Tab1 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
+               Caption         =   "1"
+               ImageVarType    =   2
+            EndProperty
+            BeginProperty Tab2 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
+               Caption         =   "2"
+               ImageVarType    =   2
+            EndProperty
+         EndProperty
+      End
+   End
    Begin VB.CommandButton cmdDelete 
       Caption         =   "Delete"
       Enabled         =   0   'False
@@ -1227,13 +1758,6 @@ Begin VB.Form frmEditor_Events
          Width           =   1335
       End
    End
-   Begin VB.ListBox lstCommands 
-      Height          =   6105
-      Left            =   6240
-      TabIndex        =   1
-      Top             =   1440
-      Width           =   6255
-   End
    Begin VB.Frame fraDialogue 
       Height          =   6975
       Left            =   6240
@@ -1241,6 +1765,42 @@ Begin VB.Form frmEditor_Events
       Top             =   1320
       Visible         =   0   'False
       Width           =   6375
+      Begin VB.Frame fraCommand 
+         Caption         =   "Play BGM"
+         Height          =   1575
+         Index           =   25
+         Left            =   1080
+         TabIndex        =   288
+         Top             =   1800
+         Visible         =   0   'False
+         Width           =   4335
+         Begin VB.ComboBox cmbPlayBGM 
+            Height          =   315
+            ItemData        =   "frmEditor_Events.frx":0618
+            Left            =   120
+            List            =   "frmEditor_Events.frx":061A
+            Style           =   2  'Dropdown List
+            TabIndex        =   291
+            Top             =   360
+            Width           =   3135
+         End
+         Begin VB.CommandButton cmdPlayBGM_Cancel 
+            Caption         =   "Cancel"
+            Height          =   375
+            Left            =   3000
+            TabIndex        =   290
+            Top             =   1080
+            Width           =   1215
+         End
+         Begin VB.CommandButton cmdPlayBGM_Ok 
+            Caption         =   "Ok"
+            Height          =   375
+            Left            =   1560
+            TabIndex        =   289
+            Top             =   1080
+            Width           =   1215
+         End
+      End
       Begin VB.Frame fraCommand 
          Caption         =   "Play Sound"
          Height          =   1575
@@ -1268,9 +1828,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox cmbPlaySound 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":0618
+            ItemData        =   "frmEditor_Events.frx":061C
             Left            =   120
-            List            =   "frmEditor_Events.frx":061A
+            List            =   "frmEditor_Events.frx":061E
             Style           =   2  'Dropdown List
             TabIndex        =   293
             Top             =   360
@@ -1278,7 +1838,7 @@ Begin VB.Form frmEditor_Events
          End
       End
       Begin VB.Frame fraCommand 
-         Caption         =   "Wait..."
+         Caption         =   "Wait"
          Height          =   1455
          Index           =   27
          Left            =   1080
@@ -1340,9 +1900,9 @@ Begin VB.Form frmEditor_Events
          Width           =   4215
          Begin VB.ComboBox cmbSetAccess 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":061C
+            ItemData        =   "frmEditor_Events.frx":0620
             Left            =   120
-            List            =   "frmEditor_Events.frx":0632
+            List            =   "frmEditor_Events.frx":0636
             Style           =   2  'Dropdown List
             TabIndex        =   313
             Top             =   360
@@ -1410,7 +1970,7 @@ Begin VB.Form frmEditor_Events
          End
       End
       Begin VB.Frame fraCommand 
-         Caption         =   "Show Chatbubble"
+         Caption         =   "Show Chat Bubble"
          Height          =   2775
          Index           =   3
          Left            =   720
@@ -1427,9 +1987,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox cmbChatBubbleTarget 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":067F
+            ItemData        =   "frmEditor_Events.frx":0683
             Left            =   1920
-            List            =   "frmEditor_Events.frx":0681
+            List            =   "frmEditor_Events.frx":0685
             Style           =   2  'Dropdown List
             TabIndex        =   366
             Top             =   1560
@@ -1646,6 +2206,48 @@ Begin VB.Form frmEditor_Events
          End
       End
       Begin VB.Frame fraCommand 
+         Caption         =   "Create Label"
+         Height          =   1695
+         Index           =   8
+         Left            =   1200
+         TabIndex        =   375
+         Top             =   1680
+         Visible         =   0   'False
+         Width           =   4095
+         Begin VB.TextBox txtLabelName 
+            Height          =   375
+            Left            =   120
+            TabIndex        =   379
+            Top             =   480
+            Width           =   3855
+         End
+         Begin VB.CommandButton cmdCreateLabel_Ok 
+            Caption         =   "Ok"
+            Height          =   375
+            Left            =   1320
+            TabIndex        =   377
+            Top             =   1200
+            Width           =   1215
+         End
+         Begin VB.CommandButton cmdCreateLabel_Cancel 
+            Caption         =   "Cancel"
+            Height          =   375
+            Left            =   2640
+            TabIndex        =   376
+            Top             =   1200
+            Width           =   1215
+         End
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Name:"
+            Height          =   255
+            Index           =   40
+            Left            =   120
+            TabIndex        =   378
+            Top             =   240
+            Width           =   3735
+         End
+      End
+      Begin VB.Frame fraCommand 
          Caption         =   "Player Switch"
          Height          =   1695
          Index           =   5
@@ -1656,9 +2258,9 @@ Begin VB.Form frmEditor_Events
          Width           =   4095
          Begin VB.ComboBox cmbPlayerSwitchSet 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":0683
+            ItemData        =   "frmEditor_Events.frx":0687
             Left            =   960
-            List            =   "frmEditor_Events.frx":068D
+            List            =   "frmEditor_Events.frx":0691
             Style           =   2  'Dropdown List
             TabIndex        =   206
             Top             =   800
@@ -1734,9 +2336,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox cmbSetSelfSwitch 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":069E
+            ItemData        =   "frmEditor_Events.frx":06A2
             Left            =   1440
-            List            =   "frmEditor_Events.frx":06AE
+            List            =   "frmEditor_Events.frx":06B2
             Style           =   2  'Dropdown List
             TabIndex        =   209
             Top             =   360
@@ -1744,9 +2346,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox cmbSetSelfSwitchTo 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":06BE
+            ItemData        =   "frmEditor_Events.frx":06C2
             Left            =   960
-            List            =   "frmEditor_Events.frx":06C8
+            List            =   "frmEditor_Events.frx":06CC
             Style           =   2  'Dropdown List
             TabIndex        =   208
             Top             =   800
@@ -1772,48 +2374,6 @@ Begin VB.Form frmEditor_Events
          End
       End
       Begin VB.Frame fraCommand 
-         Caption         =   "Create Label"
-         Height          =   1695
-         Index           =   8
-         Left            =   1200
-         TabIndex        =   375
-         Top             =   1680
-         Visible         =   0   'False
-         Width           =   4095
-         Begin VB.TextBox txtLabelName 
-            Height          =   375
-            Left            =   120
-            TabIndex        =   379
-            Top             =   480
-            Width           =   3855
-         End
-         Begin VB.CommandButton cmdCreateLabel_Ok 
-            Caption         =   "Ok"
-            Height          =   375
-            Left            =   1320
-            TabIndex        =   377
-            Top             =   1200
-            Width           =   1215
-         End
-         Begin VB.CommandButton cmdCreateLabel_Cancel 
-            Caption         =   "Cancel"
-            Height          =   375
-            Left            =   2640
-            TabIndex        =   376
-            Top             =   1200
-            Width           =   1215
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Name:"
-            Height          =   255
-            Index           =   40
-            Left            =   120
-            TabIndex        =   378
-            Top             =   240
-            Width           =   3735
-         End
-      End
-      Begin VB.Frame fraCommand 
          Caption         =   "Conditional Branch"
          Height          =   4815
          Index           =   7
@@ -1834,9 +2394,9 @@ Begin VB.Form frmEditor_Events
          Begin VB.ComboBox cmbCondition_SelfSwitch 
             Enabled         =   0   'False
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":06D5
+            ItemData        =   "frmEditor_Events.frx":06D9
             Left            =   1920
-            List            =   "frmEditor_Events.frx":06E5
+            List            =   "frmEditor_Events.frx":06E9
             Style           =   2  'Dropdown List
             TabIndex        =   297
             Top             =   3720
@@ -1845,9 +2405,9 @@ Begin VB.Form frmEditor_Events
          Begin VB.ComboBox cmbCondition_SelfSwitchCondition 
             Enabled         =   0   'False
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":06F5
+            ItemData        =   "frmEditor_Events.frx":06F9
             Left            =   3960
-            List            =   "frmEditor_Events.frx":06FF
+            List            =   "frmEditor_Events.frx":0703
             Style           =   2  'Dropdown List
             TabIndex        =   296
             Top             =   3720
@@ -1856,9 +2416,9 @@ Begin VB.Form frmEditor_Events
          Begin VB.ComboBox cmbCondition_LearntSkill 
             Enabled         =   0   'False
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":0710
+            ItemData        =   "frmEditor_Events.frx":0714
             Left            =   1920
-            List            =   "frmEditor_Events.frx":0712
+            List            =   "frmEditor_Events.frx":0716
             Style           =   2  'Dropdown List
             TabIndex        =   175
             Top             =   2760
@@ -1867,9 +2427,9 @@ Begin VB.Form frmEditor_Events
          Begin VB.ComboBox cmbCondition_ClassIs 
             Enabled         =   0   'False
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":0714
+            ItemData        =   "frmEditor_Events.frx":0718
             Left            =   1920
-            List            =   "frmEditor_Events.frx":0716
+            List            =   "frmEditor_Events.frx":071A
             Style           =   2  'Dropdown List
             TabIndex        =   174
             Top             =   2280
@@ -1878,9 +2438,9 @@ Begin VB.Form frmEditor_Events
          Begin VB.ComboBox cmbCondition_HasItem 
             Enabled         =   0   'False
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":0718
+            ItemData        =   "frmEditor_Events.frx":071C
             Left            =   1920
-            List            =   "frmEditor_Events.frx":071A
+            List            =   "frmEditor_Events.frx":071E
             Style           =   2  'Dropdown List
             TabIndex        =   173
             Top             =   1800
@@ -1889,9 +2449,9 @@ Begin VB.Form frmEditor_Events
          Begin VB.ComboBox cmbCondtion_PlayerSwitchCondition 
             Enabled         =   0   'False
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":071C
+            ItemData        =   "frmEditor_Events.frx":0720
             Left            =   3960
-            List            =   "frmEditor_Events.frx":0726
+            List            =   "frmEditor_Events.frx":072A
             Style           =   2  'Dropdown List
             TabIndex        =   172
             Top             =   1320
@@ -1900,9 +2460,9 @@ Begin VB.Form frmEditor_Events
          Begin VB.ComboBox cmbCondition_PlayerSwitch 
             Enabled         =   0   'False
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":0737
+            ItemData        =   "frmEditor_Events.frx":073B
             Left            =   1920
-            List            =   "frmEditor_Events.frx":0739
+            List            =   "frmEditor_Events.frx":073D
             Style           =   2  'Dropdown List
             TabIndex        =   171
             Top             =   1320
@@ -1920,9 +2480,9 @@ Begin VB.Form frmEditor_Events
          Begin VB.ComboBox cmbCondition_LevelCompare 
             Enabled         =   0   'False
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":073B
+            ItemData        =   "frmEditor_Events.frx":073F
             Left            =   1440
-            List            =   "frmEditor_Events.frx":0751
+            List            =   "frmEditor_Events.frx":0755
             Style           =   2  'Dropdown List
             TabIndex        =   169
             Top             =   3240
@@ -1939,9 +2499,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox cmbCondition_PlayerVarCompare 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":07B7
+            ItemData        =   "frmEditor_Events.frx":07BB
             Left            =   1920
-            List            =   "frmEditor_Events.frx":07CD
+            List            =   "frmEditor_Events.frx":07D1
             Style           =   2  'Dropdown List
             TabIndex        =   165
             Top             =   840
@@ -2018,9 +2578,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox cmbCondition_PlayerVarIndex 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":0833
+            ItemData        =   "frmEditor_Events.frx":0837
             Left            =   1920
-            List            =   "frmEditor_Events.frx":0835
+            List            =   "frmEditor_Events.frx":0839
             Style           =   2  'Dropdown List
             TabIndex        =   163
             Top             =   480
@@ -2064,7 +2624,7 @@ Begin VB.Form frmEditor_Events
          End
       End
       Begin VB.Frame fraCommand 
-         Caption         =   "Goto Label"
+         Caption         =   "Go to Label"
          Height          =   1695
          Index           =   9
          Left            =   1200
@@ -2106,6 +2666,100 @@ Begin VB.Form frmEditor_Events
          End
       End
       Begin VB.Frame fraCommand 
+         Caption         =   "Add Text"
+         Height          =   4095
+         Index           =   2
+         Left            =   1200
+         TabIndex        =   215
+         Top             =   600
+         Visible         =   0   'False
+         Width           =   4095
+         Begin VB.TextBox txtAddText_Text 
+            Height          =   1815
+            Left            =   120
+            MultiLine       =   -1  'True
+            ScrollBars      =   2  'Vertical
+            TabIndex        =   222
+            Top             =   480
+            Width           =   3855
+         End
+         Begin VB.HScrollBar scrlAddText_Colour 
+            Height          =   255
+            Left            =   120
+            Max             =   17
+            TabIndex        =   221
+            Top             =   2640
+            Width           =   3855
+         End
+         Begin VB.OptionButton optAddText_Player 
+            Caption         =   "Player"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   220
+            Top             =   3240
+            Value           =   -1  'True
+            Width           =   975
+         End
+         Begin VB.OptionButton optAddText_Map 
+            Caption         =   "Map"
+            Height          =   255
+            Left            =   1080
+            TabIndex        =   219
+            Top             =   3240
+            Width           =   735
+         End
+         Begin VB.OptionButton optAddText_Global 
+            Caption         =   "Global"
+            Height          =   255
+            Left            =   1920
+            TabIndex        =   218
+            Top             =   3240
+            Width           =   855
+         End
+         Begin VB.CommandButton cmdAddText_Ok 
+            Caption         =   "Ok"
+            Height          =   375
+            Left            =   1440
+            TabIndex        =   217
+            Top             =   3600
+            Width           =   1215
+         End
+         Begin VB.CommandButton cmdAddText_Cancel 
+            Caption         =   "Cancel"
+            Height          =   375
+            Left            =   2760
+            TabIndex        =   216
+            Top             =   3600
+            Width           =   1215
+         End
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Text:"
+            Height          =   255
+            Index           =   34
+            Left            =   120
+            TabIndex        =   225
+            Top             =   240
+            Width           =   1935
+         End
+         Begin VB.Label lblAddText_Colour 
+            Caption         =   "Color: Black"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   224
+            Top             =   2400
+            Width           =   3255
+         End
+         Begin VB.Label lblRandomLabel 
+            Caption         =   "Channel:"
+            Height          =   255
+            Index           =   10
+            Left            =   120
+            TabIndex        =   223
+            Top             =   3000
+            Width           =   1575
+         End
+      End
+      Begin VB.Frame fraCommand 
          Caption         =   "Change Items"
          Height          =   2415
          Index           =   10
@@ -2116,9 +2770,9 @@ Begin VB.Form frmEditor_Events
          Width           =   4095
          Begin VB.ComboBox cmbChangeItemIndex 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":0837
+            ItemData        =   "frmEditor_Events.frx":083B
             Left            =   120
-            List            =   "frmEditor_Events.frx":0839
+            List            =   "frmEditor_Events.frx":083D
             Style           =   2  'Dropdown List
             TabIndex        =   234
             Top             =   480
@@ -2251,9 +2905,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox cmbChangeSkills 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":083B
+            ItemData        =   "frmEditor_Events.frx":083F
             Left            =   120
-            List            =   "frmEditor_Events.frx":083D
+            List            =   "frmEditor_Events.frx":0841
             Style           =   2  'Dropdown List
             TabIndex        =   244
             Top             =   480
@@ -2312,9 +2966,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox cmbChangeClass 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":083F
+            ItemData        =   "frmEditor_Events.frx":0843
             Left            =   120
-            List            =   "frmEditor_Events.frx":0841
+            List            =   "frmEditor_Events.frx":0845
             Style           =   2  'Dropdown List
             TabIndex        =   248
             Top             =   480
@@ -2511,9 +3165,9 @@ Begin VB.Form frmEditor_Events
          Width           =   4095
          Begin VB.ComboBox cmbWarpPlayerDir 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":0843
+            ItemData        =   "frmEditor_Events.frx":0847
             Left            =   120
-            List            =   "frmEditor_Events.frx":0856
+            List            =   "frmEditor_Events.frx":085A
             Style           =   2  'Dropdown List
             TabIndex        =   300
             Top             =   2040
@@ -2594,9 +3248,9 @@ Begin VB.Form frmEditor_Events
          Width           =   4095
          Begin VB.ComboBox cmbSpawnNPC 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":0897
+            ItemData        =   "frmEditor_Events.frx":089B
             Left            =   120
-            List            =   "frmEditor_Events.frx":0899
+            List            =   "frmEditor_Events.frx":089D
             Style           =   2  'Dropdown List
             TabIndex        =   389
             Top             =   480
@@ -2639,9 +3293,9 @@ Begin VB.Form frmEditor_Events
          Width           =   5055
          Begin VB.ComboBox cmbPlayAnim 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":089B
+            ItemData        =   "frmEditor_Events.frx":089F
             Left            =   1680
-            List            =   "frmEditor_Events.frx":089D
+            List            =   "frmEditor_Events.frx":08A1
             Style           =   2  'Dropdown List
             TabIndex        =   282
             Top             =   300
@@ -2703,9 +3357,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox cmbPlayAnimEvent 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":089F
+            ItemData        =   "frmEditor_Events.frx":08A3
             Left            =   1920
-            List            =   "frmEditor_Events.frx":08A1
+            List            =   "frmEditor_Events.frx":08A5
             Style           =   2  'Dropdown List
             TabIndex        =   270
             Top             =   1440
@@ -2776,9 +3430,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox cmbOpenShop 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":08A3
+            ItemData        =   "frmEditor_Events.frx":08A7
             Left            =   960
-            List            =   "frmEditor_Events.frx":08B6
+            List            =   "frmEditor_Events.frx":08BA
             Style           =   2  'Dropdown List
             TabIndex        =   315
             Top             =   360
@@ -2900,9 +3554,9 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.ComboBox CmbWeather 
             Height          =   315
-            ItemData        =   "frmEditor_Events.frx":08F9
+            ItemData        =   "frmEditor_Events.frx":08FD
             Left            =   120
-            List            =   "frmEditor_Events.frx":090F
+            List            =   "frmEditor_Events.frx":0913
             Style           =   2  'Dropdown List
             TabIndex        =   400
             Top             =   480
@@ -2925,100 +3579,6 @@ Begin VB.Form frmEditor_Events
             TabIndex        =   402
             Top             =   240
             Width           =   1275
-         End
-      End
-      Begin VB.Frame fraCommand 
-         Caption         =   "Add Text"
-         Height          =   4095
-         Index           =   2
-         Left            =   1200
-         TabIndex        =   215
-         Top             =   600
-         Visible         =   0   'False
-         Width           =   4095
-         Begin VB.TextBox txtAddText_Text 
-            Height          =   1815
-            Left            =   120
-            MultiLine       =   -1  'True
-            ScrollBars      =   2  'Vertical
-            TabIndex        =   222
-            Top             =   480
-            Width           =   3855
-         End
-         Begin VB.HScrollBar scrlAddText_Colour 
-            Height          =   255
-            Left            =   120
-            Max             =   17
-            TabIndex        =   221
-            Top             =   2640
-            Width           =   3855
-         End
-         Begin VB.OptionButton optAddText_Player 
-            Caption         =   "Player"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   220
-            Top             =   3240
-            Value           =   -1  'True
-            Width           =   975
-         End
-         Begin VB.OptionButton optAddText_Map 
-            Caption         =   "Map"
-            Height          =   255
-            Left            =   1080
-            TabIndex        =   219
-            Top             =   3240
-            Width           =   735
-         End
-         Begin VB.OptionButton optAddText_Global 
-            Caption         =   "Global"
-            Height          =   255
-            Left            =   1920
-            TabIndex        =   218
-            Top             =   3240
-            Width           =   855
-         End
-         Begin VB.CommandButton cmdAddText_Ok 
-            Caption         =   "Ok"
-            Height          =   375
-            Left            =   1440
-            TabIndex        =   217
-            Top             =   3600
-            Width           =   1215
-         End
-         Begin VB.CommandButton cmdAddText_Cancel 
-            Caption         =   "Cancel"
-            Height          =   375
-            Left            =   2760
-            TabIndex        =   216
-            Top             =   3600
-            Width           =   1215
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Text:"
-            Height          =   255
-            Index           =   34
-            Left            =   120
-            TabIndex        =   225
-            Top             =   240
-            Width           =   1935
-         End
-         Begin VB.Label lblAddText_Colour 
-            Caption         =   "Color: Black"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   224
-            Top             =   2400
-            Width           =   3255
-         End
-         Begin VB.Label lblRandomLabel 
-            Caption         =   "Channel:"
-            Height          =   255
-            Index           =   10
-            Left            =   120
-            TabIndex        =   223
-            Top             =   3000
-            Width           =   1575
          End
       End
       Begin VB.Frame fraCommand 
@@ -3319,7 +3879,8 @@ Begin VB.Form frmEditor_Events
             Width           =   855
          End
          Begin VB.Label lblMapTintData 
-            Caption         =   "Opacity: 0"
+            Caption         =   "Alpha: 0"
+            ForeColor       =   &H80000006&
             Height          =   255
             Index           =   3
             Left            =   2280
@@ -3329,6 +3890,7 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.Label lblMapTintData 
             Caption         =   "Red: 0"
+            ForeColor       =   &H000000C0&
             Height          =   255
             Index           =   0
             Left            =   120
@@ -3338,6 +3900,7 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.Label lblMapTintData 
             Caption         =   "Green: 0"
+            ForeColor       =   &H0000C000&
             Height          =   255
             Index           =   1
             Left            =   2280
@@ -3347,6 +3910,7 @@ Begin VB.Form frmEditor_Events
          End
          Begin VB.Label lblMapTintData 
             Caption         =   "Blue: 0"
+            ForeColor       =   &H00C00000&
             Height          =   255
             Index           =   2
             Left            =   120
@@ -3355,573 +3919,13 @@ Begin VB.Form frmEditor_Events
             Width           =   1455
          End
       End
-      Begin VB.Frame fraCommand 
-         Caption         =   "Play BGM"
-         Height          =   1575
-         Index           =   25
-         Left            =   1080
-         TabIndex        =   288
-         Top             =   1800
-         Visible         =   0   'False
-         Width           =   4335
-         Begin VB.ComboBox cmbPlayBGM 
-            Height          =   315
-            ItemData        =   "frmEditor_Events.frx":093E
-            Left            =   120
-            List            =   "frmEditor_Events.frx":0940
-            Style           =   2  'Dropdown List
-            TabIndex        =   291
-            Top             =   360
-            Width           =   3135
-         End
-         Begin VB.CommandButton cmdPlayBGM_Cancel 
-            Caption         =   "Cancel"
-            Height          =   375
-            Left            =   3000
-            TabIndex        =   290
-            Top             =   1080
-            Width           =   1215
-         End
-         Begin VB.CommandButton cmdPlayBGM_Ok 
-            Caption         =   "Ok"
-            Height          =   375
-            Left            =   1560
-            TabIndex        =   289
-            Top             =   1080
-            Width           =   1215
-         End
-      End
    End
-   Begin VB.Frame fraCommands 
-      Caption         =   "Commands"
-      Height          =   6975
+   Begin VB.ListBox lstCommands 
+      Height          =   6105
       Left            =   6240
-      TabIndex        =   37
-      Top             =   1320
-      Visible         =   0   'False
-      Width           =   6375
-      Begin VB.CommandButton cmdCancelCommand 
-         Caption         =   "Cancel"
-         Height          =   375
-         Left            =   4440
-         TabIndex        =   72
-         Top             =   6360
-         Width           =   1455
-      End
-      Begin VB.PictureBox picCommands 
-         BorderStyle     =   0  'None
-         Height          =   6135
-         Index           =   1
-         Left            =   240
-         ScaleHeight     =   6135
-         ScaleWidth      =   5775
-         TabIndex        =   39
-         Top             =   600
-         Width           =   5775
-         Begin VB.Frame fraRandom 
-            Caption         =   "Player Control"
-            Height          =   5535
-            Index           =   3
-            Left            =   3000
-            TabIndex        =   52
-            Top             =   0
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Change Class"
-               Height          =   375
-               Index           =   17
-               Left            =   120
-               TabIndex        =   59
-               Top             =   3120
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Give EXP"
-               Height          =   375
-               Index           =   21
-               Left            =   120
-               TabIndex        =   334
-               Top             =   5040
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Change PK"
-               Height          =   375
-               Index           =   20
-               Left            =   120
-               TabIndex        =   214
-               Top             =   4560
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Change Sex"
-               Height          =   375
-               Index           =   19
-               Left            =   120
-               TabIndex        =   61
-               Top             =   4080
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Change Sprite"
-               Height          =   375
-               Index           =   18
-               Left            =   120
-               TabIndex        =   60
-               Top             =   3600
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Change Level"
-               Height          =   375
-               Index           =   15
-               Left            =   120
-               TabIndex        =   57
-               Top             =   2160
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Level Up"
-               Height          =   375
-               Index           =   14
-               Left            =   120
-               TabIndex        =   56
-               Top             =   1680
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Restore MP"
-               Height          =   375
-               Index           =   13
-               Left            =   120
-               TabIndex        =   55
-               Top             =   1200
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Restore HP"
-               Height          =   375
-               Index           =   12
-               Left            =   120
-               TabIndex        =   54
-               Top             =   720
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Change Items"
-               Height          =   375
-               Index           =   11
-               Left            =   120
-               TabIndex        =   53
-               Top             =   240
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Change Spells"
-               Height          =   375
-               Index           =   16
-               Left            =   120
-               TabIndex        =   58
-               Top             =   2640
-               Width           =   2535
-            End
-         End
-         Begin VB.Frame fraRandom 
-            Caption         =   "Flow Control"
-            Height          =   2175
-            Index           =   2
-            Left            =   0
-            TabIndex        =   49
-            Top             =   3840
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Go To Label"
-               Height          =   375
-               Index           =   10
-               Left            =   120
-               TabIndex        =   350
-               Top             =   1680
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Label"
-               Height          =   375
-               Index           =   9
-               Left            =   120
-               TabIndex        =   349
-               Top             =   1200
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Conditional Branch"
-               Height          =   375
-               Index           =   7
-               Left            =   120
-               TabIndex        =   51
-               Top             =   240
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Exit Event Process"
-               Height          =   375
-               Index           =   8
-               Left            =   120
-               TabIndex        =   50
-               Top             =   720
-               Width           =   2535
-            End
-         End
-         Begin VB.Frame fraRandom 
-            Caption         =   "Event Progression"
-            Height          =   1695
-            Index           =   1
-            Left            =   0
-            TabIndex        =   45
-            Top             =   2160
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Self Switch"
-               Height          =   375
-               Index           =   6
-               Left            =   120
-               TabIndex        =   48
-               Top             =   1200
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Player Switch"
-               Height          =   375
-               Index           =   5
-               Left            =   120
-               TabIndex        =   47
-               Top             =   720
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Player Variable"
-               Height          =   375
-               Index           =   4
-               Left            =   120
-               TabIndex        =   46
-               Top             =   240
-               Width           =   2535
-            End
-         End
-         Begin VB.Frame fraRandom 
-            Caption         =   "Message"
-            Height          =   2175
-            Index           =   21
-            Left            =   0
-            TabIndex        =   41
-            Top             =   0
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Show Chat Bubble"
-               Height          =   375
-               Index           =   3
-               Left            =   120
-               TabIndex        =   345
-               Top             =   1680
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Show Text"
-               Height          =   375
-               Index           =   0
-               Left            =   120
-               TabIndex        =   43
-               Top             =   240
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Add Chatbox Text"
-               Height          =   375
-               Index           =   2
-               Left            =   120
-               TabIndex        =   42
-               Top             =   1200
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Show Choices"
-               Height          =   375
-               Index           =   1
-               Left            =   120
-               TabIndex        =   44
-               Top             =   720
-               Width           =   2535
-            End
-         End
-      End
-      Begin VB.PictureBox picCommands 
-         BorderStyle     =   0  'None
-         Height          =   6015
-         Index           =   2
-         Left            =   240
-         ScaleHeight     =   6015
-         ScaleWidth      =   5775
-         TabIndex        =   40
-         Top             =   600
-         Visible         =   0   'False
-         Width           =   5775
-         Begin VB.Frame fraRandom 
-            Caption         =   "Map Functions"
-            Height          =   1695
-            Index           =   12
-            Left            =   3000
-            TabIndex        =   354
-            Top             =   0
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Set Fog"
-               Height          =   375
-               Index           =   31
-               Left            =   120
-               TabIndex        =   357
-               Top             =   240
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Set Weather"
-               Height          =   375
-               Index           =   32
-               Left            =   120
-               TabIndex        =   356
-               Top             =   720
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Set Map Tinting"
-               Height          =   375
-               Index           =   33
-               Left            =   120
-               TabIndex        =   355
-               Top             =   1200
-               Width           =   2535
-            End
-         End
-         Begin VB.Frame fraRandom 
-            Caption         =   "Cut-Scene Options"
-            Height          =   1695
-            Index           =   11
-            Left            =   0
-            TabIndex        =   347
-            Top             =   3840
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Flash White"
-               Height          =   375
-               Index           =   30
-               Left            =   120
-               TabIndex        =   353
-               Top             =   1200
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Fade Out"
-               Height          =   375
-               Index           =   29
-               Left            =   120
-               TabIndex        =   352
-               Top             =   720
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Fade In"
-               Height          =   375
-               Index           =   28
-               Left            =   120
-               TabIndex        =   348
-               Top             =   240
-               Width           =   2535
-            End
-         End
-         Begin VB.Frame fraRandom 
-            Caption         =   "Scenes"
-            Height          =   1215
-            Index           =   6
-            Left            =   0
-            TabIndex        =   306
-            Top             =   2520
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Open Shop"
-               Height          =   375
-               Index           =   27
-               Left            =   120
-               TabIndex        =   308
-               Top             =   720
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Open Bank"
-               Height          =   375
-               Index           =   26
-               Left            =   120
-               TabIndex        =   307
-               Top             =   240
-               Width           =   2535
-            End
-         End
-         Begin VB.Frame fraRandom 
-            Caption         =   "Etc..."
-            Height          =   1695
-            Index           =   8
-            Left            =   3000
-            TabIndex        =   267
-            Top             =   3840
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Wait..."
-               Height          =   375
-               Index           =   38
-               Left            =   120
-               TabIndex        =   346
-               Top             =   240
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Set Access"
-               Height          =   375
-               Index           =   39
-               Left            =   120
-               TabIndex        =   309
-               Top             =   720
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Custom Script"
-               Height          =   375
-               Index           =   40
-               Left            =   120
-               TabIndex        =   268
-               Top             =   1200
-               Width           =   2535
-            End
-         End
-         Begin VB.Frame fraRandom 
-            Caption         =   "Music and Sound"
-            Height          =   2175
-            Index           =   7
-            Left            =   3000
-            TabIndex        =   67
-            Top             =   1680
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Stop Sounds"
-               Height          =   375
-               Index           =   37
-               Left            =   120
-               TabIndex        =   71
-               Top             =   1680
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Play Sound"
-               Height          =   375
-               Index           =   36
-               Left            =   120
-               TabIndex        =   70
-               Top             =   1200
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Fadeout BGM"
-               Height          =   375
-               Index           =   35
-               Left            =   120
-               TabIndex        =   69
-               Top             =   720
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Play BGM"
-               Height          =   375
-               Index           =   34
-               Left            =   120
-               TabIndex        =   68
-               Top             =   240
-               Width           =   2535
-            End
-         End
-         Begin VB.Frame fraRandom 
-            Caption         =   "Animation"
-            Height          =   735
-            Index           =   5
-            Left            =   0
-            TabIndex        =   65
-            Top             =   1680
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Play Animation"
-               Height          =   375
-               Index           =   25
-               Left            =   120
-               TabIndex        =   66
-               Top             =   240
-               Width           =   2535
-            End
-         End
-         Begin VB.Frame fraRandom 
-            Caption         =   "Movement"
-            Height          =   1695
-            Index           =   4
-            Left            =   0
-            TabIndex        =   62
-            Top             =   0
-            Width           =   2775
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Force Spawn NPC"
-               Height          =   375
-               Index           =   24
-               Left            =   120
-               TabIndex        =   351
-               Top             =   1200
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Set Move Route"
-               Height          =   375
-               Index           =   23
-               Left            =   120
-               TabIndex        =   64
-               Top             =   720
-               Width           =   2535
-            End
-            Begin VB.CommandButton cmdCommands 
-               Caption         =   "Warp Player"
-               Height          =   375
-               Index           =   22
-               Left            =   120
-               TabIndex        =   63
-               Top             =   240
-               Width           =   2535
-            End
-         End
-      End
-      Begin MSComctlLib.TabStrip tabCommands 
-         Height          =   6615
-         Left            =   120
-         TabIndex        =   38
-         Top             =   240
-         Width           =   6015
-         _ExtentX        =   10610
-         _ExtentY        =   11668
-         MultiRow        =   -1  'True
-         TabMinWidth     =   1764
-         _Version        =   393216
-         BeginProperty Tabs {1EFB6598-857C-11D1-B16A-00C0F0283628} 
-            NumTabs         =   2
-            BeginProperty Tab1 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
-               Caption         =   "1"
-               ImageVarType    =   2
-            EndProperty
-            BeginProperty Tab2 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
-               Caption         =   "2"
-               ImageVarType    =   2
-            EndProperty
-         EndProperty
-      End
+      TabIndex        =   1
+      Top             =   1440
+      Width           =   6255
    End
    Begin MSComctlLib.TabStrip tabPages 
       Height          =   8055
@@ -4199,9 +4203,6 @@ Private Sub cmdAddCommand_Click()
         picCommands(1).Visible = True
         picCommands(2).Visible = False
     End If
-    
-    fraRandom(9).Visible = False
-    lstCommands.Visible = False
 End Sub
 
 Private Sub cmdAddMoveRoute_Click(Index As Integer)
@@ -4434,7 +4435,7 @@ Private Sub cmdClearPage_Click()
 End Sub
 
 Private Sub cmdCommands_Click(Index As Integer)
-    Dim i As Long, x As Long
+    Dim i As Long, X As Long
     
     Select Case Index
         Case 0
@@ -4546,7 +4547,7 @@ Private Sub cmdCommands_Click(Index As Integer)
                 If cmbChangeClass.ListCount = 0 Then
                 cmbChangeClass.Clear
                 For i = 1 To MAX_CLASSES
-                    cmbChangeClass.AddItem Trim$(Class(i).name)
+                    cmbChangeClass.AddItem Trim$(Class(i).Name)
                 Next
                 cmbChangeClass.ListIndex = 0
                 End If
@@ -4595,9 +4596,9 @@ Private Sub cmdCommands_Click(Index As Integer)
             cmbEvent.Enabled = True
             For i = 1 To Map.EventCount
                 If i <> EditorEvent Then
-                    cmbEvent.AddItem Trim$(Map.events(i).name)
-                    x = x + 1
-                    ListOfEvents(x) = i
+                    cmbEvent.AddItem Trim$(Map.events(i).Name)
+                    X = X + 1
+                    ListOfEvents(X) = i
                 End If
             Next
             IsMoveRouteCommand = True
@@ -4617,7 +4618,7 @@ Private Sub cmdCommands_Click(Index As Integer)
         Case 25
             cmbPlayAnimEvent.Clear
             For i = 1 To Map.EventCount
-                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).name)
+                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).Name)
             Next
             cmbPlayAnimEvent.ListIndex = 0
             optPlayAnimPlayer.Value = True
@@ -5633,7 +5634,7 @@ Public Sub InitEventEditorForm()
     cmbChangeItemIndex.Clear
     
     For i = 1 To MAX_ITEMS
-        cmbChangeItemIndex.AddItem Trim$(Item(i).name)
+        cmbChangeItemIndex.AddItem Trim$(Item(i).Name)
     Next
     cmbChangeItemIndex.ListIndex = 0
     
@@ -5641,7 +5642,7 @@ Public Sub InitEventEditorForm()
     cmbChangeSkills.Clear
     
     For i = 1 To MAX_SPELLS
-        cmbChangeSkills.AddItem Trim$(Spell(i).name)
+        cmbChangeSkills.AddItem Trim$(Spell(i).Name)
     Next
     cmbChangeSkills.ListIndex = 0
     
@@ -5649,7 +5650,7 @@ Public Sub InitEventEditorForm()
     cmbChangeClass.Clear
     
     For i = 1 To MAX_CLASSES
-        cmbChangeClass.AddItem i & ": " & Trim$(Class(i).name)
+        cmbChangeClass.AddItem i & ": " & Trim$(Class(i).Name)
     Next
     cmbChangeClass.ListIndex = 0
     
@@ -5657,7 +5658,7 @@ Public Sub InitEventEditorForm()
     cmbPlayAnim.Clear
     
     For i = 1 To MAX_ANIMATIONS
-        cmbPlayAnim.AddItem i & ": " & Trim$(Animation(i).name)
+        cmbPlayAnim.AddItem i & ": " & Trim$(Animation(i).Name)
     Next
     cmbPlayAnim.ListIndex = 0
     
@@ -5681,7 +5682,7 @@ Public Sub InitEventEditorForm()
     cmbOpenShop.Clear
     
     For i = 1 To MAX_SHOPS
-        cmbOpenShop.AddItem i & ". " & Trim$(Shop(i).name)
+        cmbOpenShop.AddItem i & ". " & Trim$(Shop(i).Name)
     Next
     cmbOpenShop.ListIndex = 0
     
@@ -5690,7 +5691,7 @@ Public Sub InitEventEditorForm()
     
     For i = 1 To MAX_MAP_NPCS
         If Map.NPC(i) > 0 Then
-            cmbSpawnNPC.AddItem i & ". " & Trim$(NPC(Map.NPC(i)).name)
+            cmbSpawnNPC.AddItem i & ". " & Trim$(NPC(Map.NPC(i)).Name)
         Else
             cmbSpawnNPC.AddItem i & ". "
         End If
@@ -5724,7 +5725,7 @@ Private Sub lstCommands_Click()
 End Sub
 
 Sub AddMoveRouteCommand(Index As Integer)
-    Dim i As Long, x As Long, z As Long
+    Dim i As Long, X As Long, Z As Long
     
     Index = Index + 1
     
@@ -5733,8 +5734,8 @@ Sub AddMoveRouteCommand(Index As Integer)
         TempMoveRouteCount = TempMoveRouteCount + 1
         ReDim Preserve TempMoveRoute(TempMoveRouteCount)
         
-        For x = TempMoveRouteCount - 1 To i Step -1
-            TempMoveRoute(x + 1) = TempMoveRoute(x)
+        For X = TempMoveRouteCount - 1 To i Step -1
+            TempMoveRoute(X + 1) = TempMoveRoute(X)
         Next
         
         TempMoveRoute(i).Index = Index
@@ -5844,7 +5845,7 @@ Dim i As Long
             If Map.NPC(i) <= 0 Then
                 cmbChatBubbleTarget.AddItem CStr(i) & ". "
             Else
-                cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(NPC(Map.NPC(i)).name)
+                cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(NPC(Map.NPC(i)).Name)
             End If
         Next
         cmbChatBubbleTarget.ListIndex = 0
@@ -5852,19 +5853,19 @@ Dim i As Long
         cmbChatBubbleTarget.Visible = True
         cmbChatBubbleTarget.Clear
         For i = 1 To Map.EventCount
-            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.events(i).name)
+            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.events(i).Name)
         Next
         cmbChatBubbleTarget.ListIndex = 0
     End If
 End Sub
 
 Private Sub optCondition_Index_Click(Index As Integer)
-Dim i As Long, x As Long
+Dim i As Long, X As Long
     For i = 0 To 6
-        If optCondition_Index(i).Value = True Then x = i
+        If optCondition_Index(i).Value = True Then X = i
     Next
     ClearConditionFrame
-    Select Case x
+    Select Case X
         Case 0
             cmbCondition_PlayerVarIndex.Enabled = True
             cmbCondition_PlayerVarCompare.Enabled = True
@@ -5914,21 +5915,21 @@ Dim i As Long
     cmbCondition_HasItem.Enabled = False
     cmbCondition_HasItem.Clear
     For i = 1 To MAX_ITEMS
-        cmbCondition_HasItem.AddItem i & ". " & Trim$(Item(i).name)
+        cmbCondition_HasItem.AddItem i & ". " & Trim$(Item(i).Name)
     Next
     cmbCondition_HasItem.ListIndex = 0
     
     cmbCondition_ClassIs.Enabled = False
     cmbCondition_ClassIs.Clear
     For i = 1 To MAX_CLASSES
-        cmbCondition_ClassIs.AddItem i & ". " & CStr(Class(i).name)
+        cmbCondition_ClassIs.AddItem i & ". " & CStr(Class(i).Name)
     Next
     cmbCondition_ClassIs.ListIndex = 0
     
     cmbCondition_LearntSkill.Enabled = False
     cmbCondition_LearntSkill.Clear
     For i = 1 To MAX_SPELLS
-        cmbCondition_LearntSkill.AddItem i & ". " & Trim$(Spell(i).name)
+        cmbCondition_LearntSkill.AddItem i & ". " & Trim$(Spell(i).Name)
     Next
     cmbCondition_LearntSkill.ListIndex = 0
     cmbCondition_LevelCompare.Enabled = False
@@ -6003,26 +6004,26 @@ Private Sub picGraphic_Click()
     GraphicSelType = 0
 End Sub
 
-Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim i As Long
     If frmEditor_Events.cmbGraphic.ListIndex = 2 Then
         'Tileset... hard one....
         If ShiftDown Then
             If GraphicSelX > -1 And GraphicSelY > -1 Then
-                If CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
-                    GraphicSelX2 = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32
-                    GraphicSelY2 = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32
+                If CLng(X + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
+                    GraphicSelX2 = CLng(X + frmEditor_Events.hScrlGraphicSel.Value) / 32
+                    GraphicSelY2 = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) / 32
                 End If
             End If
         Else
-            GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) \ 32
-            GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) \ 32
+            GraphicSelX = CLng(X + frmEditor_Events.hScrlGraphicSel.Value) \ 32
+            GraphicSelY = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) \ 32
             GraphicSelX2 = 0
             GraphicSelY2 = 0
         End If
     ElseIf frmEditor_Events.cmbGraphic.ListIndex = 1 Then
-        GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value)
-        GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value)
+        GraphicSelX = CLng(X + frmEditor_Events.hScrlGraphicSel.Value)
+        GraphicSelY = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value)
         GraphicSelX2 = 0
         GraphicSelY2 = 0
         
@@ -6188,7 +6189,7 @@ Private Sub scrlMapTintData_Change(Index As Integer)
         Case 2
             lblMapTintData(2).Caption = "Blue: " & scrlMapTintData(2).Value
         Case 3
-            lblMapTintData(3).Caption = "Opacity: " & scrlMapTintData(3).Value
+            lblMapTintData(3).Caption = "Alpha: " & scrlMapTintData(3).Value
     End Select
     
     ' Error handler
@@ -6244,7 +6245,7 @@ Private Sub tabPages_Click()
 End Sub
 
 Private Sub txtName_Validate(Cancel As Boolean)
-    tmpEvent.name = Trim$(txtName.text)
+    tmpEvent.Name = Trim$(txtName.text)
 End Sub
 
 Private Sub txtPlayerVariable_Validate(Cancel As Boolean)

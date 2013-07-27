@@ -773,7 +773,7 @@ Function TakeInvSlot(ByVal Index As Long, ByVal InvSlot As Byte, ByVal ItemVal A
     Dim ItemNum As Integer
 
     ' Check for subscript out of range
-    If IsPlaying(Index) = False Or InvSlot <= 0 Or InvSlot > MAX_ITEMS Then Exit Function
+    If IsPlaying(Index) = False Or InvSlot < 1 Or InvSlot > MAX_ITEMS Then Exit Function
     
     ItemNum = GetPlayerInvItemNum(Index, InvSlot)
 
@@ -810,7 +810,7 @@ Function TakeInvSlot(ByVal Index As Long, ByVal InvSlot As Byte, ByVal ItemVal A
     End If
 End Function
 
-Function GiveInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVal As Long, Optional ByVal ItemDur As Integer = -1, Optional ByVal ItemBind As Integer = 0, Optional ByVal SendUpdate As Boolean = True) As Boolean
+Function GiveInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVal As Long, Optional ByVal ItemDur As Integer = -1, Optional ByVal ItemBind As Integer = 0, Optional ByVal SendUpdate As Boolean = True) As Byte
     Dim i As Long
 
     ' Check for subscript out of range
@@ -819,7 +819,7 @@ Function GiveInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVa
     i = FindOpenInvSlot(Index, ItemNum)
 
     ' Check to see if inventory is full
-    If Not i = 0 Then
+    If i > 0 And i <= MAX_INV Then
         Call SetPlayerInvItemNum(Index, i, ItemNum)
         Call SetPlayerInvItemValue(Index, i, GetPlayerInvItemValue(Index, i) + ItemVal)
         
@@ -842,6 +842,8 @@ Function GiveInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVa
     Else
         Call PlayerMsg(Index, "Your inventory is full!", BrightRed)
     End If
+    
+    GiveInvItem = i
 End Function
 
 Function HasSpell(ByVal Index As Long, ByVal SpellNum As Long) As Boolean
