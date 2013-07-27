@@ -155,7 +155,6 @@ Public Const NPC_BEHAVIOR_FRIENDLY As Byte = 2
 Public Const NPC_BEHAVIOR_SHOPKEEPER As Byte = 3
 Public Const NPC_BEHAVIOR_GUARD As Byte = 4
 Public Const NPC_BEHAVIOR_QUEST As Byte = 5
-Public Const NPC_BEHAVIOR_GUIDE As Byte = 6
 
 ' Spell constants
 Public Const SPELL_TYPE_DAMAGEHP As Byte = 0

@@ -300,11 +300,11 @@ Function TryCreateDirectX8Device() As Boolean
                 TryCreateDirectX8Device = True
                 Exit Function
             Case 2
-                Set Direct3D_Device = Direct3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.picScreen.hwnd, D3DCREATE_MIXED_VERTEXPROCESSING, Direct3D_Window)
+                Set Direct3D_Device = Direct3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.picScreen.hwnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, Direct3D_Window)
                 TryCreateDirectX8Device = True
                 Exit Function
             Case 3
-                Set Direct3D_Device = Direct3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.picScreen.hwnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, Direct3D_Window)
+                Set Direct3D_Device = Direct3D.CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, frmMain.picScreen.hwnd, D3DCREATE_MIXED_VERTEXPROCESSING, Direct3D_Window)
                 TryCreateDirectX8Device = True
                 Exit Function
             Case 4
@@ -5214,8 +5214,8 @@ Public Sub UpdateCamera()
     Dim offsetX As Long, offsetY As Long, StartX As Long, StartY As Long, EndX As Long, EndY As Long
     Dim centerX As Long, centerY As Long
     
-    centerX = (ScreenX \ 32) / 2
-    centerY = ((ScreenY \ 32) + 1) / 2
+    centerX = (ScreenX \ PIC_X) / 2
+    centerY = (ScreenY \ PIC_Y) / 2
     offsetX = TempPlayer(MyIndex).xOffset + PIC_X
     offsetY = TempPlayer(MyIndex).yOffset + PIC_Y
     StartX = GetPlayerX(MyIndex) - centerX
@@ -5223,11 +5223,13 @@ Public Sub UpdateCamera()
  
     If StartX <= 0 Then
         offsetX = 0
+        
         If StartX = 0 Then
             If TempPlayer(MyIndex).xOffset > 0 Then
                 offsetX = TempPlayer(MyIndex).xOffset
             End If
         End If
+        
         StartX = 0
     End If
 
@@ -5247,44 +5249,42 @@ Public Sub UpdateCamera()
     EndY = StartY + MIN_MAPY
     
     If GetPlayerX(MyIndex) > centerX And EndX <= Map.MaxX Then
-            StartX = StartX - 1
+        StartX = StartX - 1
     End If
     
     If GetPlayerY(MyIndex) > centerY And EndY <= Map.MaxY Then
-            StartY = StartY - 1
+        StartY = StartY - 1
     End If
+    
     If EndX > Map.MaxX Then
-        offsetX = 32
+        offsetX = PIC_X
+        
         If EndX = Map.MaxX + 1 Then
             If TempPlayer(MyIndex).xOffset < 0 Then
                 offsetX = TempPlayer(MyIndex).xOffset + PIC_X
             End If
         End If
+        
         EndX = Map.MaxX
         StartX = EndX - MIN_MAPX
     End If
 
     If EndY > Map.MaxY Then
-
-
         If EndY = Map.MaxY + 1 Then
             If TempPlayer(MyIndex).yOffset <= 0 Then
                 offsetY = TempPlayer(MyIndex).yOffset + PIC_Y
                 StartY = EndY - MIN_MAPY - 1
-                'Debug.Print "1st: " & StartY
             Else
                 offsetY = 0
                 StartY = EndY - MIN_MAPY
-                'Debug.Print "2nd: " & StartY
             End If
         Else
-            offsetY = 32
+            offsetY = PIC_Y
             EndY = Map.MaxY
             StartY = EndY - MIN_MAPY
         End If
+        
         EndY = Map.MaxY
-
-
     End If
 
     With TileView

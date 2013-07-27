@@ -107,36 +107,36 @@ Public Function GetNpcSpellVital(ByVal MapNum As Integer, ByVal MapNpcNum As Byt
     End If
 End Function
 
-Function GetNpcMaxVital(ByVal NpcNum As Long, ByVal Vital As Vitals) As Long
+Function GetNpcMaxVital(ByVal npcnum As Long, ByVal Vital As Vitals) As Long
     Dim X As Long
 
     ' Prevent subscript out of range
-    If NpcNum <= 0 Or NpcNum > MAX_NPCS Then Exit Function
+    If npcnum <= 0 Or npcnum > MAX_NPCS Then Exit Function
 
     Select Case Vital
         Case HP
-            GetNpcMaxVital = NPC(NpcNum).HP
+            GetNpcMaxVital = NPC(npcnum).HP
         Case MP
-            GetNpcMaxVital = NPC(NpcNum).MP
+            GetNpcMaxVital = NPC(npcnum).MP
     End Select
 End Function
 
-Function GetNpcVitalRegen(ByVal NpcNum As Long, ByVal Vital As Vitals) As Long
+Function GetNpcVitalRegen(ByVal npcnum As Long, ByVal Vital As Vitals) As Long
     Dim i As Long
 
     ' Prevent subscript out of range
-    If NpcNum <= 0 Or NpcNum > MAX_NPCS Then Exit Function
+    If npcnum <= 0 Or npcnum > MAX_NPCS Then Exit Function
 
     Select Case Vital
         Case HP
-            i = (NPC(NpcNum).Stat(Stats.Spirit) * 0.8) + 7
-            If i > GetNpcMaxVital(NpcNum, HP) / 25 Then
-                i = GetNpcMaxVital(NpcNum, HP) / 25
+            i = (NPC(npcnum).Stat(Stats.Spirit) * 0.8) + 7
+            If i > GetNpcMaxVital(npcnum, HP) / 25 Then
+                i = GetNpcMaxVital(npcnum, HP) / 25
             End If
         Case MP
-            i = (NPC(NpcNum).Stat(Stats.Spirit) / 4) + 12
-            If i > GetNpcMaxVital(NpcNum, MP) / 25 Then
-                i = GetNpcMaxVital(NpcNum, MP) / 25
+            i = (NPC(npcnum).Stat(Stats.Spirit) / 4) + 12
+            If i > GetNpcMaxVital(npcnum, MP) / 25 Then
+                i = GetNpcMaxVital(npcnum, MP) / 25
             End If
     End Select
     
@@ -144,8 +144,8 @@ Function GetNpcVitalRegen(ByVal NpcNum As Long, ByVal Vital As Vitals) As Long
     GetNpcVitalRegen = i
 End Function
 
-Function GetNpcDamage(ByVal NpcNum As Long) As Long
-    GetNpcDamage = 0.085 * 5 * NPC(NpcNum).Stat(Stats.Strength) * NPC(NpcNum).Damage + (NPC(NpcNum).Level / 5)
+Function GetNpcDamage(ByVal npcnum As Long) As Long
+    GetNpcDamage = 0.085 * 5 * NPC(npcnum).Stat(Stats.Strength) * NPC(npcnum).Damage + (NPC(npcnum).Level / 5)
 End Function
 
 ' ###############################
@@ -207,13 +207,13 @@ Public Function CanPlayerDeflect(ByVal index As Long) As Boolean
     End If
 End Function
 
-Public Function CanNpcCritical(ByVal NpcNum As Long) As Boolean
+Public Function CanNpcCritical(ByVal npcnum As Long) As Boolean
     Dim Rate As Long
     Dim RandomNum As Long
 
     CanNpcCritical = False
 
-    Rate = NPC(NpcNum).Stat(Stats.Agility) / 52.08
+    Rate = NPC(npcnum).Stat(Stats.Agility) / 52.08
     RandomNum = Random(1, 100)
     
     If RandomNum <= Rate Then
@@ -221,13 +221,13 @@ Public Function CanNpcCritical(ByVal NpcNum As Long) As Boolean
     End If
 End Function
 
-Public Function CanNpcSpellCritical(ByVal NpcNum As Long) As Boolean
+Public Function CanNpcSpellCritical(ByVal npcnum As Long) As Boolean
     Dim Rate As Long
     Dim RandomNum As Long
 
     CanNpcSpellCritical = False
 
-    Rate = NPC(NpcNum).Stat(Stats.Intelligence) / 78.16
+    Rate = NPC(npcnum).Stat(Stats.Intelligence) / 78.16
     RandomNum = Random(1, 100)
     
     If RandomNum <= Rate Then
@@ -367,13 +367,13 @@ Function CanNpcMitigateNpc(ByVal Attacker As Long, Victim As Long, MapNum As Int
     End If
 End Function
 
-Public Function CanNpcDodge(ByVal NpcNum As Long) As Boolean
+Public Function CanNpcDodge(ByVal npcnum As Long) As Boolean
     Dim Rate As Long
     Dim RandomNum As Long
 
     CanNpcDodge = False
 
-    Rate = NPC(NpcNum).Stat(Stats.Agility) / 83.3
+    Rate = NPC(npcnum).Stat(Stats.Agility) / 83.3
     RandomNum = Random(1, 100)
     
     If RandomNum <= Rate Then
@@ -381,13 +381,13 @@ Public Function CanNpcDodge(ByVal NpcNum As Long) As Boolean
     End If
 End Function
 
-Public Function CanNpcDeflect(ByVal NpcNum As Long) As Boolean
+Public Function CanNpcDeflect(ByVal npcnum As Long) As Boolean
     Dim Rate As Long
     Dim RandomNum As Long
 
     CanNpcDeflect = False
 
-    Rate = NPC(NpcNum).Stat(Stats.Strength) * 0.25
+    Rate = NPC(npcnum).Stat(Stats.Strength) * 0.25
     RandomNum = Random(1, 100)
     
     If RandomNum <= Rate Then
@@ -399,14 +399,14 @@ End Function
 ' ##      Player Attacking Npc     ##
 ' ###################################
 Public Sub TryPlayerAttackNpc(ByVal index As Long, ByVal MapNpcNum As Long)
-    Dim NpcNum As Long
+    Dim npcnum As Long
     Dim MapNum As Integer
     Dim Damage As Long
     
     ' Can we attack the npc?
     If CanPlayerAttackNpc(index, MapNpcNum, False) Then
         MapNum = GetPlayerMap(index)
-        NpcNum = MapNpc(MapNum).NPC(MapNpcNum).Num
+        npcnum = MapNpc(MapNum).NPC(MapNpcNum).Num
     
         ' Get the damage we can do
         Damage = GetPlayerDamage(index)
@@ -465,7 +465,7 @@ End Sub
 
 Public Function CanPlayerAttackNpc(ByVal Attacker As Long, ByVal MapNpcNum As Long, Optional ByVal IsSpell As Boolean = False, Optional ByVal UsingBow As Boolean) As Boolean
     Dim MapNum As Integer
-    Dim NpcNum As Long
+    Dim npcnum As Long
     Dim NpcX As Long
     Dim NpcY As Long
     Dim Attackspeed As Long
@@ -480,15 +480,15 @@ Public Function CanPlayerAttackNpc(ByVal Attacker As Long, ByVal MapNpcNum As Lo
     If MapNpc(GetPlayerMap(Attacker)).NPC(MapNpcNum).Num < 1 Then Exit Function
     
     MapNum = GetPlayerMap(Attacker)
-    NpcNum = MapNpc(MapNum).NPC(MapNpcNum).Num
+    npcnum = MapNpc(MapNum).NPC(MapNpcNum).Num
     
     ' Make sure the npc isn't already dead
     If MapNpc(MapNum).NPC(MapNpcNum).Vital(Vitals.HP) < 1 Then
-        If Not NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_QUEST And Not NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_GUIDE Then Exit Function
+        If Not NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_QUEST Then Exit Function
     End If
 
     ' Make sure they are a player killer or else they can't attack a guard
-    If NPC(NpcNum).Behavior = NPC_BEHAVIOR_GUARD And GetPlayerPK(Attacker) = NO Then Exit Function
+    If NPC(npcnum).Behavior = NPC_BEHAVIOR_GUARD And GetPlayerPK(Attacker) = NO Then Exit Function
 
     ' Attack speed from weapon
     If GetPlayerEquipment(Attacker, Weapon) > 0 Then
@@ -497,7 +497,7 @@ Public Function CanPlayerAttackNpc(ByVal Attacker As Long, ByVal MapNpcNum As Lo
         Attackspeed = 1000
     End If
     
-    If NpcNum > 0 And timeGetTime > TempPlayer(Attacker).AttackTimer + Attackspeed Then
+    If npcnum > 0 And timeGetTime > TempPlayer(Attacker).AttackTimer + Attackspeed Then
         If Not IsSpell Then ' Melee attack
             ' Check if at same coordinates
             Select Case GetPlayerDir(Attacker)
@@ -515,21 +515,21 @@ Public Function CanPlayerAttackNpc(ByVal Attacker As Long, ByVal MapNpcNum As Lo
         End If
 
         If Not IsSpell And Not UsingBow Then
-            If Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_QUEST And Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_GUIDE Then
+            If Not NPC(npcnum).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(npcnum).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(npcnum).Behavior = NPC_BEHAVIOR_QUEST Then
                 If DidNpcMitigatePlayer(Attacker, MapNpcNum) = False Then
                     CanPlayerAttackNpc = True
                 End If
-            ElseIf Len(Trim$(NPC(NpcNum).AttackSay)) > 0 Then
-                Call SendChatBubble(MapNum, MapNpcNum, TARGET_TYPE_NPC, Trim$(NPC(NpcNum).AttackSay), White)
+            ElseIf Len(Trim$(NPC(npcnum).AttackSay)) > 0 Then
+                Call SendChatBubble(MapNum, MapNpcNum, TARGET_TYPE_NPC, Trim$(NPC(npcnum).AttackSay), White)
             End If
         ElseIf UsingBow Then
-            If Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_QUEST And Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_GUIDE Then
+            If Not NPC(npcnum).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(npcnum).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(npcnum).Behavior = NPC_BEHAVIOR_QUEST Then
                 If DidNpcMitigatePlayer(Attacker, MapNpcNum) = False Then
                     CanPlayerAttackNpc = True
                 End If
             End If
         ElseIf IsSpell Then
-            If Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_QUEST And Not NPC(NpcNum).Behavior = NPC_BEHAVIOR_GUIDE Then
+            If Not NPC(npcnum).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(npcnum).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(npcnum).Behavior = NPC_BEHAVIOR_QUEST Then
                 If DidNpcMitigatePlayer(Attacker, MapNpcNum) = False Then
                     CanPlayerAttackNpc = True
                 End If
@@ -540,21 +540,21 @@ End Function
 
 Public Function DidNpcMitigatePlayer(ByVal Attacker As Long, ByVal MapNpcNum As Long) As Boolean
     Dim MapNum As Integer
-    Dim NpcNum As Long
+    Dim npcnum As Long
     
     MapNum = GetPlayerMap(Attacker)
-    NpcNum = MapNpc(MapNum).NPC(MapNpcNum).Num
+    npcnum = MapNpc(MapNum).NPC(MapNpcNum).Num
     
     If CanNpcMitigatePlayer(MapNpcNum, Attacker) = True Or TempPlayer(Attacker).SpellBuffer.Spell > 0 Then
         ' Check if NPC can avoid the attack
-        If CanNpcDodge(NpcNum) Then
+        If CanNpcDodge(npcnum) Then
             Call SendSoundToMap(MapNum, Options.DodgeSound)
             SendAnimation MapNum, Options.DodgeAnimation, 0, 0, TARGET_TYPE_NPC, MapNpcNum
             DidNpcMitigatePlayer = True
             Exit Function
         End If
         
-        If CanNpcDeflect(NpcNum) Then
+        If CanNpcDeflect(npcnum) Then
             Call SendSoundToMap(MapNum, Options.DeflectSound)
             SendAnimation MapNum, Options.DeflectAnimation, 0, 0, TARGET_TYPE_NPC, MapNpcNum
             DidNpcMitigatePlayer = True
@@ -573,7 +573,7 @@ Public Sub PlayerAttackNpc(ByVal Attacker As Long, ByVal MapNpcNum As Long, ByVa
     Dim STR As Long
     Dim DEF As Long
     Dim MapNum As Integer
-    Dim NpcNum As Long
+    Dim npcnum As Long
     Dim Value As Long
     Dim LevelDiff As Byte
 
@@ -581,8 +581,8 @@ Public Sub PlayerAttackNpc(ByVal Attacker As Long, ByVal MapNpcNum As Long, ByVa
     If IsPlaying(Attacker) = False Or MapNpcNum <= 0 Or MapNpcNum > MAX_MAP_NPCS Then Exit Sub
 
     MapNum = GetPlayerMap(Attacker)
-    NpcNum = MapNpc(MapNum).NPC(MapNpcNum).Num
-    Name = Trim$(NPC(NpcNum).Name)
+    npcnum = MapNpc(MapNum).NPC(MapNpcNum).Num
+    Name = Trim$(NPC(npcnum).Name)
     
     ' Set the attacker's target
     If SpellNum = 0 Then
@@ -639,10 +639,10 @@ Public Sub PlayerAttackNpc(ByVal Attacker As Long, ByVal MapNpcNum As Long, ByVa
         End If
 
         ' Calculate experience to give attacker
-        Exp = NPC(NpcNum).Exp
+        Exp = NPC(npcnum).Exp
         
         ' Find the level difference between the npc and player
-        LevelDiff = GetPlayerLevel(Attacker) - NPC(NpcNum).Level
+        LevelDiff = GetPlayerLevel(Attacker) - NPC(npcnum).Level
         
         If Exp > 0 Then
             If LevelDiff > 0 Then
@@ -681,19 +681,19 @@ Public Sub PlayerAttackNpc(ByVal Attacker As Long, ByVal MapNpcNum As Long, ByVa
 
         ' Drop the goods if they have anything to drop
         For n = 1 To MAX_NPC_DROPS
-            If NPC(NpcNum).DropItem(n) = 0 Then Exit For
+            If NPC(npcnum).DropItem(n) = 0 Then Exit For
             
-            Value = NPC(NpcNum).DropValue(n)
+            Value = NPC(npcnum).DropValue(n)
             Value = Random(Value * 0.25, Value * 1.5)
             Round Value
             
             If Value < 1 Then Value = 1
             
-            If Rnd <= NPC(NpcNum).DropChance(n) Then
+            If Rnd <= NPC(npcnum).DropChance(n) Then
                 If TempPlayer(Attacker).InParty > 0 Then
-                    Call Party_GetLoot(TempPlayer(Attacker).InParty, NPC(NpcNum).DropItem(n), NPC(NpcNum).DropValue(n), MapNpc(MapNum).NPC(MapNpcNum).X, MapNpc(MapNum).NPC(MapNpcNum).Y)
+                    Call Party_GetLoot(TempPlayer(Attacker).InParty, NPC(npcnum).DropItem(n), NPC(npcnum).DropValue(n), MapNpc(MapNum).NPC(MapNpcNum).X, MapNpc(MapNum).NPC(MapNpcNum).Y)
                 Else
-                    Call SpawnItem(NPC(NpcNum).DropItem(n), Value, Item(NPC(NpcNum).DropItem(n)).Data1, MapNum, MapNpc(MapNum).NPC(MapNpcNum).X, MapNpc(MapNum).NPC(MapNpcNum).Y, GetPlayerName(Attacker))
+                    Call SpawnItem(NPC(npcnum).DropItem(n), Value, Item(NPC(npcnum).DropItem(n)).Data1, MapNum, MapNpc(MapNum).NPC(MapNpcNum).X, MapNpc(MapNum).NPC(MapNpcNum).Y, GetPlayerName(Attacker))
                 End If
             End If
         Next
@@ -806,10 +806,10 @@ End Sub
 ' ##      Npc Attacking Npc        ##
 ' ###################################
 Public Sub TryNpcAttackNpc(ByVal MapNum As Integer, ByVal Attacker As Long, ByVal Victim As Long)
-    Dim NpcNum As Long, Damage As Long, i As Long
+    Dim npcnum As Long, Damage As Long, i As Long
     
-    NpcNum = MapNpc(MapNum).NPC(Attacker).Num
-    Damage = GetNpcDamage(NpcNum)
+    npcnum = MapNpc(MapNum).NPC(Attacker).Num
+    Damage = GetNpcDamage(npcnum)
 
     ' Set the npc target to the npc
     If MapNpc(MapNum).NPC(Victim).Target = 0 Then
@@ -929,7 +929,7 @@ Function CanNpcAttackNpc(ByVal MapNum As Integer, ByVal Attacker As Long, ByVal 
     If MapNpc(MapNum).NPC(Attacker).Vital(Vitals.HP) < 1 Or MapNpc(MapNum).NPC(Victim).Vital(Vitals.HP) < 1 Then Exit Function
     
     ' Make sure they aren't trying to attack a friendly or shopkeeper NPC
-    If NPC(MapNpc(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_FRIENDLY Or NPC(MapNpc(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER Or NPC(MapNpc(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_QUEST Or NPC(MapNpc(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_GUIDE Then Exit Function
+    If NPC(MapNpc(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_FRIENDLY Or NPC(MapNpc(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER Or NPC(MapNpc(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_QUEST Then Exit Function
     
     ' Make sure they aren't casting a spell
     If MapNpc(MapNum).NPC(Attacker).SpellBuffer.Timer > 0 And Spell = False Then Exit Function
@@ -1082,10 +1082,10 @@ End Sub
 ' ##      Npc Attacking Player     ##
 ' ###################################
 Public Sub TryNpcAttackPlayer(ByVal MapNpcNum As Long, ByVal index As Long)
-    Dim MapNum As Integer, NpcNum As Long, Damage As Long, n As Byte, DistanceX As Byte, DistanceY As Byte
+    Dim MapNum As Integer, npcnum As Long, Damage As Long, n As Byte, DistanceX As Byte, DistanceY As Byte
     
     MapNum = GetPlayerMap(index)
-    NpcNum = MapNpc(GetPlayerMap(index)).NPC(MapNpcNum).Num
+    npcnum = MapNpc(GetPlayerMap(index)).NPC(MapNpcNum).Num
     
     ' Can the npc attack the player
     If CanNpcAttackPlayer(MapNpcNum, index) Then
@@ -1147,7 +1147,7 @@ Public Sub TryNpcAttackPlayer(ByVal MapNpcNum As Long, ByVal index As Long)
         End If
         
         ' Get the damage we can do
-        Damage = GetNpcDamage(NpcNum)
+        Damage = GetNpcDamage(npcnum)
         
         ' Add damage based on direction
         If MapNpc(GetPlayerMap(index)).NPC(MapNpcNum).Dir = DIR_UP Then
@@ -1207,7 +1207,7 @@ End Sub
 
 Function CanNpcAttackPlayer(ByVal MapNpcNum As Long, ByVal index As Long, Optional ByVal Spell As Boolean = False) As Boolean
     Dim MapNum As Integer
-    Dim NpcNum As Long
+    Dim npcnum As Long
 
     ' Check for subscript out of range
     If MapNpcNum < 1 Or MapNpcNum > MAX_MAP_NPCS Or Not IsPlaying(index) Then Exit Function
@@ -1216,7 +1216,7 @@ Function CanNpcAttackPlayer(ByVal MapNpcNum As Long, ByVal index As Long, Option
     If MapNpc(GetPlayerMap(index)).NPC(MapNpcNum).Num < 1 Then Exit Function
 
     MapNum = GetPlayerMap(index)
-    NpcNum = MapNpc(MapNum).NPC(MapNpcNum).Num
+    npcnum = MapNpc(MapNum).NPC(MapNpcNum).Num
 
     ' Make sure the npc isn't already dead
     If MapNpc(MapNum).NPC(MapNpcNum).Vital(Vitals.HP) < 1 Then Exit Function
@@ -1224,8 +1224,8 @@ Function CanNpcAttackPlayer(ByVal MapNpcNum As Long, ByVal index As Long, Option
     ' Make sure they aren't casting a spell
     If MapNpc(MapNum).NPC(MapNpcNum).SpellBuffer.Timer > 0 And Spell = False Then Exit Function
     
-    ' Can't attack if shopkeeper, friendly, quest, or guide
-    If NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_FRIENDLY Or NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER Or NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_QUEST Or NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_GUIDE Then Exit Function
+    ' Can't attack if shopkeeper, friendly, or quest
+    If NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_FRIENDLY Or NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER Or NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_QUEST Then Exit Function
     
     ' Don't attack players who are not Player Killers if the attack is a guard
     If NPC(MapNpc(MapNum).NPC(MapNpcNum).Num).Behavior = NPC_BEHAVIOR_GUARD Then
@@ -1252,7 +1252,7 @@ Function CanNpcAttackPlayer(ByVal MapNpcNum As Long, ByVal index As Long, Option
     
     ' Make sure they are on the same map
     If IsPlaying(index) Then
-        If NpcNum > 0 Then
+        If npcnum > 0 Then
             ' Check if they are going to cast
             If Random(1, 2) = 1 And CanNpcCastSpell(MapNum, MapNpcNum) Then
                 Call BufferNpcSpell(MapNum, MapNpcNum, MapNpc(MapNum).NPC(MapNpcNum).Target)
@@ -1711,7 +1711,7 @@ End Sub
 ' ##    Player Attacking Player    ##
 ' ###################################
 Public Sub TryPlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long)
-    Dim NpcNum As Long
+    Dim npcnum As Long
     Dim MapNum As Integer
     Dim Damage As Long
 
@@ -2345,7 +2345,7 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal Target 
                             If MapNpc(MapNum).NPC(i).Vital(HP) > 0 Then
                                 If IsInRange(AoE, X, Y, MapNpc(MapNum).NPC(i).X, MapNpc(MapNum).NPC(i).Y) Then
                                     ' Friendly and Shopkeeper
-                                    If Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_QUEST And Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_GUIDE Then
+                                    If Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_QUEST Then
                                         ' Guard
                                         If Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_GUARD Or (NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_GUARD And GetPlayerPK(index) = YES) Then
                                             If CanPlayerAttackNpc(index, i, False, True) Then
@@ -2782,9 +2782,9 @@ Public Sub StunPlayer(ByVal index As Long, ByVal SpellNum As Long)
 End Sub
 
 Public Sub StunNPC(ByVal index As Long, ByVal MapNum As Integer, ByVal SpellNum As Long)
-    Dim NpcNum As Long
+    Dim npcnum As Long
     
-    NpcNum = MapNpc(MapNum).NPC(index).Num
+    npcnum = MapNpc(MapNum).NPC(index).Num
     
     ' Check if it's a stunning spell
     If Spell(SpellNum).StunDuration > 0 Then
@@ -2812,19 +2812,19 @@ Public Sub ClearAccountSpellBuffer(ByVal index As Long)
 End Sub
 
 Private Function CanNpcHealSelf(ByVal MapNum As Integer, ByVal MapNpcNum As Byte, ByVal SpellNum As Long) As Boolean
-    Dim NpcNum As Long, Target As Long, TargetType As Byte
+    Dim npcnum As Long, Target As Long, TargetType As Byte
     
-    NpcNum = MapNpc(MapNum).NPC(MapNpcNum).Num
+    npcnum = MapNpc(MapNum).NPC(MapNpcNum).Num
     Target = MapNpcNum
     TargetType = TARGET_TYPE_NPC
     
     ' Valid spell
-    If NPC(NpcNum).Spell(SpellNum) > 0 And NPC(NpcNum).Spell(SpellNum) <= MAX_SPELLS Then
+    If NPC(npcnum).Spell(SpellNum) > 0 And NPC(npcnum).Spell(SpellNum) <= MAX_SPELLS Then
         ' Check for cooldown
         If MapNpc(MapNum).NPC(MapNpcNum).SpellTimer(MapNpcNum) <= timeGetTime Then
             ' Have enough mana
             If MapNpc(MapNum).NPC(MapNpcNum).Vital(MP) - Spell(SpellNum).MPCost >= 0 Or Spell(SpellNum).MPCost = 0 Then
-                If Spell(NPC(NpcNum).Spell(SpellNum)).Type = SPELL_TYPE_HEALHP Or Spell(NPC(NpcNum).Spell(SpellNum)).Type = SPELL_TYPE_HEALMP Then
+                If Spell(NPC(npcnum).Spell(SpellNum)).Type = SPELL_TYPE_HEALHP Or Spell(NPC(npcnum).Spell(SpellNum)).Type = SPELL_TYPE_HEALMP Then
                     ' Don't want to overheal
                     ' If Npc(NpcNum).Behavior = NPC_BEHAVIOR_GUARD And TargetType = TARGET_TYPE_PLAYER Then
                     '    If Spell(Npc(NpcNum).Spell(SpellNum)).Type = SPELL_TYPE_HEALHP Then
@@ -2837,15 +2837,15 @@ Private Function CanNpcHealSelf(ByVal MapNum As Integer, ByVal MapNpcNum As Byte
                     '        End If
                     '    End If
                     ' If TargetType = TARGET_TYPE_NPC And Not Npc(NpcNum).Behavior = NPC_BEHAVIOR_GUARD Then
-                        If Spell(NPC(NpcNum).Spell(SpellNum)).Type = SPELL_TYPE_HEALHP Then
+                        If Spell(NPC(npcnum).Spell(SpellNum)).Type = SPELL_TYPE_HEALHP Then
                             If Target = MapNpcNum Then
-                                If MapNpc(MapNum).NPC(MapNpcNum).Vital(HP) + GetNpcSpellVital(MapNum, MapNpcNum, MapNpcNum, NPC(NpcNum).Spell(SpellNum), True) > GetNpcMaxVital(NpcNum, HP) Then Exit Function
+                                If MapNpc(MapNum).NPC(MapNpcNum).Vital(HP) + GetNpcSpellVital(MapNum, MapNpcNum, MapNpcNum, NPC(npcnum).Spell(SpellNum), True) > GetNpcMaxVital(npcnum, HP) Then Exit Function
                             ElseIf Target > 0 And Target <= MAX_MAP_NPCS Then
                                 If MapNpc(MapNum).NPC(Target).Vital(HP) + GetNpcSpellVital(MapNum, MapNpcNum, Target, NPC(MapNpc(MapNum).NPC(Target).Num).Spell(SpellNum), True) > GetNpcMaxVital(MapNpc(MapNum).NPC(Target).Num, HP) Then Exit Function
                             End If
-                        ElseIf Spell(NPC(NpcNum).Spell(SpellNum)).Type = SPELL_TYPE_HEALMP Then
+                        ElseIf Spell(NPC(npcnum).Spell(SpellNum)).Type = SPELL_TYPE_HEALMP Then
                             If Target = MapNpcNum Then
-                                If MapNpc(MapNum).NPC(MapNpcNum).Vital(MP) + GetNpcSpellVital(MapNum, MapNpcNum, MapNpcNum, NPC(NpcNum).Spell(SpellNum), True) > GetNpcMaxVital(NpcNum, MP) Then Exit Function
+                                If MapNpc(MapNum).NPC(MapNpcNum).Vital(MP) + GetNpcSpellVital(MapNum, MapNpcNum, MapNpcNum, NPC(npcnum).Spell(SpellNum), True) > GetNpcMaxVital(npcnum, MP) Then Exit Function
                             ElseIf Target > 0 And Target <= MAX_MAP_NPCS Then
                                 If MapNpc(MapNum).NPC(Target).Vital(MP) + GetNpcSpellVital(MapNum, MapNpcNum, Target, NPC(MapNpc(MapNum).NPC(Target).Num).Spell(SpellNum), True) > GetNpcMaxVital(MapNpc(MapNum).NPC(Target).Num, MP) Then Exit Function
                             End If
@@ -2861,12 +2861,12 @@ Private Function CanNpcHealSelf(ByVal MapNum As Integer, ByVal MapNpcNum As Byte
 End Function
 
 Private Function CanNpcCastSpell(ByVal MapNum As Integer, ByVal MapNpcNum As Byte) As Boolean
-    Dim i As Long, Target As Long, TargetType As Byte, Range As Byte, NpcNum As Long
+    Dim i As Long, Target As Long, TargetType As Byte, Range As Byte, npcnum As Long
     Dim RndNum As Byte
     
     TargetType = MapNpc(MapNum).NPC(MapNpcNum).TargetType
     Target = MapNpc(MapNum).NPC(MapNpcNum).Target
-    NpcNum = MapNpc(MapNum).NPC(MapNpcNum).Num
+    npcnum = MapNpc(MapNum).NPC(MapNpcNum).Num
     
     CanNpcCastSpell = False
 
@@ -2885,12 +2885,12 @@ Private Function CanNpcCastSpell(ByVal MapNum As Integer, ByVal MapNpcNum As Byt
     
     For i = 1 To MAX_NPC_SPELLS
         ' Valid spell
-        If NPC(NpcNum).Spell(i) > 0 And NPC(NpcNum).Spell(i) <= MAX_SPELLS Then
+        If NPC(npcnum).Spell(i) > 0 And NPC(npcnum).Spell(i) <= MAX_SPELLS Then
             ' Check for cooldown
             If MapNpc(MapNum).NPC(MapNpcNum).SpellTimer(i) <= timeGetTime Then
                 ' Have enough mana
-                If MapNpc(MapNum).NPC(MapNpcNum).Vital(MP) - Spell(NPC(NpcNum).Spell(i)).MPCost >= 0 Or Spell(NPC(NpcNum).Spell(i)).MPCost = 0 Then
-                    Range = Spell(NPC(NpcNum).Spell(i)).Range
+                If MapNpc(MapNum).NPC(MapNpcNum).Vital(MP) - Spell(NPC(npcnum).Spell(i)).MPCost >= 0 Or Spell(NPC(npcnum).Spell(i)).MPCost = 0 Then
+                    Range = Spell(NPC(npcnum).Spell(i)).Range
                     
                     ' Are they in range
                     If TargetType = TARGET_TYPE_PLAYER Then

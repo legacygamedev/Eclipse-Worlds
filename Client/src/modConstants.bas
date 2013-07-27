@@ -3,7 +3,7 @@ Option Explicit
 
 ' API Declares
 Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
-Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lparam As Long) As Long
+Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByRef msg() As Byte, ByVal wParam As Long, ByVal lparam As Long) As Long
 Public Declare Function GetForegroundWindow Lib "user32" () As Long
 
 ' Sounds
@@ -384,7 +384,6 @@ Public Const NPC_BEHAVIOR_FRIENDLY As Byte = 2
 Public Const NPC_BEHAVIOR_SHOPKEEPER As Byte = 3
 Public Const NPC_BEHAVIOR_GUARD As Byte = 4
 Public Const NPC_BEHAVIOR_QUEST As Byte = 5
-Public Const NPC_BEHAVIOR_GUIDE As Byte = 6
 
 ' Spell constants
 Public Const SPELL_TYPE_DAMAGEHP As Byte = 0

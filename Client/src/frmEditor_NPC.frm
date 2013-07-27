@@ -112,7 +112,7 @@ Begin VB.Form frmEditor_NPC
          TabStop         =   0   'False
          ToolTipText     =   "Other faction members will defend this NPC"
          Top             =   2400
-         Width           =   1455
+         Width           =   1815
       End
       Begin VB.TextBox txtAttackSay 
          Height          =   285
@@ -188,7 +188,7 @@ Begin VB.Form frmEditor_NPC
          Height          =   300
          ItemData        =   "frmEditor_NPC.frx":03AD
          Left            =   1080
-         List            =   "frmEditor_NPC.frx":03C6
+         List            =   "frmEditor_NPC.frx":03C3
          Style           =   2  'Dropdown List
          TabIndex        =   9
          Top             =   2760

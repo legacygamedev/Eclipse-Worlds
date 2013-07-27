@@ -21,17 +21,17 @@ Sub ServerLoop()
             For i = 1 To Player_HighIndex
                 If IsPlaying(i) Then
                     ' Check if they've completed casting, and if so set the actual spell going
-                    If tempPlayer(i).SpellBuffer.Spell > 0 Then
-                        If timeGetTime > tempPlayer(i).SpellBuffer.Timer + (Spell(Account(i).Chars(GetPlayerChar(i)).Spell(tempPlayer(i).SpellBuffer.Spell)).CastTime * 1000) Then
-                            CastSpell i, tempPlayer(i).SpellBuffer.Spell, tempPlayer(i).SpellBuffer.Target, tempPlayer(i).SpellBuffer.TType
+                    If TempPlayer(i).SpellBuffer.Spell > 0 Then
+                        If timeGetTime > TempPlayer(i).SpellBuffer.Timer + (Spell(Account(i).Chars(GetPlayerChar(i)).Spell(TempPlayer(i).SpellBuffer.Spell)).CastTime * 1000) Then
+                            CastSpell i, TempPlayer(i).SpellBuffer.Spell, TempPlayer(i).SpellBuffer.Target, TempPlayer(i).SpellBuffer.TType
                         End If
                     End If
                     
                     ' Check if need to turn off stunned
-                    If tempPlayer(i).StunDuration > 0 Then
-                        If timeGetTime > tempPlayer(i).StunTimer + (tempPlayer(i).StunDuration * 1000) Then
-                            tempPlayer(i).StunDuration = 0
-                            tempPlayer(i).StunTimer = 0
+                    If TempPlayer(i).StunDuration > 0 Then
+                        If timeGetTime > TempPlayer(i).StunTimer + (TempPlayer(i).StunDuration * 1000) Then
+                            TempPlayer(i).StunDuration = 0
+                            TempPlayer(i).StunTimer = 0
                             SendStunned i
                         End If
                     End If
@@ -49,10 +49,10 @@ Sub ServerLoop()
                     Next
                     
                     ' Check regen timer
-                    If tempPlayer(i).StopRegen Then
-                        If tempPlayer(i).StopRegenTimer + 5000 < timeGetTime Then
-                            tempPlayer(i).StopRegen = False
-                            tempPlayer(i).StopRegenTimer = 0
+                    If TempPlayer(i).StopRegen Then
+                        If TempPlayer(i).StopRegenTimer + 5000 < timeGetTime Then
+                            TempPlayer(i).StopRegen = False
+                            TempPlayer(i).StopRegenTimer = 0
                         End If
                     End If
                     
@@ -176,7 +176,7 @@ End Sub
 Private Sub UpdateMapLogic()
     Dim i As Long, X As Long, MapNum As Integer, n As Long, x1 As Long, y1 As Long
     Dim TickCount As Long, Damage As Long, DistanceX As Long, DistanceY As Long, npcnum As Long
-    Dim Target As Long, TargetType As Byte, didwalk As Boolean, buffer As clsBuffer, Resource_Index As Long
+    Dim Target As Long, TargetType As Byte, didwalk As Boolean, Buffer As clsBuffer, Resource_Index As Long
     Dim TargetX As Long, TargetY As Long, Target_Verify As Boolean
 
     For MapNum = 1 To MAX_MAPS
@@ -293,7 +293,7 @@ Private Sub UpdateMapLogic()
                                             ' Different npc
                                             If MapNpc(MapNum).NPC(i).Num <> MapNpc(MapNum).NPC(X).Num Then
                                                 ' Not friendly or shopkeeper
-                                                If Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_FRIENDLY Or Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER Or Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_QUEST Or Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_GUIDE Then
+                                                If Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_FRIENDLY Or Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER Or Not NPC(MapNpc(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_QUEST Then
                                                     ' Different faction
                                                     If NPC(MapNpc(MapNum).NPC(i).Num).Faction > 0 Then
                                                         If Not NPC(MapNpc(MapNum).NPC(i).Num).Faction = NPC(npcnum).Faction Then
@@ -343,7 +343,7 @@ Private Sub UpdateMapLogic()
                         TargetType = MapNpc(MapNum).NPC(X).TargetType
       
                         ' Check to see if its time for the npc to walk
-                        If Not NPC(npcnum).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(npcnum).Behavior = NPC_BEHAVIOR_GUIDE Then
+                        If Not NPC(npcnum).Behavior = NPC_BEHAVIOR_SHOPKEEPER Then
                             If TargetType = 1 Then ' Player
                                 ' Check to see if we are following a player or not
                                 If Target > 0 Then
@@ -668,18 +668,18 @@ Sub UpdatePlayerVitals()
     
     For i = 1 To Player_HighIndex
         If IsPlaying(i) Then
-            If Not tempPlayer(i).StopRegen Then
+            If Not TempPlayer(i).StopRegen Then
                 If GetPlayerVital(i, Vitals.HP) <> GetPlayerMaxVital(i, Vitals.HP) Then
                     Call SetPlayerVital(i, Vitals.HP, GetPlayerVital(i, Vitals.HP) + GetPlayerVitalRegen(i, Vitals.HP))
                     Call SendVital(i, HP)
                     ' Send vitals to party if in one
-                    If tempPlayer(i).InParty > 0 Then SendPartyVitals tempPlayer(i).InParty, i
+                    If TempPlayer(i).InParty > 0 Then SendPartyVitals TempPlayer(i).InParty, i
                 End If
                 If GetPlayerVital(i, Vitals.MP) <> GetPlayerMaxVital(i, Vitals.MP) Then
                     Call SetPlayerVital(i, Vitals.MP, GetPlayerVital(i, Vitals.MP) + GetPlayerVitalRegen(i, Vitals.MP))
                     Call SendVital(i, MP)
                     ' Send vitals to party if in one
-                    If tempPlayer(i).InParty > 0 Then SendPartyVitals tempPlayer(i).InParty, i
+                    If TempPlayer(i).InParty > 0 Then SendPartyVitals TempPlayer(i).InParty, i
                 End If
             End If
         End If
@@ -721,18 +721,18 @@ Private Sub PotionLogic()
     
     For i = 1 To Player_HighIndex
         If IsPlaying(i) Then
-            If tempPlayer(i).VitalCycle(HP) > 0 Then
-                If tempPlayer(i).VitalPotion(HP) > 0 Then
+            If TempPlayer(i).VitalCycle(HP) > 0 Then
+                If TempPlayer(i).VitalPotion(HP) > 0 Then
                     ' Don't heal if we're already full health
                     If Account(i).Chars(GetPlayerChar(i)).Vital(HP) < GetPlayerMaxVital(i, HP) Then
-                        Account(i).Chars(GetPlayerChar(i)).Vital(HP) = Account(i).Chars(GetPlayerChar(i)).Vital(HP) + Round(Item(tempPlayer(i).VitalPotion(HP)).AddHP / Item(tempPlayer(i).VitalPotion(HP)).Data1)
+                        Account(i).Chars(GetPlayerChar(i)).Vital(HP) = Account(i).Chars(GetPlayerChar(i)).Vital(HP) + Round(Item(TempPlayer(i).VitalPotion(HP)).AddHP / Item(TempPlayer(i).VitalPotion(HP)).Data1)
                         
                         ' Prevent overhealing
                         If Account(i).Chars(GetPlayerChar(i)).Vital(HP) > GetPlayerMaxVital(i, HP) Then
                             Account(i).Chars(GetPlayerChar(i)).Vital(HP) = GetPlayerMaxVital(i, HP)
                         End If
                         
-                        Call SendActionMsg(GetPlayerMap(i), "+" & Round(Item(tempPlayer(i).VitalPotion(HP)).AddHP / Item(tempPlayer(i).VitalPotion(HP)).Data1), BrightGreen, ACTIONMSG_SCROLL, GetPlayerX(i) * 32, GetPlayerY(i) * 32)
+                        Call SendActionMsg(GetPlayerMap(i), "+" & Round(Item(TempPlayer(i).VitalPotion(HP)).AddHP / Item(TempPlayer(i).VitalPotion(HP)).Data1), BrightGreen, ACTIONMSG_SCROLL, GetPlayerX(i) * 32, GetPlayerY(i) * 32)
                         
                         ' Send the vital
                         Call SendVital(i, HP)
@@ -740,26 +740,26 @@ Private Sub PotionLogic()
                 End If
                 
                 ' Lower the cycle by 1
-                tempPlayer(i).VitalCycle(HP) = tempPlayer(i).VitalCycle(HP) - 1
+                TempPlayer(i).VitalCycle(HP) = TempPlayer(i).VitalCycle(HP) - 1
                 
                 ' Clear out old data if the cycle is over
-                If tempPlayer(i).VitalCycle(HP) = 0 Then
-                    tempPlayer(i).VitalPotion(HP) = 0
+                If TempPlayer(i).VitalCycle(HP) = 0 Then
+                    TempPlayer(i).VitalPotion(HP) = 0
                 End If
             End If
             
-            If tempPlayer(i).VitalCycle(MP) > 0 Then
-                If tempPlayer(i).VitalPotion(MP) > 0 Then
+            If TempPlayer(i).VitalCycle(MP) > 0 Then
+                If TempPlayer(i).VitalPotion(MP) > 0 Then
                     ' Don't heal if we're already full mana
                     If Account(i).Chars(GetPlayerChar(i)).Vital(MP) < GetPlayerMaxVital(i, MP) Then
-                        Account(i).Chars(GetPlayerChar(i)).Vital(MP) = Account(i).Chars(GetPlayerChar(i)).Vital(MP) + Round(Item(tempPlayer(i).VitalPotion(MP)).AddMP / Item(tempPlayer(i).VitalPotion(MP)).Data1)
+                        Account(i).Chars(GetPlayerChar(i)).Vital(MP) = Account(i).Chars(GetPlayerChar(i)).Vital(MP) + Round(Item(TempPlayer(i).VitalPotion(MP)).AddMP / Item(TempPlayer(i).VitalPotion(MP)).Data1)
                         
                         ' Prevent overhealing
                         If Account(i).Chars(GetPlayerChar(i)).Vital(MP) > GetPlayerMaxVital(i, MP) Then
                             Account(i).Chars(GetPlayerChar(i)).Vital(MP) = GetPlayerMaxVital(i, MP)
                         End If
                         
-                        Call SendActionMsg(GetPlayerMap(i), "+" & Round(Item(tempPlayer(i).VitalPotion(MP)).AddMP / Item(tempPlayer(i).VitalPotion(MP)).Data1), BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(i) * 32, GetPlayerY(i) * 32)
+                        Call SendActionMsg(GetPlayerMap(i), "+" & Round(Item(TempPlayer(i).VitalPotion(MP)).AddMP / Item(TempPlayer(i).VitalPotion(MP)).Data1), BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(i) * 32, GetPlayerY(i) * 32)
                         
                         ' Send the vital
                         Call SendVital(i, MP)
@@ -767,11 +767,11 @@ Private Sub PotionLogic()
                 End If
                 
                 ' Lower the cycle by 1
-                tempPlayer(i).VitalCycle(MP) = tempPlayer(i).VitalCycle(MP) - 1
+                TempPlayer(i).VitalCycle(MP) = TempPlayer(i).VitalCycle(MP) - 1
                 
                 ' Clear out old data if the cycle is over
-                If tempPlayer(i).VitalCycle(MP) = 0 Then
-                    tempPlayer(i).VitalPotion(MP) = 0
+                If TempPlayer(i).VitalCycle(MP) = 0 Then
+                    TempPlayer(i).VitalPotion(MP) = 0
                 End If
             End If
         End If
@@ -789,13 +789,13 @@ Function CanEventMoveTowardsPlayer(playerID As Long, MapNum As Long, eventID As 
     
     If playerID <= 0 Or playerID > Player_HighIndex Then Exit Function
     If MapNum <= 0 Or MapNum > MAX_MAPS Then Exit Function
-    If eventID <= 0 Or eventID > tempPlayer(playerID).EventMap.CurrentEvents Then Exit Function
+    If eventID <= 0 Or eventID > TempPlayer(playerID).EventMap.CurrentEvents Then Exit Function
     
     X = GetPlayerX(playerID)
     Y = GetPlayerY(playerID)
-    x1 = tempPlayer(playerID).EventMap.EventPages(eventID).X
-    y1 = tempPlayer(playerID).EventMap.EventPages(eventID).Y
-    WalkThrough = Map(MapNum).Events(tempPlayer(playerID).EventMap.EventPages(eventID).eventID).Pages(tempPlayer(playerID).EventMap.EventPages(eventID).pageID).WalkThrough
+    x1 = TempPlayer(playerID).EventMap.EventPages(eventID).X
+    y1 = TempPlayer(playerID).EventMap.EventPages(eventID).Y
+    WalkThrough = Map(MapNum).Events(TempPlayer(playerID).EventMap.EventPages(eventID).eventID).Pages(TempPlayer(playerID).EventMap.EventPages(eventID).PageID).WalkThrough
     ' Add option for pathfinding to random guessing option.
     
     If PathfindingType = 1 Then
@@ -966,10 +966,10 @@ Function CanEventMoveTowardsPlayer(playerID As Long, MapNum As Long, eventID As 
         
         pos = MapBlocks(MapNum).Blocks
         
-        For i = 1 To tempPlayer(playerID).EventMap.CurrentEvents
-            If tempPlayer(playerID).EventMap.EventPages(i).Visible Then
-                If tempPlayer(playerID).EventMap.EventPages(i).WalkThrough = 1 Then
-                    pos(tempPlayer(playerID).EventMap.EventPages(i).X, tempPlayer(playerID).EventMap.EventPages(i).Y) = 9
+        For i = 1 To TempPlayer(playerID).EventMap.CurrentEvents
+            If TempPlayer(playerID).EventMap.EventPages(i).Visible Then
+                If TempPlayer(playerID).EventMap.EventPages(i).WalkThrough = 1 Then
+                    pos(TempPlayer(playerID).EventMap.EventPages(i).X, TempPlayer(playerID).EventMap.EventPages(i).Y) = 9
                 End If
             End If
         Next
@@ -1152,13 +1152,13 @@ Function CanEventMoveAwayFromPlayer(playerID As Long, MapNum As Long, eventID As
     
     If playerID <= 0 Or playerID > Player_HighIndex Then Exit Function
     If MapNum <= 0 Or MapNum > MAX_MAPS Then Exit Function
-    If eventID <= 0 Or eventID > tempPlayer(playerID).EventMap.CurrentEvents Then Exit Function
+    If eventID <= 0 Or eventID > TempPlayer(playerID).EventMap.CurrentEvents Then Exit Function
     
     X = GetPlayerX(playerID)
     Y = GetPlayerY(playerID)
-    x1 = tempPlayer(playerID).EventMap.EventPages(eventID).X
-    y1 = tempPlayer(playerID).EventMap.EventPages(eventID).Y
-    WalkThrough = Map(MapNum).Events(tempPlayer(playerID).EventMap.EventPages(eventID).eventID).Pages(tempPlayer(playerID).EventMap.EventPages(eventID).pageID).WalkThrough
+    x1 = TempPlayer(playerID).EventMap.EventPages(eventID).X
+    y1 = TempPlayer(playerID).EventMap.EventPages(eventID).Y
+    WalkThrough = Map(MapNum).Events(TempPlayer(playerID).EventMap.EventPages(eventID).eventID).Pages(TempPlayer(playerID).EventMap.EventPages(eventID).PageID).WalkThrough
     
     i = Int(Rnd * 5)
     didwalk = False
@@ -1325,12 +1325,12 @@ Function GetDirToPlayer(playerID As Long, MapNum As Long, eventID As Long) As Lo
     ' This Event returns a direction, 5 is not a valid direction so we assume fail unless otherwise told.
     If playerID <= 0 Or playerID > Player_HighIndex Then Exit Function
     If MapNum <= 0 Or MapNum > MAX_MAPS Then Exit Function
-    If eventID <= 0 Or eventID > tempPlayer(playerID).EventMap.CurrentEvents Then Exit Function
+    If eventID <= 0 Or eventID > TempPlayer(playerID).EventMap.CurrentEvents Then Exit Function
     
     X = GetPlayerX(playerID)
     Y = GetPlayerY(playerID)
-    x1 = tempPlayer(playerID).EventMap.EventPages(eventID).X
-    y1 = tempPlayer(playerID).EventMap.EventPages(eventID).Y
+    x1 = TempPlayer(playerID).EventMap.EventPages(eventID).X
+    y1 = TempPlayer(playerID).EventMap.EventPages(eventID).Y
     
     i = DIR_RIGHT
     
@@ -1368,12 +1368,12 @@ Function GetDirAwayFromPlayer(playerID As Long, MapNum As Long, eventID As Long)
     ' This Event returns a direction, 5 is not a valid direction so we assume fail unless otherwise told.
     If playerID <= 0 Or playerID > Player_HighIndex Then Exit Function
     If MapNum <= 0 Or MapNum > MAX_MAPS Then Exit Function
-    If eventID <= 0 Or eventID > tempPlayer(playerID).EventMap.CurrentEvents Then Exit Function
+    If eventID <= 0 Or eventID > TempPlayer(playerID).EventMap.CurrentEvents Then Exit Function
     
     X = GetPlayerX(playerID)
     Y = GetPlayerY(playerID)
-    x1 = tempPlayer(playerID).EventMap.EventPages(eventID).X
-    y1 = tempPlayer(playerID).EventMap.EventPages(eventID).Y
+    x1 = TempPlayer(playerID).EventMap.EventPages(eventID).X
+    y1 = TempPlayer(playerID).EventMap.EventPages(eventID).Y
     
     
     i = DIR_RIGHT
