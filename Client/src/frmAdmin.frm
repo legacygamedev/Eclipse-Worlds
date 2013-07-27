@@ -212,10 +212,10 @@ Begin VB.Form frmAdmin
          Alignment       =   2  'Center
          Appearance      =   0  'Flat
          Height          =   285
-         Left            =   1770
+         Left            =   1800
          TabIndex        =   34
          Text            =   "0"
-         Top             =   2940
+         Top             =   2880
          Width           =   600
       End
       Begin VB.ComboBox cmbAccess 
@@ -393,10 +393,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1590
+         Left            =   1560
          TabIndex        =   17
          TabStop         =   0   'False
-         Top             =   3690
+         Top             =   3720
          Width           =   1215
       End
       Begin VB.CommandButton cmdARespawn 
@@ -709,7 +709,7 @@ Begin VB.Form frmAdmin
          BackStyle       =   0  'Transparent
          Caption         =   "Recent"
          BeginProperty Font 
-            Name            =   "Myriad Arabic"
+            Name            =   "Arial"
             Size            =   12
             Charset         =   238
             Weight          =   700
@@ -742,7 +742,7 @@ Begin VB.Form frmAdmin
          BackStyle       =   0  'Transparent
          Caption         =   "Categories"
          BeginProperty Font 
-            Name            =   "Myriad Arabic"
+            Name            =   "Arial"
             Size            =   12
             Charset         =   238
             Weight          =   700
@@ -933,7 +933,7 @@ Private Const UISF_FocusRectangle As Integer = &H1
 
  
 Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, _
-ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+ByVal wMsg As Long, ByVal wParam As Long, lparam As Any) As Long
 
  
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)

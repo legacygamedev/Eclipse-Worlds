@@ -4,7 +4,7 @@ Option Explicit
 Public cpEvent As EventRec
 
 Const LB_SETHORIZONTALEXTENT = &H194
-Private Declare Function SendMessageByNum Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Declare Function SendMessageByNum Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
 Public charList() As String
 Public g_playersOnline() As String
 Public ignoreIndexes() As Long
@@ -22,7 +22,7 @@ Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
 Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, _
 ByVal dwNewLong As Long) As Long
 Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, _
-ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+ByVal Msg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
 Public Declare Function BringWindowToTop Lib "user32" (ByVal hWnd As Long) As Long
 
 
@@ -66,17 +66,17 @@ errorhandler:
     HandleError "MapEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-Private Function WindowProc(ByVal hWnd As Long, ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Function WindowProc(ByVal hWnd As Long, ByVal Msg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
     
         Select Case Msg
         Case WM_SETFOCUS
             Exit Function
         Case WM_DESTROY
-            WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, Msg, wParam, lParam)
+            WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, Msg, wParam, lparam)
             Call SetWindowLong(hWnd, GWL_WNDPROC, GetWindowLong(hWnd, -21))
             Exit Function
     End Select
-    WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, Msg, wParam, lParam)
+    WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, Msg, wParam, lparam)
 End Function
  
 Public Sub SubClassHwnd(ByVal hWnd As Long)
@@ -3252,10 +3252,7 @@ Sub AddCommand(Index As Long)
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    frmEditor_Events.fraRandom(9).Visible = False
-    frmEditor_Events.lstCommands.Visible = False
-    
+
     If tmpEvent.Pages(curPageNum).CommandListCount = 0 Then
         tmpEvent.Pages(curPageNum).CommandListCount = 1
         ReDim tmpEvent.Pages(curPageNum).CommandList(1)
@@ -3559,7 +3556,7 @@ errorhandler:
 End Sub
 
 Public Sub EditEventCommand()
-    Dim i As Long, x As Long, z As Long, CurList As Long, CurSlot As Long
+    Dim i As Long, x As Long, Z As Long, CurList As Long, CurSlot As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -3577,9 +3574,6 @@ Public Sub EditEventCommand()
     
     If CurList > tmpEvent.Pages(curPageNum).CommandListCount Then Exit Sub
     If CurSlot > tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount Then Exit Sub
-    
-    frmEditor_Events.fraRandom(9).Visible = False
-    frmEditor_Events.lstCommands.Visible = False
     
     Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index
         Case EventType.evAddText
@@ -4055,7 +4049,7 @@ errorhandler:
 End Sub
 
 Public Sub DeleteEventCommand()
-    Dim i As Long, x As Long, z As Long, CurList As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
+    Dim i As Long, x As Long, Z As Long, CurList As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -4137,7 +4131,7 @@ errorhandler:
 End Sub
 
 Public Sub EditCommand()
-    Dim i As Long, x As Long, z As Long, CurList As Long, CurSlot As Long
+    Dim i As Long, x As Long, Z As Long, CurList As Long, CurSlot As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -4147,9 +4141,6 @@ Public Sub EditCommand()
     
     If i > UBound(EventList) Then Exit Sub
     
-    frmEditor_Events.fraRandom(9).Visible = False
-    frmEditor_Events.lstCommands.Visible = False
-
     CurList = EventList(i).CommandList
     CurSlot = EventList(i).CommandNum
     
