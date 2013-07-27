@@ -691,7 +691,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     ClassEditorInit
@@ -743,6 +743,8 @@ Private Sub Form_Unload(Cancel As Integer)
     Else
         EditorSave = False
     End If
+    frmAdmin.chkEditor(EDITOR_CLASS).Value = False
+    BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
     
 ' Error handler
@@ -909,7 +911,7 @@ Private Sub scrlItemNum_Change()
     lblItemNum.Caption = "Number: " & scrlItemNum.Value
 
     If scrlItemNum.Value > 0 Then
-        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.Value).Name)
+        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.Value).name)
     Else
         lblItemName.Caption = "Item: None"
     End If
@@ -948,7 +950,7 @@ Private Sub scrlSpellNum_Change()
     lblSpellNum.Caption = "Number: " & scrlSpellNum.Value
 
     If scrlSpellNum.Value > 0 Then
-        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).Name)
+        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).name)
     Else
         lblSpellName.Caption = "Spell: None"
     End If
@@ -1100,9 +1102,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Class(EditorIndex).Name = Trim$(txtName.text)
+    Class(EditorIndex).name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -1203,7 +1205,7 @@ Private Sub cmdPaste_Click()
      
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Class(EditorIndex)), ByVal VarPtr(Class(TmpIndex + 1)), LenB(Class(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Class(EditorIndex).Name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Class(EditorIndex).name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

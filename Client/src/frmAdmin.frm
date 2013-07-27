@@ -7,7 +7,7 @@ Begin VB.Form frmAdmin
    ClientHeight    =   8715
    ClientLeft      =   810
    ClientTop       =   330
-   ClientWidth     =   2985
+   ClientWidth     =   3045
    Icon            =   "frmAdmin.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
@@ -15,7 +15,7 @@ Begin VB.Form frmAdmin
    MinButton       =   0   'False
    ScaleHeight     =   581
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   199
+   ScaleWidth      =   203
    ShowInTaskbar   =   0   'False
    Begin VB.PictureBox picPanel 
       Appearance      =   0  'Flat
@@ -32,21 +32,346 @@ Begin VB.Form frmAdmin
       EndProperty
       ForeColor       =   &H80000008&
       Height          =   8655
-      Left            =   60
+      Left            =   120
       ScaleHeight     =   577
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   191
+      ScaleWidth      =   198
       TabIndex        =   1
       TabStop         =   0   'False
       Top             =   15
-      Width           =   2865
+      Width           =   2970
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Events"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   12
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   67
+         Top             =   4755
+         Width           =   1065
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   12
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   66
+         Top             =   4770
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   11
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   65
+         Top             =   6900
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   10
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   64
+         Top             =   6630
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   9
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   63
+         Top             =   6360
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   8
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   62
+         Top             =   6090
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   7
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   61
+         Top             =   5835
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   6
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   60
+         Top             =   5565
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   5
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   59
+         Top             =   5295
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   4
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   58
+         Top             =   5025
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   3
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   57
+         Top             =   4500
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   2
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   56
+         Top             =   4230
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   1
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   55
+         Top             =   3960
+         Width           =   240
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   0
+         Left            =   2625
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   54
+         Top             =   3690
+         Width           =   240
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Title"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   11
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   53
+         Top             =   6900
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Spell"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   10
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   52
+         Top             =   6630
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Shop"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   9
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   51
+         Top             =   6360
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Resource"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   8
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   50
+         Top             =   6090
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "NPC"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   7
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   49
+         Top             =   5820
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Moral"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   6
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   48
+         Top             =   5550
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Map"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   5
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   47
+         Top             =   5280
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Item"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   4
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   46
+         Top             =   5010
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Emoticon"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   3
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   45
+         Top             =   4485
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Class"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   2
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   44
+         Top             =   4215
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Ban"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   1
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   43
+         Top             =   3945
+         Width           =   1065
+      End
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Animation"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   0
+         Left            =   1545
+         Style           =   1  'Graphical
+         TabIndex        =   42
+         Top             =   3675
+         Width           =   1065
+      End
       Begin VB.OptionButton optCat 
          Height          =   420
          Index           =   9
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   53
+         TabIndex        =   41
          ToolTipText     =   "Change sprites via dbl click."
          Top             =   6225
          Width           =   420
@@ -59,7 +384,7 @@ Begin VB.Form frmAdmin
          Left            =   195
          ScaleHeight     =   450
          ScaleWidth      =   450
-         TabIndex        =   52
+         TabIndex        =   40
          Top             =   6870
          Width           =   480
       End
@@ -69,7 +394,7 @@ Begin VB.Form frmAdmin
          Left            =   990
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   50
+         TabIndex        =   38
          ToolTipText     =   "Auto Life ?? "
          Top             =   5790
          Width           =   420
@@ -80,7 +405,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   49
+         TabIndex        =   37
          ToolTipText     =   "Reset Scrolls"
          Top             =   5790
          Width           =   420
@@ -91,7 +416,7 @@ Begin VB.Form frmAdmin
          Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   48
+         TabIndex        =   36
          ToolTipText     =   "Teleport scrolls"
          Top             =   5790
          Width           =   420
@@ -102,7 +427,7 @@ Begin VB.Form frmAdmin
          Left            =   990
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   47
+         TabIndex        =   35
          ToolTipText     =   "Spells, scrolls, magic."
          Top             =   5355
          Width           =   420
@@ -113,7 +438,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   46
+         TabIndex        =   34
          ToolTipText     =   "No idea???"
          Top             =   5355
          Width           =   420
@@ -124,7 +449,7 @@ Begin VB.Form frmAdmin
          Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   45
+         TabIndex        =   33
          ToolTipText     =   "Potions, elixirs, food."
          Top             =   5355
          Width           =   420
@@ -135,7 +460,7 @@ Begin VB.Form frmAdmin
          Left            =   990
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   44
+         TabIndex        =   32
          ToolTipText     =   "Things you can wear"
          Top             =   4920
          Width           =   420
@@ -146,7 +471,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   43
+         TabIndex        =   31
          ToolTipText     =   "Things without a type"
          Top             =   4920
          Width           =   420
@@ -157,7 +482,7 @@ Begin VB.Form frmAdmin
          Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   42
+         TabIndex        =   30
          ToolTipText     =   "Recently spawned items"
          Top             =   4920
          Width           =   420
@@ -165,7 +490,7 @@ Begin VB.Form frmAdmin
       Begin MSComCtl2.UpDown UpDown1 
          Height          =   255
          Left            =   765
-         TabIndex        =   40
+         TabIndex        =   28
          Top             =   6990
          Width           =   480
          _ExtentX        =   847
@@ -179,7 +504,7 @@ Begin VB.Form frmAdmin
          Enabled         =   0   'False
          Height          =   255
          Left            =   30
-         TabIndex        =   39
+         TabIndex        =   27
          Top             =   7935
          Width           =   1380
       End
@@ -190,7 +515,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   285
          Left            =   30
-         TabIndex        =   38
+         TabIndex        =   26
          Text            =   "Recent Amount"
          Top             =   7620
          Width           =   1350
@@ -204,7 +529,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   46
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   35
+         TabIndex        =   23
          Top             =   2160
          Width           =   510
       End
@@ -213,7 +538,7 @@ Begin VB.Form frmAdmin
          Appearance      =   0  'Flat
          Height          =   285
          Left            =   1770
-         TabIndex        =   34
+         TabIndex        =   22
          Text            =   "0"
          Top             =   2940
          Width           =   600
@@ -227,7 +552,7 @@ Begin VB.Form frmAdmin
          ItemData        =   "frmAdmin.frx":038A
          Left            =   480
          List            =   "frmAdmin.frx":039D
-         TabIndex        =   33
+         TabIndex        =   21
          Text            =   "Player's Access"
          Top             =   810
          Width           =   1695
@@ -238,7 +563,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000002&
          Height          =   315
          Left            =   120
-         TabIndex        =   32
+         TabIndex        =   20
          Text            =   "Choose Player"
          Top             =   390
          Width           =   2055
@@ -251,7 +576,7 @@ Begin VB.Form frmAdmin
          Left            =   2280
          ScaleHeight     =   285
          ScaleWidth      =   345
-         TabIndex        =   31
+         TabIndex        =   19
          Top             =   390
          Width           =   375
       End
@@ -268,46 +593,10 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1050
-         TabIndex        =   25
+         TabIndex        =   13
          TabStop         =   0   'False
          Top             =   1800
          Width           =   1725
-      End
-      Begin VB.CommandButton cmdAEmoticon 
-         Caption         =   "Emoticon"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   24
-         TabStop         =   0   'False
-         Top             =   4500
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdAClass 
-         Caption         =   "Class"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   22
-         TabStop         =   0   'False
-         Top             =   4230
-         Width           =   1215
       End
       Begin VB.CommandButton cmdAMute 
          Caption         =   "Mute"
@@ -322,46 +611,10 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   21
+         TabIndex        =   11
          TabStop         =   0   'False
          Top             =   1500
          Width           =   855
-      End
-      Begin VB.CommandButton cmdATitle 
-         Caption         =   "Title"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   20
-         TabStop         =   0   'False
-         Top             =   6645
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdABanE 
-         Caption         =   "Ban"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   19
-         TabStop         =   0   'False
-         Top             =   3960
-         Width           =   1215
       End
       Begin VB.CommandButton cmdLevelUp 
          Caption         =   "Level Up"
@@ -376,28 +629,10 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   18
+         TabIndex        =   10
          TabStop         =   0   'False
          Top             =   2100
          Width           =   855
-      End
-      Begin VB.CommandButton cmdAAnim 
-         Caption         =   "Animation"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   17
-         TabStop         =   0   'False
-         Top             =   3690
-         Width           =   1215
       End
       Begin VB.CommandButton cmdARespawn 
          Caption         =   "Respawn"
@@ -412,118 +647,10 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   165
-         TabIndex        =   16
+         TabIndex        =   9
          TabStop         =   0   'False
          Top             =   4065
          Width           =   1155
-      End
-      Begin VB.CommandButton cmdASpell 
-         Caption         =   "Spell"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   15
-         TabStop         =   0   'False
-         Top             =   6390
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdAShop 
-         Caption         =   "Shop"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   14
-         TabStop         =   0   'False
-         Top             =   6120
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdAResource 
-         Caption         =   "Resource"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   13
-         TabStop         =   0   'False
-         Top             =   5850
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdANpc 
-         Caption         =   "NPC"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   12
-         TabStop         =   0   'False
-         Top             =   5580
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdAMap 
-         Caption         =   "Map"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   11
-         TabStop         =   0   'False
-         Top             =   5040
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdAItem 
-         Caption         =   "Item"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   10
-         TabStop         =   0   'False
-         Top             =   4770
-         Width           =   1215
       End
       Begin VB.CommandButton cmdAMapReport 
          Caption         =   "Map Report"
@@ -538,7 +665,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   180
-         TabIndex        =   9
+         TabIndex        =   8
          TabStop         =   0   'False
          Top             =   3495
          Width           =   1140
@@ -556,7 +683,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   165
-         TabIndex        =   8
+         TabIndex        =   7
          TabStop         =   0   'False
          Top             =   3780
          Width           =   1155
@@ -574,7 +701,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   195
-         TabIndex        =   7
+         TabIndex        =   6
          TabStop         =   0   'False
          Top             =   3210
          Width           =   1125
@@ -608,7 +735,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1050
-         TabIndex        =   6
+         TabIndex        =   5
          TabStop         =   0   'False
          Top             =   1500
          Width           =   1725
@@ -626,7 +753,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   1050
-         TabIndex        =   5
+         TabIndex        =   4
          TabStop         =   0   'False
          Top             =   1200
          Width           =   1725
@@ -644,7 +771,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   4
+         TabIndex        =   3
          TabStop         =   0   'False
          Top             =   1200
          Width           =   855
@@ -662,40 +789,22 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   3
+         TabIndex        =   2
          TabStop         =   0   'False
          Top             =   1800
          Width           =   855
       End
-      Begin VB.CommandButton cmdAMoral 
-         Caption         =   "Moral"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   1590
-         TabIndex        =   2
-         TabStop         =   0   'False
-         Top             =   5310
-         Width           =   1215
-      End
       Begin MSComCtl2.UpDown upSprite 
          Height          =   555
          Left            =   2430
-         TabIndex        =   36
+         TabIndex        =   24
          Top             =   2280
          Width           =   255
          _ExtentX        =   450
          _ExtentY        =   979
          _Version        =   393216
          BuddyControl    =   "txtSprite"
-         BuddyDispid     =   196615
+         BuddyDispid     =   196617
          OrigLeft        =   3990
          OrigTop         =   1770
          OrigRight       =   4245
@@ -704,13 +813,20 @@ Begin VB.Form frmAdmin
          BuddyProperty   =   65547
          Enabled         =   -1  'True
       End
+      Begin VB.Line Line5 
+         BorderColor     =   &H00800080&
+         X1              =   3
+         X2              =   97
+         Y1              =   444
+         Y2              =   444
+      End
       Begin VB.Label lblRecent 
          BackColor       =   &H80000002&
          BackStyle       =   0  'Transparent
          Caption         =   "Recent"
          BeginProperty Font 
-            Name            =   "Myriad Arabic"
-            Size            =   12
+            Name            =   "Arial"
+            Size            =   8.25
             Charset         =   238
             Weight          =   700
             Underline       =   0   'False
@@ -718,10 +834,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          ForeColor       =   &H00800080&
-         Height          =   315
+         Height          =   195
          Left            =   435
-         TabIndex        =   51
-         Top             =   6600
+         TabIndex        =   39
+         Top             =   6645
          Width           =   555
       End
       Begin VB.Label lblItemName 
@@ -732,7 +848,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   195
          Left            =   -45
-         TabIndex        =   41
+         TabIndex        =   29
          Top             =   7380
          Width           =   1470
       End
@@ -742,10 +858,10 @@ Begin VB.Form frmAdmin
          BackStyle       =   0  'Transparent
          Caption         =   "Categories"
          BeginProperty Font 
-            Name            =   "Myriad Arabic"
-            Size            =   12
+            Name            =   "Arial"
+            Size            =   8.25
             Charset         =   238
-            Weight          =   700
+            Weight          =   400
             Underline       =   0   'False
             Italic          =   0   'False
             Strikethrough   =   0   'False
@@ -753,8 +869,8 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   255
          Left            =   105
-         TabIndex        =   37
-         Top             =   4635
+         TabIndex        =   25
+         Top             =   4695
          Width           =   1260
       End
       Begin VB.Label lblStatus 
@@ -773,7 +889,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000008&
          Height          =   375
          Left            =   45
-         TabIndex        =   30
+         TabIndex        =   18
          Top             =   8235
          Visible         =   0   'False
          Width           =   2760
@@ -795,7 +911,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   270
-         TabIndex        =   29
+         TabIndex        =   17
          Top             =   2475
          Width           =   975
       End
@@ -815,8 +931,8 @@ Begin VB.Form frmAdmin
          EndProperty
          ForeColor       =   &H000000C0&
          Height          =   195
-         Left            =   1425
-         TabIndex        =   28
+         Left            =   1380
+         TabIndex        =   16
          Top             =   3345
          Width           =   1410
       End
@@ -837,7 +953,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   285
          Left            =   150
-         TabIndex        =   27
+         TabIndex        =   15
          Top             =   4380
          Width           =   1140
       End
@@ -857,7 +973,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   26
+         TabIndex        =   14
          Top             =   0
          Width           =   2505
       End
@@ -879,8 +995,8 @@ Begin VB.Form frmAdmin
       Begin VB.Line Line2 
          BorderColor     =   &H000000C0&
          BorderWidth     =   3
-         X1              =   103
-         X2              =   186
+         X1              =   99
+         X2              =   183
          Y1              =   240
          Y2              =   240
       End
@@ -898,7 +1014,7 @@ Begin VB.Form frmAdmin
          EndProperty
          Height          =   255
          Left            =   195
-         TabIndex        =   23
+         TabIndex        =   12
          Top             =   2880
          Width           =   735
       End
@@ -924,6 +1040,7 @@ Dim currentSprite As Long
 Private catSub As Boolean
 Public lastIndex As Integer
 Public currentCategory As String
+Public ignoreChange As Boolean
 
 Private Const WM_ChangeUIState As Long = &H127
 Private Const UIS_HideRectangle As Integer = &H1
@@ -948,6 +1065,248 @@ Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination
 'End Function
 
 
+
+Private Sub chkAnim_Click()
+    
+
+End Sub
+Public Sub ShowEyeFor(editor As Byte)
+    picEye(editor).Visible = True
+End Sub
+
+Public Sub chkEditor_Click(Index As Integer)
+
+    ' If debug mode, handle error then exit out
+    
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If ignoreChange Then
+        ignoreChange = False
+        Exit Sub
+    End If
+    Select Case Index
+    
+        Case 0 ' Animation
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+            
+                SendRequestEditAnimation
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Animation.Visible = False
+                    BringWindowToTop (frmAdmin.hWnd)
+            End If
+        Case 1 ' Ban
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+                
+                SendRequestEditBan
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Ban.Visible = False
+                    BringWindowToTop (frmAdmin.hWnd)
+            End If
+        Case 2 'Class
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+                
+                SendRequestEditClass
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Class.Visible = False
+                    BringWindowToTop (frmAdmin.hWnd)
+            End If
+        Case 3 ' Emoticons
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+    
+                SendRequestEditEmoticon
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Emoticon.Visible = False
+                BringWindowToTop (frmAdmin.hWnd)
+            End If
+        Case 4 ' Items
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+            
+                SendRequestEditItem
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Item.Visible = False
+                BringWindowToTop (frmAdmin.hWnd)
+            End If
+        Case 5 ' Map
+                If chkEditor(Index).Value = 1 Then
+                    If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
+                        AddText "You have insufficent access to do this!", BrightRed
+                        ignoreChange = True
+                        chkEditor(Index).Value = 0
+                        Exit Sub
+                    End If
+                    
+                    SendRequestEditMap
+                    chkEditor(Index).FontBold = True
+                Else
+                    If frmEditor_Map.Visible Then
+                        ignoreChange = True
+                        chkEditor(Index).Value = 1
+                        BringWindowToTop (frmEditor_Map.hWnd)
+                        Unload frmEditor_Map
+                    Else
+                    
+                    End If
+                End If
+        Case 6 ' Moral
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+                
+                SendRequestEditMoral
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Moral.Visible = False
+                    BringWindowToTop (frmAdmin.hWnd)
+            End If
+        Case 7 'NPC
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+            
+                SendRequestEditNPC
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_NPC.Visible = False
+                    BringWindowToTop (frmAdmin.hWnd)
+            End If
+         Case 8 ' Resource
+
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+            
+                SendRequestEditResource
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Resource.Visible = False
+                    BringWindowToTop (frmAdmin.hWnd)
+            End If
+        Case 9 'Shop
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+            
+                SendRequestEditShop
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Shop.Visible = False
+                    BringWindowToTop (frmAdmin.hWnd)
+            End If
+        Case 10 ' Spell
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+            
+                SendRequestEditSpell
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Spell.Visible = False
+                    BringWindowToTop (frmAdmin.hWnd)
+            End If
+        Case 11 ' Title
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                    Exit Sub
+                End If
+                
+                SendRequestEditTitle
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Title.Visible = False
+                BringWindowToTop (frmAdmin.hWnd)
+            End If
+        Case 12 ' Events
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                End If
+                    
+                SendRequestEditEvent
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Events.Visible = False
+                BringWindowToTop (frmAdmin.hWnd)
+            End If
+
+    End Select
+    picEye(Index).Visible = False
+    
+' Error handler
+errorhandler:
+    HandleError "chkEditor_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
 
 Private Sub cmbAccess_Click()
     If autoAccess Then
@@ -1065,42 +1424,9 @@ Private Sub setAdminAccessLevel()
     Next i
 End Sub
 
-Private Sub cmdAEmoticon_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-    
-    SendRequestEditEmoticon
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdAEmoticon_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
 
-Private Sub cmdAAnim_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-
-    SendRequestEditAnimation
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdAAnim_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 'Character Editor
 Private Sub cmdCharEditor_Click()
     ' Send request for character names
@@ -1144,23 +1470,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub cmdAMap_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-    
-    SendRequestEditMap
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdAMap_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
 Private Sub cmdAWarpToMe_Click()
     ' If debug mode, handle error then exit out
@@ -1316,116 +1626,10 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub cmdAItem_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-
-    SendRequestEditItem
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdAItem_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
-Private Sub cmdANpc_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-
-    SendRequestEditNPC
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdANpc_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
-Private Sub cmdAResource_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-
-    SendRequestEditResource
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdAResource_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
-Private Sub cmdAShop_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-
-    SendRequestEditShop
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdAShop_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
-Private Sub cmdASpell_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-
-    SendRequestEditSpell
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdASpell_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
 
 
 
-Private Sub cmdABanE_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-    
-    SendRequestEditBan
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdABanE_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
 Private Sub cmdAMute_Click()
     ' If debug mode, handle error then exit out
@@ -1447,59 +1651,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub cmdAClass_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-    
-    SendRequestEditClass
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdAClass_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
-Private Sub cmdATitle_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-    
-    SendRequestEditTitle
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdATitle_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
-Private Sub cmdAMoral_Click()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
-        AddText "You have insufficent access to do this!", BrightRed
-        Exit Sub
-    End If
-    
-    SendRequestEditMoral
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "cmdAMoral_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
 
 Private Sub Command1_Click()
     frmItemSpawner.Visible = True
@@ -1543,6 +1695,7 @@ Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integ
             lblCat.Caption = "Auto Life"
         Case 9
             lblCat.Caption = "Change Sprite"
+        
     End Select
 End Sub
 
@@ -1554,30 +1707,34 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
     Else
 
         optCat(Index).Picture = LoadResPicture(110 + Index, vbResBitmap)
-
-    Select Case Index
-    
-        Case 0
-            currentCategory = "Recent"
-        Case 1
-            currentCategory = "None"
-        Case 2
-            currentCategory = "Equipment"
-        Case 3
-            currentCategory = "Consumable"
-        Case 4
-            currentCategory = "Title"
-        Case 5
-            currentCategory = "Spell"
-        Case 6
-            currentCategory = "Teleport"
-        Case 7
-            currentCategory = "Reset Stats"
-        Case 8
-            currentCategory = "Auto Life"
-        Case 9
-            currentCategory = "Change Sprite"
-    End Select
+    If lastIndex = Index And optCat(Index).Value = True Then
+        frmAdmin.currentCategory = "Categories"
+    Else
+        Select Case Index
+        
+            Case 0
+                currentCategory = "Recent"
+            Case 1
+                currentCategory = "None"
+            Case 2
+                currentCategory = "Equipment"
+            Case 3
+                currentCategory = "Consumable"
+            Case 4
+                currentCategory = "Title"
+            Case 5
+                currentCategory = "Spell"
+            Case 6
+                currentCategory = "Teleport"
+            Case 7
+                currentCategory = "Reset Stats"
+            Case 8
+                currentCategory = "Auto Life"
+            Case 9
+                currentCategory = "Change Sprite"
+        End Select
+        lblCat.Caption = currentCategory
+    End If
         If lastIndex <> -1 Then
             If optCat(lastIndex).Value = False Then
                 optCat(lastIndex).Picture = LoadResPicture(100 + lastIndex, vbResBitmap)
@@ -1601,6 +1758,72 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
         
         lastIndex = Index
     End If
+End Sub
+
+Private Sub picEye_Click(Index As Integer)
+    Select Case Index
+        Case 0 ' Animation
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_Animation.hWnd)
+            End If
+            Exit Sub
+        Case 1 ' Ban
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_Ban.hWnd)
+            End If
+            Exit Sub
+        Case 2 'Class
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_Class.hWnd)
+            End If
+            Exit Sub
+        Case 3 ' Emoticons
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_Emoticon.hWnd)
+            End If
+            Exit Sub
+        Case 4 ' Items
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_Item.hWnd)
+            End If
+            Exit Sub
+        Case 5 ' Map
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_Map.hWnd)
+            End If
+            Exit Sub
+        Case 6 ' Moral
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_Moral.hWnd)
+            End If
+            Exit Sub
+        Case 7 'NPC
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_NPC.hWnd)
+            End If
+            Exit Sub
+         Case 8 ' Resource
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_Resource.hWnd)
+            End If
+            Exit Sub
+        Case 9 'Shop
+            If chkEditor(Index).Value = 0 Then
+                BringWindowToTop (frmEditor_Shop.hWnd)
+            End If
+            Exit Sub
+        Case 10 ' Spell
+            If chkEditor(Index).Value = 0 Then
+                BringWindowToTop (frmEditor_Spell.hWnd)
+            End If
+            Exit Sub
+        Case 11 ' Title
+            If chkEditor(Index).Value = 0 Then
+                BringWindowToTop (frmEditor_Title.hWnd)
+            End If
+            Exit Sub
+
+    End Select
 End Sub
 
 Private Sub picPanel_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
@@ -1688,18 +1911,108 @@ Public Sub UpdatePlayersOnline()
     
     lblPlayers.Caption = "Players: " & overallCounter
 End Sub
+Function ProcAdr(addr As Long) As Long
+      ProcAdr = addr
+End Function
 Public Sub styleButtons()
 Dim i As Long, temp1 As Long, temp2 As Long
     For i = 0 To optCat.UBound
         optCat(i).Value = False
         optCat(i).Picture = LoadResPicture(100 + i, vbResBitmap)
     Next
-    If Not catSub Then
-        catSub = True
+    For i = 0 To picEye.UBound
+        picEye(i).Visible = False
+        picEye(i).Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
+    Next
+    
+    If GetWindowLong(optCat(0).hWnd, -4) <> ProcAdr(AddressOf WindowProc) Then
         For i = 0 To optCat.UBound
             SubClassHwnd optCat(i).hWnd
         Next
+        For i = 0 To chkEditor.UBound
+            picEye(i).BorderStyle = 0
+            SubClassHwnd chkEditor(i).hWnd
+        Next
+        catSub = True
     End If
+End Sub
+Public Sub findVisibleEditors()
+    Dim i As Long, tempCtl As Control
+    For Each frm In Forms
+        If frm.Visible = True Then
+
+            Select Case frm.name
+            
+                Case "frmEditor_Animation"
+                    ignoreChange = True
+                    chkEditor(EDITOR_ANIMATION).Value = 1
+                    chkEditor(EDITOR_ANIMATION).FontBold = True
+                    picEye(EDITOR_ANIMATION).Visible = True
+
+                Case "frmEditor_Ban"
+                    ignoreChange = True
+                    chkEditor(EDITOR_BAN).Value = 1
+                    chkEditor(EDITOR_BAN).FontBold = True
+                    picEye(EDITOR_BAN).Visible = True
+                Case "frmEditor_Class"
+                    ignoreChange = True
+                    chkEditor(EDITOR_CLASS).Value = 1
+                    chkEditor(EDITOR_CLASS).FontBold = True
+                    picEye(EDITOR_CLASS).Visible = True
+                Case "frmEditor_Emoticon"
+                    ignoreChange = True
+                    chkEditor(EDITOR_EMOTICON).Value = 1
+                    chkEditor(EDITOR_EMOTICON).FontBold = True
+                    picEye(EDITOR_EMOTICON).Visible = True
+                Case "frmEditor_Events"
+                    ignoreChange = True
+                    chkEditor(EDITOR_EVENTS).Value = 1
+                    chkEditor(EDITOR_EVENTS).FontBold = True
+                    picEye(EDITOR_EVENTS).Visible = True
+                Case "frmEditor_Item"
+                    ignoreChange = True
+                    chkEditor(EDITOR_ITEM).Value = 1
+                    chkEditor(EDITOR_ITEM).FontBold = True
+                    picEye(EDITOR_ITEM).Visible = True
+                Case "frmEditor_Map"
+                    ignoreChange = True
+                    chkEditor(EDITOR_MAP).Value = 1
+                    chkEditor(EDITOR_MAP).FontBold = True
+                    picEye(EDITOR_MAP).Visible = True
+                Case "frmEditor_Moral"
+                    ignoreChange = True
+                    chkEditor(EDITOR_MORAL).Value = 1
+                    chkEditor(EDITOR_MORAL).FontBold = True
+                    picEye(EDITOR_MORAL).Visible = True
+                Case "frmEditor_NPC"
+                    ignoreChange = True
+                    chkEditor(EDITOR_NPC).Value = 1
+                    chkEditor(EDITOR_NPC).FontBold = True
+                    picEye(EDITOR_NPC).Visible = True
+                Case "frmEditor_Resource"
+                    ignoreChange = True
+                    chkEditor(EDITOR_RESOURCE).Value = 1
+                    chkEditor(EDITOR_RESOURCE).FontBold = True
+                    picEye(EDITOR_RESOURCE).Visible = True
+                Case "frmEditor_Shop"
+                    ignoreChange = True
+                    chkEditor(EDITOR_SHOP).Value = 1
+                    chkEditor(EDITOR_SHOP).FontBold = True
+                    picEye(EDITOR_SHOP).Visible = True
+                Case "frmEditor_Spell"
+                    ignoreChange = True
+                    chkEditor(EDITOR_SPELL).Value = 1
+                    chkEditor(EDITOR_SPELL).FontBold = True
+                    picEye(EDITOR_SPELL).Visible = True
+                Case "frmEditor_Title"
+                    ignoreChange = True
+                    chkEditor(EDITOR_TITLE).Value = 1
+                    chkEditor(EDITOR_TITLE).FontBold = True
+                    picEye(EDITOR_TITLE).Visible = True
+            End Select
+            
+        End If
+    Next
 End Sub
 Public Sub Form_Load()
     ' If debug mode, handle error then exit out
@@ -1714,7 +2027,9 @@ Public Sub Form_Load()
     
     lastIndex = -1
     styleButtons
-        
+    
+    findVisibleEditors
+    
     upSprite.max = NumCharacters
     upSprite.min = 0
     

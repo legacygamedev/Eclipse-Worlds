@@ -1960,6 +1960,11 @@ Private Sub Form_Unload(Cancel As Integer)
     If frmEditor_Events.Visible Then
         Unload frmEditor_Events
     End If
+    frmAdmin.ignoreChange = True
+    frmAdmin.chkEditor(EDITOR_MAP).Value = 0
+    frmAdmin.chkEditor(EDITOR_MAP).FontBold = False
+    BringWindowToTop (frmAdmin.hWnd)
+    frmAdmin.picEye(EDITOR_MAP).Visible = False
     Exit Sub
     
 ' Error handler

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.ocx"
 Begin VB.Form frmEditor_Events 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Event Editor"
@@ -5710,6 +5710,13 @@ Private Sub Form_Load()
     txtSearch.MaxLength = NAME_LENGTH
     txtLabelName.MaxLength = NAME_LENGTH
     txtGotoLabel.MaxLength = NAME_LENGTH
+    
+
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    frmAdmin.chkEditor(EDITOR_EVENTS).Value = False
+    BringWindowToTop (frmAdmin.hWnd)
 End Sub
 
 Private Sub lstCommands_Click()
@@ -5717,7 +5724,7 @@ Private Sub lstCommands_Click()
 End Sub
 
 Sub AddMoveRouteCommand(Index As Integer)
-    Dim i As Long, x As Long, Z As Long
+    Dim i As Long, x As Long, z As Long
     
     Index = Index + 1
     

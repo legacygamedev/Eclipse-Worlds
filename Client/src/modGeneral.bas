@@ -460,14 +460,14 @@ errorhandler:
 End Sub
 
 ' Used for adding text to packet debugger
-Public Sub TextAdd(ByVal txt As textBox, msg As String, NewLine As Boolean)
+Public Sub TextAdd(ByVal txt As textBox, Msg As String, NewLine As Boolean)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If NewLine Then
-        txt.text = txt.text + msg + vbCrLf
+        txt.text = txt.text + Msg + vbCrLf
     Else
-        txt.text = txt.text + msg
+        txt.text = txt.text + Msg
     End If
 
     txt.SelStart = Len(txt.text) - 1
@@ -899,13 +899,13 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Function CheckMessage(ByVal msg As String) As String
+Public Function CheckMessage(ByVal Msg As String) As String
     Dim i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    CheckMessage = msg
+    CheckMessage = Msg
     
     ' Do nothing if the filter is turned off
     If Options.SwearFilter = 0 Then Exit Function
@@ -974,8 +974,11 @@ Public Sub LogoutGame()
 
     ' Close out all the editors
     Unload frmCharEditor
+    Unload frmItemSpawner
+    Unload frmAlert
     Unload frmEditor_Map
     Unload frmEditor_MapProperties
+    Unload frmMapReport
     Unload frmEditor_Item
     Unload frmEditor_Resource
     Unload frmEditor_NPC

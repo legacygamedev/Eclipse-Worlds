@@ -434,6 +434,9 @@ Private Sub cmdSave_Click()
     
     EditorSave = True
     Call BanEditorSave
+    frmAdmin.chkEditor(EDITOR_BAN).FontBold = False
+    frmAdmin.picEye(EDITOR_BAN).Visible = False
+    BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
     
 ' Error handler
@@ -454,7 +457,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).playerName), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).PlayerName), EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     BanEditorInit
@@ -473,6 +476,9 @@ Private Sub cmdCancel_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Unload frmEditor_Ban
+    frmAdmin.chkEditor(EDITOR_BAN).FontBold = False
+    frmAdmin.picEye(EDITOR_BAN).Visible = False
+    BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
     
 ' Error handler
@@ -563,9 +569,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Ban(EditorIndex).playerName = Trim$(txtName.text)
+    Ban(EditorIndex).PlayerName = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).playerName), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).PlayerName), EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -584,6 +590,8 @@ Private Sub Form_Unload(Cancel As Integer)
     Else
         EditorSave = False
     End If
+    frmAdmin.chkEditor(EDITOR_BAN).Value = False
+    BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
     
 ' Error handler
@@ -841,7 +849,7 @@ Private Sub cmdPaste_Click()
     
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Ban(EditorIndex)), ByVal VarPtr(Ban(TmpIndex + 1)), LenB(Ban(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).playerName), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Ban(EditorIndex).PlayerName), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

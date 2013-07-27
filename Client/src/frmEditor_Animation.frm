@@ -24,7 +24,6 @@ Begin VB.Form frmEditor_Animation
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   673
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cmdDelete 
       Caption         =   "Delete"
       Height          =   375
@@ -361,7 +360,9 @@ Private Sub cmdCancel_Click()
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmAdmin.chkEditor(EDITOR_ANIMATION).FontBold = False
+    frmAdmin.picEye(EDITOR_ANIMATION).Visible = False
+    BringWindowToTop (frmAdmin.hWnd)
     Unload frmEditor_Animation
     Exit Sub
     
@@ -403,6 +404,9 @@ Private Sub cmdSave_Click()
     
     EditorSave = True
     AnimationEditorSave
+    frmAdmin.chkEditor(EDITOR_ANIMATION).FontBold = False
+    frmAdmin.picEye(EDITOR_ANIMATION).Visible = False
+    BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
     
 ' Error handler
@@ -616,6 +620,8 @@ Private Sub Form_Unload(Cancel As Integer)
     Else
         EditorSave = False
     End If
+    frmAdmin.chkEditor(EDITOR_ANIMATION).Value = False
+    BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
     
 ' Error handler

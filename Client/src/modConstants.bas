@@ -3,7 +3,7 @@ Option Explicit
 
 ' API Declares
 Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
-Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByRef msg() As Byte, ByVal wParam As Long, ByVal lparam As Long) As Long
+Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lParam As Long) As Long
 Public Declare Function GetForegroundWindow Lib "user32" () As Long
 
 ' Sounds
@@ -151,19 +151,19 @@ Public Const SIZE_Y As Integer = 32
 Public Const AnimatedSpriteNumbers As String = ""
 
 ' Game editor constants
-Public Const EDITOR_ITEM As Byte = 1
-Public Const EDITOR_NPC As Byte = 2
-Public Const EDITOR_SPELL As Byte = 3
-Public Const EDITOR_SHOP As Byte = 4
-Public Const EDITOR_RESOURCE As Byte = 5
-Public Const EDITOR_ANIMATION As Byte = 6
-Public Const EDITOR_CONV As Byte = 7
-Public Const EDITOR_QUEST As Byte = 8
-Public Const EDITOR_BAN As Byte = 9
-Public Const EDITOR_TITLE As Byte = 10
-Public Const EDITOR_MORAL As Byte = 11
-Public Const EDITOR_CLASS As Byte = 12
-Public Const EDITOR_EMOTICON As Byte = 13
+Public Const EDITOR_ANIMATION As Byte = 0
+Public Const EDITOR_BAN As Byte = 1
+Public Const EDITOR_CLASS As Byte = 2
+Public Const EDITOR_EMOTICON As Byte = 3
+Public Const EDITOR_ITEM As Byte = 4
+Public Const EDITOR_MAP As Byte = 5
+Public Const EDITOR_MORAL As Byte = 6
+Public Const EDITOR_NPC As Byte = 7
+Public Const EDITOR_RESOURCE As Byte = 8
+Public Const EDITOR_SHOP As Byte = 9
+Public Const EDITOR_SPELL As Byte = 10
+Public Const EDITOR_TITLE As Byte = 11
+Public Const EDITOR_EVENTS As Byte = 12
 
 ' Dialogue box constants
 Public Const DIALOGUE_TYPE_NONE As Byte = 0

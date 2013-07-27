@@ -1690,6 +1690,8 @@ Private Sub Form_Unload(Cancel As Integer)
     Else
         EditorSave = False
     End If
+    frmAdmin.chkEditor(EDITOR_ITEM).Value = False
+    BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
     
 ' Error handler

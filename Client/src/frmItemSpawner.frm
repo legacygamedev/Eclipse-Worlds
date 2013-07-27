@@ -37,13 +37,13 @@ Begin VB.Form frmItemSpawner
       Width           =   1425
    End
    Begin MSComctlLib.ListView listItems 
-      Height          =   3795
-      Left            =   105
+      Height          =   3405
+      Left            =   45
       TabIndex        =   9
-      Top             =   1170
+      Top             =   1470
       Width           =   8205
       _ExtentX        =   14473
-      _ExtentY        =   6694
+      _ExtentY        =   6006
       Arrange         =   2
       LabelEdit       =   1
       LabelWrap       =   0   'False
@@ -200,10 +200,10 @@ Begin VB.Form frmItemSpawner
       EndProperty
       ForeColor       =   &H00FF8080&
       Height          =   240
-      Left            =   6075
+      Left            =   6015
       TabIndex        =   14
       Top             =   480
-      Width           =   1020
+      Width           =   1080
       WordWrap        =   -1  'True
    End
    Begin VB.Label lblOptions 
@@ -430,6 +430,7 @@ Private Sub cmdSpawn_Click()
     If chkClose.Value = 1 Then
         Unload Me
         frmAdmin.lastIndex = -1
+        frmAdmin.currentCategory = "Categories"
         lastTab = 0
         currentItemId = 0
     End If
@@ -444,10 +445,12 @@ End Sub
 Private Sub Form_Load()
     tabItems_Click
     ListView_SetIconSpacing listItems.hWnd, 105, 56
+    Move frmAdmin.Left - Width, frmAdmin.Top
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     frmAdmin.styleButtons
+    frmAdmin.currentCategory = "Categories"
 End Sub
 
 Private Sub listItems_ItemClick(ByVal Item As MSComctlLib.ListItem)
@@ -467,14 +470,15 @@ Private Sub tabItems_Click()
         
     If tabItems.SelectedItem.Index = 1 Then
         generateLastItems
-        Exit Sub
+    Else
+        If generateItemsForTab(tabItems.SelectedItem.Index) Then
+            styleListwView status.Correct
+        Else
+            styleListwView status.Error, "No items available in this category!"
+        End If
     End If
     
-    If generateItemsForTab(tabItems.SelectedItem.Index) Then
-        styleListwView status.Correct
-    Else
-        styleListwView status.Error, "No items available in this category!"
-    End If
+
     frmAdmin.lastIndex = lastTab - 1
     frmAdmin.optCat(tabItems.SelectedItem.Index - 1).Value = True
     frmAdmin.optCat_MouseUp tabItems.SelectedItem.Index - 1, 0, 0, 0, 0

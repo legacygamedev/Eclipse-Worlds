@@ -10,14 +10,14 @@ Public g_playersOnline() As String
 Public ignoreIndexes() As Long
 Public refreshingAdminList As Boolean
 Public requestedPlayer As PlayerEditableRec
-
+Public mapEditorCancelNag As Boolean
 'Item Editor - davemax © 07.2013 :D
 Public lastSpawnedItems(0 To 20) As Byte
 Public lastSpawnedItemsCounter As Byte
 Public currentlyListedIndexes() As Long
 
 Public EventList() As EventListRec
-Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
+Public Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
     (ByVal hWnd As Long, ByVal nIndex As Long) As Long
 Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, _
 ByVal dwNewLong As Long) As Long
@@ -26,7 +26,7 @@ ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
 Public Declare Function BringWindowToTop Lib "user32" (ByVal hWnd As Long) As Long
 
 
-Private Const GWL_WNDPROC   As Long = (-4)
+Public Const GWL_WNDPROC   As Long = (-4)
 Private Const WM_NOTIFY     As Long = &H4E
 Private Const WM_DESTROY    As Long = &H2
 Private Const WM_SETFOCUS   As Long = &H7
@@ -38,6 +38,11 @@ Private Const WM_KILLFOCUS  As Long = &H8
 Public Sub MapEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
+    If frmAdmin.Visible Then
+        frmEditor_Map.Move frmAdmin.Left - frmEditor_Map.Width, frmAdmin.Top
+    Else
+        frmEditor_Map.Move frmMain.Left + frmMain.Width - frmEditor_Map.Width, frmMain.Top
+    End If
     
     ' Reset the layer to 1
     frmEditor_Map.OptLayers = 1
@@ -59,6 +64,7 @@ Public Sub MapEditorInit()
     frmEditor_Map.lblRevision.Caption = "Revision: " & Map.Revision
     
     Call ToggleGUI(False)
+
     Exit Sub
     
 ' Error handler
@@ -66,8 +72,7 @@ errorhandler:
     HandleError "MapEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-Private Function WindowProc(ByVal hWnd As Long, ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
-    
+Public Function WindowProc(ByVal hWnd As Long, ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
         Select Case Msg
         Case WM_SETFOCUS
             Exit Function
@@ -754,7 +759,13 @@ Public Sub ItemEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-
+    
+    If frmAdmin.Visible Then
+        frmEditor_Item.Move frmAdmin.Left - frmEditor_Item.Width, frmAdmin.Top
+    Else
+        frmEditor_Item.Move frmMain.Left + frmMain.Width - frmEditor_Item.Width, frmMain.Top
+    End If
+    
     If frmEditor_Item.Visible = False Then Exit Sub
     
     EditorIndex = frmEditor_Item.lstIndex.ListIndex + 1
@@ -944,7 +955,7 @@ Public Sub ItemEditorSave()
     Next
     
     Unload frmEditor_Item
-    Editor = 0
+    editor = 0
     ClearChanged_Item
     Exit Sub
     
@@ -958,7 +969,7 @@ Public Sub ItemEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Editor = 0
+    editor = 0
     ClearChanged_Item
     ClearItems
     SendRequestItems
@@ -1012,6 +1023,11 @@ Public Sub AnimationEditorInit()
         frmEditor_Animation.cmbSound.AddItem SoundCache(i)
     Next
 
+    If frmAdmin.Visible Then
+        frmEditor_Animation.Move frmAdmin.Left - frmEditor_Animation.Width, frmAdmin.Top
+    Else
+        frmEditor_Animation.Move frmMain.Left + frmMain.Width - frmEditor_Animation.Width, frmMain.Top
+    End If
     With Animation(EditorIndex)
         frmEditor_Animation.txtName.text = Trim$(.name)
         
@@ -1072,7 +1088,7 @@ Public Sub AnimationEditorSave()
     Next
     
     Unload frmEditor_Animation
-    Editor = 0
+    editor = 0
     ClearChanged_Animation
     Exit Sub
     
@@ -1086,7 +1102,7 @@ Public Sub AnimationEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Editor = 0
+    editor = 0
     ClearChanged_Animation
     ClearAnimations
     SendRequestAnimations
@@ -1120,7 +1136,12 @@ Public Sub NPCEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-
+    If frmAdmin.Visible Then
+        frmEditor_NPC.Move frmAdmin.Left - frmEditor_NPC.Width, frmAdmin.Top
+    Else
+        frmEditor_NPC.Move frmMain.Left + frmMain.Width - frmEditor_NPC.Width, frmMain.Top
+    End If
+    
     If frmEditor_NPC.Visible = False Then Exit Sub
     
     EditorIndex = frmEditor_NPC.lstIndex.ListIndex + 1
@@ -1240,7 +1261,7 @@ Public Sub NpcEditorSave()
     Next
     
     Unload frmEditor_NPC
-    Editor = 0
+    editor = 0
     ClearChanged_Npc
     Exit Sub
     
@@ -1254,7 +1275,7 @@ Public Sub NpcEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Editor = 0
+    editor = 0
     ClearChanged_Npc
     ClearNpcs
     SendRequestNpcs
@@ -1288,7 +1309,11 @@ Public Sub ResourceEditorInit()
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-
+    If frmAdmin.Visible Then
+        frmEditor_Resource.Move frmAdmin.Left - frmEditor_Resource.Width, frmAdmin.Top
+    Else
+        frmEditor_Resource.Move frmMain.Left + frmMain.Width - frmEditor_Resource.Width, frmMain.Top
+    End If
     If frmEditor_Resource.Visible = False Then Exit Sub
     
     EditorIndex = frmEditor_Resource.lstIndex.ListIndex + 1
@@ -1374,7 +1399,7 @@ Public Sub ResourceEditorSave()
     Next
     
     Unload frmEditor_Resource
-    Editor = 0
+    editor = 0
     ClearChanged_Resource
     Exit Sub
     
@@ -1388,7 +1413,7 @@ Public Sub ResourceEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Editor = 0
+    editor = 0
     ClearChanged_Resource
     ClearResources
     SendRequestResources
@@ -1421,7 +1446,12 @@ Public Sub ShopEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-
+    If frmAdmin.Visible Then
+        frmEditor_Shop.Move frmAdmin.Left - frmEditor_Shop.Width, frmAdmin.Top
+    Else
+        frmEditor_Shop.Move frmMain.Left + frmMain.Width - frmEditor_Shop.Width, frmMain.Top
+    End If
+    
     If frmEditor_Shop.Visible = False Then Exit Sub
     
     With frmEditor_Shop
@@ -1499,7 +1529,7 @@ Public Sub ShopEditorSave()
     Next
     
     Unload frmEditor_Shop
-    Editor = 0
+    editor = 0
     ClearChanged_Shop
     Exit Sub
     
@@ -1513,7 +1543,7 @@ Public Sub ShopEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Editor = 0
+    editor = 0
     ClearChanged_Shop
     ClearShops
     SendRequestShops
@@ -1548,7 +1578,13 @@ Public Sub SpellEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-
+    
+    If frmAdmin.Visible Then
+        frmEditor_Spell.Move frmAdmin.Left - frmEditor_Spell.Width, frmAdmin.Top
+    Else
+        frmEditor_Spell.Move frmMain.Left + frmMain.Width - frmEditor_Spell.Width, frmMain.Top
+    End If
+    
     If frmEditor_Spell.Visible = False Then Exit Sub
     
     EditorIndex = frmEditor_Spell.lstIndex.ListIndex + 1
@@ -1647,7 +1683,7 @@ Public Sub SpellEditorSave()
     Next
     
     Unload frmEditor_Spell
-    Editor = 0
+    editor = 0
     ClearChanged_Spell
     Exit Sub
     
@@ -1663,7 +1699,7 @@ Public Sub SpellEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Editor = 0
+    editor = 0
     ClearChanged_Spell
     ClearSpells
     SendRequestSpells
@@ -1888,6 +1924,11 @@ Public Sub BanEditorInit()
     EditorIndex = frmEditor_Ban.lstIndex.ListIndex + 1
     Ban_Changed(EditorIndex) = True
 
+    If frmAdmin.Visible Then
+        frmEditor_Ban.Move frmAdmin.Left - frmEditor_Ban.Width, frmAdmin.Top
+    Else
+        frmEditor_Ban.Move frmMain.Left + frmMain.Width - frmEditor_Ban.Width, frmMain.Top
+    End If
     With frmEditor_Ban
         .txtName.text = Trim(Ban(EditorIndex).PlayerName)
         .txtLogin.text = Trim(Ban(EditorIndex).PlayerLogin)
@@ -1922,7 +1963,7 @@ Public Sub BanEditorSave()
     Next
     
     Unload frmEditor_Ban
-    Editor = 0
+    editor = 0
     ClearChanged_Ban
     Exit Sub
     
@@ -1939,7 +1980,7 @@ Public Sub BanEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Editor = 0
+    editor = 0
     ClearChanged_Ban
     ClearBans
     SendRequestBans
@@ -1970,6 +2011,12 @@ End Sub
 Public Sub TitleEditorInit()
     ' Check if the form is visible if not then exit
     If frmEditor_Title.Visible = False Then Exit Sub
+    
+    If frmAdmin.Visible Then
+        frmEditor_Title.Move frmAdmin.Left - frmEditor_Title.Width, frmAdmin.Top
+    Else
+        frmEditor_Title.Move frmMain.Left + frmMain.Width - frmEditor_Title.Width, frmMain.Top
+    End If
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -2009,7 +2056,7 @@ Public Sub TitleEditorSave()
     Next
     
     Unload frmEditor_Title
-    Editor = 0
+    editor = 0
     ClearChanged_Title
     Exit Sub
     
@@ -2026,7 +2073,7 @@ Public Sub TitleEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Editor = 0
+    editor = 0
     ClearChanged_Title
     ClearTitles
     SendRequestTitles
@@ -2066,7 +2113,7 @@ Public Sub MoralEditorSave()
         End If
     Next
     
-    Editor = 0
+    editor = 0
     ClearChanged_Moral
     Unload frmEditor_Moral
     Exit Sub
@@ -2081,7 +2128,7 @@ Public Sub MoralEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Editor = 0
+    editor = 0
     ClearChanged_Moral
     ClearMorals
     SendRequestMorals
@@ -2112,6 +2159,11 @@ Public Sub MoralEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
+    If frmAdmin.Visible Then
+        frmEditor_Moral.Move frmAdmin.Left - frmEditor_Moral.Width, frmAdmin.Top
+    Else
+        frmEditor_Moral.Move frmMain.Left + frmMain.Width - frmEditor_Moral.Width, frmMain.Top
+    End If
     
     EditorIndex = frmEditor_Moral.lstIndex.ListIndex + 1
     Moral_Changed(EditorIndex) = True
@@ -2149,7 +2201,7 @@ Public Sub ClassEditorSave()
         End If
     Next
     
-    Editor = 0
+    editor = 0
     ClearChanged_Class
     Unload frmEditor_Class
     Exit Sub
@@ -2164,7 +2216,7 @@ Public Sub ClassEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Editor = 0
+    editor = 0
     ClearChanged_Class
     ClearClasses
     SendRequestClasses
@@ -2191,7 +2243,12 @@ End Sub
 
 Public Sub ClassEditorInit()
     Dim i As Long
-    
+
+    If frmAdmin.Visible Then
+        frmEditor_Class.Move frmAdmin.Left - frmEditor_Class.Width, frmAdmin.Top
+    Else
+        frmEditor_Class.Move frmMain.Left + frmMain.Width - frmEditor_Class.Width, frmMain.Top
+    End If
     ' Check if the form is visible if not then exit
     If frmEditor_Class.Visible = False Then Exit Sub
     
@@ -2344,7 +2401,11 @@ End Sub
 Public Sub EmoticonEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    If frmAdmin.Visible Then
+        frmEditor_Emoticon.Move frmAdmin.Left - frmEditor_Emoticon.Width, frmAdmin.Top
+    Else
+        frmEditor_Emoticon.Move frmMain.Left + frmMain.Width - frmEditor_Emoticon.Width, frmMain.Top
+    End If
     With frmEditor_Emoticon
         ' Check if the form is visible if not then exit
         If .Visible = False Then Exit Sub
@@ -2378,7 +2439,7 @@ Public Sub EmoticonEditorSave()
         End If
     Next
     
-    Editor = 0
+    editor = 0
     ClearChanged_Emoticon
     Unload frmEditor_Emoticon
     Exit Sub
@@ -2393,7 +2454,7 @@ Public Sub EmoticonEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Editor = 0
+    editor = 0
     ClearChanged_Emoticon
     ClearEmoticons
     SendRequestEmoticons
@@ -2594,7 +2655,16 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
+    If EventNum < 1 Then
+        frmEditor_Events.Visible = True
+        If frmAdmin.Visible Then
+            frmEditor_Events.Move frmAdmin.Left - frmEditor_Events.Width, frmAdmin.Top
+        Else
+            frmEditor_Events.Move frmMain.Left + frmMain.Width - frmEditor_Events.Width, frmMain.Top
+        End If
 
+        Exit Sub
+    End If
     If CommonEvent Then
         frmEditor_Events.fraEvents.Visible = True
     Else
