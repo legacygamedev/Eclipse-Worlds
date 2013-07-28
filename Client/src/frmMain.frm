@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -816,7 +816,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -4323,7 +4322,7 @@ errorhandler:
 End Sub
 
 Private Sub picHotbar_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
-    Dim SlotNum As Long
+    Dim SlotNum As Long, i As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -4334,6 +4333,12 @@ Private Sub picHotbar_MouseDown(Button As Integer, Shift As Integer, x As Single
         If Button = 1 Then
             If ShiftDown Then
                 DragHotbarSlot = SlotNum
+                
+                For i = 1 To MAX_PLAYER_SPELLS
+                    If Hotbar(DragHotbarSlot).Slot = PlayerSpells(i) Then
+                        DragHotbarSpell = i
+                    End If
+                Next
             Else
                 SendHotbarUse SlotNum
             End If
@@ -4350,7 +4355,7 @@ errorhandler:
 End Sub
 
 Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-    Dim SlotNum As Long
+    Dim SlotNum As Long, i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -4381,7 +4386,12 @@ Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, x As Single
                 y = y + picHotbar.Top
                 UpdateSpellDescWindow Hotbar(SlotNum).Slot, x, y
                 LastSpellDesc = Hotbar(SlotNum).Slot
-                LastSpellSlotDesc = SlotNum
+
+                For i = 1 To MAX_PLAYER_SPELLS
+                    If Hotbar(SlotNum).Slot = PlayerSpells(i) Then
+                        LastSpellSlotDesc = i
+                    End If
+                Next
                 Exit Sub
               End If
           End If

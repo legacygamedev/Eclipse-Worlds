@@ -88,8 +88,9 @@ Public BankY As Integer
 ' Spell drag and drop
 Public DragSpellSlot As Byte
 
-' Hot bar drag and drop
+' Hotbar drag and drop
 Public DragHotbarSlot As Byte
+Public DragHotbarSpell As Byte
 
 ' GUI
 Public EqX As Integer
@@ -190,7 +191,7 @@ Public TmpInvNum As Byte
 Public TmpSpellSlot As Byte
 
 ' Game editors
-Public Editor As Byte
+Public editor As Byte
 Public EditorIndex As Long
 Public EditorSave As Boolean
 Public AnimEditorFrame(0 To 1) As Long

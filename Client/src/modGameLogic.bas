@@ -852,13 +852,13 @@ Public Sub ForgetSpell(ByVal SpellSlot As Byte)
     
     ' Don't let them forget a spell which is in CD
     If SpellCD(SpellSlot) > 0 Then
-        AddText "You cannot forget a spell which is cooling down!", BrightRed
+        AddText "You can't forget a spell which is on cooldown!", BrightRed
         Exit Sub
     End If
     
     ' Don't let them forget a spell which is buffered
     If SpellBuffer = SpellSlot Then
-        AddText "You cannot forget a spell which you are casting!", BrightRed
+        AddText "You can't forget a spell which you are casting!", BrightRed
         Exit Sub
     End If
     
@@ -869,7 +869,7 @@ Public Sub ForgetSpell(ByVal SpellSlot As Byte)
         SendData buffer.ToArray()
         Set buffer = Nothing
     Else
-        AddText "There is no spell here, report this to a Staff member.", BrightRed
+        AddText "There is no spell here, report this to a staff member!", BrightRed
     End If
     Exit Sub
     
@@ -1767,13 +1767,13 @@ Public Sub DialogueHandler(ByVal Index As Long)
             Case DIALOGUE_TYPE_RESETSTATS
                 Call SendUseItem(DialogueData1)
             Case DIALOGUE_TYPE_ADDFRIEND
-                Call SendAddFriend(frmMain.txtDialogue.Text)
+                Call SendAddFriend(frmMain.txtDialogue.text)
             Case DIALOGUE_TYPE_REMOVEFRIEND
-                Call SendRemoveFriend(frmMain.txtDialogue.Text)
+                Call SendRemoveFriend(frmMain.txtDialogue.text)
             Case DIALOGUE_TYPE_ADDFOE
-                Call SendAddFoe(frmMain.txtDialogue.Text)
+                Call SendAddFoe(frmMain.txtDialogue.text)
             Case DIALOGUE_TYPE_REMOVEFOE
-                Call SendRemoveFoe(frmMain.txtDialogue.Text)
+                Call SendRemoveFoe(frmMain.txtDialogue.text)
             Case DIALOGUE_TYPE_GUILD
                 Call SendGuildAccept
             Case DIALOGUE_TYPE_GUILDDISBAND
@@ -1782,14 +1782,14 @@ Public Sub DialogueHandler(ByVal Index As Long)
                 Call SendDestroyItem(DialogueData1)
             Case DIALOGUE_TYPE_CHANGEGUILDACCESS
                 If Not frmMain.lstGuild.ListIndex = -1 Then
-                    Call SendGuildChangeAccess(frmMain.lstGuild.List(frmMain.lstGuild.ListIndex), frmMain.txtDialogue.Text)
+                    Call SendGuildChangeAccess(frmMain.lstGuild.List(frmMain.lstGuild.ListIndex), frmMain.txtDialogue.text)
                 End If
             Case DIALOGUE_TYPE_GUILDINVITE
-                Call SendGuildInvite(frmMain.txtDialogue.Text)
+                Call SendGuildInvite(frmMain.txtDialogue.text)
             Case DIALOGUE_TYPE_GUILDREMOVE
-                Call SendGuildRemove(frmMain.txtDialogue.Text)
+                Call SendGuildRemove(frmMain.txtDialogue.text)
             Case DIALOGUE_TYPE_PARTYINVITE
-                Call SendPartyRequest(frmMain.txtDialogue.Text)
+                Call SendPartyRequest(frmMain.txtDialogue.text)
         End Select
     ElseIf Index = 3 Then ' No button
         ' Dialogue Index
@@ -1937,16 +1937,16 @@ Public Sub UpdatePlayerTitles()
     
     ' Build the combo list
     For i = 1 To Player(MyIndex).AmountOfTitles
-        If Player(MyIndex).Title(i) > 0 Then
-            frmMain.lstTitles.AddItem Trim$(Title(Player(MyIndex).Title(i)).name)
+        If Player(MyIndex).title(i) > 0 Then
+            frmMain.lstTitles.AddItem Trim$(title(Player(MyIndex).title(i)).name)
         End If
     Next
 
     With frmMain
         If Player(MyIndex).CurTitle > 0 Then
             For i = 1 To MAX_TITLES
-                If Player(MyIndex).CurTitle = Player(MyIndex).Title(i) Then
-                    frmMain.lblDesc.Caption = Trim$(Title(Player(MyIndex).Title(i)).Desc)
+                If Player(MyIndex).CurTitle = Player(MyIndex).title(i) Then
+                    frmMain.lblDesc.Caption = Trim$(title(Player(MyIndex).title(i)).Desc)
                     frmMain.lstTitles.ListIndex = i
                     Exit For
                 End If

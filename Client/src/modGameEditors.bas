@@ -4517,14 +4517,9 @@ Public Sub MapEditorEyeDropper()
     If Not IsInBounds Then Exit Sub
     
     ' Enable scrollbars if they are disabled
-    If frmEditor_Map.scrlPictureX.Enabled = False Then
-        frmEditor_Map.scrlPictureX.Enabled = True
-    End If
-    
-    If frmEditor_Map.scrlPictureY.Enabled = False Then
-        frmEditor_Map.scrlPictureY.Enabled = True
-    End If
-    
+    If frmEditor_Map.scrlPictureX.Enabled = False Then frmEditor_Map.scrlPictureX.Enabled = True
+    If frmEditor_Map.scrlPictureY.Enabled = False Then frmEditor_Map.scrlPictureY.Enabled = True
+
     With Map.Tile(CurX, CurY)
         If .Layer(CurrentLayer).Tileset > 0 Then
             frmEditor_Map.scrlTileSet.Value = .Layer(CurrentLayer).Tileset
@@ -4569,6 +4564,7 @@ Public Sub MapEditorEyeDropper()
             End If
         End If
         
+        frmEditor_Map.scrlAutotile.Value = .Autotile(CurrentLayer)
         frmEditor_Map.chkEyeDropper.Value = False
     End With
     Exit Sub

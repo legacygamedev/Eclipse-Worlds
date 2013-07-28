@@ -142,7 +142,7 @@ Begin VB.Form frmEditor_Spell
             TabIndex        =   59
             TabStop         =   0   'False
             Top             =   1440
-            Width           =   975
+            Width           =   1455
          End
          Begin VB.HScrollBar scrlMap 
             Height          =   255
@@ -553,7 +553,7 @@ Begin VB.Form frmEditor_Spell
             Left            =   120
             TabIndex        =   37
             Top             =   2640
-            Width           =   1815
+            Width           =   2895
          End
          Begin VB.Label lblLevel 
             Caption         =   "Level Required: None"

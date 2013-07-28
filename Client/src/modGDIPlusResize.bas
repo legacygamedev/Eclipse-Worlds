@@ -19,16 +19,16 @@ End Type
 
 Public Declare Function AlphaBlend Lib "msimg32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal widthSrc As Long, ByVal heightSrc As Long, ByVal blendFunct As Long) As Boolean
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
-Declare Function TransparentBlt Lib "msimg32" (ByVal hdc As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal nSrcWidth As Long, ByVal nSrcHeight As Long, ByVal crTransparent As Long) As Boolean
+Declare Function TransparentBlt Lib "msimg32" (ByVal hDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal nSrcWidth As Long, ByVal nSrcHeight As Long, ByVal crTransparent As Long) As Boolean
 
 Public Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
-Public Declare Function SelectObject Lib "gdi32" (ByVal hdc As Long, ByVal hObject As Long) As Long
+Public Declare Function SelectObject Lib "gdi32" (ByVal hDC As Long, ByVal hObject As Long) As Long
 Public Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
-Public Declare Function PatBlt Lib "gdi32" (ByVal hdc As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal dwRop As Long) As Long
+Public Declare Function PatBlt Lib "gdi32" (ByVal hDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal dwRop As Long) As Long
 Public Declare Function GetShortPathName Lib "kernel32" Alias "GetShortPathNameA" (ByVal lpszLongPath As String, ByVal lpszShortPath As String, ByVal cchBuffer As Long) As Long
 
 ' PRIVATE GDI Declarations
-Private Declare Function CreateCompatibleBitmap Lib "gdi32" (ByVal hdc As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
+Private Declare Function CreateCompatibleBitmap Lib "gdi32" (ByVal hDC As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
 
 Private Type Guid
    Data1    As Long
@@ -38,24 +38,23 @@ Private Type Guid
 End Type
 
 Private Type PICTDESC
-   size     As Long
+   Size     As Long
    Type     As Long
    hBmp     As Long
    hPal     As Long
    Reserved As Long
 End Type
 
-
 Private Declare Function OleCreatePictureIndirect Lib "olepro32.dll" (PicDesc As PICTDESC, RefIID As Guid, ByVal fPictureOwnsHandle As Long, IPic As IPicture) As Long
 
-Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
-Private Declare Function DeleteDC Lib "gdi32" (ByVal hdc As Long) As Long
+Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hDC As Long) As Long
+Private Declare Function DeleteDC Lib "gdi32" (ByVal hDC As Long) As Long
 
 Private Declare Function CreateBitmap Lib "gdi32" (ByVal nWidth As Long, ByVal nHeight As Long, ByVal nPlanes As Long, ByVal nBitCount As Long, lpBits As Any) As Long
 
 Private Declare Function CreateSolidBrush Lib "gdi32" (ByVal crColor As Long) As Long
 
-Private Declare Function GetDeviceCaps Lib "gdi32" (ByVal hdc As Long, ByVal nIndex As Long) As Long
+Private Declare Function GetDeviceCaps Lib "gdi32" (ByVal hDC As Long, ByVal nIndex As Long) As Long
 
 'PRIVATE GDI+ Declarations
 Private Type GdiplusStartupInput
@@ -65,67 +64,69 @@ Private Type GdiplusStartupInput
     SuppressExternalCodecs   As Long
 End Type
 
-Private Declare Function GdiplusStartup Lib "gdiplus" (token As Long, inputbuf As GdiplusStartupInput, Optional ByVal outputbuf As Long = 0) As Long
-Private Declare Sub GdiplusShutdown Lib "gdiplus" (ByVal token As Long)
+Private Declare Function GdiplusStartup Lib "gdiplus" (Token As Long, inputbuf As GdiplusStartupInput, Optional ByVal outputbuf As Long = 0) As Long
+Private Declare Sub GdiplusShutdown Lib "gdiplus" (ByVal Token As Long)
 
-Private Declare Function GdipGetImageWidth Lib "gdiplus.dll" (ByVal image As Long, Width As Long) As Long
-Private Declare Function GdipGetImageHeight Lib "gdiplus.dll" (ByVal image As Long, Height As Long) As Long
-Private Declare Function GdipDrawImageRectRectI Lib "gdiplus.dll" (ByVal graphics As Long, ByVal GpImage As Long, ByVal dstx As Long, ByVal dsty As Long, ByVal dstwidth As Long, ByVal dstheight As Long, ByVal srcx As Long, ByVal srcy As Long, ByVal srcwidth As Long, ByVal srcheight As Long, ByVal srcUnit As Long, ByVal imageAttributes As Long, ByVal callback As Long, ByVal callbackData As Long) As Long
-Private Declare Function GdipDrawImageRectI Lib "gdiplus.dll" (ByVal graphics As Long, ByVal Img As Long, ByVal x As Long, ByVal y As Long, ByVal Width As Long, ByVal Height As Long) As Long
+Private Declare Function GdipGetImageWidth Lib "GdiPlus.dll" (ByVal Image As Long, Width As Long) As Long
+Private Declare Function GdipGetImageHeight Lib "GdiPlus.dll" (ByVal Image As Long, Height As Long) As Long
+Private Declare Function GdipDrawImageRectRectI Lib "GdiPlus.dll" (ByVal graphics As Long, ByVal GpImage As Long, ByVal dstX As Long, ByVal dstY As Long, ByVal dstWidth As Long, ByVal dstHeight As Long, ByVal srcX As Long, ByVal srcY As Long, ByVal srcWidth As Long, ByVal srcHeight As Long, ByVal srcUnit As Long, ByVal imageAttributes As Long, ByVal Callback As Long, ByVal callbackData As Long) As Long
+Private Declare Function GdipDrawImageRectI Lib "GdiPlus.dll" (ByVal graphics As Long, ByVal Img As Long, ByVal x As Long, ByVal y As Long, ByVal Width As Long, ByVal Height As Long) As Long
 
-Private Declare Function GdipCreateFromHDC Lib "gdiplus" (ByVal hdc As Long, graphics As Long) As Long
+Private Declare Function GdipCreateFromHDC Lib "gdiplus" (ByVal hDC As Long, graphics As Long) As Long
 Private Declare Function GdipDeleteGraphics Lib "gdiplus" (ByVal graphics As Long) As Long
 
-Private Declare Function GdipLoadImageFromFile Lib "gdiplus.dll" (ByVal FileName As Long, GpImage As Long) As Long
-Private Declare Function GdipDisposeImage Lib "gdiplus.dll" (ByVal image As Long) As Long
+Private Declare Function GdipLoadImageFromFile Lib "GdiPlus.dll" (ByVal FileName As Long, GpImage As Long) As Long
+Private Declare Function GdipDisposeImage Lib "GdiPlus.dll" (ByVal Image As Long) As Long
 Public Declare Function GdipCloneBitmapAreaI Lib "gdiplus" (ByVal x As Long, ByVal y As Long, ByVal Width As Long, ByVal Height As Long, ByVal PixelFormat As Long, ByVal srcImage As Long, dstImage As Long) As Long
-Private Declare Function GdipSetInterpolationMode Lib "gdiplus.dll" (ByVal graphics As Long, ByVal InterMode As Long) As Long
-Private Declare Function GdipDrawImageI Lib "gdiplus.dll" (ByVal graphics As Long, ByVal pImage As Long, ByVal x As Long, ByVal y As Long) As Long
+Private Declare Function GdipSetInterpolationMode Lib "GdiPlus.dll" (ByVal graphics As Long, ByVal InterMode As Long) As Long
+Private Declare Function GdipDrawImageI Lib "GdiPlus.dll" (ByVal graphics As Long, ByVal pImage As Long, ByVal x As Long, ByVal y As Long) As Long
 
 Private m_lGDIpSmoothMode As Long
 
 Public Type tFXDCS 'you need to store these
-  hdc As Long 'you need these
+  hDC As Long 'you need these
   hBitmap As Long 'you need these
 End Type
 
 ' Initialises GDI Plus
 Public Function InitGDIPlus() As Long
-    Dim token    As Long
+    Dim Token    As Long
     Dim gdipInit As GdiplusStartupInput
     
     gdipInit.GdiplusVersion = 1
-    GdiplusStartup token, gdipInit, ByVal 0&
-    InitGDIPlus = token
+    GdiplusStartup Token, gdipInit, ByVal 0&
+    InitGDIPlus = Token
 End Function
 
 ' Frees GDI Plus
-Public Sub FreeGDIPlus(token As Long)
-    GdiplusShutdown token
+Public Sub FreeGDIPlus(Token As Long)
+    GdiplusShutdown Token
 End Sub
 
 Public Function LoadPictureGDIPlus(ByVal PicFile As String, Optional ByVal AutoLoad As Boolean = True, Optional ByVal Width As Long = -1, Optional ByVal Height As Long = -1, Optional ByVal BackColor As Long, Optional ByVal RetainRatio As Boolean = False, Optional ByVal UseAlpha As Boolean = False) As IPicture
-    Dim hdc     As Long
+    Dim hDC     As Long
     Dim hBitmap As Long
     Dim croppedBitmap As Long
     Dim Img     As Long
-    Dim token   As Long
+    Dim Token   As Long
     Dim tmpx    As Long
     Dim tmpy    As Long
     Dim realWidth As Long
     Dim realHeight As Long
-   On Error GoTo LoadPictureGDIPlus_Error
+    
+    On Error GoTo LoadPictureGDIPlus_Error
 
     ' Load the image
     If Len(Mid$(PicFile$, InStrRev(PicFile$, "\"))) < 2 Then Exit Function
     
     InitGDIPlus
     
-    If AutoLoad Then token = InitGDIPlus
-    hdc = GdipLoadImageFromFile(StrPtr(GetShortName(PicFile$)), Img)
-    If hdc <> 0 Then
+    If AutoLoad Then Token = InitGDIPlus
+    hDC = GdipLoadImageFromFile(StrPtr(GetShortName(PicFile$)), Img)
+    
+    If hDC <> 0 Then
         GdipDisposeImage Img
-        If AutoLoad Then FreeGDIPlus token
+        If AutoLoad Then FreeGDIPlus Token
         Exit Function
     End If
     
@@ -147,10 +148,10 @@ Public Function LoadPictureGDIPlus(ByVal PicFile As String, Optional ByVal AutoL
     End If
     
     ' Initialise the hDC
-    InitDC hdc, hBitmap, BackColor, Width, Height, UseAlpha
+    InitDC hDC, hBitmap, BackColor, Width, Height, UseAlpha
 
     ' Resize the picture
-    gdipResize Img, hdc, Width, Height, RetainRatio
+    gdipResize Img, hDC, Width, Height, RetainRatio
     If realWidth > Width Or realHeight > Height Then
         GdipCloneBitmapAreaI -32, 0, 32, 32, 0, Img, croppedBitmap
         Img = croppedBitmap
@@ -161,12 +162,13 @@ Public Function LoadPictureGDIPlus(ByVal PicFile As String, Optional ByVal AutoL
     
     'AlphaBlt Form1.hdc, 0, 0, Width, Height, hdc, 0, 0, Width, Height, , True
     
-    'select bitmap out of DC
-    hBitmap = SelectObject(hdc, hBitmap)
+    ' Select bitmap out of DC
+    hBitmap = SelectObject(hDC, hBitmap)
+    
     ' Create the picture
     Set LoadPictureGDIPlus = CreatePicture(hBitmap)
-    If AutoLoad Then FreeGDIPlus token
-    DeleteDC hdc
+    If AutoLoad Then FreeGDIPlus Token
+    DeleteDC hDC
     
     'should probably do this eventually: DeleteObject hBitmap
 
@@ -175,8 +177,8 @@ Public Function LoadPictureGDIPlus(ByVal PicFile As String, Optional ByVal AutoL
     
 LoadPictureGDIPlus_Error:
     GdipDisposeImage Img
-    DeleteObject SelectObject(hdc, hBitmap)
-    DeleteDC hdc
+    DeleteObject SelectObject(hDC, hBitmap)
+    DeleteDC hDC
 
 End Function
 
@@ -185,10 +187,10 @@ Public Sub LoadPictureFXDC(ByVal PicFile As String, fxDC As tFXDCS, Optional ByV
 'purpose: load graphic from file
 'returns: fxDC, passed by reference, return a hDC and a stock bitmap handle to *reselect into DC to return bitmap this creates*
 'function returns: .Picture compatible object(like form, picturebox, etc)
-    Dim hdc     As Long
+    Dim hDC     As Long
     Dim hBitmap As Long
     Dim Img     As Long
-    Dim token   As Long
+    Dim Token   As Long
     Dim tmpx    As Long
     Dim tmpy    As Long
    On Error GoTo LoadPictureFXDC_Error
@@ -196,10 +198,10 @@ Public Sub LoadPictureFXDC(ByVal PicFile As String, fxDC As tFXDCS, Optional ByV
     ' Load the image
     If Len(Mid$(PicFile$, InStrRev(PicFile$, "\"))) < 2 Then Exit Sub
 
-    If AutoLoad Then token = InitGDIPlus
+    If AutoLoad Then Token = InitGDIPlus
     If GdipLoadImageFromFile(StrPtr(GetShortName(PicFile$)), Img) <> 0 Then
         GdipDisposeImage Img
-        If AutoLoad Then FreeGDIPlus token
+        If AutoLoad Then FreeGDIPlus Token
         Exit Sub
     End If
     
@@ -216,12 +218,12 @@ Public Sub LoadPictureFXDC(ByVal PicFile As String, fxDC As tFXDCS, Optional ByV
     End If
     
     ' Initialise the hDC
-    InitDC hdc, hBitmap, BackColor, Width, Height, UseAlpha
+    InitDC hDC, hBitmap, BackColor, Width, Height, UseAlpha
 
     ' Resize the picture
-    gdipResize Img, hdc, Width, Height, RetainRatio
+    gdipResize Img, hDC, Width, Height, RetainRatio
     GdipDisposeImage Img
-    fxDC.hdc = hdc
+    fxDC.hDC = hDC
     fxDC.hBitmap = hBitmap
     
     'select bitmap out of DC
@@ -229,7 +231,7 @@ Public Sub LoadPictureFXDC(ByVal PicFile As String, fxDC As tFXDCS, Optional ByV
 
     ' Create the picture
     'Set LoadPictureGDIPlus = CreatePicture(hBitmap)
-    If AutoLoad Then FreeGDIPlus token
+    If AutoLoad Then FreeGDIPlus Token
     'DeleteDC hDC
     
     'should probably do this eventually: DeleteObject hBitmap
@@ -239,51 +241,51 @@ Public Sub LoadPictureFXDC(ByVal PicFile As String, fxDC As tFXDCS, Optional ByV
    
 LoadPictureFXDC_Error:
     GdipDisposeImage Img
-    DeleteObject SelectObject(hdc, hBitmap)
-    DeleteDC hdc
+    DeleteObject SelectObject(hDC, hBitmap)
+    DeleteDC hDC
 End Sub
 
 ' Initialises the hDC to draw
-Public Sub InitDC(hdc As Long, hBitmap As Long, BackColor As Long, Width As Long, Height As Long, ByVal UseAlpha As Boolean)
+Public Sub InitDC(hDC As Long, hBitmap As Long, BackColor As Long, Width As Long, Height As Long, ByVal UseAlpha As Boolean)
     Dim hBrush As Long
 
     ' Create a memory DC and select a bitmap into it, fill it in with the backcolor
-    hdc = CreateCompatibleDC(ByVal 0&)
-    hBitmap = CreateBitmap(Width, Height, GetDeviceCaps(hdc, PLANES), GetDeviceCaps(hdc, BITSPIXEL), ByVal 0&)
+    hDC = CreateCompatibleDC(ByVal 0&)
+    hBitmap = CreateBitmap(Width, Height, GetDeviceCaps(hDC, PLANES), GetDeviceCaps(hDC, BITSPIXEL), ByVal 0&)
     If hBitmap <> 0 Then
-      hBitmap = SelectObject(hdc, hBitmap)
+      hBitmap = SelectObject(hDC, hBitmap)
       If Not UseAlpha Then
           hBrush = CreateSolidBrush(BackColor)
-          hBrush = SelectObject(hdc, hBrush)
-          PatBlt hdc, 0, 0, Width, Height, PATCOPY
-          DeleteObject SelectObject(hdc, hBrush)
+          hBrush = SelectObject(hDC, hBrush)
+          PatBlt hDC, 0, 0, Width, Height, PATCOPY
+          DeleteObject SelectObject(hDC, hBrush)
       End If
     Else
-      DeleteDC hdc
+      DeleteDC hDC
       Err.Raise 1, "InitDC", "Bitmap creation failed"
     End If
 End Sub
 
 Public Sub UnloadFXDC(fxDC As tFXDCS)
-DeleteObject SelectObject(fxDC.hdc, fxDC.hBitmap)
-DeleteDC fxDC.hdc
-fxDC.hdc = 0
+DeleteObject SelectObject(fxDC.hDC, fxDC.hBitmap)
+DeleteDC fxDC.hDC
+fxDC.hDC = 0
 fxDC.hBitmap = 0
 End Sub
 
 ' Resize the picture using GDI plus
-Private Sub gdipResize(Img As Long, hdc As Long, Width As Long, Height As Long, Optional RetainRatio As Boolean = False)
+Private Sub gdipResize(Img As Long, hDC As Long, Width As Long, Height As Long, Optional RetainRatio As Boolean = False)
     Dim graphics   As Long      ' Graphics Object Pointer
     Dim OrWidth    As Long      ' Original Image Width
     Dim OrHeight   As Long      ' Original Image Height
     Dim OrRatio    As Double    ' Original Image Ratio
     Dim DesRatio   As Double    ' Destination rect Ratio
-    Dim DestX      As Long      ' Destination image X
-    Dim DestY      As Long      ' Destination image Y
-    Dim DestWidth  As Long      ' Destination image Width
-    Dim DestHeight As Long      ' Destination image Height
+    Dim destX      As Long      ' Destination image X
+    Dim destY      As Long      ' Destination image Y
+    Dim destWidth  As Long      ' Destination image Width
+    Dim destHeight As Long      ' Destination image Height
     
-    GdipCreateFromHDC hdc, graphics
+    GdipCreateFromHDC hDC, graphics
     GdipSetInterpolationMode graphics, InterpolationModeHighQualityBicubic
     
     If RetainRatio Then
@@ -294,12 +296,12 @@ Private Sub gdipResize(Img As Long, hdc As Long, Width As Long, Height As Long, 
         DesRatio = Width / Height
         
         ' Calculate destination coordinates
-        DestWidth = IIf(DesRatio < OrRatio, Width, Height * OrRatio)
-        DestHeight = IIf(DesRatio < OrRatio, Width / OrRatio, Height)
-        DestX = (Width - DestWidth)
-        DestY = (Height - DestHeight)
+        destWidth = IIf(DesRatio < OrRatio, Width, Height * OrRatio)
+        destHeight = IIf(DesRatio < OrRatio, Width / OrRatio, Height)
+        destX = (Width - destWidth)
+        destY = (Height - destHeight)
 
-        GdipDrawImageRectRectI graphics, Img, DestX, DestY, DestWidth, DestHeight, 0, 0, 32, 32, UnitPixel, 0, 0, 0
+        GdipDrawImageRectRectI graphics, Img, destX, destY, destWidth, destHeight, 0, 0, 32, 32, UnitPixel, 0, 0, 0
     Else
         GdipDrawImageI graphics, Img, 0, 0
     End If
@@ -318,7 +320,7 @@ Private Function CreatePicture(hBitmap As Long) As IPicture
     IID_IDispatch.Data4(7) = &H46
         
     ' Fill Pic with necessary parts
-    Pic.size = Len(Pic)        ' Length of structure
+    Pic.Size = Len(Pic)        ' Length of structure
     Pic.Type = PICTYPE_BITMAP  ' Type of Picture (bitmap)
     Pic.hBmp = hBitmap         ' Handle to bitmap
 
@@ -341,19 +343,19 @@ Public Function GetShortName(ByVal sLongFileName As String) As String
 
 End Function
 
-Public Sub AlphaBlt(ByVal dhDC As Long, ByVal dx As Long, ByVal dy As Long, ByVal dW As Long, ByVal dH As Long, ByVal shDC As Long, ByVal Sx As Long, ByVal Sy As Long, ByVal sW As Long, ByVal sH As Long, Optional ByVal UseAlpha As Boolean, Optional ByVal AlphaConstant As Byte = 255)
-Dim tmpHDC As Long, hBitmap As Long, bitmap As Long
+Public Sub AlphaBlt(ByVal dhDC As Long, ByVal dX As Long, ByVal dY As Long, ByVal dW As Long, ByVal dH As Long, ByVal shDC As Long, ByVal Sx As Long, ByVal Sy As Long, ByVal sW As Long, ByVal sH As Long, Optional ByVal UseAlpha As Boolean, Optional ByVal AlphaConstant As Byte = 255)
+Dim tmpHDC As Long, hBitmap As Long, BITMAP As Long
 Dim Blend As BLENDFUNCTION, BlendLng As Long
 
 If UseAlpha Then Blend.AlphaFormat = 1 'use source alpha
 Blend.SourceConstantAlpha = AlphaConstant
 CopyMemory BlendLng, Blend, 4
     
-AlphaBlend dhDC, dx, dy, dW, dH, shDC, Sx, Sy, dW, dH, BlendLng
+AlphaBlend dhDC, dX, dY, dW, dH, shDC, Sx, Sy, dW, dH, BlendLng
 End Sub
 
-Public Sub AlphaTransBlt(ByVal dhDC As Long, ByVal dx As Long, ByVal dy As Long, ByVal dW As Long, ByVal dH As Long, ByVal shDC As Long, ByVal Sx As Long, ByVal Sy As Long, ByVal sW As Long, ByVal sH As Long, Optional ByVal TransColor As Long = 65024, Optional ByVal AlphaConstant As Byte = 255, Optional ByVal PerPixelAlpha As Boolean = False)
-Dim tmpHDC As Long, hBitmap As Long, bitmap As Long
+Public Sub AlphaTransBlt(ByVal dhDC As Long, ByVal dX As Long, ByVal dY As Long, ByVal dW As Long, ByVal dH As Long, ByVal shDC As Long, ByVal Sx As Long, ByVal Sy As Long, ByVal sW As Long, ByVal sH As Long, Optional ByVal TransColor As Long = 65024, Optional ByVal AlphaConstant As Byte = 255, Optional ByVal PerPixelAlpha As Boolean = False)
+Dim tmpHDC As Long, hBitmap As Long, BITMAP As Long
 Dim Blend As BLENDFUNCTION, BlendLng As Long
     
 Blend.SourceConstantAlpha = AlphaConstant
@@ -362,13 +364,13 @@ CopyMemory BlendLng, Blend, 4
     
 If AlphaConstant = 255 Then
     If PerPixelAlpha Then
-    AlphaBlend dhDC, dx, dy, dW, dH, shDC, Sx, Sy, dW, dH, BlendLng
+    AlphaBlend dhDC, dX, dY, dW, dH, shDC, Sx, Sy, dW, dH, BlendLng
     Else
-    TransparentBlt dhDC, dx, dy, dW, dH, shDC, Sx, Sy, sW, sH, TransColor
+    TransparentBlt dhDC, dX, dY, dW, dH, shDC, Sx, Sy, sW, sH, TransColor
     End If
 Else
     InitDC tmpHDC, hBitmap, TransColor, dW, dH, True
-    BitBlt tmpHDC, 0, 0, dW, dH, dhDC, dx, dy, vbSrcCopy 'blt the background on the destination DC to a temporary DC
+    BitBlt tmpHDC, 0, 0, dW, dH, dhDC, dX, dY, vbSrcCopy 'blt the background on the destination DC to a temporary DC
     If PerPixelAlpha Then
         Blend.SourceConstantAlpha = 255
         CopyMemory BlendLng, Blend, 4
@@ -381,7 +383,7 @@ Else
     Blend.AlphaFormat = 0 'disable source alpha
     CopyMemory BlendLng, Blend, 4
     
-    AlphaBlend dhDC, dx, dy, dW, dH, tmpHDC, 0, 0, dW, dH, BlendLng 'handles alphaconstant
+    AlphaBlend dhDC, dX, dY, dW, dH, tmpHDC, 0, 0, dW, dH, BlendLng 'handles alphaconstant
     DeleteObject SelectObject(tmpHDC, hBitmap)
     DeleteDC tmpHDC
 End If

@@ -15,7 +15,7 @@ Private Const FVF_TLVERTEX As Long = D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFF
 Public Type TLVERTEX
     x As Single
     y As Single
-    z As Single
+    Z As Single
     RHW As Single
     Color As Long
     TU As Single
@@ -196,8 +196,6 @@ Public Sub DrawGDI()
     End If
     
     If frmMain.Visible Then
-        If frmMain.picTempInv.Visible Then DrawDraggedItem frmMain.picTempInv.Left, frmMain.picTempInv.Top
-        If frmMain.picTempSpell.Visible Then DrawDraggedSpell frmMain.picTempSpell.Left, frmMain.picTempSpell.Top
         If frmMain.picSpellDesc.Visible Then DrawSpellDesc LastSpellDesc
         If frmMain.picItemDesc.Visible Then DrawItemDesc LastItemDesc
         If frmMain.picHotbar.Visible Then DrawHotbar
@@ -599,10 +597,10 @@ errorhandler:
 End Sub
 
 ' This function will make it much easier to setup the vertices with the info it needs.
-Private Function Create_TLVertex(x As Single, y As Single, z As Single, RHW As Single, Color As Long, Specular As Long, TU As Single, TV As Single) As TLVERTEX
+Private Function Create_TLVertex(x As Single, y As Single, Z As Single, RHW As Single, Color As Long, Specular As Long, TU As Single, TV As Single) As TLVERTEX
     Create_TLVertex.x = x
     Create_TLVertex.y = y
-    Create_TLVertex.z = z
+    Create_TLVertex.Z = Z
     Create_TLVertex.RHW = RHW
     Create_TLVertex.Color = Color
     Create_TLVertex.TU = TU
@@ -2688,7 +2686,7 @@ Public Sub DrawDraggedSpell(ByVal x As Long, ByVal y As Long, Optional ByVal IsH
                 End With
             End If
         Else
-            If SpellCD(DragHotbarSlot) > 0 Then
+            If SpellCD(DragHotbarSpell) > 0 Then
                 With rec
                     .Top = 0
                     .Bottom = .Top + PIC_Y
@@ -2806,11 +2804,12 @@ Public Sub DrawSpellDesc(ByVal SpellNum As Long)
         SpellPic = Spell(SpellNum).Icon
 
         If SpellPic <= 0 Or SpellPic > NumSpellIcons Then Exit Sub
+        If LastSpellSlotDesc < 1 Or LastSpellSlotDesc > MAX_PLAYER_SPELLS Then Exit Sub
         
         Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
         Direct3D_Device.BeginScene
 
-        If SpellCD(SpellNum) > 0 Then
+        If SpellCD(LastSpellSlotDesc) > 0 Then
             With rec
                 .Top = 0
                 .Bottom = 32
