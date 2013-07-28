@@ -1206,7 +1206,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -3158,7 +3157,7 @@ Private Sub lblAddFriend_Click()
         If MyTarget > 0 And MyTarget <= MAX_PLAYERS Then
             If Not MyTarget = MyIndex Then
                 If IsPlaying(MyTarget) Then
-                    txtDialogue.Text = GetPlayerName(MyTarget)
+                    txtDialogue.text = GetPlayerName(MyTarget)
                 End If
             End If
         End If
@@ -3181,7 +3180,7 @@ Private Sub lblAddFoe_Click()
         If MyTarget > 0 And MyTarget <= MAX_PLAYERS Then
             If Not MyTarget = MyIndex Then
                 If IsPlaying(MyTarget) Then
-                    txtDialogue.Text = GetPlayerName(MyTarget)
+                    txtDialogue.text = GetPlayerName(MyTarget)
                 End If
             End If
         End If
@@ -3342,7 +3341,7 @@ Private Sub lblGuildRemove_Click()
         If MyTarget > 0 And MyTarget <= MAX_PLAYERS Then
             If Not MyTarget = MyIndex Then
                 If IsPlaying(MyTarget) Then
-                    txtDialogue.Text = GetPlayerName(MyTarget)
+                    txtDialogue.text = GetPlayerName(MyTarget)
                 End If
             End If
         End If
@@ -3372,7 +3371,7 @@ Private Sub lblRemoveFriend_Click()
     Dialogue "Remove Friend", "What friend do you want to remove?", DIALOGUE_TYPE_REMOVEFRIEND, True
     
     If (lstFriends.ListIndex + 1) > 0 And lstFriends.ListIndex + 1 <= MAX_PEOPLE Then
-        txtDialogue.Text = Trim$(Player(MyIndex).Friends(lstFriends.ListIndex + 1).name)
+        txtDialogue.text = Trim$(Player(MyIndex).Friends(lstFriends.ListIndex + 1).name)
     End If
     Exit Sub
     
@@ -3389,7 +3388,7 @@ Private Sub lblRemoveFoe_Click()
     Dialogue "Remove Foe", "What foe do you want to remove?", DIALOGUE_TYPE_REMOVEFOE, True
     
     If (lstFoes.ListIndex + 1) > 0 And lstFoes.ListIndex + 1 <= MAX_PEOPLE Then
-        txtDialogue.Text = Trim$(Player(MyIndex).Foes(lstFoes.ListIndex + 1).name)
+        txtDialogue.text = Trim$(Player(MyIndex).Foes(lstFoes.ListIndex + 1).name)
     End If
     Exit Sub
     
@@ -3417,7 +3416,7 @@ Private Sub lblCurrencyCancel_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     picCurrency.Visible = False
-    txtCurrency.Text = vbNullString
+    txtCurrency.text = vbNullString
     TmpCurrencyItem = 0
     CurrencyMenu = 0 ' Clear
     Exit Sub
@@ -3472,16 +3471,16 @@ Private Sub lblCurrencyOk_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    If IsNumeric(txtCurrency.Text) Then
+    If IsNumeric(txtCurrency.text) Then
         Select Case CurrencyMenu
             Case 1 ' Drop item
-                SendDropItem TmpCurrencyItem, Val(txtCurrency.Text)
+                SendDropItem TmpCurrencyItem, Val(txtCurrency.text)
             Case 2 ' Deposit item
-                DepositItem TmpCurrencyItem, Val(txtCurrency.Text)
+                DepositItem TmpCurrencyItem, Val(txtCurrency.text)
             Case 3 ' withdraw item
-                WithdrawItem TmpCurrencyItem, Val(txtCurrency.Text)
+                WithdrawItem TmpCurrencyItem, Val(txtCurrency.text)
             Case 4 ' Offer trade item
-                TradeItem TmpCurrencyItem, Val(txtCurrency.Text)
+                TradeItem TmpCurrencyItem, Val(txtCurrency.text)
         End Select
     Else
         AddText "Please enter a valid amount.", BrightRed
@@ -3490,7 +3489,7 @@ Private Sub lblCurrencyOk_Click()
     
     picCurrency.Visible = False
     TmpCurrencyItem = 0
-    txtCurrency.Text = vbNullString
+    txtCurrency.text = vbNullString
     CurrencyMenu = 0 ' Clear
     Exit Sub
     
@@ -3507,7 +3506,7 @@ Private Sub lblDialogue_Button_Click(Index As Integer)
     ' Call the handler
     DialogueHandler Index
     
-    txtDialogue.Text = vbNullString
+    txtDialogue.text = vbNullString
     picDialogue.Visible = False
     DialogueIndex = 0
     SetGameFocus
@@ -3529,7 +3528,7 @@ Private Sub lblPartyInvite_Click()
         If MyTarget > 0 And MyTarget <= MAX_PLAYERS Then
             If Not MyTarget = MyIndex Then
                 If IsPlaying(MyTarget) Then
-                    txtDialogue.Text = GetPlayerName(MyTarget)
+                    txtDialogue.text = GetPlayerName(MyTarget)
                 End If
             End If
         End If
@@ -3569,7 +3568,7 @@ Private Sub lblGuildInvite_Click()
         If MyTarget > 0 And MyTarget <= MAX_PLAYERS Then
             If Not MyTarget = MyIndex Then
                 If IsPlaying(MyTarget) Then
-                    txtDialogue.Text = GetPlayerName(MyTarget)
+                    txtDialogue.text = GetPlayerName(MyTarget)
                 End If
             End If
         End If
@@ -3661,8 +3660,8 @@ Private Sub lstTitles_Click()
     If Not lstTitles.ListIndex = 0 Then
         For i = 1 To MAX_TITLES
             If Not Player(MyIndex).CurTitle = i Then
-                If lstTitles.List(lstTitles.ListIndex) = Trim$(Title(i).name) Then
-                    lblDesc.Caption = Trim$(Title(i).Desc)
+                If lstTitles.List(lstTitles.ListIndex) = Trim$(title(i).name) Then
+                    lblDesc.Caption = Trim$(title(i).Desc)
                     Call SendSetTitle(i)
                     Exit For
                 End If
@@ -4063,7 +4062,7 @@ Public Sub ToggleChatLock(Optional ByVal ForceLock As Boolean, Optional ByVal So
     
     If ChatLocked Then
         If SoundEffect Then Call Audio.PlaySound(ButtonBuzzer)
-        frmMain.txtMyChat.Text = vbNullString
+        frmMain.txtMyChat.text = vbNullString
         frmMain.txtMyChat.Enabled = False
     Else
         If SoundEffect Then Call Audio.PlaySound(ButtonClick)
@@ -4541,8 +4540,6 @@ Private Function IsShopItem(ByVal x As Single, ByVal y As Single) As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    IsShopItem = 0
-
     For i = 1 To MAX_TRADES
         If Shop(InShop).TradeItem(i).Item > 0 And Shop(InShop).TradeItem(i).Item <= MAX_ITEMS Then
             With TempRec
@@ -4599,8 +4596,15 @@ Private Sub picShopItems_MouseDown(Button As Integer, Shift As Integer, x As Sin
         Select Case ShopAction
             Case 0 ' no action, give cost
                 With Shop(InShop).TradeItem(ShopItem)
-                    If .CostItem = 0 Then Exit Sub
-                    AddText "You can buy this item for " & .CostValue & " " & Trim$(Item(.CostItem).name) & ".", White
+                    If .CostItem > 0 And .CostItem2 = 0 Then
+                        AddText "You can buy this item for " & .CostValue & " " & Trim$(Item(.CostItem).name) & ".", BrightGreen
+                    ElseIf .CostItem2 > 0 And .CostItem = 0 Then
+                        AddText "You can buy this item for " & .CostValue & " " & Trim$(Item(.CostItem).name) & ".", BrightGreen
+                    ElseIf .CostItem > 0 And .CostItem2 > 0 Then
+                        AddText "You can buy this item for " & .CostValue & " " & Trim$(Item(.CostItem).name) & " and " & .CostValue2 & " " & Trim$(Item(.CostItem2).name) & ".", BrightGreen
+                    Else
+                        Exit Sub
+                    End If
                 End With
             Case 1 ' buy item
                 ' buy item code
@@ -4615,6 +4619,25 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub picShopItems_dblClick()
+    Dim ShopItem As Long
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    ShopItem = IsShopItem(ShopX, ShopY)
+    
+    If ShopItem > 0 Then
+        BuyItem ShopItem
+    End If
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "picShopItems_dblClick", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub picShopItems_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
     Dim ShopSlot As Long
     Dim X2 As Long, Y2 As Long
@@ -4622,6 +4645,9 @@ Private Sub picShopItems_MouseMove(Button As Integer, Shift As Integer, x As Sin
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
+    ShopX = x
+    ShopY = y
+    
     ShopSlot = IsShopItem(x, y)
 
     If ShopSlot <> 0 Then
@@ -4981,7 +5007,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         End If
         
         If picChatbox.Visible Then
-            If txtMyChat.Text = vbNullString Then
+            If txtMyChat.text = vbNullString Then
                 If picCurrency.Visible = False Then
                     If picDialogue.Visible = False Then
                         Call ToggleChatLock
@@ -5230,10 +5256,10 @@ End Sub
 
 Private Sub txtDialogue_Change()
     If DialogueIndex = DIALOGUE_TYPE_CHANGEGUILDACCESS Then
-        If Not txtDialogue.Text = vbNullString Then
-            If Not IsNumeric(txtDialogue.Text) Then txtDialogue.Text = 1
-            If txtDialogue.Text < 1 Then txtDialogue.Text = 1
-            If txtDialogue.Text > MAX_GUILDACCESS Then txtDialogue.Text = MAX_GUILDACCESS
+        If Not txtDialogue.text = vbNullString Then
+            If Not IsNumeric(txtDialogue.text) Then txtDialogue.text = 1
+            If txtDialogue.text < 1 Then txtDialogue.text = 1
+            If txtDialogue.text > MAX_GUILDACCESS Then txtDialogue.text = MAX_GUILDACCESS
         End If
     End If
 End Sub
@@ -5326,7 +5352,7 @@ Private Sub picInventory_DblClick()
                     CurrencyMenu = 2 ' Deposit
                     lblCurrency.Caption = "How many do you want to deposit?"
                     TmpCurrencyItem = InvNum
-                    txtCurrency.Text = vbNullString
+                    txtCurrency.text = vbNullString
                     picCurrency.Visible = True
                     picCurrency.ZOrder (0)
                     txtCurrency.SetFocus
@@ -5359,7 +5385,7 @@ Private Sub picInventory_DblClick()
                     CurrencyMenu = 4 ' Offer in trade
                     lblCurrency.Caption = "How many do you want to trade?"
                     TmpCurrencyItem = InvNum
-                    txtCurrency.Text = vbNullString
+                    txtCurrency.text = vbNullString
                     picCurrency.Visible = True
                     picCurrency.ZOrder (0)
                     txtCurrency.SetFocus
@@ -5801,7 +5827,7 @@ Private Sub picBank_DblClick()
                 CurrencyMenu = 3 ' Withdraw
                 lblCurrency.Caption = "How many do you want to withdraw?"
                 TmpCurrencyItem = BankNum
-                txtCurrency.Text = vbNullString
+                txtCurrency.text = vbNullString
                 picCurrency.Visible = True
                 picCurrency.ZOrder (0)
                 txtCurrency.SetFocus
@@ -5994,7 +6020,7 @@ Private Sub DropItem(ByVal InvNum As Byte)
                 CurrencyMenu = 1 ' drop
                 lblCurrency.Caption = "How many do you want to drop?"
                 TmpCurrencyItem = InvNum
-                txtCurrency.Text = vbNullString
+                txtCurrency.text = vbNullString
                 picCurrency.Visible = True
                 picCurrency.ZOrder (0)
                 txtCurrency.SetFocus

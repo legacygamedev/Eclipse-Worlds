@@ -96,6 +96,8 @@ Public EqX As Integer
 Public EqY As Integer
 Public SpellX As Integer
 Public SpellY As Integer
+Public ShopX As Integer
+Public ShopY As Integer
 Public InvItemFrame(1 To MAX_INV) As Byte ' Used for animated items
 Public BankItemFrame(1 To MAX_BANK) As Byte ' Used for animated items
 Public ShopItemFrame(1 To MAX_TRADES) As Byte ' Used for animated items

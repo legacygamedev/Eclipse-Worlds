@@ -1477,7 +1477,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
     If InvNum < 1 Or InvNum > MAX_INV Then Exit Sub
     
     ' Check if they can use the item
-    If Not CanPlayerUseItem(Index, InvNum) Then Exit Sub
+    If Not CanPlayerUseItem(Index, GetPlayerInvItemNum(Index, InvNum)) Then Exit Sub
     
     n = Item(GetPlayerInvItemNum(Index, InvNum)).Data2
 
@@ -1918,7 +1918,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     If ClassReq > 0 Then ' 0 = no req
         If Not ClassReq = GetPlayerClass(Index) Then
             If message Then
-                Call PlayerMsg(Index, "Only " & CheckGrammar(Trim$(Class(ClassReq).Name)) & " can use this item.", BrightRed)
+                Call PlayerMsg(Index, "You must be " & CheckGrammar(Trim$(Class(ClassReq).Name)) & " can use this item!", BrightRed)
             End If
             Exit Function
         End If

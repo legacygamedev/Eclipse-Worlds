@@ -968,6 +968,9 @@ Public Sub LogoutGame()
     
     GUIVisible = True
     ButtonsVisible = False
+    frmMain.picTempInv.Visible = False
+    frmMain.picTempSpell.Visible = False
+    frmMain.picTempBank.Visible = False
     
     Call ClearMenuPictures
     frmMenu.picMain.Visible = True
@@ -994,6 +997,8 @@ Public Sub LogoutGame()
     Unload frmEditor_Shop
     Unload frmEditor_Spell
     Unload frmAdmin
+    Unload frmItemSpawner
+    Unload frmCharEditor
 
     ' Destroy temp values
     MouseX = -1
@@ -1008,6 +1013,8 @@ Public Sub LogoutGame()
     EqY = 0
     BankX = 0
     BankY = 0
+    ShopX = 0
+    ShopY = 0
     SpellX = 0
     SpellY = 0
     LastItemDesc = 0
