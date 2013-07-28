@@ -978,8 +978,6 @@ Public Sub LogoutGame()
     CurButton_Menu = 0
 
     ' Close out all the editors
-    Unload frmCharEditor
-    Unload frmItemSpawner
     Unload frmAlert
     Unload frmEditor_Map
     Unload frmEditor_MapProperties

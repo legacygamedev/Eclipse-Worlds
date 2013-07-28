@@ -1652,15 +1652,6 @@ errorhandler:
 End Sub
 
 
-
-Private Sub Command1_Click()
-    frmItemSpawner.Visible = True
-End Sub
-
-Private Sub cmdRecent_Click()
-    frmItemSpawner.Visible = True
-End Sub
-
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
         Case vbKeyInsert
@@ -1700,6 +1691,11 @@ Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integ
 End Sub
 
 Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+    Dim test As Boolean
+    If ignoreChange Then
+        ignoreChange = False
+        Exit Sub
+    End If
     If optCat(Index).Value = False Then
         optCat(Index).Picture = LoadResPicture(100 + Index, vbResBitmap)
     Else
@@ -1740,13 +1736,18 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
         
         If Button <> 0 Then
             If lastIndex = Index Then
-                frmItemSpawner.Visible = False
+                Unload frmItemSpawner
+                frmItemSpawner.lastTab = -1
                 optCat(Index).Value = False
-                optCat(Index).Picture = LoadResPicture(100 + lastIndex, vbResBitmap)
+                optCat(Index).Picture = LoadResPicture(100 + Index, vbResBitmap)
                 lastIndex = -1
                 Exit Sub
             Else
                 frmItemSpawner.Visible = True
+                ignoreChange = True
+                frmItemSpawner.tabItems.SelectedItem = frmItemSpawner.tabItems.Tabs(Index + 1)
+                frmItemSpawner.Move frmAdmin.Left - frmItemSpawner.Width, frmAdmin.Top
+                frmItemSpawner.updateFreeSlots
                 frmItemSpawner.tabItems.Tabs(Index + 1).Selected = True
                 BringWindowToTop (frmItemSpawner.hWnd)
             End If

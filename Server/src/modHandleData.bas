@@ -1232,8 +1232,7 @@ Sub HandleMapGetItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr 
     
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
-    
-    Call PlayerMapGetItem(index, Buffer.ReadByte)
+    Call PlayerMapGetItem(index, CLng(Buffer.ReadByte))
 End Sub
 
 ' ::::::::::::::::::::::::::::::::::::::::::::
@@ -2290,7 +2289,8 @@ Sub HandleSpawnItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
     Dim Buffer As clsBuffer
     Dim TmpItem As Long
     Dim TmpAmount As Long
-    
+    Dim ground As Boolean
+    Dim ret As Long
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
     
@@ -2300,14 +2300,19 @@ Sub HandleSpawnItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
     ' Item
     TmpItem = Buffer.ReadLong
     TmpAmount = Buffer.ReadLong
-    
-    If Moral(GetPlayerMap(index)).CanDropItem = 0 Then
-        SpawnItem TmpItem, TmpAmount, Item(TmpItem).Data1, GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index), GetPlayerName(index)
-        Call PlayerMsg(index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been dropped beneath you.", BrightGreen)
+    ground = Buffer.ReadInteger
+    If Moral(GetPlayerMap(index)).CanDropItem = 1 And ground Then
+        ret = SpawnItem(TmpItem, TmpAmount, Item(TmpItem).Data1, GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index), GetPlayerName(index))
+        If ret > 0 Then
+            Call PlayerMsg(index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been dropped beneath you.", BrightGreen)
+        ElseIf ret = -1 Then
+            Call PlayerMsg(index, "There's already too many items(50) on the ground.", BrightRed)
+        End If
             
     Else
-        GiveInvItem index, TmpItem, TmpAmount
-        Call PlayerMsg(index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been added to you Inventory.", BrightGreen)
+        If GiveInvItem(index, TmpItem, TmpAmount) > 0 Then
+            Call PlayerMsg(index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been added to you Inventory.", BrightGreen)
+        End If
             
     End If
     

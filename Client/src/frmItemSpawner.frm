@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.ocx"
 Begin VB.Form frmItemSpawner 
    Appearance      =   0  'Flat
    BorderStyle     =   4  'Fixed ToolWindow
@@ -7,13 +7,13 @@ Begin VB.Form frmItemSpawner
    ClientHeight    =   4935
    ClientLeft      =   8280
    ClientTop       =   4425
-   ClientWidth     =   8295
+   ClientWidth     =   8325
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   329
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   553
+   ScaleWidth      =   555
    ShowInTaskbar   =   0   'False
    Begin MSComctlLib.ImageList itemsImageList 
       Left            =   7710
@@ -30,7 +30,7 @@ Begin VB.Form frmItemSpawner
       Caption         =   "Close window after spawning"
       ForeColor       =   &H00C0C000&
       Height          =   420
-      Left            =   4410
+      Left            =   4590
       TabIndex        =   10
       Top             =   285
       Value           =   1  'Checked
@@ -41,8 +41,8 @@ Begin VB.Form frmItemSpawner
       Left            =   45
       TabIndex        =   9
       Top             =   1470
-      Width           =   8205
-      _ExtentX        =   14473
+      Width           =   8235
+      _ExtentX        =   14526
       _ExtentY        =   6006
       Arrange         =   2
       LabelEdit       =   1
@@ -65,7 +65,7 @@ Begin VB.Form frmItemSpawner
       Caption         =   "Spawn it"
       Enabled         =   0   'False
       Height          =   285
-      Left            =   3270
+      Left            =   3540
       TabIndex        =   8
       Top             =   345
       Width           =   795
@@ -83,11 +83,11 @@ Begin VB.Form frmItemSpawner
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   375
-      Left            =   2505
+      Height          =   330
+      Left            =   2400
       TabIndex        =   7
       Text            =   "1"
-      Top             =   285
+      Top             =   300
       Width           =   705
    End
    Begin VB.OptionButton radioInv 
@@ -98,7 +98,7 @@ Begin VB.Form frmItemSpawner
       TabIndex        =   2
       Top             =   525
       Value           =   -1  'True
-      Width           =   1515
+      Width           =   2340
    End
    Begin VB.OptionButton radioGround 
       Caption         =   "Ground"
@@ -115,8 +115,8 @@ Begin VB.Form frmItemSpawner
       Left            =   15
       TabIndex        =   0
       Top             =   780
-      Width           =   8310
-      _ExtentX        =   14658
+      Width           =   8370
+      _ExtentX        =   14764
       _ExtentY        =   7382
       _Version        =   393216
       BeginProperty Tabs {1EFB6598-857C-11D1-B16A-00C0F0283628} 
@@ -186,12 +186,20 @@ Begin VB.Form frmItemSpawner
          Width           =   2655
       End
    End
+   Begin VB.Label lblMax 
+      Caption         =   "/max"
+      Height          =   255
+      Left            =   3120
+      TabIndex        =   15
+      Top             =   375
+      Width           =   405
+   End
    Begin VB.Label lblHelp2 
       BackStyle       =   0  'Transparent
       Caption         =   "and ""Spawn It""."
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   11.25
+         Size            =   8.25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -200,10 +208,10 @@ Begin VB.Form frmItemSpawner
       EndProperty
       ForeColor       =   &H00FF8080&
       Height          =   240
-      Left            =   6015
+      Left            =   6090
       TabIndex        =   14
       Top             =   480
-      Width           =   1080
+      Width           =   1305
       WordWrap        =   -1  'True
    End
    Begin VB.Label lblOptions 
@@ -220,7 +228,7 @@ Begin VB.Form frmItemSpawner
       EndProperty
       ForeColor       =   &H00C0C000&
       Height          =   195
-      Left            =   4635
+      Left            =   4950
       TabIndex        =   11
       Top             =   15
       Width           =   645
@@ -228,16 +236,16 @@ Begin VB.Form frmItemSpawner
    Begin VB.Line Line1 
       BorderColor     =   &H00C0C000&
       BorderWidth     =   3
-      X1              =   305
-      X2              =   382.333
+      X1              =   313
+      X2              =   390.333
       Y1              =   15
       Y2              =   15
    End
    Begin VB.Line lineAmount 
       BorderColor     =   &H0000C0C0&
       BorderWidth     =   3
-      X1              =   174
-      X2              =   251.333
+      X1              =   178
+      X2              =   282
       Y1              =   15
       Y2              =   15
    End
@@ -254,7 +262,7 @@ Begin VB.Form frmItemSpawner
       EndProperty
       ForeColor       =   &H0000C0C0&
       Height          =   195
-      Left            =   2910
+      Left            =   3150
       TabIndex        =   6
       Top             =   30
       Width           =   645
@@ -264,7 +272,7 @@ Begin VB.Form frmItemSpawner
       Caption         =   "Choose the item, input Amount"
       BeginProperty Font 
          Name            =   "Arial"
-         Size            =   11.25
+         Size            =   8.25
          Charset         =   238
          Weight          =   400
          Underline       =   0   'False
@@ -273,17 +281,17 @@ Begin VB.Form frmItemSpawner
       EndProperty
       ForeColor       =   &H00FF8080&
       Height          =   240
-      Left            =   6000
+      Left            =   6090
       TabIndex        =   5
       Top             =   270
-      Width           =   2325
+      Width           =   2220
       WordWrap        =   -1  'True
    End
    Begin VB.Line lineHow 
       BorderColor     =   &H00FF8080&
       BorderWidth     =   3
-      X1              =   402
-      X2              =   546
+      X1              =   408
+      X2              =   552
       Y1              =   16
       Y2              =   16
    End
@@ -301,7 +309,7 @@ Begin VB.Form frmItemSpawner
       EndProperty
       ForeColor       =   &H00FF8080&
       Height          =   255
-      Left            =   7020
+      Left            =   7095
       TabIndex        =   4
       Top             =   0
       Width           =   1185
@@ -338,11 +346,14 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Private lastTab As Byte
+Public lastTab As Integer
 Private allowTitle As Boolean
-Private currentItemId As Long
+Private currentItemIndex As Integer
 Private currentAmount As Long
 Private picked As Boolean
+Private freeInvSlots As Byte
+Private currentMaxLimit As Long
+
 Private Declare Function SendMessage Lib "user32" Alias _
  "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, _
  ByVal wParam As Long, lparam As Any) As Long
@@ -353,7 +364,40 @@ Public Function ListView_SetIconSpacing(hWndLV As Long, cX As Long, cY As Long) 
     LVM_SETICONSPACING = 4149
     ListView_SetIconSpacing = SendMessage(hWndLV, LVM_SETICONSPACING, 0, ByVal MakeLong(cX, cY))
 End Function
+Public Sub updateFreeSlots()
 
+    If Me.Visible Then
+        freeInvSlots = countFreeSlots
+        If freeInvSlots = 0 Then
+            radioInv.Enabled = False
+            radioInv.Caption = "Inventory(No slots available)"
+            radioGround.Enabled = True
+            radioGround.Value = True
+        Else
+            radioInv.Caption = "Inventory(" & freeInvSlots & " free slot" & IIf(freeInvSlots > 1, "s", "") & ")"
+            radioInv.Enabled = True
+            radioGround.Enabled = True
+        End If
+        updateMaxLimit
+    End If
+    
+End Sub
+Private Sub updateMaxLimit()
+    If Me.Visible = True Then
+        Dim stackable As Boolean
+        stackable = Item(currentlyListedIndexes(listItems.SelectedItem.Index - 1)).stackable
+        If radioGround.Value And Not stackable Then
+            currentMaxLimit = MAX_MAP_ITEMS
+        ElseIf Not stackable Then
+            currentMaxLimit = freeInvSlots
+        Else
+            currentMaxLimit = 2147483468
+            lblMax.Caption = "/---"
+            Exit Sub
+        End If
+        lblMax.Caption = "/" & currentMaxLimit
+    End If
+End Sub
 Private Sub styleListwView(sType As Status, Optional msg As String)
     Select Case sType
         Case Status.Correct
@@ -402,6 +446,7 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
         For i = 0 To UBound(tempItems)
             listItems.listItems.Add , , Trim(tempItems(i).name), itemsImageList.ListImages(i + 1).Index
         Next
+        currentItemIndex = 0
         generateItemsForTab = True
     End If
 End Function
@@ -423,14 +468,14 @@ Private Sub cmdSpawn_Click()
         Exit Sub
     End If
     
-    SendSpawnItem currentlyListedIndexes(currentItemId), CLng(txtAmount)
+    SendSpawnItem currentlyListedIndexes(currentItemIndex), CLng(txtAmount), IIf(radioGround.Value, True, False)
     
     If chkClose.Value = 1 Then
         Unload Me
         frmAdmin.lastIndex = -1
         frmAdmin.currentCategory = "Categories"
-        lastTab = 0
-        currentItemId = 0
+        lastTab = -1
+        currentItemIndex = -1
     End If
     Exit Sub
     
@@ -441,21 +486,36 @@ errorhandler:
 End Sub
 
 Private Sub Form_Load()
-    tabItems_Click
     ListView_SetIconSpacing listItems.hWnd, 105, 56
     Move frmAdmin.Left - Width, frmAdmin.Top
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     frmAdmin.styleButtons
+    frmAdmin.lastIndex = -1
     frmAdmin.currentCategory = "Categories"
+    lastTab = -1
+    currentItemIndex = -1
 End Sub
 
 Private Sub listItems_ItemClick(ByVal Item As MSComctlLib.ListItem)
     cmdSpawn.Enabled = True
-    currentItemId = Item.Index - 1
+    currentItemIndex = Item.Index - 1
     picked = True
+    updateMaxLimit
     Me.Caption = "Item Spawner - Going to spawn " & txtAmount.text & " " & listItems.listItems(Item.Index).text
+End Sub
+
+Private Sub listItems_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+'Wykorzystac HitTest do pokazywania  Item Description
+End Sub
+
+Private Sub radioGround_Click()
+    updateMaxLimit
+End Sub
+
+Private Sub radioInv_Click()
+    updateMaxLimit
 End Sub
 
 Private Sub tabItems_Click()
@@ -471,24 +531,31 @@ Private Sub tabItems_Click()
         generateLastItems
     Else
         If generateItemsForTab(tabItems.SelectedItem.Index) Then
-            styleListwView status.Correct
+            styleListwView Status.Correct
+            cmdSpawn.Enabled = True
+            picked = True
         Else
-            styleListwView status.Error, "No items available in this category!"
+            styleListwView Status.Error, "No items available in this category!"
+            picked = False
         End If
     End If
     
+    If frmAdmin.ignoreChange Then
+        frmAdmin.ignoreChange = False
+    Else
+        frmAdmin.lastIndex = lastTab - 1
+        frmAdmin.optCat(tabItems.SelectedItem.Index - 1).Value = True
+        frmAdmin.optCat_MouseUp tabItems.SelectedItem.Index - 1, 0, 0, 0, 0
+    End If
 
-    frmAdmin.lastIndex = lastTab - 1
-    frmAdmin.optCat(tabItems.SelectedItem.Index - 1).Value = True
-    frmAdmin.optCat_MouseUp tabItems.SelectedItem.Index - 1, 0, 0, 0, 0
     
-    Me.Caption = "Item Spawner - " & tabItems.SelectedItem.Caption & " -> " & listItems.listItems.count & " items available"
+    Me.Caption = "Item Spawner - " & tabItems.SelectedItem.Caption & " -> " & listItems.listItems.count & " item" & IIf(listItems.listItems.count > 1, "s", "") & " available"
     
     lastTab = tabItems.SelectedItem.Index
 End Sub
 
-Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min As Long, max As Long, Optional defaultVal As Long = 0) As Boolean
-    Dim test As textBox, TempValue As String
+Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min As Long, max As Long, Optional defaultVal As Long = 1) As Boolean
+    Dim test As textBox, TempValue As String, verified As Byte
     
     If textBox.text = "" Then
         textBox.text = CStr(defaultVal)
@@ -498,39 +565,58 @@ Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min
 
     If Len(textBox.text) = 1 And InStr(1, textBox.text, "-") = 1 Then
         correctValue = True
+        cmdSpawn.Enabled = False
         Exit Function
     ElseIf Len(textBox.text) = 1 And IsNumeric(textBox.text) Then
-        If verifyValue(textBox, min, max) Then
+        verified = verifyValue(textBox, min, max)
+        If verified = 1 Then
             TempValue = textBox.text
             valueToChange = TempValue
             correctValue = True
-        Else
-            textBox.text = CStr(valueToChange)
-            textBox.SelStart = Len(textBox.text)
+        ElseIf verified = 2 Then
+            textBox.text = CStr(min)
+            textBox.SelStart = 0
+            textBox.SelLength = Len(textBox.text)
             correctValue = False
+        ElseIf verified = 3 Then
         End If
+        cmdSpawn.Enabled = True
     ElseIf Len(textBox.text) > 1 And InStr(1, textBox.text, "-") = 0 And InStrRev(textBox.text, "-") = 0 And IsNumeric(textBox.text) Then
-
-        If verifyValue(textBox, min, max) Then
+        verified = verifyValue(textBox, min, max)
+        If verified = 1 Then
             TempValue = textBox.text
             valueToChange = TempValue
             correctValue = True
-        Else
-            textBox.text = CStr(valueToChange)
-            textBox.SelStart = Len(textBox.text)
+        ElseIf verified = 2 Then
+            textBox.text = CStr(min)
+            textBox.SelStart = 0
+            textBox.SelLength = Len(textBox.text)
+            correctValue = False
+        ElseIf verified = 3 Then
+            textBox.text = CStr(max)
+            textBox.SelStart = 0
+            textBox.SelLength = Len(textBox.text)
             correctValue = False
         End If
+        cmdSpawn.Enabled = True
     ElseIf Len(textBox.text) > 1 And InStr(1, textBox.text, "-") = 1 And InStrRev(textBox.text, "-") = 1 And IsNumeric(textBox.text) Then
-
-        If verifyValue(textBox, min, max) Then
+        verified = verifyValue(textBox, min, max)
+        If verified = 1 Then
             TempValue = textBox.text
             valueToChange = TempValue
             correctValue = True
-        Else
-            textBox.text = CStr(valueToChange)
-            textBox.SelStart = Len(textBox.text)
-        correctValue = False
+        ElseIf verified = 2 Then
+            textBox.text = CStr(min)
+            textBox.SelStart = 0
+            textBox.SelLength = Len(textBox.text)
+            correctValue = False
+        ElseIf verified = 3 Then
+            textBox.text = CStr(max)
+            textBox.SelStart = 0
+            textBox.SelLength = Len(textBox.text)
+            correctValue = False
         End If
+        cmdSpawn.Enabled = True
     Else
         textBox.text = CStr(valueToChange)
         textBox.SelStart = Len(textBox.text)
@@ -546,13 +632,17 @@ Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
     End If
 End Sub
 
-Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
+Private Function verifyValue(txtBox As textBox, min As Long, max As Long) As Byte
     Dim msg As String
     
-    If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
-        verifyValue = True
+    If (CDec(txtBox.text) >= min And CDec(txtBox.text) <= max) Then
+        verifyValue = 1
     Else
-        verifyValue = False
+        If CDec(txtBox.text) < min Then
+            verifyValue = 2
+        Else
+            verifyValue = 3
+        End If
     End If
 End Function
 
@@ -562,7 +652,7 @@ Private Sub selectValue(ByRef textBox As textBox)
 End Sub
 
 Private Sub txtAmount_Change()
-    If correctValue(txtAmount, currentAmount, 0, 20) Then
+    If correctValue(txtAmount, currentAmount, 1, currentMaxLimit) Then
         If picked Then
                 Me.Caption = "Item Spawner - Going to spawn " & txtAmount.text & " " & listItems.listItems(listItems.SelectedItem.Index).text
         End If

@@ -2376,6 +2376,16 @@ Public Function populateSpecificType(ByRef tempItems() As ItemRec, ItemType As B
     End If
 End Function
 
+Public Function countFreeSlots() As Byte
+    Dim i As Long, counter As Byte
+    
+        For i = 1 To MAX_INV
+        If GetPlayerInvItemNum(MyIndex, i) = 0 Then
+            counter = counter + 1
+        End If
+        countFreeSlots = counter
+    Next
+End Function
 Public Sub SpellClassListInit()
     Dim i As Long
     
