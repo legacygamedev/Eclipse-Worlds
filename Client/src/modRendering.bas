@@ -57,7 +57,6 @@ Public Tex_Weather As DX8TextureRec
 Public Tex_ChatBubble As DX8TextureRec
 Public Tex_Fade As DX8TextureRec
 Public Tex_Equip As DX8TextureRec
-Public Tex_EquipPanel As DX8TextureRec
 Public Tex_Base As DX8TextureRec
 
 ' Character Editor Sprite
@@ -201,10 +200,7 @@ Public Sub DrawGDI()
         If frmMain.picHotbar.Visible Then DrawHotbar
         If frmMain.picInventory.Visible Then DrawInventory
         If frmMain.picCharacter.Visible Then DrawPlayerCharFace
-        If frmMain.picEquipment.Visible Then
-            DrawEquipment
-            DrawEquipmentPanel
-        End If
+        If frmMain.picEquipment.Visible Then DrawEquipment
         If frmMain.picChatFace.Visible Then DrawEventChatFace
         If frmMain.picSpells.Visible Then DrawPlayerSpells
         If frmMain.picShop.Visible Then DrawShop
@@ -408,15 +404,12 @@ Private Sub LoadTextures()
     Call CheckPanoramas
     Call CheckEmoticons
     
-    NumTextures = NumTextures + 13
+    NumTextures = NumTextures + 12
     
     ReDim Preserve gTexture(NumTextures)
     Tex_Base.filepath = App.Path & "\data files\graphics\gui\main\base.png"
-    Tex_Base.Texture = NumTextures - 12
+    Tex_Base.Texture = NumTextures - 11
     LoadTexture Tex_Base
-    Tex_EquipPanel.filepath = App.Path & "\data files\graphics\gui\main\equip2.png"
-    Tex_EquipPanel.Texture = NumTextures - 11
-    LoadTexture Tex_EquipPanel
     Tex_Equip.filepath = App.Path & "\data files\graphics\gui\main\equip.png"
     Tex_Equip.Texture = NumTextures - 10
     LoadTexture Tex_Equip
@@ -513,7 +506,6 @@ Dim i As Long
         Tex_Emoticon(i).Texture = 0
     Next
 
-    Tex_EquipPanel.Texture = 0
     Tex_Equip.Texture = 0
     Tex_Base.Texture = 0
     Tex_Fade.Texture = 0
@@ -1789,7 +1781,7 @@ Sub DrawAnimatedItems()
                     TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).Num)
                     If TradeYourOffer(x).Num = i Then
                         ' Check if currency
-                        If Not Item(TmpItem).Stackable = 1 Then
+                        If Not Item(TmpItem).stackable = 1 Then
                             ' Normal item don't render
                             NoRender(i) = 1
                         Else
@@ -2184,7 +2176,7 @@ Sub DrawInventory()
                     TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).Num)
                     If TradeYourOffer(x).Num = i Then
                         ' Check if currency
-                        If Not Item(TmpItem).Stackable = 1 Then
+                        If Not Item(TmpItem).stackable = 1 Then
                             ' Normal item, exit out
                             GoTo NextLoop
                         Else
@@ -4079,43 +4071,6 @@ Public Sub ResizeExpBar()
     End If
 End Sub
 
-Public Sub DrawEquipmentPanel()
-    Dim sRect As RECT
-    Dim dRect As RECT
-
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
-    Direct3D_Device.BeginScene
-    
-    ' Render equipment panel
-    With sRect
-        .Top = 0
-        .Bottom = Tex_EquipPanel.Height
-        .Left = 0
-        .Right = Tex_EquipPanel.Width
-    End With
-    
-    With dRect
-        .Top = 0
-        .Bottom = frmMain.picEquipmentPanel.Height
-        .Left = 0
-        .Right = frmMain.picEquipmentPanel.Width
-    End With
-
-    RenderTextureByRects Tex_EquipPanel, sRect, dRect
-    
-    Direct3D_Device.EndScene
-    Direct3D_Device.Present sRect, dRect, frmMain.picEquipmentPanel.hWnd, ByVal (0)
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "DrawEquipmentPanel", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
 Public Sub DrawEquipment()
     Dim i As Long
     Dim ItemNum As Long
@@ -4140,7 +4095,7 @@ Public Sub DrawEquipment()
     With dRect
         .Top = 0
         .Bottom = frmMain.picEquipment.Height
-        .Left = 32
+        .Left = 0
         .Right = frmMain.picEquipment.Width
     End With
 
@@ -4161,7 +4116,7 @@ Public Sub DrawEquipment()
                 sRect.Left = 0
                 sRect.Right = PIC_X
 
-                RenderTexture Tex_Item(ItemPic), EquipSlotLeft(i), EquipSlotTop(i), sRect.Left, sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top
+                'RenderTexture Tex_Item(ItemPic), EquipSlotLeft(i), EquipSlotTop(i), sRect.Left, sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top
             End If
         End If
     Next

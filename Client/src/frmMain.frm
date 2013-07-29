@@ -816,6 +816,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -856,17 +857,6 @@ Begin VB.Form frmMain
          Top             =   4560
          Visible         =   0   'False
          Width           =   2925
-         Begin VB.PictureBox picEquipmentPanel 
-            BackColor       =   &H80000008&
-            BorderStyle     =   0  'None
-            Height          =   1920
-            Left            =   600
-            ScaleHeight     =   1920
-            ScaleWidth      =   1920
-            TabIndex        =   151
-            Top             =   240
-            Width           =   1920
-         End
       End
       Begin VB.PictureBox picOptions 
          Appearance      =   0  'Flat
