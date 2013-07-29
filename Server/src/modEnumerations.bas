@@ -315,15 +315,10 @@ Public Enum Equipment
     Body
     Head
     Shield
-    Legs
     Hands
     Feet
-    Ring1
-    Ring2
+    Ring
     Neck
-    Back
-    Accessory1
-    Accessory2
     
     ' Make sure Equipment_Count is below everything else
     Equipment_Count

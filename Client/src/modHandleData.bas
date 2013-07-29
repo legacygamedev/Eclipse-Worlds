@@ -2094,12 +2094,12 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef Data() As Byte, ByVal Sta
             
             OldEXPBarWidth = frmMain.imgEXPBar.Width
             NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
-            frmMain.lblExp.Visible = True
-            frmMain.lblExp.Caption = GetPlayerExp(Index) & "/" & TNL
+            frmMain.lblEXP.Visible = True
+            frmMain.lblEXP.Caption = GetPlayerExp(Index) & "/" & TNL
         Else
             frmMain.imgEXPBar.Width = EXPBar_Width
-            frmMain.lblExp.Visible = False
-            frmMain.lblExp.Caption = ""
+            frmMain.lblEXP.Visible = False
+            frmMain.lblEXP.Caption = ""
         End If
     End If
 End Sub
@@ -2545,8 +2545,6 @@ Private Sub HandleHotbar(ByVal Index As Long, ByRef Data() As Byte, ByVal StartA
         Hotbar(i).Slot = buffer.ReadByte
         Hotbar(i).sType = buffer.ReadByte
     Next
-    
-    frmMain.picHotbar.Refresh
     Exit Sub
     
 ' Error handler

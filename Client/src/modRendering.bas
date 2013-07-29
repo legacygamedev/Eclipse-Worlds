@@ -4078,6 +4078,7 @@ Public Sub DrawEquipment()
     Dim sRect As RECT
     Dim dRect As RECT
     Dim destPresentationRect As D3DRECT
+    
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -4116,7 +4117,7 @@ Public Sub DrawEquipment()
                 sRect.Left = 0
                 sRect.Right = PIC_X
 
-                'RenderTexture Tex_Item(ItemPic), EquipSlotLeft(i), EquipSlotTop(i), sRect.Left, sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top
+                RenderTexture Tex_Item(ItemPic), EquipSlotLeft(i), EquipSlotTop(i), sRect.Left, sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top
             End If
         End If
     Next
