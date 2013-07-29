@@ -202,8 +202,8 @@ Public Sub DrawGDI()
         If frmMain.picInventory.Visible Then DrawInventory
         If frmMain.picCharacter.Visible Then DrawPlayerCharFace
         If frmMain.picEquipment.Visible Then
-            DrawEquipmentPanel
             DrawEquipment
+            DrawEquipmentPanel
         End If
         If frmMain.picChatFace.Visible Then DrawEventChatFace
         If frmMain.picSpells.Visible Then DrawPlayerSpells

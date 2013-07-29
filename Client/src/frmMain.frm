@@ -693,7 +693,7 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   450
-         Left            =   4440
+         Left            =   4320
          ScaleHeight     =   30
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   476
@@ -816,6 +816,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
