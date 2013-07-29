@@ -140,15 +140,13 @@ Public Sub Main()
     
     ' Set the paperdoll order
     ReDim PaperdollOrder(1 To Equipment.Equipment_Count - 1) As Long
-    PaperdollOrder(1) = Equipment.Legs
-    PaperdollOrder(2) = Equipment.Body
-    PaperdollOrder(3) = Equipment.Feet
-    PaperdollOrder(4) = Equipment.Hands
-    PaperdollOrder(5) = Equipment.Neck
-    PaperdollOrder(6) = Equipment.back
-    PaperdollOrder(7) = Equipment.Head
-    PaperdollOrder(8) = Equipment.Shield
-    PaperdollOrder(9) = Equipment.Weapon
+    PaperdollOrder(1) = Equipment.Body
+    PaperdollOrder(2) = Equipment.Feet
+    PaperdollOrder(3) = Equipment.Hands
+    PaperdollOrder(4) = Equipment.Neck
+    PaperdollOrder(5) = Equipment.Head
+    PaperdollOrder(6) = Equipment.Shield
+    PaperdollOrder(7) = Equipment.Weapon
     
     ' Hide the load form
     frmLoad.Visible = False
@@ -249,32 +247,22 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     Next
     
     ' Equipment Slots
-    EquipSlotTop(Equipment.Weapon) = PIC_Y * 1
-    EquipSlotLeft(Equipment.Weapon) = PIC_X * 0
-    EquipSlotTop(Equipment.Body) = PIC_Y * 1
-    EquipSlotLeft(Equipment.Body) = PIC_X * 0
-    EquipSlotTop(Equipment.Head) = PIC_Y * 0
-    EquipSlotLeft(Equipment.Head) = PIC_X * 1
-    EquipSlotTop(Equipment.Shield) = PIC_Y * 1
-    EquipSlotLeft(Equipment.Shield) = PIC_X * 2
-    EquipSlotTop(Equipment.Legs) = PIC_Y * 2
-    EquipSlotLeft(Equipment.Legs) = PIC_X * 1
-    EquipSlotTop(Equipment.Hands) = PIC_Y * 3
-    EquipSlotLeft(Equipment.Hands) = PIC_X * 1
-    EquipSlotTop(Equipment.Feet) = PIC_Y * 3
-    EquipSlotLeft(Equipment.Feet) = PIC_X * 1
-    EquipSlotTop(Equipment.Ring1) = PIC_Y * 2
-    EquipSlotLeft(Equipment.Ring1) = PIC_X * 0
-    EquipSlotTop(Equipment.Ring2) = PIC_Y * 2
-    EquipSlotLeft(Equipment.Ring2) = PIC_X * 2
-    EquipSlotTop(Equipment.Neck) = PIC_Y * 0
-    EquipSlotLeft(Equipment.Neck) = PIC_X * 0
-    EquipSlotTop(Equipment.back) = PIC_Y * 0
-    EquipSlotLeft(Equipment.back) = PIC_X * 2
-    EquipSlotTop(Equipment.Accessory1) = PIC_Y * 3
-    EquipSlotLeft(Equipment.Accessory1) = PIC_X * 0
-    EquipSlotTop(Equipment.Accessory2) = PIC_Y * 3
-    EquipSlotLeft(Equipment.Accessory2) = PIC_X * 2
+    EquipSlotTop(Equipment.Weapon) = 50
+    EquipSlotLeft(Equipment.Weapon) = 44
+    EquipSlotTop(Equipment.Body) = 55
+    EquipSlotLeft(Equipment.Body) = 82
+    EquipSlotTop(Equipment.Head) = 20
+    EquipSlotLeft(Equipment.Head) = 80
+    EquipSlotTop(Equipment.Shield) = 55
+    EquipSlotLeft(Equipment.Shield) = 115
+    EquipSlotTop(Equipment.Feet) = 105
+    EquipSlotLeft(Equipment.Feet) = 80
+    EquipSlotTop(Equipment.Hands) = 80
+    EquipSlotLeft(Equipment.Hands) = 50
+    EquipSlotTop(Equipment.Ring) = 80
+    EquipSlotLeft(Equipment.Ring) = 113
+    EquipSlotTop(Equipment.Neck) = 20
+    EquipSlotLeft(Equipment.Neck) = 50
     
     ' Store the bar widths for calculations
     HPBar_Width = frmMain.imgHPBar.Width
@@ -971,9 +959,6 @@ Public Sub LogoutGame()
     
     GUIVisible = True
     ButtonsVisible = False
-    frmMain.picTempInv.Visible = False
-    frmMain.picTempSpell.Visible = False
-    frmMain.picTempBank.Visible = False
     
     Call ClearMenuPictures
     frmMenu.picMain.Visible = True
@@ -1005,10 +990,6 @@ Public Sub LogoutGame()
     MouseX = -1
     MouseY = -1
     Ping = -1
-    DragInvSlot = 0
-    DragSpellSlot = 0
-    DragHotbarSlot = 0
-    DragHotbarSpell = 0
     InvX = 0
     InvY = 0
     EqX = 0

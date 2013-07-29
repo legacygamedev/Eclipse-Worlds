@@ -104,7 +104,7 @@ Begin VB.Form frmEditor_Item
          ScaleWidth      =   34
          TabIndex        =   85
          TabStop         =   0   'False
-         Top             =   240
+         Top             =   360
          Width           =   540
          Begin VB.PictureBox Picture4 
             BackColor       =   &H00404040&
@@ -223,10 +223,10 @@ Begin VB.Form frmEditor_Item
       End
       Begin VB.HScrollBar scrlPic 
          Height          =   255
-         Left            =   2200
+         Left            =   2160
          Max             =   255
          TabIndex        =   1
-         Top             =   1080
+         Top             =   1200
          Width           =   735
       End
       Begin VB.Label Label5 
@@ -295,9 +295,9 @@ Begin VB.Form frmEditor_Item
          AutoSize        =   -1  'True
          Caption         =   "Icon: 0"
          Height          =   195
-         Left            =   2280
+         Left            =   2160
          TabIndex        =   57
-         Top             =   840
+         Top             =   960
          UseMnemonic     =   0   'False
          Width           =   495
       End
@@ -593,7 +593,7 @@ Begin VB.Form frmEditor_Item
          Height          =   315
          ItemData        =   "frmEditor_Item.frx":0468
          Left            =   1680
-         List            =   "frmEditor_Item.frx":0496
+         List            =   "frmEditor_Item.frx":0487
          Style           =   2  'Dropdown List
          TabIndex        =   105
          Top             =   360
@@ -760,9 +760,9 @@ Begin VB.Form frmEditor_Item
       End
       Begin VB.ComboBox cmbTool 
          Height          =   315
-         ItemData        =   "frmEditor_Item.frx":0501
+         ItemData        =   "frmEditor_Item.frx":04C6
          Left            =   4200
-         List            =   "frmEditor_Item.frx":0511
+         List            =   "frmEditor_Item.frx":04D6
          Style           =   2  'Dropdown List
          TabIndex        =   34
          Top             =   360
@@ -1341,7 +1341,7 @@ Private Sub chkStackable_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).Stackable = chkStackable.Value
+    Item(EditorIndex).stackable = chkStackable.Value
     Exit Sub
     
 ' Error handler
@@ -1536,7 +1536,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
 
     ItemEditorInit
@@ -1788,7 +1788,7 @@ Private Sub scrlAnim_Change()
     If scrlAnim.Value = 0 Then
         lblAnim.Caption = "Animation: None"
     Else
-        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).Name)
+        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).name)
     End If
     Item(EditorIndex).Animation = scrlAnim.Value
     Exit Sub
@@ -1806,7 +1806,7 @@ Private Sub scrlCastSpell_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlCastSpell.Value > 0 Then
-        lblCastSpell.Caption = "Cast Spell: " & Trim$(Spell(scrlCastSpell.Value).Name)
+        lblCastSpell.Caption = "Cast Spell: " & Trim$(Spell(scrlCastSpell.Value).name)
     Else
         lblCastSpell.Caption = "Cast Spell: None"
     End If
@@ -2189,9 +2189,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Item(EditorIndex).Name = Trim$(txtName.text)
+    Item(EditorIndex).name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -2336,7 +2336,7 @@ Private Sub cmdPaste_Click()
          
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Item(EditorIndex)), ByVal VarPtr(Item(TmpIndex + 1)), LenB(Item(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).Name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

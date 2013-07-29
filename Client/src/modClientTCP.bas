@@ -134,7 +134,7 @@ errorhandler:
     Err.Clear
 End Function
 
-Sub SendData(ByRef data() As Byte)
+Sub SendData(ByRef Data() As Byte)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
@@ -142,8 +142,8 @@ Sub SendData(ByRef data() As Byte)
     
     If IsConnected Then
         Set buffer = New clsBuffer
-        buffer.WriteLong (UBound(data) - LBound(data)) + 1
-        buffer.WriteBytes data()
+        buffer.WriteLong (UBound(Data) - LBound(Data)) + 1
+        buffer.WriteBytes Data()
         frmMain.Socket.SendData buffer.ToArray()
     End If
     Exit Sub
@@ -1037,7 +1037,7 @@ Public Sub SendDropItem(ByVal InvNum As Byte, ByVal Amount As Long)
     ' Do basic checks
     If InvNum < 1 Or InvNum > MAX_INV Then Exit Sub
     If PlayerInv(InvNum).Num < 1 Or PlayerInv(InvNum).Num > MAX_ITEMS Then Exit Sub
-    If Item(GetPlayerInvItemNum(MyIndex, InvNum)).Stackable = 1 Then
+    If Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
         If Amount < 1 Or Amount > PlayerInv(InvNum).Value Then Exit Sub
     End If
     
@@ -1886,7 +1886,7 @@ Public Sub SendHotbarChange(ByVal sType As Byte, ByVal Slot As Byte, ByVal Hotba
     
     If sType = 1 Then
         ' Don't add None/Currency/Auto Life type items
-        If Item(GetPlayerInvItemNum(MyIndex, Slot)).Stackable = 1 Or Item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_AUTOLIFE Then
+        If Item(GetPlayerInvItemNum(MyIndex, Slot)).stackable = 1 Or Item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_AUTOLIFE Then
             Call AddText("You can't add that type of item to your hotbar!", BrightRed)
             Exit Sub
         End If
