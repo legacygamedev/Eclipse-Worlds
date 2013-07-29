@@ -12,8 +12,7 @@ Public refreshingAdminList As Boolean
 Public requestedPlayer As PlayerEditableRec
 Public mapEditorCancelNag As Boolean
 'Item Editor - davemax © 07.2013 :D
-Public lastSpawnedItems(0 To 20) As Byte
-Public lastSpawnedItemsCounter As Byte
+Public lastSpawnedItems() As Byte
 Public currentlyListedIndexes() As Long
 
 Public EventList() As EventListRec
@@ -791,7 +790,7 @@ Public Sub ItemEditorInit()
         frmEditor_Item.cmbSound.AddItem SoundCache(i)
     Next
 
-    With Item(EditorIndex)
+    With item(EditorIndex)
         ' Check for invalid values
         If .Pic < 1 Then .Pic = 1
         If .Pic > frmEditor_Item.scrlPic.max Then .Pic = frmEditor_Item.scrlPic.max
@@ -816,11 +815,11 @@ Public Sub ItemEditorInit()
         ' Reusable
         If .IsReusable Then
             For i = 1 To frmEditor_Item.chkReusable.count - 1
-                frmEditor_Item.chkReusable.Item(i) = 1
+                frmEditor_Item.chkReusable.item(i) = 1
             Next
         Else
             For i = 1 To frmEditor_Item.chkReusable.count - 1
-                frmEditor_Item.chkReusable.Item(i) = 0
+                frmEditor_Item.chkReusable.item(i) = 0
             Next
         End If
         
@@ -853,8 +852,8 @@ Public Sub ItemEditorInit()
         If Not SoundSet Or frmEditor_Item.cmbSound.ListIndex = -1 Then frmEditor_Item.cmbSound.ListIndex = 0
 
         ' Resources
-        If Item(EditorIndex).ChanceModifier = 0 Then Item(EditorIndex).ChanceModifier = 1
-        frmEditor_Item.scrlChanceModifier.Value = Item(EditorIndex).ChanceModifier
+        If item(EditorIndex).ChanceModifier = 0 Then item(EditorIndex).ChanceModifier = 1
+        frmEditor_Item.scrlChanceModifier.Value = item(EditorIndex).ChanceModifier
 
         With frmEditor_Item
             If frmEditor_Item.cmbTool.ListIndex > 0 And frmEditor_Item.cmbTool.ListIndex <> 4 Then
@@ -1502,14 +1501,14 @@ Public Sub UpdateShopTrade(Optional ByVal tmpPos As Long = 0)
     For i = 1 To MAX_TRADES
         With Shop(EditorIndex).TradeItem(i)
             ' If none, show as none
-            If .Item = 0 Or .CostItem = 0 And .CostItem2 = 0 Then
+            If .item = 0 Or .CostItem = 0 And .CostItem2 = 0 Then
                 frmEditor_Shop.lstTradeItem.AddItem "Empty Trade Slot"
             ElseIf .CostItem2 = 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(item(.item).name) & " for " & .CostValue & "X " & Trim$(item(.CostItem).name)
             ElseIf .CostItem = 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem2).name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(item(.item).name) & " for " & .CostValue & "X " & Trim$(item(.CostItem2).name)
             ElseIf .CostItem > 0 And .CostItem2 > 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).name) & " & " & .CostValue2 & "X " & Trim$(Item(.CostItem2).name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(item(.item).name) & " for " & .CostValue & "X " & Trim$(item(.CostItem).name) & " & " & .CostValue2 & "X " & Trim$(item(.CostItem2).name)
             End If
         End With
     Next
@@ -2351,7 +2350,7 @@ Public Sub UpdateSpellScrollBars()
         End If
         
         .lblSpell.Caption = "Spell: " & .scrlSpell.Value
-        Item(EditorIndex).Data1 = .scrlSpell.Value
+        item(EditorIndex).Data1 = .scrlSpell.Value
     End With
 End Sub
 
@@ -2359,13 +2358,13 @@ End Sub
 Public Function populateSpecificType(ByRef tempItems() As ItemRec, ItemType As Byte) As Boolean
     Dim i As Long, counter As Long, found As Boolean
     For i = 1 To MAX_ITEMS
-        If Item(i).Type = ItemType And Item(i).Pic > 0 And Len(Item(i).name) > 0 Then
+        If item(i).Type = ItemType And item(i).Pic > 0 And Len(item(i).name) > 0 Then
             found = True
             ReDim Preserve tempItems(counter)
-            tempItems(counter) = Item(i)
+            tempItems(counter) = item(i)
             ReDim Preserve currentlyListedIndexes(counter)
             currentlyListedIndexes(counter) = i
-            frmItemSpawner.itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & Item(i).Pic & GFX_EXT, False, 32, 32, 16777215)
+            frmItemSpawner.itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & item(i).Pic & GFX_EXT, False, 32, 32, 16777215)
 
             counter = counter + 1
         End If
@@ -2411,7 +2410,7 @@ Public Sub ItemClassReqListInit()
     For i = 1 To MAX_CLASSES
         frmEditor_Item.cmbClassReq.AddItem Class(i).name
     Next
-    frmEditor_Item.cmbClassReq.ListIndex = Item(EditorIndex).ClassReq
+    frmEditor_Item.cmbClassReq.ListIndex = item(EditorIndex).ClassReq
 End Sub
 
 ' //////////////////
@@ -2734,7 +2733,7 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
         .cmbHasItem.AddItem "None"
         
         For i = 1 To MAX_ITEMS
-            .cmbHasItem.AddItem i & ": " & Trim$(Item(i).name)
+            .cmbHasItem.AddItem i & ": " & Trim$(item(i).name)
         Next
         
         ' Name
@@ -2927,7 +2926,7 @@ newlist:
                                         frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] == " & "False"
                                     End If
                                 Case 2
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Has Item [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Has Item [" & Trim$(item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).name) & "]"
                                 Case 3
                                     frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player's Class Is [" & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).name) & "]"
                                 Case 4
@@ -3153,11 +3152,11 @@ newlist:
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Exit Event Processing"
                         Case EventType.evChangeItems
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Item Amount of [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "] to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Item Amount of [" & Trim$(item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "] to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "(s)"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "(s)"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 2 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Take " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "(s) from Player."
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Take " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).name) & "(s) from Player."
                             End If
                         Case EventType.evRestoreHP
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Restore Player HP"
@@ -4594,3 +4593,71 @@ Public Sub InitAdminPanel()
     frmAdmin.Top = frmMain.Top
     frmAdmin.Form_Load
 End Sub
+
+Public Sub InsertByPtr(pArray() As Byte, ByVal StartIndex As Long, Optional ByVal NumElements As Long = 1)
+    Dim lSize As Long, lBase As Long
+    Dim lMemSize As Long
+    Dim tempBytes() As Byte
+
+    If NumElements < 1 Then Exit Sub
+
+    lBase = LBound(pArray)
+    lSize = (UBound(pArray) - (lBase - 1))
+
+    If StartIndex < lBase Or (StartIndex + NumElements) > lSize Then
+        Err.Raise 9
+    ElseIf (StartIndex + NumElements) = lSize Then
+        ReDim Preserve pArray(lBase To (lSize - lBase - 1) + NumElements)
+        Exit Sub
+    End If
+
+    lMemSize = LenB(pArray(lBase))
+
+    ReDim tempBytes(1 To (NumElements * lMemSize)) As Byte
+
+    ReDim Preserve pArray(lBase To (lSize - lBase - 1) + NumElements)
+    
+
+    Call CopyMemory(ByVal VarPtr(pArray(StartIndex)) + (NumElements * lMemSize), _
+                    ByVal VarPtr(pArray(StartIndex)), _
+                    (lSize - StartIndex) * lMemSize)
+
+    Call CopyMemory(ByVal VarPtr(pArray(StartIndex)), tempBytes(1), NumElements * lMemSize)
+End Sub
+
+Public Sub DeleteByPtr(pArray() As Byte, ByVal StartIndex As Long, Optional ByVal NumElements As Long = 1)
+    Dim lSize As Long, lBase As Long
+    Dim lMemSize As Long
+    Dim tempBytes() As Byte
+
+    If NumElements < 1 Then Exit Sub
+
+    lBase = LBound(pArray)
+    lSize = (UBound(pArray) - (lBase - 1))
+
+    If StartIndex < lBase Or (StartIndex + NumElements) > lSize Then
+        Err.Raise 9
+    ElseIf (StartIndex + NumElements) = lSize Then
+        ReDim Preserve pArray(lBase To (lSize - lBase - NumElements - 1))
+        Exit Sub
+    End If
+
+    lMemSize = LenB(pArray(lBase))
+
+    ReDim tempBytes(1 To (lMemSize * NumElements)) As Byte
+
+    Call CopyMemory(ByVal VarPtr(tempBytes(1)), _
+                    ByVal VarPtr(pArray(StartIndex)), _
+                    lMemSize * NumElements)
+
+    Call CopyMemory(ByVal VarPtr(pArray(StartIndex)), _
+                    ByVal VarPtr(pArray(StartIndex)) + (NumElements * lMemSize), _
+                    (lSize - (StartIndex + 1)) * lMemSize)
+
+    Call CopyMemory(ByVal VarPtr(pArray(lSize - lBase - 1)) - (lMemSize * (NumElements - 1)), tempBytes(1), lMemSize * NumElements)
+
+    ReDim Preserve pArray(lBase To (lSize - lBase - NumElements - 1))
+End Sub
+
+
+

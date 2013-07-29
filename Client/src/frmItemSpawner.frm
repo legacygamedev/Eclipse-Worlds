@@ -353,6 +353,7 @@ Private currentAmount As Long
 Private picked As Boolean
 Private freeInvSlots As Byte
 Private currentMaxLimit As Long
+Public updatingItem As Boolean
 
 Private Declare Function SendMessage Lib "user32" Alias _
  "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, _
@@ -383,9 +384,9 @@ Public Sub updateFreeSlots()
     
 End Sub
 Private Sub updateMaxLimit()
-    If Me.Visible = True Then
+    If Me.Visible = True And listItems.listItems.count > 0 Then
         Dim stackable As Boolean
-        stackable = Item(currentlyListedIndexes(listItems.SelectedItem.Index - 1)).stackable
+        'stackable = Item(currentlyListedIndexes(listItems.SelectedItem.Index - 1)).stackable
         If radioGround.Value And Not stackable Then
             currentMaxLimit = MAX_MAP_ITEMS
         ElseIf Not stackable Then
@@ -396,6 +397,8 @@ Private Sub updateMaxLimit()
             Exit Sub
         End If
         lblMax.Caption = "/" & currentMaxLimit
+    Else
+            lblMax.Caption = "/NaN"
     End If
 End Sub
 Private Sub styleListwView(sType As Status, Optional msg As String)
@@ -451,11 +454,22 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
     End If
 End Function
 
-Private Sub generateLastItems()
-    If lastSpawnedItemsCounter = 0 Then
+Private Sub generateRecentItems()
+Dim i As Byte
+    If ArrayIsInitialized(lastSpawnedItems) = 0 Then
         styleListwView Status.Error, "You haven't spawned any items yet!"
     Else
         styleListwView Status.Correct
+        For i = 0 To UBound(lastSpawnedItems) - 1
+            itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & item(lastSpawnedItems(i)).Pic & GFX_EXT, False, 32, 32, 16777215)
+        Next i
+        Set listItems.Icons = itemsImageList
+                
+        For i = 0 To UBound(lastSpawnedItems) - 1
+            listItems.listItems.Add , , Trim(item(lastSpawnedItems(i)).name), itemsImageList.ListImages(i + 1).Index
+        Next
+        cmdSpawn.Enabled = True
+        currentItemIndex = 0
     End If
 End Sub
 
@@ -463,12 +477,56 @@ Private Sub cmdSpawn_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
+    Dim item As Byte
+    Dim i As Byte
+
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
+
         Exit Sub
+
     End If
+
+    If tabItems.SelectedItem.Index > 1 Then
+        item = currentlyListedIndexes(currentItemIndex)
+    Else
+        item = lastSpawnedItems(currentItemIndex)
+    End If
+
+    SendSpawnItem item, CLng(txtAmount), IIf(radioGround.Value, True, False)
+
+    Dim found As Integer, limit As Integer
+
+    found = -1
+    If ArrayIsInitialized(lastSpawnedItems) Then
+     If UBound(lastSpawnedItems) > 0 Then
+        For i = 0 To UBound(lastSpawnedItems) - 1
     
-    SendSpawnItem currentlyListedIndexes(currentItemIndex), CLng(txtAmount), IIf(radioGround.Value, True, False)
+            If lastSpawnedItems(i) = item Then
+                found = i
+                Exit For
+            End If
+    
+        Next
+    End If
+    Else
+        ReDim lastSpawnedItems(0) As Byte
+    End If
+
+
+out:
+    
+    If found = -1 Then
+        If UBound(lastSpawnedItems) = 20 Then
+            DeleteByPtr lastSpawnedItems, 20
+        End If
+        InsertByPtr lastSpawnedItems, 0
+    Else
+        DeleteByPtr lastSpawnedItems, found
+        InsertByPtr lastSpawnedItems, 0
+    End If
+
+    lastSpawnedItems(0) = item
     
     If chkClose.Value = 1 Then
         Unload Me
@@ -476,15 +534,27 @@ Private Sub cmdSpawn_Click()
         frmAdmin.currentCategory = "Categories"
         lastTab = -1
         currentItemIndex = -1
+    Else
+        updatingItem = True
+        tabItems_Click
     End If
+
     Exit Sub
     
-' Error handler
+    ' Error handler
 errorhandler:
     HandleError "cmdSpawn_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+Public Function ArrayIsInitialized(arr) As Boolean
 
+  Dim memVal As Long
+
+  CopyMemory memVal, ByVal VarPtr(arr) + 8, ByVal 4 'get pointer to array
+  CopyMemory memVal, ByVal memVal, ByVal 4  'see if it points to an address...
+  ArrayIsInitialized = (memVal <> 0)        '...if it does, array is intialized
+
+End Function
 Private Sub Form_Load()
     ListView_SetIconSpacing listItems.hWnd, 105, 56
     Move frmAdmin.Left - Width, frmAdmin.Top
@@ -498,12 +568,12 @@ Private Sub Form_Unload(Cancel As Integer)
     currentItemIndex = -1
 End Sub
 
-Private Sub listItems_ItemClick(ByVal Item As MSComctlLib.ListItem)
+Private Sub listItems_ItemClick(ByVal item As MSComctlLib.ListItem)
     cmdSpawn.Enabled = True
-    currentItemIndex = Item.Index - 1
+    currentItemIndex = item.Index - 1
     picked = True
     updateMaxLimit
-    Me.Caption = "Item Spawner - Going to spawn " & txtAmount.text & " " & listItems.listItems(Item.Index).text
+    Me.Caption = "Item Spawner - Going to spawn " & txtAmount.text & " " & listItems.listItems(item.Index).text
 End Sub
 
 Private Sub listItems_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
@@ -518,8 +588,8 @@ Private Sub radioInv_Click()
     updateMaxLimit
 End Sub
 
-Private Sub tabItems_Click()
-    If lastTab = tabItems.SelectedItem.Index Then Exit Sub
+Public Sub tabItems_Click()
+    If lastTab = tabItems.SelectedItem.Index And Not updatingItem Then Exit Sub
     
     cmdSpawn.Enabled = False
     listItems.listItems.Clear
@@ -528,7 +598,7 @@ Private Sub tabItems_Click()
     itemsImageList.ListImages.Clear
         
     If tabItems.SelectedItem.Index = 1 Then
-        generateLastItems
+        generateRecentItems
     Else
         If generateItemsForTab(tabItems.SelectedItem.Index) Then
             styleListwView Status.Correct
@@ -539,7 +609,11 @@ Private Sub tabItems_Click()
             picked = False
         End If
     End If
-    
+    updateMaxLimit
+    If updatingItem Then
+        updatingItem = False
+        Exit Sub
+    End If
     If frmAdmin.ignoreChange Then
         frmAdmin.ignoreChange = False
     Else

@@ -4,16 +4,16 @@ Begin VB.Form frmAdmin
    BackColor       =   &H80000002&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Admin Panel"
-   ClientHeight    =   8715
-   ClientLeft      =   810
-   ClientTop       =   330
+   ClientHeight    =   8640
+   ClientLeft      =   19095
+   ClientTop       =   1830
    ClientWidth     =   3045
    Icon            =   "frmAdmin.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   581
+   ScaleHeight     =   576
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   203
    ShowInTaskbar   =   0   'False
@@ -40,6 +40,14 @@ Begin VB.Form frmAdmin
       TabStop         =   0   'False
       Top             =   15
       Width           =   2970
+      Begin VB.CommandButton Command1 
+         Caption         =   "Command1"
+         Height          =   195
+         Left            =   2535
+         TabIndex        =   68
+         Top             =   900
+         Width           =   240
+      End
       Begin VB.CheckBox chkEditor 
          Alignment       =   1  'Right Justify
          Caption         =   "Events"
@@ -805,7 +813,7 @@ Begin VB.Form frmAdmin
          _ExtentY        =   979
          _Version        =   393216
          BuddyControl    =   "txtSprite"
-         BuddyDispid     =   196617
+         BuddyDispid     =   196618
          OrigLeft        =   3990
          OrigTop         =   1770
          OrigRight       =   4245
@@ -1048,8 +1056,6 @@ Private Const UIS_HideRectangle As Integer = &H1
 Private Const UIS_ShowRectangle As Integer = &H2
 Private Const UISF_FocusRectangle As Integer = &H1
 
-
- 
 Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, _
 ByVal wMsg As Long, ByVal wParam As Long, lparam As Any) As Long
 
@@ -1654,6 +1660,10 @@ errorhandler:
 End Sub
 
 
+Private Sub Command1_Click()
+ loko
+End Sub
+
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
         Case vbKeyInsert
@@ -1851,6 +1861,17 @@ Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, x As Single,
     SendRequestPlayersOnline
 End Sub
 
+Public Sub selectMyself()
+
+    For i = 0 To cmbPlayersOnline.ListCount
+        If Trim(cmbPlayersOnline.List(i)) = Trim(Player(MyIndex).name) Then
+            cmbPlayersOnline.ListIndex = i
+            cmbPlayersOnline_Click
+            Exit Sub
+        End If
+    Next
+
+End Sub
 Public Sub UpdatePlayersOnline()
     Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
     Dim stuffCounter As Long, playersCounter As Long, overallCounter As Long, foundStuff As Boolean, foundPlayer As Boolean
@@ -2014,7 +2035,7 @@ Public Sub Form_Load()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     frmAdmin.picRefresh.BorderStyle = 0
-    'Me.Move frmMain.Left + frmMain.Width, frmMain.Top
+    Me.Move frmMain.Left + frmMain.Width, frmMain.Top
     If Trim(cmbPlayersOnline.text) = "Choose Player" Then
         txtSprite.Enabled = False
         upSprite.Enabled = False
