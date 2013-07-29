@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmEditor_Map 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Map Editor"
-   ClientHeight    =   7545
+   ClientHeight    =   7485
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   14985
@@ -20,7 +20,7 @@ Begin VB.Form frmEditor_Map
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   503
+   ScaleHeight     =   499
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   999
    StartUpPosition =   2  'CenterScreen
@@ -795,7 +795,7 @@ Begin VB.Form frmEditor_Map
       Height          =   375
       Left            =   2280
       TabIndex        =   91
-      Top             =   7080
+      Top             =   6960
       Width           =   900
    End
    Begin VB.CommandButton cmdCancel 
@@ -803,7 +803,7 @@ Begin VB.Form frmEditor_Map
       Height          =   375
       Left            =   3240
       TabIndex        =   5
-      Top             =   7080
+      Top             =   6960
       Width           =   1020
    End
    Begin VB.CommandButton cmdProperties 
@@ -811,7 +811,7 @@ Begin VB.Form frmEditor_Map
       Height          =   375
       Left            =   120
       TabIndex        =   3
-      Top             =   7080
+      Top             =   6960
       Width           =   1020
    End
    Begin VB.CommandButton cmdSave 
@@ -819,7 +819,7 @@ Begin VB.Form frmEditor_Map
       Height          =   375
       Left            =   1200
       TabIndex        =   4
-      Top             =   7080
+      Top             =   6960
       Width           =   1020
    End
    Begin VB.VScrollBar scrlPictureY 
@@ -1185,7 +1185,7 @@ Begin VB.Form frmEditor_Map
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   1215
+      Height          =   1095
       Left            =   120
       TabIndex        =   27
       Top             =   5760
@@ -1224,7 +1224,7 @@ Begin VB.Form frmEditor_Map
          Max             =   10
          Min             =   1
          TabIndex        =   2
-         Top             =   840
+         Top             =   720
          Value           =   1
          Width           =   3615
       End
@@ -1243,7 +1243,7 @@ Begin VB.Form frmEditor_Map
          Height          =   255
          Left            =   240
          TabIndex        =   74
-         Top             =   600
+         Top             =   480
          Width           =   1335
       End
    End
@@ -1378,8 +1378,8 @@ Begin VB.Form frmEditor_Map
          Top             =   720
          Width           =   1215
       End
-      Begin VB.OptionButton optNpcAvoid 
-         Caption         =   "Npc Avoid"
+      Begin VB.OptionButton optNPCAvoid 
+         Caption         =   "NPC Avoid"
          Height          =   270
          Left            =   120
          TabIndex        =   9
@@ -2409,7 +2409,7 @@ Private Sub scrlMapItem_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Item(scrlMapItem.Value).Stackable = 1 Then
+    If Item(scrlMapItem.Value).stackable = 1 Then
         scrlMapItemValue.Enabled = True
     Else
         scrlMapItemValue.Value = 1

@@ -404,7 +404,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendCanTrade
                     
                 Case "/afk"
-                    If Trim$(Player(MyIndex).status) = vbNullString Then
+                    If Trim$(Player(MyIndex).Status) = vbNullString Then
                         Call SendChangeStatus(MyIndex, "AFK")
                     Else
                         Call SendChangeStatus(MyIndex, "")

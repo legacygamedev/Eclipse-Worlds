@@ -43,6 +43,7 @@ Begin VB.Form frmAdmin
       Begin VB.CheckBox chkEditor 
          Alignment       =   1  'Right Justify
          Caption         =   "Events"
+         Enabled         =   0   'False
          ForeColor       =   &H000000C0&
          Height          =   270
          Index           =   12
@@ -1070,8 +1071,8 @@ Private Sub chkAnim_Click()
     
 
 End Sub
-Public Sub ShowEyeFor(editor As Byte)
-    picEye(editor).Visible = True
+Public Sub ShowEyeFor(Editor As Byte)
+    picEye(Editor).Visible = True
 End Sub
 
 Public Sub chkEditor_Click(Index As Integer)
@@ -1083,6 +1084,7 @@ Public Sub chkEditor_Click(Index As Integer)
         ignoreChange = False
         Exit Sub
     End If
+    
     Select Case Index
     
         Case 0 ' Animation
@@ -1235,7 +1237,7 @@ Public Sub chkEditor_Click(Index As Integer)
                 frmEditor_Resource.Visible = False
                     BringWindowToTop (frmAdmin.hWnd)
             End If
-        Case 9 'Shop
+        Case 9 ' Shop
             If chkEditor(Index).Value = 1 Then
                 If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                     AddText "You have insufficent access to do this!", BrightRed

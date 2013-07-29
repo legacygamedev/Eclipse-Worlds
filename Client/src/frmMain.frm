@@ -816,7 +816,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
+            ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
             TextRTF         =   $"frmMain.frx":038A
@@ -5360,7 +5360,7 @@ Private Sub picInventory_DblClick()
         
         ' In Bank
         If InBank Then
-            If Item(GetPlayerInvItemNum(MyIndex, InvNum)).Stackable = 1 Then
+            If Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
                 If GetPlayerInvItemValue(MyIndex, InvNum) > 1 Then
                     CurrencyMenu = 2 ' Deposit
                     lblCurrency.Caption = "How many do you want to deposit?"
@@ -5384,7 +5384,7 @@ Private Sub picInventory_DblClick()
             For i = 1 To MAX_INV
                 If TradeYourOffer(i).Num = InvNum Then
                     ' Is currency?
-                    If Item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)).Stackable = 1 Then
+                    If Item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)).stackable = 1 Then
                         ' Only exit out if we're offering all of it
                         If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
                     Else
@@ -5393,7 +5393,7 @@ Private Sub picInventory_DblClick()
                 End If
             Next
             
-            If Item(GetPlayerInvItemNum(MyIndex, InvNum)).Stackable = 1 Then
+            If Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
                 If GetPlayerInvItemValue(MyIndex, InvNum) > 1 Then
                     CurrencyMenu = 4 ' Offer in trade
                     lblCurrency.Caption = "How many do you want to trade?"
@@ -5412,7 +5412,7 @@ Private Sub picInventory_DblClick()
         End If
         
         ' Don't use an item if it is None or Auto Life
-        If Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(MyIndex, InvNum)).Stackable = 1 Or Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
+        If Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Or Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
             AddText "You can't use this type of item!", BrightRed
             Exit Sub
         End If
@@ -5612,7 +5612,7 @@ Private Sub picInventory_MouseDown(Button As Integer, Shift As Integer, x As Sin
             lstDropDownBox.Clear
             
             ' Build the list
-            If Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE And Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).Stackable = 1 And Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
+            If Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE And Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 And Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
                 lstDropDownBox.AddItem "Use"
             ElseIf Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_EQUIPMENT Then
                 lstDropDownBox.AddItem "Equip"
@@ -5668,7 +5668,7 @@ Private Sub picInventory_MouseMove(Button As Integer, Shift As Integer, x As Sin
                 For i = 1 To MAX_INV
                     If TradeYourOffer(i).Num = InvNum Then
                         ' is currency?
-                        If Item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)).Stackable = 1 Then
+                        If Item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)).stackable = 1 Then
                             ' Only exit out if we're offering all of it
                             If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
                         Else
@@ -5835,7 +5835,7 @@ Private Sub picBank_DblClick()
     BankNum = IsBankItem(BankX, BankY)
     
     If Not BankNum = 0 Then
-        If Item(GetBankItemNum(BankNum)).Stackable = 1 Then
+        If Item(GetBankItemNum(BankNum)).stackable = 1 Then
             If GetBankItemValue(BankNum) > 1 Then
                 CurrencyMenu = 3 ' Withdraw
                 lblCurrency.Caption = "How many do you want to withdraw?"
@@ -6028,7 +6028,7 @@ End Sub
 
 Private Sub DropItem(ByVal InvNum As Byte)
     If InvNum > 0 And InvNum <= MAX_INV Then
-        If Item(GetPlayerInvItemNum(MyIndex, InvNum)).Stackable = 1 Then
+        If Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
             If GetPlayerInvItemValue(MyIndex, InvNum) > 0 Then
                 CurrencyMenu = 1 ' drop
                 lblCurrency.Caption = "How many do you want to drop?"

@@ -488,6 +488,9 @@ End Sub
 Public Sub SetGameFocus()
     On Error Resume Next ' Prevents run time errors, no way to handle it other than this
 
+    ' Ignore focus if in editor
+    If Editor > 0 Then Exit Sub
+    
     If ChatLocked Or Not GUIVisible Then
         SetFocusOnScreen
     Else

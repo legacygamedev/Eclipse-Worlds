@@ -810,7 +810,7 @@ Public Sub ItemEditorInit()
         frmEditor_Item.chkHoT.Value = .HoT
         frmEditor_Item.cmbProficiencyReq.ListIndex = .ProficiencyReq
         frmEditor_Item.chkTwoHanded.Value = .TwoHanded
-        frmEditor_Item.chkStackable.Value = .Stackable
+        frmEditor_Item.chkStackable.Value = .stackable
         Call UpdateSpellScrollBars
         
         ' Reusable
@@ -962,7 +962,7 @@ Public Sub ItemEditorSave()
     Next
     
     Unload frmEditor_Item
-    editor = 0
+    Editor = 0
     ClearChanged_Item
     Exit Sub
     
@@ -976,7 +976,7 @@ Public Sub ItemEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    editor = 0
+    Editor = 0
     ClearChanged_Item
     ClearItems
     SendRequestItems
@@ -1095,7 +1095,7 @@ Public Sub AnimationEditorSave()
     Next
     
     Unload frmEditor_Animation
-    editor = 0
+    Editor = 0
     ClearChanged_Animation
     Exit Sub
     
@@ -1109,7 +1109,7 @@ Public Sub AnimationEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    editor = 0
+    Editor = 0
     ClearChanged_Animation
     ClearAnimations
     SendRequestAnimations
@@ -1268,7 +1268,7 @@ Public Sub NpcEditorSave()
     Next
     
     Unload frmEditor_NPC
-    editor = 0
+    Editor = 0
     ClearChanged_Npc
     Exit Sub
     
@@ -1282,7 +1282,7 @@ Public Sub NpcEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    editor = 0
+    Editor = 0
     ClearChanged_Npc
     ClearNpcs
     SendRequestNpcs
@@ -1406,7 +1406,7 @@ Public Sub ResourceEditorSave()
     Next
     
     Unload frmEditor_Resource
-    editor = 0
+    Editor = 0
     ClearChanged_Resource
     Exit Sub
     
@@ -1420,7 +1420,7 @@ Public Sub ResourceEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    editor = 0
+    Editor = 0
     ClearChanged_Resource
     ClearResources
     SendRequestResources
@@ -1536,7 +1536,7 @@ Public Sub ShopEditorSave()
     Next
     
     Unload frmEditor_Shop
-    editor = 0
+    Editor = 0
     ClearChanged_Shop
     Exit Sub
     
@@ -1550,7 +1550,7 @@ Public Sub ShopEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    editor = 0
+    Editor = 0
     ClearChanged_Shop
     ClearShops
     SendRequestShops
@@ -1690,7 +1690,7 @@ Public Sub SpellEditorSave()
     Next
     
     Unload frmEditor_Spell
-    editor = 0
+    Editor = 0
     ClearChanged_Spell
     Exit Sub
     
@@ -1706,7 +1706,7 @@ Public Sub SpellEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    editor = 0
+    Editor = 0
     ClearChanged_Spell
     ClearSpells
     SendRequestSpells
@@ -1833,7 +1833,7 @@ Public Sub MapPropertiesInit()
             .cmbNpcs.AddItem i & ": " & Trim$(NPC(i).name)
         Next
         
-        .CmbWeather.ListIndex = Map.Weather
+        .cmbWeather.ListIndex = Map.Weather
         .scrlWeatherIntensity.Value = Map.WeatherIntensity
         
         .ScrlFog.Value = Map.Fog
@@ -1970,7 +1970,7 @@ Public Sub BanEditorSave()
     Next
     
     Unload frmEditor_Ban
-    editor = 0
+    Editor = 0
     ClearChanged_Ban
     Exit Sub
     
@@ -1987,7 +1987,7 @@ Public Sub BanEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    editor = 0
+    Editor = 0
     ClearChanged_Ban
     ClearBans
     SendRequestBans
@@ -2063,7 +2063,7 @@ Public Sub TitleEditorSave()
     Next
     
     Unload frmEditor_Title
-    editor = 0
+    Editor = 0
     ClearChanged_Title
     Exit Sub
     
@@ -2080,7 +2080,7 @@ Public Sub TitleEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    editor = 0
+    Editor = 0
     ClearChanged_Title
     ClearTitles
     SendRequestTitles
@@ -2120,7 +2120,7 @@ Public Sub MoralEditorSave()
         End If
     Next
     
-    editor = 0
+    Editor = 0
     ClearChanged_Moral
     Unload frmEditor_Moral
     Exit Sub
@@ -2135,7 +2135,7 @@ Public Sub MoralEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    editor = 0
+    Editor = 0
     ClearChanged_Moral
     ClearMorals
     SendRequestMorals
@@ -2208,7 +2208,7 @@ Public Sub ClassEditorSave()
         End If
     Next
     
-    editor = 0
+    Editor = 0
     ClearChanged_Class
     Unload frmEditor_Class
     Exit Sub
@@ -2223,7 +2223,7 @@ Public Sub ClassEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    editor = 0
+    Editor = 0
     ClearChanged_Class
     ClearClasses
     SendRequestClasses
@@ -2458,7 +2458,7 @@ Public Sub EmoticonEditorSave()
         End If
     Next
     
-    editor = 0
+    Editor = 0
     ClearChanged_Emoticon
     Unload frmEditor_Emoticon
     Exit Sub
@@ -2473,7 +2473,7 @@ Public Sub EmoticonEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    editor = 0
+    Editor = 0
     ClearChanged_Emoticon
     ClearEmoticons
     SendRequestEmoticons
@@ -2674,21 +2674,24 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
+    
     If EventNum < 1 Then
         frmEditor_Events.Visible = True
+        
         If frmAdmin.Visible Then
             frmEditor_Events.Move frmAdmin.Left - frmEditor_Events.Width, frmAdmin.Top
         Else
             frmEditor_Events.Move frmMain.Left + frmMain.Width - frmEditor_Events.Width, frmMain.Top
         End If
-
         Exit Sub
     End If
+    
     If CommonEvent Then
         frmEditor_Events.fraEvents.Visible = True
     Else
         frmEditor_Events.fraEvents.Visible = False
         frmEditor_Events.InitEventEditorForm
+        Editor = EDITOR_EVENTS
     End If
     
     ' Populate the cache if we need to
@@ -3622,7 +3625,7 @@ Sub AddCommand(Index As Long)
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
@@ -4108,7 +4111,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.fraCommands.Visible = False
         Case EventType.evSetWeather
             isEdit = True
-            frmEditor_Events.CmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
+            frmEditor_Events.cmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
             frmEditor_Events.scrlWeatherIntensity.Value = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(23).Visible = True
@@ -4401,7 +4404,7 @@ Public Sub EditCommand()
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.ScrlFogData(1).Value
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlMapTintData(0).Value

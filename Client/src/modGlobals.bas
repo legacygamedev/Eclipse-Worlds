@@ -191,7 +191,7 @@ Public TmpInvNum As Byte
 Public TmpSpellSlot As Byte
 
 ' Game editors
-Public editor As Byte
+Public Editor As Byte
 Public EditorIndex As Long
 Public EditorSave As Boolean
 Public AnimEditorFrame(0 To 1) As Long
