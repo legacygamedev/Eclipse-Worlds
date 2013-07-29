@@ -4077,7 +4077,7 @@ Public Sub DrawEquipment()
     Dim ItemPic As Long
     Dim sRect As RECT
     Dim dRect As RECT
-
+    Dim destPresentationRect As D3DRECT
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -4121,22 +4121,16 @@ Public Sub DrawEquipment()
         End If
     Next
     
-    With sRect
-        .Top = 0
-        .Bottom = Tex_Equip.Height
-        .Left = 0
-        .Right = Tex_Equip.Width
+    With destPresentationRect
+        .X1 = 0
+        .X2 = Tex_Equip.Width
+        .Y1 = 0
+        .Y2 = Tex_Equip.Height
     End With
     
-    With dRect
-        .Top = 0
-        .Bottom = frmMain.picEquipment.Height
-        .Left = 0
-        .Right = frmMain.picEquipment.Width
-    End With
     
     Direct3D_Device.EndScene
-    Direct3D_Device.Present sRect, dRect, frmMain.picEquipment.hWnd, ByVal (0)
+    Direct3D_Device.Present destPresentationRect, destPresentationRect, frmMain.picEquipment.hWnd, ByVal (0)
     Exit Sub
     
 ' Error handler
