@@ -1653,11 +1653,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-
-
-
-
-
 Private Sub cmdAMute_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler

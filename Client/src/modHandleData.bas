@@ -1493,6 +1493,12 @@ Private Sub HandleItemEditor()
         .Show
         .lstIndex.ListIndex = 0
         ItemEditorInit
+        
+        If frmAdmin.Visible Then
+            frmEditor_Item.Move frmAdmin.Left - frmEditor_Item.Width, frmAdmin.Top
+        Else
+            frmEditor_Item.Move frmMain.Left + frmMain.Width - frmEditor_Item.Width, frmMain.Top
+        End If
     End With
     frmAdmin.ShowEyeFor EDITOR_ITEM
     Exit Sub
@@ -1520,9 +1526,15 @@ Private Sub HandleAnimationEditor()
 
         .Show
         .lstIndex.ListIndex = 0
-        frmAdmin.ShowEyeFor EDITOR_ANIMATION
         AnimationEditorInit
+        
+        If frmAdmin.Visible Then
+            frmEditor_Animation.Move frmAdmin.Left - frmEditor_Animation.Width, frmAdmin.Top
+        Else
+            frmEditor_Animation.Move frmMain.Left + frmMain.Width - frmEditor_Animation.Width, frmMain.Top
+        End If
     End With
+    frmAdmin.ShowEyeFor EDITOR_ANIMATION
     Exit Sub
     
 ' Error handler
@@ -1583,6 +1595,7 @@ Private Sub HandleUpdateAnimation(ByVal Index As Long, ByRef data() As Byte, ByV
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     n = buffer.ReadLong
+    
     ' Update the Animation
     AnimationSize = LenB(Animation(n))
     ReDim AnimationData(AnimationSize - 1)
@@ -1664,6 +1677,12 @@ Private Sub HandleNPCEditor()
         .Show
         .lstIndex.ListIndex = 0
         NPCEditorInit
+        
+        If frmAdmin.Visible Then
+            frmEditor_NPC.Move frmAdmin.Left - frmEditor_NPC.Width, frmAdmin.Top
+        Else
+            frmEditor_NPC.Move frmMain.Left + frmMain.Width - frmEditor_NPC.Width, frmMain.Top
+        End If
     End With
     frmAdmin.ShowEyeFor EDITOR_NPC
     Exit Sub
@@ -1733,6 +1752,12 @@ Private Sub HandleResourceEditor()
         .Show
         .lstIndex.ListIndex = 0
         ResourceEditorInit
+        
+        If frmAdmin.Visible Then
+            frmEditor_Resource.Move frmAdmin.Left - frmEditor_Resource.Width, frmAdmin.Top
+        Else
+            frmEditor_Resource.Move frmMain.Left + frmMain.Width - frmEditor_Resource.Width, frmMain.Top
+        End If
     End With
     frmAdmin.ShowEyeFor EDITOR_RESOURCE
     Exit Sub
@@ -1786,9 +1811,14 @@ Private Sub HandleEditMap()
     
     ' Show the form
     frmEditor_Map.Visible = True
-
-    frmAdmin.ShowEyeFor EDITOR_MAP
     Call MapEditorInit
+    
+    If frmAdmin.Visible Then
+        frmEditor_Map.Move frmAdmin.Left - frmEditor_Map.Width, frmAdmin.Top
+    Else
+        frmEditor_Map.Move frmMain.Left + frmMain.Width - frmEditor_Map.Width, frmMain.Top
+    End If
+    frmAdmin.ShowEyeFor EDITOR_MAP
     Exit Sub
     
 ' Error handler
@@ -1798,11 +1828,17 @@ errorhandler:
 End Sub
 
 Private Sub HandleEventEditor()
+    Dim buffer As clsBuffer
+    Dim EventNum As Long
+    
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Call EventEditorInit(True)
-    Editor = EDITOR_ITEM
+    Set buffer = New clsBuffer
+    EventNum = buffer.ReadLong
+    
+    Call EventEditorInit(EventNum, True)
+    Editor = EDITOR_EVENTS
     frmAdmin.ShowEyeFor EDITOR_EVENTS
     Exit Sub
     
@@ -1830,6 +1866,12 @@ Private Sub HandleShopEditor()
         .Show
         .lstIndex.ListIndex = 0
         ShopEditorInit
+        
+        If frmAdmin.Visible Then
+            frmEditor_Shop.Move frmAdmin.Left - frmEditor_Shop.Width, frmAdmin.Top
+        Else
+            frmEditor_Shop.Move frmMain.Left + frmMain.Width - frmEditor_Shop.Width, frmMain.Top
+        End If
     End With
     frmAdmin.ShowEyeFor EDITOR_SHOP
     Exit Sub
@@ -1889,6 +1931,12 @@ Private Sub HandleSpellEditor()
         .Show
         .lstIndex.ListIndex = 0
         SpellEditorInit
+        
+        If frmAdmin.Visible Then
+            frmEditor_Spell.Move frmAdmin.Left - frmEditor_Spell.Width, frmAdmin.Top
+        Else
+            frmEditor_Spell.Move frmMain.Left + frmMain.Width - frmEditor_Spell.Width, frmMain.Top
+        End If
     End With
     frmAdmin.ShowEyeFor EDITOR_SPELL
     Exit Sub
@@ -2104,12 +2152,12 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
             
             OldEXPBarWidth = frmMain.imgEXPBar.Width
             NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
-            frmMain.lblEXP.Visible = True
-            frmMain.lblEXP.Caption = GetPlayerExp(Index) & "/" & TNL
+            frmMain.lblExp.Visible = True
+            frmMain.lblExp.Caption = GetPlayerExp(Index) & "/" & TNL
         Else
             frmMain.imgEXPBar.Width = EXPBar_Width
-            frmMain.lblEXP.Visible = False
-            frmMain.lblEXP.Caption = ""
+            frmMain.lblExp.Visible = False
+            frmMain.lblExp.Caption = ""
         End If
     End If
 End Sub
@@ -3209,6 +3257,7 @@ errorhandler:
     HandleError "HandleChatBubble", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
 'Character Editor
 Private Sub HandlePlayersOnline(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer, playersOnline As String, Length As Long, i As Long
@@ -3220,6 +3269,7 @@ Private Sub HandlePlayersOnline(ByVal Index As Long, ByRef data() As Byte, ByVal
     buffer.WriteBytes data()
     
     playersOnline = buffer.ReadString
+    
     If frmCharEditor.Visible = True Then
         Length = UBound(charList)
         For i = 0 To Length
@@ -3245,6 +3295,7 @@ errorhandler:
     HandleError "HandleSpecialEffect", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
 'Character Editor
 Private Sub HandleAllCharacters(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer, temp As String, allCharacters() As String, Length As Long, i As Long
@@ -3277,6 +3328,7 @@ End Sub
 
 Private Sub HandleAccessVerificator(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer, Success As Byte, Message As String, CurrentAccess As Byte, PlayerName As String, realMessage As String
+    
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
@@ -3293,9 +3345,7 @@ Private Sub HandleAccessVerificator(ByVal Index As Long, ByRef data() As Byte, B
         realMessage = Split(Message, ":")(0)
         
         frmAdmin.VerifyAccess PlayerName, Success, realMessage, CurrentAccess
-    
     End If
-    
     Set buffer = Nothing
     Exit Sub
     
@@ -3305,7 +3355,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-'Character Editor
+' Character Editor
 Private Sub HandleExtendedPlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
     ' If debug mode, handle error then exit out
@@ -3330,6 +3380,7 @@ errorhandler:
     HandleError "HandleExtendedPlayerData", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
 Private Sub HandleSpecialEffect(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer, effectType As Long
     
@@ -3667,8 +3718,14 @@ Private Sub HandleBanEditor(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
         .Show
         .lstIndex.ListIndex = 0
         BanEditorInit
+        
+        If frmAdmin.Visible Then
+            frmEditor_Ban.Move frmAdmin.Left - frmEditor_Ban.Width, frmAdmin.Top
+        Else
+            frmEditor_Ban.Move frmMain.Left + frmMain.Width - frmEditor_Ban.Width, frmMain.Top
+        End If
     End With
-        frmAdmin.ShowEyeFor EDITOR_BAN
+    frmAdmin.ShowEyeFor EDITOR_BAN
     Exit Sub
     
 ' Error handler
@@ -3750,6 +3807,12 @@ Private Sub HandleTitleEditor(ByVal Index As Long, ByRef data() As Byte, ByVal S
         .Show
         .lstIndex.ListIndex = 0
         TitleEditorInit
+    
+        If frmAdmin.Visible Then
+            frmEditor_Title.Move frmAdmin.Left - frmEditor_Title.Width, frmAdmin.Top
+        Else
+            frmEditor_Title.Move frmMain.Left + frmMain.Width - frmEditor_Title.Width, frmMain.Top
+        End If
     End With
     frmAdmin.ShowEyeFor EDITOR_TITLE
     Exit Sub
@@ -3806,6 +3869,12 @@ Private Sub HandleMoralEditor(ByVal Index As Long, ByRef data() As Byte, ByVal S
         .Show
         .lstIndex.ListIndex = 0
         MoralEditorInit
+        
+        If frmAdmin.Visible Then
+            frmEditor_Moral.Move frmAdmin.Left - frmEditor_Moral.Width, frmAdmin.Top
+        Else
+            frmEditor_Moral.Move frmMain.Left + frmMain.Width - frmEditor_Moral.Width, frmMain.Top
+        End If
     End With
     frmAdmin.ShowEyeFor EDITOR_MORAL
     Exit Sub
@@ -3835,6 +3904,12 @@ Private Sub HandleClassEditor(ByVal Index As Long, ByRef data() As Byte, ByVal S
         .Show
         .lstIndex.ListIndex = 0
         ClassEditorInit
+        
+        If frmAdmin.Visible Then
+            frmEditor_Class.Move frmAdmin.Left - frmEditor_Class.Width, frmAdmin.Top
+        Else
+            frmEditor_Class.Move frmMain.Left + frmMain.Width - frmEditor_Class.Width, frmMain.Top
+        End If
     End With
     frmAdmin.ShowEyeFor EDITOR_CLASS
     Exit Sub
@@ -4031,6 +4106,12 @@ Private Sub HandleEmoticonEditor(ByVal Index As Long, ByRef data() As Byte, ByVa
         .Show
         .lstIndex.ListIndex = 0
         EmoticonEditorInit
+        
+        If frmAdmin.Visible Then
+            frmEditor_Emoticon.Move frmAdmin.Left - frmEditor_Emoticon.Width, frmAdmin.Top
+        Else
+            frmEditor_Emoticon.Move frmMain.Left + frmMain.Width - frmEditor_Emoticon.Width, frmMain.Top
+        End If
     End With
     frmAdmin.ShowEyeFor EDITOR_EMOTICON
     Exit Sub

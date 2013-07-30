@@ -73,12 +73,14 @@ errorhandler:
     HandleError "MapEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
 Function ProcAdr(addr As Long) As Long
       ProcAdr = addr
 End Function
 Public Function getWndProcAddr() As Long
     getWndProcAddr = ProcAdr(AddressOf WindowProc)
 End Function
+
 Private Function WindowProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
     
         Select Case msg
@@ -780,9 +782,7 @@ Public Sub ItemEditorInit()
     Item_Changed(EditorIndex) = True
 
     ' Populate the cache if we need to
-    If Not HasPopulated Then
-        PopulateLists
-    End If
+    If Not HasPopulated Then PopulateLists
     
     ' Add the array to the combo
     frmEditor_Item.cmbSound.Clear
@@ -1012,17 +1012,12 @@ Public Sub AnimationEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    ' If form isn't visible then exit
-    If frmEditor_Animation.Visible = False Then Exit Sub
-    
     EditorIndex = frmEditor_Animation.lstIndex.ListIndex + 1
     Animation_Changed(EditorIndex) = True
     
     ' Populate the cache if we need to
-    If Not HasPopulated Then
-        PopulateLists
-    End If
-    
+    If Not HasPopulated Then PopulateLists
+
     ' Add the array to the combo
     frmEditor_Animation.cmbSound.Clear
     frmEditor_Animation.cmbSound.AddItem "None"
@@ -1328,10 +1323,8 @@ Public Sub ResourceEditorInit()
     Resource_Changed(EditorIndex) = True
     
     ' Populate the cache if we need to
-    If Not HasPopulated Then
-        PopulateLists
-    End If
-    
+    If Not HasPopulated Then PopulateLists
+
     ' Add the array to the combo
     frmEditor_Resource.cmbSound.Clear
     frmEditor_Resource.cmbSound.AddItem "None"
@@ -1460,12 +1453,10 @@ Public Sub ShopEditorInit()
         frmEditor_Shop.Move frmMain.Left + frmMain.Width - frmEditor_Shop.Width, frmMain.Top
     End If
     
-    If frmEditor_Shop.Visible = False Then Exit Sub
+    EditorIndex = frmEditor_Shop.lstIndex.ListIndex + 1
+    Shop_Changed(EditorIndex) = True
     
     With frmEditor_Shop
-        EditorIndex = .lstIndex.ListIndex + 1
-        Shop_Changed(EditorIndex) = True
-        
         .txtName.text = Trim$(Shop(EditorIndex).name)
         
         If Shop(EditorIndex).BuyRate > 0 And Shop(EditorIndex).BuyRate <= .scrlBuy.max Then
@@ -1599,10 +1590,8 @@ Public Sub SpellEditorInit()
     Spell_Changed(EditorIndex) = True
     
     ' Populate the cache if we need to
-    If Not HasPopulated Then
-        PopulateLists
-    End If
-    
+    If Not HasPopulated Then PopulateLists
+
     ' Add the array to the combo
     frmEditor_Spell.cmbSound.Clear
     frmEditor_Spell.cmbSound.AddItem "None"
@@ -2339,10 +2328,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub UpdateAdminScrollBar()
-
-End Sub
-
 Public Sub UpdateSpellScrollBars()
     With frmEditor_Item
         If .scrlSpell.Value = 0 Then
@@ -2356,7 +2341,7 @@ Public Sub UpdateSpellScrollBars()
     End With
 End Sub
 
-' Item Spawner davemax © 07.2013
+' Item Spawner
 Public Function populateSpecificType(ByRef tempItems() As ItemRec, ItemType As Byte) As Boolean
     Dim i As Long, counter As Long, found As Boolean
     For i = 1 To MAX_ITEMS
@@ -2672,7 +2657,7 @@ End Sub
 
 Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = False)
     Dim i As Long
-    
+
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
