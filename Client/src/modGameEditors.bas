@@ -15,6 +15,8 @@ Public mapEditorCancelNag As Boolean
 Public lastSpawnedItems() As Byte
 Public currentlyListedIndexes() As Long
 
+Public adminMiniSettings(0 To 27, 0 To 1)
+Public adminMin As Boolean
 Public EventList() As EventListRec
 Public Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
     (ByVal hWnd As Long, ByVal nIndex As Long) As Long
@@ -37,7 +39,7 @@ Private Const WM_KILLFOCUS  As Long = &H8
 Public Sub MapEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_Map.Move frmAdmin.Left - frmEditor_Map.Width, frmAdmin.Top
     Else
         frmEditor_Map.Move frmMain.Left + frmMain.Width - frmEditor_Map.Width, frmMain.Top
@@ -493,12 +495,12 @@ Public Sub MapEditorSave()
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Save changes made to map properties
-    If frmEditor_MapProperties.Visible Then
+    If FormVisible("frmEditor_MapProperties") Then
         frmEditor_MapProperties.cmdSave_Click
     End If
     
     ' Save changes made to event form
-    If frmEditor_Events.Visible Then
+    If FormVisible("frmEditor_Events") Then
         frmEditor_Events.cmdSave_Click
     End If
             
@@ -766,7 +768,7 @@ Public Sub ItemEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_Item.Move frmAdmin.Left - frmEditor_Item.Width, frmAdmin.Top
     Else
         frmEditor_Item.Move frmMain.Left + frmMain.Width - frmEditor_Item.Width, frmMain.Top
@@ -1029,7 +1031,7 @@ Public Sub AnimationEditorInit()
         frmEditor_Animation.cmbSound.AddItem SoundCache(i)
     Next
 
-    If frmAdmin.Visible Then
+    If frmAdmin.Visible = True Then
         frmEditor_Animation.Move frmAdmin.Left - frmEditor_Animation.Width, frmAdmin.Top
     Else
         frmEditor_Animation.Move frmMain.Left + frmMain.Width - frmEditor_Animation.Width, frmMain.Top
@@ -1142,7 +1144,7 @@ Public Sub NPCEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_NPC.Move frmAdmin.Left - frmEditor_NPC.Width, frmAdmin.Top
     Else
         frmEditor_NPC.Move frmMain.Left + frmMain.Width - frmEditor_NPC.Width, frmMain.Top
@@ -1315,7 +1317,7 @@ Public Sub ResourceEditorInit()
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_Resource.Move frmAdmin.Left - frmEditor_Resource.Width, frmAdmin.Top
     Else
         frmEditor_Resource.Move frmMain.Left + frmMain.Width - frmEditor_Resource.Width, frmMain.Top
@@ -1452,7 +1454,7 @@ Public Sub ShopEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_Shop.Move frmAdmin.Left - frmEditor_Shop.Width, frmAdmin.Top
     Else
         frmEditor_Shop.Move frmMain.Left + frmMain.Width - frmEditor_Shop.Width, frmMain.Top
@@ -1585,7 +1587,7 @@ Public Sub SpellEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_Spell.Move frmAdmin.Left - frmEditor_Spell.Width, frmAdmin.Top
     Else
         frmEditor_Spell.Move frmMain.Left + frmMain.Width - frmEditor_Spell.Width, frmMain.Top
@@ -1930,7 +1932,7 @@ Public Sub BanEditorInit()
     EditorIndex = frmEditor_Ban.lstIndex.ListIndex + 1
     Ban_Changed(EditorIndex) = True
 
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_Ban.Move frmAdmin.Left - frmEditor_Ban.Width, frmAdmin.Top
     Else
         frmEditor_Ban.Move frmMain.Left + frmMain.Width - frmEditor_Ban.Width, frmMain.Top
@@ -2018,7 +2020,7 @@ Public Sub TitleEditorInit()
     ' Check if the form is visible if not then exit
     If frmEditor_Title.Visible = False Then Exit Sub
     
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_Title.Move frmAdmin.Left - frmEditor_Title.Width, frmAdmin.Top
     Else
         frmEditor_Title.Move frmMain.Left + frmMain.Width - frmEditor_Title.Width, frmMain.Top
@@ -2165,7 +2167,7 @@ Public Sub MoralEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_Moral.Move frmAdmin.Left - frmEditor_Moral.Width, frmAdmin.Top
     Else
         frmEditor_Moral.Move frmMain.Left + frmMain.Width - frmEditor_Moral.Width, frmMain.Top
@@ -2250,7 +2252,7 @@ End Sub
 Public Sub ClassEditorInit()
     Dim i As Long
 
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_Class.Move frmAdmin.Left - frmEditor_Class.Width, frmAdmin.Top
     Else
         frmEditor_Class.Move frmMain.Left + frmMain.Width - frmEditor_Class.Width, frmMain.Top
@@ -2419,7 +2421,7 @@ End Sub
 Public Sub EmoticonEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
         frmEditor_Emoticon.Move frmAdmin.Left - frmEditor_Emoticon.Width, frmAdmin.Top
     Else
         frmEditor_Emoticon.Move frmMain.Left + frmMain.Width - frmEditor_Emoticon.Width, frmMain.Top
@@ -2566,7 +2568,7 @@ Sub DeleteEvent(x As Long, y As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Not InMapEditor Then Exit Sub
-    If frmEditor_Events.Visible Then Exit Sub
+    If FormVisible("frmEditor_Events") Then Exit Sub
     
     count = Map.EventCount
     
@@ -2677,7 +2679,7 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
     If EventNum < 1 Then
         frmEditor_Events.Visible = True
         
-        If frmAdmin.Visible Then
+        If FormVisible("frmAdmin") Then
             frmEditor_Events.Move frmAdmin.Left - frmEditor_Events.Width, frmAdmin.Top
         Else
             frmEditor_Events.Move frmMain.Left + frmMain.Width - frmEditor_Events.Width, frmMain.Top
@@ -4591,6 +4593,8 @@ Public Sub InitAdminPanel()
     frmAdmin.Visible = True
     frmAdmin.Left = frmMain.Left + frmMain.Width - frmAdmin.Width
     frmAdmin.Top = frmMain.Top
+    frmAdmin.picSizer.BorderStyle = 0
+    frmAdmin.picSizer.Picture = LoadResPicture("MIN", vbResBitmap)
     frmAdmin.Form_Load
 End Sub
 
@@ -4658,6 +4662,36 @@ Public Sub DeleteByPtr(pArray() As Byte, ByVal StartIndex As Long, Optional ByVa
 
     ReDim Preserve pArray(lBase To (lSize - lBase - NumElements - 1))
 End Sub
+Public Function ArrayIsInitialized(arr) As Boolean
 
+  Dim memVal As Long
 
+  CopyMemory memVal, ByVal VarPtr(arr) + 8, ByVal 4 'get pointer to array
+  CopyMemory memVal, ByVal memVal, ByVal 4  'see if it points to an address...
+  ArrayIsInitialized = (memVal <> 0)        '...if it does, array is intialized
 
+End Function
+
+Public Function getItemType(itype As Byte) As String
+  Select Case itype
+        
+            Case 0
+                getItemType = "None"
+            Case 1
+                getItemType = "Equipment"
+            Case 2
+                getItemType = "Consumable"
+            Case 3
+                getItemType = "Title"
+            Case 4
+                getItemType = "Spell"
+            Case 5
+                getItemType = "Teleport"
+            Case 6
+                getItemType = "Reset Stats"
+            Case 7
+                getItemType = "Auto Life"
+            Case 8
+                getItemType = "Change Sprite"
+        End Select
+End Function

@@ -1952,12 +1952,12 @@ Private Sub Form_Unload(Cancel As Integer)
     Call ToggleGUI(True)
     
     ' Make sure the properties form is closed
-    If frmEditor_MapProperties.Visible Then
+    If FormVisible("frmEditor_MapProperties") Then
         Unload frmEditor_MapProperties
     End If
     
     ' Make sure event editor form is closed
-    If frmEditor_Events.Visible Then
+    If FormVisible("frmEditor_Events") Then
         Unload frmEditor_Events
     End If
     frmAdmin.ignoreChange = True
@@ -2314,8 +2314,8 @@ Private Sub optItem_Click()
     picAttributes.Visible = True
     fraMapItem.Visible = True
     
-    If Not Trim$(Item(scrlMapItem.Value).name) = vbNullString Then
-        lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    If Not Trim$(item(scrlMapItem.Value).name) = vbNullString Then
+        lblMapItem.Caption = Trim$(item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
     End If
     Exit Sub
     
@@ -2409,15 +2409,15 @@ Private Sub scrlMapItem_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Item(scrlMapItem.Value).stackable = 1 Then
+    If item(scrlMapItem.Value).stackable = 1 Then
         scrlMapItemValue.Enabled = True
     Else
         scrlMapItemValue.Value = 1
         scrlMapItemValue.Enabled = False
     End If
     
-    If Not Trim$(Item(scrlMapItem.Value).name) = vbNullString Then
-        lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    If Not Trim$(item(scrlMapItem.Value).name) = vbNullString Then
+        lblMapItem.Caption = Trim$(item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
     Else
         lblMapItem.Caption = "None"
         frmEditor_Map.picMapItem.Cls
@@ -2447,7 +2447,7 @@ Private Sub scrlMapItemValue_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    lblMapItem.Caption = Trim$(item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
     Exit Sub
     
 ' Error handler

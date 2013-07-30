@@ -297,7 +297,11 @@ Sub HandlePlayerInv(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr A
     frmMain.txtCurrency.text = vbNullString
     TmpCurrencyItem = 0
     CurrencyMenu = 0 ' Clear
-    frmItemSpawner.updateFreeSlots
+    If FormVisible("frmItemSpawner") Then
+        If FormVisible("frmItemSpawner") Then
+            frmItemSpawner.updateFreeSlots
+        End If
+    End If
     Set buffer = Nothing
     Exit Sub
     
@@ -655,8 +659,8 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
         End If
         
         ' Hide admin panel if visible and access is 0
-        If frmAdmin.Visible Then
-            If Player(MyIndex).Access < STAFF_MODERATOR Then
+        If FormVisible("frmAdmin") Then
+            If frmAdmin.Visible And Player(MyIndex).Access < STAFF_MODERATOR Then
                 Unload frmAdmin
             End If
         End If
@@ -1103,7 +1107,7 @@ Private Sub HandleCheckForMap(ByVal Index As Long, ByRef data() As Byte, ByVal S
         Unload frmEditor_Map
         ClearAttributeFrames
 
-        If frmEditor_MapProperties.Visible Then
+        If FormVisible("frmEditor_MapProperties") Then
             Unload frmEditor_MapProperties
         End If
     End If
@@ -1203,7 +1207,7 @@ Sub HandleMapData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As 
         
         ClearAttributeFrames
 
-        If frmEditor_MapProperties.Visible Then
+        If FormVisible("frmEditor_MapProperties") Then
             frmEditor_MapProperties.Visible = False
         End If
     End If
@@ -1553,9 +1557,11 @@ Private Sub HandleUpdateItem(ByVal Index As Long, ByRef data() As Byte, ByVal St
     TmpCurrencyItem = 0
     CurrencyMenu = 0 ' Clear
     
-    If frmItemSpawner.Visible And item(n).Type = frmItemSpawner.tabItems.SelectedItem.Index - 2 Then
-        frmItemSpawner.updatingItem = True
-        frmItemSpawner.tabItems_Click
+    If FormVisible("frmItemSpawner") Then
+        If item(n).Type = frmItemSpawner.tabItems.SelectedItem.Index - 2 Then
+            frmItemSpawner.updatingItem = True
+            frmItemSpawner.tabItems_Click
+        End If
     End If
     Exit Sub
     
@@ -3224,7 +3230,7 @@ Private Sub HandlePlayersOnline(ByVal Index As Long, ByRef data() As Byte, ByVal
 
         frmCharEditor.ResetCharList
     End If
-    If refreshingAdminList And frmAdmin.Visible Then
+    If refreshingAdminList And FormVisible("frmAdmin") Then
         refreshingAdminList = False
         g_playersOnline = Split(playersOnline, ",")
         frmAdmin.UpdatePlayersOnline
@@ -3274,7 +3280,7 @@ Private Sub HandleAccessVerificator(ByVal Index As Long, ByRef data() As Byte, B
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    If frmAdmin.Visible Then
+    If FormVisible("frmAdmin") Then
     
         Set buffer = New clsBuffer
         buffer.WriteBytes data()
@@ -3874,7 +3880,7 @@ Private Sub HandleUpdateClass(ByVal Index As Long, ByRef data() As Byte, ByVal S
     Set buffer = Nothing
     
     ' Update lists
-    If frmEditor_Spell.Visible Then
+    If FormVisible("frmEditor_Spell") Then
         SpellClassListInit
     End If
     
@@ -3882,7 +3888,7 @@ Private Sub HandleUpdateClass(ByVal Index As Long, ByRef data() As Byte, ByVal S
         UpdateCharacterMenu
     End If
     
-    If frmEditor_Item.Visible Then
+    If FormVisible("frmEditor_Item") Then
         ItemClassReqListInit
     End If
     Exit Sub

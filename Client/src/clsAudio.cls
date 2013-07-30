@@ -38,38 +38,38 @@ Private Sub Class_Initialize()
     End If
 End Sub
 
-Public Sub PlayMusic(FileName As String)
-    If Options.Music = 0 Or FileName = vbNullString Or CurrentMusic = FileName Then Exit Sub
+Public Sub PlayMusic(filename As String)
+    If Options.Music = 0 Or filename = vbNullString Or CurrentMusic = filename Then Exit Sub
     
     Call StopMusic
     
-    If FileExist(App.Path & MUSIC_PATH & FileName, True) Then
-        If Left$(FileName, 7) = "http://" Then
-            If Right$(FileName, 4) = "mid" Then
-                Music = BASS_MIDI_StreamCreateURL(FileName, 0, BASS_SAMPLE_LOOP, 0, 0, 0)
+    If FileExist(App.Path & MUSIC_PATH & filename, True) Then
+        If Left$(filename, 7) = "http://" Then
+            If Right$(filename, 4) = "mid" Then
+                Music = BASS_MIDI_StreamCreateURL(filename, 0, BASS_SAMPLE_LOOP, 0, 0, 0)
             Else
-                Music = BASS_StreamCreateURL(FileName, 0, BASS_SAMPLE_LOOP, 0, 0)
+                Music = BASS_StreamCreateURL(filename, 0, BASS_SAMPLE_LOOP, 0, 0)
             End If
         Else
-            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & FileName), 0, 0, BASS_SAMPLE_LOOP)
+            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & filename), 0, 0, BASS_SAMPLE_LOOP)
         End If
         
         Call BASS_ChannelSetAttribute(Music, BASS_ATTRIB_VOL, Options.MusicVolume)
         Call BASS_ChannelPlay(Music, BASSFALSE)
-        CurrentMusic = FileName
+        CurrentMusic = filename
     Else
-        If frmMain.Visible Then
-            Call AddText(FileName & " does not exist!", BrightRed)
+        If FormVisible("frmMain") Then
+            Call AddText(filename & " does not exist!", BrightRed)
         End If
     End If
 End Sub
 
-Public Sub PlaySound(FileName As String, Optional ByVal x As Long, Optional ByVal y As Long)
+Public Sub PlaySound(filename As String, Optional ByVal x As Long, Optional ByVal y As Long)
     Dim i As Long
     
-    If Options.Sound = 0 Or FileName = vbNullString Then Exit Sub
+    If Options.Sound = 0 Or filename = vbNullString Then Exit Sub
     
-    If FileExist(App.Path & SOUND_PATH & FileName, True) Then
+    If FileExist(App.Path & SOUND_PATH & filename, True) Then
         ' Find the index
         For i = 1 To MAX_SOUNDS
             If Sounds(i) = 0 Then
@@ -88,14 +88,14 @@ Public Sub PlaySound(FileName As String, Optional ByVal x As Long, Optional ByVa
         Next
         
         ' Create the sound
-        Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & FileName), 0, 0, 0)
+        Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & filename), 0, 0, 0)
         Call BASS_ChannelSetAttribute(Sounds(SoundIndex), BASS_ATTRIB_VOL, Options.SoundVolume)
         
         ' Play the sound
         Call BASS_ChannelPlay(Sounds(SoundIndex), BASSFALSE)
     Else
-        If frmMain.Visible Then
-            Call AddText(FileName & " does not exist!", BrightRed)
+        If FormVisible("frmMain") Then
+            Call AddText(filename & " does not exist!", BrightRed)
         End If
     End If
 End Sub

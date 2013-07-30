@@ -190,11 +190,11 @@ End Sub
 
 Public Sub DrawGDI()
     ' Cycle through in-game stuff before cycling through editors
-    If frmMenu.Visible Then
+    If FormVisible("frmMenu") Then
         If frmMenu.picCharacter.Visible Then Menu_DrawCharacter
     End If
     
-    If frmMain.Visible Then
+    If FormVisible("frmMain") Then
         If frmMain.picSpellDesc.Visible Then DrawSpellDesc LastSpellDesc
         If frmMain.picItemDesc.Visible Then DrawItemDesc LastItemDesc
         If frmMain.picHotbar.Visible Then DrawHotbar
@@ -209,16 +209,16 @@ Public Sub DrawGDI()
         If frmMain.picTrade.Visible Then DrawTrade
     End If
     
-    If frmEditor_Animation.Visible Then
+    If FormVisible("frmEditor_Animation") Then
         EditorAnim_DrawAnim
     End If
     
-    If frmEditor_Item.Visible Then
+    If FormVisible("frmEditor_Item") Then
         EditorItem_DrawItem
         EditorItem_DrawPaperdoll
     End If
     
-    If frmEditor_Map.Visible Then
+    If FormVisible("frmEditor_Map") Then
         EditorMap_DrawTileset
         If frmEditor_Map.fraMapItem.Visible Then EditorMap_DrawMapItem
     End If
@@ -236,23 +236,23 @@ Public Sub DrawGDI()
         End If
     End If
     
-    If frmEditor_MapProperties.Visible Then
+    If FormVisible("frmEditor_MapProperties") Then
         EditorMapProperties_DrawPanorama
     End If
     
-    If frmEditor_NPC.Visible Then
+    If FormVisible("frmEditor_NPC") Then
         EditorNPC_DrawSprite
     End If
     
-    If frmEditor_Resource.Visible Then
+    If FormVisible("frmEditor_Resource") Then
         EditorResource_DrawSprite
     End If
     
-    If frmEditor_Spell.Visible Then
+    If FormVisible("frmEditor_Spell") Then
         EditorSpell_DrawIcon
     End If
     
-    If frmEditor_Events.Visible Then
+    If FormVisible("frmEditor_Events") Then
         EditorEvent_DrawFace
         EditorEvent_DrawFace2
         EditorEvent_DrawGraphic
@@ -262,7 +262,7 @@ Public Sub DrawGDI()
         EditorEmoticon_DrawIcon
     End If
     
-    If frmEditor_Class.Visible Then
+    If FormVisible("frmEditor_Class") Then
         With frmEditor_Class
             If .scrlMSprite.Visible Then
                 Call EditorClass_DrawSprite(0)
@@ -277,10 +277,15 @@ Public Sub DrawGDI()
             End If
         End With
     End If
-    If frmAdmin.Visible And frmAdmin.txtSprite.text > 0 Then
-        If LastAdminSpriteTimer + 300 < timeGetTime Then
+    If FormVisible("frmAdmin") Then
+        If frmAdmin.txtSprite.text > 0 And LastAdminSpriteTimer + 300 < timeGetTime Then
             LastAdminSpriteTimer = timeGetTime
             EditorChar_AnimSprite frmAdmin.picSprite, frmAdmin.txtSprite.text, AdminSpritePos
+        End If
+        If ArrayIsInitialized(lastSpawnedItems) Then
+            If UBound(lastSpawnedItems) > 0 Then
+                drawRecentItem item(lastSpawnedItems(frmAdmin.rcSwitcher.Value)).Pic
+            End If
         End If
     End If
 End Sub
@@ -971,7 +976,7 @@ Public Sub DrawMapItem(ByVal ItemNum As Long)
         End If
     End If
 
-    picNum = Item(MapItem(ItemNum).Num).Pic
+    picNum = item(MapItem(ItemNum).Num).Pic
 
     If picNum < 1 Or picNum > NumItems Then Exit Sub
     
@@ -1393,10 +1398,10 @@ Public Sub DrawHotbar()
     
         Select Case Hotbar(i).sType
             Case 1 ' Inventory
-                If Len(Item(Hotbar(i).Slot).name) > 0 Then
-                    If Item(Hotbar(i).Slot).Pic > 0 Then
-                        If Item(Hotbar(i).Slot).Pic <= NumItems Then
-                            RenderTextureByRects Tex_Item(Item(Hotbar(i).Slot).Pic), sRect, dRect
+                If Len(item(Hotbar(i).Slot).name) > 0 Then
+                    If item(Hotbar(i).Slot).Pic > 0 Then
+                        If item(Hotbar(i).Slot).Pic <= NumItems Then
+                            RenderTextureByRects Tex_Item(item(Hotbar(i).Slot).Pic), sRect, dRect
                         End If
                     End If
                 End If
@@ -1468,7 +1473,7 @@ Public Sub DrawPlayer(ByVal Index As Long)
 
     ' Speed from weapon
     If GetPlayerEquipment(Index, Weapon) > 0 Then
-        AttackSpeed = Item(GetPlayerEquipment(Index, Weapon)).WeaponSpeed
+        AttackSpeed = item(GetPlayerEquipment(Index, Weapon)).WeaponSpeed
     Else
         AttackSpeed = 1000
     End If
@@ -1554,8 +1559,8 @@ Public Sub DrawPlayer(ByVal Index As Long)
     ' Check for paperdolling
     For i = 1 To UBound(PaperdollOrder)
         If GetPlayerEquipment(Index, PaperdollOrder(i)) > 0 Then
-            If Item(GetPlayerEquipment(Index, PaperdollOrder(i))).Paperdoll > 0 Then
-                Call DrawPaperdoll(x, y, Item(GetPlayerEquipment(Index, PaperdollOrder(i))).Paperdoll, Anim, spritetop)
+            If item(GetPlayerEquipment(Index, PaperdollOrder(i))).Paperdoll > 0 Then
+                Call DrawPaperdoll(x, y, item(GetPlayerEquipment(Index, PaperdollOrder(i))).Paperdoll, Anim, spritetop)
             End If
         End If
     Next
@@ -1754,7 +1759,7 @@ Sub DrawAnimatedItems()
     ' Check for map animation changes
     For i = 1 To MAX_MAP_ITEMS
         If MapItem(i).Num > 0 Then
-            ItemPic = Item(MapItem(i).Num).Pic
+            ItemPic = item(MapItem(i).Num).Pic
 
             If ItemPic < 1 Or ItemPic > NumItems Then Exit Sub
             MaxFrames = Tex_Item(ItemPic).Width / PIC_X ' Work out how many frames there are.
@@ -1771,7 +1776,7 @@ Sub DrawAnimatedItems()
         ItemNum = GetPlayerInvItemNum(MyIndex, i)
         
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = Item(ItemNum).Pic
+            ItemPic = item(ItemNum).Pic
             AmountModifier = 0
             NoRender(i) = 0
             
@@ -1781,7 +1786,7 @@ Sub DrawAnimatedItems()
                     TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).Num)
                     If TradeYourOffer(x).Num = i Then
                         ' Check if currency
-                        If Not Item(TmpItem).stackable = 1 Then
+                        If Not item(TmpItem).stackable = 1 Then
                             ' Normal item don't render
                             NoRender(i) = 1
                         Else
@@ -1854,7 +1859,7 @@ Sub DrawAnimatedItems()
             ItemNum = GetBankItemNum(i)
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-                ItemPic = Item(ItemNum).Pic
+                ItemPic = item(ItemNum).Pic
     
                 If ItemPic > 0 And ItemPic <= NumItems Then
                     If Tex_Item(ItemPic).Width > PIC_X Then
@@ -1909,10 +1914,10 @@ Sub DrawAnimatedItems()
     
     If InShop > 0 Then
         For i = 1 To MAX_TRADES
-            ItemNum = Shop(InShop).TradeItem(i).Item
+            ItemNum = Shop(InShop).TradeItem(i).item
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-                ItemPic = Item(ItemNum).Pic
+                ItemPic = item(ItemNum).Pic
     
                 If ItemPic > 0 And ItemPic <= NumItems Then
                     If Tex_Item(ItemPic).Width > PIC_X Then
@@ -1970,7 +1975,7 @@ Sub DrawAnimatedItems()
             ItemNum = TradeTheirOffer(i).Num
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-                ItemPic = Item(ItemNum).Pic
+                ItemPic = item(ItemNum).Pic
     
                 If ItemPic > 0 And ItemPic <= NumItems Then
                     If Tex_Item(ItemPic).Width > PIC_X Then
@@ -2026,7 +2031,7 @@ Sub DrawAnimatedItems()
             ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-                ItemPic = Item(ItemNum).Pic
+                ItemPic = item(ItemNum).Pic
     
                 If ItemPic > 0 And ItemPic <= NumItems Then
                     If Tex_Item(ItemPic).Width > PIC_X Then
@@ -2167,7 +2172,7 @@ Sub DrawInventory()
         ItemNum = GetPlayerInvItemNum(MyIndex, i)
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = Item(ItemNum).Pic
+            ItemPic = item(ItemNum).Pic
             AmountModifier = 0
             
             ' Exit out if we're offering item in a trade.
@@ -2176,7 +2181,7 @@ Sub DrawInventory()
                     TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).Num)
                     If TradeYourOffer(x).Num = i Then
                         ' Check if currency
-                        If Not Item(TmpItem).stackable = 1 Then
+                        If Not item(TmpItem).stackable = 1 Then
                             ' Normal item, exit out
                             GoTo NextLoop
                         Else
@@ -2280,7 +2285,7 @@ Sub DrawTrade()
         ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = Item(ItemNum).Pic
+            ItemPic = item(ItemNum).Pic
 
             If ItemPic > 0 And ItemPic <= NumItems Then
                 If Tex_Item(ItemPic).Width <= 32 Then
@@ -2331,7 +2336,7 @@ Sub DrawTrade()
         ItemNum = TradeTheirOffer(i).Num
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = Item(ItemNum).Pic
+            ItemPic = item(ItemNum).Pic
 
             If ItemPic > 0 And ItemPic <= NumItems Then
                 If Tex_Item(ItemPic).Width <= 32 Then
@@ -2495,10 +2500,10 @@ Sub DrawShop()
     Direct3D_Device.BeginScene
     
     For i = 1 To MAX_TRADES
-        ItemNum = Shop(InShop).TradeItem(i).Item
+        ItemNum = Shop(InShop).TradeItem(i).item
         
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = Item(ItemNum).Pic
+            ItemPic = item(ItemNum).Pic
 
             If ItemPic > 0 And ItemPic <= NumItems Then
                 If Tex_Item(ItemPic).Width <= 32 Then
@@ -2581,7 +2586,7 @@ Public Sub DrawDraggedItem(ByVal x As Long, ByVal y As Long, Optional ByVal IsHo
         Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
         Direct3D_Device.BeginScene
     
-        ItemPic = Item(ItemNum).Pic
+        ItemPic = item(ItemNum).Pic
         
         If ItemPic < 1 Or ItemPic > NumItems Then Exit Sub
         
@@ -2744,7 +2749,7 @@ Public Sub DrawItemDesc(ByVal ItemNum As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-        ItemPic = Item(ItemNum).Pic
+        ItemPic = item(ItemNum).Pic
 
         If ItemPic = 0 Then Exit Sub
         
@@ -3390,7 +3395,7 @@ Sub DrawBank()
         For i = 1 To MAX_BANK
             ItemNum = GetBankItemNum(i)
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-                Sprite = Item(ItemNum).Pic
+                Sprite = item(ItemNum).Pic
                 
                 If Sprite > 0 Or Sprite <= NumItems Then
                     If Tex_Item(Sprite).Width <= 32 Then
@@ -3465,7 +3470,7 @@ Public Sub DrawBankItem(ByVal x As Long, ByVal y As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ItemNum = GetBankItemNum(DragBankSlot)
-    Sprite = Item(GetBankItemNum(DragBankSlot)).Pic
+    Sprite = item(GetBankItemNum(DragBankSlot)).Pic
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 255), 1#, 0
     Direct3D_Device.BeginScene
     
@@ -3629,6 +3634,35 @@ Public Sub EditorChar_AnimSprite(container As PictureBox, SpriteNum As String, B
     Direct3D_Device.Present destRECT, destRECT, container.hWnd, ByVal (0)
 
     spritePosition = spritePosition + 1
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "EditorChar_AnimSprite", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+' Character Editor
+Public Sub drawRecentItem(SpriteNum As Integer)
+    'Dim destRECT As D3DRECT
+    Dim drawRect As RECT
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+
+    Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
+    Direct3D_Device.BeginScene
+    
+    drawRect.Top = 0
+    drawRect.Bottom = 32
+    drawRect.Left = 0
+    drawRect.Right = 32
+
+    RenderTextureByRects Tex_Item(SpriteNum), drawRect, drawRect
+
+    Direct3D_Device.EndScene
+    Direct3D_Device.Present drawRect, drawRect, frmAdmin.picRecentItem.hWnd, ByVal (0)
+
     Exit Sub
     
 ' Error handler
@@ -3971,20 +4005,20 @@ errorhandler:
 End Sub
 
 Public Sub RenderOptionButton(ByRef ThePictureBox As PictureBox, ByVal TheOption As Byte, ByVal TheValue As Byte)
-    Dim FileName As String
+    Dim filename As String
 
     If TheValue = 0 Then
-        FileName = App.Path & GFX_PATH & "gui/main/buttons/option_off.bmp"
+        filename = App.Path & GFX_PATH & "gui/main/buttons/option_off.bmp"
     ElseIf TheValue = 1 Then
-        FileName = App.Path & GFX_PATH & "gui/main/buttons/option_on.bmp"
+        filename = App.Path & GFX_PATH & "gui/main/buttons/option_on.bmp"
     ElseIf TheValue = 2 Then
-        FileName = App.Path & GFX_PATH & "gui/main/buttons/option_off_hover.bmp"
+        filename = App.Path & GFX_PATH & "gui/main/buttons/option_off_hover.bmp"
     ElseIf TheValue = 3 Then
-        FileName = App.Path & GFX_PATH & "gui/main/buttons/option_on_hover.bmp"
+        filename = App.Path & GFX_PATH & "gui/main/buttons/option_on_hover.bmp"
     End If
     
     OptionButton(TheOption).State = TheValue
-    ThePictureBox.Picture = LoadPicture(FileName)
+    ThePictureBox.Picture = LoadPicture(filename)
 End Sub
 
 Public Sub ResizeHPBar()
@@ -4108,7 +4142,7 @@ Public Sub DrawEquipment()
         
         ' If there is an item draw it, if not do NOTHING!
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = Item(ItemNum).Pic
+            ItemPic = item(ItemNum).Pic
             
             ' If the picture exists then render it
             If ItemPic > 0 And ItemPic <= NumItems Then
@@ -4465,7 +4499,7 @@ Public Sub EditorMap_DrawMapItem()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    ItemNum = Item(frmEditor_Map.scrlMapItem.Value).Pic
+    ItemNum = item(frmEditor_Map.scrlMapItem.Value).Pic
 
     If ItemNum < 1 Or ItemNum > NumItems Then
         frmEditor_Map.picMapItem.Cls

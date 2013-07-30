@@ -11,9 +11,8 @@ Begin VB.Form frmItemSpawner
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   329
-   ScaleMode       =   3  'Pixel
-   ScaleWidth      =   555
+   ScaleHeight     =   4935
+   ScaleWidth      =   8325
    ShowInTaskbar   =   0   'False
    Begin MSComctlLib.ImageList itemsImageList 
       Left            =   7710
@@ -37,13 +36,13 @@ Begin VB.Form frmItemSpawner
       Width           =   1425
    End
    Begin MSComctlLib.ListView listItems 
-      Height          =   3405
+      Height          =   3720
       Left            =   45
       TabIndex        =   9
-      Top             =   1470
+      Top             =   1185
       Width           =   8235
       _ExtentX        =   14526
-      _ExtentY        =   6006
+      _ExtentY        =   6562
       Arrange         =   2
       LabelEdit       =   1
       LabelWrap       =   0   'False
@@ -94,9 +93,9 @@ Begin VB.Form frmItemSpawner
       Caption         =   "Inventory(3 slots)"
       ForeColor       =   &H000080FF&
       Height          =   255
-      Left            =   60
+      Left            =   45
       TabIndex        =   2
-      Top             =   525
+      Top             =   540
       Value           =   -1  'True
       Width           =   2340
    End
@@ -236,18 +235,18 @@ Begin VB.Form frmItemSpawner
    Begin VB.Line Line1 
       BorderColor     =   &H00C0C000&
       BorderWidth     =   3
-      X1              =   313
-      X2              =   390.333
-      Y1              =   15
-      Y2              =   15
+      X1              =   4695
+      X2              =   5855
+      Y1              =   225
+      Y2              =   225
    End
    Begin VB.Line lineAmount 
       BorderColor     =   &H0000C0C0&
       BorderWidth     =   3
-      X1              =   178
-      X2              =   282
-      Y1              =   15
-      Y2              =   15
+      X1              =   2670
+      X2              =   4230
+      Y1              =   225
+      Y2              =   225
    End
    Begin VB.Label lblAmount 
       Caption         =   "Amount"
@@ -290,10 +289,10 @@ Begin VB.Form frmItemSpawner
    Begin VB.Line lineHow 
       BorderColor     =   &H00FF8080&
       BorderWidth     =   3
-      X1              =   408
-      X2              =   552
-      Y1              =   16
-      Y2              =   16
+      X1              =   6120
+      X2              =   8280
+      Y1              =   240
+      Y2              =   240
    End
    Begin VB.Label lblHow 
       Alignment       =   1  'Right Justify
@@ -318,9 +317,9 @@ Begin VB.Form frmItemSpawner
       BorderColor     =   &H000080FF&
       BorderWidth     =   3
       X1              =   0
-      X2              =   144
-      Y1              =   14
-      Y2              =   14
+      X2              =   2160
+      Y1              =   210
+      Y2              =   210
    End
    Begin VB.Label lblWhere 
       Caption         =   "Where to Spawn It"
@@ -353,6 +352,7 @@ Private currentAmount As Long
 Private picked As Boolean
 Private freeInvSlots As Byte
 Private currentMaxLimit As Long
+Private descIndex As Long
 Public updatingItem As Boolean
 
 Private Declare Function SendMessage Lib "user32" Alias _
@@ -512,9 +512,6 @@ Private Sub cmdSpawn_Click()
     Else
         ReDim lastSpawnedItems(0) As Byte
     End If
-
-
-out:
     
     If found = -1 Then
         If UBound(lastSpawnedItems) = 20 Then
@@ -527,6 +524,7 @@ out:
     End If
 
     lastSpawnedItems(0) = item
+    frmAdmin.UpdateRecentSpawner
     
     If chkClose.Value = 1 Then
         Unload Me
@@ -538,32 +536,27 @@ out:
         updatingItem = True
         tabItems_Click
     End If
-
-    Exit Sub
     
     ' Error handler
 errorhandler:
     HandleError "cmdSpawn_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-Public Function ArrayIsInitialized(arr) As Boolean
 
-  Dim memVal As Long
-
-  CopyMemory memVal, ByVal VarPtr(arr) + 8, ByVal 4 'get pointer to array
-  CopyMemory memVal, ByVal memVal, ByVal 4  'see if it points to an address...
-  ArrayIsInitialized = (memVal <> 0)        '...if it does, array is intialized
-
-End Function
 Private Sub Form_Load()
     ListView_SetIconSpacing listItems.hWnd, 105, 56
     Move frmAdmin.Left - Width, frmAdmin.Top
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-    frmAdmin.styleButtons
-    frmAdmin.lastIndex = -1
-    frmAdmin.currentCategory = "Categories"
+
+    If FormVisible("frmAdmin") Then
+        frmAdmin.styleButtons
+        frmAdmin.lastIndex = -1
+        frmAdmin.currentCategory = "Categories"
+        frmAdmin.picSpawner.Visible = False
+    End If
+
     lastTab = -1
     currentItemIndex = -1
 End Sub
@@ -577,7 +570,36 @@ Private Sub listItems_ItemClick(ByVal item As MSComctlLib.ListItem)
 End Sub
 
 Private Sub listItems_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
-'Wykorzystac HitTest do pokazywania  Item Description
+    Dim oListItem As ListItem, indexx As Long, num As Long
+    
+    Set oListItem = listItems.HitTest(x, y)
+    If Not oListItem Is Nothing Then
+        indexx = oListItem.Index
+        If Not FormVisible("frmItemDesc") Then
+            Load frmItemDesc
+        End If
+        If indexx <> descIndex Then
+            
+            If tabItems.SelectedItem.Index = 1 Then
+                num = lastSpawnedItems(indexx - 1)
+            Else
+                num = currentlyListedIndexes(indexx - 1)
+            End If
+            frmItemDesc.lblName = Trim(item(num).name)
+            frmItemDesc.lblStack = "Stackable: " & IIf(item(num).stackable > 0, "yes", "no")
+            frmItemDesc.lblLevel = "LVL: " & item(num).LevelReq
+            frmItemDesc.lblType = "Type: " & getItemType(item(num).Type)
+            frmItemDesc.lbl2Hand = "2-Handed: " & IIf(item(num).TwoHanded > 0, "yes", "no")
+            
+            frmItemDesc.Visible = True
+        End If
+        descIndex = indexx
+    Else
+        If FormVisible("frmItemDesc") Then
+            Unload frmItemDesc
+        End If
+        descIndex = 0
+    End If
 End Sub
 
 Private Sub radioGround_Click()
@@ -723,6 +745,10 @@ End Function
 Private Sub selectValue(ByRef textBox As textBox)
     textBox.SelStart = 0
     textBox.SelLength = Len(textBox.text)
+End Sub
+
+Private Sub tabItems_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+    If FormVisible("frmItemDesc") Then Unload frmItemDesc
 End Sub
 
 Private Sub txtAmount_Change()

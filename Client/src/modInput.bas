@@ -467,7 +467,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                         GoTo Continue
                     End If
                     
-                    If frmAdmin.Visible Then
+                    If FormVisible("frmAdmin") Then
                         Unload frmAdmin
                     Else
                         InitAdminPanel

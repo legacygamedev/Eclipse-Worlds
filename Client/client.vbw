@@ -44,3 +44,4 @@ modBassMidi = 234, 234, 1560, 811,
 frmCharEditor = 50, 50, 1039, 489, , 125, 125, 1114, 564, C
 frmItemSpawner = 200, 200, 1189, 631, , 0, 0, 989, 431, C
 modGDIPlusResize = 312, 312, 1422, 962, 
+frmItemDesc = 50, 50, 1046, 408, C, 25, 25, 1021, 383, C

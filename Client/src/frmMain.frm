@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -816,7 +816,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -3035,7 +3034,7 @@ Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpCl
          As Any) As Long
          
 Private Sub Form_Paint()
-    If frmCharEditor.Visible Then
+    If FormVisible("frmCharEditor") Then
         frmCharEditor.Show
     End If
 End Sub
@@ -3218,8 +3217,8 @@ Private Sub lblChoices_MouseMove(Index As Integer, Button As Integer, Shift As I
     
     Call ClearChatButton(Index)
     If frmMain.lblChoices(Index).Visible = False Then Exit Sub
-    If frmMain.lblChoices.Item(Index).ForeColor = vbYellow Then Exit Sub
-    frmMain.lblChoices.Item(Index).ForeColor = vbYellow
+    If frmMain.lblChoices.item(Index).ForeColor = vbYellow Then Exit Sub
+    frmMain.lblChoices.item(Index).ForeColor = vbYellow
     Audio.PlaySound ButtonHover
     Exit Sub
     
@@ -3236,8 +3235,8 @@ Private Sub ClearChatButton(Index As Integer)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For i = 1 To 4
-        If frmMain.lblChoices.Item(i).ForeColor = vbYellow And Not Index = i Then
-            frmMain.lblChoices.Item(i).ForeColor = &H80000003
+        If frmMain.lblChoices.item(i).ForeColor = vbYellow And Not Index = i Then
+            frmMain.lblChoices.item(i).ForeColor = &H80000003
         End If
     Next
     
@@ -3537,7 +3536,7 @@ Private Sub lblPartyLeave_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Party.Num > 0 Then
+    If Party.num > 0 Then
         SendPartyLeave
     Else
         AddText "You are not in a party.", BrightRed
@@ -4075,7 +4074,7 @@ Private Sub picButton_Click(Index As Integer)
         ' Don't set it if it's the trade/GUI adjusting button
         If Not Index = 5 And Not Index = 14 And Not Index = 15 Then
             CurButton_Main = Index
-            picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).FileName & "_click.jpg")
+            picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).filename & "_click.jpg")
             Call ResetMainButtons
         End If
         
@@ -4102,7 +4101,7 @@ Private Sub picButton_MouseMove(Index As Integer, Button As Integer, Shift As In
     
     If Not LastButton_Main = Index And Not CurButton_Main = Index Then
         Call ResetMainButtons
-        picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).FileName & "_hover.jpg")
+        picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).filename & "_hover.jpg")
         Call Audio.PlaySound(ButtonHover)
         LastButton_Main = Index
     End If
@@ -4168,18 +4167,18 @@ Public Sub TogglePanel(ByVal PanelNum As Long)
         Case 14
             ButtonsVisible = Not ButtonsVisible
             If ButtonsVisible Then
-                MainButton(14).FileName = "btn_hidepanels"
+                MainButton(14).filename = "btn_hidepanels"
             Else
-                MainButton(14).FileName = "btn_showpanels"
+                MainButton(14).filename = "btn_showpanels"
             End If
             Call ResetMainButtons
             Call ToggleButtons(ButtonsVisible)
         Case 15
             GUIVisible = Not GUIVisible
             If GUIVisible Then
-                MainButton(15).FileName = "btn_hidegui"
+                MainButton(15).filename = "btn_hidegui"
             Else
-                MainButton(15).FileName = "btn_showgui"
+                MainButton(15).filename = "btn_showgui"
             End If
             Call ResetMainButtons
             Call ToggleGUI(GUIVisible)
@@ -4203,7 +4202,7 @@ Public Sub ResetMainButtons()
     
     For i = 1 To MAX_MAINBUTTONS
         If Not CurButton_Main = i Then
-            picButton(i).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(i).FileName & "_norm.jpg")
+            picButton(i).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(i).filename & "_norm.jpg")
         End If
     Next
     Exit Sub
@@ -4539,7 +4538,7 @@ Private Function IsShopItem(ByVal x As Single, ByVal y As Single) As Long
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_TRADES
-        If Shop(InShop).TradeItem(i).Item > 0 And Shop(InShop).TradeItem(i).Item <= MAX_ITEMS Then
+        If Shop(InShop).TradeItem(i).item > 0 And Shop(InShop).TradeItem(i).item <= MAX_ITEMS Then
             With TempRec
                 .Top = ShopTop + ((ShopOffsetY + PIC_Y) * ((i - 1) \ ShopColumns))
                 .Bottom = .Top + PIC_Y
@@ -4595,11 +4594,11 @@ Private Sub picShopItems_MouseDown(Button As Integer, Shift As Integer, x As Sin
             Case 0 ' no action, give cost
                 With Shop(InShop).TradeItem(ShopItem)
                     If .CostItem > 0 And .CostItem2 = 0 Then
-                        AddText "You can buy this item for " & .CostValue & " " & Trim$(Item(.CostItem).name) & ".", BrightGreen
+                        AddText "You can buy this item for " & .CostValue & " " & Trim$(item(.CostItem).name) & ".", BrightGreen
                     ElseIf .CostItem2 > 0 And .CostItem = 0 Then
-                        AddText "You can buy this item for " & .CostValue & " " & Trim$(Item(.CostItem).name) & ".", BrightGreen
+                        AddText "You can buy this item for " & .CostValue & " " & Trim$(item(.CostItem).name) & ".", BrightGreen
                     ElseIf .CostItem > 0 And .CostItem2 > 0 Then
-                        AddText "You can buy this item for " & .CostValue & " " & Trim$(Item(.CostItem).name) & " and " & .CostValue2 & " " & Trim$(Item(.CostItem2).name) & ".", BrightGreen
+                        AddText "You can buy this item for " & .CostValue & " " & Trim$(item(.CostItem).name) & " and " & .CostValue2 & " " & Trim$(item(.CostItem2).name) & ".", BrightGreen
                     Else
                         Exit Sub
                     End If
@@ -4651,8 +4650,8 @@ Private Sub picShopItems_MouseMove(Button As Integer, Shift As Integer, x As Sin
     If ShopSlot <> 0 Then
         X2 = x + picShop.Left + picShopItems.Left + 1
         Y2 = y + picShop.Top + picShopItems.Top + 1
-        UpdateItemDescWindow Shop(InShop).TradeItem(ShopSlot).Item, X2, Y2
-        LastItemDesc = Shop(InShop).TradeItem(ShopSlot).Item
+        UpdateItemDescWindow Shop(InShop).TradeItem(ShopSlot).item, X2, Y2
+        LastItemDesc = Shop(InShop).TradeItem(ShopSlot).item
         Exit Sub
     End If
     
@@ -4922,8 +4921,8 @@ Private Sub picYourTrade_MouseMove(Button As Integer, Shift As Integer, x As Sin
     If TradeNum <> 0 Then
         x = x + picTrade.Left + picYourTrade.Left + 4
         y = y + picTrade.Top + picYourTrade.Top + 4
-        UpdateItemDescWindow GetPlayerInvItemNum(MyIndex, TradeYourOffer(TradeNum).Num), x, y
-        LastItemDesc = GetPlayerInvItemNum(MyIndex, TradeYourOffer(TradeNum).Num) ' Set it so you don't re-set values
+        UpdateItemDescWindow GetPlayerInvItemNum(MyIndex, TradeYourOffer(TradeNum).num), x, y
+        LastItemDesc = GetPlayerInvItemNum(MyIndex, TradeYourOffer(TradeNum).num) ' Set it so you don't re-set values
         Exit Sub
     End If
     
@@ -4948,8 +4947,8 @@ Private Sub picTheirTrade_MouseMove(Button As Integer, Shift As Integer, x As Si
     If TradeNum <> 0 Then
         x = x + picTrade.Left + picTheirTrade.Left + 4
         y = y + picTrade.Top + picTheirTrade.Top + 4
-        UpdateItemDescWindow TradeTheirOffer(TradeNum).Num, x, y
-        LastItemDesc = TradeTheirOffer(TradeNum).Num ' Set it so you don't re-set values
+        UpdateItemDescWindow TradeTheirOffer(TradeNum).num, x, y
+        LastItemDesc = TradeTheirOffer(TradeNum).num ' Set it so you don't re-set values
         Exit Sub
     End If
     
@@ -5124,11 +5123,13 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
-                If frmAdmin.Visible And GetForegroundWindow = frmAdmin.hWnd Then
-                    Unload frmAdmin
-                ElseIf frmAdmin.Visible And GetForegroundWindow <> frmAdmin.hWnd Then
-                    BringWindowToTop (frmAdmin.hWnd)
-                    InitAdminPanel
+                If FormVisible("frmAdmin") Then
+                    If GetForegroundWindow = frmAdmin.hWnd Then
+                        Unload frmAdmin
+                    ElseIf GetForegroundWindow <> frmAdmin.hWnd Then
+                        BringWindowToTop (frmAdmin.hWnd)
+                        InitAdminPanel
+                    End If
                 Else
                     InitAdminPanel
                 End If
@@ -5345,7 +5346,7 @@ Private Sub picInventory_DblClick()
         
         ' In Bank
         If InBank Then
-            If Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
+            If item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
                 If GetPlayerInvItemValue(MyIndex, InvNum) > 1 Then
                     CurrencyMenu = 2 ' Deposit
                     lblCurrency.Caption = "How many do you want to deposit?"
@@ -5367,18 +5368,18 @@ Private Sub picInventory_DblClick()
         If InTrade > 0 Then
             ' Exit out if we're offering that item
             For i = 1 To MAX_INV
-                If TradeYourOffer(i).Num = InvNum Then
+                If TradeYourOffer(i).num = InvNum Then
                     ' Is currency?
-                    If Item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)).stackable = 1 Then
+                    If item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).num)).stackable = 1 Then
                         ' Only exit out if we're offering all of it
-                        If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
+                        If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).num) Then Exit Sub
                     Else
                         Exit Sub
                     End If
                 End If
             Next
             
-            If Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
+            If item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
                 If GetPlayerInvItemValue(MyIndex, InvNum) > 1 Then
                     CurrencyMenu = 4 ' Offer in trade
                     lblCurrency.Caption = "How many do you want to trade?"
@@ -5397,13 +5398,13 @@ Private Sub picInventory_DblClick()
         End If
         
         ' Don't use an item if it is None or Auto Life
-        If Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Or Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
+        If item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE Or item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Or item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
             AddText "You can't use this type of item!", BrightRed
             Exit Sub
         End If
         
         ' Reset Stat Points
-        If Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_RESETSTATS Then
+        If item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_RESETSTATS Then
             Dialogue "Reset Stats", "Are you sure you wish to reset your stats?", DIALOGUE_TYPE_RESETSTATS, True, InvNum
             Exit Sub
         End If
@@ -5526,9 +5527,9 @@ Private Function IsTradeItem(ByVal x As Single, ByVal y As Single, ByVal Yours A
     
     For i = 1 To MAX_INV
         If Yours Then
-            ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)
+            ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).num)
         Else
-            ItemNum = TradeTheirOffer(i).Num
+            ItemNum = TradeTheirOffer(i).num
         End If
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
@@ -5590,9 +5591,9 @@ Private Sub picInventory_MouseDown(Button As Integer, Shift As Integer, x As Sin
             lstDropDownBox.Clear
             
             ' Build the list
-            If Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE And Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 And Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
+            If Not item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE And Not item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 And Not item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
                 lstDropDownBox.AddItem "Use"
-            ElseIf Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_EQUIPMENT Then
+            ElseIf item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_EQUIPMENT Then
                 lstDropDownBox.AddItem "Equip"
             End If
             
@@ -5644,11 +5645,11 @@ Private Sub picInventory_MouseMove(Button As Integer, Shift As Integer, x As Sin
             ' Exit out if we're offering that item
             If InTrade > 0 Then
                 For i = 1 To MAX_INV
-                    If TradeYourOffer(i).Num = InvNum Then
+                    If TradeYourOffer(i).num = InvNum Then
                         ' is currency?
-                        If Item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)).stackable = 1 Then
+                        If item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).num)).stackable = 1 Then
                             ' Only exit out if we're offering all of it
-                            If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).Num) Then Exit Sub
+                            If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).num) Then Exit Sub
                         Else
                             Exit Sub
                         End If
@@ -5816,7 +5817,7 @@ Private Sub picBank_DblClick()
     BankNum = IsBankItem(BankX, BankY)
     
     If Not BankNum = 0 Then
-        If Item(GetBankItemNum(BankNum)).stackable = 1 Then
+        If item(GetBankItemNum(BankNum)).stackable = 1 Then
             If GetBankItemValue(BankNum) > 1 Then
                 CurrencyMenu = 3 ' Withdraw
                 lblCurrency.Caption = "How many do you want to withdraw?"
@@ -5921,8 +5922,8 @@ Private Sub picBank_MouseMove(Button As Integer, Shift As Integer, x As Single, 
         If BankNum <> 0 Then
             X2 = x + picBank.Left + 1
             Y2 = y + picBank.Top + 1
-            UpdateItemDescWindow bank.Item(BankNum).Num, X2, Y2
-            LastItemDesc = bank.Item(BankNum).Num
+            UpdateItemDescWindow bank.item(BankNum).num, X2, Y2
+            LastItemDesc = bank.item(BankNum).num
             Exit Sub
         End If
     End If
@@ -6009,7 +6010,7 @@ End Sub
 
 Private Sub DropItem(ByVal InvNum As Byte)
     If InvNum > 0 And InvNum <= MAX_INV Then
-        If Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
+        If item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
             If GetPlayerInvItemValue(MyIndex, InvNum) > 0 Then
                 CurrencyMenu = 1 ' drop
                 lblCurrency.Caption = "How many do you want to drop?"

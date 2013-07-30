@@ -40,12 +40,29 @@ Begin VB.Form frmAdmin
       TabStop         =   0   'False
       Top             =   15
       Width           =   2970
-      Begin VB.CommandButton Command1 
-         Caption         =   "Command1"
-         Height          =   195
-         Left            =   2535
+      Begin VB.PictureBox picSizer 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   300
+         Left            =   2565
+         ScaleHeight     =   270
+         ScaleWidth      =   270
+         TabIndex        =   69
+         Top             =   3270
+         Width           =   300
+      End
+      Begin VB.PictureBox picSpawner 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Left            =   1170
+         ScaleHeight     =   210
+         ScaleWidth      =   210
          TabIndex        =   68
-         Top             =   900
+         Top             =   4680
+         Visible         =   0   'False
          Width           =   240
       End
       Begin VB.CheckBox chkEditor 
@@ -388,6 +405,7 @@ Begin VB.Form frmAdmin
       Begin VB.PictureBox picRecentItem 
          Appearance      =   0  'Flat
          BackColor       =   &H80000001&
+         Enabled         =   0   'False
          ForeColor       =   &H80000008&
          Height          =   480
          Left            =   195
@@ -496,7 +514,7 @@ Begin VB.Form frmAdmin
          Top             =   4920
          Width           =   420
       End
-      Begin MSComCtl2.UpDown UpDown1 
+      Begin MSComCtl2.UpDown rcSwitcher 
          Height          =   255
          Left            =   765
          TabIndex        =   28
@@ -505,10 +523,11 @@ Begin VB.Form frmAdmin
          _ExtentX        =   847
          _ExtentY        =   450
          _Version        =   393216
+         Max             =   20
          Orientation     =   1
          Enabled         =   0   'False
       End
-      Begin VB.CommandButton cmdSpawnLast 
+      Begin VB.CommandButton cmdSpawnRecent 
          Caption         =   "Spawn Recent"
          Enabled         =   0   'False
          Height          =   255
@@ -517,7 +536,7 @@ Begin VB.Form frmAdmin
          Top             =   7935
          Width           =   1380
       End
-      Begin VB.TextBox txtLastAmount 
+      Begin VB.TextBox txtRecentAmount 
          Alignment       =   2  'Center
          Appearance      =   0  'Flat
          Enabled         =   0   'False
@@ -813,7 +832,7 @@ Begin VB.Form frmAdmin
          _ExtentY        =   979
          _Version        =   393216
          BuddyControl    =   "txtSprite"
-         BuddyDispid     =   196618
+         BuddyDispid     =   196617
          OrigLeft        =   3990
          OrigTop         =   1770
          OrigRight       =   4245
@@ -880,7 +899,7 @@ Begin VB.Form frmAdmin
          Left            =   105
          TabIndex        =   25
          Top             =   4695
-         Width           =   1260
+         Width           =   1020
       End
       Begin VB.Label lblStatus 
          Alignment       =   2  'Center
@@ -888,7 +907,7 @@ Begin VB.Form frmAdmin
          BackColor       =   &H0000FF00&
          BeginProperty Font 
             Name            =   "Arial"
-            Size            =   9.75
+            Size            =   8.25
             Charset         =   238
             Weight          =   400
             Underline       =   0   'False
@@ -940,10 +959,10 @@ Begin VB.Form frmAdmin
          EndProperty
          ForeColor       =   &H000000C0&
          Height          =   195
-         Left            =   1380
+         Left            =   1680
          TabIndex        =   16
          Top             =   3345
-         Width           =   1410
+         Width           =   765
       End
       Begin VB.Label lblSpawning 
          Alignment       =   2  'Center
@@ -1001,11 +1020,11 @@ Begin VB.Form frmAdmin
          Y1              =   311
          Y2              =   311
       End
-      Begin VB.Line Line2 
+      Begin VB.Line lineEditors 
          BorderColor     =   &H000000C0&
          BorderWidth     =   3
-         X1              =   99
-         X2              =   183
+         X1              =   103
+         X2              =   187
          Y1              =   240
          Y2              =   240
       End
@@ -1046,6 +1065,7 @@ Attribute VB_Exposed = False
 Dim refreshDown As Boolean
 Dim autoAccess As Boolean, autoSprite As Boolean
 Dim currentSprite As Long
+Private currentRecentAm As Long
 Private catSub As Boolean
 Public lastIndex As Integer
 Public currentCategory As String
@@ -1055,7 +1075,6 @@ Private Const WM_ChangeUIState As Long = &H127
 Private Const UIS_HideRectangle As Integer = &H1
 Private Const UIS_ShowRectangle As Integer = &H2
 Private Const UISF_FocusRectangle As Integer = &H1
-
 Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, _
 ByVal wMsg As Long, ByVal wParam As Long, lparam As Any) As Long
 
@@ -1185,7 +1204,7 @@ Public Sub chkEditor_Click(Index As Integer)
                     SendRequestEditMap
                     chkEditor(Index).FontBold = True
                 Else
-                    If frmEditor_Map.Visible Then
+                    If FormVisible("frmEditor_Map") Then
                         ignoreChange = True
                         chkEditor(Index).Value = 1
                         BringWindowToTop (frmEditor_Map.hWnd)
@@ -1659,9 +1678,57 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub cmdSpawnRecent_Click()
 
-Private Sub Command1_Click()
- loko
+    Dim item As Byte
+
+    Dim i    As Byte
+
+    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+        AddText "You have insufficent access to do this!", BrightRed
+
+        Exit Sub
+
+    End If
+
+    item = lastSpawnedItems(rcSwitcher.Value)
+
+    SendSpawnItem item, CLng(txtRecentAmount), True
+
+    Dim found As Integer, limit As Integer
+
+    For i = 0 To UBound(lastSpawnedItems) - 1
+    
+        If lastSpawnedItems(i) = item Then
+            found = i
+
+            Exit For
+
+        End If
+    
+    Next
+    
+    If found = -1 Then
+        If UBound(lastSpawnedItems) = 20 Then
+            DeleteByPtr lastSpawnedItems, 20
+        End If
+
+        InsertByPtr lastSpawnedItems, 0
+    Else
+        DeleteByPtr lastSpawnedItems, found
+        InsertByPtr lastSpawnedItems, 0
+    End If
+
+    lastSpawnedItems(0) = item
+    frmAdmin.UpdateRecentSpawner
+    If FormVisible("frmItemSpawner") Then
+        If frmItemSpawner.tabItems.SelectedItem.Index = 1 Then
+            frmItemSpawner.updatingItem = True
+            frmItemSpawner.tabItems_Click
+        End If
+    End If
+    Exit Sub
+    
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
@@ -1756,6 +1823,7 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
                 Exit Sub
             Else
                 frmItemSpawner.Visible = True
+                picSpawner.Visible = True
                 ignoreChange = True
                 frmItemSpawner.tabItems.SelectedItem = frmItemSpawner.tabItems.Tabs(Index + 1)
                 frmItemSpawner.Move frmAdmin.Left - frmItemSpawner.Width, frmAdmin.Top
@@ -1950,6 +2018,8 @@ Dim i As Long, temp1 As Long, temp2 As Long
             SubClassHwnd chkEditor(i).hWnd
         Next
         catSub = True
+        picSpawner.Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
+        picSpawner.BorderStyle = 0
     End If
 End Sub
 Public Sub findVisibleEditors()
@@ -2025,11 +2095,28 @@ Public Sub findVisibleEditors()
                     chkEditor(EDITOR_TITLE).Value = 1
                     chkEditor(EDITOR_TITLE).FontBold = True
                     picEye(EDITOR_TITLE).Visible = True
+                Case "frmItemSpawner"
+                    picSpawner.Visible = True
             End Select
             
         End If
     Next
 End Sub
+Public Sub UpdateRecentSpawner()
+    If ArrayIsInitialized(lastSpawnedItems) Then
+        If UBound(lastSpawnedItems) > 0 Then
+            lblItemName.Enabled = True
+            txtRecentAmount.Enabled = True
+            cmdSpawnRecent.Enabled = True
+            rcSwitcher.max = UBound(lastSpawnedItems) - 1
+            rcSwitcher.Enabled = True
+            picRecentItem.Enabled = True
+            lblItemName.Caption = item(lastSpawnedItems(rcSwitcher.Value)).name
+            txtRecentAmount.text = 1
+        End If
+    End If
+End Sub
+
 Public Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -2054,6 +2141,7 @@ Public Sub Form_Load()
     LastAdminSpriteTimer = timeGetTime
 
     UpdateAdminScrollBar
+    UpdateRecentSpawner
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
     refreshingAdminList = True
     SendRequestPlayersOnline
@@ -2063,6 +2151,44 @@ Public Sub Form_Load()
 errorhandler:
     HandleError "Form_Load", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+End Sub
+
+Private Sub picSizer_Click()
+    Dim ctrl As Control
+    If adminMin Then
+        
+    Else
+        Exit Sub
+        For Each ctrl In Controls
+            Select Case ctrl.name
+            
+                Case "lblEditors"
+                    ctrl.Left = ctrl.Left - 111
+                Case "lineEditors"
+                    ctrl.X1 = ctrl.X1 - 100
+                    ctrl.X2 = ctrl.X2 - 100
+                Case "picSizer"
+                    ctrl.Left = ctrl.Left - 111
+                Case "chkEditor"
+                    ctrl.Left = ctrl.Left - 111
+                Case "picEye"
+                    ctrl.Left = ctrl.Left - 111
+                Case Else
+                    ctrl.Visible = False
+            End Select
+        Next
+    End If
+
+End Sub
+
+Private Sub picSpawner_Click()
+    If FormVisible("frmItemSpawner") Then
+        BringWindowToTop (frmItemSpawner.hWnd)
+    End If
+End Sub
+
+Private Sub rcSwitcher_Change()
+    frmAdmin.UpdateRecentSpawner
 End Sub
 
 Private Sub txtAMap_GotFocus()
@@ -2175,6 +2301,22 @@ End Sub
 Private Sub selectValue(ByRef textBox As textBox)
     textBox.SelStart = 0
     textBox.SelLength = Len(textBox.text)
+End Sub
+
+Private Sub txtRecentAmount_Change()
+    correctValue txtRecentAmount, currentRecentAm, 0, 999999
+End Sub
+
+Private Sub txtRecentAmount_Click()
+    selectValue txtRecentAmount
+End Sub
+
+Private Sub txtRecentAmount_GotFocus()
+    selectValue txtRecentAmount
+End Sub
+
+Private Sub txtRecentAmount_LostFocus()
+    reviseValue txtRecentAmount, currentRecentAm
 End Sub
 
 Private Sub txtSprite_Change()
