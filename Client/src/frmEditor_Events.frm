@@ -4547,7 +4547,7 @@ Private Sub cmdCommands_Click(Index As Integer)
                 If cmbChangeClass.ListCount = 0 Then
                 cmbChangeClass.Clear
                 For i = 1 To MAX_CLASSES
-                    cmbChangeClass.AddItem Trim$(Class(i).Name)
+                    cmbChangeClass.AddItem Trim$(Class(i).name)
                 Next
                 cmbChangeClass.ListIndex = 0
                 End If
@@ -4596,7 +4596,7 @@ Private Sub cmdCommands_Click(Index As Integer)
             cmbEvent.Enabled = True
             For i = 1 To Map.EventCount
                 If i <> EditorEvent Then
-                    cmbEvent.AddItem Trim$(Map.events(i).Name)
+                    cmbEvent.AddItem Trim$(Map.events(i).name)
                     x = x + 1
                     ListOfEvents(x) = i
                 End If
@@ -4618,7 +4618,7 @@ Private Sub cmdCommands_Click(Index As Integer)
         Case 25
             cmbPlayAnimEvent.Clear
             For i = 1 To Map.EventCount
-                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).Name)
+                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).name)
             Next
             cmbPlayAnimEvent.ListIndex = 0
             optPlayAnimPlayer.Value = True
@@ -5608,6 +5608,12 @@ End Sub
 
 Public Sub InitEventEditorForm()
     Dim i As Long
+
+    If frmAdmin.Visible Then
+        frmEditor_Events.Move frmAdmin.Left - frmEditor_Events.Width, frmAdmin.Top
+     Else
+        frmEditor_Events.Move frmMain.Left + frmMain.Width - frmEditor_Events.Width, frmMain.Top
+    End If
     
     ' Level
     scrlChangeLevel.min = 1
@@ -5634,7 +5640,7 @@ Public Sub InitEventEditorForm()
     cmbChangeItemIndex.Clear
     
     For i = 1 To MAX_ITEMS
-        cmbChangeItemIndex.AddItem Trim$(Item(i).Name)
+        cmbChangeItemIndex.AddItem Trim$(item(i).name)
     Next
     cmbChangeItemIndex.ListIndex = 0
     
@@ -5642,7 +5648,7 @@ Public Sub InitEventEditorForm()
     cmbChangeSkills.Clear
     
     For i = 1 To MAX_SPELLS
-        cmbChangeSkills.AddItem Trim$(Spell(i).Name)
+        cmbChangeSkills.AddItem Trim$(Spell(i).name)
     Next
     cmbChangeSkills.ListIndex = 0
     
@@ -5650,7 +5656,7 @@ Public Sub InitEventEditorForm()
     cmbChangeClass.Clear
     
     For i = 1 To MAX_CLASSES
-        cmbChangeClass.AddItem i & ": " & Trim$(Class(i).Name)
+        cmbChangeClass.AddItem i & ": " & Trim$(Class(i).name)
     Next
     cmbChangeClass.ListIndex = 0
     
@@ -5658,7 +5664,7 @@ Public Sub InitEventEditorForm()
     cmbPlayAnim.Clear
     
     For i = 1 To MAX_ANIMATIONS
-        cmbPlayAnim.AddItem i & ": " & Trim$(Animation(i).Name)
+        cmbPlayAnim.AddItem i & ": " & Trim$(Animation(i).name)
     Next
     cmbPlayAnim.ListIndex = 0
     
@@ -5682,7 +5688,7 @@ Public Sub InitEventEditorForm()
     cmbOpenShop.Clear
     
     For i = 1 To MAX_SHOPS
-        cmbOpenShop.AddItem i & ". " & Trim$(Shop(i).Name)
+        cmbOpenShop.AddItem i & ". " & Trim$(Shop(i).name)
     Next
     cmbOpenShop.ListIndex = 0
     
@@ -5691,7 +5697,7 @@ Public Sub InitEventEditorForm()
     
     For i = 1 To MAX_MAP_NPCS
         If Map.NPC(i) > 0 Then
-            cmbSpawnNPC.AddItem i & ". " & Trim$(NPC(Map.NPC(i)).Name)
+            cmbSpawnNPC.AddItem i & ". " & Trim$(NPC(Map.NPC(i)).name)
         Else
             cmbSpawnNPC.AddItem i & ". "
         End If
@@ -5806,7 +5812,7 @@ End Sub
 
 Private Sub lstMoveRoute_KeyDown(KeyCode As Integer, Shift As Integer)
     If KeyCode = 46 Then
-        'remove move route command lol
+        ' Remove move route command lol
         If lstMoveRoute.ListIndex > -1 Then
             Call RemoveMoveRouteCommand(lstMoveRoute.ListIndex)
         End If
@@ -5834,7 +5840,8 @@ Private Sub lstVariables_DblClick()
 End Sub
 
 Private Sub optChatBubbleTarget_Click(Index As Integer)
-Dim i As Long
+    Dim i As Long
+
     If Index = 0 Then
         cmbChatBubbleTarget.Visible = False
     ElseIf Index = 1 Then
@@ -5844,7 +5851,7 @@ Dim i As Long
             If Map.NPC(i) <= 0 Then
                 cmbChatBubbleTarget.AddItem CStr(i) & ". "
             Else
-                cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(NPC(Map.NPC(i)).Name)
+                cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(NPC(Map.NPC(i)).name)
             End If
         Next
         cmbChatBubbleTarget.ListIndex = 0
@@ -5852,7 +5859,7 @@ Dim i As Long
         cmbChatBubbleTarget.Visible = True
         cmbChatBubbleTarget.Clear
         For i = 1 To Map.EventCount
-            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.events(i).Name)
+            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.events(i).name)
         Next
         cmbChatBubbleTarget.ListIndex = 0
     End If
@@ -5914,21 +5921,21 @@ Dim i As Long
     cmbCondition_HasItem.Enabled = False
     cmbCondition_HasItem.Clear
     For i = 1 To MAX_ITEMS
-        cmbCondition_HasItem.AddItem i & ". " & Trim$(Item(i).Name)
+        cmbCondition_HasItem.AddItem i & ". " & Trim$(item(i).name)
     Next
     cmbCondition_HasItem.ListIndex = 0
     
     cmbCondition_ClassIs.Enabled = False
     cmbCondition_ClassIs.Clear
     For i = 1 To MAX_CLASSES
-        cmbCondition_ClassIs.AddItem i & ". " & CStr(Class(i).Name)
+        cmbCondition_ClassIs.AddItem i & ". " & CStr(Class(i).name)
     Next
     cmbCondition_ClassIs.ListIndex = 0
     
     cmbCondition_LearntSkill.Enabled = False
     cmbCondition_LearntSkill.Clear
     For i = 1 To MAX_SPELLS
-        cmbCondition_LearntSkill.AddItem i & ". " & Trim$(Spell(i).Name)
+        cmbCondition_LearntSkill.AddItem i & ". " & Trim$(Spell(i).name)
     Next
     cmbCondition_LearntSkill.ListIndex = 0
     cmbCondition_LevelCompare.Enabled = False
@@ -6244,7 +6251,7 @@ Private Sub tabPages_Click()
 End Sub
 
 Private Sub txtName_Validate(Cancel As Boolean)
-    tmpEvent.Name = Trim$(txtName.text)
+    tmpEvent.name = Trim$(txtName.text)
 End Sub
 
 Private Sub txtPlayerVariable_Validate(Cancel As Boolean)

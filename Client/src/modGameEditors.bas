@@ -2583,18 +2583,12 @@ End Sub
 
 Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = False)
     Dim i As Long
-    
+
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If EventNum < 1 Then
         frmEditor_Events.Visible = True
-        
-        If frmAdmin.Visible Then
-            frmEditor_Events.Move frmAdmin.Left - frmEditor_Events.Width, frmAdmin.Top
-        Else
-            frmEditor_Events.Move frmMain.Left + frmMain.Width - frmEditor_Events.Width, frmMain.Top
-        End If
         Exit Sub
     End If
     
