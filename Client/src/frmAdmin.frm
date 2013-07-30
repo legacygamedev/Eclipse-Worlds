@@ -1634,11 +1634,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-
-
-
-
-
 Private Sub cmdAMute_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1657,11 +1652,6 @@ Private Sub cmdAMute_Click()
 errorhandler:
     HandleError "cmdAMute_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
-End Sub
-
-
-Private Sub Command1_Click()
- loko
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
