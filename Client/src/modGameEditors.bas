@@ -37,11 +37,6 @@ Private Const WM_KILLFOCUS  As Long = &H8
 Public Sub MapEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
-        frmEditor_Map.Move frmAdmin.Left - frmEditor_Map.Width, frmAdmin.Top
-    Else
-        frmEditor_Map.Move frmMain.Left + frmMain.Width - frmEditor_Map.Width, frmMain.Top
-    End If
     
     ' Reset the layer to 1
     frmEditor_Map.OptLayers = 1
@@ -71,12 +66,14 @@ errorhandler:
     HandleError "MapEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
 Function ProcAdr(addr As Long) As Long
       ProcAdr = addr
 End Function
 Public Function getWndProcAddr() As Long
     getWndProcAddr = ProcAdr(AddressOf WindowProc)
 End Function
+
 Private Function WindowProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lparam As Long) As Long
     
         Select Case msg
@@ -765,22 +762,12 @@ Public Sub ItemEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    If frmAdmin.Visible Then
-        frmEditor_Item.Move frmAdmin.Left - frmEditor_Item.Width, frmAdmin.Top
-    Else
-        frmEditor_Item.Move frmMain.Left + frmMain.Width - frmEditor_Item.Width, frmMain.Top
-    End If
-    
-    If frmEditor_Item.Visible = False Then Exit Sub
-    
+
     EditorIndex = frmEditor_Item.lstIndex.ListIndex + 1
     Item_Changed(EditorIndex) = True
 
     ' Populate the cache if we need to
-    If Not HasPopulated Then
-        PopulateLists
-    End If
+    If Not HasPopulated Then PopulateLists
     
     ' Add the array to the combo
     frmEditor_Item.cmbSound.Clear
@@ -1010,17 +997,12 @@ Public Sub AnimationEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    ' If form isn't visible then exit
-    If frmEditor_Animation.Visible = False Then Exit Sub
-    
     EditorIndex = frmEditor_Animation.lstIndex.ListIndex + 1
     Animation_Changed(EditorIndex) = True
     
     ' Populate the cache if we need to
-    If Not HasPopulated Then
-        PopulateLists
-    End If
-    
+    If Not HasPopulated Then PopulateLists
+
     ' Add the array to the combo
     frmEditor_Animation.cmbSound.Clear
     frmEditor_Animation.cmbSound.AddItem "None"
@@ -1029,11 +1011,6 @@ Public Sub AnimationEditorInit()
         frmEditor_Animation.cmbSound.AddItem SoundCache(i)
     Next
 
-    If frmAdmin.Visible Then
-        frmEditor_Animation.Move frmAdmin.Left - frmEditor_Animation.Width, frmAdmin.Top
-    Else
-        frmEditor_Animation.Move frmMain.Left + frmMain.Width - frmEditor_Animation.Width, frmMain.Top
-    End If
     With Animation(EditorIndex)
         frmEditor_Animation.txtName.text = Trim$(.name)
         
@@ -1142,13 +1119,6 @@ Public Sub NPCEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
-        frmEditor_NPC.Move frmAdmin.Left - frmEditor_NPC.Width, frmAdmin.Top
-    Else
-        frmEditor_NPC.Move frmMain.Left + frmMain.Width - frmEditor_NPC.Width, frmMain.Top
-    End If
-    
-    If frmEditor_NPC.Visible = False Then Exit Sub
     
     EditorIndex = frmEditor_NPC.lstIndex.ListIndex + 1
     Npc_Changed(EditorIndex) = True
@@ -1315,21 +1285,13 @@ Public Sub ResourceEditorInit()
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
-        frmEditor_Resource.Move frmAdmin.Left - frmEditor_Resource.Width, frmAdmin.Top
-    Else
-        frmEditor_Resource.Move frmMain.Left + frmMain.Width - frmEditor_Resource.Width, frmMain.Top
-    End If
-    If frmEditor_Resource.Visible = False Then Exit Sub
-    
+
     EditorIndex = frmEditor_Resource.lstIndex.ListIndex + 1
     Resource_Changed(EditorIndex) = True
     
     ' Populate the cache if we need to
-    If Not HasPopulated Then
-        PopulateLists
-    End If
-    
+    If Not HasPopulated Then PopulateLists
+
     ' Add the array to the combo
     frmEditor_Resource.cmbSound.Clear
     frmEditor_Resource.cmbSound.AddItem "None"
@@ -1452,18 +1414,11 @@ Public Sub ShopEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
-        frmEditor_Shop.Move frmAdmin.Left - frmEditor_Shop.Width, frmAdmin.Top
-    Else
-        frmEditor_Shop.Move frmMain.Left + frmMain.Width - frmEditor_Shop.Width, frmMain.Top
-    End If
     
-    If frmEditor_Shop.Visible = False Then Exit Sub
+    EditorIndex = frmEditor_Shop.lstIndex.ListIndex + 1
+    Shop_Changed(EditorIndex) = True
     
     With frmEditor_Shop
-        EditorIndex = .lstIndex.ListIndex + 1
-        Shop_Changed(EditorIndex) = True
-        
         .txtName.text = Trim$(Shop(EditorIndex).name)
         
         If Shop(EditorIndex).BuyRate > 0 And Shop(EditorIndex).BuyRate <= .scrlBuy.max Then
@@ -1585,22 +1540,12 @@ Public Sub SpellEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If frmAdmin.Visible Then
-        frmEditor_Spell.Move frmAdmin.Left - frmEditor_Spell.Width, frmAdmin.Top
-    Else
-        frmEditor_Spell.Move frmMain.Left + frmMain.Width - frmEditor_Spell.Width, frmMain.Top
-    End If
-    
-    If frmEditor_Spell.Visible = False Then Exit Sub
-    
     EditorIndex = frmEditor_Spell.lstIndex.ListIndex + 1
     Spell_Changed(EditorIndex) = True
     
     ' Populate the cache if we need to
-    If Not HasPopulated Then
-        PopulateLists
-    End If
-    
+    If Not HasPopulated Then PopulateLists
+
     ' Add the array to the combo
     frmEditor_Spell.cmbSound.Clear
     frmEditor_Spell.cmbSound.AddItem "None"
@@ -1930,11 +1875,6 @@ Public Sub BanEditorInit()
     EditorIndex = frmEditor_Ban.lstIndex.ListIndex + 1
     Ban_Changed(EditorIndex) = True
 
-    If frmAdmin.Visible Then
-        frmEditor_Ban.Move frmAdmin.Left - frmEditor_Ban.Width, frmAdmin.Top
-    Else
-        frmEditor_Ban.Move frmMain.Left + frmMain.Width - frmEditor_Ban.Width, frmMain.Top
-    End If
     With frmEditor_Ban
         .txtName.text = Trim(Ban(EditorIndex).PlayerName)
         .txtLogin.text = Trim(Ban(EditorIndex).PlayerLogin)
@@ -2017,12 +1957,6 @@ End Sub
 Public Sub TitleEditorInit()
     ' Check if the form is visible if not then exit
     If frmEditor_Title.Visible = False Then Exit Sub
-    
-    If frmAdmin.Visible Then
-        frmEditor_Title.Move frmAdmin.Left - frmEditor_Title.Width, frmAdmin.Top
-    Else
-        frmEditor_Title.Move frmMain.Left + frmMain.Width - frmEditor_Title.Width, frmMain.Top
-    End If
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -2165,11 +2099,6 @@ Public Sub MoralEditorInit()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
-        frmEditor_Moral.Move frmAdmin.Left - frmEditor_Moral.Width, frmAdmin.Top
-    Else
-        frmEditor_Moral.Move frmMain.Left + frmMain.Width - frmEditor_Moral.Width, frmMain.Top
-    End If
     
     EditorIndex = frmEditor_Moral.lstIndex.ListIndex + 1
     Moral_Changed(EditorIndex) = True
@@ -2250,14 +2179,6 @@ End Sub
 Public Sub ClassEditorInit()
     Dim i As Long
 
-    If frmAdmin.Visible Then
-        frmEditor_Class.Move frmAdmin.Left - frmEditor_Class.Width, frmAdmin.Top
-    Else
-        frmEditor_Class.Move frmMain.Left + frmMain.Width - frmEditor_Class.Width, frmMain.Top
-    End If
-    ' Check if the form is visible if not then exit
-    If frmEditor_Class.Visible = False Then Exit Sub
-    
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -2337,10 +2258,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub UpdateAdminScrollBar()
-
-End Sub
-
 Public Sub UpdateSpellScrollBars()
     With frmEditor_Item
         If .scrlSpell.Value = 0 Then
@@ -2354,7 +2271,7 @@ Public Sub UpdateSpellScrollBars()
     End With
 End Sub
 
-' Item Spawner davemax © 07.2013
+' Item Spawner
 Public Function populateSpecificType(ByRef tempItems() As ItemRec, ItemType As Byte) As Boolean
     Dim i As Long, counter As Long, found As Boolean
     For i = 1 To MAX_ITEMS
@@ -2419,11 +2336,7 @@ End Sub
 Public Sub EmoticonEditorInit()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    If frmAdmin.Visible Then
-        frmEditor_Emoticon.Move frmAdmin.Left - frmEditor_Emoticon.Width, frmAdmin.Top
-    Else
-        frmEditor_Emoticon.Move frmMain.Left + frmMain.Width - frmEditor_Emoticon.Width, frmMain.Top
-    End If
+
     With frmEditor_Emoticon
         ' Check if the form is visible if not then exit
         If .Visible = False Then Exit Sub

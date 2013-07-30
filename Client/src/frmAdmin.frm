@@ -2043,7 +2043,6 @@ Public Sub Form_Load()
     
     LastAdminSpriteTimer = timeGetTime
 
-    UpdateAdminScrollBar
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
     refreshingAdminList = True
     SendRequestPlayersOnline
