@@ -573,6 +573,318 @@ Begin VB.Form frmEditor_Item
          Width           =   405
       End
    End
+   Begin VB.Frame Frame4 
+      Caption         =   "Description"
+      Height          =   1095
+      Left            =   3360
+      TabIndex        =   101
+      Top             =   3600
+      Width           =   6255
+      Begin VB.TextBox txtDesc 
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   735
+         Left            =   120
+         MaxLength       =   255
+         MultiLine       =   -1  'True
+         ScrollBars      =   2  'Vertical
+         TabIndex        =   16
+         Top             =   240
+         Width           =   6015
+      End
+   End
+   Begin VB.Frame fraConsume 
+      Caption         =   "Consumable Data"
+      Height          =   2775
+      Left            =   3360
+      TabIndex        =   72
+      Top             =   4680
+      Visible         =   0   'False
+      Width           =   4455
+      Begin VB.HScrollBar scrlDuration 
+         Height          =   255
+         Left            =   3000
+         Max             =   60
+         TabIndex        =   27
+         Top             =   1680
+         Width           =   1335
+      End
+      Begin VB.CheckBox chkHoT 
+         Caption         =   "Heal Over Time"
+         Height          =   375
+         Left            =   3000
+         TabIndex        =   106
+         TabStop         =   0   'False
+         Top             =   960
+         Width           =   1380
+      End
+      Begin VB.CheckBox chkReusable 
+         Caption         =   "Reusable"
+         Height          =   255
+         Index           =   1
+         Left            =   3000
+         TabIndex        =   29
+         TabStop         =   0   'False
+         Top             =   720
+         Width           =   1025
+      End
+      Begin VB.CheckBox chkInstaCast 
+         Caption         =   "Instant Cast"
+         Height          =   255
+         Left            =   3000
+         TabIndex        =   28
+         TabStop         =   0   'False
+         Top             =   480
+         Width           =   1335
+      End
+      Begin VB.HScrollBar scrlCastSpell 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   26
+         Top             =   2280
+         Width           =   2775
+      End
+      Begin VB.HScrollBar scrlAddEXP 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   25
+         Top             =   1680
+         Width           =   2775
+      End
+      Begin VB.HScrollBar scrlAddMP 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   24
+         Top             =   1080
+         Width           =   2775
+      End
+      Begin VB.HScrollBar scrlAddHP 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   23
+         Top             =   480
+         Width           =   2775
+      End
+      Begin VB.Label lblDuration 
+         Caption         =   "Duration: 0 s"
+         Height          =   255
+         Left            =   3000
+         TabIndex        =   107
+         Top             =   1440
+         Width           =   1095
+      End
+      Begin VB.Label lblCastSpell 
+         Caption         =   "Cast Spell: None"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   80
+         Top             =   2040
+         Width           =   2775
+      End
+      Begin VB.Label lblAddEXP 
+         Caption         =   "Add Exp: 0"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   79
+         Top             =   1440
+         Width           =   2775
+      End
+      Begin VB.Label lblAddMP 
+         Caption         =   "Add MP: 0"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   78
+         Top             =   840
+         Width           =   2775
+      End
+      Begin VB.Label lblAddHP 
+         Caption         =   "Add HP: 0"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   77
+         Top             =   240
+         Width           =   2775
+      End
+   End
+   Begin VB.Frame fraTeleport 
+      Caption         =   "Teleport"
+      Height          =   2415
+      Left            =   3360
+      TabIndex        =   81
+      Top             =   4680
+      Width           =   2895
+      Begin VB.CheckBox chkReusable 
+         Caption         =   "Reusable"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   0
+         Left            =   1680
+         TabIndex        =   33
+         TabStop         =   0   'False
+         Top             =   2040
+         Width           =   1025
+      End
+      Begin VB.HScrollBar scrlY 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   32
+         Top             =   1680
+         Width           =   2535
+      End
+      Begin VB.HScrollBar scrlX 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   31
+         Top             =   1080
+         Width           =   2535
+      End
+      Begin VB.HScrollBar scrlMap 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   30
+         Top             =   480
+         Width           =   2535
+      End
+      Begin VB.Label lblY 
+         Caption         =   "Y: 0"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   84
+         Top             =   1440
+         Width           =   1935
+      End
+      Begin VB.Label lblX 
+         Caption         =   "X: 0"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   83
+         Top             =   840
+         Width           =   1935
+      End
+      Begin VB.Label lblMap 
+         Caption         =   "Map: 0"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   82
+         Top             =   240
+         Width           =   1935
+      End
+   End
+   Begin VB.Frame fraAutoLife 
+      Caption         =   "Auto Life Data"
+      Height          =   1815
+      Left            =   3360
+      TabIndex        =   91
+      Top             =   4680
+      Visible         =   0   'False
+      Width           =   3375
+      Begin VB.CheckBox chkWarpAway 
+         Caption         =   "Warp Away"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   103
+         TabStop         =   0   'False
+         Top             =   1440
+         Width           =   1140
+      End
+      Begin VB.CheckBox chkReusable 
+         Caption         =   "Reusable"
+         Height          =   255
+         Index           =   2
+         Left            =   2160
+         TabIndex        =   19
+         TabStop         =   0   'False
+         Top             =   1440
+         Width           =   1025
+      End
+      Begin VB.HScrollBar scrlHP 
+         Height          =   255
+         Left            =   240
+         Min             =   1
+         TabIndex        =   17
+         Top             =   480
+         Value           =   1
+         Width           =   2895
+      End
+      Begin VB.HScrollBar scrlMP 
+         Height          =   255
+         Left            =   240
+         TabIndex        =   18
+         Top             =   1080
+         Width           =   2895
+      End
+      Begin VB.Label lblHP 
+         AutoSize        =   -1  'True
+         Caption         =   "HP: 1"
+         Height          =   195
+         Left            =   240
+         TabIndex        =   93
+         Top             =   240
+         Width           =   405
+      End
+      Begin VB.Label lblMP 
+         AutoSize        =   -1  'True
+         Caption         =   "MP: 0"
+         Height          =   195
+         Left            =   240
+         TabIndex        =   92
+         Top             =   840
+         Width           =   420
+      End
+   End
+   Begin VB.Frame fraSprite 
+      Caption         =   "Sprite Data"
+      Height          =   1095
+      Left            =   3360
+      TabIndex        =   96
+      Top             =   4680
+      Visible         =   0   'False
+      Width           =   3735
+      Begin VB.CheckBox chkReusable 
+         Caption         =   "Reusable"
+         Height          =   255
+         Index           =   3
+         Left            =   2520
+         TabIndex        =   21
+         TabStop         =   0   'False
+         Top             =   720
+         Width           =   1025
+      End
+      Begin VB.HScrollBar scrlSprite 
+         Height          =   255
+         Left            =   1440
+         Max             =   255
+         Min             =   1
+         TabIndex        =   20
+         Top             =   360
+         Value           =   1
+         Width           =   2055
+      End
+      Begin VB.Label lblSprite 
+         AutoSize        =   -1  'True
+         Caption         =   "Sprite: 1"
+         Height          =   195
+         Left            =   240
+         TabIndex        =   97
+         Top             =   360
+         Width           =   585
+      End
+   End
    Begin VB.Frame fraEquipment 
       Caption         =   "Equipment Data"
       Height          =   3015
@@ -955,318 +1267,6 @@ Begin VB.Form frmEditor_Item
          Width           =   585
       End
    End
-   Begin VB.Frame Frame4 
-      Caption         =   "Description"
-      Height          =   1095
-      Left            =   3360
-      TabIndex        =   101
-      Top             =   3600
-      Width           =   6255
-      Begin VB.TextBox txtDesc 
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   735
-         Left            =   120
-         MaxLength       =   255
-         MultiLine       =   -1  'True
-         ScrollBars      =   2  'Vertical
-         TabIndex        =   16
-         Top             =   240
-         Width           =   6015
-      End
-   End
-   Begin VB.Frame fraConsume 
-      Caption         =   "Consumable Data"
-      Height          =   2775
-      Left            =   3360
-      TabIndex        =   72
-      Top             =   4680
-      Visible         =   0   'False
-      Width           =   4455
-      Begin VB.HScrollBar scrlDuration 
-         Height          =   255
-         Left            =   3000
-         Max             =   60
-         TabIndex        =   27
-         Top             =   1680
-         Width           =   1335
-      End
-      Begin VB.CheckBox chkHoT 
-         Caption         =   "Heal Over Time"
-         Height          =   375
-         Left            =   3000
-         TabIndex        =   106
-         TabStop         =   0   'False
-         Top             =   960
-         Width           =   1380
-      End
-      Begin VB.CheckBox chkReusable 
-         Caption         =   "Reusable"
-         Height          =   255
-         Index           =   1
-         Left            =   3000
-         TabIndex        =   29
-         TabStop         =   0   'False
-         Top             =   720
-         Width           =   1025
-      End
-      Begin VB.CheckBox chkInstaCast 
-         Caption         =   "Instant Cast"
-         Height          =   255
-         Left            =   3000
-         TabIndex        =   28
-         TabStop         =   0   'False
-         Top             =   480
-         Width           =   1335
-      End
-      Begin VB.HScrollBar scrlCastSpell 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   26
-         Top             =   2280
-         Width           =   2775
-      End
-      Begin VB.HScrollBar scrlAddEXP 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   25
-         Top             =   1680
-         Width           =   2775
-      End
-      Begin VB.HScrollBar scrlAddMP 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   24
-         Top             =   1080
-         Width           =   2775
-      End
-      Begin VB.HScrollBar scrlAddHP 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   23
-         Top             =   480
-         Width           =   2775
-      End
-      Begin VB.Label lblDuration 
-         Caption         =   "Duration: 0 s"
-         Height          =   255
-         Left            =   3000
-         TabIndex        =   107
-         Top             =   1440
-         Width           =   1095
-      End
-      Begin VB.Label lblCastSpell 
-         Caption         =   "Cast Spell: None"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   80
-         Top             =   2040
-         Width           =   2775
-      End
-      Begin VB.Label lblAddEXP 
-         Caption         =   "Add Exp: 0"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   79
-         Top             =   1440
-         Width           =   2775
-      End
-      Begin VB.Label lblAddMP 
-         Caption         =   "Add MP: 0"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   78
-         Top             =   840
-         Width           =   2775
-      End
-      Begin VB.Label lblAddHP 
-         Caption         =   "Add HP: 0"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   77
-         Top             =   240
-         Width           =   2775
-      End
-   End
-   Begin VB.Frame fraTeleport 
-      Caption         =   "Teleport"
-      Height          =   2415
-      Left            =   3360
-      TabIndex        =   81
-      Top             =   4680
-      Width           =   2895
-      Begin VB.CheckBox chkReusable 
-         Caption         =   "Reusable"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Index           =   0
-         Left            =   1680
-         TabIndex        =   33
-         TabStop         =   0   'False
-         Top             =   2040
-         Width           =   1025
-      End
-      Begin VB.HScrollBar scrlY 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   32
-         Top             =   1680
-         Width           =   2535
-      End
-      Begin VB.HScrollBar scrlX 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   31
-         Top             =   1080
-         Width           =   2535
-      End
-      Begin VB.HScrollBar scrlMap 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   30
-         Top             =   480
-         Width           =   2535
-      End
-      Begin VB.Label lblY 
-         Caption         =   "Y: 0"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   84
-         Top             =   1440
-         Width           =   1935
-      End
-      Begin VB.Label lblX 
-         Caption         =   "X: 0"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   83
-         Top             =   840
-         Width           =   1935
-      End
-      Begin VB.Label lblMap 
-         Caption         =   "Map: 0"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   82
-         Top             =   240
-         Width           =   1935
-      End
-   End
-   Begin VB.Frame fraAutoLife 
-      Caption         =   "Auto Life Data"
-      Height          =   1815
-      Left            =   3360
-      TabIndex        =   91
-      Top             =   4680
-      Visible         =   0   'False
-      Width           =   3375
-      Begin VB.CheckBox chkWarpAway 
-         Caption         =   "Warp Away"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   103
-         TabStop         =   0   'False
-         Top             =   1440
-         Width           =   1140
-      End
-      Begin VB.CheckBox chkReusable 
-         Caption         =   "Reusable"
-         Height          =   255
-         Index           =   2
-         Left            =   2160
-         TabIndex        =   19
-         TabStop         =   0   'False
-         Top             =   1440
-         Width           =   1025
-      End
-      Begin VB.HScrollBar scrlHP 
-         Height          =   255
-         Left            =   240
-         Min             =   1
-         TabIndex        =   17
-         Top             =   480
-         Value           =   1
-         Width           =   2895
-      End
-      Begin VB.HScrollBar scrlMP 
-         Height          =   255
-         Left            =   240
-         TabIndex        =   18
-         Top             =   1080
-         Width           =   2895
-      End
-      Begin VB.Label lblHP 
-         AutoSize        =   -1  'True
-         Caption         =   "HP: 1"
-         Height          =   195
-         Left            =   240
-         TabIndex        =   93
-         Top             =   240
-         Width           =   405
-      End
-      Begin VB.Label lblMP 
-         AutoSize        =   -1  'True
-         Caption         =   "MP: 0"
-         Height          =   195
-         Left            =   240
-         TabIndex        =   92
-         Top             =   840
-         Width           =   420
-      End
-   End
-   Begin VB.Frame fraSprite 
-      Caption         =   "Sprite Data"
-      Height          =   1095
-      Left            =   3360
-      TabIndex        =   96
-      Top             =   4680
-      Visible         =   0   'False
-      Width           =   3735
-      Begin VB.CheckBox chkReusable 
-         Caption         =   "Reusable"
-         Height          =   255
-         Index           =   3
-         Left            =   2520
-         TabIndex        =   21
-         TabStop         =   0   'False
-         Top             =   720
-         Width           =   1025
-      End
-      Begin VB.HScrollBar scrlSprite 
-         Height          =   255
-         Left            =   1440
-         Max             =   255
-         Min             =   1
-         TabIndex        =   20
-         Top             =   360
-         Value           =   1
-         Width           =   2055
-      End
-      Begin VB.Label lblSprite 
-         AutoSize        =   -1  'True
-         Caption         =   "Sprite: 1"
-         Height          =   195
-         Left            =   240
-         TabIndex        =   97
-         Top             =   360
-         Width           =   585
-      End
-   End
 End
 Attribute VB_Name = "frmEditor_Item"
 Attribute VB_GlobalNameSpace = False
@@ -1284,7 +1284,7 @@ Private Sub chkHoT_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).HoT = chkHoT.Value
+    Item(EditorIndex).HoT = chkHoT.Value
     
     If chkHoT.Value = 1 Then
         lblDuration.Enabled = True
@@ -1307,7 +1307,7 @@ Private Sub chkInstaCast_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).InstaCast = chkInstaCast.Value
+    Item(EditorIndex).InstaCast = chkInstaCast.Value
     Exit Sub
     
 ' Error handler
@@ -1323,9 +1323,9 @@ Private Sub chkReusable_Click(Index As Integer)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If frmEditor_Item.chkReusable(Index) = 1 Then
-        item(EditorIndex).IsReusable = True
+        Item(EditorIndex).IsReusable = True
     Else
-        item(EditorIndex).IsReusable = False
+        Item(EditorIndex).IsReusable = False
     End If
     Exit Sub
     
@@ -1341,7 +1341,7 @@ Private Sub chkStackable_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).stackable = chkStackable.Value
+    Item(EditorIndex).stackable = chkStackable.Value
     Exit Sub
     
 ' Error handler
@@ -1356,7 +1356,7 @@ Private Sub chkTwoHanded_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).TwoHanded = chkTwoHanded.Value
+    Item(EditorIndex).TwoHanded = chkTwoHanded.Value
     Exit Sub
     
 ' Error handler
@@ -1373,7 +1373,7 @@ Private Sub chkWarpAway_Click()
     
     If fraAutoLife.Visible = False Then Exit Sub
     
-    item(EditorIndex).Data1 = chkWarpAway.Value
+    Item(EditorIndex).Data1 = chkWarpAway.Value
     Exit Sub
     
 ' Error handler
@@ -1388,7 +1388,7 @@ Private Sub cmbBind_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).BindType = cmbBind.ListIndex
+    Item(EditorIndex).BindType = cmbBind.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1403,7 +1403,7 @@ Private Sub cmbEquipSlot_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).EquipSlot = cmbEquipSlot.ListIndex
+    Item(EditorIndex).EquipSlot = cmbEquipSlot.ListIndex
     
     With frmEditor_Item
         ' Specific options when selecting the weapon type
@@ -1440,7 +1440,7 @@ Private Sub cmbProficiencyReq_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).ProficiencyReq = cmbProficiencyReq.ListIndex
+    Item(EditorIndex).ProficiencyReq = cmbProficiencyReq.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1455,7 +1455,7 @@ Private Sub cmbClassReq_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).ClassReq = cmbClassReq.ListIndex
+    Item(EditorIndex).ClassReq = cmbClassReq.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1470,7 +1470,7 @@ Private Sub cmbGenderReq_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).GenderReq = cmbGenderReq.ListIndex
+    Item(EditorIndex).GenderReq = cmbGenderReq.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1484,9 +1484,9 @@ Private Sub cmbSound_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If cmbSound.ListIndex > 0 Then
-        item(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
+        Item(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
     Else
-        item(EditorIndex).Sound = vbNullString
+        Item(EditorIndex).Sound = vbNullString
     End If
     Exit Sub
     
@@ -1502,7 +1502,7 @@ Private Sub cmbTool_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).Data3 = cmbTool.ListIndex
+    Item(EditorIndex).Data3 = cmbTool.ListIndex
     
     ' Resources
     If frmEditor_Item.cmbTool.ListIndex = 0 Then
@@ -1536,7 +1536,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & item(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
 
     ItemEditorInit
@@ -1623,7 +1623,7 @@ Private Sub cmbType_Click()
 
     If (cmbType.ListIndex = ITEM_TYPE_EQUIPMENT) Then
         fraEquipment.Visible = True
-        Me.cmbEquipSlot.ListIndex = item(EditorIndex).EquipSlot
+        Me.cmbEquipSlot.ListIndex = Item(EditorIndex).EquipSlot
     Else
         fraEquipment.Visible = False
     End If
@@ -1679,7 +1679,7 @@ Private Sub cmbType_Click()
         End If
     End With
     
-    item(EditorIndex).Type = cmbType.ListIndex
+    Item(EditorIndex).Type = cmbType.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1729,7 +1729,7 @@ Private Sub scrlAccessReq_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAccessReq.Caption = "Access: " & scrlAccessReq.Value
-    item(EditorIndex).AccessReq = scrlAccessReq.Value
+    Item(EditorIndex).AccessReq = scrlAccessReq.Value
     Exit Sub
     
 ' Error handler
@@ -1745,7 +1745,7 @@ Private Sub scrlAddEXP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAddEXP.Caption = "Add Exp: " & scrlAddEXP.Value
-    item(EditorIndex).AddEXP = scrlAddEXP.Value
+    Item(EditorIndex).AddEXP = scrlAddEXP.Value
     Exit Sub
     
 ' Error handler
@@ -1761,7 +1761,7 @@ Private Sub scrlAddHP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAddHP.Caption = "Add HP: " & scrlAddHP.Value
-    item(EditorIndex).AddHP = scrlAddHP.Value
+    Item(EditorIndex).AddHP = scrlAddHP.Value
     Exit Sub
     
 ' Error handler
@@ -1777,7 +1777,7 @@ Private Sub scrlAddMP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAddMP.Caption = "Add MP: " & scrlAddMP.Value
-    item(EditorIndex).AddMP = scrlAddMP.Value
+    Item(EditorIndex).AddMP = scrlAddMP.Value
     Exit Sub
     
 ' Error handler
@@ -1797,7 +1797,7 @@ Private Sub scrlAnim_Change()
     Else
         lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).name)
     End If
-    item(EditorIndex).Animation = scrlAnim.Value
+    Item(EditorIndex).Animation = scrlAnim.Value
     Exit Sub
     
 ' Error handler
@@ -1817,7 +1817,7 @@ Private Sub scrlCastSpell_Change()
     Else
         lblCastSpell.Caption = "Cast Spell: None"
     End If
-    item(EditorIndex).CastSpell = scrlCastSpell.Value
+    Item(EditorIndex).CastSpell = scrlCastSpell.Value
     Exit Sub
     
 ' Error handler
@@ -1839,7 +1839,7 @@ Private Sub scrlDamage_Change()
     Else
         lblDamage.Caption = "Defense: " & scrlDamage.Value
     End If
-    item(EditorIndex).Data2 = scrlDamage.Value
+    Item(EditorIndex).Data2 = scrlDamage.Value
     Exit Sub
     
 ' Error handler
@@ -1856,10 +1856,10 @@ Private Sub scrlDurability_Change()
     
     If fraEquipment.Visible = False Then Exit Sub
     
-    item(EditorIndex).Data1 = frmEditor_Item.scrlDurability.Value
-    lblDurability.Caption = "Durability: " & item(EditorIndex).Data1
+    Item(EditorIndex).Data1 = frmEditor_Item.scrlDurability.Value
+    lblDurability.Caption = "Durability: " & Item(EditorIndex).Data1
     
-    If item(EditorIndex).Data1 > 0 Then
+    If Item(EditorIndex).Data1 > 0 Then
         chkStackable.Value = 0
         chkStackable.Enabled = False
     Else
@@ -1882,7 +1882,7 @@ Private Sub scrlDuration_Change()
     If fraConsume.Visible = False Then Exit Sub
     
     lblDuration.Caption = "Duration: " & scrlDuration.Value & " s"
-    item(EditorIndex).Data1 = scrlDuration.Value
+    Item(EditorIndex).Data1 = scrlDuration.Value
     Exit Sub
     
 ' Error handler
@@ -1900,7 +1900,7 @@ Private Sub scrlHP_Change()
     If fraAutoLife.Visible = False Then Exit Sub
     
     lblHP.Caption = "HP: " & scrlHP.Value
-    item(EditorIndex).AddHP = scrlHP.Value
+    Item(EditorIndex).AddHP = scrlHP.Value
     Exit Sub
     
 ' Error handler
@@ -1916,7 +1916,7 @@ Private Sub scrlMP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblMP.Caption = "MP: " & scrlMP.Value
-    item(EditorIndex).AddMP = scrlMP.Value
+    Item(EditorIndex).AddMP = scrlMP.Value
     Exit Sub
     
 ' Error handler
@@ -1932,7 +1932,7 @@ Private Sub scrlLevelReq_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblLevelReq.Caption = "Level: " & scrlLevelReq
-    item(EditorIndex).LevelReq = scrlLevelReq.Value
+    Item(EditorIndex).LevelReq = scrlLevelReq.Value
     Exit Sub
     
 ' Error handler
@@ -1950,7 +1950,7 @@ Private Sub scrlMap_Change()
     If fraTeleport.Visible Then Exit Sub
     
     lblMap.Caption = "Map: " & scrlMap.Value
-    item(EditorIndex).Data1 = scrlMap.Value
+    Item(EditorIndex).Data1 = scrlMap.Value
     Exit Sub
     
 ' Error handler
@@ -1966,7 +1966,7 @@ Private Sub scrlChanceModifier_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblChance.Caption = "Chance: " & scrlChanceModifier.Value
-    item(EditorIndex).ChanceModifier = scrlChanceModifier.Value
+    Item(EditorIndex).ChanceModifier = scrlChanceModifier.Value
     Exit Sub
     
 ' Error handler
@@ -1982,7 +1982,7 @@ Private Sub scrlPaperdoll_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblPaperdoll.Caption = "Paperdoll: " & scrlPaperdoll.Value
-    item(EditorIndex).Paperdoll = scrlPaperdoll.Value
+    Item(EditorIndex).Paperdoll = scrlPaperdoll.Value
     Exit Sub
     
 ' Error handler
@@ -1998,7 +1998,7 @@ Private Sub scrlPic_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblPic.Caption = "Icon: " & scrlPic.Value
-    item(EditorIndex).Pic = scrlPic.Value
+    Item(EditorIndex).Pic = scrlPic.Value
     Exit Sub
     
 ' Error handler
@@ -2014,7 +2014,7 @@ Private Sub scrlRarity_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblRarity.Caption = "Rarity: " & scrlRarity.Value
-    item(EditorIndex).Rarity = scrlRarity.Value
+    Item(EditorIndex).Rarity = scrlRarity.Value
     Exit Sub
     
 ' Error handler
@@ -2030,7 +2030,7 @@ Private Sub scrlSpeed_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblSpeed.Caption = "Speed: " & scrlSpeed.Value / 1000 & " s"
-    item(EditorIndex).WeaponSpeed = scrlSpeed.Value
+    Item(EditorIndex).WeaponSpeed = scrlSpeed.Value
     Exit Sub
     
 ' Error handler
@@ -2048,7 +2048,7 @@ Private Sub scrlSprite_Change()
     If fraSprite.Visible = False Then Exit Sub
     
     lblSprite.Caption = "Sprite: " & scrlSprite.Value
-    item(EditorIndex).Data1 = scrlSprite.Value
+    Item(EditorIndex).Data1 = scrlSprite.Value
     Exit Sub
     
 ' Error handler
@@ -2079,7 +2079,7 @@ Private Sub scrlStatBonus_Change(Index As Integer)
     End Select
             
     lblStatBonus(Index).Caption = text & scrlStatBonus(Index).Value
-    item(EditorIndex).Add_Stat(Index) = scrlStatBonus(Index).Value
+    Item(EditorIndex).Add_Stat(Index) = scrlStatBonus(Index).Value
     Exit Sub
     
 ' Error handler
@@ -2110,7 +2110,7 @@ Private Sub scrlStatReq_Change(Index As Integer)
     End Select
     
     lblStatReq(Index).Caption = text & scrlStatReq(Index).Value
-    item(EditorIndex).Stat_Req(Index) = scrlStatReq(Index).Value
+    Item(EditorIndex).Stat_Req(Index) = scrlStatReq(Index).Value
     Exit Sub
     
 ' Error handler
@@ -2145,7 +2145,7 @@ Private Sub scrlX_Change()
     If fraTeleport.Visible = False Then Exit Sub
     
     lblX.Caption = "X: " & scrlX.Value
-    item(EditorIndex).Data2 = scrlX.Value
+    Item(EditorIndex).Data2 = scrlX.Value
     Exit Sub
     
 ' Error handler
@@ -2161,7 +2161,7 @@ Private Sub scrlY_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblY.Caption = "Y: " & scrlY.Value
-    item(EditorIndex).Data3 = scrlY.Value
+    Item(EditorIndex).Data3 = scrlY.Value
     Exit Sub
     
 ' Error handler
@@ -2178,7 +2178,7 @@ Private Sub txtDesc_Change()
     
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
-    item(EditorIndex).Desc = Trim$(txtDesc.text)
+    Item(EditorIndex).Desc = Trim$(txtDesc.text)
     Exit Sub
     
 ' Error handler
@@ -2196,9 +2196,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    item(EditorIndex).name = Trim$(txtName.text)
+    Item(EditorIndex).name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & item(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -2217,7 +2217,7 @@ Private Sub txtPrice_Change()
     If Not IsNumeric(txtPrice.text) Then txtPrice.text = 0
     If txtPrice.text > MAX_LONG Then txtPrice.text = MAX_LONG
     If txtPrice.text < 0 Then txtPrice.text = 0
-    item(EditorIndex).Price = Val(frmEditor_Item.txtPrice.text)
+    Item(EditorIndex).Price = Val(frmEditor_Item.txtPrice.text)
     Exit Sub
     
 ' Error handler
@@ -2342,8 +2342,8 @@ Private Sub cmdPaste_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
          
     lstIndex.RemoveItem EditorIndex - 1
-    Call CopyMemory(ByVal VarPtr(item(EditorIndex)), ByVal VarPtr(item(TmpIndex + 1)), LenB(item(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(item(EditorIndex).name), EditorIndex - 1
+    Call CopyMemory(ByVal VarPtr(Item(EditorIndex)), ByVal VarPtr(Item(TmpIndex + 1)), LenB(Item(TmpIndex + 1)))
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     
