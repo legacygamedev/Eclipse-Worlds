@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -816,7 +816,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -4083,7 +4082,7 @@ Private Sub picButton_Click(Index As Integer)
         ' Don't set it if it's the trade/GUI adjusting button
         If Not Index = 5 And Not Index = 14 And Not Index = 15 Then
             CurButton_Main = Index
-            picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).FileName & "_click.jpg")
+            picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).filename & "_click.jpg")
             Call ResetMainButtons
         End If
         
@@ -4110,7 +4109,7 @@ Private Sub picButton_MouseMove(Index As Integer, Button As Integer, Shift As In
     
     If Not LastButton_Main = Index And Not CurButton_Main = Index Then
         Call ResetMainButtons
-        picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).FileName & "_hover.jpg")
+        picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).filename & "_hover.jpg")
         Call Audio.PlaySound(ButtonHover)
         LastButton_Main = Index
     End If
@@ -4176,18 +4175,18 @@ Public Sub TogglePanel(ByVal PanelNum As Long)
         Case 14
             ButtonsVisible = Not ButtonsVisible
             If ButtonsVisible Then
-                MainButton(14).FileName = "btn_hidepanels"
+                MainButton(14).filename = "btn_hidepanels"
             Else
-                MainButton(14).FileName = "btn_showpanels"
+                MainButton(14).filename = "btn_showpanels"
             End If
             Call ResetMainButtons
             Call ToggleButtons(ButtonsVisible)
         Case 15
             GUIVisible = Not GUIVisible
             If GUIVisible Then
-                MainButton(15).FileName = "btn_hidegui"
+                MainButton(15).filename = "btn_hidegui"
             Else
-                MainButton(15).FileName = "btn_showgui"
+                MainButton(15).filename = "btn_showgui"
             End If
             Call ResetMainButtons
             Call ToggleGUI(GUIVisible)
@@ -4211,7 +4210,7 @@ Public Sub ResetMainButtons()
     
     For i = 1 To MAX_MAINBUTTONS
         If Not CurButton_Main = i Then
-            picButton(i).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(i).FileName & "_norm.jpg")
+            picButton(i).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(i).filename & "_norm.jpg")
         End If
     Next
     Exit Sub
@@ -5785,7 +5784,6 @@ End Sub
 
 Private Sub picEquipment_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim EqNum As Long
-    Dim X2 As Long, Y2 As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -5795,9 +5793,9 @@ Private Sub picEquipment_MouseMove(Button As Integer, Shift As Integer, X As Sin
     EqNum = IsEqItem(X, Y)
 
     If Not EqNum = 0 Then
-        Y2 = picEquipment.Top
-        X2 = picEquipment.Left - frmMain.picItemDesc.Width - 4
-        UpdateItemDescWindow GetPlayerEquipment(MyIndex, EqNum), X2, Y2
+        X = X + picEquipment.Left - picItemDesc.Width - 1
+        Y = Y + picEquipment.Top - picItemDesc.Height
+        UpdateItemDescWindow GetPlayerEquipment(MyIndex, EqNum), X, Y
         LastItemDesc = GetPlayerEquipment(MyIndex, EqNum) ' Set it so you don't re-set values
         Exit Sub
     End If
