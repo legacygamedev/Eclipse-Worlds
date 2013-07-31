@@ -32,14 +32,14 @@ Begin VB.Form frmAdmin
       EndProperty
       ForeColor       =   &H80000008&
       Height          =   8655
-      Left            =   120
+      Left            =   -15
       ScaleHeight     =   577
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   198
+      ScaleWidth      =   205
       TabIndex        =   1
       TabStop         =   0   'False
       Top             =   15
-      Width           =   2970
+      Width           =   3075
       Begin VB.PictureBox picSizer 
          Appearance      =   0  'Flat
          BackColor       =   &H80000002&
@@ -49,7 +49,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   270
          ScaleWidth      =   270
          TabIndex        =   69
-         Top             =   3270
+         Top             =   3105
          Width           =   300
       End
       Begin VB.PictureBox picSpawner 
@@ -57,11 +57,11 @@ Begin VB.Form frmAdmin
          BackColor       =   &H80000002&
          ForeColor       =   &H80000008&
          Height          =   240
-         Left            =   1170
+         Left            =   1155
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   68
-         Top             =   4680
+         Top             =   4425
          Visible         =   0   'False
          Width           =   240
       End
@@ -75,7 +75,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   67
-         Top             =   4755
+         Top             =   4590
          Width           =   1065
       End
       Begin VB.PictureBox picEye 
@@ -88,7 +88,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   66
-         Top             =   4770
+         Top             =   4605
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -101,7 +101,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   65
-         Top             =   6900
+         Top             =   6735
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -114,7 +114,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   64
-         Top             =   6630
+         Top             =   6465
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -127,7 +127,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   63
-         Top             =   6360
+         Top             =   6195
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -140,7 +140,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   62
-         Top             =   6090
+         Top             =   5925
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -153,7 +153,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   61
-         Top             =   5835
+         Top             =   5670
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -166,7 +166,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   60
-         Top             =   5565
+         Top             =   5400
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -179,7 +179,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   59
-         Top             =   5295
+         Top             =   5130
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -192,7 +192,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   58
-         Top             =   5025
+         Top             =   4860
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -205,7 +205,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   57
-         Top             =   4500
+         Top             =   4335
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -218,7 +218,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   56
-         Top             =   4230
+         Top             =   4065
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -231,7 +231,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   55
-         Top             =   3960
+         Top             =   3795
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -244,7 +244,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   54
-         Top             =   3690
+         Top             =   3525
          Width           =   240
       End
       Begin VB.CheckBox chkEditor 
@@ -256,7 +256,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   53
-         Top             =   6900
+         Top             =   6735
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -268,7 +268,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   52
-         Top             =   6630
+         Top             =   6465
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -280,7 +280,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   51
-         Top             =   6360
+         Top             =   6195
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -292,7 +292,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   50
-         Top             =   6090
+         Top             =   5925
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -304,7 +304,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   49
-         Top             =   5820
+         Top             =   5655
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -316,7 +316,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   48
-         Top             =   5550
+         Top             =   5385
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -328,7 +328,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   47
-         Top             =   5280
+         Top             =   5115
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -340,7 +340,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   46
-         Top             =   5010
+         Top             =   4845
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -352,7 +352,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   45
-         Top             =   4485
+         Top             =   4320
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -364,7 +364,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   44
-         Top             =   4215
+         Top             =   4050
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -376,7 +376,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   43
-         Top             =   3945
+         Top             =   3780
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
@@ -388,7 +388,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   42
-         Top             =   3675
+         Top             =   3510
          Width           =   1065
       End
       Begin VB.OptionButton optCat 
@@ -399,7 +399,7 @@ Begin VB.Form frmAdmin
          Style           =   1  'Graphical
          TabIndex        =   41
          ToolTipText     =   "Change sprites via dbl click."
-         Top             =   6225
+         Top             =   6075
          Width           =   420
       End
       Begin VB.PictureBox picRecentItem 
@@ -423,7 +423,7 @@ Begin VB.Form frmAdmin
          Style           =   1  'Graphical
          TabIndex        =   38
          ToolTipText     =   "Auto Life ?? "
-         Top             =   5790
+         Top             =   5640
          Width           =   420
       End
       Begin VB.OptionButton optCat 
@@ -434,7 +434,7 @@ Begin VB.Form frmAdmin
          Style           =   1  'Graphical
          TabIndex        =   37
          ToolTipText     =   "Reset Scrolls"
-         Top             =   5790
+         Top             =   5640
          Width           =   420
       End
       Begin VB.OptionButton optCat 
@@ -445,7 +445,7 @@ Begin VB.Form frmAdmin
          Style           =   1  'Graphical
          TabIndex        =   36
          ToolTipText     =   "Teleport scrolls"
-         Top             =   5790
+         Top             =   5640
          Width           =   420
       End
       Begin VB.OptionButton optCat 
@@ -456,7 +456,7 @@ Begin VB.Form frmAdmin
          Style           =   1  'Graphical
          TabIndex        =   35
          ToolTipText     =   "Spells, scrolls, magic."
-         Top             =   5355
+         Top             =   5205
          Width           =   420
       End
       Begin VB.OptionButton optCat 
@@ -467,7 +467,7 @@ Begin VB.Form frmAdmin
          Style           =   1  'Graphical
          TabIndex        =   34
          ToolTipText     =   "No idea???"
-         Top             =   5355
+         Top             =   5205
          Width           =   420
       End
       Begin VB.OptionButton optCat 
@@ -478,7 +478,7 @@ Begin VB.Form frmAdmin
          Style           =   1  'Graphical
          TabIndex        =   33
          ToolTipText     =   "Potions, elixirs, food."
-         Top             =   5355
+         Top             =   5205
          Width           =   420
       End
       Begin VB.OptionButton optCat 
@@ -489,7 +489,7 @@ Begin VB.Form frmAdmin
          Style           =   1  'Graphical
          TabIndex        =   32
          ToolTipText     =   "Things you can wear"
-         Top             =   4920
+         Top             =   4755
          Width           =   420
       End
       Begin VB.OptionButton optCat 
@@ -500,7 +500,7 @@ Begin VB.Form frmAdmin
          Style           =   1  'Graphical
          TabIndex        =   31
          ToolTipText     =   "Things without a type"
-         Top             =   4920
+         Top             =   4755
          Width           =   420
       End
       Begin VB.OptionButton optCat 
@@ -511,7 +511,7 @@ Begin VB.Form frmAdmin
          Style           =   1  'Graphical
          TabIndex        =   30
          ToolTipText     =   "Recently spawned items"
-         Top             =   4920
+         Top             =   4755
          Width           =   420
       End
       Begin MSComCtl2.UpDown rcSwitcher 
@@ -558,7 +558,7 @@ Begin VB.Form frmAdmin
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
          TabIndex        =   23
-         Top             =   2160
+         Top             =   1995
          Width           =   510
       End
       Begin VB.TextBox txtSprite 
@@ -568,7 +568,7 @@ Begin VB.Form frmAdmin
          Left            =   1770
          TabIndex        =   22
          Text            =   "0"
-         Top             =   2880
+         Top             =   2760
          Width           =   600
       End
       Begin VB.ComboBox cmbAccess 
@@ -578,11 +578,11 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000002&
          Height          =   315
          ItemData        =   "frmAdmin.frx":038A
-         Left            =   480
+         Left            =   585
          List            =   "frmAdmin.frx":039D
          TabIndex        =   21
          Text            =   "Player's Access"
-         Top             =   810
+         Top             =   780
          Width           =   1695
       End
       Begin VB.ComboBox cmbPlayersOnline 
@@ -590,7 +590,7 @@ Begin VB.Form frmAdmin
          BackColor       =   &H80000001&
          ForeColor       =   &H80000002&
          Height          =   315
-         Left            =   120
+         Left            =   240
          TabIndex        =   20
          Text            =   "Choose Player"
          Top             =   390
@@ -601,7 +601,7 @@ Begin VB.Form frmAdmin
          BackColor       =   &H80000002&
          ForeColor       =   &H80000008&
          Height          =   315
-         Left            =   2280
+         Left            =   2370
          ScaleHeight     =   285
          ScaleWidth      =   345
          TabIndex        =   19
@@ -620,10 +620,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1050
+         Left            =   1170
          TabIndex        =   13
          TabStop         =   0   'False
-         Top             =   1800
+         Top             =   1710
          Width           =   1725
       End
       Begin VB.CommandButton cmdAMute 
@@ -641,7 +641,7 @@ Begin VB.Form frmAdmin
          Left            =   120
          TabIndex        =   11
          TabStop         =   0   'False
-         Top             =   1500
+         Top             =   1440
          Width           =   855
       End
       Begin VB.CommandButton cmdLevelUp 
@@ -659,7 +659,7 @@ Begin VB.Form frmAdmin
          Left            =   120
          TabIndex        =   10
          TabStop         =   0   'False
-         Top             =   2100
+         Top             =   1980
          Width           =   855
       End
       Begin VB.CommandButton cmdARespawn 
@@ -677,7 +677,7 @@ Begin VB.Form frmAdmin
          Left            =   165
          TabIndex        =   9
          TabStop         =   0   'False
-         Top             =   4065
+         Top             =   3750
          Width           =   1155
       End
       Begin VB.CommandButton cmdAMapReport 
@@ -695,7 +695,7 @@ Begin VB.Form frmAdmin
          Left            =   180
          TabIndex        =   8
          TabStop         =   0   'False
-         Top             =   3495
+         Top             =   3240
          Width           =   1140
       End
       Begin VB.CommandButton cmdALoc 
@@ -713,7 +713,7 @@ Begin VB.Form frmAdmin
          Left            =   165
          TabIndex        =   7
          TabStop         =   0   'False
-         Top             =   3780
+         Top             =   3495
          Width           =   1155
       End
       Begin VB.CommandButton cmdAWarp 
@@ -731,7 +731,7 @@ Begin VB.Form frmAdmin
          Left            =   195
          TabIndex        =   6
          TabStop         =   0   'False
-         Top             =   3210
+         Top             =   2985
          Width           =   1125
       End
       Begin VB.TextBox txtAMap 
@@ -747,7 +747,7 @@ Begin VB.Form frmAdmin
          Height          =   285
          Left            =   825
          TabIndex        =   0
-         Top             =   2850
+         Top             =   2640
          Width           =   465
       End
       Begin VB.CommandButton cmdAWarpMeTo 
@@ -762,10 +762,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1050
+         Left            =   1170
          TabIndex        =   5
          TabStop         =   0   'False
-         Top             =   1500
+         Top             =   1440
          Width           =   1725
       End
       Begin VB.CommandButton cmdAWarpToMe 
@@ -780,10 +780,10 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   1050
+         Left            =   1170
          TabIndex        =   4
          TabStop         =   0   'False
-         Top             =   1200
+         Top             =   1170
          Width           =   1725
       End
       Begin VB.CommandButton cmdABan 
@@ -801,7 +801,7 @@ Begin VB.Form frmAdmin
          Left            =   120
          TabIndex        =   3
          TabStop         =   0   'False
-         Top             =   1200
+         Top             =   1170
          Width           =   855
       End
       Begin VB.CommandButton cmdAKick 
@@ -819,20 +819,20 @@ Begin VB.Form frmAdmin
          Left            =   120
          TabIndex        =   2
          TabStop         =   0   'False
-         Top             =   1800
+         Top             =   1710
          Width           =   855
       End
       Begin MSComCtl2.UpDown upSprite 
          Height          =   555
          Left            =   2430
          TabIndex        =   24
-         Top             =   2280
+         Top             =   2070
          Width           =   255
          _ExtentX        =   450
          _ExtentY        =   979
          _Version        =   393216
          BuddyControl    =   "txtSprite"
-         BuddyDispid     =   196617
+         BuddyDispid     =   196619
          OrigLeft        =   3990
          OrigTop         =   1770
          OrigRight       =   4245
@@ -841,12 +841,21 @@ Begin VB.Form frmAdmin
          BuddyProperty   =   65547
          Enabled         =   -1  'True
       End
+      Begin VB.CommandButton cmdShowGame 
+         Caption         =   "Show Game"
+         Height          =   255
+         Left            =   180
+         TabIndex        =   70
+         Top             =   3975
+         Visible         =   0   'False
+         Width           =   1065
+      End
       Begin VB.Line Line5 
          BorderColor     =   &H00800080&
          X1              =   3
          X2              =   97
-         Y1              =   444
-         Y2              =   444
+         Y1              =   438
+         Y2              =   438
       End
       Begin VB.Label lblRecent 
          BackColor       =   &H80000002&
@@ -898,7 +907,7 @@ Begin VB.Form frmAdmin
          Height          =   255
          Left            =   105
          TabIndex        =   25
-         Top             =   4695
+         Top             =   4440
          Width           =   1020
       End
       Begin VB.Label lblStatus 
@@ -940,7 +949,7 @@ Begin VB.Form frmAdmin
          Height          =   255
          Left            =   270
          TabIndex        =   17
-         Top             =   2475
+         Top             =   2280
          Width           =   975
       End
       Begin VB.Label lblEditors 
@@ -961,7 +970,7 @@ Begin VB.Form frmAdmin
          Height          =   195
          Left            =   1680
          TabIndex        =   16
-         Top             =   3345
+         Top             =   3180
          Width           =   765
       End
       Begin VB.Label lblSpawning 
@@ -982,7 +991,7 @@ Begin VB.Form frmAdmin
          Height          =   285
          Left            =   150
          TabIndex        =   15
-         Top             =   4380
+         Top             =   4080
          Width           =   1140
       End
       Begin VB.Label lblPlayers 
@@ -1000,15 +1009,15 @@ Begin VB.Form frmAdmin
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
+         Left            =   285
          TabIndex        =   14
          Top             =   0
          Width           =   2505
       End
       Begin VB.Line Line3 
          BorderWidth     =   3
-         X1              =   8
-         X2              =   180
+         X1              =   16
+         X2              =   188
          Y1              =   18
          Y2              =   18
       End
@@ -1017,16 +1026,16 @@ Begin VB.Form frmAdmin
          BorderWidth     =   3
          X1              =   8
          X2              =   89
-         Y1              =   311
-         Y2              =   311
+         Y1              =   290
+         Y2              =   290
       End
       Begin VB.Line lineEditors 
          BorderColor     =   &H000000C0&
          BorderWidth     =   3
          X1              =   103
          X2              =   187
-         Y1              =   240
-         Y2              =   240
+         Y1              =   229
+         Y2              =   229
       End
       Begin VB.Label Label30 
          BackStyle       =   0  'Transparent
@@ -1043,15 +1052,15 @@ Begin VB.Form frmAdmin
          Height          =   255
          Left            =   195
          TabIndex        =   12
-         Top             =   2880
+         Top             =   2685
          Width           =   735
       End
       Begin VB.Line Line1 
          BorderWidth     =   3
          X1              =   10
          X2              =   90
-         Y1              =   183
-         Y2              =   183
+         Y1              =   171
+         Y2              =   171
       End
    End
 End
@@ -1070,7 +1079,7 @@ Private catSub As Boolean
 Public lastIndex As Integer
 Public currentCategory As String
 Public ignoreChange As Boolean
-
+Public reverse As Boolean
 Private Const WM_ChangeUIState As Long = &H127
 Private Const UIS_HideRectangle As Integer = &H1
 Private Const UIS_ShowRectangle As Integer = &H2
@@ -1673,6 +1682,10 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub cmdShowGame_Click()
+    BringWindowToTop (frmMain.hWnd)
+End Sub
+
 Private Sub cmdSpawnRecent_Click()
 
     Dim item As Byte
@@ -1737,7 +1750,8 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     End Select
 End Sub
 
-Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+
+Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Select Case Index
     
         Case 0
@@ -1764,7 +1778,7 @@ Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integ
     End Select
 End Sub
 
-Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim test As Boolean
     If ignoreChange Then
         ignoreChange = False
@@ -1898,27 +1912,27 @@ Private Sub picEye_Click(Index As Integer)
     End Select
 End Sub
 
-Private Sub picPanel_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picPanel_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
     lblCat.Caption = currentCategory
 End Sub
 
-Private Sub picPanel_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picPanel_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     refreshDown = False
 End Sub
 
-Private Sub picRefresh_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picRefresh_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     refreshDown = True
     picRefresh.Picture = LoadResPicture("REFRESH_DOWN", vbResBitmap)
 End Sub
 
-Private Sub picRefresh_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picRefresh_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If Not refreshDown Then
         picRefresh.Picture = LoadResPicture("REFRESH_OVER", vbResBitmap)
     End If
 End Sub
 
-Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     refreshDown = False
     refreshingAdminList = True
     SendRequestPlayersOnline
@@ -2135,7 +2149,7 @@ Public Sub Form_Load()
     
     LastAdminSpriteTimer = timeGetTime
 
-    UpdateAdminScrollBar
+    'UpdateAdminScrollBar
     UpdateRecentSpawner
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
     refreshingAdminList = True
@@ -2148,34 +2162,71 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picSizer_Click()
+Public Sub picSizer_Click()
     Dim ctrl As Control
-    If adminMin Then
-        
-    Else
-        Exit Sub
+    If adminMin And reverse Then
         For Each ctrl In Controls
             Select Case ctrl.name
             
-                Case "lblEditors"
-                    ctrl.Left = ctrl.Left - 111
+                Case "lblEditors", "picSizer", "chkEditor", "picEye"
+                    ctrl.Left = ctrl.Left + 100
+                    ctrl.Top = ctrl.Top + 206
+                Case "lineEditors"
+                    ctrl.X1 = ctrl.X1 + 100
+                    ctrl.X2 = ctrl.X2 + 100
+                    ctrl.Y1 = ctrl.Y1 + 206
+                    ctrl.Y2 = ctrl.Y2 + 206
+                Case "picPanel"
+                Case Else
+                    ctrl.Visible = True
+            End Select
+        Next
+        Width = 3135
+        Height = 9060
+        adminMin = False
+        picSizer.Picture = LoadResPicture("MIN", vbResBitmap)
+        picPanel.Top = picPanel.Top + 2
+        BorderStyle = 1
+        Caption = "Admin Panel"
+        frmAdmin.Left = frmMain.Left + frmMain.Width - frmAdmin.Width
+        frmAdmin.Top = frmMain.Top
+        cmdShowGame.Visible = False
+    Else
+        'Exit Sub
+        For Each ctrl In Controls
+            Select Case ctrl.name
+            
+                Case "lblEditors", "picSizer", "chkEditor", "picEye"
+                    ctrl.Left = ctrl.Left - 100
+                    ctrl.Top = ctrl.Top - 206
                 Case "lineEditors"
                     ctrl.X1 = ctrl.X1 - 100
                     ctrl.X2 = ctrl.X2 - 100
-                Case "picSizer"
-                    ctrl.Left = ctrl.Left - 111
-                Case "chkEditor"
-                    ctrl.Left = ctrl.Left - 111
-                Case "picEye"
-                    ctrl.Left = ctrl.Left - 111
+                    ctrl.Y1 = ctrl.Y1 - 206
+                    ctrl.Y2 = ctrl.Y2 - 206
+                Case "picPanel"
                 Case Else
                     ctrl.Visible = False
             End Select
         Next
+
+        Width = 1485
+        Height = 4680
+        picPanel.Top = picPanel.Top - 2
+        BorderStyle = 4
+        Caption = "Mini Panel"
+        adminMin = True
+        picSizer.Picture = LoadResPicture("MAX", vbResBitmap)
+        frmAdmin.centerMiniVert frmMain.Width, frmMain.Height, frmMain.Left, frmMain.Top
+        cmdShowGame.Visible = True
     End If
-
+    reverse = True
 End Sub
-
+Public Sub centerMiniVert(pWidth As Long, pHeight As Long, pLeft As Long, pTop As Long)
+    Left = pLeft + pWidth + 165
+    Top = pTop + ((pHeight - Height) / 2)
+    BringWindowToTop (hwndLastActiveWnd)
+End Sub
 Private Sub picSpawner_Click()
     If FormVisible("frmItemSpawner") Then
         BringWindowToTop (frmItemSpawner.hWnd)

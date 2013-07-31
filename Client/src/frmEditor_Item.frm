@@ -1284,7 +1284,7 @@ Private Sub chkHoT_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).HoT = chkHoT.Value
+    item(EditorIndex).HoT = chkHoT.Value
     
     If chkHoT.Value = 1 Then
         lblDuration.Enabled = True
@@ -1307,7 +1307,7 @@ Private Sub chkInstaCast_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).InstaCast = chkInstaCast.Value
+    item(EditorIndex).InstaCast = chkInstaCast.Value
     Exit Sub
     
 ' Error handler
@@ -1323,9 +1323,9 @@ Private Sub chkReusable_Click(Index As Integer)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If frmEditor_Item.chkReusable(Index) = 1 Then
-        Item(EditorIndex).IsReusable = True
+        item(EditorIndex).IsReusable = True
     Else
-        Item(EditorIndex).IsReusable = False
+        item(EditorIndex).IsReusable = False
     End If
     Exit Sub
     
@@ -1341,7 +1341,7 @@ Private Sub chkStackable_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).stackable = chkStackable.Value
+    item(EditorIndex).stackable = chkStackable.Value
     Exit Sub
     
 ' Error handler
@@ -1356,7 +1356,7 @@ Private Sub chkTwoHanded_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).TwoHanded = chkTwoHanded.Value
+    item(EditorIndex).TwoHanded = chkTwoHanded.Value
     Exit Sub
     
 ' Error handler
@@ -1373,7 +1373,7 @@ Private Sub chkWarpAway_Click()
     
     If fraAutoLife.Visible = False Then Exit Sub
     
-    Item(EditorIndex).Data1 = chkWarpAway.Value
+    item(EditorIndex).Data1 = chkWarpAway.Value
     Exit Sub
     
 ' Error handler
@@ -1388,7 +1388,7 @@ Private Sub cmbBind_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).BindType = cmbBind.ListIndex
+    item(EditorIndex).BindType = cmbBind.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1403,7 +1403,7 @@ Private Sub cmbEquipSlot_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).EquipSlot = cmbEquipSlot.ListIndex
+    item(EditorIndex).EquipSlot = cmbEquipSlot.ListIndex
     
     With frmEditor_Item
         ' Specific options when selecting the weapon type
@@ -1440,7 +1440,7 @@ Private Sub cmbProficiencyReq_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).ProficiencyReq = cmbProficiencyReq.ListIndex
+    item(EditorIndex).ProficiencyReq = cmbProficiencyReq.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1455,7 +1455,7 @@ Private Sub cmbClassReq_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).ClassReq = cmbClassReq.ListIndex
+    item(EditorIndex).ClassReq = cmbClassReq.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1470,7 +1470,7 @@ Private Sub cmbGenderReq_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).GenderReq = cmbGenderReq.ListIndex
+    item(EditorIndex).GenderReq = cmbGenderReq.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1484,9 +1484,9 @@ Private Sub cmbSound_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If cmbSound.ListIndex > 0 Then
-        Item(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
+        item(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
     Else
-        Item(EditorIndex).Sound = vbNullString
+        item(EditorIndex).Sound = vbNullString
     End If
     Exit Sub
     
@@ -1502,7 +1502,7 @@ Private Sub cmbTool_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Item(EditorIndex).Data3 = cmbTool.ListIndex
+    item(EditorIndex).Data3 = cmbTool.ListIndex
     
     ' Resources
     If frmEditor_Item.cmbTool.ListIndex = 0 Then
@@ -1536,7 +1536,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & item(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
 
     ItemEditorInit
@@ -1546,6 +1546,13 @@ Private Sub cmdDelete_Click()
 errorhandler:
     HandleError "cmdDelete_Click", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+End Sub
+
+Private Sub Form_Activate()
+    hwndLastActiveWnd = hWnd
+    If FormVisible("frmAdmin") And adminMin Then
+        frmAdmin.centerMiniVert Width, Height, Left, Top
+    End If
 End Sub
 
 Public Sub Form_Load()
@@ -1616,7 +1623,7 @@ Private Sub cmbType_Click()
 
     If (cmbType.ListIndex = ITEM_TYPE_EQUIPMENT) Then
         fraEquipment.Visible = True
-        Me.cmbEquipSlot.ListIndex = Item(EditorIndex).EquipSlot
+        Me.cmbEquipSlot.ListIndex = item(EditorIndex).EquipSlot
     Else
         fraEquipment.Visible = False
     End If
@@ -1672,7 +1679,7 @@ Private Sub cmbType_Click()
         End If
     End With
     
-    Item(EditorIndex).Type = cmbType.ListIndex
+    item(EditorIndex).Type = cmbType.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1722,7 +1729,7 @@ Private Sub scrlAccessReq_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAccessReq.Caption = "Access: " & scrlAccessReq.Value
-    Item(EditorIndex).AccessReq = scrlAccessReq.Value
+    item(EditorIndex).AccessReq = scrlAccessReq.Value
     Exit Sub
     
 ' Error handler
@@ -1738,7 +1745,7 @@ Private Sub scrlAddEXP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAddEXP.Caption = "Add Exp: " & scrlAddEXP.Value
-    Item(EditorIndex).AddEXP = scrlAddEXP.Value
+    item(EditorIndex).AddEXP = scrlAddEXP.Value
     Exit Sub
     
 ' Error handler
@@ -1754,7 +1761,7 @@ Private Sub scrlAddHP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAddHP.Caption = "Add HP: " & scrlAddHP.Value
-    Item(EditorIndex).AddHP = scrlAddHP.Value
+    item(EditorIndex).AddHP = scrlAddHP.Value
     Exit Sub
     
 ' Error handler
@@ -1770,7 +1777,7 @@ Private Sub scrlAddMP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAddMP.Caption = "Add MP: " & scrlAddMP.Value
-    Item(EditorIndex).AddMP = scrlAddMP.Value
+    item(EditorIndex).AddMP = scrlAddMP.Value
     Exit Sub
     
 ' Error handler
@@ -1790,7 +1797,7 @@ Private Sub scrlAnim_Change()
     Else
         lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).name)
     End If
-    Item(EditorIndex).Animation = scrlAnim.Value
+    item(EditorIndex).Animation = scrlAnim.Value
     Exit Sub
     
 ' Error handler
@@ -1810,7 +1817,7 @@ Private Sub scrlCastSpell_Change()
     Else
         lblCastSpell.Caption = "Cast Spell: None"
     End If
-    Item(EditorIndex).CastSpell = scrlCastSpell.Value
+    item(EditorIndex).CastSpell = scrlCastSpell.Value
     Exit Sub
     
 ' Error handler
@@ -1832,7 +1839,7 @@ Private Sub scrlDamage_Change()
     Else
         lblDamage.Caption = "Defense: " & scrlDamage.Value
     End If
-    Item(EditorIndex).Data2 = scrlDamage.Value
+    item(EditorIndex).Data2 = scrlDamage.Value
     Exit Sub
     
 ' Error handler
@@ -1849,10 +1856,10 @@ Private Sub scrlDurability_Change()
     
     If fraEquipment.Visible = False Then Exit Sub
     
-    Item(EditorIndex).Data1 = frmEditor_Item.scrlDurability.Value
-    lblDurability.Caption = "Durability: " & Item(EditorIndex).Data1
+    item(EditorIndex).Data1 = frmEditor_Item.scrlDurability.Value
+    lblDurability.Caption = "Durability: " & item(EditorIndex).Data1
     
-    If Item(EditorIndex).Data1 > 0 Then
+    If item(EditorIndex).Data1 > 0 Then
         chkStackable.Value = 0
         chkStackable.Enabled = False
     Else
@@ -1875,7 +1882,7 @@ Private Sub scrlDuration_Change()
     If fraConsume.Visible = False Then Exit Sub
     
     lblDuration.Caption = "Duration: " & scrlDuration.Value & " s"
-    Item(EditorIndex).Data1 = scrlDuration.Value
+    item(EditorIndex).Data1 = scrlDuration.Value
     Exit Sub
     
 ' Error handler
@@ -1893,7 +1900,7 @@ Private Sub scrlHP_Change()
     If fraAutoLife.Visible = False Then Exit Sub
     
     lblHP.Caption = "HP: " & scrlHP.Value
-    Item(EditorIndex).AddHP = scrlHP.Value
+    item(EditorIndex).AddHP = scrlHP.Value
     Exit Sub
     
 ' Error handler
@@ -1909,7 +1916,7 @@ Private Sub scrlMP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblMP.Caption = "MP: " & scrlMP.Value
-    Item(EditorIndex).AddMP = scrlMP.Value
+    item(EditorIndex).AddMP = scrlMP.Value
     Exit Sub
     
 ' Error handler
@@ -1925,7 +1932,7 @@ Private Sub scrlLevelReq_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblLevelReq.Caption = "Level: " & scrlLevelReq
-    Item(EditorIndex).LevelReq = scrlLevelReq.Value
+    item(EditorIndex).LevelReq = scrlLevelReq.Value
     Exit Sub
     
 ' Error handler
@@ -1943,7 +1950,7 @@ Private Sub scrlMap_Change()
     If fraTeleport.Visible Then Exit Sub
     
     lblMap.Caption = "Map: " & scrlMap.Value
-    Item(EditorIndex).Data1 = scrlMap.Value
+    item(EditorIndex).Data1 = scrlMap.Value
     Exit Sub
     
 ' Error handler
@@ -1959,7 +1966,7 @@ Private Sub scrlChanceModifier_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblChance.Caption = "Chance: " & scrlChanceModifier.Value
-    Item(EditorIndex).ChanceModifier = scrlChanceModifier.Value
+    item(EditorIndex).ChanceModifier = scrlChanceModifier.Value
     Exit Sub
     
 ' Error handler
@@ -1975,7 +1982,7 @@ Private Sub scrlPaperdoll_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblPaperdoll.Caption = "Paperdoll: " & scrlPaperdoll.Value
-    Item(EditorIndex).Paperdoll = scrlPaperdoll.Value
+    item(EditorIndex).Paperdoll = scrlPaperdoll.Value
     Exit Sub
     
 ' Error handler
@@ -1991,7 +1998,7 @@ Private Sub scrlPic_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblPic.Caption = "Icon: " & scrlPic.Value
-    Item(EditorIndex).Pic = scrlPic.Value
+    item(EditorIndex).Pic = scrlPic.Value
     Exit Sub
     
 ' Error handler
@@ -2007,7 +2014,7 @@ Private Sub scrlRarity_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblRarity.Caption = "Rarity: " & scrlRarity.Value
-    Item(EditorIndex).Rarity = scrlRarity.Value
+    item(EditorIndex).Rarity = scrlRarity.Value
     Exit Sub
     
 ' Error handler
@@ -2023,7 +2030,7 @@ Private Sub scrlSpeed_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblSpeed.Caption = "Speed: " & scrlSpeed.Value / 1000 & " s"
-    Item(EditorIndex).WeaponSpeed = scrlSpeed.Value
+    item(EditorIndex).WeaponSpeed = scrlSpeed.Value
     Exit Sub
     
 ' Error handler
@@ -2041,7 +2048,7 @@ Private Sub scrlSprite_Change()
     If fraSprite.Visible = False Then Exit Sub
     
     lblSprite.Caption = "Sprite: " & scrlSprite.Value
-    Item(EditorIndex).Data1 = scrlSprite.Value
+    item(EditorIndex).Data1 = scrlSprite.Value
     Exit Sub
     
 ' Error handler
@@ -2072,7 +2079,7 @@ Private Sub scrlStatBonus_Change(Index As Integer)
     End Select
             
     lblStatBonus(Index).Caption = text & scrlStatBonus(Index).Value
-    Item(EditorIndex).Add_Stat(Index) = scrlStatBonus(Index).Value
+    item(EditorIndex).Add_Stat(Index) = scrlStatBonus(Index).Value
     Exit Sub
     
 ' Error handler
@@ -2103,7 +2110,7 @@ Private Sub scrlStatReq_Change(Index As Integer)
     End Select
     
     lblStatReq(Index).Caption = text & scrlStatReq(Index).Value
-    Item(EditorIndex).Stat_Req(Index) = scrlStatReq(Index).Value
+    item(EditorIndex).Stat_Req(Index) = scrlStatReq(Index).Value
     Exit Sub
     
 ' Error handler
@@ -2138,7 +2145,7 @@ Private Sub scrlX_Change()
     If fraTeleport.Visible = False Then Exit Sub
     
     lblX.Caption = "X: " & scrlX.Value
-    Item(EditorIndex).Data2 = scrlX.Value
+    item(EditorIndex).Data2 = scrlX.Value
     Exit Sub
     
 ' Error handler
@@ -2154,7 +2161,7 @@ Private Sub scrlY_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblY.Caption = "Y: " & scrlY.Value
-    Item(EditorIndex).Data3 = scrlY.Value
+    item(EditorIndex).Data3 = scrlY.Value
     Exit Sub
     
 ' Error handler
@@ -2171,7 +2178,7 @@ Private Sub txtDesc_Change()
     
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
-    Item(EditorIndex).Desc = Trim$(txtDesc.text)
+    item(EditorIndex).Desc = Trim$(txtDesc.text)
     Exit Sub
     
 ' Error handler
@@ -2189,9 +2196,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Item(EditorIndex).name = Trim$(txtName.text)
+    item(EditorIndex).name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & item(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -2210,7 +2217,7 @@ Private Sub txtPrice_Change()
     If Not IsNumeric(txtPrice.text) Then txtPrice.text = 0
     If txtPrice.text > MAX_LONG Then txtPrice.text = MAX_LONG
     If txtPrice.text < 0 Then txtPrice.text = 0
-    Item(EditorIndex).Price = Val(frmEditor_Item.txtPrice.text)
+    item(EditorIndex).Price = Val(frmEditor_Item.txtPrice.text)
     Exit Sub
     
 ' Error handler
@@ -2335,8 +2342,8 @@ Private Sub cmdPaste_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
          
     lstIndex.RemoveItem EditorIndex - 1
-    Call CopyMemory(ByVal VarPtr(Item(EditorIndex)), ByVal VarPtr(Item(TmpIndex + 1)), LenB(Item(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).name), EditorIndex - 1
+    Call CopyMemory(ByVal VarPtr(item(EditorIndex)), ByVal VarPtr(item(TmpIndex + 1)), LenB(item(TmpIndex + 1)))
+    lstIndex.AddItem EditorIndex & ": " & Trim$(item(EditorIndex).name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

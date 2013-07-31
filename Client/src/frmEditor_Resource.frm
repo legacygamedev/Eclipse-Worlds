@@ -515,6 +515,13 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub Form_Activate()
+    hwndLastActiveWnd = hWnd
+    If FormVisible("frmAdmin") And adminMin Then
+        frmAdmin.centerMiniVert Width, Height, Left, Top
+    End If
+End Sub
+
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -627,7 +634,7 @@ Private Sub scrlExp_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblExp.Caption = "Exp: " & scrlExp.Value
+    lblEXP.Caption = "Exp: " & scrlExp.Value
     Resource(EditorIndex).Exp = scrlExp.Value
     Exit Sub
     
@@ -740,7 +747,7 @@ Private Sub scrlReward_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlReward.Value > 0 Then
-        lblReward.Caption = "Reward: " & Trim$(Item(scrlReward.Value).name)
+        lblReward.Caption = "Reward: " & Trim$(item(scrlReward.Value).name)
     Else
         lblReward.Caption = "Reward: None"
     End If

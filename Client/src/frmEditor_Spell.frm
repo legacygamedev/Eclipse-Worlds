@@ -753,6 +753,13 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub Form_Activate()
+    hwndLastActiveWnd = hWnd
+    If FormVisible("frmAdmin") And adminMin Then
+        frmAdmin.centerMiniVert Width, Height, Left, Top
+    End If
+End Sub
+
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1171,7 +1178,7 @@ Private Sub scrlX_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblX.Caption = "X: " & scrlX.Value
-    Spell(EditorIndex).x = scrlX.Value
+    Spell(EditorIndex).X = scrlX.Value
     Exit Sub
     
 ' Error handler
@@ -1187,7 +1194,7 @@ Private Sub scrlY_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblY.Caption = "Y: " & scrlY.Value
-    Spell(EditorIndex).y = scrlY.Value
+    Spell(EditorIndex).Y = scrlY.Value
     Exit Sub
     
 ' Error handler

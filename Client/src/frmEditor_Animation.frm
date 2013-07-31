@@ -415,6 +415,13 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub Form_Activate()
+    hwndLastActiveWnd = hWnd
+    If FormVisible("frmAdmin") And adminMin Then
+        frmAdmin.centerMiniVert Width, Height, Left, Top
+    End If
+End Sub
+
 Private Sub Form_Load()
     Dim i As Long
     
@@ -437,6 +444,7 @@ errorhandler:
     HandleError "Form_Load", "frmEditor_Animation", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
 
 Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ANIMATIONS Then Exit Sub

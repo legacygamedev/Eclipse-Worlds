@@ -734,6 +734,13 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub Form_Activate()
+    hwndLastActiveWnd = hWnd
+    If FormVisible("frmAdmin") And adminMin Then
+        frmAdmin.centerMiniVert Width, Height, Left, Top
+    End If
+End Sub
+
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -911,7 +918,7 @@ Private Sub scrlItemNum_Change()
     lblItemNum.Caption = "Number: " & scrlItemNum.Value
 
     If scrlItemNum.Value > 0 Then
-        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.Value).name)
+        lblItemName.Caption = "Item: " & Trim$(item(scrlItemNum.Value).name)
     Else
         lblItemName.Caption = "Item: None"
     End If
@@ -1068,7 +1075,7 @@ Private Sub scrlX_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblX.Caption = "X : " & scrlX.Value
-    Class(EditorIndex).x = scrlX.Value
+    Class(EditorIndex).X = scrlX.Value
     Exit Sub
     
 ' Error handler
@@ -1084,7 +1091,7 @@ Private Sub scrlY_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblY.Caption = "Y : " & scrlY.Value
-    Class(EditorIndex).y = scrlY.Value
+    Class(EditorIndex).Y = scrlY.Value
     Exit Sub
     
 ' Error handler

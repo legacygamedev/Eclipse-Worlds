@@ -381,3 +381,5 @@ Public ButtonsVisible As Boolean
 Public FadeType As Long
 Public FadeAmount As Long
 Public FlashTimer As Long
+
+Public hwndLastActiveWnd As Long

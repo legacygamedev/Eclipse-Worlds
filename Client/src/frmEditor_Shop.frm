@@ -389,7 +389,7 @@ Private Sub cmdUpdate_Click()
     If Index < 1 Or Index > MAX_SHOPS Then Exit Sub
     
     With Shop(EditorIndex).TradeItem(Index)
-        .Item = cmbItem.ListIndex
+        .item = cmbItem.ListIndex
         .ItemValue = Val(txtItemValue.text)
         .CostItem = cmbCostItem.ListIndex
         .CostItem2 = cmbCostItem2.ListIndex
@@ -418,7 +418,7 @@ Private Sub cmdDeleteTrade_Click()
     If Index < 1 Or Index > MAX_SHOPS Then Exit Sub
     
     With Shop(EditorIndex).TradeItem(Index)
-        .Item = 0
+        .item = 0
         .ItemValue = 0
         .CostItem = 0
         .CostItem2 = 0
@@ -433,6 +433,13 @@ Private Sub cmdDeleteTrade_Click()
 errorhandler:
     HandleError "cmdDeleteTrade_Click", "frmEditor_Shop", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+End Sub
+
+Private Sub Form_Activate()
+    hwndLastActiveWnd = hWnd
+    If FormVisible("frmAdmin") And adminMin Then
+        frmAdmin.centerMiniVert Width, Height, Left, Top
+    End If
 End Sub
 
 Private Sub lstIndex_Click()
@@ -463,7 +470,7 @@ Private Sub lstTradeItem_DblClick()
     If Index < 1 Or Index > MAX_SHOPS Then Exit Sub
     
     With Shop(EditorIndex).TradeItem(Index)
-         cmbItem.ListIndex = .Item
+         cmbItem.ListIndex = .item
          txtItemValue.text = .ItemValue
          cmbCostItem.ListIndex = .CostItem
          cmbCostItem2.ListIndex = .CostItem2
@@ -626,9 +633,9 @@ Private Sub Form_Load()
     frmEditor_Shop.cmbCostItem2.AddItem "None"
 
     For i = 1 To MAX_ITEMS
-        frmEditor_Shop.cmbItem.AddItem i & ": " & Trim$(Item(i).name)
-        frmEditor_Shop.cmbCostItem.AddItem i & ": " & Trim$(Item(i).name)
-        frmEditor_Shop.cmbCostItem2.AddItem i & ": " & Trim$(Item(i).name)
+        frmEditor_Shop.cmbItem.AddItem i & ": " & Trim$(item(i).name)
+        frmEditor_Shop.cmbCostItem.AddItem i & ": " & Trim$(item(i).name)
+        frmEditor_Shop.cmbCostItem2.AddItem i & ": " & Trim$(item(i).name)
     Next
     
     frmEditor_Shop.cmbItem.ListIndex = 0

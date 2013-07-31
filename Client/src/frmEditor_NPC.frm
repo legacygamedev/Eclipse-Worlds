@@ -778,6 +778,13 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub Form_Activate()
+    hwndLastActiveWnd = hWnd
+    If FormVisible("frmAdmin") And adminMin Then
+        frmAdmin.centerMiniVert Width, Height, Left, Top
+    End If
+End Sub
+
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1021,7 +1028,7 @@ Private Sub scrlNum_Change()
     lblNum.Caption = "Number: " & scrlNum.Value
 
     If scrlNum.Value > 0 Then
-        lblItemName.Caption = "Item: " & Trim$(Item(scrlNum.Value).name)
+        lblItemName.Caption = "Item: " & Trim$(item(scrlNum.Value).name)
     Else
         lblItemName.Caption = "Item: None"
     End If
@@ -1101,10 +1108,10 @@ Private Sub txtExp_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Not IsNumeric(txtExp.text) Then txtExp.text = 0
-    If txtExp.text > MAX_LONG Then txtExp.text = MAX_LONG
-    If txtExp.text < 0 Then txtExp.text = 0
-    NPC(EditorIndex).Exp = txtExp.text
+    If Not IsNumeric(txtEXP.text) Then txtEXP.text = 0
+    If txtEXP.text > MAX_LONG Then txtEXP.text = MAX_LONG
+    If txtEXP.text < 0 Then txtEXP.text = 0
+    NPC(EditorIndex).Exp = txtEXP.text
     Exit Sub
     
 ' Error handler
@@ -1321,7 +1328,7 @@ Private Sub txtEXP_GotFocus()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    txtExp.SelStart = Len(txtExp)
+    txtEXP.SelStart = Len(txtEXP)
     Exit Sub
     
 ' Error handler

@@ -205,13 +205,20 @@ errorhandler:
 End Sub
 
 Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
-    Dim ChatText As String
-    Dim name As String
-    Dim i As Long
-    Dim n As Long
+
+    Dim ChatText  As String
+
+    Dim name      As String
+
+    Dim i         As Long
+
+    Dim n         As Long
+
     Dim Command() As String
-    Dim buffer As clsBuffer
-    Dim StrInput As String
+
+    Dim buffer    As clsBuffer
+
+    Dim StrInput  As String
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -223,8 +230,10 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
     ' Handle when the player presses the return key
     If KeyAscii = vbKeyReturn Then
+
         ' Party message
         If Left$(ChatText, 1) = "~" Or Left$(MyText, 7) = "/party " Then
+
             ' Make sure they are actually sending something
             If Left$(MyText, 7) = "/party " And Len(MyText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
@@ -234,21 +243,28 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AddText("Usage: ~message or /party message", BrightRed)
                 MyText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
+
                 Exit Sub
+
             End If
+
             ' Send the message to the player
-            If Party.Num > 0 Then
-                Call PartyMsg(GetPlayerName(MyIndex) & ": " & ChatText, Party.Num)
+            If Party.num > 0 Then
+                Call PartyMsg(GetPlayerName(MyIndex) & ": " & ChatText, Party.num)
             Else
                 AddText "You are not in a party!", BrightRed
             End If
+
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
+
             Exit Sub
+
         End If
         
         ' Guild message
         If Left$(ChatText, 1) = "@" Or Left$(MyText, 7) = "/guild " Then
+
             ' Make sure they are actually sending something
             If Left$(MyText, 7) = "/guild " And Len(MyText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
@@ -258,21 +274,28 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AddText("Usage: @message or /guild message", BrightRed)
                 MyText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
+
                 Exit Sub
+
             End If
+
             ' Send the message to the player
             If Not GetPlayerGuild(MyIndex) = vbNullString Then
                 Call GuildMsg(ChatText)
             Else
                 AddText "You are not in a guild!", BrightRed
             End If
+
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
+
             Exit Sub
+
         End If
 
         ' Global message
         If Left$(ChatText, 1) = "'" Or Left$(MyText, 8) = "/global " Then
+
             ' Make sure they are actually sending something
             If Left$(MyText, 8) = "/global " And Len(MyText) > 8 Then
                 ChatText = Mid$(ChatText, 9, Len(ChatText) - 1)
@@ -282,17 +305,23 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AddText("Usage: 'message or /global message", BrightRed)
                 MyText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
+
                 Exit Sub
+
             End If
+
             ' Send the message to the player
             Call GlobalMsg(ChatText)
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
+
             Exit Sub
+
         End If
             
         ' Admin message
         If Left$(ChatText, 1) = "`" Or Left$(MyText, 7) = "/Staff " Then
+
             ' Make sure they are actually sending something
             If Left$(MyText, 7) = "/Staff " And Len(MyText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
@@ -302,19 +331,26 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AddText("Usage: `message or /Staff message", BrightRed)
                 MyText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
+
                 Exit Sub
+
             End If
+
             If GetPlayerAccess(MyIndex) > 0 Then
                 ' Send the message to the player
                 Call AdminMsg(GetPlayerName(MyIndex) & ": " & ChatText)
             End If
+
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
+
             Exit Sub
+
         End If
         
         ' Emote message
         If Left$(ChatText, 1) = "-" Or Left$(MyText, 7) = "/emote " Then
+
             ' Make sure they are actually sending something
             If Left$(MyText, 7) = "/emote " And Len(MyText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
@@ -324,17 +360,23 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AddText("Usage: -message or /emote message", BrightRed)
                 MyText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
+
                 Exit Sub
+
             End If
+
             ' Send the message to the player
             Call EmoteMsg(ChatText)
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
+
             Exit Sub
+
         End If
         
         ' Private message
         If Left$(ChatText, 1) = "!" Or Left$(MyText, 9) = "/whisper " Then
+
             ' Make sure they are actually sending something
             If Left$(MyText, 9) = "/whisper " And Len(MyText) > 9 Then
                 ChatText = Mid$(ChatText, 10, Len(ChatText) - 1)
@@ -344,18 +386,24 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
                 MyText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
+
                 Exit Sub
+
             End If
             
             name = vbNullString
 
             ' Get the desired player from the user text
             For i = 1 To Len(ChatText)
+
                 If Not Mid$(ChatText, i, 1) = " " Then
                     name = name & Mid$(ChatText, i, 1)
                 Else
+
                     Exit For
+
                 End If
+
             Next
             
             ' Make sure they are actually sending something
@@ -370,7 +418,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
+
             Exit Sub
+
         End If
 
         ' Commands
@@ -378,10 +428,14 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Command = Split(MyText, Space(1))
 
             Select Case LCase$(Command(0))
+
                 Case "/pquit"
-                    If Party.Num = 0 Then
+
+                    If Party.num = 0 Then
                         AddText "You are not in a party!", BrightRed
+
                         Exit Sub
+
                     End If
                     
                     SendPartyLeave
@@ -390,11 +444,13 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     RequestGuildResign
                     
                 Case "/createguild"
+
                     ' Make sure they are actually sending something
                     If UBound(Command) < 1 Then
                         AddText "Usage: /createguild name", BrightRed
                         GoTo Continue
                     End If
+
                     SendGuildCreate Command(1)
                     
                 Case "/clearchat"
@@ -404,6 +460,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendCanTrade
                     
                 Case "/afk"
+
                     If Trim$(Player(MyIndex).Status) = vbNullString Then
                         Call SendChangeStatus(MyIndex, "AFK")
                     Else
@@ -413,14 +470,14 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Case "/fps"
                     BFPS = Not BFPS
                     
-                ' Toggle fps lock
+                    ' Toggle fps lock
                 Case "/fpslock"
                     FPS_Lock = Not FPS_Lock
                     
                 Case "/ping"
                     BPing = Not BPing
                     
-                ' Help commands
+                    ' Help commands
                 Case "/help"
                     Call AddText("Social Commands:", HelpColor)
                     Call AddText("'message message or /global message = Global Message", HelpColor)
@@ -444,14 +501,19 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Case "/emotes"
                     ' Empty out text
                     ChatText = vbNullString
+
                     For i = 1 To MAX_EMOTICONS
+
                         If Not Trim$(Emoticon(i).Command) = "/" Then
                             If Not ChatText = vbNullString Then
                                 ChatText = ChatText & ", "
                             End If
+
                             ChatText = ChatText & Trim$(Emoticon(i).Command)
                         End If
+
                     Next
+
                     AddText "Emotes: " & ChatText, BrightGreen
                     
                 Case "/trade"
@@ -462,23 +524,31 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     Call ToggleGUI(GUIVisible)
                     
                 Case "/acp", "/admin"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
                     End If
-                    
+
                     If FormVisible("frmAdmin") Then
-                        Unload frmAdmin
+                        If GetForegroundWindow = frmAdmin.hWnd Then
+                            Unload frmAdmin
+                        ElseIf GetForegroundWindow <> frmAdmin.hWnd Then
+                            BringWindowToTop (frmAdmin.hWnd)
+                            InitAdminPanel
+                        End If
+
                     Else
                         InitAdminPanel
                     End If
                     
-                ' Who's Online
+                    ' Who's Online
                 Case "/who"
                     SendWhosOnline
                 
-                ' Kicking a player
+                    ' Kicking a player
                 Case "/kick"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -492,6 +562,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendKick Command(1)
                     
                 Case "/mute"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -504,8 +575,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     
                     SendMute Command(1)
                     
-                ' Location
+                    ' Location
                 Case "/loc"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -513,8 +585,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     BLoc = Not BLoc
                     
-                ' Warping to a player
+                    ' Warping to a player
                 Case "/warpmeto"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -532,8 +605,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     WarpMeTo Command(1)
                     
-                ' Warping a player to you
+                    ' Warping a player to you
                 Case "/warptome"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -551,8 +625,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     WarpToMe Command(1)
                     
-                ' Warping to a map
+                    ' Warping to a map
                 Case "/warpto"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -577,8 +652,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                         Call AddText("Invalid map number.", Red)
                     End If
 
-                ' Setting sprite
+                    ' Setting sprite
                 Case "/setsprite"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -596,8 +672,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendSetSprite CLng(Command(1))
                     
-                ' Set player sprite
+                    ' Set player sprite
                 Case "/setplayersprite"
+
                     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -620,8 +697,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendSetPlayerSprite (Command(1)), (CLng(Command(2)))
                     
-                ' Map report
+                    ' Map report
                 Case "/mapreport"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -629,8 +707,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendMapReport
 
-                ' Map respawn
+                    ' Map respawn
                 Case "/respawn"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -638,8 +717,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendMapRespawn
                     
-                ' MOTD change
+                    ' MOTD change
                 Case "/motd"
+
                     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -653,6 +733,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendMOTDChange Right$(ChatText, Len(ChatText) - 5)
                     
                 Case "/smotd"
+
                     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -666,6 +747,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendSMOTDChange Right$(ChatText, Len(ChatText) - 6)
                     
                 Case "/gmotd"
+
                     If GetPlayerGuild(MyIndex) = vbNullString Then
                         AddText "You are not in a guild!", BrightRed
                         GoTo Continue
@@ -683,8 +765,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendGMOTDChange Right$(ChatText, Len(ChatText) - 6)
             
-                ' Banning a player
+                    ' Banning a player
                 Case "/ban"
+
                     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -698,9 +781,10 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     StrInput = InputBox("Reason: ", "Ban")
                     SendBan Command(1), Trim$(StrInput)
                     
-                ' // Developer Admin Commands //
-                ' Editing item request
+                    ' // Developer Admin Commands //
+                    ' Editing item request
                 Case "/edititem"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -708,8 +792,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendRequestEditItem
                     
-                ' Editing animation request
+                    ' Editing animation request
                 Case "/editanimation"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -717,8 +802,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendRequestEditAnimation
                     
-                ' Editing npc request
+                    ' Editing npc request
                 Case "/editnpc"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -726,8 +812,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendRequestEditNPC
                     
-                ' Editing resource request
+                    ' Editing resource request
                 Case "/editresource"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -735,8 +822,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendRequestEditResource
                     
-                ' Editing shop request
+                    ' Editing shop request
                 Case "/editshop"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -744,8 +832,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendRequestEditShop
                     
-                ' Editing emoticon request
+                    ' Editing emoticon request
                 Case "/editemoticon"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -753,8 +842,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     
                     SendEmoticonEditor
                     
-                ' Ban Editor
+                    ' Ban Editor
                 Case "/editban"
+
                     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -762,8 +852,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     
                     SendRequestEditBan
                     
-                ' Class Editor
+                    ' Class Editor
                 Case "/editclass"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -771,8 +862,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     
                     SendRequestEditClass
                     
-                ' Title Editor
+                    ' Title Editor
                 Case "/edittitle"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -780,8 +872,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     
                     SendRequestEditTitle
                     
-                ' Map Editor
+                    ' Map Editor
                 Case "/editmap"
+
                     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -789,7 +882,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     
                     SendRequestEditMap
                 
-                ' Event Editor
+                    ' Event Editor
                 Case "/editevent"
                     'If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
                     '    AddText "You have insufficent access to do this!", BrightRed
@@ -798,8 +891,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     
                     'SendRequestEditEvent
                     
-                ' Moral Editor
+                    ' Moral Editor
                 Case "/editmoral"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -807,8 +901,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendRequestEditMoral
                     
-                ' Editing spell request
+                    ' Editing spell request
                 Case "/editspell"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -816,8 +911,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendRequestEditSpell
                     
-                ' Editing Class request
+                    ' Editing Class request
                 Case "/edititem"
+
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -825,9 +921,10 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendRequestEditClass
                     
-                ' // Creator Admin Commands //
-                ' Giving another player access
+                    ' // Creator Admin Commands //
+                    ' Giving another player access
                 Case "/setaccess"
+
                     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -844,27 +941,35 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     End If
 
                     SendSetAccess Command(1), CLng(Command(2))
+
                 Case Else
+
                     ' Check for Emoticons
                     For i = 1 To MAX_EMOTICONS
+
                         If Not Trim$(Emoticon(i).Command) = "/" Then
                             If Trim$(Emoticon(i).Command) = Command(0) Then
                                 SendCheckEmoticon i
                                 n = n + 1
+
                                 Exit For
+
                             End If
                         End If
+
                     Next
                     
                     ' If we don't find a Emoticon, then it's an invalid command
                     If n = 0 Then AddText "Not a valid command!", BrightRed
             End Select
 
-' Continue label where we go instead of exiting the sub
+            ' Continue label where we go instead of exiting the sub
 Continue:
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
+
             Exit Sub
+
         End If
 
         ' Chat message
@@ -889,8 +994,8 @@ Continue:
             
             ' Party message
             If CurrentChatChannel = 3 Then
-                If Party.Num > 0 Then
-                    Call PartyMsg(GetPlayerName(MyIndex) & ": " & ChatText, Party.Num)
+                If Party.num > 0 Then
+                    Call PartyMsg(GetPlayerName(MyIndex) & ": " & ChatText, Party.num)
                 Else
                     AddText "You are not in a party!", BrightRed
                 End If
@@ -905,7 +1010,9 @@ Continue:
 
         MyText = vbNullString
         frmMain.txtMyChat.text = vbNullString
+
         Exit Sub
+
     End If
 
     ' Handle when the user presses the backspace key
@@ -919,9 +1026,10 @@ Continue:
             MyText = MyText & ChrW$(KeyAscii)
         End If
     End If
+
     Exit Sub
 
-' Error handler
+    ' Error handler
 errorhandler:
     HandleError "HandleKeyPresses", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
