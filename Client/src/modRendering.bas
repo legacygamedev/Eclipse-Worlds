@@ -15,7 +15,7 @@ Private Const FVF_TLVERTEX As Long = D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFF
 Public Type TLVERTEX
     x As Single
     y As Single
-    Z As Single
+    z As Single
     RHW As Single
     Color As Long
     TU As Single
@@ -594,10 +594,10 @@ errorhandler:
 End Sub
 
 ' This function will make it much easier to setup the vertices with the info it needs.
-Private Function Create_TLVertex(x As Single, y As Single, Z As Single, RHW As Single, Color As Long, Specular As Long, TU As Single, TV As Single) As TLVERTEX
+Private Function Create_TLVertex(x As Single, y As Single, z As Single, RHW As Single, Color As Long, Specular As Long, TU As Single, TV As Single) As TLVERTEX
     Create_TLVertex.x = x
     Create_TLVertex.y = y
-    Create_TLVertex.Z = Z
+    Create_TLVertex.z = z
     Create_TLVertex.RHW = RHW
     Create_TLVertex.Color = Color
     Create_TLVertex.TU = TU
@@ -907,7 +907,7 @@ Public Sub DrawAnimation(ByVal Index As Long, ByVal Layer As Long)
             lockIndex = AnimInstance(Index).lockIndex
             
             ' Check if NPC exists
-            If MapNPC(lockIndex).Num > 0 Then
+            If MapNPC(lockIndex).num > 0 Then
                 ' Check if alive
                 If MapNPC(lockIndex).Vital(Vitals.HP) > 0 Then
                     ' Exists, is alive, set x & y
@@ -976,7 +976,7 @@ Public Sub DrawMapItem(ByVal ItemNum As Long)
         End If
     End If
 
-    picNum = item(MapItem(ItemNum).Num).Pic
+    picNum = item(MapItem(ItemNum).num).Pic
 
     If picNum < 1 Or picNum > NumItems Then Exit Sub
     
@@ -1104,7 +1104,7 @@ Private Sub DrawBars()
     
     ' Render health bars and casting bar
     For i = 1 To MAX_MAP_NPCS
-        NpcNum = MapNPC(i).Num
+        NpcNum = MapNPC(i).num
         ' Exists
         If NpcNum > 0 Then
             If Options.NpcVitals = 1 Then
@@ -1321,7 +1321,7 @@ Private Sub DrawBars()
     End If
     
     ' Draw party health bars
-    If Party.Num > 0 Then
+    If Party.num > 0 Then
         For i = 1 To MAX_PARTY_MEMBERS
             PartyIndex = Party.Member(i)
             If (PartyIndex > 0) And (Not PartyIndex = MyIndex) And (GetPlayerMap(PartyIndex) = GetPlayerMap(MyIndex)) Then
@@ -1366,7 +1366,7 @@ errorhandler:
 End Sub
 
 Public Sub DrawHotbar()
-    Dim sRect As RECT, dRect As RECT, i As Long, Num As String, n As Long, destRECT As D3DRECT
+    Dim sRect As RECT, dRect As RECT, i As Long, num As String, n As Long, destRECT As D3DRECT
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1434,18 +1434,18 @@ Public Sub DrawHotbar()
         ' Render the letters
         If Options.WASD = 1 Then
             If i = 10 Then
-                Num = " 0"
+                num = " 0"
             ElseIf i = 11 Then
-                Num = " -"
+                num = " -"
             ElseIf i = 12 Then
-                Num = " +"
+                num = " +"
             Else
-                Num = " " & Trim$(i)
+                num = " " & Trim$(i)
             End If
         Else
-            Num = " F" & Trim$(i)
+            num = " F" & Trim$(i)
         End If
-        RenderText Font_Default, Num, dRect.Left + 2, dRect.Top + 16, White
+        RenderText Font_Default, num, dRect.Left + 2, dRect.Top + 16, White
         
         Direct3D_Device.EndScene
         Direct3D_Device.Present destRECT, destRECT, frmMain.picHotbar.hWnd, ByVal (0)
@@ -1580,9 +1580,9 @@ Public Sub DrawNpc(ByVal MapNPCNum As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    If MapNPC(MapNPCNum).Num = 0 Then Exit Sub ' No npc set
+    If MapNPC(MapNPCNum).num = 0 Then Exit Sub ' No npc set
     
-    Sprite = NPC(MapNPC(MapNPCNum).Num).Sprite
+    Sprite = NPC(MapNPC(MapNPCNum).num).Sprite
 
     If Sprite < 1 Or Sprite > NumCharacters Then Exit Sub
 
@@ -1591,7 +1591,7 @@ Public Sub DrawNpc(ByVal MapNPCNum As Long)
     ' Reset frame
     Anim = 0
     
-    If Not IsConstAnimated(NPC(MapNPC(MapNPCNum).Num).Sprite) Then
+    If Not IsConstAnimated(NPC(MapNPC(MapNPCNum).num).Sprite) Then
         ' Check for attacking animation
         If MapNPC(MapNPCNum).AttackTimer + (AttackSpeed / 2) > timeGetTime Then
             If MapNPC(MapNPCNum).Attacking = 1 Then
@@ -1758,8 +1758,8 @@ Sub DrawAnimatedItems()
     
     ' Check for map animation changes
     For i = 1 To MAX_MAP_ITEMS
-        If MapItem(i).Num > 0 Then
-            ItemPic = item(MapItem(i).Num).Pic
+        If MapItem(i).num > 0 Then
+            ItemPic = item(MapItem(i).num).Pic
 
             If ItemPic < 1 Or ItemPic > NumItems Then Exit Sub
             MaxFrames = Tex_Item(ItemPic).Width / PIC_X ' Work out how many frames there are.
@@ -1783,8 +1783,8 @@ Sub DrawAnimatedItems()
             ' Exit out if we're offering item in a trade.
             If InTrade > 0 Then
                 For x = 1 To MAX_INV
-                    TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).Num)
-                    If TradeYourOffer(x).Num = i Then
+                    TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).num)
+                    If TradeYourOffer(x).num = i Then
                         ' Check if currency
                         If Not item(TmpItem).stackable = 1 Then
                             ' Normal item don't render
@@ -1972,7 +1972,7 @@ Sub DrawAnimatedItems()
     
     If frmMain.picTrade.Visible = True Then
         For i = 1 To MAX_INV
-            ItemNum = TradeTheirOffer(i).Num
+            ItemNum = TradeTheirOffer(i).num
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
                 ItemPic = item(ItemNum).Pic
@@ -2028,7 +2028,7 @@ Sub DrawAnimatedItems()
         Next
         
          For i = 1 To MAX_INV
-            ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)
+            ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).num)
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
                 ItemPic = item(ItemNum).Pic
@@ -2178,8 +2178,8 @@ Sub DrawInventory()
             ' Exit out if we're offering item in a trade.
             If InTrade > 0 Then
                 For x = 1 To MAX_INV
-                    TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).Num)
-                    If TradeYourOffer(x).Num = i Then
+                    TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).num)
+                    If TradeYourOffer(x).num = i Then
                         ' Check if currency
                         If Not item(TmpItem).stackable = 1 Then
                             ' Normal item, exit out
@@ -2282,7 +2282,7 @@ Sub DrawTrade()
     
     For i = 1 To MAX_INV
         ' Draw your own offer
-        ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)
+        ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).num)
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
             ItemPic = item(ItemNum).Pic
@@ -2333,7 +2333,7 @@ Sub DrawTrade()
         Direct3D_Device.BeginScene
             
         ' Draw their offer
-        ItemNum = TradeTheirOffer(i).Num
+        ItemNum = TradeTheirOffer(i).num
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
             ItemPic = item(ItemNum).Pic
@@ -2992,7 +2992,7 @@ Public Sub Render_Graphics()
     ' Draw out the items
     If NumItems > 0 Then
         For i = 1 To MAX_MAP_ITEMS
-            If MapItem(i).Num > 0 Then
+            If MapItem(i).num > 0 Then
                 Call DrawMapItem(i)
             End If
         Next
@@ -3149,7 +3149,7 @@ Public Sub Render_Graphics()
     Next
     
     For i = 1 To Map.Npc_HighIndex
-        If MapNPC(i).Num > 0 Then
+        If MapNPC(i).num > 0 Then
             If CurX = MapNPC(i).x And CurY = MapNPC(i).y Then
                 If MyTargetType = TARGET_TYPE_NPC And MyTarget = i Then
                     ' Don't render
@@ -3203,7 +3203,7 @@ Public Sub Render_Graphics()
     
     ' Draw npc names
     For i = 1 To Map.Npc_HighIndex
-        If MapNPC(i).Num > 0 Then
+        If MapNPC(i).num > 0 Then
             Call DrawNPCName(i)
         End If
     Next
@@ -3222,6 +3222,11 @@ Public Sub Render_Graphics()
     For i = 1 To Action_HighIndex
         Call DrawActionMsg(i)
     Next
+    
+    ' Render the minimap
+    If GUIVisible Then
+        DrawMiniMap
+    End If
 
     ' Draw map name
     RenderText Font_Default, Map.name, DrawMapNameX, DrawMapNameY, DrawMapNameColor
@@ -6150,4 +6155,152 @@ Public Sub EditorMapProperties_DrawPanorama()
 errorhandler:
     HandleError "EditorMapProperties_DrawPanorama", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+End Sub
+
+Public Sub DrawMiniMap()
+    Dim i As Long, z As Long
+    Dim x As Integer, y As Integer
+    Dim Direction As Byte
+    Dim CameraX As Long, CameraY As Long, playerNum As Long
+    Dim MapX As Long, MapY As Long, MinMapX As Long, MinMapY As Long
+    Dim CameraXSize As Long, CameraYSize As Long, CameraHalfX As Long, CameraHalfY As Long
+ 
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    CameraXSize = (MIN_MAPX * PIC_X) - (MIN_MAPX * 4) - 8
+    CameraYSize = 64
+
+    CameraHalfX = (MIN_MAPX / 2)
+    CameraHalfY = (MIN_MAPY / 2)
+     
+    MinMapX = Player(MyIndex).x - CameraHalfX
+    MinMapY = Player(MyIndex).y - CameraHalfY
+    MapX = Player(MyIndex).x + CameraHalfX
+    MapY = Player(MyIndex).y + CameraHalfY
+     
+    If Player(MyIndex).x <= CameraHalfX Then MinMapX = 0
+    If Player(MyIndex).y <= CameraHalfY Then MinMapY = 0
+    If MinMapX <= CameraHalfX Then MapX = MIN_MAPX
+    If MinMapY <= CameraHalfY Then MapY = MIN_MAPY
+    If MapX > Map.MaxX Then MapX = Map.MaxX
+    If MapY > Map.MaxY Then MapY = Map.MaxY
+ 
+    ' Draw Outline
+    For x = 0 To MIN_MAPX
+        For y = 0 To MIN_MAPY
+            CameraX = CameraXSize + (x * 4)
+            CameraY = CameraYSize + (y * 4)
+            RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(255, 255, 255, 150)
+        Next y
+    Next x
+ 
+    ' Draw Player dot
+    For i = 1 To Player_HighIndex
+        If IsPlaying(i) Then
+            CameraX = CameraXSize + (((MiniMapPlayer(i).x / 4) - MinMapX) * 4)
+            CameraY = CameraYSize + (((MiniMapPlayer(i).y / 4) - MinMapY) * 4)
+            If (MiniMapPlayer(i).x / 4) < MapX Or (MiniMapPlayer(i).x / 4) > MinMapX Then
+                If (MiniMapPlayer(i).y / 4) < MapY Or (MiniMapPlayer(i).y / 4) > MinMapY Then
+                    If GetPlayerMap(i) = GetPlayerMap(MyIndex) And (Not i = MyIndex) Then
+                        Select Case Player(i).PK
+                            Case 0
+                                RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Yellow)
+                            Case 1
+                                RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightRed)
+                        End Select
+                    Else
+                        If (Map.MaxX - CameraHalfX) < (MiniMapPlayer(i).x / 4) Then CameraX = CameraXSize + ((MIN_MAPX - (Map.MaxX - (MiniMapPlayer(i).x / 4))) * 4)
+                        If (Map.MaxY - CameraHalfY) < (MiniMapPlayer(i).y / 4) Then CameraY = CameraYSize + ((MIN_MAPY - (Map.MaxY - (MiniMapPlayer(i).y / 4))) * 4)
+                        RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Orange)
+                    End If
+                End If
+            End If
+        End If
+    Next i
+   
+    For x = 0 To MapX
+        For y = 0 To MapY
+            CameraX = CameraXSize + ((x - MinMapX) * 4)
+            CameraY = CameraYSize + ((y - MinMapY) * 4)
+            
+            If Player(MyIndex).x > (Map.MaxX - CameraHalfX) Then CameraX = CameraXSize + ((x - (Map.MaxX - MIN_MAPX)) * 4)
+            If Player(MyIndex).y > (Map.MaxY - CameraHalfY) Then CameraY = CameraYSize + ((y - (Map.MaxY - MIN_MAPY)) * 4)
+
+            If CameraX >= CameraXSize And CameraX <= CameraXSize + (MIN_MAPX * 4) And CameraY >= CameraYSize And CameraY <= CameraYSize + (MIN_MAPY * 4) Then
+                ' Draw Tile Attribute
+                If Map.Tile(x, y).Type > 0 Then
+                    Select Case Map.Tile(x, y).Type
+                        Case TILE_TYPE_BLOCKED
+                            RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Black)
+                        Case TILE_TYPE_WARP
+                            RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(75, 0, 155, 200)
+                        Case TILE_TYPE_ITEM
+                            RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(0, 155, 0, 200)
+                        Case TILE_TYPE_SHOP
+                            RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(255, 125, 0, 200)
+                    End Select
+                End If
+                
+                ' Draw Events
+                For i = 1 To Map.CurrentEvents
+                    If Map.MapEvents(i).Visible = 1 Then
+                        If Map.MapEvents(i).x = x Then
+                            If Map.MapEvents(i).y = y Then
+                                Select Case Map.MapEvents(i).ShowName
+                                Case 0 ' Tile
+                                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Black)
+                                Case 1 ' Sprite
+                                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(255, 255, 0, 200)
+                                End Select
+                            End If
+                        End If
+                    End If
+                Next i
+            End If
+        Next y
+    Next x
+    
+    ' Draw NPC dot
+    For i = 1 To MAX_MAP_NPCS
+        If MapNPC(i).num > 0 Then
+            CameraX = CameraXSize + (((MiniMapNPC(i).x / 4) - MinMapX) * 4)
+            CameraY = CameraYSize + (((MiniMapNPC(i).y / 4) - MinMapY) * 4)
+            If Player(MyIndex).x > (Map.MaxX - CameraHalfX) Then CameraX = CameraXSize + (((MiniMapNPC(i).x / 4) - (Map.MaxX - MIN_MAPX)) * 4)
+            If Player(MyIndex).y > (Map.MaxY - CameraHalfY) Then CameraY = CameraYSize + (((MiniMapNPC(i).y / 4) - (Map.MaxY - MIN_MAPY)) * 4)
+            Select Case NPC(i).Behavior
+                Case NPC_BEHAVIOR_ATTACKONSIGHT
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Red)
+                Case NPC_BEHAVIOR_ATTACKWHENATTACKED
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(DarkGrey)
+                Case NPC_BEHAVIOR_SHOPKEEPER
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightBlue)
+                Case NPC_BEHAVIOR_FRIENDLY
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(White)
+                Case NPC_BEHAVIOR_GUARD
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightGreen)
+            End Select
+        End If
+    Next i
+ 
+    ' Directional blocks
+    For x = 0 To Map.MaxX
+        For y = 0 To Map.MaxY
+            If Map.Tile(x, y).DirBlock >= 1 Then
+                CameraX = CameraXSize + ((x - MinMapX) * 4)
+                CameraY = CameraYSize + ((y - MinMapY) * 4)
+                If Player(MyIndex).x > (Map.MaxX - CameraHalfX) Then CameraX = CameraXSize + ((x - (Map.MaxX - MIN_MAPX)) * 4)
+                If Player(MyIndex).y > (Map.MaxY - CameraHalfY) Then CameraY = CameraYSize + ((y - (Map.MaxY - MIN_MAPY)) * 4)
+                If CameraX >= CameraXSize And CameraX <= CameraXSize + (MIN_MAPX * 4) And CameraY >= CameraYSize And CameraY <= CameraYSize + (MIN_MAPY * 4) Then
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Black)
+                End If
+            End If
+        Next
+    Next
+    Exit Sub
+    
+' Error handler
+errorhandler:
+HandleError "DrawMiniMap", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+Err.Clear
 End Sub

@@ -4,10 +4,10 @@ Option Explicit
 ' Public data structures
 Public Map As MapRec
 Public TempMap As MapRec
-Public Bank As BankRec
+Public bank As BankRec
 Public Player(1 To MAX_PLAYERS) As PlayerRec
 Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
-Public Item(1 To MAX_ITEMS) As ItemRec
+Public item(1 To MAX_ITEMS) As ItemRec
 Public NPC(1 To MAX_NPCS) As NpcRec
 Public MapItem(1 To MAX_MAP_ITEMS) As MapItemRec
 Public MapNPC(1 To MAX_MAP_NPCS) As MapNpcRec
@@ -52,8 +52,8 @@ Public MainButton(1 To MAX_MAINBUTTONS) As ButtonRec
 Public Party As PartyRec
 
 Public Type SoundsRec
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     handle As Long
     InUse As Boolean
     channel As Long
@@ -102,7 +102,7 @@ Public Type PlayerItemRec
 End Type
 
 Private Type BankRec
-    Item(1 To MAX_BANK) As PlayerItemRec
+    item(1 To MAX_BANK) As PlayerItemRec
 End Type
 
 Private Type SpellAnim
@@ -147,8 +147,8 @@ Public Type PlayerRec
     
     ' Position
     Map As Integer
-    x As Byte
-    y As Byte
+    X As Byte
+    Y As Byte
     Dir As Byte
     
     ' Vitals
@@ -227,8 +227,8 @@ Private Type TempPlayerRec
 End Type
 
 Private Type TileDataRec
-    x As Byte
-    y As Byte
+    X As Byte
+    Y As Byte
     Tileset As Byte
 End Type
 
@@ -326,8 +326,8 @@ Public Type EventPageRec
     Position As Byte
     
     ' Client needed only
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 Public Type EventRec
@@ -335,8 +335,8 @@ Public Type EventRec
     Global As Long
     PageCount As Long
     Pages() As EventPageRec
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 Public Type TileRec
@@ -353,8 +353,8 @@ End Type
 Private Type MapEventRec
     name As String
     Dir As Long
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     GraphicType As Long
     GraphicX As Long
     GraphicY As Long
@@ -444,8 +444,8 @@ Private Type ClassRec
     
     ' Start position
     Map As Integer
-    x As Byte
-    y As Byte
+    X As Byte
+    Y As Byte
     Dir As Byte
     
     ' Combat tree
@@ -500,8 +500,8 @@ Private Type MapItemRec
     Value As Long
     Durability As Integer
     Frame As Byte
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 Private Type NpcRec
@@ -535,8 +535,8 @@ Private Type MapNpcRec
     Target As Byte
     TargetType As Byte
     Vital(1 To Vitals.Vital_Count - 1) As Long
-    x As Byte
-    y As Byte
+    X As Byte
+    Y As Byte
     Dir As Byte
     
     ' Client use only
@@ -553,7 +553,7 @@ Private Type MapNpcRec
 End Type
 
 Private Type TradeItemRec
-    Item As Long
+    item As Long
     ItemValue As Long
     CostItem As Long
     CostValue As Long
@@ -583,8 +583,8 @@ Private Type SpellRec
     CDTime As Long
     Icon As Long
     Map As Long
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     Dir As Byte
     Vital As Long
     Duration As Long
@@ -602,8 +602,8 @@ Private Type SpellRec
 End Type
 
 Public Type MapResourceRec
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     ResourceState As Byte
 End Type
 
@@ -634,16 +634,16 @@ Private Type ActionMsgRec
     Type As Long
     Color As Long
     Scroll As Long
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     Alpha As Byte
 End Type
 
 Private Type BloodRec
     Sprite As Long
     Timer As Long
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     Alpha As Byte
 End Type
 
@@ -659,8 +659,8 @@ End Type
 
 Private Type AnimInstanceRec
     Animation As Long
-    x As Byte
-    y As Byte
+    X As Byte
+    Y As Byte
     
     ' Used for locking to players/npcs
     lockIndex As Long
@@ -722,8 +722,8 @@ Public Type HotbarRec
 End Type
 
 Type DropRec
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     YSpeed As Long
     XSpeed As Long
     Init As Boolean
@@ -751,16 +751,16 @@ End Type
 
 Public Type WeatherParticleRec
     Type As Long
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
     Velocity As Long
     InUse As Long
 End Type
 
 ' Auto tiles
 Public Type PointRec
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 Public Type QuarterTileRec
@@ -812,4 +812,18 @@ Public Type EventWrapperRec
     WalkThrought As Byte
     Animated As Byte
     Graphic(0 To 2) As Long
+End Type
+
+' Mini Map Data
+Public MiniMapPlayer(1 To MAX_PLAYERS) As MiniMapPlayerRec
+Public MiniMapNPC(1 To MAX_MAP_NPCS) As MiniMapNPCRec
+
+Public Type MiniMapPlayerRec
+    X As Byte
+    Y As Byte
+End Type
+
+Public Type MiniMapNPCRec
+    X As Byte
+    Y As Byte
 End Type
