@@ -183,10 +183,8 @@ Begin VB.Form frmEditor_Resource
          Height          =   255
          Left            =   120
          Max             =   3
-         Min             =   1
          TabIndex        =   10
          Top             =   5280
-         Value           =   1
          Width           =   2295
       End
       Begin VB.HScrollBar scrlRewardMin 
@@ -246,12 +244,12 @@ Begin VB.Form frmEditor_Resource
       End
       Begin VB.Label lblExp 
          AutoSize        =   -1  'True
-         Caption         =   "Exp: None"
-         Height          =   180
+         Caption         =   "Exp: 0"
+         Height          =   195
          Left            =   2640
          TabIndex        =   41
          Top             =   4440
-         Width           =   780
+         Width           =   555
       End
       Begin VB.Label lblSkill 
          AutoSize        =   -1  'True
@@ -260,7 +258,7 @@ Begin VB.Form frmEditor_Resource
          Left            =   2640
          TabIndex        =   40
          Top             =   5040
-         Width           =   825
+         Width           =   2265
       End
       Begin VB.Label Label5 
          Caption         =   "Sound:"
@@ -368,7 +366,7 @@ Begin VB.Form frmEditor_Resource
          Left            =   120
          TabIndex        =   27
          Top             =   5040
-         Width           =   1530
+         Width           =   2250
       End
       Begin VB.Label lblRespawn 
          AutoSize        =   -1  'True
@@ -478,7 +476,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Resource(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Resource(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     ResourceEditorInit
@@ -601,7 +599,7 @@ Private Sub scrlAnimation_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).name)
+    If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).Name)
     lblAnim.Caption = "Animation: " & sString
     Resource(EditorIndex).Animation = scrlAnimation.Value
     Exit Sub
@@ -747,7 +745,7 @@ Private Sub scrlReward_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlReward.Value > 0 Then
-        lblReward.Caption = "Reward: " & Trim$(item(scrlReward.Value).name)
+        lblReward.Caption = "Reward: " & Trim$(item(scrlReward.Value).Name)
     Else
         lblReward.Caption = "Reward: None"
     End If
@@ -774,6 +772,35 @@ Private Sub scrlSkill_Change()
 ' Error handler
 errorhandler:
     HandleError "scrlSkill_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlTool_Change()
+    Dim Name As String
+
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Select Case scrlTool.Value
+        Case 0
+            Name = "None"
+        Case 1
+            Name = "Hatchet"
+        Case 2
+            Name = "Fishing Pole"
+        Case 3
+            Name = "Pickaxe"
+    End Select
+
+    lblTool.Caption = "Tool Required: " & Name
+    Resource(EditorIndex).ToolRequired = scrlTool.Value
+    Exit Sub
+
+' Error handler
+errorhandler:
+   HandleError "scrlTool_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -831,9 +858,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Resource(EditorIndex).name = Trim$(txtName.text)
+    Resource(EditorIndex).Name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Resource(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Resource(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -973,7 +1000,7 @@ Private Sub cmdPaste_Click()
     
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Resource(EditorIndex)), ByVal VarPtr(Resource(TmpIndex + 1)), LenB(Resource(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Resource(EditorIndex).name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Resource(EditorIndex).Name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     
