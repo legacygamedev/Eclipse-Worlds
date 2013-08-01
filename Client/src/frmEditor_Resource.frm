@@ -323,7 +323,7 @@ Begin VB.Form frmEditor_Resource
          Left            =   2640
          TabIndex        =   33
          Top             =   2040
-         Width           =   1530
+         Width           =   2130
       End
       Begin VB.Label lblName 
          AutoSize        =   -1  'True
@@ -350,7 +350,7 @@ Begin VB.Form frmEditor_Resource
          Left            =   120
          TabIndex        =   29
          Top             =   2040
-         Width           =   1470
+         Width           =   2175
       End
       Begin VB.Label lblReward 
          AutoSize        =   -1  'True
@@ -634,7 +634,7 @@ Private Sub scrlExp_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblEXP.Caption = "Exp: " & scrlExp.Value
+    lblExp.Caption = "Exp: " & scrlExp.Value
     Resource(EditorIndex).Exp = scrlExp.Value
     Exit Sub
     
@@ -747,7 +747,7 @@ Private Sub scrlReward_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlReward.Value > 0 Then
-        lblReward.Caption = "Reward: " & Trim$(item(scrlReward.Value).name)
+        lblReward.Caption = "Reward: " & Trim$(Item(scrlReward.Value).name)
     Else
         lblReward.Caption = "Reward: None"
     End If
