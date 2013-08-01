@@ -747,7 +747,7 @@ Private Sub scrlReward_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlReward.Value > 0 Then
-        lblReward.Caption = "Reward: " & Trim$(Item(scrlReward.Value).name)
+        lblReward.Caption = "Reward: " & Trim$(item(scrlReward.Value).name)
     Else
         lblReward.Caption = "Reward: None"
     End If
@@ -774,35 +774,6 @@ Private Sub scrlSkill_Change()
 ' Error handler
 errorhandler:
     HandleError "scrlSkill_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
-Private Sub scrlTool_Change()
-    Dim name As String
-    
-    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
-    
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    Select Case scrlTool.Value
-        Case 0
-            name = "None"
-        Case 1
-            name = "Hatchet"
-        Case 2
-            name = "Fishing Pole"
-        Case 3
-            name = "Pickaxe"
-    End Select
-
-    lblTool.Caption = "Tool Required: " & name
-    Resource(EditorIndex).ToolRequired = scrlTool.Value
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "scrlTool_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

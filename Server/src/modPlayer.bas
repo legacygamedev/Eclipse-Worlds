@@ -663,7 +663,6 @@ Function FindOpenInvSlot(ByVal Index As Long, ByVal ItemNum As Long) As Long
     If IsPlaying(Index) = False Or ItemNum <= 0 Or ItemNum > MAX_ITEMS Then Exit Function
 
     If Item(ItemNum).Stackable = 1 Then
-
         ' If currency then check to see if they already have an instance of the item and add it to that
         For i = 1 To MAX_INV
             If GetPlayerInvItemNum(Index, i) = ItemNum Then
@@ -1504,7 +1503,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
         Case ITEM_TYPE_EQUIPMENT
             EquipSlot = Item(GetPlayerInvItemNum(Index, InvNum)).EquipSlot
             
-            If EquipSlot >= 1 And EquipSlot <= Equipment.Equipment_Count - 1 Then
+            If EquipSlot >= 1 And EquipSlot <= Equipment_Count - 1 Then
                 Call PlayerUnequipItem(Index, EquipSlot, False, False)
                 
                 PlayerMsg Index, "You equip " & CheckGrammar(Trim$(Item(GetPlayerInvItemNum(Index, InvNum)).Name)) & ".", BrightGreen
@@ -1660,7 +1659,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
         Case ITEM_TYPE_RESETSTATS
             TotalPoints = GetPlayerPoints(Index)
             
-            For i = 1 To Stats.Stat_count - 1
+            For i = 1 To Stats.Stat_Count - 1
                 TotalPoints = TotalPoints + (GetPlayerStat(Index, i) - Class(GetPlayerClass(Index)).Stat(i))
                 Call SetPlayerStat(Index, i, Class(GetPlayerClass(Index)).Stat(i))
             Next
@@ -1706,23 +1705,41 @@ Public Sub SetCheckpoint(ByVal Index As Long, ByVal MapNum As Integer, ByVal X A
 End Sub
 
 Public Sub UpdatePlayerEquipmentItems(ByVal Index As Long)
+    Dim i As Long
+    
     If GetPlayerEquipment(Index, Shield) > 0 And GetPlayerEquipment(Index, Weapon) > 0 Then
         If Item(GetPlayerEquipment(Index, Weapon)).TwoHanded = 1 Then
             Call PlayerUnequipItem(Index, Weapon)
         End If
     End If
+    
+    For i = 1 To Equipment_Count - 1
+        If GetPlayerEquipment(Index, i) > 0 Then
+            If Item(GetPlayerEquipment(Index, i)).EquipSlot <> i Then
+                Call PlayerUnequipItem(Index, i)
+            End If
+        End If
+    Next
 End Sub
 
 Public Sub UpdateAllPlayerEquipmentItems()
-    Dim n As Long
+    Dim n As Long, i As Long
     
     For n = 1 To Player_HighIndex
         If IsPlaying(n) Then
-            If GetPlayerEquipment(n, Shield) > 0 And GetPlayerEquipment(n, Weapon) Then
+            If GetPlayerEquipment(n, Shield) > 0 And GetPlayerEquipment(n, Weapon) > 0 Then
                 If Item(GetPlayerEquipment(n, Weapon)).TwoHanded = 1 Then
                     Call PlayerUnequipItem(n, Weapon)
                 End If
             End If
+            
+            For i = 1 To Equipment_Count - 1
+                If GetPlayerEquipment(n, i) > 0 Then
+                    If Item(GetPlayerEquipment(n, i)).EquipSlot <> i Then
+                        Call PlayerUnequipItem(n, i)
+                    End If
+                End If
+            Next
         End If
     Next
 End Sub
@@ -1952,7 +1969,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     End If
     
     ' Check if they have the stats required to use this item
-    For i = 1 To Stats.Stat_count - 1
+    For i = 1 To Stats.Stat_Count - 1
         If GetPlayerRawStat(Index, i) < Item(ItemNum).Stat_Req(i) Then
             If message Then
                 PlayerMsg Index, "You do not meet the stat requirements to use this item.", BrightRed
@@ -2020,7 +2037,7 @@ Public Sub DamagePlayerEquipment(ByVal Index As Long, ByVal EquipmentSlot As Byt
     If ItemNum = 0 Then Exit Sub
     
     ' Make sure the item isn't indestructable
-    If Item(ItemNum).Data1 = 0 Then Exit Sub
+    If Item(ItemNum).Indestructable = 1 Then Exit Sub
     
     ' Don't subtract past 0
     If GetPlayerEquipmentDur(Index, EquipmentSlot) = 0 Then Exit Sub

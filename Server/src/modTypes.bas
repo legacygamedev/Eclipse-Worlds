@@ -38,7 +38,7 @@ Public Log As LogRec
 Public Options As OptionsRec
 
 Private Type MoveRouteRec
-    index As Long
+    Index As Long
     Data1 As Long
     Data2 As Long
     Data3 As Long
@@ -48,7 +48,7 @@ Private Type MoveRouteRec
 End Type
 
 Private Type GuildMemberRec
-    index As Long
+    Index As Long
     Access As Byte
 End Type
 
@@ -340,7 +340,7 @@ Public Type ConditionalBranchRec
 End Type
 
 Private Type EventCommandRec
-    index As Byte
+    Index As Byte
     Text1 As String
     Text2 As String
     Text3 As String
@@ -633,7 +633,7 @@ Private Type ClassRec
 End Type
 
 Private Type ItemRec
-    Name As String * NAME_LENGTH
+      Name As String * NAME_LENGTH
     Desc As String * 256
     Sound As String * FILE_LENGTH
     
@@ -672,6 +672,7 @@ Private Type ItemRec
     HoT As Byte
     TwoHanded As Byte
     Stackable As Byte
+    Indestructable As Byte
 End Type
 
 Private Type MapItemRec
