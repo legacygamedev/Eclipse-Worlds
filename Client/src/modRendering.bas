@@ -6191,6 +6191,7 @@ Public Sub DrawMiniMap()
         For y = 0 To MIN_MAPY
             CameraX = CameraXSize + (x * 4)
             CameraY = CameraYSize + (y * 4)
+              
             RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(255, 255, 255, 150)
         Next y
     Next x
@@ -6200,12 +6201,13 @@ Public Sub DrawMiniMap()
         If IsPlaying(i) Then
             CameraX = CameraXSize + (((MiniMapPlayer(i).x / 4) - MinMapX) * 4)
             CameraY = CameraYSize + (((MiniMapPlayer(i).y / 4) - MinMapY) * 4)
+            
             If (MiniMapPlayer(i).x / 4) < MapX Or (MiniMapPlayer(i).x / 4) > MinMapX Then
                 If (MiniMapPlayer(i).y / 4) < MapY Or (MiniMapPlayer(i).y / 4) > MinMapY Then
                     If GetPlayerMap(i) = GetPlayerMap(MyIndex) And (Not i = MyIndex) Then
                         Select Case Player(i).PK
                             Case 0
-                                RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Yellow)
+                                RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightCyan)
                             Case 1
                                 RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightRed)
                         End Select
@@ -6289,8 +6291,10 @@ Public Sub DrawMiniMap()
             If Map.Tile(x, y).DirBlock >= 1 Then
                 CameraX = CameraXSize + ((x - MinMapX) * 4)
                 CameraY = CameraYSize + ((y - MinMapY) * 4)
+                
                 If Player(MyIndex).x > (Map.MaxX - CameraHalfX) Then CameraX = CameraXSize + ((x - (Map.MaxX - MIN_MAPX)) * 4)
                 If Player(MyIndex).y > (Map.MaxY - CameraHalfY) Then CameraY = CameraYSize + ((y - (Map.MaxY - MIN_MAPY)) * 4)
+                
                 If CameraX >= CameraXSize And CameraX <= CameraXSize + (MIN_MAPX * 4) And CameraY >= CameraYSize And CameraY <= CameraYSize + (MIN_MAPY * 4) Then
                     RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Black)
                 End If

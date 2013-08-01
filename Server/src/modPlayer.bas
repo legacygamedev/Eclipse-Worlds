@@ -2013,14 +2013,14 @@ Public Function CanPlayerCastSpell(ByVal Index As Long, ByVal SpellNum As Long) 
 End Function
 
 Public Sub DamagePlayerEquipment(ByVal Index As Long, ByVal EquipmentSlot As Byte)
-    Dim Slot As Long, RandomNum As Byte
+    Dim ItemNum As Long, RandomNum As Byte
     
-    Slot = GetPlayerEquipment(Index, EquipmentSlot)
+    ItemNum = GetPlayerEquipment(Index, EquipmentSlot)
     
-    If Slot = 0 Then Exit Sub
+    If ItemNum = 0 Then Exit Sub
     
     ' Make sure the item isn't indestructable
-    If Item(Slot).Data1 = 0 Then Exit Sub
+    If Item(ItemNum).Data1 = 0 Then Exit Sub
     
     ' Don't subtract past 0
     If GetPlayerEquipmentDur(Index, EquipmentSlot) = 0 Then Exit Sub
@@ -2029,16 +2029,16 @@ Public Sub DamagePlayerEquipment(ByVal Index As Long, ByVal EquipmentSlot As Byt
     
     ' 1 in 7 chance it will actually damage the equipment if it's not a shield type item
     If RandomNum = 1 Or EquipmentSlot = Shield Then
-        If Item(Slot).Type = ITEM_TYPE_EQUIPMENT Then
+        If Item(ItemNum).Type = ITEM_TYPE_EQUIPMENT Then
         
             ' Take away 1 durability
-            Call SetPlayerEquipmentDur(Index, GetPlayerEquipmentDur(Index, EquipmentSlot) - 1, Slot)
+            Call SetPlayerEquipmentDur(Index, GetPlayerEquipmentDur(Index, EquipmentSlot) - 1, EquipmentSlot)
             Call SendPlayerEquipmentTo(Index)
                 
             If GetPlayerEquipmentDur(Index, EquipmentSlot) < 1 Then
-                Call PlayerMsg(Index, "Your " & Trim$(Item(Slot).Name) & " has broken.", BrightRed)
+                Call PlayerMsg(Index, "Your " & Trim$(Item(ItemNum).Name) & " has broken.", BrightRed)
             ElseIf GetPlayerEquipmentDur(Index, EquipmentSlot) = 10 Then
-                Call PlayerMsg(Index, "Your " & Trim$(Item(Slot).Name) & " is about to break!", BrightRed)
+                Call PlayerMsg(Index, "Your " & Trim$(Item(ItemNum).Name) & " is about to break!", BrightRed)
             End If
         End If
     End If
