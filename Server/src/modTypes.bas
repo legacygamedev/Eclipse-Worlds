@@ -12,9 +12,9 @@ Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
 Public TempGuildMember(1 To MAX_GUILD_MEMBERS) As PlayerRec
 
 Public Item(1 To MAX_ITEMS) As ItemRec
-Public NPC(1 To MAX_NPCS) As NpcRec
+Public NPC(1 To MAX_NPCS) As NPCRec
 Public MapItem(1 To MAX_MAPS, 1 To MAX_MAP_ITEMS) As MapItemRec
-Public MapNpc(1 To MAX_MAPS) As MapDataRec
+Public MapNPC(1 To MAX_MAPS) As MapDataRec
 Public Shop(1 To MAX_SHOPS) As ShopRec
 Public Spell(1 To MAX_SPELLS) As SpellRec
 Public Resource(1 To MAX_RESOURCES) As ResourceRec
@@ -594,11 +594,11 @@ Private Type MapRec
     MaxX As Byte
     MaxY As Byte
     
-    Npc_HighIndex As Byte
+    NPC_HighIndex As Byte
     
     Tile() As TileRec
     NPC(1 To MAX_MAP_NPCS) As Long
-    NpcSpawnType(1 To MAX_MAP_NPCS) As Long
+    NPCSpawnType(1 To MAX_MAP_NPCS) As Long
     EventCount As Long
     Events() As EventRec
 End Type
@@ -690,7 +690,7 @@ Private Type MapItemRec
     DespawnTimer As Long
 End Type
 
-Private Type NpcRec
+Private Type NPCRec
     Name As String * NAME_LENGTH
     Title As String * NAME_LENGTH
     Music As String * FILE_LENGTH
@@ -716,7 +716,7 @@ Private Type NpcRec
     FactionThreat As Boolean
 End Type
 
-Private Type MapNpcRec
+Private Type MapNPCRec
     Num As Byte
     Target As Byte
     TargetType As Byte
@@ -803,7 +803,7 @@ Private Type GuildRec
 End Type
 
 Private Type MapDataRec
-    NPC() As MapNpcRec
+    NPC() As MapNPCRec
 End Type
 
 Private Type MapResourceRec

@@ -4,8 +4,8 @@ Option Explicit
 ' Used for closing key doors again
 Public KeyTimer As Long
 
-' Used for gradually giving back Npcs hp
-Public GiveNpcHPTimer As Long
+' Used for gradually giving back NPCs hp
+Public GiveNPCHPTimer As Long
 
 ' Used for logging
 Public ServerLog As Boolean

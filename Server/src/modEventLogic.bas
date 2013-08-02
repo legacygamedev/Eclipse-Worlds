@@ -1644,9 +1644,9 @@ restartlist:
                                     Case EventType.evGotoLabel
                                         ' Find the label's list of commands and slot
                                         FindEventLabel Trim$(Map(GetPlayerMap(i)).Events(.eventID).Pages(.PageID).CommandList(.CurList).Commands(.CurSlot).Text1), GetPlayerMap(i), .eventID, .PageID, .CurSlot, .CurList, .ListLeftOff
-                                    Case EventType.evSpawnNpc
+                                    Case EventType.evSpawnNPC
                                         If Map(GetPlayerMap(i)).NPC(Map(GetPlayerMap(i)).Events(.eventID).Pages(.PageID).CommandList(.CurList).Commands(.CurSlot).Data1) > 0 Then
-                                            SpawnNpc Map(GetPlayerMap(i)).Events(.eventID).Pages(.PageID).CommandList(.CurList).Commands(.CurSlot).Data1, GetPlayerMap(i), True
+                                            SpawnNPC Map(GetPlayerMap(i)).Events(.eventID).Pages(.PageID).CommandList(.CurList).Commands(.CurSlot).Data1, GetPlayerMap(i), True
                                         End If
                                     Case EventType.evFadeIn
                                         SendSpecialEffect i, EFFECT_TYPE_FADEIN

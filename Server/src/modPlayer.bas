@@ -31,7 +31,7 @@ Sub JoinGame(ByVal Index As Long)
     ' Send data
     Call SendItems(Index)
     Call SendAnimations(Index)
-    Call SendNpcs(Index)
+    Call SendNPCs(Index)
     Call SendShops(Index)
     Call SendSpells(Index)
     Call SendResources(Index)
@@ -186,13 +186,13 @@ Sub LeftGame(ByVal Index As Long)
         Party_PlayerLeave Index
 
         ' Loop through entire map and purge npc targets from player
-        For i = 1 To Map(GetPlayerMap(Index)).Npc_HighIndex
-            If MapNpc(GetPlayerMap(Index)).NPC(i).Num > 0 Then
-                If MapNpc(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_PLAYER Then
-                    If MapNpc(GetPlayerMap(Index)).NPC(i).Target = Index Then
-                        MapNpc(GetPlayerMap(Index)).NPC(i).Target = 0
-                        MapNpc(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_NONE
-                        Call SendMapNpcTarget(GetPlayerMap(Index), i, 0, 0)
+        For i = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
+            If MapNPC(GetPlayerMap(Index)).NPC(i).Num > 0 Then
+                If MapNPC(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_PLAYER Then
+                    If MapNPC(GetPlayerMap(Index)).NPC(i).Target = Index Then
+                        MapNPC(GetPlayerMap(Index)).NPC(i).Target = 0
+                        MapNPC(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_NONE
+                        Call SendMapNPCTarget(GetPlayerMap(Index), i, 0, 0)
                     End If
                 End If
             End If
@@ -281,13 +281,13 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     SendPlayerTarget Index
 
     ' Loop through entire map and purge npc targets from player
-    For i = 1 To Map(GetPlayerMap(Index)).Npc_HighIndex
-        If MapNpc(GetPlayerMap(Index)).NPC(i).Num > 0 Then
-            If MapNpc(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_PLAYER Then
-                If MapNpc(GetPlayerMap(Index)).NPC(i).Target = Index Then
-                    MapNpc(GetPlayerMap(Index)).NPC(i).Target = 0
-                    MapNpc(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_NONE
-                    Call SendMapNpcTarget(OldMap, i, 0, 0)
+    For i = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
+        If MapNPC(GetPlayerMap(Index)).NPC(i).Num > 0 Then
+            If MapNPC(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_PLAYER Then
+                If MapNPC(GetPlayerMap(Index)).NPC(i).Target = Index Then
+                    MapNPC(GetPlayerMap(Index)).NPC(i).Target = 0
+                    MapNPC(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_NONE
+                    Call SendMapNPCTarget(OldMap, i, 0, 0)
                 End If
             End If
         End If
@@ -308,9 +308,9 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
         PlayersOnMap(OldMap) = NO
         
         ' Get all NPCs' vitals
-        For i = 1 To Map(OldMap).Npc_HighIndex
-            If MapNpc(OldMap).NPC(i).Num > 0 Then
-                MapNpc(OldMap).NPC(i).Vital(Vitals.HP) = GetNpcMaxVital(MapNpc(OldMap).NPC(i).Num, Vitals.HP)
+        For i = 1 To Map(OldMap).NPC_HighIndex
+            If MapNPC(OldMap).NPC(i).Num > 0 Then
+                MapNPC(OldMap).NPC(i).Vital(Vitals.HP) = GetNPCMaxVital(MapNPC(OldMap).NPC(i).Num, Vitals.HP)
             End If
         Next
     End If
@@ -1202,13 +1202,13 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
     End If
     
     ' Loop through entire map and purge npc targets from player
-    For i = 1 To Map(GetPlayerMap(Index)).Npc_HighIndex
-        If MapNpc(GetPlayerMap(Index)).NPC(i).Num > 0 Then
-            If MapNpc(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_PLAYER Then
-                If MapNpc(GetPlayerMap(Index)).NPC(i).Target = Index Then
-                    MapNpc(GetPlayerMap(Index)).NPC(i).Target = 0
-                    MapNpc(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_NONE
-                    Call SendMapNpcTarget(GetPlayerMap(Index), i, 0, 0)
+    For i = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
+        If MapNPC(GetPlayerMap(Index)).NPC(i).Num > 0 Then
+            If MapNPC(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_PLAYER Then
+                If MapNPC(GetPlayerMap(Index)).NPC(i).Target = Index Then
+                    MapNPC(GetPlayerMap(Index)).NPC(i).Target = 0
+                    MapNPC(GetPlayerMap(Index)).NPC(i).TargetType = TARGET_TYPE_NONE
+                    Call SendMapNPCTarget(GetPlayerMap(Index), i, 0, 0)
                 End If
             End If
         End If

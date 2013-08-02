@@ -871,64 +871,64 @@ Sub ClearSpells()
 End Sub
 
 ' **********
-' ** Npcs **
+' ** NPCs **
 ' **********
-Sub SaveNpcs()
+Sub SaveNPCs()
     Dim i As Long
 
     For i = 1 To MAX_NPCS
-        Call SaveNpc(i)
+        Call SaveNPC(i)
     Next
 End Sub
 
-Sub SaveNpc(ByVal npcnum As Long)
+Sub SaveNPC(ByVal NPCNum As Long)
     Dim filename As String
     Dim F As Long
     
-    filename = App.path & "\data\npcs\" & npcnum & ".dat"
+    filename = App.path & "\data\npcs\" & NPCNum & ".dat"
     F = FreeFile
     
     Open filename For Binary As #F
-        Put #F, , NPC(npcnum)
+        Put #F, , NPC(NPCNum)
     Close #F
 End Sub
 
-Sub LoadNpcs()
+Sub LoadNPCs()
     Dim i As Long
 
-    Call CheckNpcs
+    Call CheckNPCs
 
     For i = 1 To MAX_NPCS
-        Call LoadNpc(i)
+        Call LoadNPC(i)
     Next
 End Sub
 
-Sub LoadNpc(npcnum As Long)
+Sub LoadNPC(NPCNum As Long)
     Dim F As Long
     Dim filename As String
     
-    filename = App.path & "\data\npcs\" & npcnum & ".dat"
+    filename = App.path & "\data\npcs\" & NPCNum & ".dat"
     F = FreeFile
     
     Open filename For Binary As #F
-        Get #F, , NPC(npcnum)
+        Get #F, , NPC(NPCNum)
     Close #F
 End Sub
 
-Sub CheckNpcs()
+Sub CheckNPCs()
     Dim i As Integer
-    Dim NpcSize As Long
-    Dim NpcData() As Byte
+    Dim NPCSize As Long
+    Dim NPCData() As Byte
     
     For i = 1 To MAX_NPCS
         If Not FileExist("\data\npcs\" & i & ".dat") Then
-            Call ClearNpc(i)
-            Call SaveNpc(i)
+            Call ClearNPC(i)
+            Call SaveNPC(i)
         End If
     Next
 End Sub
 
-Sub ClearNpc(ByVal Index As Long)
+Sub ClearNPC(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(NPC(Index)), LenB(NPC(Index)))
     NPC(Index).Name = vbNullString
     NPC(Index).Title = vbNullString
@@ -937,11 +937,11 @@ Sub ClearNpc(ByVal Index As Long)
     NPC(Index).Sound = vbNullString
 End Sub
 
-Sub ClearNpcs()
+Sub ClearNPCs()
     Dim i As Long
 
     For i = 1 To MAX_NPCS
-        Call ClearNpc(i)
+        Call ClearNPC(i)
     Next
 End Sub
 
@@ -1123,7 +1123,7 @@ Sub SaveMap(ByVal MapNum As Long)
         Put #F, , Map(MapNum).MaxX
         Put #F, , Map(MapNum).MaxY
         
-        Put #F, , Map(MapNum).Npc_HighIndex
+        Put #F, , Map(MapNum).NPC_HighIndex
     
         For X = 0 To Map(MapNum).MaxX
             For Y = 0 To Map(MapNum).MaxY
@@ -1133,7 +1133,7 @@ Sub SaveMap(ByVal MapNum As Long)
     
         For X = 1 To MAX_MAP_NPCS
             Put #F, , Map(MapNum).NPC(X)
-            Put #F, , Map(MapNum).NpcSpawnType(X)
+            Put #F, , Map(MapNum).NPCSpawnType(X)
         Next
     Close #F
     
@@ -1312,7 +1312,7 @@ Sub LoadMaps()
         ' have to set the tile()
         ReDim Map(i).Tile(0 To Map(i).MaxX, 0 To Map(i).MaxY)
 
-        Get #F, , Map(i).Npc_HighIndex
+        Get #F, , Map(i).NPC_HighIndex
         
         For X = 0 To Map(i).MaxX
             For Y = 0 To Map(i).MaxY
@@ -1322,8 +1322,8 @@ Sub LoadMaps()
 
         For X = 1 To MAX_MAP_NPCS
             Get #F, , Map(i).NPC(X)
-            Get #F, , Map(i).NpcSpawnType(X)
-            MapNpc(i).NPC(X).Num = Map(i).NPC(X)
+            Get #F, , Map(i).NPCSpawnType(X)
+            MapNPC(i).NPC(X).Num = Map(i).NPC(X)
         Next
 
         Close #F
@@ -1486,18 +1486,18 @@ Sub ClearMapItems()
     Next
 End Sub
 
-Sub ClearMapNpc(ByVal Index As Long, ByVal MapNum As Integer)
-    ReDim MapNpc(MapNum).NPC(1 To MAX_MAP_NPCS)
-    Call ZeroMemory(ByVal VarPtr(MapNpc(MapNum).NPC(Index)), LenB(MapNpc(MapNum).NPC(Index)))
+Sub ClearMapNPC(ByVal Index As Long, ByVal MapNum As Integer)
+    ReDim MapNPC(MapNum).NPC(1 To MAX_MAP_NPCS)
+    Call ZeroMemory(ByVal VarPtr(MapNPC(MapNum).NPC(Index)), LenB(MapNPC(MapNum).NPC(Index)))
 End Sub
 
-Sub ClearMapNpcs()
+Sub ClearMapNPCs()
     Dim X As Long
     Dim Y As Long
 
     For Y = 1 To MAX_MAPS
         For X = 1 To MAX_MAP_NPCS
-            Call ClearMapNpc(X, Y)
+            Call ClearMapNPC(X, Y)
         Next
     Next
 End Sub

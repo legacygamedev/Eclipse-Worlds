@@ -85,7 +85,7 @@ Public Const SayColor As Byte = White
 Public Const PrivateColor As Byte = Pink
 Public Const EmoteColor As Byte = Cyan
 Public Const WhoColor As Byte = BrightBlue
-Public Const NpcColor As Byte = Brown
+Public Const NPCColor As Byte = Brown
 Public Const NewMapColor As Byte = BrightBlue
 
 ' Boolean constants
@@ -148,7 +148,7 @@ Public Const STAFF_DEVELOPER As Byte = 3
 Public Const STAFF_ADMIN As Byte = 4
 Public Const STAFF_OWNER As Byte = 5
 
-' Npc constants
+' NPC constants
 Public Const NPC_BEHAVIOR_ATTACKONSIGHT As Byte = 0
 Public Const NPC_BEHAVIOR_ATTACKWHENATTACKED As Byte = 1
 Public Const NPC_BEHAVIOR_FRIENDLY As Byte = 2

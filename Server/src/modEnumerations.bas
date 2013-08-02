@@ -25,16 +25,16 @@ Public Enum ServerPackets
     SPlayerData
     SPlayerMove
     SPlayerWarp
-    SNpcMove
+    SNPCMove
     SPlayerDir
-    SNpcDir
+    SNPCDir
     SAttack
-    SNpcAttack
+    SNPCAttack
     SCheckForMap
     SMapData
     SMapItemData
-    SMapNpcData
-    SMapNpcTarget
+    SMapNPCData
+    SMapNPCTarget
     SMapDone
     SGlobalMsg
     SAdminMsg
@@ -44,10 +44,10 @@ Public Enum ServerPackets
     SItemEditor
     SUpdateItem
     SREditor
-    SSpawnNpc
-    SNpcDead
-    SNpcEditor
-    SUpdateNpc
+    SSpawnNPC
+    SNPCDead
+    SNPCEditor
+    SUpdateNPC
     SEditMap
     SEditEvent
     SShopEditor
@@ -68,7 +68,7 @@ Public Enum ServerPackets
     SAnimationEditor
     SUpdateAnimation
     SAnimation
-    SMapNpcVitals
+    SMapNPCVitals
     SSpellCooldown
     SClearSpellBuffer
     SSayMsg
@@ -90,7 +90,7 @@ Public Enum ServerPackets
     SGuildMembers
     SGuildInvite
     SMapReport
-    SNpcSpellBuffer
+    SNPCSpellBuffer
     SCheckpoint
     SUpdateLogs
     SFriendsList
@@ -297,7 +297,7 @@ Public Enum Stats
     Spirit
     
     ' Make sure Stat_Count is below everything else
-    Stat_Count
+    Stat_count
 End Enum
 
 ' Vitals used by Players, NPCs and Classes
@@ -340,7 +340,7 @@ End Enum
 Public Enum SoundEntity
     seAnimation = 1
     seItem
-    seNpc
+    seNPC
     seResource
     seSpell
     
@@ -428,7 +428,7 @@ Public Enum EventType
     evShowChatBubble
     evLabel
     evGotoLabel
-    evSpawnNpc
+    evSpawnNPC
     evFadeIn
     evFadeOut
     evFlashWhite
