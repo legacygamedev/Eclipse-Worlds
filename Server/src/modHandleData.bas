@@ -355,8 +355,8 @@ Private Sub HandleLogin(ByVal index As Long, ByRef Data() As Byte, ByVal StartAd
         End If
         
         ' Get the data
-        Name = Buffer.ReadString
-        Password = Buffer.ReadString
+        Name = Trim$(Buffer.ReadString)
+        Password = Trim$(Buffer.ReadString)
         
         ' Prevent hacking
         If Len(Trim$(Name)) < 3 Or Len(Trim$(Name)) > NAME_LENGTH Then Exit Sub
