@@ -182,7 +182,7 @@ Public Type HotbarRec
 End Type
 
 Public Type SkillRec
-    Level As Integer
+    Level As Byte
     Exp As Long
 End Type
 
@@ -201,11 +201,11 @@ Public Type PlayerRec
     Face As Integer
     
     ' Both
-    Level As Integer
+    Level As Byte
     Exp As Long
     
     ' Stats - both
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_count - 1) As Integer
     Points As Integer
     
     ' Spells - server only
@@ -282,7 +282,7 @@ Public Type PlayerEditableRec
     Gender As Byte
     Class As Byte
     Sprite As Integer
-    Level As Integer
+    Level As Byte
     Exp As Long
     Access As Byte
 
@@ -291,7 +291,7 @@ Public Type PlayerEditableRec
     ' Max Vitals are dynamically calculated on server
     
     ' Stats
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_count - 1) As Integer
     Points As Integer
 End Type
 
@@ -605,7 +605,7 @@ End Type
 
 Private Type ClassRec
     Name As String * NAME_LENGTH
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_count - 1) As Integer
     MaleSprite As Integer
     FemaleSprite As Integer
     
@@ -633,7 +633,7 @@ Private Type ClassRec
 End Type
 
 Private Type ItemRec
-      Name As String * NAME_LENGTH
+    Name As String * NAME_LENGTH
     Desc As String * 256
     Sound As String * FILE_LENGTH
     
@@ -653,12 +653,12 @@ Private Type ItemRec
     ProficiencyReq As Byte
     
     Price As Long
-    Add_Stat(1 To Stats.Stat_Count - 1) As Integer
+    Add_Stat(1 To Stats.Stat_count - 1) As Integer
     Rarity As Byte
     WeaponSpeed As Long
     Handed As Long
     BindType As Byte
-    Stat_Req(1 To Stats.Stat_Count - 1) As Integer
+    Stat_Req(1 To Stats.Stat_count - 1) As Integer
     Animation As Long
     Paperdoll As Long
     AddHP As Long
@@ -673,6 +673,7 @@ Private Type ItemRec
     TwoHanded As Byte
     Stackable As Byte
     Indestructable As Byte
+    SkillReq As Byte
 End Type
 
 Private Type MapItemRec
@@ -703,7 +704,7 @@ Private Type NpcRec
     DropItem(1 To MAX_NPC_DROPS) As Byte
     DropValue(1 To MAX_NPC_DROPS) As Integer
     Damage As Long
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_count - 1) As Integer
     HP As Long
     MP As Long
     Exp As Long
@@ -837,6 +838,7 @@ Private Type ResourceRec
     Animation As Long
     LowChance As Byte
     HighChance As Byte
+    LevelReq As Byte
 End Type
 
 Private Type AnimationRec

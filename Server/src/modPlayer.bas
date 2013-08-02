@@ -820,7 +820,7 @@ Function GiveInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVa
     ' Check to see if inventory is full
     If i > 0 And i <= MAX_INV Then
         If CDec(GetPlayerInvItemValue(Index, i)) + CDec(ItemVal) > 2147483468 Then
-            Call PlayerMsg(Index, "Can't give it to you. It exceeds maximum limit!", BrightRed)
+            Call PlayerMsg(Index, "You can't give it to you. It exceeds maximum limit!", BrightRed)
             GiveInvItem = 0
             Exit Function
         Else
@@ -1074,17 +1074,17 @@ Sub CheckPlayerSkillLevelUp(ByVal Index As Long, ByVal SkillNum As Byte)
     
     Level_Count = 0
 
-    If GetPlayerSkillLevel(Index, SkillNum) > 0 And GetPlayerSkillLevel(Index, SkillNum) < MAX_LEVEL Then
+    If GetPlayerSkill(Index, SkillNum) > 0 And GetPlayerSkill(Index, SkillNum) < MAX_LEVEL Then
         Do While GetPlayerSkillExp(Index, SkillNum) >= GetPlayerNextSkillLevel(Index, SkillNum)
             ExpRollOver = GetPlayerSkillExp(Index, SkillNum) - GetPlayerNextSkillLevel(Index, SkillNum)
-            Call SetPlayerSkillLevel(Index, GetPlayerSkillLevel(Index, SkillNum) + 1, SkillNum)
+            Call SetPlayerSkill(Index, GetPlayerSkill(Index, SkillNum) + 1, SkillNum)
             Call SetPlayerSkillExp(Index, ExpRollOver, SkillNum)
             Level_Count = Level_Count + 1
         Loop
         
         If Level_Count > 0 Then
             SendActionMsg GetPlayerMap(Index), "Level Up", Yellow, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
-            Call PlayerMsg(Index, "Your " & GetSkillName(SkillNum) & " level is now " & GetPlayerSkillLevel(Index, SkillNum) & ".", BrightGreen)
+            Call PlayerMsg(Index, "Your " & CheckGrammar(GetSkillName(SkillNum)) & " level is now " & GetPlayerSkill(Index, SkillNum) & ".", BrightGreen)
             Call SendAnimation(GetPlayerMap(Index), 2, 0, 0, TARGET_TYPE_PLAYER, Index)
         End If
     End If
@@ -1294,86 +1294,96 @@ Sub CheckResource(ByVal Index As Long, ByVal X As Long, ByVal Y As Long)
         Next
 
         If Resource_Num > 0 Then
-            If GetPlayerEquipment(Index, Weapon) > 0 Then
-                If Item(GetPlayerEquipment(Index, Weapon)).Data3 = Resource(Resource_Index).ToolRequired Then
-                    If Not GetPlayerEquipmentDur(Index, Weapon) = 0 Or Item(GetPlayerEquipment(Index, Weapon)).Data1 = 0 Then
-                        ' Enough space in inventory?
-                        If Resource(Resource_Index).ItemReward > 0 Then
-                            If FindOpenInvSlot(Index, Resource(Resource_Index).ItemReward) = 0 Then
-                                PlayerMsg Index, "You do not have enough inventory space!", BrightRed
-                                Exit Sub
-                            End If
-                        End If
-    
-                        ' Check if the resource has already been deplenished
-                        If ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).ResourceState = 0 Then
-                            rX = ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).X
-                            rY = ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).Y
+            ' Check if they meet the level required
+            If Resource(Resource_Index).LevelReq > 0 Then
+                If GetPlayerSkill(Index, Resource(Resource_Index).Skill) < Resource(Resource_Index).LevelReq Then
+                    Call PlayerMsg(Index, "Your " & CheckGrammar(GetSkillName(Resource(Resource_Index).LevelReq)) & " skill level does not meet the requirement to use this resource!", BrightRed)
+                End If
+            End If
+            
+            ' Check if they have the right tool
+            If Resource(Resource_Index).ToolRequired > 0 Then
+                If GetPlayerEquipment(Index, Weapon) < 1 Then
+                    PlayerMsg Index, "You need a tool to interact with this resource!", BrightRed
+                End If
+                
+                If Item(GetPlayerEquipment(Index, Weapon)).Tool <> Resource(Resource_Index).ToolRequired Then
+                    PlayerMsg Index, "You have the wrong type of item equipped to use this resource!", BrightRed
+                End If
+            End If
+                
+            If Not GetPlayerEquipmentDur(Index, Weapon) = 0 Or Item(GetPlayerEquipment(Index, Weapon)).Indestructable = 1 Then
+                ' Enough space in inventory?
+                If Resource(Resource_Index).ItemReward > 0 Then
+                    If FindOpenInvSlot(Index, Resource(Resource_Index).ItemReward) = 0 Then
+                        PlayerMsg Index, "You do not have enough inventory space!", BrightRed
+                        Exit Sub
+                    End If
+                End If
+
+                ' Check if the resource has already been deplenished
+                If ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).ResourceState = 0 Then
+                    rX = ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).X
+                    rY = ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).Y
+                
+                    ' Reduce weapon's durability
+                    Call DamagePlayerEquipment(Index, Weapon)
+                    
+                    ' Give the reward random when they deal damage
+                    RndNum = Random(Resource(Resource_Index).LowChance, Resource(Resource_Index).HighChance)
+                      
+                    If Not RndNum = Resource(Resource_Index).LowChance Then
+                        ' Subtract the RndNum by the random value of the weapon's chance modifier
+                        RndNum = RndNum - Round(Random((Item(GetPlayerEquipment(Index, Weapon)).ChanceModifier / 2), Item(GetPlayerEquipment(Index, Weapon)).ChanceModifier))
                         
-                            ' Reduce weapon's durability
-                            Call DamagePlayerEquipment(Index, Weapon)
+                        ' If value is less than the resource low chance then set it to it
+                        If RndNum < Resource(Resource_Index).LowChance Then
+                            RndNum = Resource(Resource_Index).LowChance
+                        End If
+                    End If
+                    
+                    If RndNum = Resource(Resource_Index).LowChance Then
+                        ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).Cur_Reward = ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).Cur_Reward - 1
+                        GiveInvItem Index, Resource(Resource_Index).ItemReward, 1
+                        
+                        If GetPlayerSkill(Index, Resource(Resource_Index).Skill) < MAX_LEVEL Then
+                            ' Add the experience to the skill
+                            Call SetPlayerSkillExp(Index, GetPlayerSkillExp(Index, Resource(Resource_Index).Skill) + Resource(Resource_Index).Exp * EXP_RATE, Resource(Resource_Index).Skill)
                             
-                            ' Give the reward random when they deal damage
-                            RndNum = Random(Resource(Resource_Index).LowChance, Resource(Resource_Index).HighChance)
-                              
-                            If Not RndNum = Resource(Resource_Index).LowChance Then
-                                ' Subtract the RndNum by the random value of the weapon's chance modifier
-                                RndNum = RndNum - Round(Random((Item(GetPlayerEquipment(Index, Weapon)).ChanceModifier / 2), Item(GetPlayerEquipment(Index, Weapon)).ChanceModifier))
-                                
-                                ' If value is less than the resource low chance then set it to it
-                                If RndNum < Resource(Resource_Index).LowChance Then
-                                    RndNum = Resource(Resource_Index).LowChance
-                                End If
-                            End If
-                            
-                            If RndNum = Resource(Resource_Index).LowChance Then
-                                ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).Cur_Reward = ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).Cur_Reward - 1
-                                GiveInvItem Index, Resource(Resource_Index).ItemReward, 1
-                                
-                                If GetPlayerSkillLevel(Index, Resource(Resource_Index).Skill) < MAX_LEVEL Then
-                                    ' Add the experience to the skill
-                                    Call SetPlayerSkillExp(Index, GetPlayerSkillExp(Index, Resource(Resource_Index).Skill) + Resource(Resource_Index).Exp * EXP_RATE, Resource(Resource_Index).Skill)
-                                    
-                                    ' Check for skill level up
-                                    Call CheckPlayerSkillLevelUp(Index, Resource(Resource_Index).Skill)
-                                End If
-                                
-                                ' Send message if it exists
-                                If Len(Trim$(Resource(Resource_Index).SuccessMessage)) > 0 Then
-                                    SendActionMsg GetPlayerMap(Index), Trim$(Resource(Resource_Index).SuccessMessage), BrightGreen, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
-                                End If
-                                
-                                ' If the resource is empty then clear it
-                                If ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).Cur_Reward = 0 Then
-                                    ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).ResourceState = 1
-                                    ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).ResourceTimer = timeGetTime
-                                    SendResourceCacheToMap GetPlayerMap(Index), Resource_Num
-                                End If
-                            Else
-                                ' Send message if it exists
-                                If Len(Trim$(Resource(Resource_Index).FailMessage)) > 0 Then
-                                    SendActionMsg GetPlayerMap(Index), Trim$(Resource(Resource_Index).FailMessage), BrightRed, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
-                                End If
-                            End If
-                            
-                            SendAnimation GetPlayerMap(Index), Resource(Resource_Index).Animation, rX, rY
-                            
-                            ' Send the sound
-                            SendMapSound GetPlayerMap(Index), Index, rX, rY, SoundEntity.seResource, Resource_Index
-                        Else
-                            ' Send message if it exists
-                            If Len(Trim$(Resource(Resource_Index).EmptyMessage)) > 0 Then
-                                SendActionMsg GetPlayerMap(Index), Trim$(Resource(Resource_Index).EmptyMessage), BrightRed, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
-                            End If
+                            ' Check for skill level up
+                            Call CheckPlayerSkillLevelUp(Index, Resource(Resource_Index).Skill)
+                        End If
+                        
+                        ' Send message if it exists
+                        If Len(Trim$(Resource(Resource_Index).SuccessMessage)) > 0 Then
+                            SendActionMsg GetPlayerMap(Index), Trim$(Resource(Resource_Index).SuccessMessage), BrightGreen, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
+                        End If
+                        
+                        ' If the resource is empty then clear it
+                        If ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).Cur_Reward = 0 Then
+                            ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).ResourceState = 1
+                            ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).ResourceTimer = timeGetTime
+                            SendResourceCacheToMap GetPlayerMap(Index), Resource_Num
                         End If
                     Else
-                        PlayerMsg Index, "The tool your using is broken!", BrightRed
+                        ' Send message if it exists
+                        If Len(Trim$(Resource(Resource_Index).FailMessage)) > 0 Then
+                            SendActionMsg GetPlayerMap(Index), Trim$(Resource(Resource_Index).FailMessage), BrightRed, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
+                        End If
                     End If
+                    
+                    SendAnimation GetPlayerMap(Index), Resource(Resource_Index).Animation, rX, rY
+                    
+                    ' Send the sound
+                    SendMapSound GetPlayerMap(Index), Index, rX, rY, SoundEntity.seResource, Resource_Index
                 Else
-                    PlayerMsg Index, "You have the wrong type of tool equipped.", BrightRed
+                    ' Send message if it exists
+                    If Len(Trim$(Resource(Resource_Index).EmptyMessage)) > 0 Then
+                        SendActionMsg GetPlayerMap(Index), Trim$(Resource(Resource_Index).EmptyMessage), BrightRed, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
+                    End If
                 End If
             Else
-                PlayerMsg Index, "You need a tool to interact with this resource.", BrightRed
+                PlayerMsg Index, "The tool you are using is broken!", BrightRed
             End If
         End If
     End If
@@ -1659,7 +1669,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
         Case ITEM_TYPE_RESETSTATS
             TotalPoints = GetPlayerPoints(Index)
             
-            For i = 1 To Stats.Stat_Count - 1
+            For i = 1 To Stats.Stat_count - 1
                 TotalPoints = TotalPoints + (GetPlayerStat(Index, i) - Class(GetPlayerClass(Index)).Stat(i))
                 Call SetPlayerStat(Index, i, Class(GetPlayerClass(Index)).Stat(i))
             Next
@@ -1907,7 +1917,7 @@ Function CanPlayerTrade(ByVal Index As Long, ByVal TradeTarget As Long) As Boole
     CanPlayerTrade = True
 End Function
 
-Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optional message As Boolean = True) As Boolean
+Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optional Message As Boolean = True) As Boolean
     Dim LevelReq As Byte
     Dim AccessReq As Byte
     Dim ClassReq As Byte
@@ -1924,7 +1934,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
 
     ' Make sure they are the right level
     If LevelReq > GetPlayerLevel(Index) Then
-        If message Then
+        If Message Then
             Call PlayerMsg(Index, "You must be level " & LevelReq & " to use this item.", BrightRed)
         End If
         Exit Function
@@ -1934,7 +1944,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     
     ' Make sure they have the right access
     If AccessReq > GetPlayerAccess(Index) Then
-        If message Then
+        If Message Then
             Call PlayerMsg(Index, "You must be a staff member to use this item.", BrightRed)
         End If
         Exit Function
@@ -1945,7 +1955,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     ' Make sure the Classes req > 0
     If ClassReq > 0 Then ' 0 = no req
         If Not ClassReq = GetPlayerClass(Index) Then
-            If message Then
+            If Message Then
                 Call PlayerMsg(Index, "You must be " & CheckGrammar(Trim$(Class(ClassReq).Name)) & " can use this item!", BrightRed)
             End If
             Exit Function
@@ -1957,7 +1967,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     ' Make sure the Gender req > 0
     If GenderReq > 0 Then ' 0 = no req
         If Not GenderReq - 1 = GetPlayerGender(Index) Then
-            If message Then
+            If Message Then
                 If GetPlayerGender(Index) = 0 Then
                     Call PlayerMsg(Index, "You need to be a female to use this item!", BrightRed)
                 Else
@@ -1969,9 +1979,9 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     End If
     
     ' Check if they have the stats required to use this item
-    For i = 1 To Stats.Stat_Count - 1
+    For i = 1 To Stats.Stat_count - 1
         If GetPlayerRawStat(Index, i) < Item(ItemNum).Stat_Req(i) Then
-            If message Then
+            If Message Then
                 PlayerMsg Index, "You do not meet the stat requirements to use this item.", BrightRed
             End If
             Exit Function
@@ -1981,7 +1991,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     ' Check if they have the proficiency required to use this item
     If Item(ItemNum).ProficiencyReq > 0 Then
         If GetPlayerProficiency(Index, Item(ItemNum).ProficiencyReq) = 0 Then
-            If message Then
+            If Message Then
                 PlayerMsg Index, "You lack the proficiency to use this item!", BrightRed
             End If
             Exit Function
@@ -1992,6 +2002,14 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
      If Item(ItemNum).TwoHanded = 1 Then
         If GetPlayerEquipment(Index, Shield) > 0 Then
             PlayerMsg Index, "You must unequip your shield before equipping a two-handed weapon!", BrightRed
+            Exit Function
+        End If
+    End If
+    
+    ' Don't let them use a tool they don't meet the level requirement to
+    If Item(ItemNum).SkillReq > 0 Then
+        If GetPlayerSkill(Index, Item(ItemNum).SkillReq) < Item(ItemNum).LevelReq Then
+            PlayerMsg Index, "Your " & CheckGrammar(GetSkillName(Item(ItemNum).SkillReq)) & " skill level does not meet the requirement to use this item!", BrightRed
             Exit Function
         End If
     End If

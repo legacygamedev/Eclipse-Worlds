@@ -329,7 +329,7 @@ Begin VB.Form frmEditor_Spell
             Left            =   120
             TabIndex        =   49
             Top             =   2640
-            Width           =   1335
+            Width           =   1575
          End
          Begin VB.Label lblAOE 
             Caption         =   "AoE Range: Self-cast"
@@ -725,7 +725,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Spell(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Spell(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     SpellEditorInit
@@ -862,7 +862,7 @@ Private Sub scrlAnim_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlAnim.Value > 0 Then
-        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).name)
+        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).Name)
     Else
         lblAnim.Caption = "Animation: None"
     End If
@@ -882,7 +882,7 @@ Private Sub scrlAnimCast_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlAnimCast.Value > 0 Then
-        lblAnimCast.Caption = "Cast Animation: " & Trim$(Animation(scrlAnimCast.Value).name)
+        lblAnimCast.Caption = "Cast Animation: " & Trim$(Animation(scrlAnimCast.Value).Name)
     Else
         lblAnimCast.Caption = "Cast Animation: None"
     End If
@@ -1246,9 +1246,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Spell(EditorIndex).name = Trim$(txtName.text)
+    Spell(EditorIndex).Name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Spell(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Spell(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -1375,7 +1375,7 @@ Private Sub cmdPaste_Click()
     
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Spell(EditorIndex)), ByVal VarPtr(Spell(TmpIndex + 1)), LenB(Spell(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Spell(EditorIndex).name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Spell(EditorIndex).Name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

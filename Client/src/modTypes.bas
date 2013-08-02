@@ -139,7 +139,7 @@ Public Type PlayerRec
     Gender As Byte
     Class As Byte
     Sprite As Integer
-    Level As Integer
+    Level As Byte
     Exp As Long
     Access As Byte
     PK As Byte
@@ -199,7 +199,7 @@ Public Type PlayerEditableRec
     Gender As Byte
     Class As Byte
     Sprite As Integer
-    Level As Integer
+    Level As Byte
     Exp As Long
     Access As Byte
 
@@ -491,8 +491,9 @@ Public Type ItemRec
     Tool As Integer
     HoT As Byte
     TwoHanded As Byte
-    Stackable As Byte
+    stackable As Byte
     Indestructable As Byte
+    SkillReq As Byte
 End Type
 
 Private Type MapItemRec
@@ -627,6 +628,7 @@ Private Type ResourceRec
     Animation As Long
     LowChance As Byte
     HighChance As Byte
+    LevelReq As Byte
 End Type
 
 Private Type ActionMsgRec

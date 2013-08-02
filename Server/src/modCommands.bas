@@ -93,19 +93,19 @@ Function GetPlayerLevel(ByVal Index As Long) As Long
     GetPlayerLevel = Account(Index).Chars(GetPlayerChar(Index)).Level
 End Function
 
-Function GetPlayerSkillLevel(ByVal Index As Long, ByVal SkillNum As Byte) As Long
+Function GetPlayerSkill(ByVal Index As Long, ByVal SkillNum As Byte) As Long
 
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
-    GetPlayerSkillLevel = Account(Index).Chars(GetPlayerChar(Index)).Skills(SkillNum).Level
+    GetPlayerSkill = Account(Index).Chars(GetPlayerChar(Index)).Skills(SkillNum).Level
 End Function
 
-Sub SetPlayerLevel(ByVal Index As Long, ByVal Level As Long)
+Sub SetPlayerLevel(ByVal Index As Long, ByVal Level As Byte)
 
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
     Account(Index).Chars(GetPlayerChar(Index)).Level = Level
 End Sub
 
-Sub SetPlayerSkillLevel(ByVal Index As Long, ByVal Level As Long, ByVal SkillNum As Byte)
+Sub SetPlayerSkill(ByVal Index As Long, ByVal Level As Byte, ByVal SkillNum As Byte)
 
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
     Account(Index).Chars(GetPlayerChar(Index)).Skills(SkillNum).Level = Level
@@ -116,7 +116,7 @@ Function GetPlayerNextLevel(ByVal Index As Long) As Long
 End Function
 
 Function GetPlayerNextSkillLevel(ByVal Index As Long, ByVal SkillNum As Byte) As Long
-    GetPlayerNextSkillLevel = (50 / 3) * ((GetPlayerSkillLevel(Index, SkillNum) + 1) ^ 3 - (6 * (GetPlayerSkillLevel(Index, SkillNum) + 1) ^ 2) + 17 * (GetPlayerSkillLevel(Index, SkillNum) + 1) - 12)
+    GetPlayerNextSkillLevel = (50 / 3) * ((GetPlayerSkill(Index, SkillNum) + 1) ^ 3 - (6 * (GetPlayerSkill(Index, SkillNum) + 1) ^ 2) + 17 * (GetPlayerSkill(Index, SkillNum) + 1) - 12)
 End Function
 
 Function GetPlayerExp(ByVal Index As Long) As Long
@@ -442,8 +442,8 @@ Function GetClassName(ByVal ClassesNum As Long) As String
     GetClassName = Trim$(Class(ClassesNum).Name)
 End Function
 
-Function GetClassestat(ByVal ClassesNum As Long, ByVal Stat As Stats) As Long
-    GetClassestat = Class(ClassesNum).Stat(Stat)
+Function GetClasseStat(ByVal ClassesNum As Long, ByVal Stat As Stats) As Long
+    GetClasseStat = Class(ClassesNum).Stat(Stat)
 End Function
 
 Function GetPlayerProficiency(ByVal Index As Long, ByVal ProficiencyNum As Byte) As Long

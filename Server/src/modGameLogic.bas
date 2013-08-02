@@ -524,8 +524,6 @@ End Function
 
 Public Sub CacheResources(ByVal MapNum As Integer)
     Dim X As Long, Y As Long, Resource_Count As Long
-    
-    Resource_Count = 0
 
     For X = 0 To Map(MapNum).MaxX
         For Y = 0 To Map(MapNum).MaxY

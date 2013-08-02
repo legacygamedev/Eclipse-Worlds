@@ -445,7 +445,7 @@ Sub AddChar(ByVal Index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
         
         ' Skills
         For i = 1 To Skills.Skill_Count - 1
-            Call SetPlayerSkillLevel(Index, 1, i)
+            Call SetPlayerSkill(Index, 1, i)
         Next
         
         ' Set the player's start values
@@ -1137,7 +1137,7 @@ Sub SaveMap(ByVal MapNum As Long)
         Next
     Close #F
     
-    ' This is for event saving, it is in .ini files becuase there are non-limited values (strings) that cannot easily be loaded/saved in the normal manner.
+    ' This is for event saving, it is in .ini files becuase there are non-limited values (strings) that Can't easily be loaded/saved in the normal manner.
     filename = App.path & "\data\maps\" & MapNum & "_eventdata.dat"
     PutVar filename, "Events", "EventCount", Val(Map(MapNum).EventCount)
     

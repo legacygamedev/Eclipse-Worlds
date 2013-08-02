@@ -11,7 +11,8 @@ Public ignoreIndexes() As Long
 Public refreshingAdminList As Boolean
 Public requestedPlayer As PlayerEditableRec
 Public mapEditorCancelNag As Boolean
-'Item Editor - davemax © 07.2013 :D
+
+' Item Editor
 Public lastSpawnedItems() As Byte
 Public currentlyListedIndexes() As Long
 
@@ -521,7 +522,7 @@ Public Sub MapEditorCancel()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If InMapEditor And IsLogging = False Then
-        If AlertMsg("Are you sure you wish to discard changes made to this map?", False, False) = YES Then
+        If AlertMsg("Are you sure you want to discard changes made to the map?", False, False) = YES Then
             SendNeedMap
             Call ToggleGUI(True)
         Else
@@ -799,8 +800,9 @@ Public Sub ItemEditorInit()
         frmEditor_Item.chkHoT.Value = .HoT
         frmEditor_Item.cmbProficiencyReq.ListIndex = .ProficiencyReq
         frmEditor_Item.chkTwoHanded.Value = .TwoHanded
-        frmEditor_Item.chkStackable.Value = .Stackable
+        frmEditor_Item.chkStackable.Value = .stackable
         frmEditor_Item.chkIndestructable = .Indestructable
+        frmEditor_Item.cmbSkillReq.ListIndex = .SkillReq
         Call UpdateSpellScrollBars
         
         ' Reusable
@@ -1166,7 +1168,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtExp.text = NPC(EditorIndex).Exp
+        .txtEXP.text = NPC(EditorIndex).Exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -1316,6 +1318,7 @@ Public Sub ResourceEditorInit()
         .scrlNormalPic.Value = Resource(EditorIndex).ResourceImage
         .scrlExhaustedPic.Value = Resource(EditorIndex).ExhaustedImage
         .scrlReward.Value = Resource(EditorIndex).ItemReward
+        .scrlLevelReq.Value = Resource(EditorIndex).LevelReq
         
         If Resource(EditorIndex).ToolRequired = 0 Then Resource(EditorIndex).ToolRequired = 1
         .scrlTool.Value = Resource(EditorIndex).ToolRequired
@@ -3584,7 +3587,7 @@ errorhandler:
 End Sub
 
 Public Sub EditEventCommand()
-    Dim i As Long, x As Long, z As Long, CurList As Long, CurSlot As Long
+    Dim i As Long, x As Long, Z As Long, CurList As Long, CurSlot As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -4077,7 +4080,7 @@ errorhandler:
 End Sub
 
 Public Sub DeleteEventCommand()
-    Dim i As Long, x As Long, z As Long, CurList As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
+    Dim i As Long, x As Long, Z As Long, CurList As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -4159,7 +4162,7 @@ errorhandler:
 End Sub
 
 Public Sub EditCommand()
-    Dim i As Long, x As Long, z As Long, CurList As Long, CurSlot As Long
+    Dim i As Long, x As Long, Z As Long, CurList As Long, CurSlot As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler

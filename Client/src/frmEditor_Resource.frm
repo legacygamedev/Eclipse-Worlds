@@ -30,7 +30,7 @@ Begin VB.Form frmEditor_Resource
       Caption         =   "Delete"
       Height          =   375
       Left            =   5160
-      TabIndex        =   19
+      TabIndex        =   18
       Top             =   8160
       Width           =   1455
    End
@@ -38,7 +38,7 @@ Begin VB.Form frmEditor_Resource
       Caption         =   "Cancel"
       Height          =   375
       Left            =   6840
-      TabIndex        =   20
+      TabIndex        =   19
       Top             =   8160
       Width           =   1455
    End
@@ -46,7 +46,7 @@ Begin VB.Form frmEditor_Resource
       Caption         =   "Save"
       Height          =   375
       Left            =   3480
-      TabIndex        =   18
+      TabIndex        =   17
       Top             =   8160
       Width           =   1455
    End
@@ -54,9 +54,23 @@ Begin VB.Form frmEditor_Resource
       Caption         =   "Properties"
       Height          =   8055
       Left            =   3360
-      TabIndex        =   22
+      TabIndex        =   21
       Top             =   0
       Width           =   5055
+      Begin VB.HScrollBar scrlRespawn 
+         Height          =   255
+         Left            =   2640
+         TabIndex        =   45
+         Top             =   5280
+         Width           =   2295
+      End
+      Begin VB.HScrollBar scrlLevelReq 
+         Height          =   255
+         Left            =   2640
+         TabIndex        =   43
+         Top             =   7080
+         Width           =   2295
+      End
       Begin VB.HScrollBar scrlExp 
          Height          =   255
          Left            =   2640
@@ -66,11 +80,11 @@ Begin VB.Form frmEditor_Resource
       End
       Begin VB.HScrollBar scrlSkill 
          Height          =   255
-         Left            =   2640
+         Left            =   120
          Max             =   3
          Min             =   1
          TabIndex        =   11
-         Top             =   5280
+         Top             =   7080
          Value           =   1
          Width           =   2295
       End
@@ -123,7 +137,7 @@ Begin VB.Form frmEditor_Resource
          Height          =   255
          Left            =   120
          Max             =   6000
-         TabIndex        =   17
+         TabIndex        =   16
          Top             =   7680
          Width           =   4815
       End
@@ -153,7 +167,7 @@ Begin VB.Form frmEditor_Resource
          ScaleHeight     =   112
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   152
-         TabIndex        =   32
+         TabIndex        =   30
          TabStop         =   0   'False
          Top             =   2640
          Width           =   2280
@@ -216,17 +230,10 @@ Begin VB.Form frmEditor_Resource
          ScaleHeight     =   112
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   152
-         TabIndex        =   23
+         TabIndex        =   22
          TabStop         =   0   'False
          Top             =   2640
          Width           =   2280
-      End
-      Begin VB.HScrollBar scrlRespawn 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   16
-         Top             =   7080
-         Width           =   4815
       End
       Begin VB.TextBox txtSuccess 
          Height          =   285
@@ -242,29 +249,49 @@ Begin VB.Form frmEditor_Resource
          Top             =   1320
          Width           =   3975
       End
+      Begin VB.Label lblRespawn 
+         AutoSize        =   -1  'True
+         Caption         =   "Respawn Time: 0 s"
+         Height          =   180
+         Left            =   2640
+         TabIndex        =   46
+         ToolTipText     =   "In seconds."
+         Top             =   5040
+         Width           =   2265
+      End
+      Begin VB.Label lblLevelReq 
+         AutoSize        =   -1  'True
+         Caption         =   "Skill Level Required: 0"
+         Height          =   195
+         Left            =   2640
+         TabIndex        =   44
+         ToolTipText     =   "In seconds."
+         Top             =   6840
+         Width           =   2295
+      End
       Begin VB.Label lblExp 
          AutoSize        =   -1  'True
          Caption         =   "Exp: 0"
          Height          =   195
          Left            =   2640
-         TabIndex        =   41
+         TabIndex        =   39
          Top             =   4440
-         Width           =   555
+         Width           =   2235
       End
       Begin VB.Label lblSkill 
          AutoSize        =   -1  'True
          Caption         =   "Skill: None"
          Height          =   180
-         Left            =   2640
-         TabIndex        =   40
-         Top             =   5040
-         Width           =   2265
+         Left            =   120
+         TabIndex        =   38
+         Top             =   6840
+         Width           =   2145
       End
       Begin VB.Label Label5 
          Caption         =   "Sound:"
          Height          =   255
          Left            =   120
-         TabIndex        =   39
+         TabIndex        =   37
          Top             =   1680
          Width           =   1455
       End
@@ -273,27 +300,27 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Low Chance: 1"
          Height          =   180
          Left            =   120
-         TabIndex        =   38
+         TabIndex        =   36
          Top             =   6240
-         Width           =   1110
+         Width           =   2295
       End
       Begin VB.Label lblHighChance 
          AutoSize        =   -1  'True
          Caption         =   "High Chance: 2"
          Height          =   180
          Left            =   2640
-         TabIndex        =   37
+         TabIndex        =   35
          Top             =   6240
-         Width           =   1170
+         Width           =   2250
       End
       Begin VB.Label lblRewardMax 
          AutoSize        =   -1  'True
          Caption         =   "Maximum Reward: 1"
          Height          =   180
          Left            =   2640
-         TabIndex        =   36
+         TabIndex        =   34
          Top             =   5640
-         Width           =   1515
+         Width           =   2235
       End
       Begin VB.Label lblRewardMin 
          AutoSize        =   -1  'True
@@ -301,25 +328,25 @@ Begin VB.Form frmEditor_Resource
          DataSource      =   "in"
          Height          =   180
          Left            =   120
-         TabIndex        =   35
+         TabIndex        =   33
          Top             =   5640
-         Width           =   1470
+         Width           =   2295
       End
       Begin VB.Label lblAnim 
          AutoSize        =   -1  'True
          Caption         =   "Animation: None"
          Height          =   180
          Left            =   120
-         TabIndex        =   34
+         TabIndex        =   32
          Top             =   7440
-         Width           =   1260
+         Width           =   4740
       End
       Begin VB.Label lblExhaustedPic 
          AutoSize        =   -1  'True
          Caption         =   "Exhausted Image: 0"
          Height          =   180
          Left            =   2640
-         TabIndex        =   33
+         TabIndex        =   31
          Top             =   2040
          Width           =   2130
       End
@@ -328,7 +355,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Name:"
          Height          =   180
          Left            =   120
-         TabIndex        =   31
+         TabIndex        =   29
          Top             =   240
          Width           =   495
       End
@@ -337,7 +364,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Fail:"
          Height          =   180
          Left            =   120
-         TabIndex        =   30
+         TabIndex        =   28
          Top             =   960
          Width           =   330
       End
@@ -346,7 +373,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Normal Image: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   29
+         TabIndex        =   27
          Top             =   2040
          Width           =   2175
       End
@@ -355,35 +382,25 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Reward: None"
          Height          =   180
          Left            =   120
-         TabIndex        =   28
+         TabIndex        =   26
          Top             =   4440
-         Width           =   1035
+         Width           =   2235
       End
       Begin VB.Label lblTool 
          AutoSize        =   -1  'True
          Caption         =   "Tool Required: None"
          Height          =   180
          Left            =   120
-         TabIndex        =   27
+         TabIndex        =   25
          Top             =   5040
          Width           =   2250
-      End
-      Begin VB.Label lblRespawn 
-         AutoSize        =   -1  'True
-         Caption         =   "Respawn Time: 0 s"
-         Height          =   180
-         Left            =   120
-         TabIndex        =   26
-         ToolTipText     =   "In seconds."
-         Top             =   6840
-         Width           =   1425
       End
       Begin VB.Label lblSuccess 
          AutoSize        =   -1  'True
          Caption         =   "Success:"
          Height          =   180
          Left            =   120
-         TabIndex        =   25
+         TabIndex        =   24
          Top             =   600
          Width           =   705
       End
@@ -393,7 +410,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Empty:"
          Height          =   180
          Left            =   120
-         TabIndex        =   24
+         TabIndex        =   23
          Top             =   1320
          Width           =   540
       End
@@ -402,14 +419,14 @@ Begin VB.Form frmEditor_Resource
       Caption         =   "Resource List"
       Height          =   8535
       Left            =   120
-      TabIndex        =   21
+      TabIndex        =   20
       Top             =   0
       Width           =   3135
       Begin VB.CommandButton cmdPaste 
          Caption         =   "Paste"
          Height          =   315
          Left            =   2400
-         TabIndex        =   44
+         TabIndex        =   42
          Top             =   240
          Width           =   615
       End
@@ -417,7 +434,7 @@ Begin VB.Form frmEditor_Resource
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   43
+         TabIndex        =   41
          Top             =   240
          Width           =   1455
       End
@@ -425,7 +442,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Copy"
          Height          =   315
          Left            =   1680
-         TabIndex        =   42
+         TabIndex        =   40
          Top             =   240
          Width           =   615
       End
@@ -632,13 +649,29 @@ Private Sub scrlExp_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblExp.Caption = "Exp: " & scrlExp.Value
+    lblEXP.Caption = "Exp: " & scrlExp.Value
     Resource(EditorIndex).Exp = scrlExp.Value
     Exit Sub
     
 ' Error handler
 errorhandler:
     HandleError "scrlExp_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlLevelReq_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    lblLevelReq.Caption = "Skill Level Req: " & scrlLevelReq.Value
+    Resource(EditorIndex).LevelReq = scrlLevelReq.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "scrlLevelReq_Change", "frmEditor_Resource", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -745,7 +778,7 @@ Private Sub scrlReward_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlReward.Value > 0 Then
-        lblReward.Caption = "Reward: " & Trim$(item(scrlReward.Value).Name)
+        lblReward.Caption = "Reward: " & Trim$(Item(scrlReward.Value).Name)
     Else
         lblReward.Caption = "Reward: None"
     End If

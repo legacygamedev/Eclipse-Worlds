@@ -160,7 +160,7 @@ Begin VB.Form frmEditor_Item
          LargeChange     =   10
          Left            =   3240
          TabIndex        =   42
-         Top             =   1920
+         Top             =   1800
          Width           =   900
       End
       Begin VB.HScrollBar scrlStatBonus 
@@ -169,7 +169,7 @@ Begin VB.Form frmEditor_Item
          LargeChange     =   10
          Left            =   1200
          TabIndex        =   41
-         Top             =   1920
+         Top             =   1800
          Width           =   900
       End
       Begin VB.HScrollBar scrlStatBonus 
@@ -178,7 +178,7 @@ Begin VB.Form frmEditor_Item
          LargeChange     =   10
          Left            =   5225
          TabIndex        =   40
-         Top             =   1560
+         Top             =   1440
          Width           =   900
       End
       Begin VB.HScrollBar scrlStatBonus 
@@ -187,7 +187,7 @@ Begin VB.Form frmEditor_Item
          LargeChange     =   10
          Left            =   3240
          TabIndex        =   39
-         Top             =   1560
+         Top             =   1440
          Width           =   900
       End
       Begin VB.HScrollBar scrlStatBonus 
@@ -196,16 +196,8 @@ Begin VB.Form frmEditor_Item
          LargeChange     =   10
          Left            =   1200
          TabIndex        =   38
-         Top             =   1560
+         Top             =   1440
          Width           =   900
-      End
-      Begin VB.HScrollBar scrlDamage 
-         Height          =   255
-         LargeChange     =   10
-         Left            =   1680
-         TabIndex        =   35
-         Top             =   720
-         Width           =   4455
       End
       Begin VB.HScrollBar scrlChanceModifier 
          Height          =   255
@@ -228,6 +220,14 @@ Begin VB.Form frmEditor_Item
          Top             =   360
          Width           =   1935
       End
+      Begin VB.HScrollBar scrlDamage 
+         Height          =   255
+         LargeChange     =   10
+         Left            =   1680
+         TabIndex        =   35
+         Top             =   720
+         Width           =   4455
+      End
       Begin VB.Label Label6 
          AutoSize        =   -1  'True
          Caption         =   "Slot:"
@@ -241,7 +241,7 @@ Begin VB.Form frmEditor_Item
          AutoSize        =   -1  'True
          Caption         =   "Durability: 0"
          Height          =   195
-         Left            =   3120
+         Left            =   3240
          TabIndex        =   98
          ToolTipText     =   "In seconds."
          Top             =   1080
@@ -275,7 +275,7 @@ Begin VB.Form frmEditor_Item
          Index           =   5
          Left            =   2160
          TabIndex        =   70
-         Top             =   1920
+         Top             =   1800
          UseMnemonic     =   0   'False
          Width           =   540
       End
@@ -286,7 +286,7 @@ Begin VB.Form frmEditor_Item
          Index           =   4
          Left            =   120
          TabIndex        =   69
-         Top             =   1920
+         Top             =   1800
          UseMnemonic     =   0   'False
          Width           =   540
       End
@@ -297,7 +297,7 @@ Begin VB.Form frmEditor_Item
          Index           =   3
          Left            =   4200
          TabIndex        =   68
-         Top             =   1560
+         Top             =   1440
          UseMnemonic     =   0   'False
          Width           =   495
       End
@@ -308,7 +308,7 @@ Begin VB.Form frmEditor_Item
          Index           =   2
          Left            =   2160
          TabIndex        =   67
-         Top             =   1560
+         Top             =   1440
          UseMnemonic     =   0   'False
          Width           =   600
       End
@@ -319,7 +319,7 @@ Begin VB.Form frmEditor_Item
          Index           =   1
          Left            =   120
          TabIndex        =   64
-         Top             =   1560
+         Top             =   1440
          UseMnemonic     =   0   'False
          Width           =   510
       End
@@ -701,6 +701,25 @@ Begin VB.Form frmEditor_Item
       TabIndex        =   48
       Top             =   1680
       Width           =   6255
+      Begin VB.ComboBox cmbSkillReq 
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   315
+         ItemData        =   "frmEditor_Item.frx":04D7
+         Left            =   480
+         List            =   "frmEditor_Item.frx":04E4
+         Style           =   2  'Dropdown List
+         TabIndex        =   119
+         Top             =   360
+         Width           =   2415
+      End
       Begin VB.HScrollBar scrlLevelReq 
          Height          =   255
          LargeChange     =   10
@@ -721,13 +740,13 @@ Begin VB.Form frmEditor_Item
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmEditor_Item.frx":04D7
-         Left            =   4200
-         List            =   "frmEditor_Item.frx":04D9
+         ItemData        =   "frmEditor_Item.frx":04FC
+         Left            =   3840
+         List            =   "frmEditor_Item.frx":04FE
          Style           =   2  'Dropdown List
          TabIndex        =   108
-         Top             =   720
-         Width           =   1935
+         Top             =   360
+         Width           =   2295
       End
       Begin VB.ComboBox cmbGenderReq 
          BeginProperty Font 
@@ -739,30 +758,30 @@ Begin VB.Form frmEditor_Item
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   300
-         ItemData        =   "frmEditor_Item.frx":04DB
-         Left            =   4200
-         List            =   "frmEditor_Item.frx":04E8
+         Height          =   315
+         ItemData        =   "frmEditor_Item.frx":0500
+         Left            =   2760
+         List            =   "frmEditor_Item.frx":050D
          Style           =   2  'Dropdown List
          TabIndex        =   10
-         Top             =   360
-         Width           =   1935
+         Top             =   720
+         Width           =   1095
       End
       Begin VB.HScrollBar scrlAccessReq 
          Height          =   255
-         Left            =   1320
+         Left            =   1080
          Max             =   5
          TabIndex        =   9
          Top             =   720
-         Width           =   1815
+         Width           =   975
       End
       Begin VB.ComboBox cmbClassReq 
          Height          =   315
-         Left            =   1320
+         Left            =   4440
          Style           =   2  'Dropdown List
          TabIndex        =   8
-         Top             =   360
-         Width           =   1815
+         Top             =   720
+         Width           =   1695
       End
       Begin VB.HScrollBar scrlStatReq 
          Height          =   255
@@ -809,6 +828,15 @@ Begin VB.Form frmEditor_Item
          Top             =   1440
          Width           =   925
       End
+      Begin VB.Label lblSkillReq 
+         AutoSize        =   -1  'True
+         Caption         =   "Skill:"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   120
+         Top             =   360
+         Width           =   330
+      End
       Begin VB.Label lblLevelReq 
          AutoSize        =   -1  'True
          Caption         =   "Level: 0"
@@ -822,18 +850,18 @@ Begin VB.Form frmEditor_Item
          AutoSize        =   -1  'True
          Caption         =   "Proficiency:"
          Height          =   195
-         Left            =   3240
+         Left            =   3000
          TabIndex        =   109
-         Top             =   720
+         Top             =   360
          Width           =   825
       End
       Begin VB.Label lblGenderReq 
          AutoSize        =   -1  'True
          Caption         =   "Gender:"
          Height          =   195
-         Left            =   3240
+         Left            =   2160
          TabIndex        =   102
-         Top             =   360
+         Top             =   720
          Width           =   570
       End
       Begin VB.Label lblAccessReq 
@@ -849,9 +877,9 @@ Begin VB.Form frmEditor_Item
          AutoSize        =   -1  'True
          Caption         =   "Class:"
          Height          =   195
-         Left            =   120
+         Left            =   3960
          TabIndex        =   54
-         Top             =   360
+         Top             =   720
          Width           =   420
       End
       Begin VB.Label lblStatReq 
@@ -1292,7 +1320,7 @@ Private Sub chkHoT_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).HoT = chkHoT.Value
+    Item(EditorIndex).HoT = chkHoT.Value
     
     If chkHoT.Value = 1 Then
         lblDuration.Enabled = True
@@ -1315,7 +1343,7 @@ Private Sub chkIndestructable_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).Indestructable = chkIndestructable.Value
+    Item(EditorIndex).Indestructable = chkIndestructable.Value
     Exit Sub
     
 ' Error handler
@@ -1330,7 +1358,7 @@ Private Sub chkInstaCast_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).InstaCast = chkInstaCast.Value
+    Item(EditorIndex).InstaCast = chkInstaCast.Value
     Exit Sub
     
 ' Error handler
@@ -1346,9 +1374,9 @@ Private Sub chkReusable_Click(Index As Integer)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If frmEditor_Item.chkReusable(Index) = 1 Then
-        item(EditorIndex).IsReusable = True
+        Item(EditorIndex).IsReusable = True
     Else
-        item(EditorIndex).IsReusable = False
+        Item(EditorIndex).IsReusable = False
     End If
     Exit Sub
     
@@ -1364,7 +1392,7 @@ Private Sub chkStackable_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).Stackable = chkStackable.Value
+    Item(EditorIndex).Stackable = chkStackable.Value
     Exit Sub
     
 ' Error handler
@@ -1379,7 +1407,7 @@ Private Sub chkTwoHanded_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).TwoHanded = chkTwoHanded.Value
+    Item(EditorIndex).TwoHanded = chkTwoHanded.Value
     Exit Sub
     
 ' Error handler
@@ -1396,7 +1424,7 @@ Private Sub chkWarpAway_Click()
     
     If fraAutoLife.Visible = False Then Exit Sub
     
-    item(EditorIndex).Data1 = chkWarpAway.Value
+    Item(EditorIndex).Data1 = chkWarpAway.Value
     Exit Sub
     
 ' Error handler
@@ -1411,7 +1439,7 @@ Private Sub cmbBind_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).BindType = cmbBind.ListIndex
+    Item(EditorIndex).BindType = cmbBind.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1426,7 +1454,7 @@ Private Sub cmbEquipSlot_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).EquipSlot = cmbEquipSlot.ListIndex
+    Item(EditorIndex).EquipSlot = cmbEquipSlot.ListIndex
     
     With frmEditor_Item
         ' Specific options when selecting the weapon type
@@ -1463,7 +1491,7 @@ Private Sub cmbProficiencyReq_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).ProficiencyReq = cmbProficiencyReq.ListIndex
+    Item(EditorIndex).ProficiencyReq = cmbProficiencyReq.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1478,7 +1506,7 @@ Private Sub cmbClassReq_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).ClassReq = cmbClassReq.ListIndex
+    Item(EditorIndex).ClassReq = cmbClassReq.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1493,7 +1521,7 @@ Private Sub cmbGenderReq_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).GenderReq = cmbGenderReq.ListIndex
+    Item(EditorIndex).GenderReq = cmbGenderReq.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1502,14 +1530,29 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub cmbSkillReq_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    Item(EditorIndex).SkillReq = cmbSkillReq.ListIndex
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmbSkillReq_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub cmbSound_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If cmbSound.ListIndex > 0 Then
-        item(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
+        Item(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
     Else
-        item(EditorIndex).Sound = vbNullString
+        Item(EditorIndex).Sound = vbNullString
     End If
     Exit Sub
     
@@ -1525,7 +1568,7 @@ Private Sub cmbTool_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    item(EditorIndex).Tool = cmbTool.ListIndex
+    Item(EditorIndex).Tool = cmbTool.ListIndex
     
     ' Resources
     If frmEditor_Item.cmbTool.ListIndex = 0 Then
@@ -1559,7 +1602,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & item(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
 
     ItemEditorInit
@@ -1598,6 +1641,13 @@ Public Sub Form_Load()
     
     For i = 1 To Proficiency_Count - 1
         cmbProficiencyReq.AddItem GetProficiencyName(i)
+    Next
+    
+    cmbSkillReq.Clear
+    cmbSkillReq.AddItem "None"
+    
+    For i = 1 To Skill_Count - 1
+        cmbSkillReq.AddItem GetSkillName(i)
     Next
     Exit Sub
     
@@ -1646,7 +1696,7 @@ Private Sub cmbType_Click()
 
     If (cmbType.ListIndex = ITEM_TYPE_EQUIPMENT) Then
         fraEquipment.Visible = True
-        Me.cmbEquipSlot.ListIndex = item(EditorIndex).EquipSlot
+        Me.cmbEquipSlot.ListIndex = Item(EditorIndex).EquipSlot
     Else
         fraEquipment.Visible = False
     End If
@@ -1702,7 +1752,7 @@ Private Sub cmbType_Click()
         End If
     End With
     
-    item(EditorIndex).Type = cmbType.ListIndex
+    Item(EditorIndex).Type = cmbType.ListIndex
     Exit Sub
     
 ' Error handler
@@ -1752,7 +1802,7 @@ Private Sub scrlAccessReq_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAccessReq.Caption = "Access: " & scrlAccessReq.Value
-    item(EditorIndex).AccessReq = scrlAccessReq.Value
+    Item(EditorIndex).AccessReq = scrlAccessReq.Value
     Exit Sub
     
 ' Error handler
@@ -1768,7 +1818,7 @@ Private Sub scrlAddEXP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAddEXP.Caption = "Add Exp: " & scrlAddEXP.Value
-    item(EditorIndex).AddEXP = scrlAddEXP.Value
+    Item(EditorIndex).AddEXP = scrlAddEXP.Value
     Exit Sub
     
 ' Error handler
@@ -1784,7 +1834,7 @@ Private Sub scrlAddHP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAddHP.Caption = "Add HP: " & scrlAddHP.Value
-    item(EditorIndex).AddHP = scrlAddHP.Value
+    Item(EditorIndex).AddHP = scrlAddHP.Value
     Exit Sub
     
 ' Error handler
@@ -1800,7 +1850,7 @@ Private Sub scrlAddMP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblAddMP.Caption = "Add MP: " & scrlAddMP.Value
-    item(EditorIndex).AddMP = scrlAddMP.Value
+    Item(EditorIndex).AddMP = scrlAddMP.Value
     Exit Sub
     
 ' Error handler
@@ -1820,7 +1870,7 @@ Private Sub scrlAnim_Change()
     Else
         lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).Name)
     End If
-    item(EditorIndex).Animation = scrlAnim.Value
+    Item(EditorIndex).Animation = scrlAnim.Value
     Exit Sub
     
 ' Error handler
@@ -1840,7 +1890,7 @@ Private Sub scrlCastSpell_Change()
     Else
         lblCastSpell.Caption = "Cast Spell: None"
     End If
-    item(EditorIndex).CastSpell = scrlCastSpell.Value
+    Item(EditorIndex).CastSpell = scrlCastSpell.Value
     Exit Sub
     
 ' Error handler
@@ -1862,7 +1912,7 @@ Private Sub scrlDamage_Change()
     Else
         lblDamage.Caption = "Defense: " & scrlDamage.Value
     End If
-    item(EditorIndex).Data2 = scrlDamage.Value
+    Item(EditorIndex).Data2 = scrlDamage.Value
     Exit Sub
     
 ' Error handler
@@ -1879,10 +1929,10 @@ Private Sub scrlDurability_Change()
     
     If fraEquipment.Visible = False Then Exit Sub
     
-    item(EditorIndex).Data1 = frmEditor_Item.scrlDurability.Value
-    lblDurability.Caption = "Durability: " & item(EditorIndex).Data1
+    Item(EditorIndex).Data1 = frmEditor_Item.scrlDurability.Value
+    lblDurability.Caption = "Durability: " & Item(EditorIndex).Data1
     
-    If item(EditorIndex).Data1 > 0 Then
+    If Item(EditorIndex).Data1 > 0 Then
         chkStackable.Value = 0
         chkStackable.Enabled = False
     Else
@@ -1905,7 +1955,7 @@ Private Sub scrlDuration_Change()
     If fraConsume.Visible = False Then Exit Sub
     
     lblDuration.Caption = "Duration: " & scrlDuration.Value & " s"
-    item(EditorIndex).Data1 = scrlDuration.Value
+    Item(EditorIndex).Data1 = scrlDuration.Value
     Exit Sub
     
 ' Error handler
@@ -1923,7 +1973,7 @@ Private Sub scrlHP_Change()
     If fraAutoLife.Visible = False Then Exit Sub
     
     lblHP.Caption = "HP: " & scrlHP.Value
-    item(EditorIndex).AddHP = scrlHP.Value
+    Item(EditorIndex).AddHP = scrlHP.Value
     Exit Sub
     
 ' Error handler
@@ -1939,7 +1989,7 @@ Private Sub scrlMP_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblMP.Caption = "MP: " & scrlMP.Value
-    item(EditorIndex).AddMP = scrlMP.Value
+    Item(EditorIndex).AddMP = scrlMP.Value
     Exit Sub
     
 ' Error handler
@@ -1955,7 +2005,7 @@ Private Sub scrlLevelReq_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblLevelReq.Caption = "Level: " & scrlLevelReq
-    item(EditorIndex).LevelReq = scrlLevelReq.Value
+    Item(EditorIndex).LevelReq = scrlLevelReq.Value
     Exit Sub
     
 ' Error handler
@@ -1973,7 +2023,7 @@ Private Sub scrlMap_Change()
     If fraTeleport.Visible Then Exit Sub
     
     lblMap.Caption = "Map: " & scrlMap.Value
-    item(EditorIndex).Data1 = scrlMap.Value
+    Item(EditorIndex).Data1 = scrlMap.Value
     Exit Sub
     
 ' Error handler
@@ -1989,7 +2039,7 @@ Private Sub scrlChanceModifier_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblChance.Caption = "Chance: " & scrlChanceModifier.Value
-    item(EditorIndex).ChanceModifier = scrlChanceModifier.Value
+    Item(EditorIndex).ChanceModifier = scrlChanceModifier.Value
     Exit Sub
     
 ' Error handler
@@ -2005,7 +2055,7 @@ Private Sub scrlPaperdoll_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblPaperdoll.Caption = "Paperdoll: " & scrlPaperdoll.Value
-    item(EditorIndex).Paperdoll = scrlPaperdoll.Value
+    Item(EditorIndex).Paperdoll = scrlPaperdoll.Value
     Exit Sub
     
 ' Error handler
@@ -2021,7 +2071,7 @@ Private Sub scrlPic_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblPic.Caption = "Icon: " & scrlPic.Value
-    item(EditorIndex).Pic = scrlPic.Value
+    Item(EditorIndex).Pic = scrlPic.Value
     Exit Sub
     
 ' Error handler
@@ -2037,7 +2087,7 @@ Private Sub scrlRarity_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblRarity.Caption = "Rarity: " & scrlRarity.Value
-    item(EditorIndex).Rarity = scrlRarity.Value
+    Item(EditorIndex).Rarity = scrlRarity.Value
     Exit Sub
     
 ' Error handler
@@ -2053,7 +2103,7 @@ Private Sub scrlSpeed_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblSpeed.Caption = "Speed: " & scrlSpeed.Value / 1000 & " s"
-    item(EditorIndex).WeaponSpeed = scrlSpeed.Value
+    Item(EditorIndex).WeaponSpeed = scrlSpeed.Value
     Exit Sub
     
 ' Error handler
@@ -2071,7 +2121,7 @@ Private Sub scrlSprite_Change()
     If fraSprite.Visible = False Then Exit Sub
     
     lblSprite.Caption = "Sprite: " & scrlSprite.Value
-    item(EditorIndex).Data1 = scrlSprite.Value
+    Item(EditorIndex).Data1 = scrlSprite.Value
     Exit Sub
     
 ' Error handler
@@ -2102,7 +2152,7 @@ Private Sub scrlStatBonus_Change(Index As Integer)
     End Select
             
     lblStatBonus(Index).Caption = text & scrlStatBonus(Index).Value
-    item(EditorIndex).Add_Stat(Index) = scrlStatBonus(Index).Value
+    Item(EditorIndex).Add_Stat(Index) = scrlStatBonus(Index).Value
     Exit Sub
     
 ' Error handler
@@ -2133,7 +2183,7 @@ Private Sub scrlStatReq_Change(Index As Integer)
     End Select
     
     lblStatReq(Index).Caption = text & scrlStatReq(Index).Value
-    item(EditorIndex).Stat_Req(Index) = scrlStatReq(Index).Value
+    Item(EditorIndex).Stat_Req(Index) = scrlStatReq(Index).Value
     Exit Sub
     
 ' Error handler
@@ -2168,7 +2218,7 @@ Private Sub scrlX_Change()
     If fraTeleport.Visible = False Then Exit Sub
     
     lblX.Caption = "X: " & scrlX.Value
-    item(EditorIndex).Data2 = scrlX.Value
+    Item(EditorIndex).Data2 = scrlX.Value
     Exit Sub
     
 ' Error handler
@@ -2184,7 +2234,7 @@ Private Sub scrlY_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblY.Caption = "Y: " & scrlY.Value
-    item(EditorIndex).Data3 = scrlY.Value
+    Item(EditorIndex).Data3 = scrlY.Value
     Exit Sub
     
 ' Error handler
@@ -2201,7 +2251,7 @@ Private Sub txtDesc_Change()
     
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
-    item(EditorIndex).Desc = Trim$(txtDesc.text)
+    Item(EditorIndex).Desc = Trim$(txtDesc.text)
     Exit Sub
     
 ' Error handler
@@ -2219,9 +2269,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    item(EditorIndex).Name = Trim$(txtName.text)
+    Item(EditorIndex).Name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & item(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Item(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -2240,7 +2290,7 @@ Private Sub txtPrice_Change()
     If Not IsNumeric(txtPrice.text) Then txtPrice.text = 0
     If txtPrice.text > MAX_LONG Then txtPrice.text = MAX_LONG
     If txtPrice.text < 0 Then txtPrice.text = 0
-    item(EditorIndex).Price = Val(frmEditor_Item.txtPrice.text)
+    Item(EditorIndex).Price = Val(frmEditor_Item.txtPrice.text)
     Exit Sub
     
 ' Error handler
@@ -2365,8 +2415,8 @@ Private Sub cmdPaste_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
          
     lstIndex.RemoveItem EditorIndex - 1
-    Call CopyMemory(ByVal VarPtr(item(EditorIndex)), ByVal VarPtr(item(TmpIndex + 1)), LenB(item(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(item(EditorIndex).Name), EditorIndex - 1
+    Call CopyMemory(ByVal VarPtr(Item(EditorIndex)), ByVal VarPtr(Item(TmpIndex + 1)), LenB(Item(TmpIndex + 1)))
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Item(EditorIndex).Name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     
