@@ -491,7 +491,7 @@ Public Type ItemRec
     Tool As Integer
     HoT As Byte
     TwoHanded As Byte
-    stackable As Byte
+    Stackable As Byte
     Indestructable As Byte
     SkillReq As Byte
 End Type
