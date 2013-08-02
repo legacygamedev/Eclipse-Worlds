@@ -346,6 +346,7 @@ Public Enum SoundEntity
     ' Make sure SoundEntity_Count is below everything else
     SoundEntity_Count
 End Enum
+
 ' Message status
 Public Enum Status
     Error = 1
@@ -356,6 +357,7 @@ Public Enum Status
     ' Make sure SoundEntity_Count is below everything else
     Status_Count
 End Enum
+
 Public Enum Skills
     Herbalism = 1
     Alchemy

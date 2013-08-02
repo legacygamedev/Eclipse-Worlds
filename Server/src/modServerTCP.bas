@@ -589,7 +589,7 @@ End Sub
 Function PlayerData(ByVal Index As Long) As Byte()
     Dim Buffer As clsBuffer, i As Long
 
-    If Index > Player_HighIndex Or Index < 1 Then Exit Function
+    If Index < 1 Or Index > Player_HighIndex Then Exit Function
     
     Set Buffer = New clsBuffer
     
@@ -598,8 +598,8 @@ Function PlayerData(ByVal Index As Long) As Byte()
     Buffer.WriteInteger Account(Index).Chars(GetPlayerChar(Index)).Face
     Buffer.WriteString GetPlayerName(Index)
     Buffer.WriteByte GetPlayerGender(Index)
-    Buffer.WriteByte Account(Index).Chars(GetPlayerChar(Index)).Class
-    Buffer.WriteInteger GetPlayerLevel(Index)
+    Buffer.WriteByte GetPlayerClass(Index)
+    Buffer.WriteByte GetPlayerLevel(Index)
     Buffer.WriteInteger GetPlayerPoints(Index)
     Buffer.WriteInteger GetPlayerSprite(Index)
     Buffer.WriteInteger GetPlayerMap(Index)
@@ -1172,7 +1172,7 @@ Sub SendPlayerLevel(ByVal Index As Long)
     
     Buffer.WriteLong SPlayerLevel
     Buffer.WriteLong Index
-    Buffer.WriteInteger GetPlayerLevel(Index)
+    Buffer.WriteByte GetPlayerLevel(Index)
     
     SendDataToMap GetPlayerMap(Index), Buffer.ToArray()
     Set Buffer = Nothing
@@ -1420,36 +1420,36 @@ End Sub
 Sub SendAssociatedCharacters()
 
 End Sub
-Sub SendUpdateNpcToAll(ByVal NpcNum As Long)
+Sub SendUpdateNpcToAll(ByVal npcnum As Long)
     Dim Buffer As clsBuffer
     Dim NpcSize As Long
     Dim NpcData() As Byte
     
     Set Buffer = New clsBuffer
     
-    NpcSize = LenB(NPC(NpcNum))
+    NpcSize = LenB(NPC(npcnum))
     ReDim NpcData(NpcSize - 1)
-    CopyMemory NpcData(0), ByVal VarPtr(NPC(NpcNum)), NpcSize
+    CopyMemory NpcData(0), ByVal VarPtr(NPC(npcnum)), NpcSize
     Buffer.WriteLong SUpdateNpc
-    Buffer.WriteLong NpcNum
+    Buffer.WriteLong npcnum
     Buffer.WriteBytes NpcData
     
     SendDataToAll Buffer.ToArray()
     Set Buffer = Nothing
 End Sub
 
-Sub SendUpdateNpcTo(ByVal Index As Long, ByVal NpcNum As Long)
+Sub SendUpdateNpcTo(ByVal Index As Long, ByVal npcnum As Long)
     Dim Buffer As clsBuffer
     Dim NpcSize As Long
     Dim NpcData() As Byte
     
     Set Buffer = New clsBuffer
     
-    NpcSize = LenB(NPC(NpcNum))
+    NpcSize = LenB(NPC(npcnum))
     ReDim NpcData(NpcSize - 1)
-    CopyMemory NpcData(0), ByVal VarPtr(NPC(NpcNum)), NpcSize
+    CopyMemory NpcData(0), ByVal VarPtr(NPC(npcnum)), NpcSize
     Buffer.WriteLong SUpdateNpc
-    Buffer.WriteLong NpcNum
+    Buffer.WriteLong npcnum
     Buffer.WriteBytes NpcData
     
     SendDataTo Index, Buffer.ToArray()

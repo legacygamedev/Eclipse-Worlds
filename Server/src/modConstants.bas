@@ -53,7 +53,7 @@ Public Const MIN_MAPX As Byte = 25
 Public Const MIN_MAPY As Byte = 20
 
 ' Player constants
-Public Const MAX_LEVEL As Integer = 99
+Public Const MAX_LEVEL As Byte = 99
 Public Const MAX_STAT As Integer = 255
 Public Const MAX_PEOPLE As Byte = 100
 Public Const MAX_GUILD_MEMBERS As Byte = 100

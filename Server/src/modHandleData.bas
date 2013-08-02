@@ -609,7 +609,7 @@ Private Sub HandlePrivateMsg(ByVal index As Long, ByRef Data() As Byte, ByVal St
             Call PlayerMsg(index, "Player is not online!", BrightRed)
         End If
     Else
-        Call PlayerMsg(index, "Cannot message yourself.", BrightRed)
+        Call PlayerMsg(index, "You can't message yourself.", BrightRed)
     End If
     
     Set Buffer = Nothing
@@ -766,7 +766,7 @@ Sub HandleUseStatPoint(ByVal index As Long, ByRef Data() As Byte, ByVal StartAdd
     
     ' Make sure they're not maxed
     If GetPlayerRawStat(index, PointType) >= MAX_STAT Then
-        PlayerMsg index, "You cannot spend any more points on that stat.", BrightRed
+        PlayerMsg index, "You can't spend any more points on that stat!", BrightRed
         Exit Sub
     End If
     
@@ -846,7 +846,7 @@ Sub HandleWarpMeTo(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As
         End If
 
     Else
-        Call PlayerMsg(index, "You cannot warp to yourself!", BrightRed)
+        Call PlayerMsg(index, "You can't warp to yourself!", BrightRed)
     End If
 
 End Sub
@@ -879,7 +879,7 @@ Sub HandleWarpToMe(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As
         End If
 
     Else
-        Call PlayerMsg(index, "You cannot warp to yourself!", BrightRed)
+        Call PlayerMsg(index, "You can't warp to yourself!", BrightRed)
     End If
 End Sub
 
@@ -1496,7 +1496,7 @@ Sub HandleBanPlayer(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
             Call PlayerMsg(index, "Player is not online!", BrightRed)
         End If
     Else
-        Call PlayerMsg(index, "You cannot ban yourself!", BrightRed)
+        Call PlayerMsg(index, "You can't ban yourself!", BrightRed)
     End If
 End Sub
 
@@ -1836,8 +1836,6 @@ Sub HandleSetAccess(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
         Exit Sub
     End If
 
-
-    
     ' The access
     i = Buffer.ReadLong
     
@@ -1848,11 +1846,6 @@ Sub HandleSetAccess(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
         ' Check if player is on
         If n > 0 Then
             ' Check to see if same level access is trying to change another access of the very same level and boot them if they are.
-            'If GetPlayerAccess(n) = GetPlayerAccess(index) And index <> n Then
-                'Call PlayerMsg(index, "That player has the same access level as you!", BrightRed)
-                'SendAccessVerificator index, 0, "Cannot set a player to the same access level as yourself!:" & playerToChange, GetPlayerAccess(n)
-                'Exit Sub
-            'End If
             If GetPlayerAccess(n) = i Then
                 Call PlayerMsg(index, "That player already has that access level!", BrightRed)
                 SendAccessVerificator index, 1, "Access level saved!:" & playerToChange, GetPlayerAccess(n)
@@ -1860,13 +1853,13 @@ Sub HandleSetAccess(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
             End If
             
             If GetPlayerAccess(index) = i Then
-                Call PlayerMsg(index, "Cannot set a player to the same access level as yourself!", BrightRed)
-                SendAccessVerificator index, 0, "Cannot set a player to the same access level as yourself!:" & playerToChange, GetPlayerAccess(n)
+                Call PlayerMsg(index, "You can't set a player to the same access level as yourself!", BrightRed)
+                SendAccessVerificator index, 0, "You can't set a player to the same access level as yourself!:" & playerToChange, GetPlayerAccess(n)
                 Exit Sub
             End If
             If GetPlayerAccess(index) < i Then
-                Call PlayerMsg(index, "Cannot set a player's access level higher than yourself!", BrightRed)
-                SendAccessVerificator index, 0, "Cannot set a player's access level higher than yourself!:" & playerToChange, GetPlayerAccess(n)
+                Call PlayerMsg(index, "You can't set a player's access level higher than yourself!", BrightRed)
+                SendAccessVerificator index, 0, "You can't set a player's access level higher than yourself!:" & playerToChange, GetPlayerAccess(n)
                 Exit Sub
             End If
             
@@ -1879,8 +1872,6 @@ Sub HandleSetAccess(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
             
             SendAccessVerificator index, 1, "Access level saved!:" & playerToChange, GetPlayerAccess(n)
             Call AddLog(GetPlayerName(index) & " has modified " & GetPlayerName(n) & "'s access.", "Staff")
-            
-
         Else
             Call PlayerMsg(index, "Player is not online!", BrightRed)
             SendAccessVerificator index, 0, "Player is Offline!:" & playerToChange, GetPlayerAccess(n)
@@ -1889,7 +1880,6 @@ Sub HandleSetAccess(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
         Call PlayerMsg(index, "Invalid access level.", BrightRed)
         SendAccessVerificator index, 0, "Invalid access level!:" & playerToChange, GetPlayerAccess(n)
     End If
-
 End Sub
 
 ' :::::::::::::::::::::::::
@@ -1953,7 +1943,7 @@ End Sub
 ' ::::::::::::::::::::::
 Sub HandleSetGMotd(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim Buffer As clsBuffer
-    Dim message As String
+    Dim Message As String
     
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
@@ -1962,13 +1952,13 @@ Sub HandleSetGMotd(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As
     If GetPlayerGuild(index) = 0 Then Exit Sub
     If GetPlayerGuildAccess(index) < 3 Then Exit Sub
         
-    message = Buffer.ReadString
-    Guild(GetPlayerGuild(index)).MOTD = message
+    Message = Buffer.ReadString
+    Guild(GetPlayerGuild(index)).MOTD = Message
 
     Set Buffer = Nothing
     
-    Call GuildMsg(index, GetPlayerName(index) & " has changed the MOTD to: " & message, BrightGreen, True)
-    Call AddLog(GetPlayerName(index) & " changed MOTD to: " & message, "Player")
+    Call GuildMsg(index, GetPlayerName(index) & " has changed the MOTD to: " & Message, BrightGreen, True)
+    Call AddLog(GetPlayerName(index) & " changed MOTD to: " & Message, "Player")
 End Sub
 
 ' :::::::::::::::::::
@@ -2341,13 +2331,13 @@ Sub HandleForgetSpell(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr
     
     ' Don't let them forget a spell which is in CD
     If GetPlayerSpellCD(index, SpellSlot) > timeGetTime Then
-        PlayerMsg index, "Cannot forget a spell which is cooling down!", BrightRed
+        PlayerMsg index, "You can't forget a spell which is cooling down!", BrightRed
         Exit Sub
     End If
     
     ' Don't let them forget a spell which is buffered
     If TempPlayer(index).SpellBuffer.Spell = SpellSlot Then
-        PlayerMsg index, "Cannot forget a spell which you are casting!", BrightRed
+        PlayerMsg index, "You can't forget a spell which you are casting!", BrightRed
         Exit Sub
     End If
     
@@ -4154,6 +4144,7 @@ Sub HandleCharacterUpdate(ByVal index As Long, ByRef Data() As Byte, ByVal Start
     ' Check if He is Online
     Dim tempSize As Long
     Dim i As Long, j As Long
+    
     For i = 1 To MAX_PLAYERS
         For j = 1 To MAX_CHARS
             If Account(i).Login = "" Then GoTo use_offline_player

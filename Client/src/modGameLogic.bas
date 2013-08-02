@@ -128,7 +128,7 @@ Public Sub GameLoop()
                 Next
             End If
 
-            WalkTimer = tick + 30 ' Edit this Value to change WalkTimer
+            WalkTimer = tick + 15 ' Edit this Value to change WalkTimer
         End If
         
         ' Targetting
@@ -205,14 +205,13 @@ Public Sub GameLoop()
         Call Audio.UpdateMapSounds
         DoEvents
 
-        ' Lock fps
+        'Lock FPS
         If Not FPS_Lock Then
-            Do While timeGetTime < tick + 15
+            Do While timeGetTime < tick + 10
                 DoEvents
-                Sleep 1
             Loop
         End If
-        
+        Sleep 11
         ' Calculate FPS
         If TickFPS < tick Then
             GameFPS = FPS

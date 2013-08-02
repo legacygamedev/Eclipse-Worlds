@@ -15,7 +15,7 @@ Private Const FVF_TLVERTEX As Long = D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFF
 Public Type TLVERTEX
     x As Single
     y As Single
-    Z As Single
+    z As Single
     RHW As Single
     Color As Long
     TU As Single
@@ -58,6 +58,11 @@ Public Tex_ChatBubble As DX8TextureRec
 Public Tex_Fade As DX8TextureRec
 Public Tex_Equip As DX8TextureRec
 Public Tex_Base As DX8TextureRec
+
+'Caching
+Public lowerTilesCache As Direct3DTexture8
+Public upperTilesCache As Direct3DTexture8
+Public redrawMapCache As Boolean
 
 ' Character Editor Sprite
 Public Tex_CharSprite As DX8TextureRec
@@ -122,7 +127,6 @@ Public Function InitDX8() As Boolean
     
     Direct3D_Window.SwapEffect = D3DSWAPEFFECT_DISCARD ' Refresh when the monitor does.
     Direct3D_Window.BackBufferFormat = Display_Mode.Format ' Sets the format that was retrieved into the backbuffer.
-    
     ' Creates the rendering device with some useful info, along with the info
     ' DispMode.Format = D3DFMT_X8R8G8B8
     Direct3D_Window.SwapEffect = D3DSWAPEFFECT_COPY
@@ -343,7 +347,6 @@ Public Sub LoadTexture(ByRef TextureRec As DX8TextureRec)
         
         Set SourceBitmap = New cGDIpImage
         Call SourceBitmap.LoadPicture_FileName(TextureRec.filepath, GDIToken)
-        
         TextureRec.Width = SourceBitmap.Width
         TextureRec.Height = SourceBitmap.Height
         
@@ -380,11 +383,9 @@ Public Sub LoadTexture(ByRef TextureRec As DX8TextureRec)
         newWidth, _
         newHeight, _
         D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_NONE, ByVal (0), ByVal 0, ByVal 0)
-    
     gTexture(TextureRec.Texture).TexWidth = newWidth
     gTexture(TextureRec.Texture).TexHeight = newHeight
     Exit Sub
-    
 ' Error handler
 errorhandler:
     HandleError "LoadTexture", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
@@ -570,7 +571,55 @@ Public Sub RenderTexture(ByRef TextureRec As DX8TextureRec, ByVal dX As Single, 
     Vertex_List(2) = Create_TLVertex(dX, dY + dHeight, 0, 1, Color, 0, sourceX + 0.000003, sourceHeight + 0.000003)
     Vertex_List(3) = Create_TLVertex(dX + dWidth, dY + dHeight, 0, 1, Color, 0, sourceWidth + 0.000003, sourceHeight + 0.000003)
     
-    Direct3D_Device.SetTexture 0, gTexture(textureNum).Texture
+    Direct3D_Device.SetTexture 0, gTexture(textureNum).texture
+    Direct3D_Device.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, Vertex_List(0), Len(Vertex_List(0))
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "RenderTexture", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+Public Sub RenderCache(ByRef mapChache As Direct3DTexture8, ByVal dX As Single, ByVal dY As Single, ByVal Sx As Single, ByVal Sy As Single, ByVal dWidth As Single, ByVal dHeight As Single, ByVal sWidth As Single, ByVal sHeight As Single, Optional Color As Long = -1)
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    Dim textureWidth As Long, textureHeight As Long, sourceX As Single, sourceY As Single, sourceWidth As Single, sourceHeight As Single
+    
+    'Setting up Texture Source
+    Dim infoS As D3DSURFACE_DESC
+    Dim textSurf As Direct3DSurface8
+    
+    Set textSurf = mapChache.GetSurfaceLevel(0)
+    textSurf.GetDesc infoS
+    
+    textureWidth = infoS.Width
+    textureHeight = infoS.Height
+    
+    If Sy + sHeight > textureHeight Then Exit Sub
+    If Sx + sWidth > textureWidth Then Exit Sub
+    If Sx < 0 Then Exit Sub
+    If Sy < 0 Then Exit Sub
+
+    Sx = Sx - 0.5
+    Sy = Sy - 0.5
+    dY = dY - 0.5
+    dX = dX - 0.5
+    sWidth = sWidth
+    sHeight = sHeight
+    dWidth = dWidth
+    dHeight = dHeight
+    sourceX = (Sx / textureWidth)
+    sourceY = (Sy / textureHeight)
+    sourceWidth = ((Sx + sWidth) / textureWidth)
+    sourceHeight = ((Sy + sHeight) / textureHeight)
+    
+    Vertex_List(0) = Create_TLVertex(dX, dY, 0, 1, Color, 0, sourceX + 0.000003, sourceY + 0.000003)
+    Vertex_List(1) = Create_TLVertex(dX + dWidth, dY, 0, 1, Color, 0, sourceWidth + 0.000003, sourceY + 0.000003)
+    Vertex_List(2) = Create_TLVertex(dX, dY + dHeight, 0, 1, Color, 0, sourceX + 0.000003, sourceHeight + 0.000003)
+    Vertex_List(3) = Create_TLVertex(dX + dWidth, dY + dHeight, 0, 1, Color, 0, sourceWidth + 0.000003, sourceHeight + 0.000003)
+    
+    Direct3D_Device.SetTexture 0, mapChache
     Direct3D_Device.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, Vertex_List(0), Len(Vertex_List(0))
     Exit Sub
     
@@ -594,10 +643,10 @@ errorhandler:
 End Sub
 
 ' This function will make it much easier to setup the vertices with the info it needs.
-Private Function Create_TLVertex(x As Single, y As Single, Z As Single, RHW As Single, Color As Long, Specular As Long, TU As Single, TV As Single) As TLVERTEX
+Private Function Create_TLVertex(x As Single, y As Single, z As Single, RHW As Single, Color As Long, Specular As Long, TU As Single, TV As Single) As TLVERTEX
     Create_TLVertex.x = x
     Create_TLVertex.y = y
-    Create_TLVertex.Z = Z
+    Create_TLVertex.z = z
     Create_TLVertex.RHW = RHW
     Create_TLVertex.Color = Color
     Create_TLVertex.TU = TU
@@ -739,8 +788,43 @@ errorhandler:
     HandleError "DrawHover", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+'Before Caching
+'Public Sub DrawMapLowerTiles(ByVal x As Long, ByVal y As Long)
+'    Dim rec As RECT
+'    Dim i As Long, Alpha As Byte
+'
+'    ' If debug mode, handle error then exit out
+'    If Options.Debug = 1 Then On Error GoTo errorhandler
+'
+'    With Map.Tile(x, y)
+'        For i = MapLayer.Ground To MapLayer.Cover
+'            If i < CurrentLayer And frmEditor_Map.ChkDimLayers = 1 And InMapEditor Then
+'                Alpha = 255 - ((CurrentLayer - i) * 48)
+'            Else
+'                Alpha = 255
+'            End If
+'
+'            If Autotile(x, y).Layer(i).RenderState = RENDER_STATE_NORMAL Then
+'                ' Draw normally
+'                RenderTexture Tex_Tileset(.Layer(i).Tileset), ConvertMapX(x * PIC_X), ConvertMapY(y * PIC_Y), .Layer(i).x * 32, .Layer(i).y * 32, 32, 32, 32, 32, D3DColorARGB(Alpha, 255, 255, 255)
+'            ElseIf Autotile(x, y).Layer(i).RenderState = RENDER_STATE_AUTOTILE And Options.Autotile = 1 Then
+'                ' Draw autotiles
+'                DrawAutoTile i, ConvertMapX(x * PIC_X), ConvertMapY(y * PIC_Y), 1, x, y, Alpha
+'                DrawAutoTile i, ConvertMapX((x * PIC_X) + 16), ConvertMapY(y * PIC_Y), 2, x, y, Alpha
+'                DrawAutoTile i, ConvertMapX(x * PIC_X), ConvertMapY((y * PIC_Y) + 16), 3, x, y, Alpha
+'                DrawAutoTile i, ConvertMapX((x * PIC_X) + 16), ConvertMapY((y * PIC_Y) + 16), 4, x, y, Alpha
+'            End If
+'        Next
+'    End With
+'    Exit Sub
+'
+'' Error handler
+'errorhandler:
+'    HandleError "DrawMapLowerTiles", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+'    Err.Clear
+'End Sub
 
-Public Sub DrawMapLowerTiles(ByVal x As Long, ByVal y As Long)
+Public Sub DrawWholeMapLowerTiles(ByVal x As Long, ByVal y As Long)
     Dim rec As RECT
     Dim i As Long, Alpha As Byte
     
@@ -749,21 +833,25 @@ Public Sub DrawMapLowerTiles(ByVal x As Long, ByVal y As Long)
 
     With Map.Tile(x, y)
         For i = MapLayer.Ground To MapLayer.Cover
-            If i < CurrentLayer And frmEditor_Map.ChkDimLayers = 1 And InMapEditor Then
-                Alpha = 255 - ((CurrentLayer - i) * 48)
+            If InMapEditor And i < CurrentLayer Then
+                If frmEditor_Map.ChkDimLayers = 1 Then
+                    Alpha = 255 - ((CurrentLayer - i) * 48)
+                Else
+                    Alpha = 255
+                End If
             Else
-                Alpha = 255
+                    Alpha = 255
             End If
             
             If Autotile(x, y).Layer(i).RenderState = RENDER_STATE_NORMAL Then
                 ' Draw normally
-                RenderTexture Tex_Tileset(.Layer(i).Tileset), ConvertMapX(x * PIC_X), ConvertMapY(y * PIC_Y), .Layer(i).x * 32, .Layer(i).y * 32, 32, 32, 32, 32, D3DColorARGB(Alpha, 255, 255, 255)
+                RenderTexture Tex_Tileset(.Layer(i).Tileset), x * PIC_X, y * PIC_Y, .Layer(i).x * 32, .Layer(i).y * 32, 32, 32, 32, 32, D3DColorARGB(Alpha, 255, 255, 255)
             ElseIf Autotile(x, y).Layer(i).RenderState = RENDER_STATE_AUTOTILE And Options.Autotile = 1 Then
                 ' Draw autotiles
-                DrawAutoTile i, ConvertMapX(x * PIC_X), ConvertMapY(y * PIC_Y), 1, x, y, Alpha
-                DrawAutoTile i, ConvertMapX((x * PIC_X) + 16), ConvertMapY(y * PIC_Y), 2, x, y, Alpha
-                DrawAutoTile i, ConvertMapX(x * PIC_X), ConvertMapY((y * PIC_Y) + 16), 3, x, y, Alpha
-                DrawAutoTile i, ConvertMapX((x * PIC_X) + 16), ConvertMapY((y * PIC_Y) + 16), 4, x, y, Alpha
+                DrawAutoTile i, x * PIC_X, y * PIC_Y, 1, x, y, Alpha
+                DrawAutoTile i, (x * PIC_X) + 16, y * PIC_Y, 2, x, y, Alpha
+                DrawAutoTile i, x * PIC_X, (y * PIC_Y) + 16, 3, x, y, Alpha
+                DrawAutoTile i, (x * PIC_X) + 16, (y * PIC_Y) + 16, 4, x, y, Alpha
             End If
         Next
     End With
@@ -771,11 +859,10 @@ Public Sub DrawMapLowerTiles(ByVal x As Long, ByVal y As Long)
     
 ' Error handler
 errorhandler:
-    HandleError "DrawMapLowerTiles", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "DrawWholeMapLowerTiles", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-
-Public Sub DrawMapUpperTiles(ByVal x As Long, ByVal y As Long)
+Public Sub DrawWholeMapUpperTiles(ByVal x As Long, ByVal y As Long)
     Dim rec As RECT
     Dim i As Long, Alpha As Byte
 
@@ -784,38 +871,73 @@ Public Sub DrawMapUpperTiles(ByVal x As Long, ByVal y As Long)
 
     With Map.Tile(x, y)
         For i = MapLayer.Fringe To MapLayer.Roof
-            If i < CurrentLayer And frmEditor_Map.ChkDimLayers = 1 And InMapEditor Then
-                Alpha = 255 - ((CurrentLayer - i) * 48)
+            If i < CurrentLayer And InMapEditor Then
+                If frmEditor_Map.ChkDimLayers = 1 Then ' has to be here cause checking for it in previous IF would load it to memory
+                    Alpha = 255 - ((CurrentLayer - i) * 48)
+                Else
+                    Alpha = 255
+                End If
             Else
                 Alpha = 255
             End If
             
             If Autotile(x, y).Layer(i).RenderState = RENDER_STATE_NORMAL Then
                 ' Draw normally
-                RenderTexture Tex_Tileset(.Layer(i).Tileset), ConvertMapX(x * PIC_X), ConvertMapY(y * PIC_Y), .Layer(i).x * 32, .Layer(i).y * 32, 32, 32, 32, 32, D3DColorARGB(Alpha, 255, 255, 255)
+                RenderTexture Tex_Tileset(.Layer(i).Tileset), x * PIC_X, y * PIC_Y, .Layer(i).x * 32, .Layer(i).y * 32, 32, 32, 32, 32, D3DColorARGB(Alpha, 255, 255, 255)
             ElseIf Autotile(x, y).Layer(i).RenderState = RENDER_STATE_AUTOTILE And Options.Autotile = 1 Then
                 ' Draw autotiles
-                DrawAutoTile i, ConvertMapX(x * PIC_X), ConvertMapY(y * PIC_Y), 1, x, y, Alpha
-                DrawAutoTile i, ConvertMapX((x * PIC_X) + 16), ConvertMapY(y * PIC_Y), 2, x, y, Alpha
-                DrawAutoTile i, ConvertMapX(x * PIC_X), ConvertMapY((y * PIC_Y) + 16), 3, x, y, Alpha
-                DrawAutoTile i, ConvertMapX((x * PIC_X) + 16), ConvertMapY((y * PIC_Y) + 16), 4, x, y, Alpha
+                DrawAutoTile i, x * PIC_X, y * PIC_Y, 1, x, y, Alpha
+                DrawAutoTile i, (x * PIC_X) + 16, y * PIC_Y, 2, x, y, Alpha
+                DrawAutoTile i, (x * PIC_X), (y * PIC_Y) + 16, 3, x, y, Alpha
+                DrawAutoTile i, (x * PIC_X) + 16, (y * PIC_Y) + 16, 4, x, y, Alpha
             End If
         Next
 
-        ' Tile preview
-        If InMapEditor Then
-            If frmEditor_Map.chkTilePreview.Value And frmEditor_Map.chkRandom = 0 And frmEditor_Map.scrlAutotile.Value = 0 And frmEditor_Map.OptLayers.Value Then
-                Call EditorMap_DrawTilePreview
-            End If
-        End If
     End With
     Exit Sub
     
 ' Error handler
 errorhandler:
-    HandleError "DrawMapUpperTiles", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "DrawWholeMapUpperTiles", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+
+'original before caching
+'Public Sub DrawMapUpperTiles(ByVal x As Long, ByVal y As Long)
+'    Dim rec As RECT
+'    Dim i As Long, Alpha As Byte
+'
+'    ' If debug mode, handle error then exit out
+'    If Options.Debug = 1 Then On Error GoTo errorhandler
+'
+'    With Map.Tile(x, y)
+'        For i = MapLayer.Fringe To MapLayer.Roof
+'            If i < CurrentLayer And frmEditor_Map.ChkDimLayers = 1 And InMapEditor Then
+'                Alpha = 255 - ((CurrentLayer - i) * 48)
+'            Else
+'                Alpha = 255
+'            End If
+'
+'            If Autotile(x, y).Layer(i).RenderState = RENDER_STATE_NORMAL Then
+'                ' Draw normally
+'                RenderTexture Tex_Tileset(.Layer(i).Tileset), ConvertMapX(x * PIC_X), ConvertMapY(y * PIC_Y), .Layer(i).x * 32, .Layer(i).y * 32, 32, 32, 32, 32, D3DColorARGB(Alpha, 255, 255, 255)
+'            ElseIf Autotile(x, y).Layer(i).RenderState = RENDER_STATE_AUTOTILE And Options.Autotile = 1 Then
+'                ' Draw autotiles
+'                DrawAutoTile i, ConvertMapX(x * PIC_X), ConvertMapY(y * PIC_Y), 1, x, y, Alpha
+'                DrawAutoTile i, ConvertMapX((x * PIC_X) + 16), ConvertMapY(y * PIC_Y), 2, x, y, Alpha
+'                DrawAutoTile i, ConvertMapX(x * PIC_X), ConvertMapY((y * PIC_Y) + 16), 3, x, y, Alpha
+'                DrawAutoTile i, ConvertMapX((x * PIC_X) + 16), ConvertMapY((y * PIC_Y) + 16), 4, x, y, Alpha
+'            End If
+'        Next
+'
+'    End With
+'    Exit Sub
+'
+'' Error handler
+'errorhandler:
+'    HandleError "DrawMapUpperTiles", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+'    Err.Clear
+'End Sub
 
 Public Sub DrawBlood(ByVal Index As Long)
     Dim rec As RECT
@@ -907,7 +1029,7 @@ Public Sub DrawAnimation(ByVal Index As Long, ByVal Layer As Long)
             lockIndex = AnimInstance(Index).lockIndex
             
             ' Check if NPC exists
-            If MapNPC(lockIndex).Num > 0 Then
+            If MapNPC(lockIndex).num > 0 Then
                 ' Check if alive
                 If MapNPC(lockIndex).Vital(Vitals.HP) > 0 Then
                     ' Exists, is alive, set x & y
@@ -976,7 +1098,7 @@ Public Sub DrawMapItem(ByVal ItemNum As Long)
         End If
     End If
 
-    picNum = item(MapItem(ItemNum).Num).Pic
+    picNum = item(MapItem(ItemNum).num).Pic
 
     If picNum < 1 Or picNum > NumItems Then Exit Sub
     
@@ -1104,7 +1226,7 @@ Private Sub DrawBars()
     
     ' Render health bars and casting bar
     For i = 1 To MAX_MAP_NPCS
-        NpcNum = MapNPC(i).Num
+        NpcNum = MapNPC(i).num
         ' Exists
         If NpcNum > 0 Then
             If Options.NpcVitals = 1 Then
@@ -1321,7 +1443,7 @@ Private Sub DrawBars()
     End If
     
     ' Draw party health bars
-    If Party.Num > 0 Then
+    If Party.num > 0 Then
         For i = 1 To MAX_PARTY_MEMBERS
             PartyIndex = Party.Member(i)
             If (PartyIndex > 0) And (Not PartyIndex = MyIndex) And (GetPlayerMap(PartyIndex) = GetPlayerMap(MyIndex)) Then
@@ -1366,7 +1488,7 @@ errorhandler:
 End Sub
 
 Public Sub DrawHotbar()
-    Dim sRect As RECT, dRect As RECT, i As Long, Num As String, n As Long, destRECT As D3DRECT
+    Dim sRect As RECT, dRect As RECT, i As Long, num As String, n As Long, destRECT As D3DRECT
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1434,18 +1556,18 @@ Public Sub DrawHotbar()
         ' Render the letters
         If Options.WASD = 1 Then
             If i = 10 Then
-                Num = " 0"
+                num = " 0"
             ElseIf i = 11 Then
-                Num = " -"
+                num = " -"
             ElseIf i = 12 Then
-                Num = " +"
+                num = " +"
             Else
-                Num = " " & Trim$(i)
+                num = " " & Trim$(i)
             End If
         Else
-            Num = " F" & Trim$(i)
+            num = " F" & Trim$(i)
         End If
-        RenderText Font_Default, Num, dRect.Left + 2, dRect.Top + 16, White
+        RenderText Font_Default, num, dRect.Left + 2, dRect.Top + 16, White
         
         Direct3D_Device.EndScene
         Direct3D_Device.Present destRECT, destRECT, frmMain.picHotbar.hWnd, ByVal (0)
@@ -1580,9 +1702,9 @@ Public Sub DrawNpc(ByVal MapNPCNum As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    If MapNPC(MapNPCNum).Num = 0 Then Exit Sub ' No npc set
+    If MapNPC(MapNPCNum).num = 0 Then Exit Sub ' No npc set
     
-    Sprite = NPC(MapNPC(MapNPCNum).Num).Sprite
+    Sprite = NPC(MapNPC(MapNPCNum).num).Sprite
 
     If Sprite < 1 Or Sprite > NumCharacters Then Exit Sub
 
@@ -1591,7 +1713,7 @@ Public Sub DrawNpc(ByVal MapNPCNum As Long)
     ' Reset frame
     Anim = 0
     
-    If Not IsConstAnimated(NPC(MapNPC(MapNPCNum).Num).Sprite) Then
+    If Not IsConstAnimated(NPC(MapNPC(MapNPCNum).num).Sprite) Then
         ' Check for attacking animation
         If MapNPC(MapNPCNum).AttackTimer + (AttackSpeed / 2) > timeGetTime Then
             If MapNPC(MapNPCNum).Attacking = 1 Then
@@ -1758,8 +1880,8 @@ Sub DrawAnimatedItems()
     
     ' Check for map animation changes
     For i = 1 To MAX_MAP_ITEMS
-        If MapItem(i).Num > 0 Then
-            ItemPic = item(MapItem(i).Num).Pic
+        If MapItem(i).num > 0 Then
+            ItemPic = item(MapItem(i).num).Pic
 
             If ItemPic < 1 Or ItemPic > NumItems Then Exit Sub
             MaxFrames = Tex_Item(ItemPic).Width / PIC_X ' Work out how many frames there are.
@@ -1783,8 +1905,8 @@ Sub DrawAnimatedItems()
             ' Exit out if we're offering item in a trade.
             If InTrade > 0 Then
                 For x = 1 To MAX_INV
-                    TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).Num)
-                    If TradeYourOffer(x).Num = i Then
+                    TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).num)
+                    If TradeYourOffer(x).num = i Then
                         ' Check if currency
                         If Not item(TmpItem).stackable = 1 Then
                             ' Normal item don't render
@@ -1972,7 +2094,7 @@ Sub DrawAnimatedItems()
     
     If frmMain.picTrade.Visible = True Then
         For i = 1 To MAX_INV
-            ItemNum = TradeTheirOffer(i).Num
+            ItemNum = TradeTheirOffer(i).num
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
                 ItemPic = item(ItemNum).Pic
@@ -2028,7 +2150,7 @@ Sub DrawAnimatedItems()
         Next
         
          For i = 1 To MAX_INV
-            ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)
+            ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).num)
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
                 ItemPic = item(ItemNum).Pic
@@ -2139,6 +2261,79 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub RefreshUpperTilesCacheWhole()
+
+    Dim bbf    As Direct3DSurface8
+
+    Dim bUpper As Direct3DSurface8
+
+    Dim x      As Long, y As Long
+
+    Set upperTilesCache = Direct3DX.CreateTexture(Direct3D_Device, PIC_X * Map.MaxX + 32, PIC_Y * Map.MaxY + 32, D3DX_DEFAULT, D3DUSAGE_RENDERTARGET, D3DFMT_UNKNOWN, D3DPOOL_DEFAULT)
+    Set bbf = Direct3D_Device.GetRenderTarget
+    Set bUpper = upperTilesCache.GetSurfaceLevel(0)
+
+    Direct3D_Device.SetRenderTarget bUpper, Nothing, 0
+    Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorARGB(0, 0, 0, 0), 1#, 0
+    Direct3D_Device.BeginScene
+
+    For x = 0 To (Map.MaxX)
+        For y = 0 To (Map.MaxY)
+    
+            If IsValidMapPoint(x, y) Then
+                Call DrawWholeMapUpperTiles(x, y)
+            End If
+    
+        Next
+    Next
+
+    Call Direct3D_Device.EndScene
+    Direct3D_Device.SetRenderTarget bbf, Nothing, 0
+
+    Set bbf = Nothing
+    Set bUpper = Nothing
+    
+    Exit Sub
+    ' Error handler
+errorhandler:
+    HandleError "RefreshUpperTilesCacheWhole", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub RefreshLowerTilesCacheWhole()
+   
+    Dim bbf        As Direct3DSurface8
+    Dim bLower     As Direct3DSurface8
+    Dim x          As Long, y As Long
+    
+    Set lowerTilesCache = Direct3DX.CreateTexture(Direct3D_Device, PIC_X * Map.MaxX + 32, PIC_Y * Map.MaxY + 32, D3DX_DEFAULT, D3DUSAGE_RENDERTARGET, D3DFMT_UNKNOWN, D3DPOOL_DEFAULT)
+    Set bbf = Direct3D_Device.GetRenderTarget
+    Set bLower = lowerTilesCache.GetSurfaceLevel(0)
+    
+    Direct3D_Device.SetRenderTarget bLower, Nothing, 0
+    Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorARGB(0, 0, 0, 0), 1#, 0
+    Direct3D_Device.BeginScene
+     
+    For x = 0 To (Map.MaxX)
+        For y = 0 To (Map.MaxY)
+
+            If IsValidMapPoint(x, y) Then
+                Call DrawWholeMapLowerTiles(x, y)
+            End If
+
+        Next
+    Next
+    Call Direct3D_Device.EndScene
+    Direct3D_Device.SetRenderTarget bbf, Nothing, 0
+    Set bbf = Nothing
+    Set bLower = Nothing
+    Exit Sub
+    ' Error handler
+errorhandler:
+    HandleError "RefreshLowerTilesCacheWhole", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Sub DrawInventory()
     Dim i As Long, x As Long, y As Long, ItemNum As Long, ItemPic As Long
     Dim Amount As Long
@@ -2178,8 +2373,8 @@ Sub DrawInventory()
             ' Exit out if we're offering item in a trade.
             If InTrade > 0 Then
                 For x = 1 To MAX_INV
-                    TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).Num)
-                    If TradeYourOffer(x).Num = i Then
+                    TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(x).num)
+                    If TradeYourOffer(x).num = i Then
                         ' Check if currency
                         If Not item(TmpItem).stackable = 1 Then
                             ' Normal item, exit out
@@ -2282,7 +2477,7 @@ Sub DrawTrade()
     
     For i = 1 To MAX_INV
         ' Draw your own offer
-        ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).Num)
+        ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).num)
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
             ItemPic = item(ItemNum).Pic
@@ -2333,7 +2528,7 @@ Sub DrawTrade()
         Direct3D_Device.BeginScene
             
         ' Draw their offer
-        ItemNum = TradeTheirOffer(i).Num
+        ItemNum = TradeTheirOffer(i).num
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
             ItemPic = item(ItemNum).Pic
@@ -2957,31 +3152,27 @@ Public Sub Render_Graphics()
     If frmMain.WindowState = vbMinimized Then Exit Sub
     
     If GettingMap Then Exit Sub
-    
+    ' Update the viewpoint
+    Call UpdateCamera
+
+    If redrawMapCache Then
+        RefreshLowerTilesCacheWhole
+        RefreshUpperTilesCacheWhole
+        redrawMapCache = False
+    End If
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorARGB(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
     
-    ' Update the viewpoint
-    Call UpdateCamera
-    
+ 
     ' Update draw Name
     UpdateDrawMapName
     
     If Map.Panorama > 0 And Map.Panorama <= NumPanoramas Then
         RenderTexture Tex_Panorama(Map.Panorama), 0, 0, 0, 0, Tex_Panorama(Map.Panorama).Width, Tex_Panorama(Map.Panorama).Height, Tex_Panorama(Map.Panorama).Width, Tex_Panorama(Map.Panorama).Height, -1
     End If
-    
-    ' Draw lower tiles
-    If NumTileSets > 0 Then
-        For x = TileView.Left To TileView.Right
-            For y = TileView.Top To TileView.Bottom
-                If IsValidMapPoint(x, y) Then
-                    Call DrawMapLowerTiles(x, y)
-                End If
-            Next
-        Next
-    End If
-    
+    'Draw lower tiles
+    RenderCache lowerTilesCache, 0, 0, TileView.Left * PIC_X + Camera.Left, TileView.Top * PIC_Y + Camera.Top, ScreenX, ScreenY, ScreenX, ScreenY
+     
     ' Render the decals
     If Options.Blood = 1 Then
         For i = 1 To Blood_HighIndex
@@ -2992,7 +3183,7 @@ Public Sub Render_Graphics()
     ' Draw out the items
     If NumItems > 0 Then
         For i = 1 To MAX_MAP_ITEMS
-            If MapItem(i).Num > 0 Then
+            If MapItem(i).num > 0 Then
                 Call DrawMapItem(i)
             End If
         Next
@@ -3074,18 +3265,15 @@ Public Sub Render_Graphics()
             End If
         Next
     End If
+    'Draw out upper tiles
+    RenderCache upperTilesCache, 0, 0, TileView.Left * PIC_X + Camera.Left, TileView.Top * PIC_Y + Camera.Top, ScreenX, ScreenY, ScreenX, ScreenY
 
-    ' Draw out upper tiles
-    If NumTileSets > 0 Then
-        For x = TileView.Left To TileView.Right
-            For y = TileView.Top To TileView.Bottom
-                If IsValidMapPoint(x, y) Then
-                    Call DrawMapUpperTiles(x, y)
-                End If
-            Next
-        Next
+    ' Tile preview
+    If InMapEditor Then
+        If frmEditor_Map.chkTilePreview.Value And frmEditor_Map.chkRandom = 0 And frmEditor_Map.scrlAutotile.Value = 0 And frmEditor_Map.OptLayers.Value Then
+            Call EditorMap_DrawTilePreview
+        End If
     End If
-    
     ' Draw out higher events
     If Map.CurrentEvents > 0 Then
         For i = 1 To Map.CurrentEvents
@@ -3149,7 +3337,7 @@ Public Sub Render_Graphics()
     Next
     
     For i = 1 To Map.Npc_HighIndex
-        If MapNPC(i).Num > 0 Then
+        If MapNPC(i).num > 0 Then
             If CurX = MapNPC(i).x And CurY = MapNPC(i).y Then
                 If MyTargetType = TARGET_TYPE_NPC And MyTarget = i Then
                     ' Don't render
@@ -3203,7 +3391,7 @@ Public Sub Render_Graphics()
     
     ' Draw npc names
     For i = 1 To Map.Npc_HighIndex
-        If MapNPC(i).Num > 0 Then
+        If MapNPC(i).num > 0 Then
             Call DrawNPCName(i)
         End If
     Next
@@ -3222,6 +3410,11 @@ Public Sub Render_Graphics()
     For i = 1 To Action_HighIndex
         Call DrawActionMsg(i)
     Next
+    
+    ' Render the minimap
+    If GUIVisible Then
+        DrawMiniMap
+    End If
 
     ' Draw map name
     RenderText Font_Default, Map.name, DrawMapNameX, DrawMapNameY, DrawMapNameColor
@@ -3942,7 +4135,7 @@ Public Sub EditorMap_DrawTilePreview()
         .Y2 = (EditorTileHeight * PIC_Y) + .Y1
     End With
     
-    RenderTexture Tex_Tileset(Tileset), ConvertMapX(x), ConvertMapY(y), destRECT.X1, destRECT.Y1, Width * PIC_X, Height * PIC_Y, Width * PIC_X, Height * PIC_Y, D3DColorARGB(4, 255, 255, 255)
+    RenderTexture Tex_Tileset(Tileset), ConvertMapX(x), ConvertMapY(y), destRECT.X1, destRECT.Y1, Width * PIC_X, Height * PIC_Y, Width * PIC_X, Height * PIC_Y, D3DColorARGB(200, 255, 255, 255)
     Exit Sub
     
 ' Error handler
@@ -6150,4 +6343,156 @@ Public Sub EditorMapProperties_DrawPanorama()
 errorhandler:
     HandleError "EditorMapProperties_DrawPanorama", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+End Sub
+
+Public Sub DrawMiniMap()
+    Dim i As Long, z As Long
+    Dim x As Integer, y As Integer
+    Dim Direction As Byte
+    Dim CameraX As Long, CameraY As Long, playerNum As Long
+    Dim MapX As Long, MapY As Long, MinMapX As Long, MinMapY As Long
+    Dim CameraXSize As Long, CameraYSize As Long, CameraHalfX As Long, CameraHalfY As Long
+ 
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    CameraXSize = (MIN_MAPX * PIC_X) - (MIN_MAPX * 4) - 8
+    CameraYSize = 64
+
+    CameraHalfX = (MIN_MAPX / 2)
+    CameraHalfY = (MIN_MAPY / 2)
+     
+    MinMapX = Player(MyIndex).x - CameraHalfX
+    MinMapY = Player(MyIndex).y - CameraHalfY
+    MapX = Player(MyIndex).x + CameraHalfX
+    MapY = Player(MyIndex).y + CameraHalfY
+     
+    If Player(MyIndex).x <= CameraHalfX Then MinMapX = 0
+    If Player(MyIndex).y <= CameraHalfY Then MinMapY = 0
+    If MinMapX <= CameraHalfX Then MapX = MIN_MAPX
+    If MinMapY <= CameraHalfY Then MapY = MIN_MAPY
+    If MapX > Map.MaxX Then MapX = Map.MaxX
+    If MapY > Map.MaxY Then MapY = Map.MaxY
+ 
+    ' Draw Outline
+    For x = 0 To MIN_MAPX
+        For y = 0 To MIN_MAPY
+            CameraX = CameraXSize + (x * 4)
+            CameraY = CameraYSize + (y * 4)
+              
+            RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(255, 255, 255, 150)
+        Next y
+    Next x
+ 
+    ' Draw Player dot
+    For i = 1 To Player_HighIndex
+        If IsPlaying(i) Then
+            CameraX = CameraXSize + (((MiniMapPlayer(i).x / 4) - MinMapX) * 4)
+            CameraY = CameraYSize + (((MiniMapPlayer(i).y / 4) - MinMapY) * 4)
+            
+            If (MiniMapPlayer(i).x / 4) < MapX Or (MiniMapPlayer(i).x / 4) > MinMapX Then
+                If (MiniMapPlayer(i).y / 4) < MapY Or (MiniMapPlayer(i).y / 4) > MinMapY Then
+                    If GetPlayerMap(i) = GetPlayerMap(MyIndex) And (Not i = MyIndex) Then
+                        Select Case Player(i).PK
+                            Case 0
+                                RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightCyan)
+                            Case 1
+                                RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightRed)
+                        End Select
+                    Else
+                        If (Map.MaxX - CameraHalfX) < (MiniMapPlayer(i).x / 4) Then CameraX = CameraXSize + ((MIN_MAPX - (Map.MaxX - (MiniMapPlayer(i).x / 4))) * 4)
+                        If (Map.MaxY - CameraHalfY) < (MiniMapPlayer(i).y / 4) Then CameraY = CameraYSize + ((MIN_MAPY - (Map.MaxY - (MiniMapPlayer(i).y / 4))) * 4)
+                        RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Orange)
+                    End If
+                End If
+            End If
+        End If
+    Next i
+   
+    For x = 0 To MapX
+        For y = 0 To MapY
+            CameraX = CameraXSize + ((x - MinMapX) * 4)
+            CameraY = CameraYSize + ((y - MinMapY) * 4)
+            
+            If Player(MyIndex).x > (Map.MaxX - CameraHalfX) Then CameraX = CameraXSize + ((x - (Map.MaxX - MIN_MAPX)) * 4)
+            If Player(MyIndex).y > (Map.MaxY - CameraHalfY) Then CameraY = CameraYSize + ((y - (Map.MaxY - MIN_MAPY)) * 4)
+
+            If CameraX >= CameraXSize And CameraX <= CameraXSize + (MIN_MAPX * 4) And CameraY >= CameraYSize And CameraY <= CameraYSize + (MIN_MAPY * 4) Then
+                ' Draw Tile Attribute
+                If Map.Tile(x, y).Type > 0 Then
+                    Select Case Map.Tile(x, y).Type
+                        Case TILE_TYPE_BLOCKED
+                            RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Black)
+                        Case TILE_TYPE_WARP
+                            RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(75, 0, 155, 200)
+                        Case TILE_TYPE_ITEM
+                            RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(0, 155, 0, 200)
+                        Case TILE_TYPE_SHOP
+                            RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(255, 125, 0, 200)
+                    End Select
+                End If
+                
+                ' Draw Events
+                For i = 1 To Map.CurrentEvents
+                    If Map.MapEvents(i).Visible = 1 Then
+                        If Map.MapEvents(i).x = x Then
+                            If Map.MapEvents(i).y = y Then
+                                Select Case Map.MapEvents(i).ShowName
+                                Case 0 ' Tile
+                                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Black)
+                                Case 1 ' Sprite
+                                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, D3DColorRGBA(255, 255, 0, 200)
+                                End Select
+                            End If
+                        End If
+                    End If
+                Next i
+            End If
+        Next y
+    Next x
+    
+    ' Draw NPC dot
+    For i = 1 To MAX_MAP_NPCS
+        If MapNPC(i).num > 0 Then
+            CameraX = CameraXSize + (((MiniMapNPC(i).x / 4) - MinMapX) * 4)
+            CameraY = CameraYSize + (((MiniMapNPC(i).y / 4) - MinMapY) * 4)
+            If Player(MyIndex).x > (Map.MaxX - CameraHalfX) Then CameraX = CameraXSize + (((MiniMapNPC(i).x / 4) - (Map.MaxX - MIN_MAPX)) * 4)
+            If Player(MyIndex).y > (Map.MaxY - CameraHalfY) Then CameraY = CameraYSize + (((MiniMapNPC(i).y / 4) - (Map.MaxY - MIN_MAPY)) * 4)
+            Select Case NPC(i).Behavior
+                Case NPC_BEHAVIOR_ATTACKONSIGHT
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Red)
+                Case NPC_BEHAVIOR_ATTACKWHENATTACKED
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(DarkGrey)
+                Case NPC_BEHAVIOR_SHOPKEEPER
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightBlue)
+                Case NPC_BEHAVIOR_FRIENDLY
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(White)
+                Case NPC_BEHAVIOR_GUARD
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightGreen)
+            End Select
+        End If
+    Next i
+ 
+    ' Directional blocks
+    For x = 0 To Map.MaxX
+        For y = 0 To Map.MaxY
+            If Map.Tile(x, y).DirBlock >= 1 Then
+                CameraX = CameraXSize + ((x - MinMapX) * 4)
+                CameraY = CameraYSize + ((y - MinMapY) * 4)
+                
+                If Player(MyIndex).x > (Map.MaxX - CameraHalfX) Then CameraX = CameraXSize + ((x - (Map.MaxX - MIN_MAPX)) * 4)
+                If Player(MyIndex).y > (Map.MaxY - CameraHalfY) Then CameraY = CameraYSize + ((y - (Map.MaxY - MIN_MAPY)) * 4)
+                
+                If CameraX >= CameraXSize And CameraX <= CameraXSize + (MIN_MAPX * 4) And CameraY >= CameraYSize And CameraY <= CameraYSize + (MIN_MAPY * 4) Then
+                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Black)
+                End If
+            End If
+        Next
+    Next
+    Exit Sub
+    
+' Error handler
+errorhandler:
+HandleError "DrawMiniMap", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+Err.Clear
 End Sub

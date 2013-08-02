@@ -422,7 +422,7 @@ Begin VB.Form frmAdmin
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
          TabIndex        =   38
-         ToolTipText     =   "Auto Life ?? "
+         ToolTipText     =   "Revive Stones"
          Top             =   5640
          Width           =   420
       End
@@ -466,7 +466,7 @@ Begin VB.Form frmAdmin
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
          TabIndex        =   34
-         ToolTipText     =   "No idea???"
+         ToolTipText     =   "Player's titles"
          Top             =   5205
          Width           =   420
       End
@@ -1337,7 +1337,7 @@ Public Sub chkEditor_Click(Index As Integer)
 
     End Select
     picEye(Index).Visible = False
-    
+    Exit Sub
 ' Error handler
 errorhandler:
     HandleError "chkEditor_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
@@ -1466,7 +1466,7 @@ End Sub
 'Character Editor
 Private Sub cmdCharEditor_Click()
     ' Send request for character names
-    Tex_CharSprite.Texture = 0
+    Tex_CharSprite.texture = 0
     SendRequestAllCharacters
 End Sub
 
@@ -2182,13 +2182,13 @@ Public Sub picSizer_Click()
             End Select
         Next
         Width = 3135
-        Height = 9060
         adminMin = False
         picSizer.Picture = LoadResPicture("MIN", vbResBitmap)
         picPanel.Top = picPanel.Top + 2
         BorderStyle = 1
         Caption = "Admin Panel"
-        frmAdmin.Left = frmMain.Left + frmMain.Width - frmAdmin.Width
+        Height = 9060
+        frmAdmin.Left = frmMain.Left + frmMain.Width + 165
         frmAdmin.Top = frmMain.Top
         cmdShowGame.Visible = False
     Else

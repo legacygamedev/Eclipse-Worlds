@@ -297,7 +297,7 @@ Public Enum Stats
     Spirit
     
     ' Make sure Stat_Count is below everything else
-    Stat_count
+    Stat_Count
 End Enum
 
 ' Vitals used by Players, NPCs and Classes
