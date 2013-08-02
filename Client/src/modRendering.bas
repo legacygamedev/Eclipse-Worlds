@@ -15,7 +15,7 @@ Private Const FVF_TLVERTEX As Long = D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFF
 Public Type TLVERTEX
     x As Single
     y As Single
-    z As Single
+    Z As Single
     RHW As Single
     Color As Long
     TU As Single
@@ -571,7 +571,7 @@ Public Sub RenderTexture(ByRef TextureRec As DX8TextureRec, ByVal dX As Single, 
     Vertex_List(2) = Create_TLVertex(dX, dY + dHeight, 0, 1, Color, 0, sourceX + 0.000003, sourceHeight + 0.000003)
     Vertex_List(3) = Create_TLVertex(dX + dWidth, dY + dHeight, 0, 1, Color, 0, sourceWidth + 0.000003, sourceHeight + 0.000003)
     
-    Direct3D_Device.SetTexture 0, gTexture(textureNum).texture
+    Direct3D_Device.SetTexture 0, gTexture(textureNum).Texture
     Direct3D_Device.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, Vertex_List(0), Len(Vertex_List(0))
     Exit Sub
     
@@ -643,10 +643,10 @@ errorhandler:
 End Sub
 
 ' This function will make it much easier to setup the vertices with the info it needs.
-Private Function Create_TLVertex(x As Single, y As Single, z As Single, RHW As Single, Color As Long, Specular As Long, TU As Single, TV As Single) As TLVERTEX
+Private Function Create_TLVertex(x As Single, y As Single, Z As Single, RHW As Single, Color As Long, Specular As Long, TU As Single, TV As Single) As TLVERTEX
     Create_TLVertex.x = x
     Create_TLVertex.y = y
-    Create_TLVertex.z = z
+    Create_TLVertex.Z = Z
     Create_TLVertex.RHW = RHW
     Create_TLVertex.Color = Color
     Create_TLVertex.TU = TU
@@ -3419,7 +3419,7 @@ Public Sub Render_Graphics()
     ' Draw map name
     RenderText Font_Default, Map.name, DrawMapNameX, DrawMapNameY, DrawMapNameColor
     
-    If InMapEditor And frmEditor_Map.OptEvents.Value Then DrawEvents
+    If InMapEditor And (frmEditor_Map.OptEvents.Value Or frmEditor_Map.OptLayers.Value) Then DrawEvents
     If InMapEditor And frmEditor_Map.OptLayers Then DrawTileOutline
 
     If FadeAmount > 0 Then RenderTexture Tex_Fade, 0, 0, 0, 0, frmMain.picScreen.ScaleWidth, frmMain.picScreen.ScaleHeight, 32, 32, D3DColorRGBA(255, 255, 255, FadeAmount)
@@ -4198,20 +4198,20 @@ errorhandler:
 End Sub
 
 Public Sub RenderOptionButton(ByRef ThePictureBox As PictureBox, ByVal TheOption As Byte, ByVal TheValue As Byte)
-    Dim filename As String
+    Dim FileName As String
 
     If TheValue = 0 Then
-        filename = App.Path & GFX_PATH & "gui/main/buttons/option_off.bmp"
+        FileName = App.Path & GFX_PATH & "gui/main/buttons/option_off.bmp"
     ElseIf TheValue = 1 Then
-        filename = App.Path & GFX_PATH & "gui/main/buttons/option_on.bmp"
+        FileName = App.Path & GFX_PATH & "gui/main/buttons/option_on.bmp"
     ElseIf TheValue = 2 Then
-        filename = App.Path & GFX_PATH & "gui/main/buttons/option_off_hover.bmp"
+        FileName = App.Path & GFX_PATH & "gui/main/buttons/option_off_hover.bmp"
     ElseIf TheValue = 3 Then
-        filename = App.Path & GFX_PATH & "gui/main/buttons/option_on_hover.bmp"
+        FileName = App.Path & GFX_PATH & "gui/main/buttons/option_on_hover.bmp"
     End If
     
     OptionButton(TheOption).State = TheValue
-    ThePictureBox.Picture = LoadPicture(filename)
+    ThePictureBox.Picture = LoadPicture(FileName)
 End Sub
 
 Public Sub ResizeHPBar()
@@ -6346,7 +6346,7 @@ errorhandler:
 End Sub
 
 Public Sub DrawMiniMap()
-    Dim i As Long, z As Long
+    Dim i As Long, Z As Long
     Dim x As Integer, y As Integer
     Dim Direction As Byte
     Dim CameraX As Long, CameraY As Long, playerNum As Long
