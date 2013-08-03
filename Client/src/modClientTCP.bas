@@ -134,7 +134,7 @@ errorhandler:
     Err.Clear
 End Function
 
-Sub SendData(ByRef Data() As Byte)
+Sub SendData(ByRef data() As Byte)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
@@ -142,8 +142,8 @@ Sub SendData(ByRef Data() As Byte)
     
     If IsConnected Then
         Set buffer = New clsBuffer
-        buffer.WriteLong (UBound(Data) - LBound(Data)) + 1
-        buffer.WriteBytes Data()
+        buffer.WriteLong (UBound(data) - LBound(data)) + 1
+        buffer.WriteBytes data()
         frmMain.Socket.SendData buffer.ToArray()
     End If
     Exit Sub
@@ -419,8 +419,8 @@ Public Sub SendPlayerMove()
         buffer.WriteByte MOVING_RUNNING
     End If
     
-    buffer.WriteInteger Player(MyIndex).x
-    buffer.WriteInteger Player(MyIndex).y
+    buffer.WriteInteger Player(MyIndex).X
+    buffer.WriteInteger Player(MyIndex).Y
     SendData buffer.ToArray()
     Set buffer = Nothing
     
@@ -455,8 +455,8 @@ End Sub
 
 Public Sub SendSaveMap()
     Dim packet As String
-    Dim x As Long
-    Dim y As Long
+    Dim X As Long
+    Dim Y As Long
     Dim i As Long, Z As Long, w As Long
     Dim buffer As clsBuffer
 
@@ -500,12 +500,12 @@ Public Sub SendSaveMap()
         buffer.WriteByte .Npc_HighIndex
     End With
 
-    For x = 0 To Map.MaxX
-        For y = 0 To Map.MaxY
-            With Map.Tile(x, y)
+    For X = 0 To Map.MaxX
+        For Y = 0 To Map.MaxY
+            With Map.Tile(X, Y)
                 For i = 1 To MapLayer.Layer_Count - 1
-                    buffer.WriteLong .Layer(i).x
-                    buffer.WriteLong .Layer(i).y
+                    buffer.WriteLong .Layer(i).X
+                    buffer.WriteLong .Layer(i).Y
                     buffer.WriteLong .Layer(i).Tileset
                 Next
                 
@@ -524,9 +524,9 @@ Public Sub SendSaveMap()
     Next
 
     With Map
-        For x = 1 To MAX_MAP_NPCS
-            buffer.WriteLong .NPC(x)
-            buffer.WriteLong .NPCSpawnType(x)
+        For X = 1 To MAX_MAP_NPCS
+            buffer.WriteLong .NPC(X)
+            buffer.WriteLong .NPCSpawnType(X)
         Next
     End With
     
@@ -538,13 +538,13 @@ Public Sub SendSaveMap()
             With Map.events(i)
                 buffer.WriteString .name
                 buffer.WriteLong .Global
-                buffer.WriteLong .x
-                buffer.WriteLong .y
+                buffer.WriteLong .X
+                buffer.WriteLong .Y
                 buffer.WriteLong .PageCount
             End With
             If Map.events(i).PageCount > 0 Then
-                For x = 1 To Map.events(i).PageCount
-                    With Map.events(i).Pages(x)
+                For X = 1 To Map.events(i).PageCount
+                    With Map.events(i).Pages(X)
                         buffer.WriteLong .chkVariable
                         buffer.WriteLong .VariableIndex
                         buffer.WriteLong .VariableCondition
@@ -577,14 +577,14 @@ Public Sub SendSaveMap()
                         buffer.WriteLong .RepeatMoveRoute
                             
                         If .MoveRouteCount > 0 Then
-                            For y = 1 To .MoveRouteCount
-                                buffer.WriteLong .MoveRoute(y).Index
-                                buffer.WriteLong .MoveRoute(y).Data1
-                                buffer.WriteLong .MoveRoute(y).Data2
-                                buffer.WriteLong .MoveRoute(y).Data3
-                                buffer.WriteLong .MoveRoute(y).Data4
-                                buffer.WriteLong .MoveRoute(y).Data5
-                                buffer.WriteLong .MoveRoute(y).Data6
+                            For Y = 1 To .MoveRouteCount
+                                buffer.WriteLong .MoveRoute(Y).Index
+                                buffer.WriteLong .MoveRoute(Y).Data1
+                                buffer.WriteLong .MoveRoute(Y).Data2
+                                buffer.WriteLong .MoveRoute(Y).Data3
+                                buffer.WriteLong .MoveRoute(Y).Data4
+                                buffer.WriteLong .MoveRoute(Y).Data5
+                                buffer.WriteLong .MoveRoute(Y).Data6
                             Next
                         End If
                             
@@ -598,13 +598,13 @@ Public Sub SendSaveMap()
                         buffer.WriteLong .Position
                     End With
                         
-                    If Map.events(i).Pages(x).CommandListCount > 0 Then
-                        For y = 1 To Map.events(i).Pages(x).CommandListCount
-                            buffer.WriteLong Map.events(i).Pages(x).CommandList(y).CommandCount
-                            buffer.WriteLong Map.events(i).Pages(x).CommandList(y).ParentList
-                            If Map.events(i).Pages(x).CommandList(y).CommandCount > 0 Then
-                                For Z = 1 To Map.events(i).Pages(x).CommandList(y).CommandCount
-                                    With Map.events(i).Pages(x).CommandList(y).Commands(Z)
+                    If Map.events(i).Pages(X).CommandListCount > 0 Then
+                        For Y = 1 To Map.events(i).Pages(X).CommandListCount
+                            buffer.WriteLong Map.events(i).Pages(X).CommandList(Y).CommandCount
+                            buffer.WriteLong Map.events(i).Pages(X).CommandList(Y).ParentList
+                            If Map.events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
+                                For Z = 1 To Map.events(i).Pages(X).CommandList(Y).CommandCount
+                                    With Map.events(i).Pages(X).CommandList(Y).Commands(Z)
                                         buffer.WriteLong .Index
                                         buffer.WriteString .Text1
                                         buffer.WriteString .Text2
@@ -846,9 +846,9 @@ Public Sub SendSaveItem(ByVal ItemNum As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
-    ItemSize = LenB(Item(ItemNum))
+    ItemSize = LenB(item(ItemNum))
     ReDim ItemData(ItemSize - 1)
-    CopyMemory ItemData(0), ByVal VarPtr(Item(ItemNum)), ItemSize
+    CopyMemory ItemData(0), ByVal VarPtr(item(ItemNum)), ItemSize
     buffer.WriteLong CSaveItem
     buffer.WriteLong ItemNum
     buffer.WriteBytes ItemData
@@ -1036,8 +1036,8 @@ Public Sub SendDropItem(ByVal InvNum As Byte, ByVal Amount As Long)
     
     ' Do basic checks
     If InvNum < 1 Or InvNum > MAX_INV Then Exit Sub
-    If PlayerInv(InvNum).Num < 1 Or PlayerInv(InvNum).Num > MAX_ITEMS Then Exit Sub
-    If Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
+    If PlayerInv(InvNum).num < 1 Or PlayerInv(InvNum).num > MAX_ITEMS Then Exit Sub
+    If item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
         If Amount < 1 Or Amount > PlayerInv(InvNum).Value Then Exit Sub
     End If
     
@@ -1764,16 +1764,20 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub AdminWarp(ByVal x As Long, ByVal y As Long)
+Public Sub AdminWarp(ByVal X As Long, ByVal Y As Long)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
+    If X > Map.MaxX Then X = Map.MaxX
+    If X < 0 Then X = 0
+    If Y > Map.MaxY Then Y = Map.MaxY
+    If Y < 0 Then Y = 0
     buffer.WriteLong CAdminWarp
-    buffer.WriteLong x
-    buffer.WriteLong y
+    buffer.WriteLong X
+    buffer.WriteLong Y
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
@@ -1886,7 +1890,7 @@ Public Sub SendHotbarChange(ByVal sType As Byte, ByVal Slot As Byte, ByVal Hotba
     
     If sType = 1 Then
         ' Don't add None/Currency/Auto Life type items
-        If Item(GetPlayerInvItemNum(MyIndex, Slot)).stackable = 1 Or Item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_AUTOLIFE Then
+        If item(GetPlayerInvItemNum(MyIndex, Slot)).stackable = 1 Or item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_NONE Or item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_AUTOLIFE Then
             Call AddText("You can't add that type of item to your hotbar!", BrightRed)
             Exit Sub
         End If
@@ -1908,33 +1912,33 @@ errorhandler:
 End Sub
 
 Public Sub SendHotbarUse(ByVal Slot As Long)
-    Dim x As Long
+    Dim X As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Check the hotbar type
     If Hotbar(Slot).sType = 1 Then ' Item
-        For x = 1 To MAX_INV
+        For X = 1 To MAX_INV
             ' Is the item matching the hotbar
-            If GetPlayerInvItemNum(MyIndex, x) = Hotbar(Slot).Slot Then
-                SendUseItem x
+            If GetPlayerInvItemNum(MyIndex, X) = Hotbar(Slot).Slot Then
+                SendUseItem X
                 Exit Sub
             End If
         Next
         
-        For x = 1 To Equipment.Equipment_Count - 1
-            If Player(MyIndex).Equipment(x).Num = Hotbar(Slot).Slot Then
-                SendUnequip x
+        For X = 1 To Equipment.Equipment_Count - 1
+            If Player(MyIndex).Equipment(X).num = Hotbar(Slot).Slot Then
+                SendUnequip X
                 Exit Sub
             End If
         Next
     ElseIf Hotbar(Slot).sType = 2 Then ' Spell
-        For x = 1 To MAX_PLAYER_SPELLS
+        For X = 1 To MAX_PLAYER_SPELLS
             ' Is the spell matching the hotbar
-            If PlayerSpells(x) = Hotbar(Slot).Slot Then
+            If PlayerSpells(X) = Hotbar(Slot).Slot Then
                 ' Found it, cast it
-                CastSpell x
+                CastSpell X
                 Exit Sub
             End If
         Next

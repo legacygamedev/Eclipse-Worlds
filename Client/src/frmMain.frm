@@ -3,10 +3,9 @@ Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
-   BorderStyle     =   1  'Fixed Single
-   ClientHeight    =   11265
-   ClientLeft      =   45
-   ClientTop       =   720
+   ClientHeight    =   13470
+   ClientLeft      =   120
+   ClientTop       =   795
    ClientWidth     =   12000
    BeginProperty Font 
       Name            =   "Georgia"
@@ -20,8 +19,7 @@ Begin VB.Form frmMain
    Icon            =   "frmMain.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
-   MaxButton       =   0   'False
-   ScaleHeight     =   751
+   ScaleHeight     =   898
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   800
    StartUpPosition =   2  'CenterScreen
@@ -172,12 +170,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8160
+      Left            =   8100
       ScaleHeight     =   285
       ScaleWidth      =   735
       TabIndex        =   106
       TabStop         =   0   'False
-      Top             =   9360
+      Top             =   9615
       Width           =   735
    End
    Begin VB.PictureBox picOptionWeather 
@@ -186,12 +184,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8160
+      Left            =   8100
       ScaleHeight     =   285
       ScaleWidth      =   735
       TabIndex        =   105
       TabStop         =   0   'False
-      Top             =   9720
+      Top             =   9975
       Width           =   735
    End
    Begin VB.PictureBox picOptionAutoTile 
@@ -200,12 +198,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8160
+      Left            =   8100
       ScaleHeight     =   285
       ScaleWidth      =   735
       TabIndex        =   104
       TabStop         =   0   'False
-      Top             =   10080
+      Top             =   10335
       Width           =   735
    End
    Begin VB.PictureBox picOptionDebug 
@@ -214,12 +212,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8160
+      Left            =   8100
       ScaleHeight     =   285
       ScaleWidth      =   735
       TabIndex        =   103
       TabStop         =   0   'False
-      Top             =   10800
+      Top             =   11055
       Width           =   735
    End
    Begin VB.PictureBox picOptionBlood 
@@ -228,12 +226,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8160
+      Left            =   8100
       ScaleHeight     =   285
       ScaleWidth      =   735
       TabIndex        =   102
       TabStop         =   0   'False
-      Top             =   10440
+      Top             =   10695
       Width           =   735
    End
    Begin VB.PictureBox picSSMap 
@@ -2915,6 +2913,51 @@ Begin VB.Form frmMain
          Width           =   345
       End
    End
+   Begin VB.PictureBox picMapEditor 
+      Appearance      =   0  'Flat
+      BackColor       =   &H0080C0FF&
+      ForeColor       =   &H80000008&
+      Height          =   960
+      Left            =   0
+      ScaleHeight     =   62
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   798
+      TabIndex        =   151
+      Top             =   12510
+      Width           =   12000
+      Begin VB.CheckBox mapPreviewSwitch 
+         Appearance      =   0  'Flat
+         BackColor       =   &H0080C0FF&
+         ForeColor       =   &H80000008&
+         Height          =   540
+         Left            =   105
+         Style           =   1  'Graphical
+         TabIndex        =   153
+         ToolTipText     =   "Map Preview - Docked"
+         Top             =   315
+         Width           =   540
+      End
+      Begin VB.Label lblTitle 
+         BackColor       =   &H0080C0FF&
+         BackStyle       =   0  'Transparent
+         Caption         =   "UBER Map Editor"
+         BeginProperty Font 
+            Name            =   "Arial Black"
+            Size            =   9
+            Charset         =   0
+            Weight          =   900
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   225
+         Left            =   45
+         TabIndex        =   152
+         Top             =   30
+         Width           =   1695
+      End
+   End
    Begin VB.Label lblSwearFilter 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -2930,9 +2973,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6360
+      Left            =   6300
       TabIndex        =   111
-      Top             =   9360
+      Top             =   9615
       Width           =   1200
    End
    Begin VB.Label lblWeather 
@@ -2950,9 +2993,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6360
+      Left            =   6300
       TabIndex        =   110
-      Top             =   9720
+      Top             =   9975
       Width           =   855
    End
    Begin VB.Label lblAutoTile 
@@ -2970,9 +3013,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6360
+      Left            =   6300
       TabIndex        =   109
-      Top             =   10080
+      Top             =   10335
       Width           =   915
    End
    Begin VB.Label lblDebug 
@@ -2990,9 +3033,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6360
+      Left            =   6300
       TabIndex        =   108
-      Top             =   10800
+      Top             =   11055
       Width           =   600
    End
    Begin VB.Label lblBlood 
@@ -3010,9 +3053,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6360
+      Left            =   6300
       TabIndex        =   107
-      Top             =   10440
+      Top             =   10695
       Width           =   525
    End
 End
@@ -3030,14 +3073,37 @@ Private MoveForm As Boolean
 Private LastX As Long
 Private LastY As Long
 Private Declare Function GetForegroundWindow Lib "user32.dll" () As Long
-Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As Any, ByVal lpWindowName _
-         As Any) As Long
-         
+
+Private Const WM_MOUSEMOVE      As Long = &H200
+Private Const WM_LBUTTONDOWN    As Long = &H201
+Private Const WM_LBUTTONUP      As Long = &H202
+Private Const WM_CAPTURECHANGED As Long = &H215
+Private Const WM_GETMINMAXINFO  As Long = &H24
+Private Const WM_ACTIVATEAPP    As Long = &H1C
+Private Const WM_SETFOCUS       As Long = &H7
+
+Private WithEvents cSubclasserHooker As cSelfSubHookCallback
+Attribute cSubclasserHooker.VB_VarHelpID = -1
+Private taskBarClick As Boolean
 Private Sub Form_Activate()
-    hwndLastActiveWnd = hWnd
+    hwndLastActiveWnd = hwnd
     If FormVisible("frmAdmin") And adminMin Then
         frmAdmin.centerMiniVert Width, Height, Left, Top
     End If
+End Sub
+
+Private Sub Form_Initialize()
+    Set cSubclasserHooker = New cSelfSubHookCallback
+    If cSubclasserHooker.ssc_Subclass(Me.hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
+    End If
+    If cSubclasserHooker.ssc_Subclass(Me.picMapEditor.hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.picMapEditor.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
+    End If
+    If cSubclasserHooker.ssc_Subclass(Me.mapPreviewSwitch.hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.mapPreviewSwitch.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    End If
+    
 End Sub
 
 Private Sub Form_Paint()
@@ -3686,6 +3752,16 @@ End Sub
 
 Private Sub lstGuild_GotFocus()
     SetGameFocus
+End Sub
+
+Private Sub mapPreviewSwitch_Click()
+    If mapPreviewSwitch.Value Then
+        mapPreviewSwitch.Picture = LoadResPicture("MAP_DOWN", vbResBitmap)
+        frmMapPreview.Show
+    Else
+        mapPreviewSwitch.Picture = LoadResPicture("MAP_UP", vbResBitmap)
+        Unload frmMapPreview
+    End If
 End Sub
 
 Private Sub picChatbox_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -4449,35 +4525,61 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picScreen_MouseDown(Button As Integer, _
+                                Shift As Integer, _
+                                X As Single, _
+                                Y As Single)
+
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     If InMapEditor Then
         If frmEditor_Map.chkEyeDropper.Value = 1 Then
             Call MapEditorEyeDropper
         Else
+
             If ControlDown And Button = 1 Then
                 MapEditorFillSelection
+
                 Exit Sub
+
             ElseIf ControlDown And Button = 2 Then
                 MapEditorClearSelection
+
                 Exit Sub
+
             ElseIf ShiftDown And Button = 1 Then
                 MapEditorEyeDropper
+
                 Exit Sub
+
+            ElseIf Button = vbRightButton Then
+
+                If ShiftDown Then
+
+                    ' Admin warp if we're pressing shift and right clicking
+                    If GetPlayerAccess(MyIndex) >= STAFF_MAPPER Then
+                        If CanMoveNow Then
+                            AdminWarp CurX, CurY
+                        End If
+                    End If
+                End If
             End If
             
             Call MapEditorMouseDown(Button, X, Y, False)
             redrawMapCache = True
         End If
+
     Else
+
         ' Left click
         If Button = vbLeftButton Then
             ' Targetting
             Call PlayerSearch(CurX, CurY)
-        ' Right click
+            ' Right click
         ElseIf Button = vbRightButton Then
+
             If ShiftDown Then
+
                 ' Admin warp if we're pressing shift and right clicking
                 If GetPlayerAccess(MyIndex) >= STAFF_MAPPER Then
                     If CanMoveNow Then
@@ -4496,9 +4598,10 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
     Call ClearChatButton(0)
     ClearButtons
     ResetOptionButtons
+
     Exit Sub
     
-' Error handler
+    ' Error handler
 errorhandler:
     HandleError "picScreen_MouseDown", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
@@ -4510,7 +4613,6 @@ Private Sub picScreen_MouseMove(Button As Integer, Shift As Integer, X As Single
 
     CurX = TileView.Left + ((X + Camera.Left) \ PIC_X)
     CurY = TileView.Top + ((Y + Camera.Top) \ PIC_Y)
-    
     If InMapEditor Then
         Call MapEditorMouseDown(Button, X, Y, False)
         If (LastX <> CurX Or LastY <> CurY) And frmEditor_Map.chkRandom.Value = 0 And Button >= 1 Then
@@ -5137,10 +5239,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
                 If FormVisible("frmAdmin") Then
-                    If GetForegroundWindow = frmAdmin.hWnd Then
+                    If GetForegroundWindow = frmAdmin.hwnd Then
                         Unload frmAdmin
-                    ElseIf GetForegroundWindow <> frmAdmin.hWnd Then
-                        BringWindowToTop (frmAdmin.hWnd)
+                    ElseIf GetForegroundWindow <> frmAdmin.hwnd Then
+                        BringWindowToTop (frmAdmin.hwnd)
                         'InitAdminPanel
                     End If
                 Else
@@ -6038,4 +6140,41 @@ Private Sub DropItem(ByVal InvNum As Byte)
         End If
     End If
 End Sub
+Private Sub myWndProc(ByVal bBefore As Boolean, _
+                      ByRef bHandled As Boolean, _
+                      ByRef lReturn As Long, _
+                      ByVal lng_hWnd As Long, _
+                      ByVal uMsg As Long, _
+                      ByVal wParam As Long, _
+                      ByVal lParam As Long, _
+                      ByRef lParamUser As Long)
+    Select Case uMsg
+        Case WM_ACTIVATEAPP
+            taskBarClick = True
+        Case WM_LBUTTONDOWN
+            MainLButtonDown lng_hWnd
+        Case WM_LBUTTONUP
+            MainLButtonUp lng_hWnd
+        Case WM_CAPTURECHANGED
+            MainCaptureChanged lng_hWnd, lParam
+        Case WM_MOUSEMOVE
+            MainMouseMove lng_hWnd
+        Case WM_GETMINMAXINFO 'Prevent Resizing, so we can keep nice frame when turning off CAPTION.
+            If Not taskBarClick Then
+                MainPreventResizing Me.hwnd, (Me.Width \ Screen.TwipsPerPixelX), (Me.Height \ Screen.TwipsPerPixelY), lParam
+            Else
+                taskBarClick = False
+            End If
+        Case WM_SETFOCUS
+            If lng_hWnd = mapPreviewSwitch.hwnd Then
+                bHandled = True
+                lReturn = 1
+            End If
+    End Select
 
+' *************************************************************
+' C A U T I O N   C A U T I O N   C A U T I O N   C A U T I O N
+' -------------------------------------------------------------
+' DO NOT ADD ANY OTHER CODE BELOW THE "END SUB" STATEMENT BELOW
+' *************************************************************
+End Sub

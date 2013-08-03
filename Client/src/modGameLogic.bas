@@ -46,7 +46,7 @@ Public Sub GameLoop()
             InGame = IsConnected
             Call CheckKeys ' Check to make sure they aren't trying to auto do anything
 
-            If GetForegroundWindow() = frmMain.hWnd Then
+            If GetForegroundWindow() = frmMain.hwnd Then
                 Call CheckInputKeys ' Check which keys were pressed
             End If
             
@@ -359,7 +359,7 @@ Sub CheckMapGetItem()
 
     If timeGetTime > TempPlayer(MyIndex).MapGetTimer + 250 Then
         For i = 1 To MAX_MAP_ITEMS
-            If MapItem(i).Num > 0 Then
+            If MapItem(i).num > 0 Then
                 If MapItem(i).x = GetPlayerX(MyIndex) And MapItem(i).y = GetPlayerY(MyIndex) Then
                     TempPlayer(MyIndex).MapGetTimer = timeGetTime
                     buffer.WriteLong CMapGetItem
@@ -393,7 +393,7 @@ Public Sub CheckAttack()
 
         ' Speed from weapon
         If GetPlayerEquipment(MyIndex, Weapon) > 0 Then
-            AttackSpeed = Item(GetPlayerEquipment(MyIndex, Weapon)).WeaponSpeed
+            AttackSpeed = item(GetPlayerEquipment(MyIndex, Weapon)).WeaponSpeed
         Else
             AttackSpeed = 1000
         End If
@@ -718,7 +718,7 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
 
     ' Check to see if a NPC is already on that tile
     For i = 1 To Map.Npc_HighIndex
-        If MapNPC(i).Num > 0 Then
+        If MapNPC(i).num > 0 Then
             If MapNPC(i).x = x Then
                 If MapNPC(i).y = y Then
                     CheckDirection = True
@@ -1081,12 +1081,12 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal x As Long, ByVal y 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    FirstLetter = LCase$(Left$(Trim$(Item(ItemNum).name), 1))
+    FirstLetter = LCase$(Left$(Trim$(item(ItemNum).name), 1))
    
     If FirstLetter = "$" Then
-        name = (Mid$(Trim$(Item(ItemNum).name), 2, Len(Trim$(Item(ItemNum).name)) - 1))
+        name = (Mid$(Trim$(item(ItemNum).name), 2, Len(Trim$(item(ItemNum).name)) - 1))
     Else
-        name = Trim$(Item(ItemNum).name)
+        name = Trim$(item(ItemNum).name)
     End If
     
     ' Check for off-screen
@@ -1105,7 +1105,7 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal x As Long, ByVal y 
         If LastItemDesc = ItemNum Then Exit Sub ' Exit out after setting X + Y so we don't reset values
     
         ' Set the Name
-        Select Case Item(ItemNum).Rarity
+        Select Case item(ItemNum).Rarity
             Case 0 ' Grey
                 .lblItemName.ForeColor = Grey
             Case 1 ' White
@@ -1124,7 +1124,7 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal x As Long, ByVal y 
         
         ' Set captions
         .lblItemName.Caption = name
-        .lblItemDesc.Caption = Trim$(Item(ItemNum).Desc)
+        .lblItemDesc.Caption = Trim$(item(ItemNum).Desc)
         .lblItemDesc = .lblItemDesc & vbNewLine
         
         LastItemDesc = 0
@@ -1473,7 +1473,7 @@ Public Function GetBankItemNum(ByVal BankSlot As Byte) As Integer
         Exit Function
     End If
     
-    GetBankItemNum = bank.Item(BankSlot).Num
+    GetBankItemNum = bank.item(BankSlot).num
     Exit Function
     
 ' Error handler
@@ -1486,7 +1486,7 @@ Public Sub SetBankItemNum(ByVal BankSlot As Byte, ByVal ItemNum As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    bank.Item(BankSlot).Num = ItemNum
+    bank.item(BankSlot).num = ItemNum
     Exit Sub
     
 ' Error handler
@@ -1499,7 +1499,7 @@ Public Function GetBankItemValue(ByVal BankSlot As Byte) As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    GetBankItemValue = bank.Item(BankSlot).Value
+    GetBankItemValue = bank.item(BankSlot).Value
     Exit Function
     
 ' Error handler
@@ -1512,7 +1512,7 @@ Public Sub SetBankItemValue(ByVal BankSlot As Byte, ByVal ItemValue As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    bank.Item(BankSlot).Value = ItemValue
+    bank.item(BankSlot).Value = ItemValue
     Exit Sub
     
 ' Error handler
@@ -1526,7 +1526,7 @@ Function GetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte) 
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
-    GetPlayerBankItemDurValue = bank.Item(Index).Durability
+    GetPlayerBankItemDurValue = bank.item(Index).Durability
     Exit Function
     
 ' Error handler
@@ -1539,7 +1539,7 @@ Sub SetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte, ByVal
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    bank.Item(Index).Durability = DurValue
+    bank.item(Index).Durability = DurValue
     Exit Sub
     
 ' Error handler
@@ -1655,7 +1655,7 @@ Public Sub PlaySoundEntity(ByVal x As Long, ByVal y As Long, ByVal EntityType As
         ' Items
         Case SoundEntity.seItem
             If EntityNum > MAX_ITEMS Then Exit Sub
-            SoundName = Trim$(Item(EntityNum).Sound)
+            SoundName = Trim$(item(EntityNum).Sound)
         
         ' Npcs
         Case SoundEntity.seNPC
@@ -1724,12 +1724,12 @@ Public Sub Dialogue(ByVal DiTitle As String, ByVal DiText As String, ByVal DiInd
     ' Show txtDialogue if it is friend and set labels
     If DialogueIndex = DIALOGUE_TYPE_ADDFRIEND Or DialogueIndex = DIALOGUE_TYPE_REMOVEFRIEND Or DialogueIndex = DIALOGUE_TYPE_ADDFOE Or DialogueIndex = DIALOGUE_TYPE_REMOVEFOE Or DialogueIndex = DIALOGUE_TYPE_CHANGEGUILDACCESS Or DialogueIndex = DIALOGUE_TYPE_PARTYINVITE Or DialogueIndex = DIALOGUE_TYPE_GUILDINVITE Or DialogueIndex = DIALOGUE_TYPE_GUILDREMOVE Then
         frmMain.txtDialogue.Visible = True
-        frmMain.lblDialogue_Button.Item(2).Caption = "Accept"
-        frmMain.lblDialogue_Button.Item(3).Caption = "Cancel"
+        frmMain.lblDialogue_Button.item(2).Caption = "Accept"
+        frmMain.lblDialogue_Button.item(3).Caption = "Cancel"
     Else
         frmMain.txtDialogue.Visible = False
-        frmMain.lblDialogue_Button.Item(2).Caption = "Yes"
-        frmMain.lblDialogue_Button.Item(3).Caption = "No"
+        frmMain.lblDialogue_Button.item(2).Caption = "Yes"
+        frmMain.lblDialogue_Button.item(3).Caption = "No"
     End If
 
     ' Show the dialogue box
@@ -1822,7 +1822,7 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
         frmMain.Height = frmMain.Height + Screen.TwipsPerPixelY
         frmMain.Top = (Screen.Height / 2) - (frmMain.Height / 2)
     Loop
-    
+
     ' Resize and position the screen
     frmMain.picScreen.Width = MIN_MAPX * PIC_X
     frmMain.picScreen.Height = MIN_MAPY * PIC_Y
@@ -1845,6 +1845,8 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     frmMain.picScreen.Left = 0
     frmMain.picForm.Top = 0
     frmMain.picForm.Left = 0
+    frmMain.picMapEditor.Top = 0
+    frmMain.picMapEditor.Left = 0
 End Sub
 
 Function IsInRange(ByVal Range As Byte, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Boolean
@@ -2039,20 +2041,20 @@ Public Sub CheckForBattleMusic(ByVal MapNPCNum As Byte)
     If ActiveNPCTarget = MapNPCNum Then ActiveNPCTarget = 0
     
     If Options.Music = 1 And Options.BattleMusic = 1 Then
-        If MapNPC(MapNPCNum).Num > 0 Then
+        If MapNPC(MapNPCNum).num > 0 Then
             If MapNPC(MapNPCNum).TargetType = TARGET_TYPE_PLAYER Then
                 If MapNPC(MapNPCNum).Target = MyIndex And MapNPC(MapNPCNum).Target > 0 And Not MapNPC(MapNPCNum).Target = MyIndex Then
-                    If Len(Trim$(NPC(MapNPC(MapNPCNum).Num).Music)) > 0 Then
+                    If Len(Trim$(NPC(MapNPC(MapNPCNum).num).Music)) > 0 Then
                         ActiveNPCTarget = MapNPCNum
                     End If
                 End If
                 
                 ' Check if party members are being targeted
-                If Party.Num > 0 Then
+                If Party.num > 0 Then
                     For n = 1 To MAX_PARTY_MEMBERS
                         If GetPlayerMap(MyIndex) = GetPlayerMap(Party.Member(n)) Then
                             If MapNPC(MapNPCNum).Target = Party.Member(n) And MapNPC(MapNPCNum).Target > 0 And Not MapNPC(MapNPCNum).Target = Party.Member(n) Then
-                                If Len(Trim$(NPC(MapNPC(MapNPCNum).Num).Music)) > 0 Then
+                                If Len(Trim$(NPC(MapNPC(MapNPCNum).num).Music)) > 0 Then
                                     ActiveNPCTarget = MapNPCNum
                                 End If
                             End If
@@ -2064,8 +2066,8 @@ Public Sub CheckForBattleMusic(ByVal MapNPCNum As Byte)
             If InitBattleMusic = False Then Exit Sub
             
             If ActiveNPCTarget > 0 Then
-                If MapNPC(ActiveNPCTarget).Num > 0 Then
-                    Call Audio.PlayMusic(Trim$(NPC(MapNPC(ActiveNPCTarget).Num).Music))
+                If MapNPC(ActiveNPCTarget).num > 0 Then
+                    Call Audio.PlayMusic(Trim$(NPC(MapNPC(ActiveNPCTarget).num).Music))
                     BattleMusicActive = True
                     Exit Sub
                 End If
@@ -2326,7 +2328,7 @@ Public Sub FindNearestTarget()
     bestY = 255
     
     For i = 1 To MAX_MAP_NPCS
-        If MapNPC(i).Num > 0 Then
+        If MapNPC(i).num > 0 Then
             x = MapNPC(i).x
             y = MapNPC(i).y
             
@@ -2382,7 +2384,7 @@ Public Function FindTarget() As Boolean
     
     ' Check NPCs
     For i = 1 To Map.Npc_HighIndex
-        If MapNPC(i).Num > 0 Then
+        If MapNPC(i).num > 0 Then
             x = (MapNPC(i).x * 32) + MapNPC(i).xOffset + 32
             y = (MapNPC(i).y * 32) + MapNPC(i).yOffset + 32
             If x >= CurX And x <= CurX + 32 Then

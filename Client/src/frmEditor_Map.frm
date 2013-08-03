@@ -1636,7 +1636,7 @@ errorhandler:
 End Sub
 
 Private Sub Form_Activate()
-    hwndLastActiveWnd = hWnd
+    hwndLastActiveWnd = hwnd
     If FormVisible("frmAdmin") And adminMin Then
         frmAdmin.centerMiniVert Width, Height, Left, Top
     End If
@@ -1968,11 +1968,15 @@ Private Sub Form_Unload(Cancel As Integer)
     If FormVisible("frmEditor_Events") Then
         Unload frmEditor_Events
     End If
-    frmAdmin.ignoreChange = True
-    frmAdmin.chkEditor(EDITOR_MAP).Value = 0
-    frmAdmin.chkEditor(EDITOR_MAP).FontBold = False
-    BringWindowToTop (frmAdmin.hWnd)
+    If FormVisible("frmAdmin") Then
+        frmAdmin.ignoreChange = True
+        frmAdmin.chkEditor(EDITOR_MAP).Value = 0
+        frmAdmin.chkEditor(EDITOR_MAP).FontBold = False
+        BringWindowToTop (frmAdmin.hwnd)
     frmAdmin.picEye(EDITOR_MAP).Visible = False
+    End If
+
+    MapEditorMode False
     Exit Sub
     
 ' Error handler

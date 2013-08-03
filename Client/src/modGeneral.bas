@@ -44,7 +44,7 @@ Public Sub Main()
     
     ' Setup screen
     ResizeScreen 25, 18
-    
+
     ' Use the swear string to store the original swear words
     SwearString = SwearWords
     SwearArray = Split(SwearString, ", ")
@@ -369,7 +369,8 @@ Sub GameInit()
     ' Show the main form
     frmMain.Show
     frmMain.picScreen.Visible = True
-
+    'AdvMapEditor
+    
     ' Stop the song from playing
     Call Audio.StopMusic
     
@@ -508,7 +509,7 @@ errorhandler:
     Err.Clear
 End Function
 
-Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, x As Single, y As Single)
+Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim GlobalX As Integer
     Dim GlobalY As Integer
 
@@ -519,8 +520,8 @@ Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, x 
     GlobalY = PB.Top
 
     If Button = 1 Then
-        PB.Left = GlobalX + x - SOffsetX
-        PB.Top = GlobalY + y - SYOffset
+        PB.Left = GlobalX + X - SOffsetX
+        PB.Top = GlobalY + Y - SYOffset
     End If
     Exit Sub
     
