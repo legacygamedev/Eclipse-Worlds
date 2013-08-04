@@ -35,8 +35,8 @@ Private Declare Function ReleaseCapture Lib "user32" () As Long
 Private Declare Function SetWindowPos Lib "user32.dll" ( _
      ByVal hwnd As Long, _
      ByVal hWndInsertAfter As Long, _
-     ByVal x As Long, _
-     ByVal y As Long, _
+     ByVal X As Long, _
+     ByVal Y As Long, _
      ByVal cx As Long, _
      ByVal cy As Long, _
      ByVal wFlags As Long) As Long
@@ -54,8 +54,8 @@ Private Declare Sub CopyMemory Lib "kernel32" _
     ByVal cbCopy As Long)
 'Types
 Private Type POINTAPI
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 Private Type RECT
         Left As Long
@@ -80,8 +80,8 @@ Global gHW As Long
 Public Sub MapEditorMode(switch As Boolean)
     If switch Then
         frmMain.Width = frmMain.Width - 30
-        frmMain.Height = frmMain.Height + 600
-        frmMain.picForm.Top = frmMain.picForm.Top + 24 + 40
+        frmMain.Height = frmMain.Height + 750
+        frmMain.picForm.Top = frmMain.picForm.Top + 24 + 50
         
         If frmMain.mapPreviewSwitch.Value Then
             frmMain.mapPreviewSwitch.Picture = LoadResPicture("MAP_DOWN", vbResBitmap)
@@ -90,10 +90,22 @@ Public Sub MapEditorMode(switch As Boolean)
         Else
             frmMain.mapPreviewSwitch.Picture = LoadResPicture("MAP_UP", vbResBitmap)
         End If
+        'Tile Preview
+        If frmMain.chkEyeDropper.Value Then
+            frmMain.chkEyeDropper.Picture = LoadResPicture("EYE_DOWN", vbResBitmap)
+        Else
+            frmMain.chkEyeDropper.Picture = LoadResPicture("EYE_UP", vbResBitmap)
+        End If
+        'Buttons
+        frmMain.cmdSave.Picture = LoadResPicture("MAP_SAVE", vbResBitmap)
+        frmMain.cmdRevert.Picture = LoadResPicture("MAP_REVERT", vbResBitmap)
+        frmMain.cmdDelete.Picture = LoadResPicture("MAP_DELETE", vbResBitmap)
+        frmMain.cmdProperties.Picture = LoadResPicture("MAP_PROPERTIES", vbResBitmap)
+        
     Else
         frmMain.Width = frmMain.Width + 30
-        frmMain.Height = frmMain.Height - 600
-        frmMain.picForm.Top = frmMain.picForm.Top - 24 - 40
+        frmMain.Height = frmMain.Height - 750
+        frmMain.picForm.Top = frmMain.picForm.Top - 24 - 50
         frmMapPreview.Hide
     End If
     Call FlipBit(WS_CAPTION, Not switch)
@@ -131,8 +143,8 @@ Public Sub MainMouseMove(hwnd As Long)
 
             Dim wnd_x As Long, wnd_y As Long
 
-            wnd_x = g_OrigWndPos.x + (pt.x - g_OrigCursorPos.x)
-            wnd_y = g_OrigWndPos.y + (pt.y - g_OrigCursorPos.y)
+            wnd_x = g_OrigWndPos.X + (pt.X - g_OrigCursorPos.X)
+            wnd_y = g_OrigWndPos.Y + (pt.Y - g_OrigCursorPos.Y)
             SetWindowPos frmMain.hwnd, 0, wnd_x, wnd_y, 0, 0, (SWP_NOACTIVATE Or SWP_NOOWNERZORDER Or SWP_NOZORDER Or SWP_NOSIZE)
             frmMapPreview.Move frmMain.Left - frmMapPreview.Width - 80, frmMain.Top + 75
         End If
@@ -153,8 +165,8 @@ Public Sub MainLButtonDown(hwnd As Long)
         Dim rt As RECT
 
         GetWindowRect frmMain.hwnd, rt
-        g_OrigWndPos.x = rt.Left
-        g_OrigWndPos.y = rt.Top
+        g_OrigWndPos.X = rt.Left
+        g_OrigWndPos.Y = rt.Top
         g_MovingMainWnd = True
         SetCapture hwnd
     End If
@@ -165,10 +177,10 @@ Public Sub MainPreventResizing(hwnd As Long, constWidth As Long, constHeight As 
                   
                   CopyMemory MMI, ByVal lParam, LenB(MMI)
                    With MMI
-                      .ptMinTrackSize.x = constWidth
-                      .ptMinTrackSize.y = constHeight
-                      .ptMaxTrackSize.x = constWidth
-                      .ptMaxTrackSize.y = constHeight
+                      .ptMinTrackSize.X = constWidth
+                      .ptMinTrackSize.Y = constHeight
+                      .ptMaxTrackSize.X = constWidth
+                      .ptMaxTrackSize.Y = constHeight
                   End With
                   CopyMemory ByVal lParam, MMI, LenB(MMI)
 End Sub

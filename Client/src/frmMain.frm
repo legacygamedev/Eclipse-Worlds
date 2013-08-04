@@ -45,7 +45,7 @@ Begin VB.Form frmMain
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   210
       TabIndex        =   138
-      Top             =   8760
+      Top             =   8715
       Visible         =   0   'False
       Width           =   3150
       Begin VB.PictureBox picSpellDescPic 
@@ -115,7 +115,7 @@ Begin VB.Form frmMain
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   210
       TabIndex        =   134
-      Top             =   8760
+      Top             =   8715
       Visible         =   0   'False
       Width           =   3150
       Begin VB.PictureBox picItemDescPic 
@@ -170,12 +170,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8100
+      Left            =   8085
       ScaleHeight     =   285
       ScaleWidth      =   735
       TabIndex        =   106
       TabStop         =   0   'False
-      Top             =   9615
+      Top             =   9990
       Width           =   735
    End
    Begin VB.PictureBox picOptionWeather 
@@ -184,12 +184,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8100
+      Left            =   8085
       ScaleHeight     =   285
       ScaleWidth      =   735
       TabIndex        =   105
       TabStop         =   0   'False
-      Top             =   9975
+      Top             =   10350
       Width           =   735
    End
    Begin VB.PictureBox picOptionAutoTile 
@@ -198,12 +198,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8100
+      Left            =   8085
       ScaleHeight     =   285
       ScaleWidth      =   735
       TabIndex        =   104
       TabStop         =   0   'False
-      Top             =   10335
+      Top             =   10710
       Width           =   735
    End
    Begin VB.PictureBox picOptionDebug 
@@ -212,12 +212,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8100
+      Left            =   8085
       ScaleHeight     =   285
       ScaleWidth      =   735
       TabIndex        =   103
       TabStop         =   0   'False
-      Top             =   11055
+      Top             =   11430
       Width           =   735
    End
    Begin VB.PictureBox picOptionBlood 
@@ -226,12 +226,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8100
+      Left            =   8085
       ScaleHeight     =   285
       ScaleWidth      =   735
       TabIndex        =   102
       TabStop         =   0   'False
-      Top             =   10695
+      Top             =   11070
       Width           =   735
    End
    Begin VB.PictureBox picSSMap 
@@ -814,7 +814,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -2917,25 +2916,153 @@ Begin VB.Form frmMain
       Appearance      =   0  'Flat
       BackColor       =   &H0080C0FF&
       ForeColor       =   &H80000008&
-      Height          =   960
-      Left            =   0
-      ScaleHeight     =   62
+      Height          =   1110
+      Left            =   30
+      ScaleHeight     =   72
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   798
       TabIndex        =   151
-      Top             =   12510
+      Top             =   12360
       Width           =   12000
+      Begin VB.CommandButton cmdDelete 
+         BackColor       =   &H0080C0FF&
+         Height          =   420
+         Left            =   8910
+         Style           =   1  'Graphical
+         TabIndex        =   164
+         ToolTipText     =   "Delete all content of this map. "
+         Top             =   615
+         Width           =   420
+      End
+      Begin VB.CommandButton cmdRevert 
+         BackColor       =   &H0080C0FF&
+         Height          =   420
+         Left            =   8910
+         Style           =   1  'Graphical
+         TabIndex        =   163
+         ToolTipText     =   "Revert/Cancel all changes to this map."
+         Top             =   180
+         Width           =   420
+      End
+      Begin VB.CommandButton cmdProperties 
+         BackColor       =   &H0080C0FF&
+         Height          =   420
+         Left            =   8475
+         Style           =   1  'Graphical
+         TabIndex        =   162
+         ToolTipText     =   "Map Properties"
+         Top             =   615
+         Width           =   420
+      End
+      Begin VB.CommandButton cmdSave 
+         BackColor       =   &H0080C0FF&
+         Height          =   540
+         Left            =   8355
+         Style           =   1  'Graphical
+         TabIndex        =   161
+         ToolTipText     =   "Save Map"
+         Top             =   60
+         Width           =   540
+      End
+      Begin VB.CheckBox chkDrawEvents 
+         BackColor       =   &H0080C0FF&
+         Caption         =   "DrawEvents"
+         Height          =   225
+         Left            =   10215
+         TabIndex        =   160
+         ToolTipText     =   "Draw white square around events "
+         Top             =   675
+         Value           =   1  'Checked
+         Width           =   1500
+      End
+      Begin VB.CheckBox chkShowAttributes 
+         BackColor       =   &H0080C0FF&
+         Caption         =   "Show Attributes"
+         Height          =   225
+         Left            =   10215
+         TabIndex        =   159
+         ToolTipText     =   "Show attributes like Block, Warp etc. "
+         Top             =   435
+         Width           =   1740
+      End
+      Begin VB.CheckBox chkGrid 
+         BackColor       =   &H0080C0FF&
+         Caption         =   "Show Grid"
+         Height          =   225
+         Left            =   10215
+         TabIndex        =   158
+         Top             =   210
+         Width           =   1395
+      End
+      Begin VB.CheckBox chkTilePreview 
+         BackColor       =   &H0080C0FF&
+         Caption         =   "Tile Preview"
+         Height          =   225
+         Left            =   10215
+         TabIndex        =   157
+         Top             =   0
+         Value           =   1  'Checked
+         Width           =   1395
+      End
+      Begin VB.CheckBox chkEyeDropper 
+         Appearance      =   0  'Flat
+         BackColor       =   &H0080C0FF&
+         ForeColor       =   &H80000008&
+         Height          =   540
+         Left            =   2070
+         Style           =   1  'Graphical
+         TabIndex        =   155
+         ToolTipText     =   "Eye Dropper (Shift + LMouse)"
+         Top             =   210
+         Width           =   540
+      End
       Begin VB.CheckBox mapPreviewSwitch 
          Appearance      =   0  'Flat
          BackColor       =   &H0080C0FF&
          ForeColor       =   &H80000008&
          Height          =   540
-         Left            =   105
+         Left            =   210
          Style           =   1  'Graphical
          TabIndex        =   153
          ToolTipText     =   "Map Preview - Docked"
-         Top             =   315
+         Top             =   210
          Width           =   540
+      End
+      Begin VB.Label lblTilePreview 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Eye Dropper"
+         BeginProperty Font 
+            Name            =   "Arial Narrow"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   240
+         Left            =   1890
+         TabIndex        =   156
+         Top             =   720
+         Width           =   870
+      End
+      Begin VB.Label lblMapPreview 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Map Preview"
+         BeginProperty Font 
+            Name            =   "Arial Narrow"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   240
+         Left            =   60
+         TabIndex        =   154
+         Top             =   705
+         Width           =   1125
       End
       Begin VB.Label lblTitle 
          BackColor       =   &H0080C0FF&
@@ -2952,9 +3079,9 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H00000000&
          Height          =   225
-         Left            =   45
+         Left            =   15
          TabIndex        =   152
-         Top             =   30
+         Top             =   -45
          Width           =   1695
       End
    End
@@ -2973,9 +3100,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6300
+      Left            =   6285
       TabIndex        =   111
-      Top             =   9615
+      Top             =   9990
       Width           =   1200
    End
    Begin VB.Label lblWeather 
@@ -2993,9 +3120,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6300
+      Left            =   6285
       TabIndex        =   110
-      Top             =   9975
+      Top             =   10350
       Width           =   855
    End
    Begin VB.Label lblAutoTile 
@@ -3013,9 +3140,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6300
+      Left            =   6285
       TabIndex        =   109
-      Top             =   10335
+      Top             =   10710
       Width           =   915
    End
    Begin VB.Label lblDebug 
@@ -3033,9 +3160,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6300
+      Left            =   6285
       TabIndex        =   108
-      Top             =   11055
+      Top             =   11430
       Width           =   600
    End
    Begin VB.Label lblBlood 
@@ -3053,9 +3180,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6300
+      Left            =   6285
       TabIndex        =   107
-      Top             =   10695
+      Top             =   11070
       Width           =   525
    End
 End
@@ -3085,6 +3212,51 @@ Private Const WM_SETFOCUS       As Long = &H7
 Private WithEvents cSubclasserHooker As cSelfSubHookCallback
 Attribute cSubclasserHooker.VB_VarHelpID = -1
 Private taskBarClick As Boolean
+
+Private Sub chkEyeDropper_Click()
+    If frmMain.chkEyeDropper.Value Then
+        frmMain.chkEyeDropper.Picture = LoadResPicture("EYE_DOWN", vbResBitmap)
+    Else
+        frmMain.chkEyeDropper.Picture = LoadResPicture("EYE_UP", vbResBitmap)
+    End If
+End Sub
+
+Private Sub chkTilePreview_Click()
+    CurX = 0
+    CurY = 0
+End Sub
+
+Private Sub cmdDelete_Click()
+    If AlertMsg("Are you sure you want to erase this map?", False, False) = YES Then
+        Call ClearMap
+    End If
+End Sub
+
+Private Sub cmdProperties_Click()
+    ' Load the values
+    MapPropertiesInit
+    
+    ' Update the 1stnpcs list Index so it is selected
+    frmEditor_MapProperties.lstNpcs.ListIndex = 0
+    
+    ' Show the form
+    frmEditor_MapProperties.Show
+    
+    ' Lock map editor open til map properties is closed
+    cmdSave.Enabled = False
+    cmdRevert.Enabled = False
+    
+End Sub
+
+Private Sub cmdRevert_Click()
+    Unload frmEditor_Map
+End Sub
+
+Private Sub cmdSave_Click()
+    EditorSave = True
+    Call MapEditorSave
+End Sub
+
 Private Sub Form_Activate()
     hwndLastActiveWnd = hwnd
     If FormVisible("frmAdmin") And adminMin Then
@@ -3102,6 +3274,9 @@ Private Sub Form_Initialize()
     End If
     If cSubclasserHooker.ssc_Subclass(Me.mapPreviewSwitch.hwnd, ByVal 1, 1, Me) Then
         cSubclasserHooker.ssc_AddMsg Me.mapPreviewSwitch.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    End If
+    If cSubclasserHooker.ssc_Subclass(Me.chkEyeDropper.hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.chkEyeDropper.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
     
 End Sub
@@ -4533,7 +4708,7 @@ Private Sub picScreen_MouseDown(Button As Integer, _
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     If InMapEditor Then
-        If frmEditor_Map.chkEyeDropper.Value = 1 Then
+        If chkEyeDropper.Value = 1 Then
             Call MapEditorEyeDropper
         Else
 
@@ -6166,7 +6341,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
                 taskBarClick = False
             End If
         Case WM_SETFOCUS
-            If lng_hWnd = mapPreviewSwitch.hwnd Then
+            If lng_hWnd = mapPreviewSwitch.hwnd Or lng_hWnd = chkEyeDropper.hwnd Then
                 bHandled = True
                 lReturn = 1
             End If

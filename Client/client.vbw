@@ -47,3 +47,4 @@ modGDIPlusResize = 312, 312, 1422, 962, C
 frmItemDesc = 50, 50, 1046, 408, C, 25, 25, 1021, 383, C
 cSelfSubHookCallback = 200, 200, 1171, 654, 
 modAdvMapEditor = 25, 25, 996, 479, Z
+frmMapPreview = 0, 0, 0, 0, C, 0, 0, 0, 0, C

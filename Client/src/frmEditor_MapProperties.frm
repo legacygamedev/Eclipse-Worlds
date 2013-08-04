@@ -597,7 +597,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub chkAutoPlay_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub chkAutoPlay_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Me.lstMusic.SetFocus
 End Sub
 
@@ -623,6 +623,8 @@ Private Sub Form_Unload(Cancel As Integer)
     ' Reenable buttons so that the map can be saved
     frmEditor_Map.cmdSave.Enabled = True
     frmEditor_Map.cmdCancel.Enabled = True
+    frmMain.cmdSave.Enabled = True
+    frmMain.cmdCancel.Enabled = True
     Exit Sub
     
 ' Error handler
@@ -795,8 +797,8 @@ End Sub
 Public Sub cmdSave_Click()
     Dim i As Long
     Dim sTemp As Long
-    Dim x As Long, X2 As Long
-    Dim y As Long, Y2 As Long
+    Dim X As Long, X2 As Long
+    Dim Y As Long, Y2 As Long
     Dim TempArr() As TileRec
     
     ' If debug mode, handle error then exit out
@@ -861,9 +863,9 @@ Public Sub cmdSave_Click()
         If X2 > .MaxX Then X2 = .MaxX
         If Y2 > .MaxY Then Y2 = .MaxY
 
-        For x = 0 To X2
-            For y = 0 To Y2
-                .Tile(x, y) = TempArr(x, y)
+        For X = 0 To X2
+            For Y = 0 To Y2
+                .Tile(X, Y) = TempArr(X, Y)
             Next
         Next
         
