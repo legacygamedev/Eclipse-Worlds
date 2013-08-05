@@ -225,9 +225,11 @@ Public Sub GameLoop()
         DoEvents
 
         ' Lock fps
-        If Not FPS_Lock Then
-            DoEvents
-            Sleep 10
+        If Not FPS_Lock Or GameFPS > 64 Then
+            Do While timeGetTime < tick + 10
+                DoEvents
+                Sleep 1
+            Loop
         End If
         
         ' Calculate FPS
