@@ -342,8 +342,10 @@ Public CurrentTintG As Long
 Public CurrentTintB As Long
 Public CurrentTintA As Long
 Public DrawThunder As Long
+Public ParallaxX As Long
+Public ParallaxY As Long
 
-' autotiling
+' Autotiling
 Public autoInner(1 To 4) As PointRec
 Public autoNW(1 To 4) As PointRec
 Public autoNE(1 To 4) As PointRec

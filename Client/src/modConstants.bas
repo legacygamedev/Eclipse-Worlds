@@ -3,7 +3,7 @@ Option Explicit
 
 ' API Declares
 Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
-Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByRef msg() As Byte, ByVal wParam As Long, ByVal lparam As Long) As Long
+Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByRef msg() As Byte, ByVal wParam As Long, ByVal lParam As Long) As Long
 Public Declare Function GetForegroundWindow Lib "user32" () As Long
 
 ' Sounds
@@ -129,8 +129,8 @@ Public Const MENU_STATE_USECHAR As Byte = 7
 Public Const MENU_STATE_INIT As Byte = 8
 
 ' Speed moving variables
-Public Const WALK_SPEED As Byte = 8
-Public Const RUN_SPEED As Byte = 12
+Public Const WALK_SPEED As Byte = 4
+Public Const RUN_SPEED As Byte = 5
 
 ' Tile size constants
 Public Const PIC_X As Integer = 32
