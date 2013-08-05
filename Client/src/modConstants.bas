@@ -19,6 +19,9 @@ Public Const MAINBUTTON_PATH As String = "\data files\graphics\gui\main\buttons\
 Public Const SwearWords As String = "ass, fuck, shit, bitch, bastard, damn, dick, vagina, penis, boob, cock"
 Public Const ReplaceSwearWords As String = "***, ****, ****, *****, *******, ****, ****, ******, *****, ****, ****"
 
+' PK constants
+Public Const PLAYER_KILLER As Byte = 1
+Public Const PLAYER_DEFENDER As Byte = 2
 
 ' Hotbar
 Public Const HotbarTop As Byte = 2

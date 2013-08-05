@@ -1774,9 +1774,9 @@ Public Sub TryPlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long)
 End Sub
 
 Function CanPlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, Optional ByVal IsSpell As Boolean = False, Optional ByVal UsingBow As Boolean) As Boolean
-Dim WeaponSlot As Long
-Dim Range As Byte
-Dim DistanceToPlayer As Integer
+    Dim WeaponSlot As Long
+    Dim Range As Byte
+    Dim DistanceToPlayer As Integer
 
     ' Check for subscript out of range
     If Not IsPlaying(Victim) Then Exit Function
@@ -1811,7 +1811,7 @@ Dim DistanceToPlayer As Integer
         
     ' Check if map is attackable
     If Moral(Map(GetPlayerMap(Attacker)).Moral).CanPK = 0 Then
-        If GetPlayerPK(Victim) = NO Then
+        If (GetPlayerPK(Victim) <> PLAYER_KILLER Or GetPlayerPK(Attacker) <> PLAYER_DEFENDER) And (GetPlayerPK(Victim) <> PLAYER_DEFENDER Or GetPlayerPK(Attacker) <> PLAYER_KILLER) Then
             Call PlayerMsg(Attacker, "This is a safe zone!", BrightRed)
             Exit Function
         End If
@@ -1878,7 +1878,7 @@ Dim DistanceToPlayer As Integer
         End If
     End If
     
-    If CanPlayerMitigatePlayer(Attacker, Victim) = True Or TempPlayer(Attacker).SpellBuffer.Spell > 0 Then
+    If CanPlayerMitigatePlayer(Attacker, Victim) Or TempPlayer(Attacker).SpellBuffer.Spell > 0 Then
         ' Check if player can avoid the attack
         If CanPlayerDodge(Victim) Then
             Call SendSoundToMap(GetPlayerMap(Victim), Options.DodgeSound)
@@ -2020,6 +2020,11 @@ Sub PlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, ByVal Damag
                 Call GlobalMsg(GetPlayerName(Attacker) & " has been deemed a Player Killer!", BrightRed)
             End If
         Else
+            If GetPlayerPK(Victim) = PLAYER_DEFENDER Then
+                Call SetPlayerPK(Attacker, PLAYER_DEFENDER)
+                Call SendPlayerPK(Attacker)
+                Call GlobalMsg(GetPlayerName(Attacker) & " has been deemed a Player Defender!", BrightBlue)
+            End If
             Call GlobalMsg(GetPlayerName(Victim) & " has paid the price for being a Player Killer!", BrightRed)
         End If
         
@@ -2347,7 +2352,7 @@ Public Sub CastSpell(ByVal Index As Long, ByVal SpellSlot As Byte, ByVal Target 
                                     ' Friendly and Shopkeeper
                                     If Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_QUEST Then
                                         ' Guard
-                                        If Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_GUARD Or (NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_GUARD And GetPlayerPK(Index) = YES) Then
+                                        If Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_GUARD Or (NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_GUARD And GetPlayerPK(Index) = PLAYER_KILLER) Then
                                             If CanPlayerAttackNPC(Index, i, False, True) Then
                                                 SendAnimation MapNum, Spell(SpellNum).SpellAnim, 0, 0, TARGET_TYPE_NPC, i
                                                 PlayerAttackNPC Index, i, Vital, SpellNum

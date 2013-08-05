@@ -1152,8 +1152,8 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
     If AutoLife(Index) Then Exit Sub
     
     ' If map moral can drop items or not
-    If Moral(Map(GetPlayerMap(Index)).Moral).DropItems = 1 Then
-        If GetPlayerPK(Index) = YES Then
+    If Moral(Map(GetPlayerMap(Index)).Moral).DropItems = 1 Or GetPlayerPK(Index) = PLAYER_KILLER Or (GetPlayerPK(Index) = PLAYER_DEFENDER And GetPlayerPK(Attacker) = PLAYER_KILLER) Then
+        If GetPlayerPK(Index) <> NO Then
             Call SetPlayerPK(Index, NO)
             Call SendPlayerPK(Index)
         End If
