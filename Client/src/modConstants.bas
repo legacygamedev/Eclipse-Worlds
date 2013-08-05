@@ -129,8 +129,7 @@ Public Const MENU_STATE_USECHAR As Byte = 7
 Public Const MENU_STATE_INIT As Byte = 8
 
 ' Speed moving variables
-Public Const WALK_SPEED As Byte = 4
-Public Const RUN_SPEED As Byte = 5
+Public Const MOVEMENT_SPEED As Byte = 6
 
 ' Tile size constants
 Public Const PIC_X As Integer = 32

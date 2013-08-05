@@ -216,19 +216,18 @@ Public Sub GameLoop()
         ' *********************
         ' ** Render Graphics **
         ' *********************
-        If RenderSpeed < tick Then
+        If RenderSpeed < tick Or GameFPS < 64 Then
             Call Render_Graphics
             RenderSpeed = timeGetTime + 15
         End If
         
         Call Audio.UpdateMapSounds
+        DoEvents
 
-        ' Lock FPS
+        ' Lock fps
         If Not FPS_Lock Then
-            Do While timeGetTime < tick + 20
-                DoEvents
-                Sleep 1
-            Loop
+            DoEvents
+            Sleep 10
         End If
         
         ' Calculate FPS
@@ -239,7 +238,6 @@ Public Sub GameLoop()
         Else
             FPS = FPS + 1
         End If
-        DoEvents
     Loop
 
     frmMain.Visible = False
@@ -274,8 +272,8 @@ Sub ProcessPlayerMovement(ByVal Index As Long)
 
     ' Check if player is walking, and if so process moving them over
     Select Case TempPlayer(Index).Moving
-        Case MOVING_WALKING: MovementSpeed = ((ElapsedTime / 1000) * (WALK_SPEED * SIZE_X))
-        Case MOVING_RUNNING: MovementSpeed = ((ElapsedTime / 1000) * (RUN_SPEED * SIZE_X))
+        Case MOVING_WALKING: MovementSpeed = ((ElapsedTime / 1000) * ((MOVEMENT_SPEED / 2) * SIZE_X))
+        Case MOVING_RUNNING: MovementSpeed = ((ElapsedTime / 1000) * (MOVEMENT_SPEED * SIZE_X))
         Case Else: Exit Sub
     End Select
     
@@ -314,48 +312,54 @@ errorhandler:
 End Sub
 
 Sub ProcessNpcMovement(ByVal MapNPCNum As Long)
+    Dim MovementSpeed As Long
+    
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Check if Npc is walking, and if so process moving them over
-    If MapNPC(MapNPCNum).Moving = MOVING_WALKING Then
-        Select Case MapNPC(MapNPCNum).Dir
-            Case DIR_UP
-                MapNPC(MapNPCNum).yOffset = MapNPC(MapNPCNum).yOffset - ((ElapsedTime / 1000) * (WALK_SPEED * SIZE_Y))
-                If MapNPC(MapNPCNum).yOffset < 0 Then MapNPC(MapNPCNum).yOffset = 0
-                
-            Case DIR_DOWN
-                MapNPC(MapNPCNum).yOffset = MapNPC(MapNPCNum).yOffset + ((ElapsedTime / 1000) * (WALK_SPEED * SIZE_Y))
-                If MapNPC(MapNPCNum).yOffset > 0 Then MapNPC(MapNPCNum).yOffset = 0
-                
-            Case DIR_LEFT
-                MapNPC(MapNPCNum).xOffset = MapNPC(MapNPCNum).xOffset - ((ElapsedTime / 1000) * (WALK_SPEED * SIZE_X))
-                If MapNPC(MapNPCNum).xOffset < 0 Then MapNPC(MapNPCNum).xOffset = 0
-                
-            Case DIR_RIGHT
-                MapNPC(MapNPCNum).xOffset = MapNPC(MapNPCNum).xOffset + ((ElapsedTime / 1000) * (WALK_SPEED * SIZE_X))
-                If MapNPC(MapNPCNum).xOffset > 0 Then MapNPC(MapNPCNum).xOffset = 0
-        End Select
+    If MapNPC(MapNPCNum).Target = 0 Then
+        MovementSpeed = MOVEMENT_SPEED / 2
+    Else
+        MovementSpeed = MOVEMENT_SPEED
+    End If
     
-        ' Check if completed walking over to the next tile
-        If MapNPC(MapNPCNum).Moving > 0 Then
-            If MapNPC(MapNPCNum).Dir = DIR_RIGHT Or MapNPC(MapNPCNum).Dir = DIR_DOWN Then
-                If (MapNPC(MapNPCNum).xOffset >= 0) And (MapNPC(MapNPCNum).yOffset >= 0) Then
-                    MapNPC(MapNPCNum).Moving = 0
-                    If MapNPC(MapNPCNum).Step = 1 Then
-                        MapNPC(MapNPCNum).Step = 3
-                    Else
-                        MapNPC(MapNPCNum).Step = 1
-                    End If
+    Select Case MapNPC(MapNPCNum).Dir
+        Case DIR_UP
+            MapNPC(MapNPCNum).yOffset = MapNPC(MapNPCNum).yOffset - ((ElapsedTime / 1000) * (MovementSpeed * SIZE_Y))
+            If MapNPC(MapNPCNum).yOffset < 0 Then MapNPC(MapNPCNum).yOffset = 0
+            
+        Case DIR_DOWN
+            MapNPC(MapNPCNum).yOffset = MapNPC(MapNPCNum).yOffset + ((ElapsedTime / 1000) * (MovementSpeed * SIZE_Y))
+            If MapNPC(MapNPCNum).yOffset > 0 Then MapNPC(MapNPCNum).yOffset = 0
+            
+        Case DIR_LEFT
+            MapNPC(MapNPCNum).xOffset = MapNPC(MapNPCNum).xOffset - ((ElapsedTime / 1000) * (MovementSpeed * SIZE_X))
+            If MapNPC(MapNPCNum).xOffset < 0 Then MapNPC(MapNPCNum).xOffset = 0
+            
+        Case DIR_RIGHT
+            MapNPC(MapNPCNum).xOffset = MapNPC(MapNPCNum).xOffset + ((ElapsedTime / 1000) * (MovementSpeed * SIZE_X))
+            If MapNPC(MapNPCNum).xOffset > 0 Then MapNPC(MapNPCNum).xOffset = 0
+    End Select
+
+    ' Check if completed walking over to the next tile
+    If MapNPC(MapNPCNum).Moving > 0 Then
+        If MapNPC(MapNPCNum).Dir = DIR_RIGHT Or MapNPC(MapNPCNum).Dir = DIR_DOWN Then
+            If (MapNPC(MapNPCNum).xOffset >= 0) And (MapNPC(MapNPCNum).yOffset >= 0) Then
+                MapNPC(MapNPCNum).Moving = 0
+                If MapNPC(MapNPCNum).Step = 1 Then
+                    MapNPC(MapNPCNum).Step = 3
+                Else
+                    MapNPC(MapNPCNum).Step = 1
                 End If
-            Else
-                If (MapNPC(MapNPCNum).xOffset <= 0) And (MapNPC(MapNPCNum).yOffset <= 0) Then
-                    MapNPC(MapNPCNum).Moving = 0
-                    If MapNPC(MapNPCNum).Step = 1 Then
-                        MapNPC(MapNPCNum).Step = 3
-                    Else
-                        MapNPC(MapNPCNum).Step = 1
-                    End If
+            End If
+        Else
+            If (MapNPC(MapNPCNum).xOffset <= 0) And (MapNPC(MapNPCNum).yOffset <= 0) Then
+                MapNPC(MapNPCNum).Moving = 0
+                If MapNPC(MapNPCNum).Step = 1 Then
+                    MapNPC(MapNPCNum).Step = 3
+                Else
+                    MapNPC(MapNPCNum).Step = 1
                 End If
             End If
         End If
