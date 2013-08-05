@@ -814,6 +814,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -4554,6 +4555,8 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
                             AdminWarp CurX, CurY
                         End If
                     End If
+                ElseIf InMapEditor Then
+                    DeleteEvent CurX, CurY
                 End If
             End If
             
@@ -4574,8 +4577,6 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
                         AdminWarp CurX, CurY
                     End If
                 End If
-            ElseIf InMapEditor Then
-                DeleteEvent CurX, CurY
             End If
         End If
     End If
