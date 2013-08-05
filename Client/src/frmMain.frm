@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    ClientHeight    =   13470
@@ -3282,7 +3282,7 @@ Private Sub cmdSave_Click()
 End Sub
 
 Private Sub Form_Activate()
-    hwndLastActiveWnd = hwnd
+    hwndLastActiveWnd = hWnd
     If FormVisible("frmAdmin") And adminMin Then
         frmAdmin.centerMiniVert Width, Height, Left, Top
     End If
@@ -3290,11 +3290,12 @@ End Sub
 
 Private Sub Form_Initialize()
     Set cSubclasserHooker = New cSelfSubHookCallback
-    If cSubclasserHooker.ssc_Subclass(Me.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
+    If cSubclasserHooker.ssc_Subclass(Me.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.picMapEditor.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.picMapEditor.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
+    
+    If cSubclasserHooker.ssc_Subclass(Me.picMapEditor.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.picMapEditor.hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
     End If
     If cSubclasserHooker.ssc_Subclass(Me.mapPreviewSwitch.hwnd, ByVal 1, 1, Me) Then
         cSubclasserHooker.ssc_AddMsg Me.mapPreviewSwitch.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
@@ -4735,61 +4736,50 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picScreen_MouseDown(Button As Integer, _
-                                Shift As Integer, _
-                                X As Single, _
-                                Y As Single)
-
+Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
+    
     If InMapEditor Then
         If chkEyeDropper.Value = 1 Then
             Call MapEditorEyeDropper
         Else
-
             If ControlDown And Button = 1 Then
                 MapEditorFillSelection
-
                 Exit Sub
 
             ElseIf ControlDown And Button = 2 Then
                 MapEditorClearSelection
-
                 Exit Sub
 
             ElseIf ShiftDown And Button = 1 Then
                 MapEditorEyeDropper
-
                 Exit Sub
 
             ElseIf Button = vbRightButton Then
-
                 If ShiftDown Then
-
                     ' Admin warp if we're pressing shift and right clicking
                     If GetPlayerAccess(MyIndex) >= STAFF_MAPPER Then
                         If CanMoveNow Then
                             AdminWarp CurX, CurY
                         End If
                     End If
+                ElseIf InMapEditor Then
+                    DeleteEvent CurX, CurY
                 End If
             End If
             
             Call MapEditorMouseDown(Button, X, Y, False)
             redrawMapCache = True
         End If
-
     Else
-
         ' Left click
         If Button = vbLeftButton Then
             ' Targetting
             Call PlayerSearch(CurX, CurY)
             ' Right click
         ElseIf Button = vbRightButton Then
-
             If ShiftDown Then
-
                 ' Admin warp if we're pressing shift and right clicking
                 If GetPlayerAccess(MyIndex) >= STAFF_MAPPER Then
                     If CanMoveNow Then
@@ -4808,7 +4798,6 @@ Private Sub picScreen_MouseDown(Button As Integer, _
     Call ClearChatButton(0)
     ClearButtons
     ResetOptionButtons
-
     Exit Sub
     
     ' Error handler
@@ -4823,6 +4812,7 @@ Private Sub picScreen_MouseMove(Button As Integer, Shift As Integer, X As Single
 
     CurX = TileView.Left + ((X + Camera.Left) \ PIC_X)
     CurY = TileView.Top + ((Y + Camera.Top) \ PIC_Y)
+    
     If InMapEditor Then
         Call MapEditorMouseDown(Button, X, Y, False)
         If (LastX <> CurX Or LastY <> CurY) And frmEditor_Map.chkRandom.Value = 0 And Button >= 1 Then
@@ -4837,8 +4827,10 @@ Private Sub picScreen_MouseMove(Button As Integer, Shift As Integer, X As Single
             MouseY = CurY
         End If
     End If
+    
     LastX = CurX
     LastY = CurY
+    
     ' Set the description windows off
     lstDropDownBox.Visible = False
     picItemDesc.Visible = False
@@ -5449,10 +5441,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
                 If FormVisible("frmAdmin") Then
-                    If GetForegroundWindow = frmAdmin.hwnd Then
+                    If GetForegroundWindow = frmAdmin.hWnd Then
                         Unload frmAdmin
-                    ElseIf GetForegroundWindow <> frmAdmin.hwnd Then
-                        BringWindowToTop (frmAdmin.hwnd)
+                    ElseIf GetForegroundWindow <> frmAdmin.hWnd Then
+                        BringWindowToTop (frmAdmin.hWnd)
                         'InitAdminPanel
                     End If
                 Else
@@ -6371,7 +6363,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
             MainMouseMove lng_hWnd
         Case WM_GETMINMAXINFO 'Prevent Resizing, so we can keep nice frame when turning off CAPTION.
             If Not taskBarClick Then
-                MainPreventResizing Me.hwnd, (Me.Width \ Screen.TwipsPerPixelX), (Me.Height \ Screen.TwipsPerPixelY), lParam
+                MainPreventResizing Me.hWnd, (Me.Width \ Screen.TwipsPerPixelX), (Me.Height \ Screen.TwipsPerPixelY), lParam
             Else
                 taskBarClick = False
             End If

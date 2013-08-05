@@ -1,9 +1,6 @@
 Attribute VB_Name = "modGlobals"
 Option Explicit
 
-' Used for closing key doors again
-Public KeyTimer As Long
-
 ' Used for gradually giving back NPCs hp
 Public GiveNPCHPTimer As Long
 

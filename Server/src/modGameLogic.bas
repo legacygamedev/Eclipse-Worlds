@@ -666,8 +666,14 @@ Sub PlayerUnequipItem(ByVal index As Long, ByVal EqSlot As Long, Optional ByVal 
     
     If GetPlayerEquipment(index, EqSlot) < 1 Then Exit Sub
     
-    If FindOpenInvSlot(index, GetPlayerEquipment(index, EqSlot)) > 0 Then
-        i = GiveInvItem(index, GetPlayerEquipment(index, EqSlot), 0, GetPlayerEquipmentDur(index, EqSlot), GetPlayerEquipmentBind(index, EqSlot), False)
+    ' Don't allow a player killer to unequip their equipment
+    'If GetPlayerPK(Index) = PLAYER_KILLER Then
+    '    Call PlayerMsg(Index, "You can't unequip your items as a Player Killer!", BrightRed)
+    '    Exit Sub
+    'End If
+    
+    If FindOpenInvSlot(Index, GetPlayerEquipment(Index, EqSlot)) > 0 Then
+        i = GiveInvItem(Index, GetPlayerEquipment(Index, EqSlot), 0, GetPlayerEquipmentDur(Index, EqSlot), GetPlayerEquipmentBind(Index, EqSlot), False)
 
         ' Prevent subscript out of range
         If i < 1 Or i > MAX_ITEMS Then Exit Sub

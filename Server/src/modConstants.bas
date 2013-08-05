@@ -92,6 +92,10 @@ Public Const NewMapColor As Byte = BrightBlue
 Public Const NO As Byte = 0
 Public Const YES As Byte = 1
 
+' PK constants
+Public Const PLAYER_KILLER As Byte = 1
+Public Const PLAYER_DEFENDER As Byte = 2
+
 ' Length constants
 Public Const NAME_LENGTH As Byte = 21
 Public Const FILE_LENGTH As Byte = 50
