@@ -30,9 +30,9 @@ Begin VB.Form frmEditor_Events
       Caption         =   "Delete"
       Enabled         =   0   'False
       Height          =   375
-      Left            =   9600
+      Left            =   8700
       TabIndex        =   435
-      Top             =   8400
+      Top             =   8385
       Visible         =   0   'False
       Width           =   1455
    End
@@ -4435,7 +4435,7 @@ Private Sub cmdClearPage_Click()
 End Sub
 
 Private Sub cmdCommands_Click(Index As Integer)
-    Dim i As Long, x As Long
+    Dim i As Long, X As Long
     
     Select Case Index
         Case 0
@@ -4597,8 +4597,8 @@ Private Sub cmdCommands_Click(Index As Integer)
             For i = 1 To Map.EventCount
                 If i <> EditorEvent Then
                     cmbEvent.AddItem Trim$(Map.events(i).name)
-                    x = x + 1
-                    ListOfEvents(x) = i
+                    X = X + 1
+                    ListOfEvents(X) = i
                 End If
             Next
             IsMoveRouteCommand = True
@@ -5721,7 +5721,7 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     frmAdmin.chkEditor(EDITOR_EVENTS).Value = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Editor = 0
 End Sub
 
@@ -5730,7 +5730,7 @@ Private Sub lstCommands_Click()
 End Sub
 
 Sub AddMoveRouteCommand(Index As Integer)
-    Dim i As Long, x As Long, Z As Long
+    Dim i As Long, X As Long, Z As Long
     
     Index = Index + 1
     
@@ -5739,8 +5739,8 @@ Sub AddMoveRouteCommand(Index As Integer)
         TempMoveRouteCount = TempMoveRouteCount + 1
         ReDim Preserve TempMoveRoute(TempMoveRouteCount)
         
-        For x = TempMoveRouteCount - 1 To i Step -1
-            TempMoveRoute(x + 1) = TempMoveRoute(x)
+        For X = TempMoveRouteCount - 1 To i Step -1
+            TempMoveRoute(X + 1) = TempMoveRoute(X)
         Next
         
         TempMoveRoute(i).Index = Index
@@ -5866,12 +5866,12 @@ Private Sub optChatBubbleTarget_Click(Index As Integer)
 End Sub
 
 Private Sub optCondition_Index_Click(Index As Integer)
-Dim i As Long, x As Long
+Dim i As Long, X As Long
     For i = 0 To 6
-        If optCondition_Index(i).Value = True Then x = i
+        If optCondition_Index(i).Value = True Then X = i
     Next
     ClearConditionFrame
-    Select Case x
+    Select Case X
         Case 0
             cmbCondition_PlayerVarIndex.Enabled = True
             cmbCondition_PlayerVarCompare.Enabled = True
@@ -6010,26 +6010,26 @@ Private Sub picGraphic_Click()
     GraphicSelType = 0
 End Sub
 
-Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim i As Long
     If frmEditor_Events.cmbGraphic.ListIndex = 2 Then
         'Tileset... hard one....
         If ShiftDown Then
             If GraphicSelX > -1 And GraphicSelY > -1 Then
-                If CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
-                    GraphicSelX2 = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) / 32
-                    GraphicSelY2 = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) / 32
+                If CLng(X + frmEditor_Events.hScrlGraphicSel.Value) / 32 > GraphicSelX And CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) / 32 > GraphicSelY Then
+                    GraphicSelX2 = CLng(X + frmEditor_Events.hScrlGraphicSel.Value) / 32
+                    GraphicSelY2 = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) / 32
                 End If
             End If
         Else
-            GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value) \ 32
-            GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value) \ 32
+            GraphicSelX = CLng(X + frmEditor_Events.hScrlGraphicSel.Value) \ 32
+            GraphicSelY = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value) \ 32
             GraphicSelX2 = 0
             GraphicSelY2 = 0
         End If
     ElseIf frmEditor_Events.cmbGraphic.ListIndex = 1 Then
-        GraphicSelX = CLng(x + frmEditor_Events.hScrlGraphicSel.Value)
-        GraphicSelY = CLng(y + frmEditor_Events.vScrlGraphicSel.Value)
+        GraphicSelX = CLng(X + frmEditor_Events.hScrlGraphicSel.Value)
+        GraphicSelY = CLng(Y + frmEditor_Events.vScrlGraphicSel.Value)
         GraphicSelX2 = 0
         GraphicSelY2 = 0
         

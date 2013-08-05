@@ -620,11 +620,8 @@ Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    ' Reenable buttons so that the map can be saved
-    frmEditor_Map.cmdSave.Enabled = True
-    frmEditor_Map.cmdCancel.Enabled = True
     frmMain.cmdSave.Enabled = True
-    frmMain.cmdCancel.Enabled = True
+    frmMain.cmdRevert.Enabled = True
     Exit Sub
     
 ' Error handler

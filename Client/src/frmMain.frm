@@ -814,6 +814,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -2924,6 +2925,17 @@ Begin VB.Form frmMain
       TabIndex        =   151
       Top             =   12360
       Width           =   12000
+      Begin VB.CheckBox chkDimLayers 
+         BackColor       =   &H0080C0FF&
+         Caption         =   "Dim Layers"
+         Height          =   225
+         Left            =   10215
+         TabIndex        =   165
+         ToolTipText     =   "Will dim tiles of layers that are below your current layer."
+         Top             =   870
+         Value           =   1  'Checked
+         Width           =   1500
+      End
       Begin VB.CommandButton cmdDelete 
          BackColor       =   &H0080C0FF&
          Height          =   420
@@ -2971,7 +2983,7 @@ Begin VB.Form frmMain
          Left            =   10215
          TabIndex        =   160
          ToolTipText     =   "Draw white square around events "
-         Top             =   675
+         Top             =   660
          Value           =   1  'Checked
          Width           =   1500
       End
@@ -3213,6 +3225,10 @@ Private WithEvents cSubclasserHooker As cSelfSubHookCallback
 Attribute cSubclasserHooker.VB_VarHelpID = -1
 Private taskBarClick As Boolean
 
+Private Sub chkDimLayers_Click()
+        redrawMapCache = True
+End Sub
+
 Private Sub chkEyeDropper_Click()
     If frmMain.chkEyeDropper.Value Then
         frmMain.chkEyeDropper.Picture = LoadResPicture("EYE_DOWN", vbResBitmap)
@@ -3229,10 +3245,14 @@ End Sub
 Private Sub cmdDelete_Click()
     If AlertMsg("Are you sure you want to erase this map?", False, False) = YES Then
         Call ClearMap
+        Call MapEditorSave
+        redrawMapCache = True
     End If
 End Sub
 
 Private Sub cmdProperties_Click()
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
     ' Load the values
     MapPropertiesInit
     
@@ -3246,15 +3266,19 @@ Private Sub cmdProperties_Click()
     cmdSave.Enabled = False
     cmdRevert.Enabled = False
     
+' Error handler
+errorhandler:
+    HandleError "cmdProperties_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
 End Sub
 
 Private Sub cmdRevert_Click()
-    Unload frmEditor_Map
+    LeaveMapEditorMode True
 End Sub
 
 Private Sub cmdSave_Click()
-    EditorSave = True
     Call MapEditorSave
+    LeaveMapEditorMode True
 End Sub
 
 Private Sub Form_Activate()
@@ -3278,7 +3302,18 @@ Private Sub Form_Initialize()
     If cSubclasserHooker.ssc_Subclass(Me.chkEyeDropper.hwnd, ByVal 1, 1, Me) Then
         cSubclasserHooker.ssc_AddMsg Me.chkEyeDropper.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    
+    If cSubclasserHooker.ssc_Subclass(Me.cmdSave.hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdSave.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    End If
+    If cSubclasserHooker.ssc_Subclass(Me.cmdRevert.hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdRevert.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    End If
+    If cSubclasserHooker.ssc_Subclass(Me.cmdDelete.hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdDelete.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    End If
+    If cSubclasserHooker.ssc_Subclass(Me.cmdProperties.hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdProperties.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    End If
 End Sub
 
 Private Sub Form_Paint()
@@ -6341,7 +6376,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
                 taskBarClick = False
             End If
         Case WM_SETFOCUS
-            If lng_hWnd = mapPreviewSwitch.hwnd Or lng_hWnd = chkEyeDropper.hwnd Then
+            If lng_hWnd = mapPreviewSwitch.hwnd Or lng_hWnd = chkEyeDropper.hwnd Or lng_hWnd = cmdSave.hwnd Or lng_hWnd = cmdRevert.hwnd Or lng_hWnd = cmdDelete.hwnd Or lng_hWnd = cmdProperties.hwnd Then
                 bHandled = True
                 lReturn = 1
             End If

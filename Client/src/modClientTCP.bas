@@ -468,6 +468,7 @@ Public Sub SendSaveMap()
 
     With Map
         buffer.WriteLong CMapData
+        buffer.WriteLong CLng(Player(MyIndex).Map)
         buffer.WriteString Trim$(.name)
         buffer.WriteString Trim$(.Music)
         buffer.WriteString Trim$(.BGS)

@@ -225,12 +225,12 @@ Public Sub DrawGDI()
     If FormVisible("frmEditor_Map") Then
         EditorMap_DrawTileset
         If frmEditor_Map.fraMapItem.Visible Then EditorMap_DrawMapItem
+        ' Renders random tiles in map editor
+        If frmEditor_Map.chkRandom.Value = 1 Then
+            Call EditorMap_DrawRandom
+        End If
     End If
     
-    ' Renders random tiles in map editor
-    If frmEditor_Map.chkRandom.Value = 1 Then
-        Call EditorMap_DrawRandom
-    End If
     If FormVisible("frmMapPreview") Then
         If frmMapPreview.redrawMapPreview Then
             frmMapPreview.redrawMapPreview = False
@@ -833,7 +833,7 @@ End Sub
 '
 '    With Map.Tile(x, y)
 '        For i = MapLayer.Ground To MapLayer.Cover
-'            If i < CurrentLayer And frmEditor_Map.ChkDimLayers = 1 And InMapEditor Then
+'            If i < CurrentLayer And frmMain.chkDimLayers.Value = 1 And InMapEditor Then
 '                Alpha = 255 - ((CurrentLayer - i) * 48)
 '            Else
 '                Alpha = 255
@@ -869,7 +869,7 @@ Public Sub DrawWholeMapLowerTiles(ByVal X As Long, ByVal Y As Long)
     With Map.Tile(X, Y)
         For i = MapLayer.Ground To MapLayer.Cover
             If InMapEditor And i < CurrentLayer Then
-                If frmEditor_Map.ChkDimLayers = 1 Then
+                If frmMain.chkDimLayers.Value = 1 Then
                     Alpha = 255 - ((CurrentLayer - i) * 48)
                 Else
                     Alpha = 255
@@ -907,7 +907,7 @@ Public Sub DrawWholeMapUpperTiles(ByVal X As Long, ByVal Y As Long)
     With Map.Tile(X, Y)
         For i = MapLayer.Fringe To MapLayer.Roof
             If i < CurrentLayer And InMapEditor Then
-                If frmEditor_Map.ChkDimLayers = 1 Then ' has to be here cause checking for it in previous IF would load it to memory
+                If frmMain.chkDimLayers.Value = 1 Then ' has to be here cause checking for it in previous IF would load it to memory
                     Alpha = 255 - ((CurrentLayer - i) * 48)
                 Else
                     Alpha = 255
@@ -947,7 +947,7 @@ End Sub
 '
 '    With Map.Tile(x, y)
 '        For i = MapLayer.Fringe To MapLayer.Roof
-'            If i < CurrentLayer And frmEditor_Map.ChkDimLayers = 1 And InMapEditor Then
+'            If i < CurrentLayer And frmMain.chkDimLayers.Value = 1 And InMapEditor Then
 '                Alpha = 255 - ((CurrentLayer - i) * 48)
 '            Else
 '                Alpha = 255

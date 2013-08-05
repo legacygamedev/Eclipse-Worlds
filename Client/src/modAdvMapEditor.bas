@@ -101,14 +101,48 @@ Public Sub MapEditorMode(switch As Boolean)
         frmMain.cmdRevert.Picture = LoadResPicture("MAP_REVERT", vbResBitmap)
         frmMain.cmdDelete.Picture = LoadResPicture("MAP_DELETE", vbResBitmap)
         frmMain.cmdProperties.Picture = LoadResPicture("MAP_PROPERTIES", vbResBitmap)
-        
+        EditorSave = True
     Else
         frmMain.Width = frmMain.Width + 30
         frmMain.Height = frmMain.Height - 750
         frmMain.picForm.Top = frmMain.picForm.Top - 24 - 50
-        frmMapPreview.Hide
+        Unload frmMapPreview
     End If
     Call FlipBit(WS_CAPTION, Not switch)
+End Sub
+Public Sub LeaveMapEditorMode(cancel As Boolean)
+
+    If EditorSave = False And cancel Then
+         MapEditorCancel
+    ElseIf EditorSave = False And Not cancel Then
+        MapEditorLeaveMap
+    End If
+        EditorSave = False
+    Call ToggleGUI(True)
+    ' Make sure the properties form is closed
+    If FormVisible("frmEditor_MapProperties") Then
+        Unload frmEditor_MapProperties
+    End If
+    
+    ' Make sure event editor form is closed
+    If FormVisible("frmEditor_Events") Then
+        Unload frmEditor_Events
+    End If
+    
+    If FormVisible("frmEditor_Map") Then
+        MapEditorMode False
+        Unload frmEditor_Map
+    End If
+    
+    If FormVisible("frmAdmin") Then
+        frmAdmin.ignoreChange = True
+        frmAdmin.chkEditor(EDITOR_MAP).Value = 0
+        frmAdmin.chkEditor(EDITOR_MAP).FontBold = False
+        BringWindowToTop (frmAdmin.hwnd)
+        frmAdmin.picEye(EDITOR_MAP).Visible = False
+    End If
+    
+    InMapEditor = False
 End Sub
 Private Function FlipBit(ByVal Bit As Long, ByVal Value As Boolean) As Boolean
    Dim nStyle As Long

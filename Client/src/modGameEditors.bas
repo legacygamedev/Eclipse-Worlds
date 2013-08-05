@@ -113,6 +113,7 @@ Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal Y 
     If frmMain.chkEyeDropper.Value = 1 Then Exit Sub
     
     If Button = vbLeftButton Then
+        EditorSave = False
         If frmEditor_Map.OptLayers.Value Then
             ' No autotiling
             If EditorTileWidth = 1 And EditorTileHeight = 1 Then 'single tile
@@ -160,6 +161,7 @@ Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal Y 
     End If
 
     If Button = vbRightButton Then
+        EditorSave = False
         If frmEditor_Map.OptLayers.Value Then
             ' No autotiling
             If EditorTileWidth = 1 And EditorTileHeight = 1 Then ' Single tile
@@ -490,23 +492,8 @@ End Sub
 Public Sub MapEditorSave()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    ' Save changes made to map properties
-    If FormVisible("frmEditor_MapProperties") Then
-        frmEditor_MapProperties.cmdSave_Click
-    End If
-    
-    ' Save changes made to event form
-    If FormVisible("frmEditor_Events") Then
-        frmEditor_Events.cmdSave_Click
-    End If
-            
     Call SendSaveMap
-    InMapEditor = False
-    Unload frmEditor_Map
-    
-    ' Show GUI
-    Call ToggleGUI(True)
+    EditorSave = True
     Exit Sub
 
 ' Error handler
@@ -522,9 +509,9 @@ Public Sub MapEditorCancel()
     If InMapEditor And IsLogging = False Then
         If AlertMsg("Are you sure you want to discard changes made to the map?", False, False) = YES Then
             SendNeedMap
-            Call ToggleGUI(True)
         Else
             Call MapEditorSave
+            EditorSave = False
         End If
     End If
     Exit Sub
@@ -741,10 +728,10 @@ Public Sub MapEditorLeaveMap()
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If InMapEditor Then
-        If AlertMsg("Save changes to current map?", vbYesNo) = vbYes Then
-            Call MapEditorSave
-        Else
-            Call MapEditorCancel
+        If EditorSave = False Then
+            If AlertMsg("Save changes to current map, before leaving?", False, False) = YES Then
+                Call MapEditorSave
+            End If
         End If
     End If
     Exit Sub
