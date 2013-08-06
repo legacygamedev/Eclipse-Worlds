@@ -78,6 +78,7 @@ Private g_OrigWndPos As POINTAPI
 Global gHW As Long
 
 Public Sub MapEditorMode(switch As Boolean)
+
     If switch Then
         frmMain.Width = frmMain.Width - 30
         frmMain.Height = frmMain.Height + 750
@@ -110,11 +111,11 @@ Public Sub MapEditorMode(switch As Boolean)
     End If
     Call FlipBit(WS_CAPTION, Not switch)
 End Sub
-Public Sub LeaveMapEditorMode(cancel As Boolean)
+Public Sub LeaveMapEditorMode(Cancel As Boolean)
 
-    If EditorSave = False And cancel Then
+    If EditorSave = False And Cancel Then
          MapEditorCancel
-    ElseIf EditorSave = False And Not cancel Then
+    ElseIf EditorSave = False And Not Cancel Then
         MapEditorLeaveMap
     End If
         EditorSave = False
@@ -130,8 +131,12 @@ Public Sub LeaveMapEditorMode(cancel As Boolean)
     End If
     
     If FormVisible("frmEditor_Map") Then
+        If Not frmEditor_Map.UnloadStarted Then
+            frmEditor_Map.UnloadStarted = True
+            Unload frmEditor_Map
+        End If
         MapEditorMode False
-        Unload frmEditor_Map
+
     End If
     
     If FormVisible("frmAdmin") Then
@@ -161,8 +166,8 @@ Private Function FlipBit(ByVal Bit As Long, ByVal Value As Boolean) As Boolean
 End Function
 Public Sub Redraw()
    ' Redraw window with new style.
-   Const swpFlags As Long = _
-      SWP_FRAMECHANGED Or SWP_NOMOVE Or SWP_NOSIZE
+   Dim swpFlags As Long
+   swpFlags = SWP_FRAMECHANGED Or SWP_NOMOVE Or SWP_NOSIZE Or SWP_NOZORDER Or SWP_NOOWNERZORDER
       'SWP_NOZORDER
     SetWindowPos frmMain.hwnd, 0, 0, 0, 0, 0, swpFlags
 End Sub

@@ -1817,6 +1817,7 @@ Private Sub HandleEditMap()
     Call frmMain.ToggleChatLock(True)
     
     ' Show the form
+    MapEditorMode True
     frmEditor_Map.Visible = True
     Call MapEditorInit
     If FormVisible("frmAdmin") And adminMin = False Then
@@ -1825,7 +1826,6 @@ Private Sub HandleEditMap()
         frmEditor_Map.Move frmMain.Left + frmMain.Width - frmEditor_Map.Width, frmMain.Top
     End If
     frmAdmin.ShowEyeFor EDITOR_MAP
-    MapEditorMode True
     Exit Sub
     
 ' Error handler

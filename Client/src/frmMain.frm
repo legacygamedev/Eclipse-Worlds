@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    ClientHeight    =   13470
@@ -814,7 +814,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -2978,7 +2977,7 @@ Begin VB.Form frmMain
       End
       Begin VB.CheckBox chkDrawEvents 
          BackColor       =   &H0080C0FF&
-         Caption         =   "DrawEvents"
+         Caption         =   "Draw Events"
          Height          =   225
          Left            =   10215
          TabIndex        =   160
@@ -3282,7 +3281,7 @@ Private Sub cmdSave_Click()
 End Sub
 
 Private Sub Form_Activate()
-    hwndLastActiveWnd = hWnd
+    hwndLastActiveWnd = hwnd
     If FormVisible("frmAdmin") And adminMin Then
         frmAdmin.centerMiniVert Width, Height, Left, Top
     End If
@@ -3290,12 +3289,12 @@ End Sub
 
 Private Sub Form_Initialize()
     Set cSubclasserHooker = New cSelfSubHookCallback
-    If cSubclasserHooker.ssc_Subclass(Me.hWnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
+    If cSubclasserHooker.ssc_Subclass(Me.hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
     End If
     
-    If cSubclasserHooker.ssc_Subclass(Me.picMapEditor.hWnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.picMapEditor.hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
+    If cSubclasserHooker.ssc_Subclass(Me.picMapEditor.hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.picMapEditor.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
     End If
     If cSubclasserHooker.ssc_Subclass(Me.mapPreviewSwitch.hwnd, ByVal 1, 1, Me) Then
         cSubclasserHooker.ssc_AddMsg Me.mapPreviewSwitch.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
@@ -5441,10 +5440,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
                 If FormVisible("frmAdmin") Then
-                    If GetForegroundWindow = frmAdmin.hWnd Then
+                    If GetForegroundWindow = frmAdmin.hwnd Then
                         Unload frmAdmin
-                    ElseIf GetForegroundWindow <> frmAdmin.hWnd Then
-                        BringWindowToTop (frmAdmin.hWnd)
+                    ElseIf GetForegroundWindow <> frmAdmin.hwnd Then
+                        BringWindowToTop (frmAdmin.hwnd)
                         'InitAdminPanel
                     End If
                 Else
@@ -6363,7 +6362,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
             MainMouseMove lng_hWnd
         Case WM_GETMINMAXINFO 'Prevent Resizing, so we can keep nice frame when turning off CAPTION.
             If Not taskBarClick Then
-                MainPreventResizing Me.hWnd, (Me.Width \ Screen.TwipsPerPixelX), (Me.Height \ Screen.TwipsPerPixelY), lParam
+                MainPreventResizing Me.hwnd, (Me.Width \ Screen.TwipsPerPixelX), (Me.Height \ Screen.TwipsPerPixelY), lParam
             Else
                 taskBarClick = False
             End If

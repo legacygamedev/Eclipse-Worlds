@@ -2130,7 +2130,7 @@ End Sub
 Public Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    ignoreChange = False
     frmAdmin.picRefresh.BorderStyle = 0
     Me.Move frmMain.Left + frmMain.Width, frmMain.Top
     If Trim(cmbPlayersOnline.text) = "Choose Player" Then
@@ -2155,6 +2155,7 @@ Public Sub Form_Load()
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
     refreshingAdminList = True
     SendRequestPlayersOnline
+    
     Exit Sub
     
 ' Error handler
