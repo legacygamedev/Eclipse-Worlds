@@ -725,7 +725,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Spell(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Spell(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     SpellEditorInit
@@ -753,17 +753,11 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub Form_Activate()
-    hwndLastActiveWnd = hWnd
-    If FormVisible("frmAdmin") And adminMin Then
-        frmAdmin.centerMiniVert Width, Height, Left, Top
-    End If
-End Sub
 
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.SubDaFocus Me.hwnd
     ' Set max values
     scrlIcon.max = NumSpellIcons
     txtName.MaxLength = NAME_LENGTH
@@ -789,14 +783,14 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.UnsubDaFocus Me.hwnd
     If EditorSave = False Then
         SpellEditorCancel
     Else
         EditorSave = False
     End If
     frmAdmin.chkEditor(EDITOR_SPELL).Value = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Exit Sub
     
 ' Error handler
@@ -862,7 +856,7 @@ Private Sub scrlAnim_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlAnim.Value > 0 Then
-        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).Name)
+        lblAnim.Caption = "Animation: " & Trim$(Animation(scrlAnim.Value).name)
     Else
         lblAnim.Caption = "Animation: None"
     End If
@@ -882,7 +876,7 @@ Private Sub scrlAnimCast_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlAnimCast.Value > 0 Then
-        lblAnimCast.Caption = "Cast Animation: " & Trim$(Animation(scrlAnimCast.Value).Name)
+        lblAnimCast.Caption = "Cast Animation: " & Trim$(Animation(scrlAnimCast.Value).name)
     Else
         lblAnimCast.Caption = "Cast Animation: None"
     End If
@@ -1246,9 +1240,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Spell(EditorIndex).Name = Trim$(txtName.text)
+    Spell(EditorIndex).name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Spell(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Spell(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -1375,7 +1369,7 @@ Private Sub cmdPaste_Click()
     
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Spell(EditorIndex)), ByVal VarPtr(Spell(TmpIndex + 1)), LenB(Spell(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Spell(EditorIndex).Name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Spell(EditorIndex).name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

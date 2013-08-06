@@ -493,7 +493,7 @@ Private Sub cmdDelete_Click()
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Resource(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Resource(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     ResourceEditorInit
@@ -531,7 +531,7 @@ errorhandler:
 End Sub
 
 Private Sub Form_Activate()
-    hwndLastActiveWnd = hWnd
+    hwndLastActiveWnd = hwnd
     If FormVisible("frmAdmin") And adminMin Then
         frmAdmin.centerMiniVert Width, Height, Left, Top
     End If
@@ -540,7 +540,7 @@ End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.SubDaFocus Me.hwnd
     scrlReward.max = MAX_ITEMS
     scrlNormalPic.max = NumResources
     scrlExhaustedPic.max = NumResources
@@ -577,14 +577,14 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.UnsubDaFocus Me.hwnd
     If EditorSave = False Then
         ResourceEditorCancel
     Else
         EditorSave = False
     End If
     frmAdmin.chkEditor(EDITOR_RESOURCE).Value = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Exit Sub
     
 ' Error handler
@@ -616,7 +616,7 @@ Private Sub scrlAnimation_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).Name)
+    If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).name)
     lblAnim.Caption = "Animation: " & sString
     Resource(EditorIndex).Animation = scrlAnimation.Value
     Exit Sub
@@ -778,7 +778,7 @@ Private Sub scrlReward_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlReward.Value > 0 Then
-        lblReward.Caption = "Reward: " & Trim$(Item(scrlReward.Value).Name)
+        lblReward.Caption = "Reward: " & Trim$(item(scrlReward.Value).name)
     Else
         lblReward.Caption = "Reward: None"
     End If
@@ -809,7 +809,7 @@ errorhandler:
 End Sub
 
 Private Sub scrlTool_Change()
-    Dim Name As String
+    Dim name As String
 
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
@@ -818,16 +818,16 @@ Private Sub scrlTool_Change()
     
     Select Case scrlTool.Value
         Case 0
-            Name = "None"
+            name = "None"
         Case 1
-            Name = "Hatchet"
+            name = "Hatchet"
         Case 2
-            Name = "Fishing Pole"
+            name = "Fishing Pole"
         Case 3
-            Name = "Pickaxe"
+            name = "Pickaxe"
     End Select
 
-    lblTool.Caption = "Tool Required: " & Name
+    lblTool.Caption = "Tool Required: " & name
     Resource(EditorIndex).ToolRequired = scrlTool.Value
     Exit Sub
 
@@ -891,9 +891,9 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     TmpIndex = lstIndex.ListIndex
-    Resource(EditorIndex).Name = Trim$(txtName.text)
+    Resource(EditorIndex).name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Resource(EditorIndex).Name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Resource(EditorIndex).name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
@@ -1033,7 +1033,7 @@ Private Sub cmdPaste_Click()
     
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Resource(EditorIndex)), ByVal VarPtr(Resource(TmpIndex + 1)), LenB(Resource(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Resource(EditorIndex).Name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Resource(EditorIndex).name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     

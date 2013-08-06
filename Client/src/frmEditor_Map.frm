@@ -1525,19 +1525,12 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub Form_Activate()
-    hwndLastActiveWnd = hwnd
-    If FormVisible("frmAdmin") And adminMin Then
-        frmAdmin.centerMiniVert Width, Height, Left, Top
-    End If
-End Sub
-
 Private Sub Form_Unload(Cancel As Integer)
     If Not UnloadStarted Then
         UnloadStarted = True
         LeaveMapEditorMode True
     End If
-
+    frmMain.UnsubDaFocus Me.hwnd
 
 End Sub
 
@@ -1806,14 +1799,13 @@ End Sub
 
 Private Sub Form_Load()
     Dim i As Long
-    
+    frmMain.SubDaFocus Me.hwnd
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     frmEditor_Map.UnloadStarted = False
     ' Move the entire attributes box on screen
     picAttributes.Left = 0
     picAttributes.Top = 0
-    
     ' Set maxes for attribute forms
     scrlMapItem.max = MAX_ITEMS
     scrlResource.max = MAX_RESOURCES

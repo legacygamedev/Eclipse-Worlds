@@ -2924,6 +2924,30 @@ Begin VB.Form frmMain
       TabIndex        =   151
       Top             =   12360
       Width           =   12000
+      Begin VB.CheckBox chkLayers 
+         Appearance      =   0  'Flat
+         BackColor       =   &H0080C0FF&
+         ForeColor       =   &H80000008&
+         Height          =   540
+         Left            =   3585
+         Style           =   1  'Graphical
+         TabIndex        =   171
+         ToolTipText     =   "Eye Dropper (Shift + LMouse)"
+         Top             =   210
+         Width           =   540
+      End
+      Begin VB.CheckBox chkTilesets 
+         Appearance      =   0  'Flat
+         BackColor       =   &H0080C0FF&
+         ForeColor       =   &H80000008&
+         Height          =   540
+         Left            =   5190
+         Style           =   1  'Graphical
+         TabIndex        =   166
+         ToolTipText     =   "Eye Dropper (Shift + LMouse)"
+         Top             =   210
+         Width           =   540
+      End
       Begin VB.CheckBox chkDimLayers 
          BackColor       =   &H0080C0FF&
          Caption         =   "Dim Layers"
@@ -3032,19 +3056,38 @@ Begin VB.Form frmMain
          BackColor       =   &H0080C0FF&
          ForeColor       =   &H80000008&
          Height          =   540
-         Left            =   210
+         Left            =   255
          Style           =   1  'Graphical
          TabIndex        =   153
          ToolTipText     =   "Map Preview - Docked"
          Top             =   210
          Width           =   540
       End
-      Begin VB.Label lblTilePreview 
+      Begin VB.Label Label2 
          BackStyle       =   0  'Transparent
-         Caption         =   "Eye Dropper"
+         Caption         =   "(MWheel Scroll)"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000011&
+         Height          =   180
+         Left            =   3330
+         TabIndex        =   173
+         Top             =   885
+         Width           =   1140
+      End
+      Begin VB.Label lblLayers 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Layers"
          BeginProperty Font 
             Name            =   "Arial Narrow"
-            Size            =   8.25
+            Size            =   9
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -3052,9 +3095,102 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   240
-         Left            =   1890
-         TabIndex        =   156
+         Left            =   3615
+         TabIndex        =   172
+         Top             =   705
+         Width           =   480
+      End
+      Begin VB.Label lblHotMapPreview 
+         BackStyle       =   0  'Transparent
+         Caption         =   "(Ctrl+M)"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000011&
+         Height          =   180
+         Left            =   240
+         TabIndex        =   170
+         Top             =   885
+         Width           =   570
+      End
+      Begin VB.Label lblHotEye 
+         BackStyle       =   0  'Transparent
+         Caption         =   "(Shift+LMouse)"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000011&
+         Height          =   180
+         Left            =   1770
+         TabIndex        =   169
+         Top             =   885
+         Width           =   1140
+      End
+      Begin VB.Label lblHotTilesets 
+         BackStyle       =   0  'Transparent
+         Caption         =   "(MWheel Click)"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000011&
+         Height          =   180
+         Left            =   4965
+         TabIndex        =   168
+         Top             =   900
+         Width           =   1095
+      End
+      Begin VB.Label lblTilesets 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Pick Tileset"
+         BeginProperty Font 
+            Name            =   "Arial Narrow"
+            Size            =   9
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   240
+         Left            =   5055
+         TabIndex        =   167
          Top             =   720
+         Width           =   870
+      End
+      Begin VB.Label lblTilePreview 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Eye Dropper"
+         BeginProperty Font 
+            Name            =   "Arial Narrow"
+            Size            =   9
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   240
+         Left            =   1920
+         TabIndex        =   156
+         Top             =   705
          Width           =   870
       End
       Begin VB.Label lblMapPreview 
@@ -3062,7 +3198,7 @@ Begin VB.Form frmMain
          Caption         =   "Map Preview"
          BeginProperty Font 
             Name            =   "Arial Narrow"
-            Size            =   8.25
+            Size            =   9
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
@@ -3073,7 +3209,7 @@ Begin VB.Form frmMain
          Left            =   60
          TabIndex        =   154
          Top             =   705
-         Width           =   1125
+         Width           =   930
       End
       Begin VB.Label lblTitle 
          BackColor       =   &H0080C0FF&
@@ -3092,8 +3228,8 @@ Begin VB.Form frmMain
          Height          =   225
          Left            =   15
          TabIndex        =   152
-         Top             =   -45
-         Width           =   1695
+         Top             =   -30
+         Width           =   4650
       End
    End
    Begin VB.Label lblSwearFilter 
@@ -3219,7 +3355,9 @@ Private Const WM_CAPTURECHANGED As Long = &H215
 Private Const WM_GETMINMAXINFO  As Long = &H24
 Private Const WM_ACTIVATEAPP    As Long = &H1C
 Private Const WM_SETFOCUS       As Long = &H7
-
+Private Const WM_MOUSEWHEEL     As Long = &H20A
+Private Const WM_NCACTIVATE     As Long = &H86
+Private Const WM_MOVE           As Long = &H3
 Private WithEvents cSubclasserHooker As cSelfSubHookCallback
 Attribute cSubclasserHooker.VB_VarHelpID = -1
 Private taskBarClick As Boolean
@@ -3236,9 +3374,27 @@ Private Sub chkEyeDropper_Click()
     End If
 End Sub
 
+Private Sub chkLayers_Click()
+        If frmMain.chkLayers.Value Then
+            frmMain.chkLayers.Picture = LoadResPicture("LAYERS_DOWN", vbResBitmap)
+        Else
+            frmMain.chkLayers.Picture = LoadResPicture("LAYERS_UP", vbResBitmap)
+        End If
+End Sub
+
 Private Sub chkTilePreview_Click()
     CurX = 0
     CurY = 0
+End Sub
+
+Private Sub chkTilesets_Click()
+
+    If frmMain.chkTilesets.Value Then
+        frmMain.chkTilesets.Picture = LoadResPicture("TILESETS_DOWN", vbResBitmap)
+    Else
+        frmMain.chkTilesets.Picture = LoadResPicture("TILESETS_UP", vbResBitmap)
+    End If
+
 End Sub
 
 Private Sub cmdDelete_Click()
@@ -3280,17 +3436,11 @@ Private Sub cmdSave_Click()
     LeaveMapEditorMode True
 End Sub
 
-Private Sub Form_Activate()
-    hwndLastActiveWnd = hwnd
-    If FormVisible("frmAdmin") And adminMin Then
-        frmAdmin.centerMiniVert Width, Height, Left, Top
-    End If
-End Sub
 
 Private Sub Form_Initialize()
     Set cSubclasserHooker = New cSelfSubHookCallback
     If cSubclasserHooker.ssc_Subclass(Me.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
+        cSubclasserHooker.ssc_AddMsg Me.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO, WM_MOUSEWHEEL, WM_NCACTIVATE, WM_MOVE
     End If
     
     If cSubclasserHooker.ssc_Subclass(Me.picMapEditor.hwnd, ByVal 1, 1, Me) Then
@@ -3315,7 +3465,14 @@ Private Sub Form_Initialize()
         cSubclasserHooker.ssc_AddMsg Me.cmdProperties.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
 End Sub
-
+Public Sub SubDaFocus(hwnd As Long)
+    If cSubclasserHooker.ssc_Subclass(hwnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_NCACTIVATE, WM_MOVE
+    End If
+End Sub
+Public Sub UnsubDaFocus(hwnd As Long)
+    cSubclasserHooker.ssc_UnSubclass hwnd
+End Sub
 Private Sub Form_Paint()
     If FormVisible("frmCharEditor") Then
         frmCharEditor.Show
@@ -6341,6 +6498,24 @@ Private Sub DropItem(ByVal InvNum As Byte)
         End If
     End If
 End Sub
+Private Sub GameWindowProc(ByVal bBefore As Boolean, _
+                      ByRef bHandled As Boolean, _
+                      ByRef lReturn As Long, _
+                      ByVal lng_hWnd As Long, _
+                      ByVal uMsg As Long, _
+                      ByVal wParam As Long, _
+                      ByVal lParam As Long, _
+                      ByRef lParamUser As Long)
+    Select Case uMsg
+
+    End Select
+
+' *************************************************************
+' C A U T I O N   C A U T I O N   C A U T I O N   C A U T I O N
+' -------------------------------------------------------------
+' DO NOT ADD ANY OTHER CODE BELOW THE "END SUB" STATEMENT BELOW
+' *************************************************************
+End Sub
 Private Sub myWndProc(ByVal bBefore As Boolean, _
                       ByRef bHandled As Boolean, _
                       ByRef lReturn As Long, _
@@ -6352,6 +6527,23 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
     Select Case uMsg
         Case WM_ACTIVATEAPP
             taskBarClick = True
+        Case WM_MOVE
+                If lng_hWnd = hwndLastActiveWnd Then
+                    Dim rectt As modAdvMapEditor.RECTTT
+                    GetWindowSize lng_hWnd, rectt
+                    If FormVisible("frmAdmin") And adminMin Then
+                        frmAdmin.centerMiniVert PixelsToTwips((rectt.Right - rectt.Left), 0), PixelsToTwips((rectt.Bottom - rectt.Top), 1), PixelsToTwips(rectt.Left, 0), PixelsToTwips(rectt.Top, 1)
+                    End If
+                End If
+        Case WM_NCACTIVATE
+            If wParam Then
+                hwndLastActiveWnd = lng_hWnd
+                    Dim rectt2 As modAdvMapEditor.RECTTT
+                    GetWindowSize lng_hWnd, rectt2
+                    If FormVisible("frmAdmin") And adminMin Then
+                        frmAdmin.centerMiniVert PixelsToTwips((rectt2.Right - rectt2.Left), 0), PixelsToTwips((rectt2.Bottom - rectt2.Top), 1), PixelsToTwips(rectt2.Left, 0), PixelsToTwips(rectt2.Top, 1)
+                    End If
+            End If
         Case WM_LBUTTONDOWN
             MainLButtonDown lng_hWnd
         Case WM_LBUTTONUP
@@ -6360,6 +6552,11 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
             MainCaptureChanged lng_hWnd, lParam
         Case WM_MOUSEMOVE
             MainMouseMove lng_hWnd
+            If InMapEditor Then
+                If GetForegroundWindow = hwnd Or GetForegroundWindow = picScreen.hwnd Then
+                    picScreen.SetFocus
+                End If
+            End If
         Case WM_GETMINMAXINFO 'Prevent Resizing, so we can keep nice frame when turning off CAPTION.
             If Not taskBarClick Then
                 MainPreventResizing Me.hwnd, (Me.Width \ Screen.TwipsPerPixelX), (Me.Height \ Screen.TwipsPerPixelY), lParam
@@ -6370,6 +6567,15 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
             If lng_hWnd = mapPreviewSwitch.hwnd Or lng_hWnd = chkEyeDropper.hwnd Or lng_hWnd = cmdSave.hwnd Or lng_hWnd = cmdRevert.hwnd Or lng_hWnd = cmdDelete.hwnd Or lng_hWnd = cmdProperties.hwnd Then
                 bHandled = True
                 lReturn = 1
+            End If
+        Case WM_MOUSEWHEEL
+            If InMapEditor Then
+                Dim up As Boolean
+                up = IIf(HiWord(wParam) > 0, False, True)
+                getCurrentMapLayerName
+                frmEditor_Map.optLayer(IIf((currentMapLayerNum = 1 And Not up) Or (currentMapLayerNum = Layer_Count - 1 And up), currentMapLayerNum, IIf(up, 1, -1) + currentMapLayerNum)).Value = 1
+                getCurrentMapLayerName
+                Debug.Print "HWord: " & up
             End If
     End Select
 

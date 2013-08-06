@@ -362,7 +362,7 @@ Private Sub cmdCancel_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     frmAdmin.chkEditor(EDITOR_ANIMATION).FontBold = False
     frmAdmin.picEye(EDITOR_ANIMATION).Visible = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Unload frmEditor_Animation
     Exit Sub
     
@@ -406,7 +406,7 @@ Private Sub cmdSave_Click()
     AnimationEditorSave
     frmAdmin.chkEditor(EDITOR_ANIMATION).FontBold = False
     frmAdmin.picEye(EDITOR_ANIMATION).Visible = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Exit Sub
     
 ' Error handler
@@ -415,19 +415,13 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub Form_Activate()
-    hwndLastActiveWnd = hWnd
-    If FormVisible("frmAdmin") And adminMin Then
-        frmAdmin.centerMiniVert Width, Height, Left, Top
-    End If
-End Sub
 
 Private Sub Form_Load()
     Dim i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.SubDaFocus Me.hwnd
     For i = 0 To 1
         scrlSprite(i).max = NumAnimations
         scrlLoopCount(i).max = 100
@@ -622,14 +616,14 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.UnsubDaFocus Me.hwnd
     If EditorSave = False Then
         AnimationEditorCancel
     Else
         EditorSave = False
     End If
     frmAdmin.chkEditor(EDITOR_ANIMATION).Value = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Exit Sub
     
 ' Error handler

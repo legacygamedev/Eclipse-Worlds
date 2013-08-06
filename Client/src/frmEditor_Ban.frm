@@ -436,7 +436,7 @@ Private Sub cmdSave_Click()
     Call BanEditorSave
     frmAdmin.chkEditor(EDITOR_BAN).FontBold = False
     frmAdmin.picEye(EDITOR_BAN).Visible = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Exit Sub
     
 ' Error handler
@@ -478,7 +478,7 @@ Private Sub cmdCancel_Click()
     Unload frmEditor_Ban
     frmAdmin.chkEditor(EDITOR_BAN).FontBold = False
     frmAdmin.picEye(EDITOR_BAN).Visible = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Exit Sub
     
 ' Error handler
@@ -487,12 +487,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub Form_Activate()
-    hwndLastActiveWnd = hWnd
-    If FormVisible("frmAdmin") And adminMin Then
-        frmAdmin.centerMiniVert Width, Height, Left, Top
-    End If
-End Sub
+
 
 Private Sub lstIndex_Click()
     ' If debug mode, handle error then exit out
@@ -591,14 +586,14 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.UnsubDaFocus Me.hwnd
     If EditorSave = False Then
         BanEditorCancel
     Else
         EditorSave = False
     End If
     frmAdmin.chkEditor(EDITOR_BAN).Value = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Exit Sub
     
 ' Error handler
@@ -680,7 +675,7 @@ End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.SubDaFocus Me.hwnd
     ' Set max values
     txtTime.MaxLength = NAME_LENGTH
     txtReason.MaxLength = NAME_LENGTH

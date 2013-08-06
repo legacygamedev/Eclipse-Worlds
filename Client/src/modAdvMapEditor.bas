@@ -28,7 +28,7 @@ Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
 Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, _
                                                                             ByVal dwNewLong As Long) As Long
 Private Declare Function GetCursorPos Lib "user32" (lpPoint As POINTAPI) As Long
-Private Declare Function GetWindowRect Lib "user32.dll" (ByVal hwnd As Long, lpRect As RECT) As Long
+Private Declare Function GetWindowRect Lib "user32.dll" (ByVal hwnd As Long, lpRect As RECTTT) As Long
 Private Declare Function SetCapture Lib "user32" (ByVal hwnd As Long) As Long
 Private Declare Function GetCapture Lib "user32" () As Long
 Private Declare Function ReleaseCapture Lib "user32" () As Long
@@ -37,8 +37,8 @@ Private Declare Function SetWindowPos Lib "user32.dll" ( _
      ByVal hWndInsertAfter As Long, _
      ByVal X As Long, _
      ByVal Y As Long, _
-     ByVal cx As Long, _
-     ByVal cy As Long, _
+     ByVal cX As Long, _
+     ByVal cY As Long, _
      ByVal wFlags As Long) As Long
 Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, _
 ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
@@ -57,7 +57,7 @@ Private Type POINTAPI
     X As Long
     Y As Long
 End Type
-Private Type RECT
+Public Type RECTTT
         Left As Long
         Top As Long
         Right As Long
@@ -74,8 +74,22 @@ End Type
 Private g_MovingMainWnd As Boolean
 Private g_OrigCursorPos As POINTAPI
 Private g_OrigWndPos As POINTAPI
-
+Private CurrentLayer As String
+Public currentMapLayerNum As String
 Global gHW As Long
+Public Function getCurrentMapLayerName() As String
+    
+    Dim llayer As OptionButton
+    For Each llayer In frmEditor_Map.optLayer
+        If llayer Then
+            currentMapLayerNum = llayer.Index
+            CurrentLayer = llayer.Caption
+            getCurrentMapLayerName = CurrentLayer
+            Exit For
+        End If
+    Next
+    frmMain.lblTitle = "UBER Map Editor - " & "Layer: " & CurrentLayer
+End Function
 
 Public Sub MapEditorMode(switch As Boolean)
 
@@ -102,6 +116,11 @@ Public Sub MapEditorMode(switch As Boolean)
         frmMain.cmdRevert.Picture = LoadResPicture("MAP_REVERT", vbResBitmap)
         frmMain.cmdDelete.Picture = LoadResPicture("MAP_DELETE", vbResBitmap)
         frmMain.cmdProperties.Picture = LoadResPicture("MAP_PROPERTIES", vbResBitmap)
+        frmMain.chkTilesets.Picture = LoadResPicture("TILESETS_UP", vbResBitmap)
+        frmMain.chkLayers.Picture = LoadResPicture("LAYERS_UP", vbResBitmap)
+
+        'LAbels
+        getCurrentMapLayerName
         EditorSave = True
     Else
         frmMain.Width = frmMain.Width + 30
@@ -201,7 +220,7 @@ Public Sub MainLButtonDown(hwnd As Long)
 
     If (GetCursorPos(g_OrigCursorPos)) Then
 
-        Dim rt As RECT
+        Dim rt As RECTTT
 
         GetWindowRect frmMain.hwnd, rt
         g_OrigWndPos.X = rt.Left
@@ -210,6 +229,12 @@ Public Sub MainLButtonDown(hwnd As Long)
         SetCapture hwnd
     End If
 
+End Sub
+Public Sub GetWindowSize(hwndd As Long, ByRef rectt As RECTTT)
+        GetWindowRect hwndd, rectt
+End Sub
+Public Sub BeforeTopMost(hwndd As Long)
+    SetWindowPos hwndd, 0, 0, 0, 0, 0, (SWP_NOACTIVATE Or SWP_NOOWNERZORDER Or SWP_NOSIZE Or SWP_NOMOVE)
 End Sub
 Public Sub MainPreventResizing(hwnd As Long, constWidth As Long, constHeight As Long, ByRef lParam As Long)
                  Dim MMI As MINMAXINFO

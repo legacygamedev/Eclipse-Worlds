@@ -435,12 +435,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub Form_Activate()
-    hwndLastActiveWnd = hWnd
-    If FormVisible("frmAdmin") And adminMin Then
-        frmAdmin.centerMiniVert Width, Height, Left, Top
-    End If
-End Sub
 
 Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SHOPS Then Exit Sub
@@ -619,7 +613,7 @@ Private Sub Form_Load()
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.SubDaFocus Me.hwnd
     ' Max values
     txtName.MaxLength = NAME_LENGTH
     txtSearch.MaxLength = NAME_LENGTH
@@ -652,14 +646,14 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.UnsubDaFocus Me.hwnd
     If EditorSave = False Then
         ShopEditorCancel
     Else
         EditorSave = False
     End If
     frmAdmin.chkEditor(EDITOR_SHOP).Value = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Exit Sub
     
 ' Error handler

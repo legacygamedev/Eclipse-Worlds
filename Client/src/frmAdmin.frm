@@ -2227,6 +2227,7 @@ End Sub
 Public Sub centerMiniVert(pWidth As Long, pHeight As Long, pLeft As Long, pTop As Long)
     Left = pLeft + pWidth + 165
     Top = pTop + ((pHeight - Height) / 2)
+    BeforeTopMost (frmAdmin.hwnd)
     BringWindowToTop (hwndLastActiveWnd)
 End Sub
 Private Sub picSpawner_Click()

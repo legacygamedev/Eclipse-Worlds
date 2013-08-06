@@ -2167,12 +2167,12 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
             
             OldEXPBarWidth = frmMain.imgEXPBar.Width
             NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
-            frmMain.lblExp.Visible = True
-            frmMain.lblExp.Caption = GetPlayerExp(Index) & "/" & TNL
+            frmMain.lblEXP.Visible = True
+            frmMain.lblEXP.Caption = GetPlayerExp(Index) & "/" & TNL
         Else
             frmMain.imgEXPBar.Width = EXPBar_Width
-            frmMain.lblExp.Visible = False
-            frmMain.lblExp.Caption = ""
+            frmMain.lblEXP.Visible = False
+            frmMain.lblEXP.Caption = ""
         End If
     End If
 End Sub
@@ -3736,13 +3736,14 @@ Private Sub HandleBanEditor(ByVal Index As Long, _
 
         .Show
         .lstIndex.ListIndex = 0
-        BanEditorInit
-
         If FormVisible("frmAdmin") And adminMin = False Then
             frmEditor_Ban.Move frmAdmin.Left - frmEditor_Ban.Width, frmAdmin.Top
         Else
             frmEditor_Ban.Move frmMain.Left + frmMain.Width - frmEditor_Ban.Width, frmMain.Top
         End If
+        BanEditorInit
+
+
 
     End With
 

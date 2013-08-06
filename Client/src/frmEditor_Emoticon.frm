@@ -289,12 +289,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub Form_Activate()
-    hwndLastActiveWnd = hWnd
-    If FormVisible("frmAdmin") And adminMin Then
-        frmAdmin.centerMiniVert Width, Height, Left, Top
-    End If
-End Sub
 
 Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
@@ -363,14 +357,14 @@ Private Sub Form_Unload(Cancel As Integer)
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.UnsubDaFocus Me.hwnd
     If EditorSave = False Then
         EmoticonEditorCancel
     Else
         EditorSave = False
     End If
     frmAdmin.chkEditor(EDITOR_EMOTICON).Value = False
-    BringWindowToTop (frmAdmin.hWnd)
+    BringWindowToTop (frmAdmin.hwnd)
     Exit Sub
     
 ' Error handler
@@ -382,7 +376,7 @@ End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    frmMain.SubDaFocus Me.hwnd
     ' Set max values
     txtCommand.MaxLength = NAME_LENGTH
     scrlEmoticon.max = NumEmoticons

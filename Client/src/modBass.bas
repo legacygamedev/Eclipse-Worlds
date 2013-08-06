@@ -272,7 +272,7 @@ Type BASS_CHANNELINFO
     origres As Long       ' original resolution
     plugin As Long        ' plugin
     sample As Long        ' sample
-    filename As Long      ' Filename
+    FileName As Long      ' Filename
 End Type
 
 ' BASS_CHANNELINFO types
@@ -308,8 +308,8 @@ End Type
 
 ' 3D vector (for 3D positions/velocities/orientations)
 Type BASS_3DVECTOR
-    x As Single           ' +=right, -=left
-    y As Single           ' +=up, -=down
+    X As Single           ' +=right, -=left
+    Y As Single           ' +=up, -=down
     Z As Single           ' +=front, -=behind
 End Type
 
@@ -643,7 +643,7 @@ Declare Function BASS_Pause Lib "bass.dll" () As Long
 Declare Function BASS_SetVolume Lib "bass.dll" (ByVal volume As Single) As Long
 Declare Function BASS_GetVolume Lib "bass.dll" () As Single
 
-Declare Function BASS_PluginLoad Lib "bass.dll" (ByVal filename As String, ByVal flags As Long) As Long
+Declare Function BASS_PluginLoad Lib "bass.dll" (ByVal FileName As String, ByVal flags As Long) As Long
 Declare Function BASS_PluginFree Lib "bass.dll" (ByVal handle As Long) As Long
 Declare Function BASS_PluginGetInfo_ Lib "bass.dll" Alias "BASS_PluginGetInfo" (ByVal handle As Long) As Long
 
@@ -932,22 +932,46 @@ Select Case preset
 End Select
 End Function
 
-Public Function LoByte(ByVal lparam As Long) As Long
-LoByte = lparam And &HFF&
+Public Function LoByte(ByVal lParam As Long) As Long
+LoByte = lParam And &HFF&
 End Function
-Public Function HiByte(ByVal lparam As Long) As Long
-HiByte = (lparam And &HFF00&) / &H100&
+Public Function HiByte(ByVal lParam As Long) As Long
+HiByte = (lParam And &HFF00&) / &H100&
 End Function
-Public Function LoWord(ByVal lparam As Long) As Long
-LoWord = lparam And &HFFFF&
-End Function
-Public Function HiWord(ByVal lparam As Long) As Long
-If lparam < 0 Then
-    HiWord = (lparam \ &H10000 - 1) And &HFFFF&
-Else
-    HiWord = lparam \ &H10000
-End If
-End Function
+'Public Function LoWord(ByVal lParam As Long) As Long
+'LoWord = lParam And &HFFFF&
+'End Function
+'Public Function HiWord(ByVal lParam As Long) As Integer
+'If lParam < 0 Then
+'    HiWord = CInt((lParam \ &H10000 - 1) And &HFFFF&)
+'Else
+'    HiWord = lParam \ &H10000
+'End If
+'End Function
+Public Function HiWord(dwDWord As Long) As Integer
+    ' REQUIRES: None
+    ' MODIFIES: None
+    '  EFFECTS: This function returns the high-order word (as
+    '           signed integer) of the specified double-word
+    '           (passed in as a signed long)
+    Dim dw& ' To handle the sign bit
+    dw& = IIf(dwDWord >= 0&, dwDWord \ &H10000, _
+          &HFFFF& + dwDWord \ &H10001) And &HFFFF&
+    If (dw& >= &H8000&) Then dw& = dw& - &H10000
+    HiWord = CInt(dw&)
+End Function ' HiWord()
+Public Function LoWord(dwDWord As Long) As Integer
+    ' REQUIRES: None
+    ' MODIFIES: None
+    '  EFFECTS: This function returns the low-order word (as
+    '           signed integer) of the specified double-word
+    '           (passed in as a signed long)
+    Dim dw& ' To handle the sign bit
+    dw& = dwDWord And &HFFFF&
+    If (dw& >= &H8000&) Then _
+           dw& = dw& - &H10000
+    LoWord = CInt(dw&)
+End Function ' LoWord()
 Function MakeWord(ByVal LoByte As Long, ByVal HiByte As Long) As Long
 MakeWord = (LoByte And &HFF&) Or ((HiByte And &HFF&) * &H100&)
 End Function
