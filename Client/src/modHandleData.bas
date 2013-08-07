@@ -1137,7 +1137,7 @@ Sub HandleMapData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As 
     Map.BGS = buffer.ReadString
     Map.Revision = buffer.ReadLong
     Map.Moral = buffer.ReadByte
-    Map.Up = buffer.ReadLong
+    Map.up = buffer.ReadLong
     Map.Down = buffer.ReadLong
     Map.Left = buffer.ReadLong
     Map.Right = buffer.ReadLong
@@ -1820,11 +1820,12 @@ Private Sub HandleEditMap()
     MapEditorMode True
     frmEditor_Map.Visible = True
     Call MapEditorInit
-    If FormVisible("frmAdmin") And adminMin = False Then
-        frmEditor_Map.Move frmAdmin.Left - frmEditor_Map.Width, frmAdmin.Top
+    If FormVisible("frmMapPreview") Then
+        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + frmMapPreview.Height
     Else
-        frmEditor_Map.Move frmMain.Left + frmMain.Width - frmEditor_Map.Width, frmMain.Top
+        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top
     End If
+
     frmAdmin.ShowEyeFor EDITOR_MAP
     Exit Sub
     
@@ -2167,12 +2168,12 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
             
             OldEXPBarWidth = frmMain.imgEXPBar.Width
             NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
-            frmMain.lblEXP.Visible = True
-            frmMain.lblEXP.Caption = GetPlayerExp(Index) & "/" & TNL
+            frmMain.lblExp.Visible = True
+            frmMain.lblExp.Caption = GetPlayerExp(Index) & "/" & TNL
         Else
             frmMain.imgEXPBar.Width = EXPBar_Width
-            frmMain.lblEXP.Visible = False
-            frmMain.lblEXP.Caption = ""
+            frmMain.lblExp.Visible = False
+            frmMain.lblExp.Caption = ""
         End If
     End If
 End Sub

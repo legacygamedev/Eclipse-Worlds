@@ -46,11 +46,6 @@ Public Sub MapEditorInit()
     ' Set the CurrentLayer
     CurrentLayer = 1
     
-    ' Set the scrollbars
-    frmEditor_Map.scrlPictureY.max = (Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height \ PIC_Y) - (frmEditor_Map.picBack.Height \ PIC_Y)
-    frmEditor_Map.scrlPictureX.max = (Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width \ PIC_X) - (frmEditor_Map.picBack.Width \ PIC_X)
-    MapEditorTileScroll
-    
     ' Update the lists
     Call MapEditorInitShop
     
@@ -461,31 +456,6 @@ Public Sub MapEditorSetAttributes(ByVal Button As Integer, ByVal X As Long, ByVa
 ' Error handler
 errorhandler:
     HandleError "MapEditorSetAttributes", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
-Public Sub MapEditorTileScroll()
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    ' Horizontal scrolling
-    If Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width < frmEditor_Map.picBack.Width Then
-        frmEditor_Map.scrlPictureX.Enabled = False
-    Else
-        frmEditor_Map.scrlPictureX.Enabled = True
-    End If
-    
-    ' Vertical scrolling
-    If Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height < frmEditor_Map.picBack.Height Then
-        frmEditor_Map.scrlPictureY.Enabled = False
-    Else
-        frmEditor_Map.scrlPictureY.Enabled = True
-    End If
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "MapEditorTileScroll", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1795,7 +1765,7 @@ Public Sub MapPropertiesInit()
         Call LoadMapPropertiesNpcs
         
         ' Reset of it
-        .txtUp.text = CStr(Map.Up)
+        .txtUp.text = CStr(Map.up)
         .txtDown.text = CStr(Map.Down)
         .txtLeft.text = CStr(Map.Left)
         .txtRight.text = CStr(Map.Right)
@@ -4443,8 +4413,8 @@ Public Function GetSubEventCount(ByVal Index As Long)
 End Function
 
 Public Sub MapEditorEyeDropper()
-    Dim TileLeft As Long
-    Dim TileTop As Long
+    Dim TileLeft As Single
+    Dim TileTop As Single
     Dim i As Long
     
     ' If debug mode, handle error then exit out
@@ -4452,10 +4422,6 @@ Public Sub MapEditorEyeDropper()
     
     ' Check for subscript out of range
     If Not IsInBounds Then Exit Sub
-    
-    ' Enable scrollbars if they are disabled
-    If frmEditor_Map.scrlPictureX.Enabled = False Then frmEditor_Map.scrlPictureX.Enabled = True
-    If frmEditor_Map.scrlPictureY.Enabled = False Then frmEditor_Map.scrlPictureY.Enabled = True
 
     With Map.Tile(CurX, CurY)
         If .Layer(CurrentLayer).Tileset > 0 Then
@@ -4467,40 +4433,8 @@ Public Sub MapEditorEyeDropper()
         TileTop = .Layer(CurrentLayer).Y * PIC_Y
         TileLeft = .Layer(CurrentLayer).X * PIC_X
         
-        frmEditor_Map.picBack_MouseDown 1, 0, (TileLeft - (frmEditor_Map.scrlPictureX.Value * PIC_X)), (TileTop - (frmEditor_Map.scrlPictureY.Value * PIC_Y))
-        
-        If (TileTop / PIC_Y) - (frmEditor_Map.picBack.Height / 32) < frmEditor_Map.scrlPictureY.Value Then
-            If (TileTop / PIC_Y) - (frmEditor_Map.picBack.Height / 32) > 0 Then
-                frmEditor_Map.scrlPictureY.Value = (TileTop / PIC_Y) - (frmEditor_Map.picBack.Height / 32)
-            Else
-                frmEditor_Map.scrlPictureY.Value = 0
-            End If
-        End If
-        
-        If (TileTop / PIC_Y) > frmEditor_Map.scrlPictureY.Value Then
-            If (TileTop / PIC_Y) < frmEditor_Map.scrlPictureY.max Then
-                frmEditor_Map.scrlPictureY.Value = (TileTop / PIC_Y)
-            Else
-                frmEditor_Map.scrlPictureY.Value = frmEditor_Map.scrlPictureY.max
-            End If
-        End If
-        
-        If (TileLeft / PIC_X) - (frmEditor_Map.picBack.Width / 32) < frmEditor_Map.scrlPictureX.Value Then
-            If (TileLeft / PIC_X) - (frmEditor_Map.picBack.Width / 32) > 0 Then
-                frmEditor_Map.scrlPictureX.Value = (TileLeft / PIC_X) - (frmEditor_Map.picBack.Width / 32)
-            Else
-                frmEditor_Map.scrlPictureX.Value = 0
-            End If
-        End If
-        
-        If (TileLeft / PIC_X) > frmEditor_Map.scrlPictureX.Value Then
-            If (TileLeft / PIC_X) < frmEditor_Map.scrlPictureX.max Then
-                frmEditor_Map.scrlPictureX.Value = (TileLeft / PIC_X)
-            Else
-                frmEditor_Map.scrlPictureX.Value = frmEditor_Map.scrlPictureX.max
-            End If
-        End If
-        
+        Call MapEditorChooseTile(vbLeftButton, TileLeft, TileTop)
+   
         frmEditor_Map.scrlAutotile.Value = .Autotile(CurrentLayer)
         frmMain.chkEyeDropper.Value = False
     End With

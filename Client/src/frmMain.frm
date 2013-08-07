@@ -814,6 +814,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -3140,7 +3141,7 @@ Begin VB.Form frmMain
       End
       Begin VB.Label lblHotTilesets 
          BackStyle       =   0  'Transparent
-         Caption         =   "(MWheel Click)"
+         Caption         =   "(Middle MBtn)"
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   8.25
@@ -3391,8 +3392,12 @@ Private Sub chkTilesets_Click()
 
     If frmMain.chkTilesets.Value Then
         frmMain.chkTilesets.Picture = LoadResPicture("TILESETS_DOWN", vbResBitmap)
+        displayTilesets = True
+        lblTitle = "UBER Map Editor - " & "Tileset: " & frmEditor_Map.scrlTileSet.Value
     Else
         frmMain.chkTilesets.Picture = LoadResPicture("TILESETS_UP", vbResBitmap)
+        displayTilesets = False
+        frmMain.lblTitle = "UBER Map Editor - " & "Layer: " & CurrentLayer
     End If
 
 End Sub
@@ -3420,7 +3425,7 @@ Private Sub cmdProperties_Click()
     ' Lock map editor open til map properties is closed
     cmdSave.Enabled = False
     cmdRevert.Enabled = False
-    
+    Exit Sub
 ' Error handler
 errorhandler:
     HandleError "cmdProperties_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
@@ -4897,10 +4902,14 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If InMapEditor Then
-        If chkEyeDropper.Value = 1 Then
+        If chkEyeDropper.Value = 1 And displayTilesets = False Then
             Call MapEditorEyeDropper
         Else
-            If ControlDown And Button = 1 Then
+            If displayTilesets And Not (X < 0 Or Y < 0 Or _
+            X > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Width Or _
+            Y > Tex_Tileset(frmEditor_Map.scrlTileSet.Value).Height) And Button = 1 Then
+                Call MapEditorChooseTile(Button, X, Y)
+            ElseIf ControlDown And Button = 1 Then
                 MapEditorFillSelection
                 Exit Sub
 
@@ -4911,7 +4920,12 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
             ElseIf ShiftDown And Button = 1 Then
                 MapEditorEyeDropper
                 Exit Sub
-
+            ElseIf Button = vbMiddleButton Then
+                If frmMain.chkTilesets.Value Then
+                    chkTilesets.Value = 0
+                Else
+                    chkTilesets.Value = 1
+                End If
             ElseIf Button = vbRightButton Then
                 If ShiftDown Then
                     ' Admin warp if we're pressing shift and right clicking
@@ -4924,9 +4938,10 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
                     DeleteEvent CurX, CurY
                 End If
             End If
-            
-            Call MapEditorMouseDown(Button, X, Y, False)
-            redrawMapCache = True
+            If Not displayTilesets Then
+                Call MapEditorMouseDown(Button, X, Y, False)
+                redrawMapCache = True
+            End If
         End If
     Else
         ' Left click
@@ -4970,10 +4985,17 @@ Private Sub picScreen_MouseMove(Button As Integer, Shift As Integer, X As Single
     CurY = TileView.Top + ((Y + Camera.Top) \ PIC_Y)
     
     If InMapEditor Then
-        Call MapEditorMouseDown(Button, X, Y, False)
-        If (LastX <> CurX Or LastY <> CurY) And frmEditor_Map.chkRandom.Value = 0 And Button >= 1 Then
+        If displayTilesets Then
+            If frmEditor_Map.scrlAutotile.Value = 0 Then
+                Call frmEditor_Map.MapEditorDrag(Button, X, Y)
+            End If
+        Else
+            Call MapEditorMouseDown(Button, X, Y, False)
+        End If
+        If (LastX <> CurX Or LastY <> CurY) And frmEditor_Map.chkRandom.Value = 0 And Button >= 1 And Not displayTilesets Then
             redrawMapCache = True
         End If
+
     ElseIf Button = vbLeftButton And Options.Mouse = 1 Then
         ' Mouse
         If CurX = GetPlayerX(MyIndex) And CurY = GetPlayerY(MyIndex) Then
@@ -6534,6 +6556,14 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
                     If FormVisible("frmAdmin") And adminMin Then
                         frmAdmin.centerMiniVert PixelsToTwips((rectt.Right - rectt.Left), 0), PixelsToTwips((rectt.Bottom - rectt.Top), 1), PixelsToTwips(rectt.Left, 0), PixelsToTwips(rectt.Top, 1)
                     End If
+                    If FormVisible("frmMapPreview") And lng_hWnd = frmMain.hwnd Then
+                        frmMapPreview.Move frmMain.Left - frmMapPreview.Width - 80, frmMain.Top + 75
+                    End If
+                    If FormVisible("frmMapPreview") Then
+                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75 + frmMapPreview.Height
+                    Else
+                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75
+                    End If
                 End If
         Case WM_NCACTIVATE
             If wParam Then
@@ -6570,12 +6600,18 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
             End If
         Case WM_MOUSEWHEEL
             If InMapEditor Then
-                Dim up As Boolean
+                Dim up As Boolean, curTil As Long
                 up = IIf(HiWord(wParam) > 0, False, True)
-                getCurrentMapLayerName
-                frmEditor_Map.optLayer(IIf((currentMapLayerNum = 1 And Not up) Or (currentMapLayerNum = Layer_Count - 1 And up), currentMapLayerNum, IIf(up, 1, -1) + currentMapLayerNum)).Value = 1
-                getCurrentMapLayerName
-                Debug.Print "HWord: " & up
+                If displayTilesets Then
+                    curTil = frmEditor_Map.scrlTileSet.Value
+                    frmEditor_Map.scrlTileSet.Value = (IIf((curTil = 1 And Not up) Or (curTil = NumTileSets And up), curTil, IIf(up, 1, -1) + curTil))
+                    lblTitle = "UBER Map Editor - " & "Tileset: " & frmEditor_Map.scrlTileSet.Value
+                Else
+                    getCurrentMapLayerName
+                    frmEditor_Map.optLayer(IIf((currentMapLayerNum = 1 And Not up) Or (currentMapLayerNum = Layer_Count - 1 And up), currentMapLayerNum, IIf(up, 1, -1) + currentMapLayerNum)).Value = 1
+                    getCurrentMapLayerName
+                End If
+
             End If
     End Select
 

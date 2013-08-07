@@ -76,7 +76,8 @@ Private g_OrigCursorPos As POINTAPI
 Private g_OrigWndPos As POINTAPI
 Private CurrentLayer As String
 Public currentMapLayerNum As String
-Global gHW As Long
+Public displayTilesets As Boolean
+
 Public Function getCurrentMapLayerName() As String
     
     Dim llayer As OptionButton
@@ -95,7 +96,7 @@ Public Sub MapEditorMode(switch As Boolean)
 
     If switch Then
         frmMain.Width = frmMain.Width - 30
-        frmMain.Height = frmMain.Height + 750
+        frmMain.Height = frmMain.Height + 1110
         frmMain.picForm.Top = frmMain.picForm.Top + 24 + 50
         
         If frmMain.mapPreviewSwitch.Value Then
@@ -124,11 +125,11 @@ Public Sub MapEditorMode(switch As Boolean)
         EditorSave = True
     Else
         frmMain.Width = frmMain.Width + 30
-        frmMain.Height = frmMain.Height - 750
+        frmMain.Height = frmMain.Height - 1110
         frmMain.picForm.Top = frmMain.picForm.Top - 24 - 50
         Unload frmMapPreview
     End If
-    Call FlipBit(WS_CAPTION, Not switch)
+    'Call FlipBit(WS_CAPTION, Not switch)
 End Sub
 Public Sub LeaveMapEditorMode(Cancel As Boolean)
 
@@ -204,7 +205,9 @@ Public Sub MainMouseMove(hwnd As Long)
             wnd_x = g_OrigWndPos.X + (pt.X - g_OrigCursorPos.X)
             wnd_y = g_OrigWndPos.Y + (pt.Y - g_OrigCursorPos.Y)
             SetWindowPos frmMain.hwnd, 0, wnd_x, wnd_y, 0, 0, (SWP_NOACTIVATE Or SWP_NOOWNERZORDER Or SWP_NOZORDER Or SWP_NOSIZE)
-            frmMapPreview.Move frmMain.Left - frmMapPreview.Width - 80, frmMain.Top + 75
+            If FormVisible("frmMapPreview") Then
+                frmMapPreview.Move frmMain.Left - frmMapPreview.Width - 80, frmMain.Top + 75
+            End If
         End If
     End If
 
