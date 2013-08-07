@@ -814,7 +814,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -3413,7 +3412,7 @@ Private Sub cmdProperties_Click()
     MapPropertiesInit
     
     ' Update the 1stnpcs list Index so it is selected
-    frmEditor_MapProperties.lstNPCs.ListIndex = 0
+    frmEditor_MapProperties.lstNpcs.ListIndex = 0
     
     ' Show the form
     frmEditor_MapProperties.Show
@@ -4904,15 +4903,12 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
             If ControlDown And Button = 1 Then
                 MapEditorFillSelection
                 Exit Sub
-
             ElseIf ControlDown And Button = 2 Then
                 MapEditorClearSelection
                 Exit Sub
-
             ElseIf ShiftDown And Button = 1 Then
                 MapEditorEyeDropper
                 Exit Sub
-
             ElseIf Button = vbRightButton Then
                 If ShiftDown Then
                     ' Admin warp if we're pressing shift and right clicking
@@ -4921,7 +4917,7 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
                             AdminWarp CurX, CurY
                         End If
                     End If
-                ElseIf InMapEditor Then
+                ElseIf InMapEditor And frmEditor_Map.OptEvents.Value Then
                     DeleteEvent CurX, CurY
                 End If
             End If
