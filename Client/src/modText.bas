@@ -34,7 +34,7 @@ Public Font_Georgia As CustomFont
 
 Public Const FVF_SIZE As Long = 28
 
-Public Sub RenderText(ByRef UseFont As CustomFont, ByVal Text As String, ByVal X As Long, ByVal Y As Long, ByVal Color As Long, Optional ByVal Alpha As Long = 255, Optional Shadow As Boolean = True)
+Public Sub RenderText(ByRef UseFont As CustomFont, ByVal text As String, ByVal X As Long, ByVal Y As Long, ByVal Color As Long, Optional ByVal Alpha As Long = 255, Optional Shadow As Boolean = True)
     Dim TempVA(0 To 3)  As TLVERTEX
     Dim TempVAS(0 To 3) As TLVERTEX
     Dim TempStr() As String
@@ -57,10 +57,10 @@ Public Sub RenderText(ByRef UseFont As CustomFont, ByVal Text As String, ByVal X
     Color = DX8Color(Color, Alpha)
     
     ' Check for valid text to render
-    If LenB(Text) = 0 Then Exit Sub
+    If LenB(text) = 0 Then Exit Sub
     
     ' Get the text into arrays (split by vbCrLf)
-    TempStr = Split(Text, vbCrLf)
+    TempStr = Split(text, vbCrLf)
     
     ' Set the temp color (or else the first character has no color)
     TempColor = Color
@@ -246,15 +246,15 @@ Public Function DX8Color(ByVal ColorNum As Long, Optional ByVal Alpha As Long = 
     End Select
 End Function
 
-Public Function EngineGetTextWidth(ByRef UseFont As CustomFont, ByVal Text As String) As Integer
+Public Function EngineGetTextWidth(ByRef UseFont As CustomFont, ByVal text As String) As Integer
     Dim LoopI As Integer
 
     'Make sure we have text
-    If LenB(Text) = 0 Then Exit Function
+    If LenB(text) = 0 Then Exit Function
     
     'Loop through the text
-    For LoopI = 1 To Len(Text)
-        EngineGetTextWidth = EngineGetTextWidth + UseFont.HeaderInfo.CharWidth(Asc(Mid$(Text, LoopI, 1)))
+    For LoopI = 1 To Len(text)
+        EngineGetTextWidth = EngineGetTextWidth + UseFont.HeaderInfo.CharWidth(Asc(Mid$(text, LoopI, 1)))
     Next LoopI
 End Function
 
@@ -263,7 +263,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     Dim TextY As Long
     Dim Color As Long
     Dim Difference As Long
-    Dim Text, Guild, Level As String
+    Dim text, Guild, Level As String
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -292,8 +292,8 @@ Public Sub DrawPlayerName(ByVal Index As Long)
         End If
     End If
 
-    Text = Trim$(Player(Index).name)
-    TextX = GetPlayerTextX(Index) - GetFontWidth(Text)
+    text = Trim$(Player(Index).name)
+    TextX = GetPlayerTextX(Index) - GetFontWidth(text)
     
     If Options.Levels = 1 Then
         If Not Index = MyIndex Then
@@ -321,7 +321,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     End If
 
     ' Draw name
-    RenderText Font_Default, Text, TextX, TextY, Color
+    RenderText Font_Default, text, TextX, TextY, Color
     
     If Options.Levels = 1 Then
         If Not Index = MyIndex Then
@@ -345,14 +345,14 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     End If
     
     If Options.Titles = 1 And Player(Index).CurTitle > 0 Then
-        Text = Trim$(title(Player(Index).CurTitle).name)
+        text = Trim$(title(Player(Index).CurTitle).name)
         Color = Trim$(title(Player(Index).CurTitle).Color)
         
         TextX = GetPlayerTextX(Index) - GetFontWidth(Trim$(title(Player(Index).CurTitle).name))
         TextY = TextY - 12
         
         ' Draw title
-        RenderText Font_Default, Text, TextX, TextY, Color
+        RenderText Font_Default, text, TextX, TextY, Color
     End If
     
     If Options.Guilds = 1 Then
@@ -400,7 +400,7 @@ Public Sub DrawNPCName(ByVal Index As Long)
     Dim TextX As Long
     Dim TextY As Long
     Dim Color As Long
-    Dim NpcNum As Long
+    Dim NPCNum As Long
     Dim name As String
     Dim Level As String
     Dim Difference As Long
@@ -408,21 +408,21 @@ Public Sub DrawNPCName(ByVal Index As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    NpcNum = MapNPC(Index).num
+    NPCNum = MapNPC(Index).num
     
     ' Set the basic Y Value
-    If NPC(NpcNum).Sprite < 1 Or NPC(NpcNum).Sprite > NumCharacters Then
-        TextY = GetNpcTextY(Index) - 16
+    If NPC(NPCNum).Sprite < 1 Or NPC(NPCNum).Sprite > NumCharacters Then
+        TextY = GetNPCTextY(Index) - 16
     Else
         ' Determine location for the text
-        TextY = GetNpcTextY(Index) - (Tex_Character(NPC(NpcNum).Sprite).Height / 4) + 16
+        TextY = GetNPCTextY(Index) - (Tex_Character(NPC(NPCNum).Sprite).Height / 4) + 16
     
-        If (Tex_Character(NPC(NpcNum).Sprite).Height / 4) < 32 Then
+        If (Tex_Character(NPC(NPCNum).Sprite).Height / 4) < 32 Then
             TextY = TextY - 16
         End If
     End If
     
-    Select Case NPC(NpcNum).Behavior
+    Select Case NPC(NPCNum).Behavior
         Case NPC_BEHAVIOR_ATTACKONSIGHT
             Color = BrightRed
         Case NPC_BEHAVIOR_ATTACKWHENATTACKED
@@ -437,15 +437,15 @@ Public Sub DrawNPCName(ByVal Index As Long)
             Color = Yellow
     End Select
     
-    name = Trim$(NPC(NpcNum).name)
+    name = Trim$(NPC(NPCNum).name)
     
     If Len(name) > 0 Then
-        TextX = GetNpcTextX(Index) - GetFontWidth((name))
+        TextX = GetNPCTextX(Index) - GetFontWidth((name))
         
-        If Options.Levels = 1 And NPC(NpcNum).Level > 0 Then
-            Level = "Lv: " & NPC(NpcNum).Level
+        If Options.Levels = 1 And NPC(NPCNum).Level > 0 Then
+            Level = "Lv: " & NPC(NPCNum).Level
             
-            If NPC(NpcNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(NpcNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
+            If NPC(NPCNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(NPCNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
                 TextX = TextX + GetFontWidth(Trim$(Level)) + 4
             End If
         End If
@@ -454,18 +454,18 @@ Public Sub DrawNPCName(ByVal Index As Long)
         Call RenderText(Font_Default, name, TextX, TextY, Color)
     End If
     
-    If Options.Levels = 1 And NPC(NpcNum).Level > 0 Then
-        If NPC(NpcNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(NpcNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
+    If Options.Levels = 1 And NPC(NPCNum).Level > 0 Then
+        If NPC(NPCNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(NPCNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
             TextX = TextX - (GetFontWidth(Trim$(Level)) * 2) - 4
             
-            If NPC(NpcNum).Level = GetPlayerLevel(MyIndex) Then
+            If NPC(NPCNum).Level = GetPlayerLevel(MyIndex) Then
                 Color = D3DColorARGB(255, 255, 255, 0)
-            ElseIf NPC(NpcNum).Level > GetPlayerLevel(MyIndex) Then
-                Difference = NPC(NpcNum).Level - GetPlayerLevel(MyIndex)
+            ElseIf NPC(NPCNum).Level > GetPlayerLevel(MyIndex) Then
+                Difference = NPC(NPCNum).Level - GetPlayerLevel(MyIndex)
                 If Difference > 10 Then Difference = 10
                 Color = D3DColorARGB(255, 255, 255 - (255 * (Difference / 10)), 0)
-            ElseIf NPC(NpcNum).Level < GetPlayerLevel(MyIndex) Then
-                Difference = GetPlayerLevel(MyIndex) - NPC(NpcNum).Level
+            ElseIf NPC(NPCNum).Level < GetPlayerLevel(MyIndex) Then
+                Difference = GetPlayerLevel(MyIndex) - NPC(NPCNum).Level
                 If Difference > 10 Then Difference = 10
                 Color = D3DColorARGB(255, 255 - (255 * (Difference / 10)), 255, 0)
             End If
@@ -474,20 +474,20 @@ Public Sub DrawNPCName(ByVal Index As Long)
         End If
     End If
     
-    If Len(Trim$(NPC(NpcNum).title)) > 0 And Options.Titles = 1 Then
-        TextX = GetNpcTextX(Index) - GetFontWidth(Trim$(NPC(NpcNum).title))
+    If Len(Trim$(NPC(NPCNum).title)) > 0 And Options.Titles = 1 Then
+        TextX = GetNPCTextX(Index) - GetFontWidth(Trim$(NPC(NPCNum).title))
         
         ' Move it up
         TextY = TextY - 12
         
         ' Draw title
-        Call RenderText(Font_Default, Trim$(NPC(NpcNum).title), TextX, TextY, Color)
+        Call RenderText(Font_Default, Trim$(NPC(NPCNum).title), TextX, TextY, Color)
     End If
     Exit Sub
     
 ' Error handler
 errorhandler:
-    HandleError "DrawNpcName", "modText", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "DrawNPCName", "modText", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -629,11 +629,11 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Function GetFontWidth(ByVal Text As String) As Long
+Public Function GetFontWidth(ByVal text As String) As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    GetFontWidth = frmMain.TextWidth(Text) / 2
+    GetFontWidth = frmMain.TextWidth(text) / 2
     Exit Function
     
 ' Error handler
@@ -653,7 +653,7 @@ Public Sub AddText(ByVal msg As String, ByVal Color As Long)
     
     S = vbNewLine & msg
     
-    frmMain.txtChat.SelStart = Len(frmMain.txtChat.Text)
+    frmMain.txtChat.SelStart = Len(frmMain.txtChat.text)
     
     If Color < Orange Then
         frmMain.txtChat.SelColor = QBColor(Color)
@@ -662,7 +662,7 @@ Public Sub AddText(ByVal msg As String, ByVal Color As Long)
     End If
     
     frmMain.txtChat.SelText = S
-    frmMain.txtChat.SelStart = Len(frmMain.txtChat.Text) - 1
+    frmMain.txtChat.SelStart = Len(frmMain.txtChat.text) - 1
     Exit Sub
     
 ' Error handler
@@ -821,13 +821,13 @@ Public Sub DrawChatBubble(ByVal Index As Long)
     End With
 End Sub
 
-Public Sub WordWrap_Array(ByVal Text As String, ByVal MaxLineLen As Long, ByRef theArray() As String)
+Public Sub WordWrap_Array(ByVal text As String, ByVal MaxLineLen As Long, ByRef theArray() As String)
     Dim lineCount As Long, i As Long, Size As Long, lastSpace As Long, B As Long
     
     ' Too small of text
-    If Len(Text) < 2 Then
+    If Len(text) < 2 Then
         ReDim theArray(1 To 1) As String
-        theArray(1) = Text
+        theArray(1) = text
         Exit Sub
     End If
     
@@ -836,16 +836,16 @@ Public Sub WordWrap_Array(ByVal Text As String, ByVal MaxLineLen As Long, ByRef 
     lastSpace = 1
     Size = 0
     
-    For i = 1 To Len(Text)
+    For i = 1 To Len(text)
         ' If it's a space, store it
-        Select Case Mid$(Text, i, 1)
+        Select Case Mid$(text, i, 1)
             Case " ": lastSpace = i
             Case "_": lastSpace = i
             Case "-": lastSpace = i
         End Select
         
         ' Add up the size
-        Size = Size + Font_Default.HeaderInfo.CharWidth(Asc(Mid$(Text, i, 1)))
+        Size = Size + Font_Default.HeaderInfo.CharWidth(Asc(Mid$(text, i, 1)))
         
         ' Check for too large of a size
         If Size > MaxLineLen Then
@@ -854,33 +854,33 @@ Public Sub WordWrap_Array(ByVal Text As String, ByVal MaxLineLen As Long, ByRef 
                 ' Too far away to the last space, so break at the last character
                 lineCount = lineCount + 1
                 ReDim Preserve theArray(1 To lineCount) As String
-                theArray(lineCount) = Trim$(Mid$(Text, B, (i - 1) - B))
+                theArray(lineCount) = Trim$(Mid$(text, B, (i - 1) - B))
                 B = i - 1
                 Size = 0
             Else
                 ' Break at the last space to preserve the word
                 lineCount = lineCount + 1
                 ReDim Preserve theArray(1 To lineCount) As String
-                theArray(lineCount) = Trim$(Mid$(Text, B, lastSpace - B))
+                theArray(lineCount) = Trim$(Mid$(text, B, lastSpace - B))
                 B = lastSpace + 1
                 
                 ' Count all the words we ignored (the ones that weren't printed, but are before "i")
-                Size = EngineGetTextWidth(Font_Default, Mid$(Text, lastSpace, i - lastSpace))
+                Size = EngineGetTextWidth(Font_Default, Mid$(text, lastSpace, i - lastSpace))
             End If
         End If
         
         ' Remainder
-        If i = Len(Text) Then
+        If i = Len(text) Then
             If B <> i Then
                 lineCount = lineCount + 1
                 ReDim Preserve theArray(1 To lineCount) As String
-                theArray(lineCount) = theArray(lineCount) & Mid$(Text, B, i)
+                theArray(lineCount) = theArray(lineCount) & Mid$(text, B, i)
             End If
         End If
     Next
 End Sub
 
-Public Function WordWrap(ByVal Text As String, ByVal MaxLineLen As Integer) As String
+Public Function WordWrap(ByVal text As String, ByVal MaxLineLen As Integer) As String
     Dim TempSplit() As String
     Dim TSLoop As Long
     Dim lastSpace As Long
@@ -889,13 +889,13 @@ Public Function WordWrap(ByVal Text As String, ByVal MaxLineLen As Integer) As S
     Dim B As Long
 
     ' Too small of text
-    If Len(Text) < 2 Then
-        WordWrap = Text
+    If Len(text) < 2 Then
+        WordWrap = text
         Exit Function
     End If
 
     ' Check if there are any line breaks - if so, we will support them
-    TempSplit = Split(Text, vbNewLine)
+    TempSplit = Split(text, vbNewLine)
     
     For TSLoop = 0 To UBound(TempSplit)
         ' Clear the values for the new line
@@ -961,10 +961,10 @@ Public Function GetPlayerTextY(ByVal Index As Long) As Long
     GetPlayerTextY = ConvertMapY(GetPlayerY(Index) * PIC_Y) + TempPlayer(Index).yOffset - (PIC_Y / 2)
 End Function
 
-Public Function GetNpcTextX(ByVal Index As Long) As Long
-    GetNpcTextX = ConvertMapX(MapNPC(Index).X * PIC_X) + MapNPC(Index).xOffset + (PIC_X / 2)
+Public Function GetNPCTextX(ByVal Index As Long) As Long
+    GetNPCTextX = ConvertMapX(MapNPC(Index).X * PIC_X) + MapNPC(Index).xOffset + (PIC_X / 2)
 End Function
 
-Public Function GetNpcTextY(ByVal Index As Long) As Long
-    GetNpcTextY = ConvertMapY(MapNPC(Index).Y * PIC_Y) + MapNPC(Index).yOffset
+Public Function GetNPCTextY(ByVal Index As Long) As Long
+    GetNPCTextY = ConvertMapY(MapNPC(Index).Y * PIC_Y) + MapNPC(Index).yOffset
 End Function

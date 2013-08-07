@@ -1000,12 +1000,12 @@ Public Sub DrawAnimation(ByVal Index As Long, ByVal Layer As Long)
                     X = (MapNPC(lockIndex).X * PIC_X) + 16 - (Width / 2) + MapNPC(lockIndex).xOffset
                     Y = (MapNPC(lockIndex).Y * PIC_Y) + 16 - (Height / 2) + MapNPC(lockIndex).yOffset
                 Else
-                    ' Npc not alive anymore, kill the animation
+                    ' NPC not alive anymore, kill the animation
                     ClearAnimInstance Index
                     Exit Sub
                 End If
             Else
-                ' Npc not alive anymore, kill the animation
+                ' NPC not alive anymore, kill the animation
                 ClearAnimInstance Index
                 Exit Sub
             End If
@@ -1179,7 +1179,7 @@ Private Sub DrawBars()
     Dim tmpy As Long, tmpx As Long
     Dim sWidth As Long, sHeight As Long
     Dim sRect As RECT
-    Dim i As Long, NpcNum As Long, PartyIndex As Long, BarWidth As Long, MoveSpeed As Long
+    Dim i As Long, NPCNum As Long, PartyIndex As Long, BarWidth As Long, MoveSpeed As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1190,18 +1190,18 @@ Private Sub DrawBars()
     
     ' Render health bars and casting bar
     For i = 1 To MAX_MAP_NPCS
-        NpcNum = MapNPC(i).num
+        NPCNum = MapNPC(i).num
         ' Exists
-        If NpcNum > 0 Then
-            If Options.NpcVitals = 1 Then
+        If NPCNum > 0 Then
+            If Options.NPCVitals = 1 Then
                 ' Alive
-                If MapNPC(i).Vital(Vitals.HP) < NPC(NpcNum).HP Then
+                If MapNPC(i).Vital(Vitals.HP) < NPC(NPCNum).HP Then
                     ' lock to npc
                     tmpx = MapNPC(i).X * PIC_X + MapNPC(i).xOffset + 16 - (sWidth / 2)
                     tmpy = MapNPC(i).Y * PIC_Y + MapNPC(i).yOffset + 35
                     
                     ' Calculate the width to fill
-                    BarWidth = ((MapNPC(i).Vital(Vitals.HP) / sWidth) / (NPC(NpcNum).HP / sWidth)) * sWidth
+                    BarWidth = ((MapNPC(i).Vital(Vitals.HP) / sWidth) / (NPC(NPCNum).HP / sWidth)) * sWidth
                     
                     ' Draw bar background
                     With sRect
@@ -1224,18 +1224,18 @@ Private Sub DrawBars()
                     RenderTexture Tex_Bars, ConvertMapX(tmpx), ConvertMapY(tmpy), sRect.Left, sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top, sRect.Right - sRect.Left, sRect.Bottom - sRect.Top, D3DColorRGBA(255, 255, 255, 255)
                 End If
         
-                If MapNPC(i).Vital(Vitals.MP) < NPC(NpcNum).MP Then
+                If MapNPC(i).Vital(Vitals.MP) < NPC(NPCNum).MP Then
                     ' lock to npc
                     tmpx = MapNPC(i).X * PIC_X + MapNPC(i).xOffset + 16 - (sWidth / 2)
                     
-                    If MapNPC(i).Vital(Vitals.HP) = NPC(NpcNum).HP Then
+                    If MapNPC(i).Vital(Vitals.HP) = NPC(NPCNum).HP Then
                         tmpy = MapNPC(i).Y * PIC_Y + MapNPC(i).yOffset + 35
                     Else
                         tmpy = MapNPC(i).Y * PIC_Y + MapNPC(i).yOffset + 35 + sHeight
                     End If
                     
                     ' Calculate the width to fill
-                    BarWidth = ((MapNPC(i).Vital(Vitals.MP) / sWidth) / (NPC(NpcNum).MP / sWidth)) * sWidth
+                    BarWidth = ((MapNPC(i).Vital(Vitals.MP) / sWidth) / (NPC(NPCNum).MP / sWidth)) * sWidth
                     
                     ' Draw bar background
                     With sRect
@@ -1265,7 +1265,7 @@ Private Sub DrawBars()
                     ' lock to player
                     tmpx = MapNPC(i).X * PIC_X + MapNPC(i).xOffset + 16 - (sWidth / 2)
 
-                    If Options.NpcVitals = 0 Or (MapNPC(i).Vital(Vitals.HP) = NPC(NpcNum).HP And MapNPC(i).Vital(Vitals.MP) = NPC(NpcNum).MP) Then
+                    If Options.NPCVitals = 0 Or (MapNPC(i).Vital(Vitals.HP) = NPC(NPCNum).HP And MapNPC(i).Vital(Vitals.MP) = NPC(NPCNum).MP) Then
                         tmpy = MapNPC(i).Y * PIC_Y + MapNPC(i).yOffset + 35
                     Else
                         tmpy = MapNPC(i).Y * PIC_Y + MapNPC(i).yOffset + 35 + sHeight
@@ -1658,7 +1658,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub DrawNpc(ByVal MapNPCNum As Long)
+Public Sub DrawNPC(ByVal MapNPCNum As Long)
     Dim Anim As Byte, i As Long, X As Long, Y As Long, Sprite As Long, spritetop As Long
     Dim rec As RECT
     Dim AttackSpeed As Long
@@ -1751,7 +1751,7 @@ Public Sub DrawNpc(ByVal MapNPCNum As Long)
     
 ' Error handler
 errorhandler:
-    HandleError "DrawNpc", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "DrawNPC", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -3181,10 +3181,10 @@ Public Sub Render_Graphics()
 
     ' Y-based render. Renders players, npcs, and resources based on Y-axis.
     For Y = TileView.Top To TileView.Bottom
-        ' Npcs
-        For i = 1 To Map.Npc_HighIndex
+        ' NPCs
+        For i = 1 To Map.NPC_HighIndex
             If MapNPC(i).Y = Y Then
-                Call DrawNpc(i)
+                Call DrawNPC(i)
             End If
         Next
         
@@ -3310,7 +3310,7 @@ Public Sub Render_Graphics()
         End If
     Next
     
-    For i = 1 To Map.Npc_HighIndex
+    For i = 1 To Map.NPC_HighIndex
         If MapNPC(i).num > 0 Then
             If CurX = MapNPC(i).X And CurY = MapNPC(i).Y Then
                 If MyTargetType = TARGET_TYPE_NPC And MyTarget = i Then
@@ -3364,7 +3364,7 @@ Public Sub Render_Graphics()
     Next
     
     ' Draw npc names
-    For i = 1 To Map.Npc_HighIndex
+    For i = 1 To Map.NPC_HighIndex
         If MapNPC(i).num > 0 Then
             Call DrawNPCName(i)
         End If
@@ -4559,7 +4559,7 @@ Public Sub EditorNPC_DrawSprite()
     
 ' Error handler
 errorhandler:
-    HandleError "EditorNpc_DrawSprite", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "EditorNPC_DrawSprite", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

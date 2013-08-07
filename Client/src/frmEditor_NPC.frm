@@ -782,7 +782,7 @@ End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    frmMain.SubDaFocus Me.hwnd
+    frmMain.SubDaFocus Me.hWnd
     scrlSprite.max = NumCharacters
     scrlAnimation.max = MAX_ANIMATIONS
     scrlDrop.max = MAX_NPC_DROPS
@@ -814,7 +814,7 @@ Private Sub cmdSave_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     EditorSave = True
-    Call NpcEditorSave
+    Call NPCEditorSave
     Exit Sub
     
 ' Error handler
@@ -841,14 +841,14 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    frmMain.UnsubDaFocus Me.hwnd
+    frmMain.UnsubDaFocus Me.hWnd
     If EditorSave = False Then
-        Call NpcEditorCancel
+        Call NPCEditorCancel
     Else
         EditorSave = False
     End If
     frmAdmin.chkEditor(EDITOR_NPC).Value = False
-    BringWindowToTop (frmAdmin.hwnd)
+    BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
     
 ' Error handler

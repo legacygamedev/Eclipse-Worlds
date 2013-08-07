@@ -605,8 +605,8 @@ Private Sub chkDoNotAutoSpawn_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If lstNpcs.ListIndex > -1 Then
-        Map.NPCSpawnType(lstNpcs.ListIndex + 1) = chkDoNotAutoSpawn.Value
+    If lstNPCs.ListIndex > -1 Then
+        Map.NPCSpawnType(lstNPCs.ListIndex + 1) = chkDoNotAutoSpawn.Value
     End If
     Exit Sub
     
@@ -638,23 +638,23 @@ Private Sub cmbClear_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Exit if the list Index is subscript out of range
-    If lstNpcs.ListIndex + 1 < 1 Or lstNpcs.ListIndex + 1 > MAX_MAP_NPCS Then Exit Sub
+    If lstNPCs.ListIndex + 1 < 1 Or lstNPCs.ListIndex + 1 > MAX_MAP_NPCS Then Exit Sub
     
-    ' Clear the Npcs from the list
+    ' Clear the NPCs from the list
     For i = 1 To MAX_MAP_NPCS
         Map.NPC(i) = 0
     Next
     
-    TmpIndex = lstNpcs.ListIndex
+    TmpIndex = lstNPCs.ListIndex
         
     ' Clear the list
-    lstNpcs.Clear
+    lstNPCs.Clear
     
-    ' Reload the list Npcs
-    Call LoadMapPropertiesNpcs
+    ' Reload the list NPCs
+    Call LoadMapPropertiesNPCs
     
     ' Set the list Index to TmpIndex
-    lstNpcs.ListIndex = TmpIndex
+    lstNPCs.ListIndex = TmpIndex
     Exit Sub
     
 ' Error handler
@@ -670,43 +670,43 @@ Private Sub cmbUpdate_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Exit if the list index is subscript out of range
-    If lstNpcs.ListIndex < 0 Or lstNpcs.ListIndex > MAX_MAP_NPCS - 1 Then Exit Sub
+    If lstNPCs.ListIndex < 0 Or lstNPCs.ListIndex > MAX_MAP_NPCS - 1 Then Exit Sub
     
     ' Exit early if we don't need to move it down
-    If lstNpcs.ListIndex = MAX_MAP_NPCS - 1 Then
+    If lstNPCs.ListIndex = MAX_MAP_NPCS - 1 Then
         ' Save the npc to the map
-        Map.NPC(lstNpcs.ListIndex + 1) = cmbNpcs.ListIndex
+        Map.NPC(lstNPCs.ListIndex + 1) = cmbNPCs.ListIndex
         
         ' Clear the list
-        lstNpcs.Clear
+        lstNPCs.Clear
         
-        ' Reload the list Npcs
-        Call LoadMapPropertiesNpcs
-        lstNpcs.ListIndex = MAX_MAP_NPCS - 1
+        ' Reload the list NPCs
+        Call LoadMapPropertiesNPCs
+        lstNPCs.ListIndex = MAX_MAP_NPCS - 1
         Exit Sub
     End If
     
     ' Make sure it has a name
-    If Not cmbNpcs.ListIndex = 0 Then
-        If Trim$(NPC(cmbNpcs.ListIndex).name) = vbNullString Then Exit Sub
+    If Not cmbNPCs.ListIndex = 0 Then
+        If Trim$(NPC(cmbNPCs.ListIndex).name) = vbNullString Then Exit Sub
     End If
     
-    Map.Npc_HighIndex = lstNpcs.ListIndex + 1
+    Map.NPC_HighIndex = lstNPCs.ListIndex + 1
     
     ' Set the temporary index for when it reloads it after it rebuilds the list
-    TmpIndex = lstNpcs.ListIndex
+    TmpIndex = lstNPCs.ListIndex
     
     ' Save the npc to the map
-    Map.NPC(lstNpcs.ListIndex + 1) = cmbNpcs.ListIndex
+    Map.NPC(lstNPCs.ListIndex + 1) = cmbNPCs.ListIndex
     
     ' Clear the list
-    lstNpcs.Clear
+    lstNPCs.Clear
     
     ' Reload the npcs into the list
-    Call LoadMapPropertiesNpcs
+    Call LoadMapPropertiesNPCs
     
     ' Set the new index based on the old temporary Index
-    lstNpcs.ListIndex = TmpIndex + 1
+    lstNPCs.ListIndex = TmpIndex + 1
     Exit Sub
     
 ' Error handler
@@ -907,23 +907,23 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub lstNpcs_dblClick()
+Private Sub lstNPCs_dblClick()
     Dim i As Long
     Dim Index As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Index = frmEditor_MapProperties.lstNpcs.ListIndex + 1
+    Index = frmEditor_MapProperties.lstNPCs.ListIndex + 1
     
     If Index < 1 Or Index > MAX_NPCS Then Exit Sub
     
     For i = 1 To MAX_NPCS
-        If frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": None" Then
-            cmbNpcs.ListIndex = 0
+        If frmEditor_MapProperties.lstNPCs.List(Index - 1) = Index & ": None" Then
+            cmbNPCs.ListIndex = 0
             Exit For
-        ElseIf frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": " & Trim$(NPC(i).name) Then
-            cmbNpcs.ListIndex = i
+        ElseIf frmEditor_MapProperties.lstNPCs.List(Index - 1) = Index & ": " & Trim$(NPC(i).name) Then
+            cmbNPCs.ListIndex = i
             Exit For
         End If
     Next
@@ -931,20 +931,20 @@ Private Sub lstNpcs_dblClick()
     
 ' Error handler
 errorhandler:
-    HandleError "lstNpcs_dblClick", "frmEditor_MapProperties", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "lstNPCs_dblClick", "frmEditor_MapProperties", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub lstNpcs_Click()
+Private Sub lstNPCs_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    chkDoNotAutoSpawn.Value = Map.NPCSpawnType(lstNpcs.ListIndex + 1)
+    chkDoNotAutoSpawn.Value = Map.NPCSpawnType(lstNPCs.ListIndex + 1)
     Exit Sub
     
 ' Error handler
 errorhandler:
-    HandleError "lstNpcs_Click", "frmEditor_MapProperties", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "lstNPCs_Click", "frmEditor_MapProperties", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

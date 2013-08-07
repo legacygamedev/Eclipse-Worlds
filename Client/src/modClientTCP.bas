@@ -498,7 +498,7 @@ Public Sub SendSaveMap()
         buffer.WriteByte .MaxX
         buffer.WriteByte .MaxY
         
-        buffer.WriteByte .Npc_HighIndex
+        buffer.WriteByte .NPC_HighIndex
     End With
 
     For X = 0 To Map.MaxX
@@ -924,28 +924,28 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub SendSaveNpc(ByVal NpcNum As Long)
+Public Sub SendSaveNPC(ByVal NPCNum As Long)
     Dim buffer As clsBuffer
-    Dim NpcSize As Long
-    Dim NpcData() As Byte
+    Dim NPCSize As Long
+    Dim NPCData() As Byte
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
-    NpcSize = LenB(NPC(NpcNum))
-    ReDim NpcData(NpcSize - 1)
-    CopyMemory NpcData(0), ByVal VarPtr(NPC(NpcNum)), NpcSize
+    NPCSize = LenB(NPC(NPCNum))
+    ReDim NPCData(NPCSize - 1)
+    CopyMemory NPCData(0), ByVal VarPtr(NPC(NPCNum)), NPCSize
     buffer.WriteLong CSaveNPC
-    buffer.WriteLong NpcNum
-    buffer.WriteBytes NpcData
+    buffer.WriteLong NPCNum
+    buffer.WriteBytes NPCData
     SendData buffer.ToArray()
     Set buffer = Nothing
     Exit Sub
     
 ' Error handler
 errorhandler:
-    HandleError "SendSaveNpc", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "SendSaveNPC", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1481,7 +1481,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub SendRequestNpcs()
+Sub SendRequestNPCs()
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -1495,7 +1495,7 @@ Sub SendRequestNpcs()
     
 ' Error handler
 errorhandler:
-    HandleError "SendRequestNpcs", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "SendRequestNPCs", "modClientTCP", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

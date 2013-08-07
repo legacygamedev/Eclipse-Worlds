@@ -25,16 +25,16 @@ Public Enum ServerPackets
     SPlayerData
     SPlayerMove
     SPlayerWarp
-    SNpcMove
+    SNPCMove
     SPlayerDir
-    SNpcDir
+    SNPCDir
     SAttack
-    SNpcAttack
+    SNPCAttack
     SCheckForMap
     SMapData
     SMapItemData
-    SMapNpcData
-    SMapNpcTarget
+    SMapNPCData
+    SMapNPCTarget
     SMapDone
     SGlobalMsg
     SAdminMsg
@@ -44,10 +44,10 @@ Public Enum ServerPackets
     SItemEditor
     SUpdateItem
     SREditor
-    SSpawnNpc
-    SNpcDead
-    SNpcEditor
-    SUpdateNpc
+    SSpawnNPC
+    SNPCDead
+    SNPCEditor
+    SUpdateNPC
     SEditMap
     SEditEvent
     SShopEditor
@@ -68,7 +68,7 @@ Public Enum ServerPackets
     SAnimationEditor
     SUpdateAnimation
     SAnimation
-    SMapNpcVitals
+    SMapNPCVitals
     SSpellCooldown
     SClearSpellBuffer
     SSayMsg
@@ -90,7 +90,7 @@ Public Enum ServerPackets
     SGuildMembers
     SGuildInvite
     SMapReport
-    SNpcSpellBuffer
+    SNPCSpellBuffer
     SCheckpoint
     SUpdateLogs
     SFriendsList
@@ -383,7 +383,7 @@ Public Enum OptionButtons
     Opt_Level
     Opt_Guilds
     Opt_PlayerVitals
-    Opt_NpcVitals
+    Opt_NPCVitals
     Opt_Title
     Opt_BattleMusic
     Opt_Mouse
@@ -505,7 +505,7 @@ Public Enum EventType
     evShowChatBubble
     evLabel
     evGotoLabel
-    evSpawnNpc
+    evSpawnNPC
     evFadeIn
     evFadeOut
     evFlashWhite

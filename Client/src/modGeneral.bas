@@ -98,7 +98,7 @@ Public Sub Main()
     InitDX8
     
     ' Set the data to default
-    ClearNpcs
+    ClearNPCs
     ClearResources
     ClearItems
     ClearShops
@@ -918,7 +918,7 @@ Public Sub ResetOptionButtons(Optional ByVal IgnoreMe As Byte = 0)
     If Not IgnoreMe = OptionButtons.Opt_Sound Then Call RenderOptionButton(frmMain.picOptionSound, OptionButtons.Opt_Sound, Options.Sound)
     If Not IgnoreMe = OptionButtons.Opt_WASD Then Call RenderOptionButton(frmMain.picOptionWASD, OptionButtons.Opt_WASD, Options.WASD)
     If Not IgnoreMe = OptionButtons.Opt_PlayerVitals Then Call RenderOptionButton(frmMain.picOptionPlayerVitals, OptionButtons.Opt_PlayerVitals, Options.PlayerVitals)
-    If Not IgnoreMe = OptionButtons.Opt_NpcVitals Then Call RenderOptionButton(frmMain.picOptionNpcVitals, OptionButtons.Opt_NpcVitals, Options.NpcVitals)
+    If Not IgnoreMe = OptionButtons.Opt_NPCVitals Then Call RenderOptionButton(frmMain.picOptionNpcVitals, OptionButtons.Opt_NPCVitals, Options.NPCVitals)
     If Not IgnoreMe = OptionButtons.Opt_Level Then Call RenderOptionButton(frmMain.picOptionLevel, OptionButtons.Opt_Level, Options.Levels)
     If Not IgnoreMe = OptionButtons.Opt_Guilds Then Call RenderOptionButton(frmMain.picOptionGuild, OptionButtons.Opt_Guilds, Options.Guilds)
     If Not IgnoreMe = OptionButtons.Opt_Mouse Then Call RenderOptionButton(frmMain.picOptionMouse, OptionButtons.Opt_Mouse, Options.Mouse)

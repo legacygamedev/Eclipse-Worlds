@@ -3,7 +3,7 @@ Option Explicit
 
 Public Sub RemoveDeadEvents()
 Dim i As Long, MapNum As Long, Buffer As clsBuffer, X As Long, ID As Long, page As Long
-    ' See if we should remove any events....
+    ' See if we should remove any events
     For i = 1 To Player_HighIndex
         If TempPlayer(i).EventMap.CurrentEvents > 0 Then
             MapNum = GetPlayerMap(i)
@@ -11,9 +11,8 @@ Dim i As Long, MapNum As Long, Buffer As clsBuffer, X As Long, ID As Long, page 
                 ID = TempPlayer(i).EventMap.EventPages(X).eventID
                 page = TempPlayer(i).EventMap.EventPages(X).PageID
                 If Map(MapNum).Events(ID).PageCount >= page Then
-                
-                    ' See if there is any reason to delete this event....
-                    ' In other words, go back through conditions and make sure they all check up.
+                    ' See if there is any reason to delete this event
+                    ' In other words, go back through conditions and make sure they all check up
                     If TempPlayer(i).EventMap.EventPages(X).Visible = 1 Then
                         If Map(MapNum).Events(ID).Pages(page).chkHasItem = 1 Then
                             If HasItem(i, Map(MapNum).Events(ID).Pages(page).HasItemIndex) = 0 Then

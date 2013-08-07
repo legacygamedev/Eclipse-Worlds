@@ -116,9 +116,9 @@ Public Sub GameLoop()
             Next
 
             ' Process npc movements (actually move them)
-            For i = 1 To Map.Npc_HighIndex
+            For i = 1 To Map.NPC_HighIndex
                 If Map.NPC(i) > 0 Then
-                    Call ProcessNpcMovement(i)
+                    Call ProcessNPCMovement(i)
                 End If
             Next
             
@@ -313,13 +313,13 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub ProcessNpcMovement(ByVal MapNPCNum As Long)
+Sub ProcessNPCMovement(ByVal MapNPCNum As Long)
     Dim MovementSpeed As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    ' Check if Npc is walking, and if so process moving them over
+    ' Check if NPC is walking, and if so process moving them over
     If MapNPC(MapNPCNum).Target = 0 Then
         MovementSpeed = MOVEMENT_SPEED / 2
     Else
@@ -370,7 +370,7 @@ Sub ProcessNpcMovement(ByVal MapNPCNum As Long)
     
 ' Error handler
 errorhandler:
-    HandleError "ProcessNpcMovement", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "ProcessNPCMovement", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -743,7 +743,7 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     Next
 
     ' Check to see if a NPC is already on that tile
-    For i = 1 To Map.Npc_HighIndex
+    For i = 1 To Map.NPC_HighIndex
         If MapNPC(i).num > 0 Then
             If MapNPC(i).X = X Then
                 If MapNPC(i).Y = Y Then
@@ -1683,7 +1683,7 @@ Public Sub PlaySoundEntity(ByVal X As Long, ByVal Y As Long, ByVal EntityType As
             If EntityNum > MAX_ITEMS Then Exit Sub
             SoundName = Trim$(item(EntityNum).Sound)
         
-        ' Npcs
+        ' NPCs
         Case SoundEntity.seNPC
             If EntityNum > MAX_NPCS Then Exit Sub
             SoundName = Trim$(NPC(EntityNum).Sound)
@@ -2143,16 +2143,16 @@ Public Sub PlayMapMusic()
     BattleMusicActive = False
     ActiveNPCTarget = 0
     
-    For i = 1 To Map.Npc_HighIndex - 1
+    For i = 1 To Map.NPC_HighIndex - 1
         Call CheckForBattleMusic(i)
     Next
     
     InitBattleMusic = True
     
-    Call CheckForBattleMusic(Map.Npc_HighIndex)
+    Call CheckForBattleMusic(Map.NPC_HighIndex)
     
     ' Set the music to the music in the map properties
-    If Options.BattleMusic = 0 Or Map.Npc_HighIndex = 0 Or BattleMusicActive = False Then
+    If Options.BattleMusic = 0 Or Map.NPC_HighIndex = 0 Or BattleMusicActive = False Then
         MusicFile = Trim$(Map.Music)
         
         If MusicFile = vbNullString Then
@@ -2273,7 +2273,7 @@ Sub ProcessEventMovement(ByVal id As Long)
     
 ' Error handler
 errorhandler:
-    HandleError "ProcessNpcMovement", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "ProcessNPCMovement", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -2409,7 +2409,7 @@ Public Function FindTarget() As Boolean
     Next
     
     ' Check NPCs
-    For i = 1 To Map.Npc_HighIndex
+    For i = 1 To Map.NPC_HighIndex
         If MapNPC(i).num > 0 Then
             X = (MapNPC(i).X * 32) + MapNPC(i).xOffset + 32
             Y = (MapNPC(i).Y * 32) + MapNPC(i).yOffset + 32

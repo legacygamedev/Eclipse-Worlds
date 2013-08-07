@@ -5518,7 +5518,7 @@ Private Sub cmdShowText_Ok_Click()
     fraCommands.Visible = False
 End Sub
 
-Private Sub cmdSpawnNpc_Cancel_Click()
+Private Sub cmdSpawnNPC_Cancel_Click()
     If Not isEdit Then fraCommands.Visible = True Else fraCommands.Visible = False
     
     frmEditor_Events.fraRandom(9).Visible = True
@@ -5527,9 +5527,9 @@ Private Sub cmdSpawnNpc_Cancel_Click()
     fraCommand(19).Visible = False
 End Sub
 
-Private Sub cmdSpawnNpc_Ok_Click()
+Private Sub cmdSpawnNPC_Ok_Click()
     If isEdit = False Then
-        AddCommand EventType.evSpawnNpc
+        AddCommand EventType.evSpawnNPC
     Else
         EditCommand
     End If
@@ -5721,7 +5721,7 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     frmAdmin.chkEditor(EDITOR_EVENTS).Value = False
-    BringWindowToTop (frmAdmin.hwnd)
+    BringWindowToTop (frmAdmin.hWnd)
     Editor = 0
 End Sub
 

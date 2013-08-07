@@ -4,7 +4,7 @@ Option Explicit
 Public cpEvent As EventRec
 
 Const LB_SETHORIZONTALEXTENT = &H194
-Private Declare Function SendMessageByNum Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Declare Function SendMessageByNum Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
 Public charList() As String
 Public g_playersOnline() As String
 Public ignoreIndexes() As Long
@@ -18,12 +18,12 @@ Public currentlyListedIndexes() As Long
 Public adminMin As Boolean
 Public EventList() As EventListRec
 Public Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
-    (ByVal hwnd As Long, ByVal nIndex As Long) As Long
-Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, _
+    (ByVal hWnd As Long, ByVal nIndex As Long) As Long
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, _
 ByVal dwNewLong As Long) As Long
-Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, _
+Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, _
 ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
-Public Declare Function BringWindowToTop Lib "user32" (ByVal hwnd As Long) As Long
+Public Declare Function BringWindowToTop Lib "user32" (ByVal hWnd As Long) As Long
 
 
 Public Const GWL_WNDPROC   As Long = (-4)
@@ -76,21 +76,21 @@ Public Function getWndProcAddr() As Long
     getWndProcAddr = ProcAdr(AddressOf WindowProc)
 End Function
 
-Private Function WindowProc(ByVal hwnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Function WindowProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
     
         Select Case msg
         Case WM_SETFOCUS
             Exit Function
         Case WM_DESTROY
-            WindowProc = CallWindowProc(GetWindowLong(hwnd, -21), hwnd, msg, wParam, lParam)
-            Call SetWindowLong(hwnd, GWL_WNDPROC, GetWindowLong(hwnd, -21))
+            WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, msg, wParam, lParam)
+            Call SetWindowLong(hWnd, GWL_WNDPROC, GetWindowLong(hWnd, -21))
             Exit Function
     End Select
-    WindowProc = CallWindowProc(GetWindowLong(hwnd, -21), hwnd, msg, wParam, lParam)
+    WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, msg, wParam, lParam)
 End Function
  
-Public Sub SubClassHwnd(ByVal hwnd As Long)
-        SetWindowLong hwnd, -21, SetWindowLong(hwnd, GWL_WNDPROC, AddressOf WindowProc)
+Public Sub SubClassHwnd(ByVal hWnd As Long)
+        SetWindowLong hWnd, -21, SetWindowLong(hWnd, GWL_WNDPROC, AddressOf WindowProc)
 End Sub
 
 Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal MovedMouse As Boolean = True)
@@ -373,7 +373,7 @@ Public Sub MapEditorSetAttributes(ByVal Button As Integer, ByVal X As Long, ByVa
             .Data3 = 0
         End If
         
-        ' Npc Avoid
+        ' NPC Avoid
         If frmEditor_Map.optNPCAvoid.Value Then
             .Type = TILE_TYPE_NPCAVOID
             .Data1 = 0
@@ -389,11 +389,11 @@ Public Sub MapEditorSetAttributes(ByVal Button As Integer, ByVal X As Long, ByVa
             .Data3 = 0
         End If
         
-        ' Npc Spawn
+        ' NPC Spawn
         If frmEditor_Map.optNpcSpawn.Value Then
             .Type = TILE_TYPE_NPCSPAWN
-            .Data1 = SpawnNpcNum
-            .Data2 = SpawnNpcDir
+            .Data1 = SpawnNPCNum
+            .Data2 = SpawnNPCDir
             .Data3 = 0
         End If
         
@@ -1115,7 +1115,7 @@ Public Sub NPCEditorInit()
     If frmEditor_NPC.Visible = False Then Exit Sub
     
     EditorIndex = frmEditor_NPC.lstIndex.ListIndex + 1
-    Npc_Changed(EditorIndex) = True
+    NPC_Changed(EditorIndex) = True
 
     ' Populate the cache if we need to
     If Not HasPopulated Then
@@ -1153,7 +1153,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtExp.text = NPC(EditorIndex).Exp
+        .txtEXP.text = NPC(EditorIndex).Exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -1214,59 +1214,59 @@ Public Sub NPCEditorInit()
     
 ' Error handler
 errorhandler:
-    HandleError "NpcEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "NPCEditorInit", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub NpcEditorSave()
+Public Sub NPCEditorSave()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_NPCS
-        If Npc_Changed(i) Then
-            Call SendSaveNpc(i)
+        If NPC_Changed(i) Then
+            Call SendSaveNPC(i)
         End If
     Next
     
     Unload frmEditor_NPC
     Editor = 0
-    ClearChanged_Npc
+    ClearChanged_NPC
     Exit Sub
     
 ' Error handler
 errorhandler:
-    HandleError "NpcEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "NPCEditorSave", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub NpcEditorCancel()
+Public Sub NPCEditorCancel()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Editor = 0
-    ClearChanged_Npc
-    ClearNpcs
-    SendRequestNpcs
+    ClearChanged_NPC
+    ClearNPCs
+    SendRequestNPCs
     Exit Sub
     
 ' Error handler
 errorhandler:
-    HandleError "NpcEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "NPCEditorCancel", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Sub ClearChanged_Npc()
+Public Sub ClearChanged_NPC()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    ZeroMemory Npc_Changed(1), MAX_NPCS * 2 ' 2 = boolean length
+    ZeroMemory NPC_Changed(1), MAX_NPCS * 2 ' 2 = boolean length
     Exit Sub
       
 ' Error handler
 errorhandler:
-    HandleError "ClearChanged_Npc", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "ClearChanged_NPC", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1769,12 +1769,12 @@ Public Sub MapPropertiesInit()
         If Not SoundSet Or .cmbSound.ListIndex = -1 Then .cmbSound.ListIndex = 0
         
         ' Update the combo box
-        .cmbNpcs.AddItem "None"
-        .cmbNpcs.ListIndex = 0
+        .cmbNPCs.AddItem "None"
+        .cmbNPCs.ListIndex = 0
         
         ' Load all the npcs that can be selected into the combo box
         For i = 1 To MAX_NPCS
-            .cmbNpcs.AddItem i & ": " & Trim$(NPC(i).name)
+            .cmbNPCs.AddItem i & ": " & Trim$(NPC(i).name)
         Next
         
         .CmbWeather.ListIndex = Map.Weather
@@ -1791,8 +1791,8 @@ Public Sub MapPropertiesInit()
         .ScrlB.Value = Map.Blue
         .scrlA.Value = Map.Alpha
 
-        ' Load the npcs into the lstNpcs
-        Call LoadMapPropertiesNpcs
+        ' Load the npcs into the lstNPCs
+        Call LoadMapPropertiesNPCs
         
         ' Reset of it
         .txtUp.text = CStr(Map.Up)
@@ -1817,7 +1817,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub LoadMapPropertiesNpcs()
+Public Sub LoadMapPropertiesNPCs()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
@@ -1827,9 +1827,9 @@ Public Sub LoadMapPropertiesNpcs()
     With Map
         For i = 1 To MAX_MAP_NPCS
             If .NPC(i) < 1 Or .NPC(i) > MAX_NPCS Then
-                frmEditor_MapProperties.lstNpcs.AddItem i & ": None"
+                frmEditor_MapProperties.lstNPCs.AddItem i & ": None"
             Else
-                frmEditor_MapProperties.lstNpcs.AddItem i & ": " & Trim$(NPC(.NPC(i)).name)
+                frmEditor_MapProperties.lstNPCs.AddItem i & ": " & Trim$(NPC(.NPC(i)).name)
             End If
         Next
     End With
@@ -1837,7 +1837,7 @@ Public Sub LoadMapPropertiesNpcs()
     
 ' Error handler
 errorhandler:
-    HandleError "LoadMapPropertiesNpcs", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "LoadMapPropertiesNPCs", "modGameEditors", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -3177,7 +3177,7 @@ newlist:
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"
                         Case EventType.evGotoLabel
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Jump to Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"
-                        Case EventType.evSpawnNpc
+                        Case EventType.evSpawnNPC
                             If Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) <= 0 Then
                                 frmEditor_Events.lstCommands.AddItem indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & "]"
                             Else
@@ -3253,7 +3253,7 @@ Sub ListCommandAdd(S As String)
     If X < frmEditor_Events.TextWidth(S & "  ") Then
        X = frmEditor_Events.TextWidth(S & "  ")
       If frmEditor_Events.ScaleMode = vbTwips Then X = X / Screen.TwipsPerPixelX ' if twips change to pixels
-      SendMessageByNum frmEditor_Events.lstCommands.hwnd, LB_SETHORIZONTALEXTENT, X, 0
+      SendMessageByNum frmEditor_Events.lstCommands.hWnd, LB_SETHORIZONTALEXTENT, X, 0
     End If
     Exit Sub
     
@@ -3533,7 +3533,7 @@ Sub AddCommand(Index As Long)
         Case EventType.evGotoLabel
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtGotoLabel.text
-        Case EventType.evSpawnNpc
+        Case EventType.evSpawnNPC
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbSpawnNPC.ListIndex + 1
         Case EventType.evFadeIn
@@ -4019,7 +4019,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(9).Visible = True
             frmEditor_Events.fraCommands.Visible = False
-        Case EventType.evSpawnNpc
+        Case EventType.evSpawnNPC
             isEdit = True
             frmEditor_Events.cmbSpawnNPC.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 - 1
             frmEditor_Events.fraDialogue.Visible = True
@@ -4321,7 +4321,7 @@ Public Sub EditCommand()
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtLabelName.text
         Case EventType.evGotoLabel
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 = frmEditor_Events.txtGotoLabel.text
-        Case EventType.evSpawnNpc
+        Case EventType.evSpawnNPC
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbSpawnNPC.ListIndex + 1
         Case EventType.evSetFog
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.ScrlFogData(0).Value
