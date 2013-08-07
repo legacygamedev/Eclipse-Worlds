@@ -291,7 +291,7 @@ Private Sub UpdateMapLogic()
                                             ' Different npc
                                             If MapNPC(MapNum).NPC(i).Num <> MapNPC(MapNum).NPC(X).Num Then
                                                 ' Not friendly or shopkeeper
-                                                If Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_FRIENDLY Or Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER Or Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_QUEST Then
+                                                If Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_QUEST Then
                                                     ' Different faction
                                                     If NPC(MapNPC(MapNum).NPC(i).Num).Faction > 0 Then
                                                         If Not NPC(MapNPC(MapNum).NPC(i).Num).Faction = NPC(NPCNum).Faction Then
@@ -341,7 +341,7 @@ Private Sub UpdateMapLogic()
                         TargetType = MapNPC(MapNum).NPC(X).TargetType
       
                         ' Check to see if its time for the npc to walk
-                        If Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_SHOPKEEPER Then
+                        If Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_QUEST Then
                             If TargetType = 1 Then ' Player
                                 ' Check to see if we are following a player or not
                                 If Target > 0 Then

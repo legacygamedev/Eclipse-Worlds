@@ -6429,10 +6429,6 @@ Public Sub DrawMiniMap()
                     RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(Red)
                 Case NPC_BEHAVIOR_ATTACKWHENATTACKED
                     RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(DarkGrey)
-                Case NPC_BEHAVIOR_SHOPKEEPER
-                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightBlue)
-                Case NPC_BEHAVIOR_FRIENDLY
-                    RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(White)
                 Case NPC_BEHAVIOR_GUARD
                     RenderTexture Tex_White, CameraX, CameraY, 0, 0, 4, 4, 4, 4, DX8Color(BrightGreen)
             End Select

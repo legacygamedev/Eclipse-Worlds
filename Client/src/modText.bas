@@ -427,10 +427,6 @@ Public Sub DrawNPCName(ByVal Index As Long)
             Color = BrightRed
         Case NPC_BEHAVIOR_ATTACKWHENATTACKED
             Color = DarkGrey
-        Case NPC_BEHAVIOR_FRIENDLY
-            Color = White
-        Case NPC_BEHAVIOR_SHOPKEEPER
-            Color = BrightBlue
         Case NPC_BEHAVIOR_GUARD
             Color = Magenta
         Case NPC_BEHAVIOR_QUEST

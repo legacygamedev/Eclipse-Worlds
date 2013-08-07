@@ -463,7 +463,7 @@ Public Sub TryPlayerAttackNPC(ByVal Index As Long, ByVal MapNPCNum As Long)
     End If
 End Sub
 
-Public Function CanPlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, Optional ByVal IsSpell As Boolean = False, Optional ByVal UsingBow As Boolean) As Boolean
+Public Function CanPlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, Optional ByVal IsSpell As Boolean = False) As Boolean
     Dim MapNum As Integer
     Dim NPCNum As Long
     Dim NPCX As Long
@@ -484,7 +484,7 @@ Public Function CanPlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Lo
     
     ' Make sure the npc isn't already dead
     If MapNPC(MapNum).NPC(MapNPCNum).Vital(Vitals.HP) < 1 Then
-        If Not NPC(MapNPC(MapNum).NPC(MapNPCNum).Num).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(MapNPC(MapNum).NPC(MapNPCNum).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(MapNPC(MapNum).NPC(MapNPCNum).Num).Behavior = NPC_BEHAVIOR_QUEST Then Exit Function
+        If Not NPC(MapNPC(MapNum).NPC(MapNPCNum).Num).Behavior = NPC_BEHAVIOR_QUEST Then Exit Function
     End If
 
     ' Make sure they are a player killer or else they can't attack a guard
@@ -514,22 +514,16 @@ Public Function CanPlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Lo
             End Select
         End If
 
-        If Not IsSpell And Not UsingBow Then
-            If Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_QUEST Then
+        If Not IsSpell Then
+            If Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_QUEST Then
                 If DidNPCMitigatePlayer(Attacker, MapNPCNum) = False Then
                     CanPlayerAttackNPC = True
                 End If
             ElseIf Len(Trim$(NPC(NPCNum).AttackSay)) > 0 Then
                 Call SendChatBubble(MapNum, MapNPCNum, TARGET_TYPE_NPC, Trim$(NPC(NPCNum).AttackSay), White)
             End If
-        ElseIf UsingBow Then
-            If Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_QUEST Then
-                If DidNPCMitigatePlayer(Attacker, MapNPCNum) = False Then
-                    CanPlayerAttackNPC = True
-                End If
-            End If
         ElseIf IsSpell Then
-            If Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_QUEST Then
+            If Not NPC(NPCNum).Behavior = NPC_BEHAVIOR_QUEST Then
                 If DidNPCMitigatePlayer(Attacker, MapNPCNum) = False Then
                     CanPlayerAttackNPC = True
                 End If
@@ -929,7 +923,7 @@ Function CanNPCAttackNPC(ByVal MapNum As Integer, ByVal Attacker As Long, ByVal 
     If MapNPC(MapNum).NPC(Attacker).Vital(Vitals.HP) < 1 Or MapNPC(MapNum).NPC(Victim).Vital(Vitals.HP) < 1 Then Exit Function
     
     ' Make sure they aren't trying to attack a friendly or shopkeeper NPC
-    If NPC(MapNPC(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_FRIENDLY Or NPC(MapNPC(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER Or NPC(MapNPC(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_QUEST Then Exit Function
+    If NPC(MapNPC(MapNum).NPC(Victim).Num).Behavior = NPC_BEHAVIOR_QUEST Then Exit Function
     
     ' Make sure they aren't casting a spell
     If MapNPC(MapNum).NPC(Attacker).SpellBuffer.Timer > 0 And Spell = False Then Exit Function
@@ -1225,7 +1219,7 @@ Function CanNPCAttackPlayer(ByVal MapNPCNum As Long, ByVal Index As Long, Option
     If MapNPC(MapNum).NPC(MapNPCNum).SpellBuffer.Timer > 0 And Spell = False Then Exit Function
     
     ' Can't attack if shopkeeper, friendly, or quest
-    If NPC(MapNPC(MapNum).NPC(MapNPCNum).Num).Behavior = NPC_BEHAVIOR_FRIENDLY Or NPC(MapNPC(MapNum).NPC(MapNPCNum).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER Or NPC(MapNPC(MapNum).NPC(MapNPCNum).Num).Behavior = NPC_BEHAVIOR_QUEST Then Exit Function
+    If NPC(MapNPC(MapNum).NPC(MapNPCNum).Num).Behavior = NPC_BEHAVIOR_QUEST Then Exit Function
     
     ' Don't attack players who are not Player Killers if the attack is a guard
     If NPC(MapNPC(MapNum).NPC(MapNPCNum).Num).Behavior = NPC_BEHAVIOR_GUARD Then
@@ -2193,7 +2187,7 @@ Public Sub BufferPlayerSpell(ByVal Index As Long, ByVal SpellSlot As Byte)
                     If Spell(SpellNum).Type <> SPELL_TYPE_DAMAGEHP And Spell(SpellNum).Type <> SPELL_TYPE_DAMAGEMP Then
                         HasBuffered = True
                     Else
-                        If CanPlayerAttackNPC(Index, Target, False, True) Then
+                        If CanPlayerAttackNPC(Index, Target, True) Then
                             HasBuffered = True
                         End If
                     End If
@@ -2350,10 +2344,10 @@ Public Sub CastSpell(ByVal Index As Long, ByVal SpellSlot As Byte, ByVal Target 
                             If MapNPC(MapNum).NPC(i).Vital(HP) > 0 Then
                                 If IsInRange(AoE, X, Y, MapNPC(MapNum).NPC(i).X, MapNPC(MapNum).NPC(i).Y) Then
                                     ' Friendly and Shopkeeper
-                                    If Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_FRIENDLY And Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_SHOPKEEPER And Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_QUEST Then
+                                    If Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_QUEST Then
                                         ' Guard
                                         If Not NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_GUARD Or (NPC(MapNPC(MapNum).NPC(i).Num).Behavior = NPC_BEHAVIOR_GUARD And GetPlayerPK(Index) = PLAYER_KILLER) Then
-                                            If CanPlayerAttackNPC(Index, i, False, True) Then
+                                            If CanPlayerAttackNPC(Index, i, True) Then
                                                 SendAnimation MapNum, Spell(SpellNum).SpellAnim, 0, 0, TARGET_TYPE_NPC, i
                                                 PlayerAttackNPC Index, i, Vital, SpellNum
                                             End If
@@ -2432,7 +2426,7 @@ Public Sub CastSpell(ByVal Index As Long, ByVal SpellSlot As Byte, ByVal Target 
                             End If
                         End If
                     Else
-                        If CanPlayerAttackNPC(Index, Target, False, True) Then
+                        If CanPlayerAttackNPC(Index, Target, True) Then
                             If Vital > 0 Then
                                 SendAnimation MapNum, Spell(SpellNum).SpellAnim, 0, 0, TARGET_TYPE_NPC, Target
                                 PlayerAttackNPC Index, Target, Vital, SpellNum
@@ -2468,7 +2462,7 @@ Public Sub CastSpell(ByVal Index As Long, ByVal SpellSlot As Byte, ByVal Target 
                         End If
                     ElseIf TargetType = TARGET_TYPE_NPC And Increment = False Or NPC(MapNPC(MapNum).NPC(Target).Num).Behavior = NPC_BEHAVIOR_GUARD And Account(Index).Chars(GetPlayerChar(Index)).PK = NO Then
                         If Spell(SpellNum).Type = SPELL_TYPE_DAMAGEMP Then
-                            If CanPlayerAttackNPC(Index, Target, False, True) Then
+                            If CanPlayerAttackNPC(Index, Target, True) Then
                                 SpellNPC_Effect VitalType, Increment, Target, Vital, SpellNum, MapNum
                             End If
                         Else

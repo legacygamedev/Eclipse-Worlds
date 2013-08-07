@@ -30,9 +30,9 @@ Begin VB.Form frmEditor_Events
       Caption         =   "Delete"
       Enabled         =   0   'False
       Height          =   375
-      Left            =   8700
+      Left            =   2880
       TabIndex        =   435
-      Top             =   8385
+      Top             =   8400
       Visible         =   0   'False
       Width           =   1455
    End
