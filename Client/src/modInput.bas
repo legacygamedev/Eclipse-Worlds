@@ -193,8 +193,16 @@ Public Sub CheckInputKeys()
             End If
         End If
        
-        ' Are we moving
-        If distanceX >= distanceY Then Call MouseMoveX Else Call MouseMoveY
+        ' Are we moving?
+        If (GetPlayerDir(MyIndex) = DIR_LEFT And GetPlayerX(MyIndex) = 0) Or (GetPlayerDir(MyIndex) = DIR_RIGHT And GetPlayerX(MyIndex) = Map.MaxX) Then
+            Call MouseMoveX
+        ElseIf (GetPlayerDir(MyIndex) = DIR_UP And GetPlayerY(MyIndex) = 0) Or (GetPlayerDir(MyIndex) = DIR_DOWN And GetPlayerY(MyIndex) = Map.MaxY) Then
+            Call MouseMoveY
+        ElseIf distanceX >= distanceY Then
+            Call MouseMoveX
+        Else
+            Call MouseMoveY
+        End If
     End If
     Exit Sub
     
@@ -205,19 +213,12 @@ errorhandler:
 End Sub
 
 Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
-
     Dim ChatText  As String
-
     Dim name      As String
-
     Dim i         As Long
-
     Dim n         As Long
-
     Dim Command() As String
-
     Dim buffer    As clsBuffer
-
     Dim StrInput  As String
 
     ' If debug mode, handle error then exit out
@@ -230,10 +231,8 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
     ' Handle when the player presses the return key
     If KeyAscii = vbKeyReturn Then
-
         ' Party message
         If Left$(ChatText, 1) = "~" Or Left$(MyText, 7) = "/party " Then
-
             ' Make sure they are actually sending something
             If Left$(MyText, 7) = "/party " And Len(MyText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
@@ -243,9 +242,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AddText("Usage: ~message or /party message", BrightRed)
                 MyText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
-
                 Exit Sub
-
             End If
 
             ' Send the message to the player
@@ -257,14 +254,11 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
-
             Exit Sub
-
         End If
         
         ' Guild message
         If Left$(ChatText, 1) = "@" Or Left$(MyText, 7) = "/guild " Then
-
             ' Make sure they are actually sending something
             If Left$(MyText, 7) = "/guild " And Len(MyText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
@@ -276,7 +270,6 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 frmMain.txtMyChat.text = vbNullString
 
                 Exit Sub
-
             End If
 
             ' Send the message to the player
@@ -288,14 +281,11 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
-
             Exit Sub
-
         End If
 
         ' Global message
         If Left$(ChatText, 1) = "'" Or Left$(MyText, 8) = "/global " Then
-
             ' Make sure they are actually sending something
             If Left$(MyText, 8) = "/global " And Len(MyText) > 8 Then
                 ChatText = Mid$(ChatText, 9, Len(ChatText) - 1)
@@ -307,21 +297,17 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 frmMain.txtMyChat.text = vbNullString
 
                 Exit Sub
-
             End If
 
             ' Send the message to the player
             Call GlobalMsg(ChatText)
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
-
             Exit Sub
-
         End If
             
         ' Admin message
         If Left$(ChatText, 1) = "`" Or Left$(MyText, 7) = "/Staff " Then
-
             ' Make sure they are actually sending something
             If Left$(MyText, 7) = "/Staff " And Len(MyText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
@@ -331,9 +317,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AddText("Usage: `message or /Staff message", BrightRed)
                 MyText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
-
                 Exit Sub
-
             End If
 
             If GetPlayerAccess(MyIndex) > 0 Then
@@ -343,14 +327,11 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
-
             Exit Sub
-
         End If
         
         ' Emote message
         If Left$(ChatText, 1) = "-" Or Left$(MyText, 7) = "/emote " Then
-
             ' Make sure they are actually sending something
             If Left$(MyText, 7) = "/emote " And Len(MyText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
@@ -369,14 +350,11 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Call EmoteMsg(ChatText)
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
-
             Exit Sub
-
         End If
         
         ' Private message
         If Left$(ChatText, 1) = "!" Or Left$(MyText, 9) = "/whisper " Then
-
             ' Make sure they are actually sending something
             If Left$(MyText, 9) = "/whisper " And Len(MyText) > 9 Then
                 ChatText = Mid$(ChatText, 10, Len(ChatText) - 1)
@@ -386,24 +364,19 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
                 MyText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
-
                 Exit Sub
-
             End If
             
             name = vbNullString
 
             ' Get the desired player from the user text
             For i = 1 To Len(ChatText)
-
                 If Not Mid$(ChatText, i, 1) = " " Then
                     name = name & Mid$(ChatText, i, 1)
                 Else
 
                     Exit For
-
                 End If
-
             Next
             
             ' Make sure they are actually sending something
@@ -418,9 +391,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             
             MyText = vbNullString
             frmMain.txtMyChat.text = vbNullString
-
             Exit Sub
-
         End If
 
         ' Commands
@@ -428,7 +399,6 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Command = Split(MyText, Space(1))
 
             Select Case LCase$(Command(0))
-
                 Case "/pquit"
 
                     If Party.num = 0 Then
@@ -1040,13 +1010,13 @@ Public Sub MouseMoveX()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Left movement
-    If GetPlayerX(MyIndex) > MouseX Then
+    If GetPlayerX(MyIndex) > MouseX Or (GetPlayerDir(MyIndex) = DIR_LEFT And GetPlayerX(MyIndex) = 0) Then
         DirUp = False
         DirDown = False
         DirLeft = True
         DirRight = False
     ' Right movement
-    ElseIf GetPlayerX(MyIndex) < MouseX Then
+    ElseIf GetPlayerX(MyIndex) < MouseX Or (GetPlayerDir(MyIndex) = DIR_RIGHT And GetPlayerX(MyIndex) = Map.MaxX) Then
         DirUp = False
         DirDown = False
         DirLeft = False
@@ -1071,13 +1041,13 @@ Public Sub MouseMoveY()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Up movement
-    If GetPlayerY(MyIndex) > MouseY Then
+    If GetPlayerY(MyIndex) > MouseY Or (GetPlayerDir(MyIndex) = DIR_UP And GetPlayerY(MyIndex) = 0) Then
         DirUp = True
         DirDown = False
         DirLeft = False
         DirRight = False
     ' Down movement
-    ElseIf GetPlayerY(MyIndex) < MouseY Then
+    ElseIf GetPlayerY(MyIndex) < MouseY Or (GetPlayerDir(MyIndex) = DIR_DOWN And GetPlayerY(MyIndex) = Map.MaxY) Then
         DirUp = False
         DirDown = True
         DirLeft = False

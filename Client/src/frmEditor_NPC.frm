@@ -188,7 +188,7 @@ Begin VB.Form frmEditor_NPC
          Height          =   300
          ItemData        =   "frmEditor_NPC.frx":03AD
          Left            =   1080
-         List            =   "frmEditor_NPC.frx":03C3
+         List            =   "frmEditor_NPC.frx":03BD
          Style           =   2  'Dropdown List
          TabIndex        =   9
          Top             =   2760
@@ -782,7 +782,7 @@ End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    frmMain.SubDaFocus Me.hwnd
+    frmMain.SubDaFocus Me.hWnd
     scrlSprite.max = NumCharacters
     scrlAnimation.max = MAX_ANIMATIONS
     scrlDrop.max = MAX_NPC_DROPS
@@ -814,7 +814,7 @@ Private Sub cmdSave_Click()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     EditorSave = True
-    Call NpcEditorSave
+    Call NPCEditorSave
     Exit Sub
     
 ' Error handler
@@ -841,14 +841,14 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    frmMain.UnsubDaFocus Me.hwnd
+    frmMain.UnsubDaFocus Me.hWnd
     If EditorSave = False Then
-        Call NpcEditorCancel
+        Call NPCEditorCancel
     Else
         EditorSave = False
     End If
     frmAdmin.chkEditor(EDITOR_NPC).Value = False
-    BringWindowToTop (frmAdmin.hwnd)
+    BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
     
 ' Error handler
@@ -1102,10 +1102,10 @@ Private Sub txtExp_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Not IsNumeric(txtEXP.text) Then txtEXP.text = 0
-    If txtEXP.text > MAX_LONG Then txtEXP.text = MAX_LONG
-    If txtEXP.text < 0 Then txtEXP.text = 0
-    NPC(EditorIndex).Exp = txtEXP.text
+    If Not IsNumeric(txtExp.text) Then txtExp.text = 0
+    If txtExp.text > MAX_LONG Then txtExp.text = MAX_LONG
+    If txtExp.text < 0 Then txtExp.text = 0
+    NPC(EditorIndex).Exp = txtExp.text
     Exit Sub
     
 ' Error handler
@@ -1322,7 +1322,7 @@ Private Sub txtEXP_GotFocus()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    txtEXP.SelStart = Len(txtEXP)
+    txtExp.SelStart = Len(txtExp)
     Exit Sub
     
 ' Error handler

@@ -814,7 +814,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -4316,18 +4315,18 @@ Private Sub picOptionPlayerVitals_Click()
     Call RenderOptionButton(picOptionPlayerVitals, OptionButtons.Opt_PlayerVitals, Options.PlayerVitals)
 End Sub
 
-Private Sub picOptionNpcVitals_Click()
-    If Options.NpcVitals = 0 Then
-        Options.NpcVitals = 1
+Private Sub picOptionNPCVitals_Click()
+    If Options.NPCVitals = 0 Then
+        Options.NPCVitals = 1
         Call Audio.PlaySound(ButtonClick)
     Else
-        Options.NpcVitals = 0
+        Options.NPCVitals = 0
         Call Audio.PlaySound(ButtonBuzzer)
     End If
     SaveOptions
     SetGameFocus
     
-    Call RenderOptionButton(picOptionNpcVitals, OptionButtons.Opt_NpcVitals, Options.NpcVitals)
+    Call RenderOptionButton(picOptionNpcVitals, OptionButtons.Opt_NPCVitals, Options.NPCVitals)
 End Sub
 
 Private Sub picOptionLevel_Click()
@@ -4442,11 +4441,11 @@ Private Sub picOptionPlayerVitals_MouseMove(Button As Integer, Shift As Integer,
     Call RenderOptionButton(picOptionPlayerVitals, OptionButtons.Opt_PlayerVitals, 2 + Options.PlayerVitals)
 End Sub
 
-Private Sub picOptionNpcVitals_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Call ResetOptionButtons(OptionButtons.Opt_NpcVitals)
-    If OptionButton(OptionButtons.Opt_NpcVitals).State > 1 Then Exit Sub
+Private Sub picOptionNPCVitals_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    Call ResetOptionButtons(OptionButtons.Opt_NPCVitals)
+    If OptionButton(OptionButtons.Opt_NPCVitals).State > 1 Then Exit Sub
     Call Audio.PlaySound(ButtonHover)
-    Call RenderOptionButton(picOptionNpcVitals, OptionButtons.Opt_NpcVitals, 2 + Options.NpcVitals)
+    Call RenderOptionButton(picOptionNpcVitals, OptionButtons.Opt_NPCVitals, 2 + Options.NPCVitals)
 End Sub
 
 Private Sub picOptionLevel_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -4912,11 +4911,9 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
             ElseIf ControlDown And Button = 1 Then
                 MapEditorFillSelection
                 Exit Sub
-
             ElseIf ControlDown And Button = 2 Then
                 MapEditorClearSelection
                 Exit Sub
-
             ElseIf ShiftDown And Button = 1 Then
                 MapEditorEyeDropper
                 Exit Sub
@@ -4934,7 +4931,7 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
                             AdminWarp CurX, CurY
                         End If
                     End If
-                ElseIf InMapEditor Then
+                ElseIf InMapEditor And frmEditor_Map.OptEvents.Value Then
                     DeleteEvent CurX, CurY
                 End If
             End If
@@ -4946,6 +4943,16 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
     Else
         ' Left click
         If Button = vbLeftButton Then
+            If Options.Mouse = 1 Then
+                ' Mouse
+                If CurX = GetPlayerX(MyIndex) And CurY = GetPlayerY(MyIndex) Then
+                    Call CheckMapGetItem
+                Else
+                    MouseX = CurX
+                    MouseY = CurY
+                End If
+            End If
+            
             ' Targetting
             Call PlayerSearch(CurX, CurY)
             ' Right click
@@ -5476,8 +5483,8 @@ End Sub
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
     Dim i As Long
-    Dim NpcDistanceX(1 To MAX_MAP_NPCS) As Long
-    Dim NpcDistanceY(1 To MAX_MAP_NPCS) As Long
+    Dim NPCDistanceX(1 To MAX_MAP_NPCS) As Long
+    Dim NPCDistanceY(1 To MAX_MAP_NPCS) As Long
     Dim PlayerDistanceX(1 To MAX_PLAYERS) As Long
     Dim PlayerDistanceY(1 To MAX_PLAYERS) As Long
     Dim LowestDistance As Long
@@ -5513,25 +5520,25 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
 
     If KeyAscii = vbKeyTab And ShiftDown = False Then
         ' Set the NPC distance for all the NPCs on the map
-        For i = 1 To Map.Npc_HighIndex
-            NpcDistanceX(i) = MapNPC(i).X - GetPlayerX(MyIndex)
-            NpcDistanceY(i) = MapNPC(i).Y - GetPlayerY(MyIndex)
+        For i = 1 To Map.NPC_HighIndex
+            NPCDistanceX(i) = MapNPC(i).X - GetPlayerX(MyIndex)
+            NPCDistanceY(i) = MapNPC(i).Y - GetPlayerY(MyIndex)
     
             ' Make sure we get a positive Value
-            If NpcDistanceX(i) < 0 Then NpcDistanceX(i) = NpcDistanceX(i) * -1
-            If NpcDistanceY(i) < 0 Then NpcDistanceY(i) = NpcDistanceY(i) * -1
+            If NPCDistanceX(i) < 0 Then NPCDistanceX(i) = NPCDistanceX(i) * -1
+            If NPCDistanceY(i) < 0 Then NPCDistanceY(i) = NPCDistanceY(i) * -1
         Next
         
         ' Clear the target constant
         PlayerTarget = 0
         
         ' Find the closest NPC target
-        For i = 1 To Map.Npc_HighIndex
+        For i = 1 To Map.NPC_HighIndex
             If i = 1 Then
-                LowestDistance = NpcDistanceX(i) + NpcDistanceY(i)
+                LowestDistance = NPCDistanceX(i) + NPCDistanceY(i)
                 PlayerTarget = i
-            ElseIf NpcDistanceX(i) + NpcDistanceY(i) < LowestDistance Then
-                LowestDistance = NpcDistanceX(i) + NpcDistanceY(i)
+            ElseIf NPCDistanceX(i) + NPCDistanceY(i) < LowestDistance Then
+                LowestDistance = NPCDistanceX(i) + NPCDistanceY(i)
                 PlayerTarget = i
             End If
         Next
@@ -6560,7 +6567,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
                         frmMapPreview.Move frmMain.Left - frmMapPreview.Width - 80, frmMain.Top + 75
                     End If
                     If FormVisible("frmMapPreview") Then
-                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75 + frmMapPreview.Height
+                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75 + 145 + frmMapPreview.Height
                     Else
                         frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75
                     End If

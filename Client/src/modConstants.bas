@@ -383,10 +383,8 @@ Public Const ChatWidth As Long = 380
 ' NPC constants
 Public Const NPC_BEHAVIOR_ATTACKONSIGHT As Byte = 0
 Public Const NPC_BEHAVIOR_ATTACKWHENATTACKED As Byte = 1
-Public Const NPC_BEHAVIOR_FRIENDLY As Byte = 2
-Public Const NPC_BEHAVIOR_SHOPKEEPER As Byte = 3
-Public Const NPC_BEHAVIOR_GUARD As Byte = 4
-Public Const NPC_BEHAVIOR_QUEST As Byte = 5
+Public Const NPC_BEHAVIOR_GUARD As Byte = 2
+Public Const NPC_BEHAVIOR_QUEST As Byte = 3
 
 ' Spell constants
 Public Const SPELL_TYPE_DAMAGEHP As Byte = 0

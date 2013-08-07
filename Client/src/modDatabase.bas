@@ -174,7 +174,7 @@ Public Sub SaveOptions()
     Call PutVar(FileName, "Options", "Level", Trim$(Options.Levels))
     Call PutVar(FileName, "Options", "Guilds", Trim$(Options.Guilds))
     Call PutVar(FileName, "Options", "PlayerVitals", Trim$(Options.PlayerVitals))
-    Call PutVar(FileName, "Options", "NpcVitals", Trim$(Options.NpcVitals))
+    Call PutVar(FileName, "Options", "NPCVitals", Trim$(Options.NPCVitals))
     Call PutVar(FileName, "Options", "Titles", Trim$(Options.Titles))
     Call PutVar(FileName, "Options", "BattleMusic", Trim$(Options.BattleMusic))
     Call PutVar(FileName, "Options", "Mouse", Trim$(Options.Mouse))
@@ -297,11 +297,11 @@ Private Sub LoadOptionVariables()
         Options.PlayerVitals = GetVar(FileName, "Options", "PlayerVitals")
     End If
     
-    If GetVar(FileName, "Options", "NpcVitals") = "" Then
-        Options.NpcVitals = "1"
-        Call PutVar(FileName, "Options", "NpcVitals", Trim$(Options.NpcVitals))
+    If GetVar(FileName, "Options", "NPCVitals") = "" Then
+        Options.NPCVitals = "1"
+        Call PutVar(FileName, "Options", "NPCVitals", Trim$(Options.NPCVitals))
     Else
-        Options.NpcVitals = GetVar(FileName, "Options", "NpcVitals")
+        Options.NPCVitals = GetVar(FileName, "Options", "NPCVitals")
     End If
     
     If GetVar(FileName, "Options", "Titles") = "" Then
@@ -859,7 +859,7 @@ Sub ClearPlayer(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Player(Index)), LenB(Player(Index)))
     Player(Index).Login = vbNullString
     Player(Index).Password = vbNullString
-    Player(Index).Name = vbNullString
+    Player(Index).name = vbNullString
     Player(Index).Status = vbNullString
     Player(Index).Class = 1
     Exit Sub
@@ -874,10 +874,10 @@ Sub ClearItem(ByVal Index As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Call ZeroMemory(ByVal VarPtr(Item(Index)), LenB(Item(Index)))
-    Item(Index).Name = vbNullString
-    Item(Index).Desc = vbNullString
-    Item(Index).Sound = vbNullString
+    Call ZeroMemory(ByVal VarPtr(item(Index)), LenB(item(Index)))
+    item(Index).name = vbNullString
+    item(Index).Desc = vbNullString
+    item(Index).Sound = vbNullString
     Exit Sub
     
 ' Error handler
@@ -921,7 +921,7 @@ Sub ClearAnimation(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Animation(Index)), LenB(Animation(Index)))
-    Animation(Index).Name = vbNullString
+    Animation(Index).name = vbNullString
     Animation(Index).Sound = vbNullString
     Exit Sub
     
@@ -953,7 +953,7 @@ Sub ClearNPC(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ZeroMemory(ByVal VarPtr(NPC(Index)), LenB(NPC(Index)))
-    NPC(Index).Name = vbNullString
+    NPC(Index).name = vbNullString
     NPC(Index).title = vbNullString
     NPC(Index).AttackSay = vbNullString
     NPC(Index).Music = vbNullString
@@ -966,7 +966,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub ClearNpcs()
+Sub ClearNPCs()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
@@ -979,7 +979,7 @@ Sub ClearNpcs()
     
 ' Error handler
 errorhandler:
-    HandleError "ClearNpcs", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "ClearNPCs", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -988,7 +988,7 @@ Sub ClearSpell(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Spell(Index)), LenB(Spell(Index)))
-    Spell(Index).Name = vbNullString
+    Spell(Index).name = vbNullString
     Spell(Index).Desc = vbNullString
     Spell(Index).Sound = vbNullString
     Exit Sub
@@ -1021,7 +1021,7 @@ Sub ClearShop(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Shop(Index)), LenB(Shop(Index)))
-    Shop(Index).Name = vbNullString
+    Shop(Index).name = vbNullString
     Exit Sub
     
 ' Error handler
@@ -1052,7 +1052,7 @@ Sub ClearResource(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Resource(Index)), LenB(Resource(Index)))
-    Resource(Index).Name = vbNullString
+    Resource(Index).name = vbNullString
     Resource(Index).SuccessMessage = vbNullString
     Resource(Index).EmptyMessage = vbNullString
     Resource(Index).FailMessage = vbNullString
@@ -1100,7 +1100,7 @@ Sub ClearMap()
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Map), LenB(Map))
-    Map.Name = vbNullString
+    Map.name = vbNullString
     Map.Music = vbNullString
     Map.BGS = vbNullString
     Map.Moral = 1
@@ -1133,7 +1133,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub ClearMapNpc(ByVal Index As Long)
+Sub ClearMapNPC(ByVal Index As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
@@ -1142,24 +1142,24 @@ Sub ClearMapNpc(ByVal Index As Long)
     
 ' Error handler
 errorhandler:
-    HandleError "ClearMapNpc", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "ClearMapNPC", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Sub ClearMapNpcs()
+Sub ClearMapNPCs()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     For i = 1 To MAX_MAP_NPCS
-        Call ClearMapNpc(i)
+        Call ClearMapNPC(i)
     Next
     Exit Sub
     
 ' Error handler
 errorhandler:
-    HandleError "ClearMapNpcs", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "ClearMapNPCs", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1223,7 +1223,7 @@ Sub ClearTitle(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ZeroMemory(ByVal VarPtr(title(Index)), LenB(title(Index)))
-    title(Index).Name = vbNullString
+    title(Index).name = vbNullString
     Exit Sub
     
 ' Error handler
@@ -1237,7 +1237,7 @@ Sub ClearMoral(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     Call ZeroMemory(ByVal VarPtr(Moral(Index)), LenB(Moral(Index)))
-    Moral(Index).Name = vbNullString
+    Moral(Index).name = vbNullString
     Exit Sub
     
 ' Error handler
@@ -1268,7 +1268,7 @@ Sub ClearClass(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Call ZeroMemory(ByVal VarPtr(Class(Index)), LenB(Class(Index)))
-    Class(Index).Name = vbNullString
+    Class(Index).name = vbNullString
     Class(Index).CombatTree = 1
     Exit Sub
     
@@ -1349,7 +1349,7 @@ Public Sub ClearEvent(ByVal Index As Long)
     If Index <= 0 Or Index > MAX_EVENTS Then Exit Sub
     
     Call ZeroMemory(ByVal VarPtr(events(Index)), LenB(events(Index)))
-    events(Index).Name = vbNullString
+    events(Index).name = vbNullString
     Exit Sub
     
 ' Error handler

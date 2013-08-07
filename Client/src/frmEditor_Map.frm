@@ -1472,10 +1472,6 @@ errorhandler:
 End Sub
 
 
-Private Sub cmbSoundEffect_Change()
-
-End Sub
-
 Private Sub cmdSoundEffect_Click()
    ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1637,19 +1633,19 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub cmdNpcSpawn_Click()
+Private Sub cmdNPCSpawn_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    SpawnNpcNum = lstNpc.ListIndex + 1
-    SpawnNpcDir = scrlNpcDir.Value
+    SpawnNPCNum = lstNpc.ListIndex + 1
+    SpawnNPCDir = scrlNpcDir.Value
     picAttributes.Visible = False
     fraNpcSpawn.Visible = False
     Exit Sub
     
 ' Error handler
 errorhandler:
-    HandleError "cmdNpcSpawn_Click", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "cmdNPCSpawn_Click", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1867,7 +1863,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub optNpcSpawn_Click()
+Private Sub optNPCSpawn_Click()
     Dim n As Long
 
     ' If debug mode, handle error then exit out
@@ -1879,7 +1875,7 @@ Private Sub optNpcSpawn_Click()
         If Map.NPC(n) > 0 Then
             lstNpc.AddItem n & ": " & NPC(Map.NPC(n)).name
         Else
-            lstNpc.AddItem n & ": No Npc"
+            lstNpc.AddItem n & ": No NPC"
         End If
     Next n
     
@@ -1893,7 +1889,7 @@ Private Sub optNpcSpawn_Click()
     
 ' Error handler
 errorhandler:
-    HandleError "optNpcSpawn_Click", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "optNPCSpawn_Click", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -2294,7 +2290,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub scrlNpcDir_Change()
+Private Sub scrlNPCDir_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -2312,20 +2308,20 @@ Private Sub scrlNpcDir_Change()
     
 ' Error handler
 errorhandler:
-    HandleError "scrlNpcDir_Change", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "scrlNPCDir_Change", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub scrlNpcDir_Scroll()
+Private Sub scrlNPCDir_Scroll()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    scrlNpcDir_Change
+    scrlNPCDir_Change
     Exit Sub
     
 ' Error handler
 errorhandler:
-    HandleError "scrlNpcDir_Scroll", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "scrlNPCDir_Scroll", "frmEditor_Map", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

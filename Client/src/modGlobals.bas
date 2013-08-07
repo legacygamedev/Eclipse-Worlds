@@ -206,8 +206,8 @@ Public EditorTileHeight As Long
 Public EditorWarpMap As Long
 Public EditorWarpX As Long
 Public EditorWarpY As Long
-Public SpawnNpcNum As Byte
-Public SpawnNpcDir As Byte
+Public SpawnNPCNum As Byte
+Public SpawnNPCDir As Byte
 Public EditorShop As Long
 
 ' Storing width for HP/MP/Exp
@@ -251,7 +251,7 @@ Public MapEditorSound As String
 
 ' Used for map editor chat
 Public MapEditorChatDir As Byte
-Public MapEditorChatNpc As Long
+Public MapEditorChatNPC As Long
 
 ' Camera
 Public Camera As RECT
@@ -273,7 +273,7 @@ Public FPS_Lock As Boolean
 
 ' Editor edited items array
 Public Item_Changed(1 To MAX_ITEMS) As Boolean
-Public Npc_Changed(1 To MAX_NPCS) As Boolean
+Public NPC_Changed(1 To MAX_NPCS) As Boolean
 Public Resource_Changed(1 To MAX_NPCS) As Boolean
 Public Animation_Changed(1 To MAX_ANIMATIONS) As Boolean
 Public Spell_Changed(1 To MAX_SPELLS) As Boolean

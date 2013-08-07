@@ -41,16 +41,16 @@ Public Sub InitMessages()
     HandleDataSub(SPlayerData) = GetAddress(AddressOf HandlePlayerData)
     HandleDataSub(SPlayerMove) = GetAddress(AddressOf HandlePlayerMove)
     HandleDataSub(SPlayerWarp) = GetAddress(AddressOf HandlePlayerWarp)
-    HandleDataSub(SNpcMove) = GetAddress(AddressOf HandleNpcMove)
+    HandleDataSub(SNPCMove) = GetAddress(AddressOf HandleNPCMove)
     HandleDataSub(SPlayerDir) = GetAddress(AddressOf HandlePlayerDir)
-    HandleDataSub(SNpcDir) = GetAddress(AddressOf HandleNpcDir)
+    HandleDataSub(SNPCDir) = GetAddress(AddressOf HandleNPCDir)
     HandleDataSub(SAttack) = GetAddress(AddressOf HandleAttack)
-    HandleDataSub(SNpcAttack) = GetAddress(AddressOf HandleNpcAttack)
+    HandleDataSub(SNPCAttack) = GetAddress(AddressOf HandleNPCAttack)
     HandleDataSub(SCheckForMap) = GetAddress(AddressOf HandleCheckForMap)
     HandleDataSub(SMapData) = GetAddress(AddressOf HandleMapData)
     HandleDataSub(SMapItemData) = GetAddress(AddressOf HandleMapItemData)
-    HandleDataSub(SMapNpcData) = GetAddress(AddressOf HandleMapNpcData)
-    HandleDataSub(SMapNpcTarget) = GetAddress(AddressOf HandleMapNpcTarget)
+    HandleDataSub(SMapNPCData) = GetAddress(AddressOf HandleMapNPCData)
+    HandleDataSub(SMapNPCTarget) = GetAddress(AddressOf HandleMapNPCTarget)
     HandleDataSub(SMapDone) = GetAddress(AddressOf HandleMapDone)
     HandleDataSub(SGlobalMsg) = GetAddress(AddressOf HandleGlobalMsg)
     HandleDataSub(SAdminMsg) = GetAddress(AddressOf HandleAdminMsg)
@@ -59,10 +59,10 @@ Public Sub InitMessages()
     HandleDataSub(SSpawnItem) = GetAddress(AddressOf HandleSpawnItem)
     HandleDataSub(SItemEditor) = GetAddress(AddressOf HandleItemEditor)
     HandleDataSub(SUpdateItem) = GetAddress(AddressOf HandleUpdateItem)
-    HandleDataSub(SSpawnNpc) = GetAddress(AddressOf HandleSpawnNpc)
-    HandleDataSub(SNpcDead) = GetAddress(AddressOf HandleNPCDead)
-    HandleDataSub(SNpcEditor) = GetAddress(AddressOf HandleNPCEditor)
-    HandleDataSub(SUpdateNpc) = GetAddress(AddressOf HandleUpdateNPC)
+    HandleDataSub(SSpawnNPC) = GetAddress(AddressOf HandleSpawnNPC)
+    HandleDataSub(SNPCDead) = GetAddress(AddressOf HandleNPCDead)
+    HandleDataSub(SNPCEditor) = GetAddress(AddressOf HandleNPCEditor)
+    HandleDataSub(SUpdateNPC) = GetAddress(AddressOf HandleUpdateNPC)
     HandleDataSub(SEditMap) = GetAddress(AddressOf HandleEditMap)
     HandleDataSub(SEditEvent) = GetAddress(AddressOf HandleEventEditor)
     HandleDataSub(SShopEditor) = GetAddress(AddressOf HandleShopEditor)
@@ -82,7 +82,7 @@ Public Sub InitMessages()
     HandleDataSub(SAnimationEditor) = GetAddress(AddressOf HandleAnimationEditor)
     HandleDataSub(SUpdateAnimation) = GetAddress(AddressOf HandleUpdateAnimation)
     HandleDataSub(SAnimation) = GetAddress(AddressOf HandleAnimation)
-    HandleDataSub(SMapNpcVitals) = GetAddress(AddressOf HandleMapNPCVitals)
+    HandleDataSub(SMapNPCVitals) = GetAddress(AddressOf HandleMapNPCVitals)
     HandleDataSub(SSpellCooldown) = GetAddress(AddressOf HandleSpellCooldown)
     HandleDataSub(SClearSpellBuffer) = GetAddress(AddressOf HandleClearSpellBuffer)
     HandleDataSub(SSayMsg) = GetAddress(AddressOf HandleSayMsg)
@@ -104,7 +104,7 @@ Public Sub InitMessages()
     HandleDataSub(SGuildMembers) = GetAddress(AddressOf HandleGuildMembers)
     HandleDataSub(SGuildInvite) = GetAddress(AddressOf HandleGuildInvite)
     HandleDataSub(SMapReport) = GetAddress(AddressOf HandleMapReport)
-    HandleDataSub(SNpcSpellBuffer) = GetAddress(AddressOf HandleNpcSpellBuffer)
+    HandleDataSub(SNPCSpellBuffer) = GetAddress(AddressOf HandleNPCSpellBuffer)
     HandleDataSub(SCheckpoint) = GetAddress(AddressOf HandleCheckpoint)
     HandleDataSub(SUpdateLogs) = GetAddress(AddressOf HandleUpdateLogs)
     HandleDataSub(SFriendsList) = GetAddress(AddressOf HandleFriendsList)
@@ -891,7 +891,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub HandleNpcMove(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+Private Sub HandleNPCMove(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim MapNPCNum As Long
     Dim X As Byte
     Dim Y As Byte
@@ -936,7 +936,7 @@ Private Sub HandleNpcMove(ByVal Index As Long, ByRef data() As Byte, ByVal Start
     
 ' Error handler
 errorhandler:
-    HandleError "HandleNpcMove", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "HandleNPCMove", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -969,7 +969,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub HandleNpcDir(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+Private Sub HandleNPCDir(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim i As Long
     Dim Dir As Byte
     Dim buffer As clsBuffer
@@ -993,7 +993,7 @@ Private Sub HandleNpcDir(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
     
 ' Error handler
 errorhandler:
-    HandleError "HandleNpcDir", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "HandleNPCDir", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1020,7 +1020,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub HandleNpcAttack(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+Private Sub HandleNPCAttack(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim i As Long
     Dim buffer As clsBuffer
 
@@ -1039,7 +1039,7 @@ Private Sub HandleNpcAttack(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     
 ' Error handler
 errorhandler:
-    HandleError "HandleNpcAttack", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "HandleNPCAttack", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1069,7 +1069,7 @@ Private Sub HandleCheckForMap(ByVal Index As Long, ByRef data() As Byte, ByVal S
     Next
 
     ' Erase all temporary tile values
-    Call ClearMapNpcs
+    Call ClearMapNPCs
     Call ClearMapItems
     Call ClearMap
     
@@ -1164,7 +1164,7 @@ Sub HandleMapData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As 
     
     ReDim Map.Tile(0 To Map.MaxX, 0 To Map.MaxY)
 
-    Map.Npc_HighIndex = buffer.ReadByte
+    Map.NPC_HighIndex = buffer.ReadByte
     
     For X = 0 To Map.MaxX
         For Y = 0 To Map.MaxY
@@ -1241,7 +1241,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub HandleMapNpcData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+Private Sub HandleMapNPCData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim i As Long, X As Long
     Dim buffer As clsBuffer
 
@@ -1267,11 +1267,11 @@ Private Sub HandleMapNpcData(ByVal Index As Long, ByRef data() As Byte, ByVal St
     
 ' Error handler
 errorhandler:
-    HandleError "HandleMapNpcData", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "HandleMapNPCData", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub HandleMapNpcTarget(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+Private Sub HandleMapNPCTarget(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim MapNPCNum As Long
     Dim buffer As clsBuffer
 
@@ -1294,7 +1294,7 @@ Private Sub HandleMapNpcTarget(ByVal Index As Long, ByRef data() As Byte, ByVal 
     
 ' Error handler
 errorhandler:
-    HandleError "HandleMapNpcData", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "HandleMapNPCData", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1609,7 +1609,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub HandleSpawnNpc(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+Private Sub HandleSpawnNPC(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
     Dim buffer As clsBuffer
 
@@ -1635,7 +1635,7 @@ Private Sub HandleSpawnNpc(ByVal Index As Long, ByRef data() As Byte, ByVal Star
     
 ' Error handler
 errorhandler:
-    HandleError "HandleSpawnNpc", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "HandleSpawnNPC", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1649,7 +1649,7 @@ Private Sub HandleNPCDead(ByVal Index As Long, ByRef data() As Byte, ByVal Start
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     n = buffer.ReadLong
-    Call ClearMapNpc(n)
+    Call ClearMapNPC(n)
     Exit Sub
     
 ' Error handler
@@ -1699,8 +1699,8 @@ End Sub
 Private Sub HandleUpdateNPC(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim n As Long
     Dim buffer As clsBuffer
-    Dim NpcSize As Long
-    Dim NpcData() As Byte
+    Dim NPCSize As Long
+    Dim NPCData() As Byte
     Dim i As Long
     Dim name As String
     Dim Letter As String
@@ -1713,10 +1713,10 @@ Private Sub HandleUpdateNPC(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     
     n = buffer.ReadLong
     
-    NpcSize = LenB(NPC(n))
-    ReDim NpcData(NpcSize - 1)
-    NpcData = buffer.ReadBytes(NpcSize)
-    CopyMemory ByVal VarPtr(NPC(n)), ByVal VarPtr(NpcData(0)), NpcSize
+    NPCSize = LenB(NPC(n))
+    ReDim NPCData(NPCSize - 1)
+    NPCData = buffer.ReadBytes(NPCSize)
+    CopyMemory ByVal VarPtr(NPC(n)), ByVal VarPtr(NPCData(0)), NPCSize
     
     Set buffer = Nothing
     
@@ -1821,9 +1821,9 @@ Private Sub HandleEditMap()
     frmEditor_Map.Visible = True
     Call MapEditorInit
     If FormVisible("frmMapPreview") Then
-        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + frmMapPreview.Height
+        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75 + 145 + frmMapPreview.Height
     Else
-        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top
+        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75
     End If
 
     frmAdmin.ShowEyeFor EDITOR_MAP
@@ -3480,7 +3480,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub HandleNpcSpellBuffer(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+Private Sub HandleNPCSpellBuffer(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
     Dim MapNPCNum As Long
     
@@ -3498,7 +3498,7 @@ Private Sub HandleNpcSpellBuffer(ByVal Index As Long, ByRef data() As Byte, ByVa
     
 ' Error handler
 errorhandler:
-    HandleError "HandleNpcSpellBuffer", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "HandleNPCSpellBuffer", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
