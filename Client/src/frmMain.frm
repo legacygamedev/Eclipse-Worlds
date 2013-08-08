@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    ClientHeight    =   13470
@@ -814,6 +814,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -3416,7 +3417,7 @@ Private Sub cmdProperties_Click()
     MapPropertiesInit
     
     ' Update the 1stnpcs list Index so it is selected
-    frmEditor_MapProperties.lstNpcs.ListIndex = 0
+    frmEditor_MapProperties.lstNPCs.ListIndex = 0
     
     ' Show the form
     frmEditor_MapProperties.Show
@@ -3443,39 +3444,39 @@ End Sub
 
 Private Sub Form_Initialize()
     Set cSubclasserHooker = New cSelfSubHookCallback
-    If cSubclasserHooker.ssc_Subclass(Me.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO, WM_MOUSEWHEEL, WM_NCACTIVATE, WM_MOVE
+    If cSubclasserHooker.ssc_Subclass(Me.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO, WM_MOUSEWHEEL, WM_NCACTIVATE, WM_MOVE
     End If
     
-    If cSubclasserHooker.ssc_Subclass(Me.picMapEditor.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.picMapEditor.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
+    If cSubclasserHooker.ssc_Subclass(Me.picMapEditor.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.picMapEditor.hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.mapPreviewSwitch.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.mapPreviewSwitch.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.mapPreviewSwitch.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.mapPreviewSwitch.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.chkEyeDropper.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.chkEyeDropper.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.chkEyeDropper.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.chkEyeDropper.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.cmdSave.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.cmdSave.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.cmdSave.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdSave.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.cmdRevert.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.cmdRevert.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.cmdRevert.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdRevert.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.cmdDelete.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.cmdDelete.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.cmdDelete.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdDelete.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.cmdProperties.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.cmdProperties.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
-    End If
-End Sub
-Public Sub SubDaFocus(hwnd As Long)
-    If cSubclasserHooker.ssc_Subclass(hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_NCACTIVATE, WM_MOVE
+    If cSubclasserHooker.ssc_Subclass(Me.cmdProperties.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdProperties.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
 End Sub
-Public Sub UnsubDaFocus(hwnd As Long)
-    cSubclasserHooker.ssc_UnSubclass hwnd
+Public Sub SubDaFocus(hWnd As Long)
+    If cSubclasserHooker.ssc_Subclass(hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_NCACTIVATE, WM_MOVE
+    End If
+End Sub
+Public Sub UnsubDaFocus(hWnd As Long)
+    cSubclasserHooker.ssc_UnSubclass hWnd
 End Sub
 Private Sub Form_Paint()
     If FormVisible("frmCharEditor") Then
@@ -5626,11 +5627,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
                 If FormVisible("frmAdmin") Then
-                    If GetForegroundWindow = frmAdmin.hwnd Then
+                    If GetForegroundWindow = frmAdmin.hWnd Then
                         Unload frmAdmin
-                    ElseIf GetForegroundWindow <> frmAdmin.hwnd Then
-                        BringWindowToTop (frmAdmin.hwnd)
-                        'InitAdminPanel
+                    ElseIf GetForegroundWindow <> frmAdmin.hWnd Then
+                        BringWindowToTop (frmAdmin.hWnd)
                     End If
                 Else
                     InitAdminPanel
@@ -6563,7 +6563,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
                     If FormVisible("frmAdmin") And adminMin Then
                         frmAdmin.centerMiniVert PixelsToTwips((rectt.Right - rectt.Left), 0), PixelsToTwips((rectt.Bottom - rectt.Top), 1), PixelsToTwips(rectt.Left, 0), PixelsToTwips(rectt.Top, 1)
                     End If
-                    If FormVisible("frmMapPreview") And lng_hWnd = frmMain.hwnd Then
+                    If FormVisible("frmMapPreview") And lng_hWnd = frmMain.hWnd Then
                         frmMapPreview.Move frmMain.Left - frmMapPreview.Width - 80, frmMain.Top + 75
                     End If
                     If FormVisible("frmMapPreview") Then
@@ -6590,32 +6590,32 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
         Case WM_MOUSEMOVE
             MainMouseMove lng_hWnd
             If InMapEditor Then
-                If GetForegroundWindow = hwnd Or GetForegroundWindow = picScreen.hwnd Then
+                If GetForegroundWindow = hWnd Or GetForegroundWindow = picScreen.hWnd Then
                     picScreen.SetFocus
                 End If
             End If
         Case WM_GETMINMAXINFO 'Prevent Resizing, so we can keep nice frame when turning off CAPTION.
             If Not taskBarClick Then
-                MainPreventResizing Me.hwnd, (Me.Width \ Screen.TwipsPerPixelX), (Me.Height \ Screen.TwipsPerPixelY), lParam
+                MainPreventResizing Me.hWnd, (Me.Width \ Screen.TwipsPerPixelX), (Me.Height \ Screen.TwipsPerPixelY), lParam
             Else
                 taskBarClick = False
             End If
         Case WM_SETFOCUS
-            If lng_hWnd = mapPreviewSwitch.hwnd Or lng_hWnd = chkEyeDropper.hwnd Or lng_hWnd = cmdSave.hwnd Or lng_hWnd = cmdRevert.hwnd Or lng_hWnd = cmdDelete.hwnd Or lng_hWnd = cmdProperties.hwnd Then
+            If lng_hWnd = mapPreviewSwitch.hWnd Or lng_hWnd = chkEyeDropper.hWnd Or lng_hWnd = cmdSave.hWnd Or lng_hWnd = cmdRevert.hWnd Or lng_hWnd = cmdDelete.hWnd Or lng_hWnd = cmdProperties.hWnd Then
                 bHandled = True
                 lReturn = 1
             End If
         Case WM_MOUSEWHEEL
             If InMapEditor Then
-                Dim up As Boolean, curTil As Long
-                up = IIf(HiWord(wParam) > 0, False, True)
+                Dim Up As Boolean, curTil As Long
+                Up = IIf(HiWord(wParam) > 0, False, True)
                 If displayTilesets Then
                     curTil = frmEditor_Map.scrlTileSet.Value
-                    frmEditor_Map.scrlTileSet.Value = (IIf((curTil = 1 And Not up) Or (curTil = NumTileSets And up), curTil, IIf(up, 1, -1) + curTil))
+                    frmEditor_Map.scrlTileSet.Value = (IIf((curTil = 1 And Not Up) Or (curTil = NumTileSets And Up), curTil, IIf(Up, 1, -1) + curTil))
                     lblTitle = "UBER Map Editor - " & "Tileset: " & frmEditor_Map.scrlTileSet.Value
                 Else
                     getCurrentMapLayerName
-                    frmEditor_Map.optLayer(IIf((currentMapLayerNum = 1 And Not up) Or (currentMapLayerNum = Layer_Count - 1 And up), currentMapLayerNum, IIf(up, 1, -1) + currentMapLayerNum)).Value = 1
+                    frmEditor_Map.optLayer(IIf((currentMapLayerNum = 1 And Not Up) Or (currentMapLayerNum = Layer_Count - 1 And Up), currentMapLayerNum, IIf(Up, 1, -1) + currentMapLayerNum)).Value = 1
                     getCurrentMapLayerName
                 End If
 

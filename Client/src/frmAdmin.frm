@@ -905,10 +905,10 @@ Begin VB.Form frmAdmin
          EndProperty
          ForeColor       =   &H00800080&
          Height          =   255
-         Left            =   105
+         Left            =   240
          TabIndex        =   25
          Top             =   4440
-         Width           =   1020
+         Width           =   1035
       End
       Begin VB.Label lblStatus 
          Alignment       =   2  'Center
@@ -1084,7 +1084,7 @@ Private Const WM_ChangeUIState As Long = &H127
 Private Const UIS_HideRectangle As Integer = &H1
 Private Const UIS_ShowRectangle As Integer = &H2
 Private Const UISF_FocusRectangle As Integer = &H1
-Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, _
+Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, _
 ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 
  
@@ -1135,7 +1135,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Animation.Visible = False
-                    BringWindowToTop (frmAdmin.hwnd)
+                    BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 1 ' Ban
             If chkEditor(Index).Value = 1 Then
@@ -1151,7 +1151,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Ban.Visible = False
-                    BringWindowToTop (frmAdmin.hwnd)
+                    BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 2 'Class
             If chkEditor(Index).Value = 1 Then
@@ -1167,7 +1167,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Class.Visible = False
-                    BringWindowToTop (frmAdmin.hwnd)
+                    BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 3 ' Emoticons
             If chkEditor(Index).Value = 1 Then
@@ -1183,7 +1183,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Emoticon.Visible = False
-                BringWindowToTop (frmAdmin.hwnd)
+                BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 4 ' Items
             If chkEditor(Index).Value = 1 Then
@@ -1199,7 +1199,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Item.Visible = False
-                BringWindowToTop (frmAdmin.hwnd)
+                BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 5 ' Map
                 If chkEditor(Index).Value = 1 Then
@@ -1236,7 +1236,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Moral.Visible = False
-                    BringWindowToTop (frmAdmin.hwnd)
+                    BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 7 'NPC
             If chkEditor(Index).Value = 1 Then
@@ -1252,7 +1252,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_NPC.Visible = False
-                    BringWindowToTop (frmAdmin.hwnd)
+                    BringWindowToTop (frmAdmin.hWnd)
             End If
          Case 8 ' Resource
 
@@ -1269,7 +1269,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Resource.Visible = False
-                    BringWindowToTop (frmAdmin.hwnd)
+                    BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 9 ' Shop
             If chkEditor(Index).Value = 1 Then
@@ -1285,7 +1285,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Shop.Visible = False
-                    BringWindowToTop (frmAdmin.hwnd)
+                    BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 10 ' Spell
             If chkEditor(Index).Value = 1 Then
@@ -1301,7 +1301,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Spell.Visible = False
-                    BringWindowToTop (frmAdmin.hwnd)
+                    BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 11 ' Title
             If chkEditor(Index).Value = 1 Then
@@ -1317,7 +1317,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Title.Visible = False
-                BringWindowToTop (frmAdmin.hwnd)
+                BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 12 ' Events
             If chkEditor(Index).Value = 1 Then
@@ -1332,7 +1332,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Events.Visible = False
-                BringWindowToTop (frmAdmin.hwnd)
+                BringWindowToTop (frmAdmin.hWnd)
             End If
 
     End Select
@@ -1684,7 +1684,7 @@ errorhandler:
 End Sub
 
 Private Sub cmdShowGame_Click()
-    BringWindowToTop (frmMain.hwnd)
+    BringWindowToTop (frmMain.hWnd)
 End Sub
 
 Private Sub cmdSpawnRecent_Click()
@@ -1744,7 +1744,7 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     Select Case KeyCode
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
-                If frmAdmin.Visible And GetForegroundWindow = frmAdmin.hwnd Then
+                If frmAdmin.Visible And GetForegroundWindow = frmAdmin.hWnd Then
                     Unload frmAdmin
                 End If
             End If
@@ -1839,7 +1839,7 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
                 frmItemSpawner.Move frmAdmin.Left - frmItemSpawner.Width, frmAdmin.Top
                 frmItemSpawner.updateFreeSlots
                 frmItemSpawner.tabItems.Tabs(Index + 1).Selected = True
-                BringWindowToTop (frmItemSpawner.hwnd)
+                BringWindowToTop (frmItemSpawner.hWnd)
             End If
         End If
 
@@ -1851,62 +1851,62 @@ Private Sub picEye_Click(Index As Integer)
     Select Case Index
         Case 0 ' Animation
             If chkEditor(Index).Value = 1 Then
-                BringWindowToTop (frmEditor_Animation.hwnd)
+                BringWindowToTop (frmEditor_Animation.hWnd)
             End If
             Exit Sub
         Case 1 ' Ban
             If chkEditor(Index).Value = 1 Then
-                BringWindowToTop (frmEditor_Ban.hwnd)
+                BringWindowToTop (frmEditor_Ban.hWnd)
             End If
             Exit Sub
         Case 2 'Class
             If chkEditor(Index).Value = 1 Then
-                BringWindowToTop (frmEditor_Class.hwnd)
+                BringWindowToTop (frmEditor_Class.hWnd)
             End If
             Exit Sub
         Case 3 ' Emoticons
             If chkEditor(Index).Value = 1 Then
-                BringWindowToTop (frmEditor_Emoticon.hwnd)
+                BringWindowToTop (frmEditor_Emoticon.hWnd)
             End If
             Exit Sub
         Case 4 ' Items
             If chkEditor(Index).Value = 1 Then
-                BringWindowToTop (frmEditor_Item.hwnd)
+                BringWindowToTop (frmEditor_Item.hWnd)
             End If
             Exit Sub
         Case 5 ' Map
             If chkEditor(Index).Value = 1 Then
-                BringWindowToTop (frmEditor_Map.hwnd)
+                BringWindowToTop (frmEditor_Map.hWnd)
             End If
             Exit Sub
         Case 6 ' Moral
             If chkEditor(Index).Value = 1 Then
-                BringWindowToTop (frmEditor_Moral.hwnd)
+                BringWindowToTop (frmEditor_Moral.hWnd)
             End If
             Exit Sub
         Case 7 'NPC
             If chkEditor(Index).Value = 1 Then
-                BringWindowToTop (frmEditor_NPC.hwnd)
+                BringWindowToTop (frmEditor_NPC.hWnd)
             End If
             Exit Sub
          Case 8 ' Resource
             If chkEditor(Index).Value = 1 Then
-                BringWindowToTop (frmEditor_Resource.hwnd)
+                BringWindowToTop (frmEditor_Resource.hWnd)
             End If
             Exit Sub
         Case 9 'Shop
             If chkEditor(Index).Value = 0 Then
-                BringWindowToTop (frmEditor_Shop.hwnd)
+                BringWindowToTop (frmEditor_Shop.hWnd)
             End If
             Exit Sub
         Case 10 ' Spell
             If chkEditor(Index).Value = 0 Then
-                BringWindowToTop (frmEditor_Spell.hwnd)
+                BringWindowToTop (frmEditor_Spell.hWnd)
             End If
             Exit Sub
         Case 11 ' Title
             If chkEditor(Index).Value = 0 Then
-                BringWindowToTop (frmEditor_Title.hwnd)
+                BringWindowToTop (frmEditor_Title.hWnd)
             End If
             Exit Sub
 
@@ -2019,13 +2019,13 @@ Dim i As Long, temp1 As Long, temp2 As Long
         picEye(i).Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
     Next
     temp1 = getWndProcAddr
-    If GetWindowLong(optCat(0).hwnd, -4) <> temp1 Then
+    If GetWindowLong(optCat(0).hWnd, -4) <> temp1 Then
         For i = 0 To optCat.UBound
-            SubClassHwnd optCat(i).hwnd
+            SubClassHwnd optCat(i).hWnd
         Next
         For i = 0 To chkEditor.UBound
             picEye(i).BorderStyle = 0
-            SubClassHwnd chkEditor(i).hwnd
+            SubClassHwnd chkEditor(i).hWnd
         Next
         catSub = True
         picSpawner.Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
@@ -2227,12 +2227,12 @@ End Sub
 Public Sub centerMiniVert(pWidth As Long, pHeight As Long, pLeft As Long, pTop As Long)
     Left = pLeft + pWidth + 165
     Top = pTop + ((pHeight - Height) / 2)
-    BeforeTopMost (frmAdmin.hwnd)
+    BeforeTopMost (frmAdmin.hWnd)
     BringWindowToTop (hwndLastActiveWnd)
 End Sub
 Private Sub picSpawner_Click()
     If FormVisible("frmItemSpawner") Then
-        BringWindowToTop (frmItemSpawner.hwnd)
+        BringWindowToTop (frmItemSpawner.hWnd)
     End If
 End Sub
 

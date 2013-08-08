@@ -45,6 +45,14 @@ Begin VB.Form frmEditor_Map
       Top             =   120
       Visible         =   0   'False
       Width           =   3885
+      Begin VB.CommandButton cmdCancel2 
+         Caption         =   "Cancel"
+         Height          =   375
+         Left            =   1680
+         TabIndex        =   63
+         Top             =   2835
+         Width           =   1215
+      End
       Begin VB.Frame fraHeal 
          Caption         =   "Heal"
          BeginProperty Font 
@@ -745,14 +753,6 @@ Begin VB.Form frmEditor_Map
             Width           =   2535
          End
       End
-      Begin VB.CommandButton cmdCancel2 
-         Caption         =   "Cancel"
-         Height          =   375
-         Left            =   1785
-         TabIndex        =   63
-         Top             =   3525
-         Width           =   1215
-      End
    End
    Begin VB.Frame fraType 
       Caption         =   "Type"
@@ -1207,8 +1207,8 @@ Begin VB.Form frmEditor_Map
          Top             =   1680
          Width           =   1215
       End
-      Begin VB.OptionButton optNpcSpawn 
-         Caption         =   "Npc Spawn"
+      Begin VB.OptionButton optNPCSpawn 
+         Caption         =   "NPC Spawn"
          Height          =   270
          Left            =   120
          TabIndex        =   6

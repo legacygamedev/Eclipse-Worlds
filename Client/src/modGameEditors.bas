@@ -4,7 +4,7 @@ Option Explicit
 Public cpEvent As EventRec
 
 Const LB_SETHORIZONTALEXTENT = &H194
-Private Declare Function SendMessageByNum Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Declare Function SendMessageByNum Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
 Public charList() As String
 Public g_playersOnline() As String
 Public ignoreIndexes() As Long
@@ -18,12 +18,12 @@ Public currentlyListedIndexes() As Long
 Public adminMin As Boolean
 Public EventList() As EventListRec
 Public Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
-    (ByVal hwnd As Long, ByVal nIndex As Long) As Long
-Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, _
+    (ByVal hWnd As Long, ByVal nIndex As Long) As Long
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, _
 ByVal dwNewLong As Long) As Long
-Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, _
+Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, _
 ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
-Public Declare Function BringWindowToTop Lib "user32" (ByVal hwnd As Long) As Long
+Public Declare Function BringWindowToTop Lib "user32" (ByVal hWnd As Long) As Long
 
 
 Public Const GWL_WNDPROC   As Long = (-4)
@@ -71,21 +71,21 @@ Public Function getWndProcAddr() As Long
     getWndProcAddr = ProcAdr(AddressOf WindowProc)
 End Function
 
-Private Function WindowProc(ByVal hwnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+Private Function WindowProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
     
         Select Case msg
         Case WM_SETFOCUS
             Exit Function
         Case WM_DESTROY
-            WindowProc = CallWindowProc(GetWindowLong(hwnd, -21), hwnd, msg, wParam, lParam)
-            Call SetWindowLong(hwnd, GWL_WNDPROC, GetWindowLong(hwnd, -21))
+            WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, msg, wParam, lParam)
+            Call SetWindowLong(hWnd, GWL_WNDPROC, GetWindowLong(hWnd, -21))
             Exit Function
     End Select
-    WindowProc = CallWindowProc(GetWindowLong(hwnd, -21), hwnd, msg, wParam, lParam)
+    WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, msg, wParam, lParam)
 End Function
  
-Public Sub SubClassHwnd(ByVal hwnd As Long)
-        SetWindowLong hwnd, -21, SetWindowLong(hwnd, GWL_WNDPROC, AddressOf WindowProc)
+Public Sub SubClassHwnd(ByVal hWnd As Long)
+        SetWindowLong hWnd, -21, SetWindowLong(hWnd, GWL_WNDPROC, AddressOf WindowProc)
 End Sub
 
 Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal MovedMouse As Boolean = True)
@@ -1765,7 +1765,7 @@ Public Sub MapPropertiesInit()
         Call LoadMapPropertiesNPCs
         
         ' Reset of it
-        .txtUp.text = CStr(Map.up)
+        .txtUp.text = CStr(Map.Up)
         .txtDown.text = CStr(Map.Down)
         .txtLeft.text = CStr(Map.Left)
         .txtRight.text = CStr(Map.Right)
@@ -3223,7 +3223,7 @@ Sub ListCommandAdd(S As String)
     If X < frmEditor_Events.TextWidth(S & "  ") Then
        X = frmEditor_Events.TextWidth(S & "  ")
       If frmEditor_Events.ScaleMode = vbTwips Then X = X / Screen.TwipsPerPixelX ' if twips change to pixels
-      SendMessageByNum frmEditor_Events.lstCommands.hwnd, LB_SETHORIZONTALEXTENT, X, 0
+      SendMessageByNum frmEditor_Events.lstCommands.hWnd, LB_SETHORIZONTALEXTENT, X, 0
     End If
     Exit Sub
     
@@ -4449,7 +4449,7 @@ End Sub
 Public Sub InitAdminPanel()
     frmAdmin.Visible = True
     If Not adminMin Then
-        frmAdmin.Left = frmMain.Left + frmMain.Width + 165
+        frmAdmin.Left = frmMain.Left + frmMain.Width + 160
         frmAdmin.Top = frmMain.Top
         frmAdmin.picSizer.BorderStyle = 0
         frmAdmin.picSizer.Picture = LoadResPicture("MIN", vbResBitmap)
@@ -4459,8 +4459,6 @@ Public Sub InitAdminPanel()
         frmAdmin.reverse = False
         frmAdmin.picSizer_Click
     End If
-
-    
 End Sub
 
 Public Sub InsertByPtr(pArray() As Byte, ByVal StartIndex As Long, Optional ByVal NumElements As Long = 1)

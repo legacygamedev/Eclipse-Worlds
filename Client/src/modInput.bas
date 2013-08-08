@@ -494,7 +494,6 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     Call ToggleGUI(GUIVisible)
                     
                 Case "/acp", "/admin"
-
                     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -507,7 +506,6 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                             BringWindowToTop (frmAdmin.hWnd)
                             InitAdminPanel
                         End If
-
                     Else
                         InitAdminPanel
                     End If
