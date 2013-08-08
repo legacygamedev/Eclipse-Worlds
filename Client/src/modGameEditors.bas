@@ -385,7 +385,7 @@ Public Sub MapEditorSetAttributes(ByVal Button As Integer, ByVal X As Long, ByVa
         End If
         
         ' NPC Spawn
-        If frmEditor_Map.optNpcSpawn.Value Then
+        If frmEditor_Map.optNPCSpawn.Value Then
             .Type = TILE_TYPE_NPCSPAWN
             .Data1 = SpawnNPCNum
             .Data2 = SpawnNPCDir
@@ -2070,9 +2070,6 @@ errorhandler:
 End Sub
 
 Public Sub MoralEditorInit()
-    ' Check if the form is visible if not then exit
-    If frmEditor_Moral.Visible = False Then Exit Sub
-    
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -4448,6 +4445,7 @@ End Sub
 
 Public Sub InitAdminPanel()
     frmAdmin.Visible = True
+    
     If Not adminMin Then
         frmAdmin.Left = frmMain.Left + frmMain.Width + 160
         frmAdmin.Top = frmMain.Top

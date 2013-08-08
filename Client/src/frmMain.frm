@@ -814,7 +814,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -3389,7 +3388,6 @@ Private Sub chkTilePreview_Click()
 End Sub
 
 Private Sub chkTilesets_Click()
-
     If frmMain.chkTilesets.Value Then
         frmMain.chkTilesets.Picture = LoadResPicture("TILESETS_DOWN", vbResBitmap)
         displayTilesets = True
@@ -3399,7 +3397,6 @@ Private Sub chkTilesets_Click()
         displayTilesets = False
         frmMain.lblTitle = "UBER Map Editor - " & "Layer: " & CurrentLayer
     End If
-
 End Sub
 
 Private Sub cmdDelete_Click()
@@ -3417,7 +3414,7 @@ Private Sub cmdProperties_Click()
     MapPropertiesInit
     
     ' Update the 1stnpcs list Index so it is selected
-    frmEditor_MapProperties.lstNPCs.ListIndex = 0
+    frmEditor_MapProperties.lstNpcs.ListIndex = 0
     
     ' Show the form
     frmEditor_MapProperties.Show
@@ -6527,6 +6524,7 @@ Private Sub DropItem(ByVal InvNum As Byte)
         End If
     End If
 End Sub
+
 Private Sub GameWindowProc(ByVal bBefore As Boolean, _
                       ByRef bHandled As Boolean, _
                       ByRef lReturn As Long, _

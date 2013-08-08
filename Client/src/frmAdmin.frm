@@ -1069,8 +1069,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
-
 Dim refreshDown As Boolean
 Dim autoAccess As Boolean, autoSprite As Boolean
 Dim currentSprite As Long
@@ -1087,24 +1085,8 @@ Private Const UISF_FocusRectangle As Integer = &H1
 Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, _
 ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 
- 
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
 
-'Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" ( _
-'    ByVal hWnd As Long, ByVal wMsg As Long, _
-'    ByVal wParam As Long, lParam As Any) As Long
-'
-'Private Function MakeLong(ByVal wLow As Integer, _
-'    ByVal wHigh As Integer) As Long
-'    MakeLong = wHigh * &H10000 + wLow
-'End Function
-
-
-
-Private Sub chkAnim_Click()
-    
-
-End Sub
 Public Sub ShowEyeFor(Editor As Byte)
     picEye(Editor).Visible = True
 End Sub
@@ -1216,10 +1198,7 @@ Public Sub chkEditor_Click(Index As Integer)
                     If FormVisible("frmEditor_Map") Then
                         ignoreChange = True
                         chkEditor(Index).Value = 1
-                        'BringWindowToTop (frmEditor_Map.hwnd)
                         LeaveMapEditorMode True
-                    Else
-                    
                     End If
                 End If
         Case 6 ' Moral
@@ -1336,8 +1315,10 @@ Public Sub chkEditor_Click(Index As Integer)
             End If
 
     End Select
+    
     picEye(Index).Visible = False
     Exit Sub
+    
 ' Error handler
 errorhandler:
     HandleError "chkEditor_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
@@ -1582,7 +1563,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-
 Private Sub cmdAMapReport_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1688,16 +1668,12 @@ Private Sub cmdShowGame_Click()
 End Sub
 
 Private Sub cmdSpawnRecent_Click()
-
     Dim item As Byte
-
     Dim i    As Byte
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
-
         Exit Sub
-
     End If
 
     item = lastSpawnedItems(rcSwitcher.Value)
@@ -1707,14 +1683,11 @@ Private Sub cmdSpawnRecent_Click()
     Dim found As Integer, limit As Integer
 
     For i = 0 To UBound(lastSpawnedItems) - 1
-    
         If lastSpawnedItems(i) = item Then
             found = i
 
             Exit For
-
         End If
-    
     Next
     
     If found = -1 Then
@@ -1737,7 +1710,6 @@ Private Sub cmdSpawnRecent_Click()
         End If
     End If
     Exit Sub
-    
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
@@ -1940,7 +1912,6 @@ Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, X As Single,
 End Sub
 
 Public Sub selectMyself()
-
     For i = 0 To cmbPlayersOnline.ListCount
         If Trim(cmbPlayersOnline.List(i)) = Trim(Player(MyIndex).name) Then
             cmbPlayersOnline.ListIndex = i
@@ -1948,8 +1919,8 @@ Public Sub selectMyself()
             Exit Sub
         End If
     Next
-
 End Sub
+
 Public Sub UpdatePlayersOnline()
     Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
     Dim stuffCounter As Long, playersCounter As Long, overallCounter As Long, foundStuff As Boolean, foundPlayer As Boolean
@@ -2009,16 +1980,20 @@ Public Sub UpdatePlayersOnline()
 End Sub
 
 Public Sub styleButtons()
-Dim i As Long, temp1 As Long, temp2 As Long
+    Dim i As Long, temp1 As Long, temp2 As Long
+    
     For i = 0 To optCat.UBound
         optCat(i).Value = False
         optCat(i).Picture = LoadResPicture(100 + i, vbResBitmap)
     Next
+    
     For i = 0 To picEye.UBound
         picEye(i).Visible = False
         picEye(i).Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
     Next
+    
     temp1 = getWndProcAddr
+    
     If GetWindowLong(optCat(0).hWnd, -4) <> temp1 Then
         For i = 0 To optCat.UBound
             SubClassHwnd optCat(i).hWnd
@@ -2032,19 +2007,18 @@ Dim i As Long, temp1 As Long, temp2 As Long
         picSpawner.BorderStyle = 0
     End If
 End Sub
+
 Public Sub findVisibleEditors()
     Dim i As Long, tempCtl As Control
+    
     For Each frm In Forms
         If frm.Visible = True Then
-
             Select Case frm.name
-            
                 Case "frmEditor_Animation"
                     ignoreChange = True
                     chkEditor(EDITOR_ANIMATION).Value = 1
                     chkEditor(EDITOR_ANIMATION).FontBold = True
                     picEye(EDITOR_ANIMATION).Visible = True
-
                 Case "frmEditor_Ban"
                     ignoreChange = True
                     chkEditor(EDITOR_BAN).Value = 1
@@ -2108,10 +2082,10 @@ Public Sub findVisibleEditors()
                 Case "frmItemSpawner"
                     picSpawner.Visible = True
             End Select
-            
         End If
     Next
 End Sub
+
 Public Sub UpdateRecentSpawner()
     If ArrayIsInitialized(lastSpawnedItems) Then
         If UBound(lastSpawnedItems) > 0 Then
@@ -2130,8 +2104,10 @@ End Sub
 Public Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
+    
     ignoreChange = False
     frmAdmin.picRefresh.BorderStyle = 0
+    
     Me.Move frmMain.Left + frmMain.Width, frmMain.Top
     If Trim(cmbPlayersOnline.text) = "Choose Player" Then
         txtSprite.Enabled = False
@@ -2149,13 +2125,11 @@ Public Sub Form_Load()
     currentCategory = lblCat.Caption
     
     LastAdminSpriteTimer = timeGetTime
-
-    'UpdateAdminScrollBar
+    
     UpdateRecentSpawner
     picRefresh.Picture = LoadResPicture("REFRESH_UP", vbResBitmap)
     refreshingAdminList = True
     SendRequestPlayersOnline
-    
     Exit Sub
     
 ' Error handler
@@ -2190,11 +2164,10 @@ Public Sub picSizer_Click()
         BorderStyle = 1
         Caption = "Admin Panel"
         Height = 9060
-        frmAdmin.Left = frmMain.Left + frmMain.Width + 165
+        frmAdmin.Left = frmMain.Left + frmMain.Width + 160
         frmAdmin.Top = frmMain.Top
         cmdShowGame.Visible = False
     Else
-        'Exit Sub
         For Each ctrl In Controls
             Select Case ctrl.name
             
@@ -2224,12 +2197,14 @@ Public Sub picSizer_Click()
     End If
     reverse = True
 End Sub
+
 Public Sub centerMiniVert(pWidth As Long, pHeight As Long, pLeft As Long, pTop As Long)
     Left = pLeft + pWidth + 165
     Top = pTop + ((pHeight - Height) / 2)
     BeforeTopMost (frmAdmin.hWnd)
     BringWindowToTop (hwndLastActiveWnd)
 End Sub
+
 Private Sub picSpawner_Click()
     If FormVisible("frmItemSpawner") Then
         BringWindowToTop (frmItemSpawner.hWnd)

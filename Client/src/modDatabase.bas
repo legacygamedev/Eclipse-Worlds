@@ -1270,6 +1270,7 @@ Sub ClearClass(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Class(Index)), LenB(Class(Index)))
     Class(Index).name = vbNullString
     Class(Index).CombatTree = 1
+    Class(Index).Color = 15
     Exit Sub
     
 ' Error handler

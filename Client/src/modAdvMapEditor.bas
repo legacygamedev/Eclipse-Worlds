@@ -24,26 +24,26 @@ Private Const WS_CAPTION        As Long = &HC00000
 
 'API Declarations
 Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
-                        (ByVal hwnd As Long, ByVal nIndex As Long) As Long
-Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, _
+                        (ByVal hWnd As Long, ByVal nIndex As Long) As Long
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, _
                                                                             ByVal dwNewLong As Long) As Long
 Private Declare Function GetCursorPos Lib "user32" (lpPoint As POINTAPI) As Long
-Private Declare Function GetWindowRect Lib "user32.dll" (ByVal hwnd As Long, lpRect As RECTTT) As Long
-Private Declare Function SetCapture Lib "user32" (ByVal hwnd As Long) As Long
+Private Declare Function GetWindowRect Lib "user32.dll" (ByVal hWnd As Long, lpRect As RECTTT) As Long
+Private Declare Function SetCapture Lib "user32" (ByVal hWnd As Long) As Long
 Private Declare Function GetCapture Lib "user32" () As Long
 Private Declare Function ReleaseCapture Lib "user32" () As Long
 Private Declare Function SetWindowPos Lib "user32.dll" ( _
-     ByVal hwnd As Long, _
+     ByVal hWnd As Long, _
      ByVal hWndInsertAfter As Long, _
      ByVal X As Long, _
      ByVal Y As Long, _
      ByVal cX As Long, _
      ByVal cY As Long, _
      ByVal wFlags As Long) As Long
-Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, _
+Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, _
 ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
 Private Declare Function DefWindowProc Lib "user32" Alias "DefWindowProcA" _
-    (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, _
+    (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, _
     ByVal lParam As Long) As Long
 Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As Any, ByVal lpWindowName _
          As Any) As Long
@@ -156,14 +156,13 @@ Public Sub LeaveMapEditorMode(Cancel As Boolean)
             Unload frmEditor_Map
         End If
         MapEditorMode False
-
     End If
     
     If FormVisible("frmAdmin") Then
         frmAdmin.ignoreChange = True
         frmAdmin.chkEditor(EDITOR_MAP).Value = 0
         frmAdmin.chkEditor(EDITOR_MAP).FontBold = False
-        BringWindowToTop (frmAdmin.hwnd)
+        BringWindowToTop (frmAdmin.hWnd)
         frmAdmin.picEye(EDITOR_MAP).Visible = False
     End If
     
@@ -172,27 +171,27 @@ End Sub
 Private Function FlipBit(ByVal Bit As Long, ByVal Value As Boolean) As Boolean
    Dim nStyle As Long
    
-   nStyle = GetWindowLong(frmMain.hwnd, GWL_STYLE)
+   nStyle = GetWindowLong(frmMain.hWnd, GWL_STYLE)
    
    If Value Then
       nStyle = nStyle Or Bit
    Else
       nStyle = nStyle And Not Bit
    End If
-   Call SetWindowLong(frmMain.hwnd, GWL_STYLE, nStyle)
+   Call SetWindowLong(frmMain.hWnd, GWL_STYLE, nStyle)
    Call Redraw
    
-   FlipBit = (nStyle = GetWindowLong(frmMain.hwnd, GWL_STYLE))
+   FlipBit = (nStyle = GetWindowLong(frmMain.hWnd, GWL_STYLE))
 End Function
 Public Sub Redraw()
    ' Redraw window with new style.
    Dim swpFlags As Long
    swpFlags = SWP_FRAMECHANGED Or SWP_NOMOVE Or SWP_NOSIZE Or SWP_NOZORDER Or SWP_NOOWNERZORDER
       'SWP_NOZORDER
-    SetWindowPos frmMain.hwnd, 0, 0, 0, 0, 0, swpFlags
+    SetWindowPos frmMain.hWnd, 0, 0, 0, 0, 0, swpFlags
 End Sub
 
-Public Sub MainMouseMove(hwnd As Long)
+Public Sub MainMouseMove(hWnd As Long)
 
     If (g_MovingMainWnd) Then
 
@@ -204,7 +203,7 @@ Public Sub MainMouseMove(hwnd As Long)
 
             wnd_x = g_OrigWndPos.X + (pt.X - g_OrigCursorPos.X)
             wnd_y = g_OrigWndPos.Y + (pt.Y - g_OrigCursorPos.Y)
-            SetWindowPos frmMain.hwnd, 0, wnd_x, wnd_y, 0, 0, (SWP_NOACTIVATE Or SWP_NOOWNERZORDER Or SWP_NOZORDER Or SWP_NOSIZE)
+            SetWindowPos frmMain.hWnd, 0, wnd_x, wnd_y, 0, 0, (SWP_NOACTIVATE Or SWP_NOOWNERZORDER Or SWP_NOZORDER Or SWP_NOSIZE)
             If FormVisible("frmMapPreview") Then
                 frmMapPreview.Move frmMain.Left - frmMapPreview.Width - 80, frmMain.Top + 75
             End If
@@ -212,24 +211,24 @@ Public Sub MainMouseMove(hwnd As Long)
     End If
 
 End Sub
-Public Sub MainCaptureChanged(hwnd As Long, lParam As Long)
-    g_MovingMainWnd = IIf(lParam = hwnd, True, False)
+Public Sub MainCaptureChanged(hWnd As Long, lParam As Long)
+    g_MovingMainWnd = IIf(lParam = hWnd, True, False)
 End Sub
-Public Sub MainLButtonUp(hwnd As Long)
+Public Sub MainLButtonUp(hWnd As Long)
     ReleaseCapture
 End Sub
 
-Public Sub MainLButtonDown(hwnd As Long)
+Public Sub MainLButtonDown(hWnd As Long)
 
     If (GetCursorPos(g_OrigCursorPos)) Then
 
         Dim rt As RECTTT
 
-        GetWindowRect frmMain.hwnd, rt
+        GetWindowRect frmMain.hWnd, rt
         g_OrigWndPos.X = rt.Left
         g_OrigWndPos.Y = rt.Top
         g_MovingMainWnd = True
-        SetCapture hwnd
+        SetCapture hWnd
     End If
 
 End Sub
@@ -239,7 +238,7 @@ End Sub
 Public Sub BeforeTopMost(hwndd As Long)
     SetWindowPos hwndd, 0, 0, 0, 0, 0, (SWP_NOACTIVATE Or SWP_NOOWNERZORDER Or SWP_NOSIZE Or SWP_NOMOVE)
 End Sub
-Public Sub MainPreventResizing(hwnd As Long, constWidth As Long, constHeight As Long, ByRef lParam As Long)
+Public Sub MainPreventResizing(hWnd As Long, constWidth As Long, constHeight As Long, ByRef lParam As Long)
                  Dim MMI As MINMAXINFO
                   
                   CopyMemory MMI, ByVal lParam, LenB(MMI)

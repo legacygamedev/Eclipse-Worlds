@@ -1137,7 +1137,7 @@ Sub HandleMapData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As 
     Map.BGS = buffer.ReadString
     Map.Revision = buffer.ReadLong
     Map.Moral = buffer.ReadByte
-    Map.up = buffer.ReadLong
+    Map.Up = buffer.ReadLong
     Map.Down = buffer.ReadLong
     Map.Left = buffer.ReadLong
     Map.Right = buffer.ReadLong
@@ -1470,7 +1470,6 @@ errorhandler:
 End Sub
 
 Private Sub HandleItemEditor()
-
     Dim i As Long
 
     ' If debug mode, handle error then exit out
@@ -1498,7 +1497,6 @@ Private Sub HandleItemEditor()
     End With
 
     frmAdmin.ShowEyeFor EDITOR_ITEM
-
     Exit Sub
     
     ' Error handler
@@ -1820,6 +1818,7 @@ Private Sub HandleEditMap()
     MapEditorMode True
     frmEditor_Map.Visible = True
     Call MapEditorInit
+    
     If FormVisible("frmMapPreview") Then
         frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75 + 145 + frmMapPreview.Height
     Else
@@ -3907,7 +3906,6 @@ Private Sub HandleMoralEditor(ByVal Index As Long, _
     End With
 
     frmAdmin.ShowEyeFor EDITOR_MORAL
-
     Exit Sub
     
     ' Error handler

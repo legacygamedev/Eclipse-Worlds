@@ -53,86 +53,6 @@ Begin VB.Form frmEditor_Map
          Top             =   2835
          Width           =   1215
       End
-      Begin VB.Frame fraHeal 
-         Caption         =   "Heal"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   2655
-         Left            =   15
-         TabIndex        =   51
-         Top             =   810
-         Visible         =   0   'False
-         Width           =   3000
-         Begin VB.ComboBox cmbHeal 
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   315
-            ItemData        =   "frmEditor_Map.frx":038A
-            Left            =   240
-            List            =   "frmEditor_Map.frx":0394
-            Style           =   2  'Dropdown List
-            TabIndex        =   55
-            Top             =   360
-            Width           =   2535
-         End
-         Begin VB.CommandButton cmdHeal 
-            Caption         =   "Accept"
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   375
-            Left            =   240
-            TabIndex        =   53
-            Top             =   2040
-            Width           =   1215
-         End
-         Begin VB.HScrollBar scrlHeal 
-            Height          =   255
-            Left            =   240
-            Min             =   1
-            TabIndex        =   52
-            Top             =   960
-            Value           =   1
-            Width           =   2490
-         End
-         Begin VB.Label lblHeal 
-            Caption         =   "Amount: 1"
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   240
-            TabIndex        =   54
-            Top             =   720
-            Width           =   2535
-         End
-      End
       Begin VB.Frame fraMapItem 
          Caption         =   "Item"
          BeginProperty Font 
@@ -565,9 +485,9 @@ Begin VB.Form frmEditor_Map
                Strikethrough   =   0   'False
             EndProperty
             Height          =   315
-            ItemData        =   "frmEditor_Map.frx":03A6
+            ItemData        =   "frmEditor_Map.frx":038A
             Left            =   240
-            List            =   "frmEditor_Map.frx":03A8
+            List            =   "frmEditor_Map.frx":038C
             Style           =   2  'Dropdown List
             TabIndex        =   49
             Top             =   360
@@ -619,9 +539,9 @@ Begin VB.Form frmEditor_Map
                Strikethrough   =   0   'False
             EndProperty
             Height          =   315
-            ItemData        =   "frmEditor_Map.frx":03AA
+            ItemData        =   "frmEditor_Map.frx":038E
             Left            =   240
-            List            =   "frmEditor_Map.frx":03BA
+            List            =   "frmEditor_Map.frx":039E
             Style           =   2  'Dropdown List
             TabIndex        =   62
             Top             =   360
@@ -664,9 +584,9 @@ Begin VB.Form frmEditor_Map
                Strikethrough   =   0   'False
             EndProperty
             Height          =   315
-            ItemData        =   "frmEditor_Map.frx":03D5
+            ItemData        =   "frmEditor_Map.frx":03B9
             Left            =   240
-            List            =   "frmEditor_Map.frx":03D7
+            List            =   "frmEditor_Map.frx":03BB
             Style           =   2  'Dropdown List
             TabIndex        =   92
             Top             =   360
@@ -701,9 +621,9 @@ Begin VB.Form frmEditor_Map
                Strikethrough   =   0   'False
             EndProperty
             Height          =   315
-            ItemData        =   "frmEditor_Map.frx":03D9
+            ItemData        =   "frmEditor_Map.frx":03BD
             Left            =   240
-            List            =   "frmEditor_Map.frx":03E3
+            List            =   "frmEditor_Map.frx":03C7
             Style           =   2  'Dropdown List
             TabIndex        =   64
             Top             =   360
@@ -753,10 +673,90 @@ Begin VB.Form frmEditor_Map
             Width           =   2535
          End
       End
+      Begin VB.Frame fraHeal 
+         Caption         =   "Heal"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   2655
+         Left            =   15
+         TabIndex        =   51
+         Top             =   810
+         Visible         =   0   'False
+         Width           =   3000
+         Begin VB.ComboBox cmbHeal 
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   315
+            ItemData        =   "frmEditor_Map.frx":03D9
+            Left            =   240
+            List            =   "frmEditor_Map.frx":03E3
+            Style           =   2  'Dropdown List
+            TabIndex        =   55
+            Top             =   360
+            Width           =   2535
+         End
+         Begin VB.CommandButton cmdHeal 
+            Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   375
+            Left            =   240
+            TabIndex        =   53
+            Top             =   2040
+            Width           =   1215
+         End
+         Begin VB.HScrollBar scrlHeal 
+            Height          =   255
+            Left            =   240
+            Min             =   1
+            TabIndex        =   52
+            Top             =   960
+            Value           =   1
+            Width           =   2490
+         End
+         Begin VB.Label lblHeal 
+            Caption         =   "Amount: 1"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Left            =   240
+            TabIndex        =   54
+            Top             =   720
+            Width           =   2535
+         End
+      End
    End
    Begin VB.Frame fraType 
       Caption         =   "Type"
-      Height          =   1575
+      Height          =   1650
       Left            =   1650
       TabIndex        =   80
       Top             =   2835
@@ -1135,6 +1135,22 @@ Begin VB.Form frmEditor_Map
          Width           =   1335
       End
    End
+   Begin VB.CommandButton cmdCopy 
+      Caption         =   "Copy"
+      Height          =   240
+      Left            =   1680
+      TabIndex        =   94
+      Top             =   1650
+      Width           =   495
+   End
+   Begin VB.CommandButton cmdPaste 
+      Caption         =   "Paste"
+      Height          =   210
+      Left            =   2400
+      TabIndex        =   95
+      Top             =   1665
+      Width           =   555
+   End
    Begin VB.Frame fraAttribs 
       Caption         =   "Attributes"
       Height          =   4470
@@ -1435,22 +1451,6 @@ Begin VB.Form frmEditor_Map
          Width           =   1215
       End
    End
-   Begin VB.CommandButton cmdCopy 
-      Caption         =   "Copy"
-      Height          =   240
-      Left            =   1680
-      TabIndex        =   94
-      Top             =   1650
-      Width           =   495
-   End
-   Begin VB.CommandButton cmdPaste 
-      Caption         =   "Paste"
-      Height          =   210
-      Left            =   2295
-      TabIndex        =   95
-      Top             =   1665
-      Width           =   555
-   End
 End
 Attribute VB_Name = "frmEditor_Map"
 Attribute VB_GlobalNameSpace = False
@@ -1459,6 +1459,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Public UnloadStarted As Boolean
+
 Private Sub cmbHeal_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -1495,7 +1496,6 @@ Private Sub Form_Unload(Cancel As Integer)
         UnloadStarted = True
         LeaveMapEditorMode True
     End If
-
 End Sub
 
 Private Sub OptEvents_Click()
@@ -1729,28 +1729,30 @@ End Sub
 
 Private Sub Form_Load()
     Dim i As Long
+    
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
+    
     frmEditor_Map.UnloadStarted = False
+    
     ' Move the entire attributes box on screen
     picAttributes.Left = 0
     picAttributes.Top = 0
+    
     ' Set maxes for attribute forms
     scrlMapItem.max = MAX_ITEMS
     scrlResource.max = MAX_RESOURCES
     scrlMapWarp.max = MAX_MAPS
     
     ' Set the width of the form
-    Me.Width = 3150
+    Me.Width = 3250
     
     ' Set the max scrollbar to the number of tilesets
     frmEditor_Map.scrlTileSet.max = NumTileSets
     
     ' Populate the cache if we need to
-    If Not HasPopulated Then
-        PopulateLists
-    End If
-    
+    If Not HasPopulated Then PopulateLists
+
     ' Add the array to the combo
     frmEditor_Map.cmbSoundEffect.Clear
     frmEditor_Map.cmbSoundEffect.AddItem "None"

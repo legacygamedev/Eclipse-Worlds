@@ -660,7 +660,7 @@ Sub ClearClass(ByVal Index As Long)
     Class(Index).Name = vbNullString
     Class(Index).CombatTree = 1
     Class(Index).Map = 1
-    Class(Index).Color = 1
+    Class(Index).Color = 15
 End Sub
 
 Sub ClearClasses()
