@@ -189,6 +189,7 @@ Public Sub GameLoop()
                     autoTileFrame = 0
             End Select
             tmr500 = tick + 500
+            redrawMapCache = True
         End If
         
         ProcessWeather

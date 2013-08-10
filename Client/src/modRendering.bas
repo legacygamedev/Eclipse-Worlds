@@ -841,7 +841,7 @@ Public Sub DrawWholeMapLowerTiles(ByVal X As Long, ByVal Y As Long)
                     Alpha = 255
                 End If
             Else
-                    Alpha = 255
+                Alpha = 255
             End If
             
             If Autotile(X, Y).Layer(i).RenderState = RENDER_STATE_NORMAL Then
@@ -3114,8 +3114,8 @@ Public Sub Render_Graphics()
     
     ' Don't render
     If frmMain.WindowState = vbMinimized Then Exit Sub
-    
     If GettingMap Then Exit Sub
+    
     ' Update the viewpoint
     Call UpdateCamera
 
@@ -3123,13 +3123,14 @@ Public Sub Render_Graphics()
         RefreshLowerTilesCacheWhole
         RefreshUpperTilesCacheWhole
         redrawMapCache = False
+        
         If FormVisible("frmMapPreview") Then
             frmMapPreview.RecalcuateDimensions
         End If
     End If
+    
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorARGB(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
-    
  
     ' Update draw Name
     UpdateDrawMapName
@@ -5625,6 +5626,7 @@ Public Sub InitAutotiles()
             For layerNum = 1 To MapLayer.Layer_Count - 1
                 ' calculate the subtile positions and place them
                 CalculateAutotile X, Y, layerNum
+                
                 ' cache the rendering state of the tiles and set them
                 CacheRenderState X, Y, layerNum
             Next
@@ -5675,7 +5677,6 @@ Public Sub CalculateAutotile(ByVal X As Long, ByVal Y As Long, ByVal layerNum As
     
     ' Okay, we have autotiling but which one?
     Select Case Map.Tile(X, Y).Autotile(layerNum)
-    
         ' Normal or animated - same difference
         Case AUTOTILE_NORMAL, AUTOTILE_ANIM
             ' North West Quarter

@@ -1196,13 +1196,6 @@ Sub HandleMapData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As 
     InitAutotiles
     
     Set buffer = Nothing
-
-    ' Check if we get a map from someone else and if we were editing a map cancel it out
-    'If InMapEditor Then
-    '    InMapEditor = False
-    '    ClearAttributeFrames
-    '    LeaveMapEditorMode
-    'End If
     
     Audio.CacheNewMapSounds
     Exit Sub
@@ -2167,12 +2160,12 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
             
             OldEXPBarWidth = frmMain.imgEXPBar.Width
             NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
-            frmMain.lblExp.Visible = True
-            frmMain.lblExp.Caption = GetPlayerExp(Index) & "/" & TNL
+            frmMain.lblEXP.Visible = True
+            frmMain.lblEXP.Caption = GetPlayerExp(Index) & "/" & TNL
         Else
             frmMain.imgEXPBar.Width = EXPBar_Width
-            frmMain.lblExp.Visible = False
-            frmMain.lblExp.Caption = ""
+            frmMain.lblEXP.Visible = False
+            frmMain.lblEXP.Caption = ""
         End If
     End If
 End Sub

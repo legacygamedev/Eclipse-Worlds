@@ -3363,7 +3363,7 @@ Attribute cSubclasserHooker.VB_VarHelpID = -1
 Private taskBarClick As Boolean
 
 Private Sub chkDimLayers_Click()
-        redrawMapCache = True
+    redrawMapCache = True
 End Sub
 
 Private Sub chkEyeDropper_Click()
@@ -3375,11 +3375,11 @@ Private Sub chkEyeDropper_Click()
 End Sub
 
 Private Sub chkLayers_Click()
-        If frmMain.chkLayers.Value Then
-            frmMain.chkLayers.Picture = LoadResPicture("LAYERS_DOWN", vbResBitmap)
-        Else
-            frmMain.chkLayers.Picture = LoadResPicture("LAYERS_UP", vbResBitmap)
-        End If
+    If frmMain.chkLayers.Value Then
+        frmMain.chkLayers.Picture = LoadResPicture("LAYERS_DOWN", vbResBitmap)
+    Else
+        frmMain.chkLayers.Picture = LoadResPicture("LAYERS_UP", vbResBitmap)
+    End If
 End Sub
 
 Private Sub chkTilePreview_Click()
@@ -3414,7 +3414,7 @@ Private Sub cmdProperties_Click()
     MapPropertiesInit
     
     ' Update the 1stnpcs list Index so it is selected
-    frmEditor_MapProperties.lstNpcs.ListIndex = 0
+    frmEditor_MapProperties.lstNPCs.ListIndex = 0
     
     ' Show the form
     frmEditor_MapProperties.Show
@@ -4997,10 +4997,10 @@ Private Sub picScreen_MouseMove(Button As Integer, Shift As Integer, X As Single
         Else
             Call MapEditorMouseDown(Button, X, Y, False)
         End If
+        
         If (LastX <> CurX Or LastY <> CurY) And frmEditor_Map.chkRandom.Value = 0 And Button >= 1 And Not displayTilesets Then
             redrawMapCache = True
         End If
-
     ElseIf Button = vbLeftButton And Options.Mouse = 1 Then
         ' Mouse
         If CurX = GetPlayerX(MyIndex) And CurY = GetPlayerY(MyIndex) Then
