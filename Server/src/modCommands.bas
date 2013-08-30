@@ -87,6 +87,16 @@ Sub SetPlayerSprite(ByVal Index As Long, ByVal Sprite As Long)
     Account(Index).Chars(GetPlayerChar(Index)).Sprite = Sprite
 End Sub
 
+Function GetPlayerFace(ByVal Index As Long) As Long
+
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerFace = Account(Index).Chars(GetPlayerChar(Index)).Face
+End Function
+
+Sub SetPlayerFace(ByVal Index As Long, ByVal Face As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Face = Face
+End Sub
+
 Function GetPlayerLevel(ByVal Index As Long) As Long
 
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
