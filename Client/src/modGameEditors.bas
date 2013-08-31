@@ -771,15 +771,22 @@ Public Sub ItemEditorInit()
             Next
         End If
         
-        ' Sprites
+        ' Sprites and Titles
         If .Data1 > 0 Then
             If .Data1 > frmEditor_Item.scrlSprite.max Then
                 frmEditor_Item.scrlSprite.Value = frmEditor_Item.scrlSprite.max
             Else
                 frmEditor_Item.scrlSprite.Value = .Data1
             End If
+            
+            If .Data1 > frmEditor_Item.scrlTitle.max Then
+                frmEditor_Item.scrlTitle.Value = frmEditor_Item.scrlTitle.max
+            Else
+                frmEditor_Item.scrlTitle.Value = .Data1
+            End If
         Else
             frmEditor_Item.scrlSprite.Value = 1
+            frmEditor_Item.scrlTitle.Value = 1
         End If
         
         ' Gender requirement

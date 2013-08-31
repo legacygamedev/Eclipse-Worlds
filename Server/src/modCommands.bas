@@ -87,6 +87,16 @@ Sub SetPlayerSprite(ByVal Index As Long, ByVal Sprite As Long)
     Account(Index).Chars(GetPlayerChar(Index)).Sprite = Sprite
 End Sub
 
+Function GetPlayerTitle(ByVal Index As Long, ByVal TitleNum As Long) As Long
+
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerTitle = Account(Index).Chars(GetPlayerChar(Index)).Title(TitleNum)
+End Function
+
+Sub SetPlayerTitle(ByVal Index As Long, ByVal Title As Long, ByVal TitleNum As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Title(Title) = TitleNum
+End Sub
+
 Function GetPlayerFace(ByVal Index As Long) As Long
 
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function

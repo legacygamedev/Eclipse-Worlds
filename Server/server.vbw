@@ -1,6 +1,6 @@
 modConstants = 130, 130, 1240, 780, 
 modDatabase = 156, 156, 911, 598, 
-modGameLogic = 130, 130, 928, 499, 
+modGameLogic = 130, 130, 928, 499, Z
 modGeneral = 52, 52, 1257, 702, 
 modGlobals = 0, 0, 758, 442, 
 modHandleData = 26, 26, 784, 468, 

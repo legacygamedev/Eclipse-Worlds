@@ -33,6 +33,7 @@ End Sub
 Public Sub CheckInputKeys()
     Dim distanceX As Long
     Dim distanceY As Long
+    Dim i As Long
         
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -174,6 +175,30 @@ Public Sub CheckInputKeys()
     
     ' Mouse movement
     If Not MouseX = -1 And Not MouseY = -1 Then
+        ' Don't move if a target is there
+        For i = 1 To Player_HighIndex
+            If IsPlaying(i) Then
+                If Player(i).Map = Player(MyIndex).Map Then
+                    If CurX = Player(i).X And CurY = Player(i).Y Then
+                        MouseX = -1
+                        MouseY = -1
+                        Exit Sub
+                    End If
+                End If
+            End If
+        Next
+        
+        ' Don't move if a target is there
+        For i = 1 To Map.NPC_HighIndex
+            If MapNPC(i).num > 0 Then
+                If CurX = MapNPC(i).X And CurY = MapNPC(i).Y Then
+                    MouseX = -1
+                    MouseY = -1
+                    Exit Sub
+                End If
+            End If
+        Next
+        
         distanceX = 0
         distanceY = 0
     

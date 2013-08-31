@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
 Begin VB.Form frmAdmin 
    BackColor       =   &H80000002&
    BorderStyle     =   1  'Fixed Single
@@ -1722,7 +1722,6 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
             End If
     End Select
 End Sub
-
 
 Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Select Case Index
