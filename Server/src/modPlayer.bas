@@ -238,7 +238,7 @@ Sub LeftGame(ByVal Index As Long)
     End If
 End Sub
 
-Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal x As Long, ByVal Y As Long, Optional ByVal NeedMap = False, Optional ByVal Dir As Integer = -1)
+Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal NeedMap = False, Optional ByVal Dir As Integer = -1)
     Dim ShopNum As Long
     Dim OldMap As Long
     Dim i As Long
@@ -248,9 +248,9 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal x As Long, By
     If IsPlaying(Index) = False Or MapNum <= 0 Or MapNum > MAX_MAPS Then Exit Sub
 
     ' Check if you are out of bounds
-    If x > Map(MapNum).MaxX Then x = Map(MapNum).MaxX
+    If X > Map(MapNum).MaxX Then X = Map(MapNum).MaxX
     If Y > Map(MapNum).MaxY Then Y = Map(MapNum).MaxY
-    If x < 0 Then x = 0
+    If X < 0 Then X = 0
     If Y < 0 Then Y = 0
     
     ' Save old map to send erase player data to
@@ -258,9 +258,9 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal x As Long, By
     If OldMap <> MapNum Then
         UpdateMapBlock OldMap, GetPlayerX(Index), GetPlayerY(Index), False
     End If
-    Call SetPlayerX(Index, x)
+    Call SetPlayerX(Index, X)
     Call SetPlayerY(Index, Y)
-    UpdateMapBlock MapNum, x, Y, True
+    UpdateMapBlock MapNum, X, Y, True
     
     ' Set direction
     If Dir > -1 Then
@@ -326,7 +326,7 @@ End Sub
 
 Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, Optional ByVal SendToSelf As Boolean = False)
     Dim Buffer As clsBuffer, MapNum As Integer
-    Dim x As Long, Y As Long, i As Long
+    Dim X As Long, Y As Long, i As Long
     Dim Moved As Byte, MovedSoFar As Boolean
     Dim TileType As Long, VitalType As Long, Color As Long, Amount As Long
 
@@ -483,20 +483,20 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
         ' Check to see if the tile is a warp tile, and if so warp them
         If .Type = TILE_TYPE_WARP Then
             MapNum = .Data1
-            x = .Data2
+            X = .Data2
             Y = .Data3
-            Call PlayerWarp(Index, MapNum, x, Y)
+            Call PlayerWarp(Index, MapNum, X, Y)
             Moved = YES
         End If
         
         ' Check for a shop, and if so open it
         If .Type = TILE_TYPE_SHOP Then
-            x = .Data1
+            X = .Data1
             
-            If x > 0 Then ' Shop exists?
-                If Len(Trim$(Shop(x).Name)) > 0 Then ' Name exists?
-                    SendOpenShop Index, x
-                    TempPlayer(Index).InShop = x ' Stops movement and the like
+            If X > 0 Then ' Shop exists?
+                If Len(Trim$(Shop(X).Name)) > 0 Then ' Name exists?
+                    SendOpenShop Index, X
+                    TempPlayer(Index).InShop = X ' Stops movement and the like
                 End If
             End If
         End If
@@ -583,7 +583,7 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
     If Moved = NO Then
         Call PlayerWarp(Index, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index))
     Else
-        x = GetPlayerX(Index)
+        X = GetPlayerX(Index)
         Y = GetPlayerY(Index)
     
         If Trim$(Account(Index).Chars(GetPlayerChar(Index)).Status) = "AFK" Then
@@ -592,19 +592,19 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
         End If
         
         ' Check to see if events are touched
-        EventTouch Index, x, Y
+        EventTouch Index, X, Y
     End If
 End Sub
 
-Sub EventTouch(ByVal Index As Long, ByVal x As Long, ByVal Y As Long)
+Sub EventTouch(ByVal Index As Long, ByVal X As Long, ByVal Y As Long)
     Dim EventTouched As Boolean, i As Long
     
     If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
             For i = 1 To TempPlayer(Index).EventMap.CurrentEvents
                 If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Global = 1 Then
-                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).x = x And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then EventTouched = True
+                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).X = X And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then EventTouched = True
                 Else
-                    If TempPlayer(Index).EventMap.EventPages(i).x = x And TempPlayer(Index).EventMap.EventPages(i).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then EventTouched = True
+                    If TempPlayer(Index).EventMap.EventPages(i).X = X And TempPlayer(Index).EventMap.EventPages(i).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then EventTouched = True
                 End If
                 
                 If EventTouched Then
@@ -892,7 +892,7 @@ Sub PlayerMapGetItem(ByVal Index As Long, ByVal i As Long)
         ' Can we pick the item up?
         If CanPlayerPickupItem(Index, i) Then
             ' Check if item is at the same location as the player
-            If (MapItem(MapNum, i).x = GetPlayerX(Index)) Then
+            If (MapItem(MapNum, i).X = GetPlayerX(Index)) Then
                 If (MapItem(MapNum, i).Y = GetPlayerY(Index)) Then
                     ' Find open slot
                     n = FindOpenInvSlot(Index, MapItem(MapNum, i).Num)
@@ -926,7 +926,7 @@ Sub PlayerMapGetItem(ByVal Index As Long, ByVal i As Long)
                         MapItem(MapNum, i).Num = 0
                         MapItem(MapNum, i).Value = 0
                         MapItem(MapNum, i).Durability = 0
-                        MapItem(MapNum, i).x = 0
+                        MapItem(MapNum, i).X = 0
                         MapItem(MapNum, i).Y = 0
                         
                         Call SendInventoryUpdate(Index, n)
@@ -967,7 +967,7 @@ Sub PlayerMapDropItem(ByVal Index As Long, ByVal InvNum As Byte, ByVal Amount As
 
         If Not i = 0 Then
             MapItem(GetPlayerMap(Index), i).Num = GetPlayerInvItemNum(Index, InvNum)
-            MapItem(GetPlayerMap(Index), i).x = GetPlayerX(Index)
+            MapItem(GetPlayerMap(Index), i).X = GetPlayerX(Index)
             MapItem(GetPlayerMap(Index), i).Y = GetPlayerY(Index)
             MapItem(GetPlayerMap(Index), i).playerName = Trim$(GetPlayerName(Index))
             MapItem(GetPlayerMap(Index), i).PlayerTimer = timeGetTime + ITEM_SPAWN_TIME
@@ -1035,7 +1035,6 @@ Sub CheckPlayerLevelUp(ByVal Index As Long)
         If Level_Count > 0 Then
             SendActionMsg GetPlayerMap(Index), "Level Up", Yellow, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
             SendPlayerExp Index
-            Call SendAnimation(GetPlayerMap(Index), 2, 0, 0, TARGET_TYPE_PLAYER, Index)
             
             If Level_Count > 1 Then
                 Call GlobalMsg(GetPlayerName(Index) & " has gained " & Level_Count & " levels!", Yellow)
@@ -1088,7 +1087,6 @@ Sub CheckPlayerSkillLevelUp(ByVal Index As Long, ByVal SkillNum As Byte)
         If Level_Count > 0 Then
             SendActionMsg GetPlayerMap(Index), "Level Up", Yellow, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
             Call PlayerMsg(Index, "Your " & CheckGrammar(GetSkillName(SkillNum)) & " level is now " & GetPlayerSkill(Index, SkillNum) & ".", BrightGreen)
-            Call SendAnimation(GetPlayerMap(Index), 2, 0, 0, TARGET_TYPE_PLAYER, Index)
         End If
     End If
 End Sub
@@ -1127,7 +1125,7 @@ Private Function AutoLife(ByVal Index As Long) As Boolean
                         Call TakeInvItem(Index, Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num, 0)
                     End If
                     
-                    Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, i)).Animation, 0, 0, TARGET_TYPE_PLAYER, Index)
+                    Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, i)).Animation, GetPlayerX(Index), GetPlayerY(Index))
                     
                     ' Warp player away
                     If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).Data1 = 1 Then
@@ -1269,13 +1267,13 @@ Private Sub WarpPlayer(ByVal Index As Long)
                 PlayerWarp Index, .BootMap, .BootX, .BootY
             Else
                 ' Warp to the start map
-                Call PlayerWarp(Index, Class(GetPlayerClass(Index)).Map, Class(GetPlayerClass(Index)).x, Class(GetPlayerClass(Index)).Y, False, Class(GetPlayerClass(Index)).Dir)
+                Call PlayerWarp(Index, Class(GetPlayerClass(Index)).Map, Class(GetPlayerClass(Index)).X, Class(GetPlayerClass(Index)).Y, False, Class(GetPlayerClass(Index)).Dir)
             End If
         End If
      End With
 End Sub
 
-Sub CheckResource(ByVal Index As Long, ByVal x As Long, ByVal Y As Long)
+Sub CheckResource(ByVal Index As Long, ByVal X As Long, ByVal Y As Long)
     Dim Resource_Num As Long
     Dim Resource_Index As Long
     Dim rX As Long, rY As Long
@@ -1283,13 +1281,13 @@ Sub CheckResource(ByVal Index As Long, ByVal x As Long, ByVal Y As Long)
     Dim Damage As Long
     Dim RndNum As Long
     
-    If Map(GetPlayerMap(Index)).Tile(x, Y).Type = TILE_TYPE_RESOURCE Then
+    If Map(GetPlayerMap(Index)).Tile(X, Y).Type = TILE_TYPE_RESOURCE Then
         Resource_Num = 0
-        Resource_Index = Map(GetPlayerMap(Index)).Tile(x, Y).Data1
+        Resource_Index = Map(GetPlayerMap(Index)).Tile(X, Y).Data1
 
         ' Get the cache number
         For i = 0 To ResourceCache(GetPlayerMap(Index)).Resource_Count
-            If ResourceCache(GetPlayerMap(Index)).ResourceData(i).x = x Then
+            If ResourceCache(GetPlayerMap(Index)).ResourceData(i).X = X Then
                 If ResourceCache(GetPlayerMap(Index)).ResourceData(i).Y = Y Then
                     Resource_Num = i
                 End If
@@ -1326,7 +1324,7 @@ Sub CheckResource(ByVal Index As Long, ByVal x As Long, ByVal Y As Long)
 
                 ' Check if the resource has already been deplenished
                 If ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).ResourceState = 0 Then
-                    rX = ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).x
+                    rX = ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).X
                     rY = ResourceCache(GetPlayerMap(Index)).ResourceData(Resource_Num).Y
                 
                     ' Reduce weapon's durability
@@ -1494,7 +1492,7 @@ Public Sub KillPlayer(ByVal Index As Long)
 End Sub
 
 Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
-    Dim n As Long, i As Long, x As Long, Y As Long, TotalPoints As Integer, EquipSlot As Byte
+    Dim n As Long, i As Long, X As Long, Y As Long, TotalPoints As Integer, EquipSlot As Byte
     
     ' Check subscript out of range
     If InvNum < 1 Or InvNum > MAX_INV Then Exit Sub
@@ -1605,7 +1603,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                 SendActionMsg GetPlayerMap(Index), "+" & Item(GetPlayerInvItemNum(Index, InvNum)).AddEXP & " Exp", White, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32
             End If
             
-            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, 0, 0, TARGET_TYPE_PLAYER, Index)
+            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, GetPlayerX(Index), GetPlayerY(Index))
             
             ' Send the sound
             SendPlayerSound Index, GetPlayerX(Index), GetPlayerY(Index), SoundEntity.seItem, GetPlayerInvItemNum(Index, InvNum)
@@ -1631,7 +1629,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                             ' Send the sound
                             SendPlayerSound Index, GetPlayerX(Index), GetPlayerY(Index), SoundEntity.seItem, GetPlayerInvItemNum(Index, InvNum)
                             Call SetPlayerSpell(Index, i, n)
-                            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, 0, 0, TARGET_TYPE_PLAYER, Index)
+                            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, GetPlayerX(Index), GetPlayerY(Index))
                             Call TakeInvItem(Index, GetPlayerInvItemNum(Index, InvNum), 0)
                             Call PlayerMsg(Index, "You have learned a new spell!", BrightGreen)
                             Call SendPlayerSpell(Index, i)
@@ -1658,7 +1656,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                 Exit Sub
             End If
             
-            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, 0, 0, TARGET_TYPE_PLAYER, Index)
+            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, GetPlayerX(Index), GetPlayerY(Index))
             Call PlayerWarp(Index, Item(GetPlayerInvItemNum(Index, InvNum)).Data1, Item(GetPlayerInvItemNum(Index, InvNum)).Data2, Item(GetPlayerInvItemNum(Index, InvNum)).Data3)
             
             ' Send the sound
@@ -1680,7 +1678,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
             ' Send the sound
             SendPlayerSound Index, GetPlayerX(Index), GetPlayerY(Index), SoundEntity.seItem, GetPlayerInvItemNum(Index, InvNum)
             
-            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, 0, 0, TARGET_TYPE_PLAYER, Index)
+            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, GetPlayerX(Index), GetPlayerY(Index))
             Call SetPlayerPoints(Index, TotalPoints)
             Call SendPlayerStats(Index)
             Call SendPlayerPoints(Index)
@@ -1688,7 +1686,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
             Call TakeInvItem(Index, GetPlayerInvItemNum(Index, InvNum), 1)
 
         Case ITEM_TYPE_SPRITE
-            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, 0, 0, TARGET_TYPE_PLAYER, Index)
+            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, GetPlayerX(Index), GetPlayerY(Index))
             Call SetPlayerSprite(Index, Item(GetPlayerInvItemNum(Index, InvNum)).Data1)
             Call SendPlayerSprite(Index)
             
@@ -1701,7 +1699,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
             End If
             
         Case ITEM_TYPE_TITLE
-            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, 0, 0, TARGET_TYPE_PLAYER, Index)
+            Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, GetPlayerX(Index), GetPlayerY(Index))
             Call AddPlayerNewTitle(Index, Item(GetPlayerInvItemNum(Index, InvNum)).Data1, InvNum)
             
             ' Send the sound
@@ -1709,9 +1707,9 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
     End Select
 End Sub
 
-Public Sub SetCheckpoint(ByVal Index As Long, ByVal MapNum As Integer, ByVal x As Long, ByVal Y As Long)
+Public Sub SetCheckpoint(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long)
     ' Check if their checkpoint is already set here
-    If Account(Index).Chars(GetPlayerChar(Index)).CheckPointMap = MapNum And Account(Index).Chars(GetPlayerChar(Index)).CheckPointX = x And Account(Index).Chars(GetPlayerChar(Index)).CheckPointY = Y Then
+    If Account(Index).Chars(GetPlayerChar(Index)).CheckPointMap = MapNum And Account(Index).Chars(GetPlayerChar(Index)).CheckPointX = X And Account(Index).Chars(GetPlayerChar(Index)).CheckPointY = Y Then
         Call PlayerMsg(Index, "Your checkpoint is already saved here!", BrightRed)
         Exit Sub
     End If
@@ -1720,7 +1718,7 @@ Public Sub SetCheckpoint(ByVal Index As Long, ByVal MapNum As Integer, ByVal x A
     
     ' Save the Checkpoint
     Account(Index).Chars(GetPlayerChar(Index)).CheckPointMap = MapNum
-    Account(Index).Chars(GetPlayerChar(Index)).CheckPointX = x
+    Account(Index).Chars(GetPlayerChar(Index)).CheckPointX = X
     Account(Index).Chars(GetPlayerChar(Index)).CheckPointY = Y
 End Sub
 
@@ -1766,7 +1764,7 @@ End Sub
 
 Public Sub UpdatePlayerItems(ByVal Index As Long)
     Dim TmpItem As Long
-    Dim i As Byte, x As Byte
+    Dim i As Byte, X As Byte
 
     ' Make sure the inventory items are not cached as a currency
     For i = 1 To MAX_INV
@@ -1784,18 +1782,18 @@ Public Sub UpdatePlayerItems(ByVal Index As Long)
                     If GetPlayerInvItemValue(Index, i) = 0 Then
                         TmpItem = GetPlayerInvItemNum(Index, i)
                         Call TakeInvItem(Index, TmpItem, 1)
-                        x = x + 1
+                        X = X + 1
                     End If
                 End If
             End If
         End If
     Next
     
-    If x > 0 Then
-        Call GiveInvItem(Index, TmpItem, x)
+    If X > 0 Then
+        Call GiveInvItem(Index, TmpItem, X)
     End If
     
-    x = 0
+    X = 0
     
     ' Make sure the bank items are not cached as a currency
     For i = 1 To MAX_BANK
@@ -1813,21 +1811,21 @@ Public Sub UpdatePlayerItems(ByVal Index As Long)
                     If GetPlayerBankItemValue(Index, i) = 0 Then
                         TmpItem = GetPlayerBankItemNum(Index, i)
                         Call TakeBankItem(Index, TmpItem, 1)
-                        x = x + 1
+                        X = X + 1
                     End If
                 End If
             End If
         End If
     Next
     
-    If x > 0 Then
-        Call GiveBankItem(Index, TmpItem, x)
+    If X > 0 Then
+        Call GiveBankItem(Index, TmpItem, X)
     End If
 End Sub
 
 Public Sub UpdateAllPlayerItems(ByVal ItemNum As Integer)
     Dim TmpItem As Long
-    Dim n As Long, i As Byte, x As Byte
+    Dim n As Long, i As Byte, X As Byte
 
     For n = 1 To Player_HighIndex
         If IsPlaying(n) Then
@@ -1848,7 +1846,7 @@ Public Sub UpdateAllPlayerItems(ByVal ItemNum As Integer)
                             If Item(GetPlayerInvItemNum(n, i)).Stackable = 1 Then
                                 If GetPlayerInvItemValue(n, i) = 0 Then
                                     Call TakeInvItem(n, TmpItem, 1)
-                                    x = x + 1
+                                    X = X + 1
                                 End If
                             End If
                         End If
@@ -1856,11 +1854,11 @@ Public Sub UpdateAllPlayerItems(ByVal ItemNum As Integer)
                 End If
             Next
             
-            If x > 0 Then
-                Call GiveInvItem(n, TmpItem, x)
+            If X > 0 Then
+                Call GiveInvItem(n, TmpItem, X)
             End If
             
-            x = 0
+            X = 0
             
             ' Make sure the Bank items are not cached as a currency
             For i = 1 To MAX_BANK
@@ -1879,7 +1877,7 @@ Public Sub UpdateAllPlayerItems(ByVal ItemNum As Integer)
                             If Item(GetPlayerBankItemNum(n, i)).Stackable = 1 Then
                                 If GetPlayerBankItemValue(n, i) = 0 Then
                                     Call TakeBankItem(n, TmpItem, 1)
-                                    x = x + 1
+                                    X = X + 1
                                 End If
                             End If
                         End If
@@ -1887,8 +1885,8 @@ Public Sub UpdateAllPlayerItems(ByVal ItemNum As Integer)
                 End If
             Next
             
-            If x > 0 Then
-                Call GiveBankItem(n, TmpItem, x)
+            If X > 0 Then
+                Call GiveBankItem(n, TmpItem, X)
             End If
         End If
     Next
@@ -1932,39 +1930,39 @@ Public Sub UpdateClassData(ByVal Index As Long)
 End Sub
 
 Public Sub UpdateAllClassData()
-    Dim i, x As Long
+    Dim i, X As Long
     
-    For x = 1 To Player_HighIndex
+    For X = 1 To Player_HighIndex
         ' Verify incorrect class data
         For i = 1 To Stats.Stat_count - 1
-            If Not Class(GetPlayerClass(x)).Stat(i) = GetPlayerStat(x, i) - ((GetPlayerLevel(x) - 1) * 5) Then
-                Call SetPlayerStat(x, i, Class(GetPlayerClass(x)).Stat(i) + ((GetPlayerLevel(x) - 1) * 5))
+            If Not Class(GetPlayerClass(X)).Stat(i) = GetPlayerStat(X, i) - ((GetPlayerLevel(X) - 1) * 5) Then
+                Call SetPlayerStat(X, i, Class(GetPlayerClass(X)).Stat(i) + ((GetPlayerLevel(X) - 1) * 5))
             End If
         Next
         
-        If GetPlayerSprite(x) = 0 Then
-            If GetPlayerGender(x) = GENDER_MALE Then
-                Call SetPlayerSprite(x, Class(GetPlayerClass(x)).MaleSprite)
+        If GetPlayerSprite(X) = 0 Then
+            If GetPlayerGender(X) = GENDER_MALE Then
+                Call SetPlayerSprite(X, Class(GetPlayerClass(X)).MaleSprite)
             Else
-                Call SetPlayerSprite(x, Class(GetPlayerClass(x)).FemaleSprite)
+                Call SetPlayerSprite(X, Class(GetPlayerClass(X)).FemaleSprite)
             End If
             
             ' Sprite still nothing?
-            If GetPlayerSprite(x) = 0 Then
-                Call SetPlayerSprite(x, 1)
+            If GetPlayerSprite(X) = 0 Then
+                Call SetPlayerSprite(X, 1)
             End If
         End If
         
-        If GetPlayerFace(x) = 0 Then
-            If GetPlayerGender(x) = GENDER_MALE Then
-                Call SetPlayerFace(x, Class(GetPlayerClass(x)).MaleFace)
+        If GetPlayerFace(X) = 0 Then
+            If GetPlayerGender(X) = GENDER_MALE Then
+                Call SetPlayerFace(X, Class(GetPlayerClass(X)).MaleFace)
             Else
-                Call SetPlayerFace(x, Class(GetPlayerClass(x)).FemaleFace)
+                Call SetPlayerFace(X, Class(GetPlayerClass(X)).FemaleFace)
             End If
             
             ' Face still nothing?
-            If GetPlayerFace(x) = 0 Then
-                Call SetPlayerFace(x, 1)
+            If GetPlayerFace(X) = 0 Then
+                Call SetPlayerFace(X, 1)
             End If
         End If
     Next
@@ -1989,9 +1987,9 @@ Function CanPlayerTrade(ByVal Index As Long, ByVal TradeTarget As Long) As Boole
     End If
 
     ' Make sure they're stood next to each other
-    tX = Account(TradeTarget).Chars(GetPlayerChar(TradeTarget)).x
+    tX = Account(TradeTarget).Chars(GetPlayerChar(TradeTarget)).X
     tY = Account(TradeTarget).Chars(GetPlayerChar(TradeTarget)).Y
-    sX = Account(Index).Chars(GetPlayerChar(Index)).x
+    sX = Account(Index).Chars(GetPlayerChar(Index)).X
     sY = Account(Index).Chars(GetPlayerChar(Index)).Y
     
     ' Within range?
@@ -2167,13 +2165,13 @@ End Sub
 
 Public Sub WarpToCheckPoint(Index As Long)
     Dim MapNum As Integer
-    Dim x As Long, Y As Long
+    Dim X As Long, Y As Long
     
     MapNum = Account(Index).Chars(GetPlayerChar(Index)).CheckPointMap
-    x = Account(Index).Chars(GetPlayerChar(Index)).CheckPointX
+    X = Account(Index).Chars(GetPlayerChar(Index)).CheckPointX
     Y = Account(Index).Chars(GetPlayerChar(Index)).CheckPointY
     
-    PlayerWarp Index, MapNum, x, Y
+    PlayerWarp Index, MapNum, X, Y
 End Sub
 
 Function IsAFriend(ByVal Index As Long, ByVal OtherPlayer As Long) As Boolean
