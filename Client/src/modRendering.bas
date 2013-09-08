@@ -59,7 +59,7 @@ Public Tex_Fade As DX8TextureRec
 Public Tex_Equip As DX8TextureRec
 Public Tex_Base As DX8TextureRec
 
-'Caching
+' Caching
 Public lowerTilesCache As Direct3DTexture8
 Public upperTilesCache As Direct3DTexture8
 Public redrawMapCache As Boolean
@@ -127,6 +127,7 @@ Public Function InitDX8() As Boolean
     
     Direct3D_Window.SwapEffect = D3DSWAPEFFECT_DISCARD ' Refresh when the monitor does.
     Direct3D_Window.BackBufferFormat = Display_Mode.Format ' Sets the format that was retrieved into the backbuffer.
+    
     ' Creates the rendering device with some useful info, along with the info
     ' DispMode.Format = D3DFMT_X8R8G8B8
     Direct3D_Window.SwapEffect = D3DSWAPEFFECT_COPY
@@ -2226,12 +2227,9 @@ errorhandler:
 End Sub
 
 Private Sub RefreshUpperTilesCacheWhole()
-
-    Dim bbf    As Direct3DSurface8
-
+    Dim bbf As Direct3DSurface8
     Dim bUpper As Direct3DSurface8
-
-    Dim X      As Long, Y As Long
+    Dim X As Long, Y As Long
 
     Set upperTilesCache = Direct3DX.CreateTexture(Direct3D_Device, PIC_X * Map.MaxX + 32, PIC_Y * Map.MaxY + 32, D3DX_DEFAULT, D3DUSAGE_RENDERTARGET, D3DFMT_UNKNOWN, D3DPOOL_DEFAULT)
     Set bbf = Direct3D_Device.GetRenderTarget
@@ -2265,10 +2263,9 @@ errorhandler:
 End Sub
 
 Private Sub RefreshLowerTilesCacheWhole()
-   
-    Dim bbf        As Direct3DSurface8
-    Dim bLower     As Direct3DSurface8
-    Dim X          As Long, Y As Long
+    Dim bbf As Direct3DSurface8
+    Dim bLower As Direct3DSurface8
+    Dim X  As Long, Y As Long
     
     Set lowerTilesCache = Direct3DX.CreateTexture(Direct3D_Device, PIC_X * Map.MaxX + 32, PIC_Y * Map.MaxY + 32, D3DX_DEFAULT, D3DUSAGE_RENDERTARGET, D3DFMT_UNKNOWN, D3DPOOL_DEFAULT)
     Set bbf = Direct3D_Device.GetRenderTarget
@@ -3124,9 +3121,7 @@ Public Sub Render_Graphics()
         RefreshUpperTilesCacheWhole
         redrawMapCache = False
         
-        If FormVisible("frmMapPreview") Then
-            frmMapPreview.RecalcuateDimensions
-        End If
+        If FormVisible("frmMapPreview") Then frmMapPreview.RecalcuateDimensions
     End If
     
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorARGB(0, 0, 0, 0), 1#, 0
