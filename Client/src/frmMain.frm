@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "richtx32.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    ClientHeight    =   13470
@@ -814,7 +814,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -3486,7 +3485,20 @@ Private Sub Form_Unload(Cancel As Integer)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Cancel = True
-    LogoutGame
+
+    cSubclasserHooker.ssc_UnSubclass Me.picMapEditor.hWnd
+    cSubclasserHooker.ssc_UnSubclass Me.mapPreviewSwitch.hWnd
+    cSubclasserHooker.ssc_UnSubclass Me.chkEyeDropper.hWnd
+    cSubclasserHooker.ssc_UnSubclass Me.cmdSave.hWnd
+    cSubclasserHooker.ssc_UnSubclass Me.cmdRevert.hWnd
+    cSubclasserHooker.ssc_UnSubclass Me.cmdDelete.hWnd
+    cSubclasserHooker.ssc_UnSubclass Me.cmdProperties.hWnd
+    cSubclasserHooker.ssc_UnSubclass Me.hWnd
+    
+    Set cSubclasserHooker = Nothing
+    If InGame Then
+        LogoutGame
+    End If
     Exit Sub
     
 ' Error handler

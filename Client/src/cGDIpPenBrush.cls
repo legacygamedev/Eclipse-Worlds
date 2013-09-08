@@ -35,7 +35,6 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Declare Function GetSysColor Lib "user32.dll" (ByVal nIndex As Long) As Long
-Private Declare Function GetGDIObject Lib "gdi32.dll" Alias "GetObjectA" (ByVal hObject As Long, ByVal nCount As Long, ByRef lpObject As Any) As Long
 Private Type BITMAP
     bmType As Long
     bmWidth As Long
@@ -45,12 +44,6 @@ Private Type BITMAP
     bmBitsPixel As Integer
     bmBits As Long
 End Type
-
-
-
-Private Declare Function GdipLoadImageFromStream Lib "gdiplus" (ByVal Stream As IUnknown, Image As Long) As Long
-Private Declare Function GdipCreateBitmapFromScan0 Lib "gdiplus" (ByVal Width As Long, ByVal Height As Long, ByVal Stride As Long, ByVal PixelFormat As Long, scan0 As Any, BITMAP As Long) As Long
-
 
 Private Declare Function GdipCreateSolidFill Lib "GdiPlus.dll" (ByVal mColor As Long, ByRef mBrush As Long) As Long
 Private Declare Function GdipDeleteBrush Lib "GdiPlus.dll" (ByVal mBrush As Long) As Long
@@ -78,19 +71,11 @@ Private Declare Function GdipGetPenWidth Lib "GdiPlus.dll" (ByVal mPen As Long, 
 Private Declare Function GdipSetPenWidth Lib "GdiPlus.dll" (ByVal mPen As Long, ByVal nWidth As Single) As Long
 Private Declare Function GdipSetPenColor Lib "GdiPlus.dll" (ByVal mPen As Long, ByVal nColor As Long) As Long
 Private Declare Function GdipCreateTexture Lib "GdiPlus.dll" (ByVal mImage As Long, ByVal mWrapMode As Long, ByRef mTexture As Long) As Long
-Private Declare Function GdipDisposeImage Lib "GdiPlus.dll" (ByVal mImage As Long) As Long
 Private Declare Function GdipGetBrushType Lib "GdiPlus.dll" (ByVal brush As Long, ByRef ptype As Long) As Long
 Private Declare Function GdipSetPenEndCap Lib "GdiPlus.dll" (ByVal mPen As Long, ByVal mCap As Long) As Long
 Private Declare Function GdipSetPenStartCap Lib "GdiPlus.dll" (ByVal mPen As Long, ByVal mCap As Long) As Long
 Private Declare Function GdipGetPenEndCap Lib "GdiPlus.dll" (ByVal mPen As Long, ByRef mCap As Long) As Long
 Private Declare Function GdipGetPenStartCap Lib "GdiPlus.dll" (ByVal mPen As Long, ByRef mCap As Long) As Long
-
-' ToDo: GDI+ Paths
-Private Declare Function GdipCreatePathGradientFromPath Lib "GdiPlus.dll" (ByVal mpath As Long, ByRef mPolyGradient As Long) As Long
-Private Declare Function GdipSetPathGradientCenterColor Lib "GdiPlus.dll" (ByVal mBrush As Long, ByVal mColors As Long) As Long
-Private Declare Function GdipSetPathGradientSurroundColorsWithCount Lib "GdiPlus.dll" (ByVal mBrush As Long, ByRef mColors As Long, ByRef mCount As Long) As Long
-Private Declare Function GdipGetPathWorldBounds Lib "GdiPlus.dll" (ByVal mpath As Long, ByRef mBounds As RECTL, ByVal mMatrix As Long, ByVal mPen As Long) As Long
-
 
 Public Enum WrapModeConstants
     WrapModeTile = &H0
@@ -207,8 +192,8 @@ Private Type RECTL
     Height As Long
 End Type
 Private Type POINTL
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 
@@ -337,8 +322,8 @@ Public Function CreateGradientLineBrush(ByVal X1 As Long, ByVal Y1 As Long, ByVa
     If Not m_Token Is Nothing Then
         If m_Token.Token Then
             Dim lHandle As Long, pt1 As POINTL, pt2 As POINTL
-            pt1.x = X1: pt1.y = Y1
-            pt2.x = X2: pt2.y = Y2
+            pt1.X = X1: pt1.Y = Y1
+            pt2.X = X2: pt2.Y = Y2
             Call GdipCreateLineBrushI(pt1, pt2, ARGBStartColor, ARGBEndColor, WrapMode, lHandle)
             If lHandle Then
                 m_Objects.Add "b" & CStr(lHandle), CStr(lHandle)

@@ -784,7 +784,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -801,8 +801,8 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    If Not EnteringGame Then DestroyGame
+
+    If Not EnteringGame And Not gameDestroyed Then DestroyGame
     Exit Sub
     
 ' Error handler
@@ -865,7 +865,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub ImgButton_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub ImgButton_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -961,7 +961,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picCharacter_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picCharacter_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -974,7 +974,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picCredits_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picCredits_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -987,7 +987,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picLogin_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picLogin_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -1000,7 +1000,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picMain_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picMain_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
@@ -1013,7 +1013,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picRegister_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub picRegister_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     

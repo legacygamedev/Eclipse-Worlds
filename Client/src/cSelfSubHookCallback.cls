@@ -96,14 +96,14 @@ End Type
         ALL_MESSAGES = -1     'All messages will callback
     End Enum
     
-    Private Declare Function CallWindowProcA Lib "user32" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
-    Private Declare Function CallWindowProcW Lib "user32" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+    Private Declare Function CallWindowProcA Lib "user32" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+    Private Declare Function CallWindowProcW Lib "user32" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
     Private Declare Function GetCurrentProcessId Lib "kernel32" () As Long
-    Private Declare Function GetWindowThreadProcessId Lib "user32" (ByVal hwnd As Long, lpdwProcessId As Long) As Long
-    Private Declare Function IsWindow Lib "user32" (ByVal hwnd As Long) As Long
-    Private Declare Function IsWindowUnicode Lib "user32.dll" (ByVal hwnd As Long) As Long
-    Private Declare Function SetWindowLongA Lib "user32" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
-    Private Declare Function SetWindowLongW Lib "user32" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+    Private Declare Function GetWindowThreadProcessId Lib "user32" (ByVal hWnd As Long, lpdwProcessId As Long) As Long
+    Private Declare Function IsWindow Lib "user32" (ByVal hWnd As Long) As Long
+    Private Declare Function IsWindowUnicode Lib "user32.dll" (ByVal hWnd As Long) As Long
+    Private Declare Function SetWindowLongA Lib "user32" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+    Private Declare Function SetWindowLongW Lib "user32" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
 '-------------------------------------------------------------------------------------------------
 
 '========================================================================================================
@@ -123,7 +123,6 @@ End Type
     Private Declare Function SetWindowsHookExA Lib "user32" (ByVal idHook As Long, ByVal lpfn As Long, ByVal hMod As Long, ByVal dwThreadId As Long) As Long
     Private Declare Function SetWindowsHookExW Lib "user32" (ByVal idHook As Long, ByVal lpfn As Long, ByVal hMod As Long, ByVal dwThreadId As Long) As Long
     Private Declare Function UnhookWindowsHookEx Lib "user32" (ByVal hHook As Long) As Long
-    Private Declare Function CallNextHookEx Lib "user32.dll" (ByVal hHook As Long, ByVal nCode As Long, ByVal wParam As Long, ByRef lParam As Any) As Long
     Private Declare Function GetDesktopWindow Lib "user32.dll" () As Long
     
     Public Enum eHookType  ' http://msdn2.microsoft.com/en-us/library/ms644990.aspx
@@ -698,7 +697,7 @@ Private Function zMap_VFunction(vFuncTarget As Long, _
     If thunkCol Is Nothing Then
         zError "zMap_VFunction", "Thunk hasn't been initialized"
     Else
-        If thunkCol.Count Then
+        If thunkCol.count Then
             On Error GoTo Catch
             z_ScMem = thunkCol(colID)               'Get the thunk address
             If IsBadCodePtr(z_ScMem) Then z_ScMem = 0&
@@ -879,8 +878,8 @@ Private Sub zTerminateThunks(ByVal vType As eThunkType)
     
     If Not (thunkCol Is Nothing) Then                 'Ensure that hooking has been started
       With thunkCol
-        For i = .Count To 1 Step -1                   'Loop through the collection of hook types in reverse order
-          z_ScMem = .Item(i)                          'Get the thunk address
+        For i = .count To 1 Step -1                   'Loop through the collection of hook types in reverse order
+          z_ScMem = .item(i)                          'Get the thunk address
           If IsBadCodePtr(z_ScMem) = 0 Then           'Ensure that the thunk hasn't already released its memory
             Select Case vType
                 Case SubclassThunk
@@ -947,7 +946,7 @@ Public Function scb_SetCallbackAddr(ByVal nParamCount As Long, _
         Set z_cbFunk = New Collection           'If this is the first time through, do the one-time initialization
     Else
         On Error Resume Next                    'Catch already initialized?
-        z_ScMem = z_cbFunk.Item("h" & ObjPtr(oCallback) & "." & nOrdinal) 'Test it
+        z_ScMem = z_cbFunk.item("h" & ObjPtr(oCallback) & "." & nOrdinal) 'Test it
         If Err = 0 Then
             scb_SetCallbackAddr = z_ScMem + PROC_OFF  'we had this one, just reference it
             Exit Function
@@ -1023,14 +1022,14 @@ Public Sub scb_TerminateCallbacks()
     zTerminateThunks CallbackThunk
 End Sub
 
-Private Function myTimerProc(ByVal hwnd As Long, ByVal tMsg As Long, ByVal TimerID As Long, ByVal tickCount As Long) As Long
+Private Function myTimerProc(ByVal hWnd As Long, ByVal tMsg As Long, ByVal TimerID As Long, ByVal tickCount As Long) As Long
     
     ' note: although a timer procedure, per MSDN, does not return a value,
     ' the function that is used for callbacks must return a value therefore
     ' all callback routines must be functions, even if the return value is not used
                         ' YOUR CODE HERE
 
-    Debug.Print hwnd, TimerID
+    Debug.Print hWnd, TimerID
 
 End Function
 

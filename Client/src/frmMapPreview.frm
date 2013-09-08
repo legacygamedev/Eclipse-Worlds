@@ -60,15 +60,16 @@ Private Sub Form_Load()
     If subclasser Is Nothing Then
         Set subclasser = New cSelfSubHookCallback
     End If
-    If subclasser.ssc_Subclass(Me.hwnd, ByVal 1, 1, Me) Then
-        subclasser.ssc_AddMsg Me.hwnd, eMsgWhen.MSG_BEFORE, WM_MOVE
+    If subclasser.ssc_Subclass(Me.hWnd, ByVal 1, 1, Me) Then
+        subclasser.ssc_AddMsg Me.hWnd, eMsgWhen.MSG_BEFORE, WM_MOVE
     End If
         RecalcuateDimensions
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     frmMain.mapPreviewSwitch.Value = 0
-    subclasser.ssc_UnSubclass Me.hwnd
+    subclasser.ssc_UnSubclass Me.hWnd
+    Set subclasser = Nothing
 End Sub
 
 

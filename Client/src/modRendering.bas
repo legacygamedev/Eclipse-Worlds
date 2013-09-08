@@ -240,10 +240,12 @@ Public Sub DrawGDI()
     End If
     
     ' Character editor
-    If frmCharEditor.Visible And Tex_CharSprite.Texture > 0 And requestedPlayer.Sprite > 0 Then
-        If LastCharSpriteTimer + 300 < timeGetTime Then
-            LastCharSpriteTimer = timeGetTime
-            EditorChar_AnimSprite frmCharEditor.picSprite, frmCharEditor.txtSprite.text, CharSpritePos
+    If FormVisible("frmCharEditor") Then
+        If Tex_CharSprite.Texture > 0 And requestedPlayer.Sprite > 0 Then
+            If LastCharSpriteTimer + 300 < timeGetTime Then
+                LastCharSpriteTimer = timeGetTime
+                EditorChar_AnimSprite frmCharEditor.picSprite, frmCharEditor.txtSprite.text, CharSpritePos
+            End If
         End If
     End If
     
@@ -269,8 +271,10 @@ Public Sub DrawGDI()
         EditorEvent_DrawGraphic
     End If
     
-    If frmEditor_Emoticon.Visible Then
-        EditorEmoticon_DrawIcon
+    If FormVisible("frmEditor_Emoticon") Then
+        If frmEditor_Emoticon.Visible Then
+            EditorEmoticon_DrawIcon
+        End If
     End If
     
     If FormVisible("frmEditor_Class") Then
@@ -465,19 +469,27 @@ errorhandler:
     HandleError "LoadTextures", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
+Public Function ArrayIsInitialized2(arr) As Boolean
 
+  Dim memVal As Long
+
+  CopyMemory memVal, ByVal VarPtr(arr) + 8, ByVal 4 'get pointer to array
+  CopyMemory memVal, ByVal memVal, ByVal 4  'see if it points to an address...
+  ArrayIsInitialized2 = (memVal <> 0)        '...if it does, array is intialized
+
+End Function
 Public Sub UnloadTextures()
 Dim i As Long
     
     ' If debug mode, handle error then exit out
     On Error Resume Next
     
-    For i = 1 To NumTextures
-        Set gTexture(i).Texture = Nothing
-        ZeroMemory ByVal VarPtr(gTexture(i)), LenB(gTexture(i))
-    Next
-    
-    ReDim gTexture(1)
+        For i = 1 To NumTextures
+            Set gTexture(i).Texture = Nothing
+            ZeroMemory ByVal VarPtr(gTexture(i)), LenB(gTexture(i))
+        Next
+        
+        ReDim gTexture(1)
 
     For i = 1 To NumTileSets
         Tex_Tileset(i).Texture = 0

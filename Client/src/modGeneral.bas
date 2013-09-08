@@ -15,6 +15,8 @@ Public Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) 
 ' For Clear functions
 Public Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (Destination As Any, ByVal Length As Long)
 
+Public gameDestroyed As Boolean
+Public readyToExit As Boolean
 ' Swear filter
 Public SwearString As String
 
@@ -159,6 +161,12 @@ Public Sub Main()
     frmMenu.picMain.Visible = True
     
     MenuLoop
+    Dim frm As Form
+    For Each frm In Forms
+        Unload frm
+    Next
+    DoEvents
+
 End Sub
 
 Public Sub MenuLoop()
@@ -167,7 +175,7 @@ Public Sub MenuLoop()
     
 restartmenuloop:
     ' *** Start GameLoop ***
-    Do While Not InGame
+    Do While (Not InGame And Not readyToExit)
         ' *********************
         ' ** Render Graphics **
         ' *********************
@@ -391,7 +399,7 @@ End Sub
 Public Sub DestroyGame()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
+    gameDestroyed = True
     ' Turn off the timer
     StopTimer = True
     
@@ -399,16 +407,14 @@ Public Sub DestroyGame()
     If InGame Then
         LogoutGame
     End If
-    
     ' Destroy connection
     Call DestroyTCP
-    
     ' Destroy DirectX
     DestroyDX8
-    
     ' Destroy audio engine
     BASS_Free
-    End
+    Unload frmMenu
+    readyToExit = True
     Exit Sub
     
 ' Error handler
@@ -957,7 +963,6 @@ Public Sub LogoutGame()
     Call SendLeaveGame
 
     CloseInterfaces
-    
     GUIVisible = True
     ButtonsVisible = False
     
@@ -967,25 +972,13 @@ Public Sub LogoutGame()
     CurButton_Menu = 0
 
     ' Close out all the editors
-    Unload frmAlert
-    Unload frmEditor_Map
-    Unload frmEditor_MapProperties
-    Unload frmMapReport
-    Unload frmEditor_Item
-    Unload frmEditor_Resource
-    Unload frmEditor_NPC
-    Unload frmEditor_Title
-    Unload frmEditor_Events
-    Unload frmEditor_Class
-    Unload frmEditor_Ban
-    Unload frmEditor_Emoticon
-    Unload frmEditor_Animation
-    Unload frmEditor_Moral
-    Unload frmEditor_Shop
-    Unload frmEditor_Spell
-    Unload frmAdmin
-    Unload frmItemSpawner
-    Unload frmCharEditor
+    Dim tmpForm As Form
+    For Each tmpForm In Forms
+        If tmpForm.name <> "frmMenu" And tmpForm.name <> "frmMain" Then
+            Unload tmpForm
+            Set tmpForm = Nothing
+        End If
+    Next
 
     ' Destroy temp values
     MouseX = -1
@@ -1022,7 +1015,6 @@ Public Sub LogoutGame()
     
     Call ToggleButtons(False)
     Call frmMain.ResetMainButtons
-    
     InGame = False
 End Sub
 
