@@ -151,8 +151,10 @@ Begin VB.Form frmEditor_Class
          Height          =   255
          Left            =   1080
          Max             =   100
+         Min             =   1
          TabIndex        =   44
          Top             =   4920
+         Value           =   1
          Width           =   1215
       End
       Begin VB.ComboBox cmbColor 
@@ -481,7 +483,7 @@ Begin VB.Form frmEditor_Class
          Width           =   975
       End
       Begin VB.Label lblMap 
-         Caption         =   "Map: 0"
+         Caption         =   "Map: 1"
          Height          =   255
          Left            =   120
          TabIndex        =   48
