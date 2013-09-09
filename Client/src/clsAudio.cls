@@ -17,6 +17,7 @@ Option Explicit
 Private Music As Long
 Private SoundIndex As Byte
 Const BASSFALSE = 0
+
 Private Sub Class_Initialize()
     ' Change and set the current path, to prevent from VB not finding Bass.dll
     ChDrive App.Path
@@ -32,10 +33,7 @@ Private Sub Class_Initialize()
     End If
     
     ' Initialize output - default device, 44100hz, stereo, 16 bits
-    If BASS_Init(-1, 44100, 0, frmMain.hWnd, 0) = BASSFALSE Then
-        'Call Error_("Can't initialize digital sound system!")
-        'DestroyGame
-    End If
+    Call BASS_Init(-1, 44100, 0, frmMain.hWnd, 0)
 End Sub
 
 Public Sub PlayMusic(FileName As String)
@@ -43,25 +41,31 @@ Public Sub PlayMusic(FileName As String)
     
     Call StopMusic
     
-    If FileExist(App.Path & MUSIC_PATH & FileName, True) Then
-        If Left$(FileName, 7) = "http://" Then
-            If Right$(FileName, 4) = "Mid" Then
-                Music = BASS_MidI_StreamCreateURL(FileName, 0, BASS_SAMPLE_LOOP, 0, 0, 0)
-            Else
-                Music = BASS_StreamCreateURL(FileName, 0, BASS_SAMPLE_LOOP, 0, 0)
-            End If
-        Else
-            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & FileName), 0, 0, BASS_SAMPLE_LOOP)
-        End If
-        
-        Call BASS_ChannelSetAttribute(Music, BASS_ATTRIB_VOL, Options.MusicVolume)
-        Call BASS_ChannelPlay(Music, BASSFALSE)
-        CurrentMusic = FileName
-    Else
+    ' File doesn't exist
+    If Not FileExist(App.Path & MUSIC_PATH & FileName, True) Then
         If FormVisible("frmMain") Then
             Call AddText(FileName & " does not exist!", BrightRed)
         End If
+        Exit Sub
     End If
+    
+    If Left$(FileName, 7) = "http://" Then
+        If Right$(FileName, 4) = ".mid" Then
+            Music = BASS_MIDI_StreamCreateURL(FileName, 0, BASS_SAMPLE_LOOP, 0, 0, 0)
+        Else
+            Music = BASS_StreamCreateURL(FileName, 0, BASS_SAMPLE_LOOP, 0, 0)
+        End If
+    Else
+        If Right$(FileName, 4) = ".mid" Then
+            Music = BASS_MIDI_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & FileName), 0, 0, BASS_SAMPLE_LOOP, 0)
+        Else
+            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & FileName), 0, 0, BASS_SAMPLE_LOOP)
+        End If
+    End If
+    
+    Call BASS_ChannelSetAttribute(Music, BASS_ATTRIB_VOL, Options.MusicVolume)
+    Call BASS_ChannelPlay(Music, BASSFALSE)
+    CurrentMusic = FileName
 End Sub
 
 Public Sub PlaySound(FileName As String, Optional ByVal X As Long, Optional ByVal Y As Long)
@@ -88,7 +92,12 @@ Public Sub PlaySound(FileName As String, Optional ByVal X As Long, Optional ByVa
         Next
         
         ' Create the sound
-        Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & FileName), 0, 0, 0)
+        If Right$(App.Path & SOUND_PATH & FileName, 4) = ".mid" Then
+            Sounds(SoundIndex) = BASS_MIDI_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & FileName), 0, 0, 0, 0)
+        Else
+            Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & FileName), 0, 0, 0)
+        End If
+        
         Call BASS_ChannelSetAttribute(Sounds(SoundIndex), BASS_ATTRIB_VOL, Options.SoundVolume)
         
         ' Play the sound
