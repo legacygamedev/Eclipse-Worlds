@@ -22,7 +22,7 @@ Public Declare Function GetVolumeInformation Lib "kernel32" Alias "GetVolumeInfo
     
 Private Function DecimalSeparator() As String
       Dim R As Long, S As String
-      S = String(10, "a")
+      S = String$(10, "a")
       R = GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_SDECIMAL, S, 10)
       DecimalSeparator = Left$(S, R)
 End Function
@@ -59,7 +59,7 @@ Public Sub ChkDir(ByVal tDir As String, ByVal tName As String)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    If LCase$(Dir(tDir & tName, vbDirectory)) <> tName Then Call MkDir(tDir & tName)
+    If LCase$(Dir$(tDir & tName, vbDirectory)) <> tName Then Call MkDir(tDir & tName)
     Exit Sub
     
 ' Error handler
@@ -73,11 +73,11 @@ Public Function FileExist(ByVal FileName As String, Optional RAW As Boolean = Fa
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If Not RAW Then
-        If Len(Dir(App.Path & FileName)) > 0 Then
+        If Len(Dir$(App.Path & FileName)) > 0 Then
             FileExist = True
         End If
     Else
-        If Len(Dir(FileName)) > 0 Then
+        If Len(Dir$(FileName)) > 0 Then
             FileExist = True
         End If
     End If
@@ -95,10 +95,10 @@ Private Function InternationalizeDoubles(Value As String) As String
     For i = 0 To UBound(B) Step 2
         If B(i) = 44 Then
             commasCounter = commasCounter + 1
-            Mid(Value, i / 2 + 1, 1) = DecimalSeparator
+            Mid$(Value, i / 2 + 1, 1) = DecimalSeparator
         ElseIf B(i) = 46 Then
             dotsCounter = dotsCounter + 1
-            Mid(Value, i / 2 + 1, 1) = DecimalSeparator
+            Mid$(Value, i / 2 + 1, 1) = DecimalSeparator
         ElseIf B(i) >= 48 And B(i) <= 57 Then
         
         Else
@@ -499,7 +499,7 @@ Public Sub CheckCharacters()
     
     ReDim Tex_Character(1)
     Dim test As String
-    test = Dir(GFX_PATH & "characters\" & "*" & GFX_EXT, vbNormal)
+    test = Dir$(GFX_PATH & "characters\" & "*" & GFX_EXT, vbNormal)
     
     While FileExist(GFX_PATH & "characters\" & i & GFX_EXT)
         ReDim Preserve Tex_Character(NumCharacters)

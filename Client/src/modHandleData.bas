@@ -1371,7 +1371,9 @@ Private Sub HandlePlayerMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     Color = buffer.ReadByte
     
     ' Prevent ascii characters
-    For i = 1 To Len(msg)
+    Dim size As Long
+    size = Len(msg)
+    For i = 1 To size
         ' limit the ASCII
         If AscW(Mid$(msg, i, 1)) < 32 Or AscW(Mid$(msg, i, 1)) > 126 Then
             ' limit the extended ASCII
@@ -2311,7 +2313,9 @@ Private Sub HandleSayMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
     SayColor = buffer.ReadLong
     
     ' Prevent ascii characters
-    For i = 1 To Len(Message)
+    Dim size As Long
+    size = Len(Message)
+    For i = 1 To size
         ' limit the ASCII
         If AscW(Mid$(Message, i, 1)) < 32 Or AscW(Mid$(Message, i, 1)) > 126 Then
             ' limit the extended ASCII
@@ -3120,11 +3124,13 @@ Private Sub HandleMapEventData(ByVal Index As Long, ByRef data() As Byte, ByVal 
                 .Global = buffer.ReadLong
                 .X = buffer.ReadLong
                 .Y = buffer.ReadLong
-                .PageCount = buffer.ReadLong
+                .pageCount = buffer.ReadLong
             End With
-            If Map.events(i).PageCount > 0 Then
-                ReDim Map.events(i).Pages(0 To Map.events(i).PageCount)
-                For X = 1 To Map.events(i).PageCount
+            If Map.events(i).pageCount > 0 Then
+                ReDim Map.events(i).Pages(0 To Map.events(i).pageCount)
+                Dim pageCount As Long
+                pageCount = Map.events(i).pageCount
+                For X = 1 To pageCount
                     With Map.events(i).Pages(X)
                         .chkVariable = buffer.ReadLong
                         .VariableIndex = buffer.ReadLong
@@ -3183,12 +3189,16 @@ Private Sub HandleMapEventData(ByVal Index As Long, ByRef data() As Byte, ByVal 
                         
                     If Map.events(i).Pages(X).CommandListCount > 0 Then
                         ReDim Map.events(i).Pages(X).CommandList(0 To Map.events(i).Pages(X).CommandListCount)
-                        For Y = 1 To Map.events(i).Pages(X).CommandListCount
+                        Dim CommandListCount As Long
+                        CommandListCount = Map.events(i).Pages(X).CommandListCount
+                        For Y = 1 To CommandListCount
                             Map.events(i).Pages(X).CommandList(Y).CommandCount = buffer.ReadLong
                             Map.events(i).Pages(X).CommandList(Y).ParentList = buffer.ReadLong
                             If Map.events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
                                 ReDim Map.events(i).Pages(X).CommandList(Y).Commands(1 To Map.events(i).Pages(X).CommandList(Y).CommandCount)
-                                For Z = 1 To Map.events(i).Pages(X).CommandList(Y).CommandCount
+                                Dim CommandCount As Long
+                                CommandCount = Map.events(i).Pages(X).CommandList(Y).CommandCount
+                                For Z = 1 To CommandCount
                                     With Map.events(i).Pages(X).CommandList(Y).Commands(Z)
                                         .Index = buffer.ReadLong
                                         .Text1 = buffer.ReadString

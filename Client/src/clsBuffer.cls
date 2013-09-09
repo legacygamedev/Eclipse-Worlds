@@ -13,7 +13,7 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Buffer() As Byte
+Private buffer() As Byte
 Private BufferSize As Long
 Private WriteHead As Long
 Private ReadHead As Long
@@ -38,7 +38,7 @@ Public Sub PreAllocate(ByVal nLength As Long)
     WriteHead = 0
     ReadHead = 0
     BufferSize = nLength - 1
-    ReDim Buffer(0 To BufferSize)
+    ReDim buffer(0 To BufferSize)
     Exit Sub
     
 ' Error handler
@@ -53,7 +53,7 @@ Public Sub Allocate(ByVal nLength As Long)
     
     If BufferSize = 0 And nLength > 1 Then nLength = nLength - 1
     BufferSize = BufferSize + nLength
-    ReDim Preserve Buffer(0 To BufferSize)
+    ReDim Preserve buffer(0 To BufferSize)
     Exit Sub
     
 ' Error handler
@@ -69,7 +69,7 @@ Public Sub Flush()
     WriteHead = 0
     ReadHead = 0
     BufferSize = 0
-    ReDim Buffer(0)
+    ReDim buffer(0)
     Exit Sub
     
 ' Error handler
@@ -83,7 +83,7 @@ Public Sub Trim()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' If the readhead is past the buffersize, this means everything has been read in the array, flush it
-    If ReadHead >= Count Then
+    If ReadHead >= count Then
         Flush
     End If
     Exit Sub
@@ -100,7 +100,7 @@ Public Sub WriteByte(ByVal nByte As Byte)
     
     If WriteHead > BufferSize Then Allocate 1
  
-    Buffer(WriteHead) = nByte
+    buffer(WriteHead) = nByte
     WriteHead = WriteHead + 1
     Exit Sub
     
@@ -120,7 +120,7 @@ Public Sub WriteBytes(ByRef nByte() As Byte)
     
     If WriteHead + nLength - 1 > BufferSize Then Allocate nLength
     
-    CopyMemory Buffer(WriteHead), nByte(0), nLength
+    CopyMemory buffer(WriteHead), nByte(0), nLength
     WriteHead = WriteHead + nLength
     Exit Sub
     
@@ -136,7 +136,7 @@ Public Sub WriteInteger(ByVal nInteger As Integer)
     
     If WriteHead + 1 > BufferSize Then Allocate 2
         
-    CopyMemory Buffer(WriteHead), nInteger, 2
+    CopyMemory buffer(WriteHead), nInteger, 2
     WriteHead = WriteHead + 2
     Exit Sub
     
@@ -152,7 +152,7 @@ Public Sub WriteLong(ByVal nLong As Long)
     
     If WriteHead + 3 > BufferSize Then Allocate 4
     
-    CopyMemory Buffer(WriteHead), nLong, 4
+    CopyMemory buffer(WriteHead), nLong, 4
     WriteHead = WriteHead + 4
     Exit Sub
     
@@ -178,7 +178,7 @@ Public Sub WriteString(ByRef nString As String)
     
     If WriteHead + sLength - 1 > BufferSize Then Allocate sLength
       
-    CopyMemory Buffer(WriteHead), sBytes(0), sLength
+    CopyMemory buffer(WriteHead), sBytes(0), sLength
     WriteHead = WriteHead + sLength
     Exit Sub
     
@@ -194,7 +194,7 @@ Public Function ReadByte(Optional MoveReadHead As Boolean = True) As Byte
     
     If ReadHead > BufferSize Then Exit Function
     
-    ReadByte = Buffer(ReadHead)
+    ReadByte = buffer(ReadHead)
     If MoveReadHead Then ReadHead = ReadHead + 1
     Exit Function
     
@@ -205,7 +205,7 @@ errorhandler:
 End Function
 
 Public Function ReadBytes(ByVal nLength As Long, Optional MoveReadHead As Boolean = True) As Byte()
-    Dim Data() As Byte
+    Dim data() As Byte
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -213,12 +213,12 @@ Public Function ReadBytes(ByVal nLength As Long, Optional MoveReadHead As Boolea
     If nLength = 0 Then Exit Function
     If ReadHead + nLength - 1 > BufferSize Then Exit Function
         
-    ReDim Data(nLength - 1)
+    ReDim data(nLength - 1)
         
-    CopyMemory Data(0), Buffer(ReadHead), nLength
+    CopyMemory data(0), buffer(ReadHead), nLength
     If MoveReadHead Then ReadHead = ReadHead + nLength
     
-    ReadBytes = Data
+    ReadBytes = data
     Exit Function
     
 ' Error handler
@@ -233,7 +233,7 @@ Public Function ReadInteger(Optional MoveReadHead As Boolean = True) As Integer
     
     If ReadHead + 1 > BufferSize Then Exit Function
     
-    CopyMemory ReadInteger, Buffer(ReadHead), 2
+    CopyMemory ReadInteger, buffer(ReadHead), 2
     If MoveReadHead Then ReadHead = ReadHead + 2
     Exit Function
 
@@ -249,7 +249,7 @@ Public Function ReadLong(Optional MoveReadHead As Boolean = True) As Long
     
     If ReadHead + 3 > BufferSize Then Exit Function
     
-    CopyMemory ReadLong, Buffer(ReadHead), 4
+    CopyMemory ReadLong, buffer(ReadHead), 4
     If MoveReadHead Then ReadHead = ReadHead + 4
     Exit Function
     
@@ -275,7 +275,7 @@ Public Function ReadString(Optional MoveReadHead As Boolean = True) As String
     
     ReDim sBytes(sLength - 1)
     
-    CopyMemory sBytes(0), Buffer(ReadHead + 4), sLength
+    CopyMemory sBytes(0), buffer(ReadHead + 4), sLength
     
     ReadString = StrConv(sBytes, vbUnicode)
     If MoveReadHead Then ReadHead = ReadHead + sLength + 4
@@ -287,11 +287,11 @@ errorhandler:
     Err.Clear
 End Function
 
-Public Function Count() As Long
+Public Function count() As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Count = (UBound(Buffer) - LBound(Buffer)) + 1
+    count = (UBound(buffer) - LBound(buffer)) + 1
     Exit Function
     
 ' Error handler
@@ -304,7 +304,7 @@ Public Function Length() As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Length = Count - ReadHead
+    Length = count - ReadHead
     Exit Function
         
 ' Error handler
@@ -317,7 +317,7 @@ Public Function ToArray() As Byte()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    ToArray = Buffer()
+    ToArray = buffer()
     Exit Function
     
 ' Error handler
@@ -330,7 +330,7 @@ Public Function ToString() As String
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    ToString = StrConv(Buffer, vbUnicode)
+    ToString = StrConv(buffer, vbUnicode)
     Exit Function
     
 ' Error handler

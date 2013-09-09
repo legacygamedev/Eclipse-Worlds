@@ -1051,7 +1051,7 @@ End Function
 ' ordinal #3 - Example of a callback for one of the ENUM  APIs
 Private Function EnumWindowsProc(ByVal lng_hWnd As Long, ByVal lParam As Long) As Long
     
-    RaiseEvent EnumCallback("&H" & Hex(lng_hWnd))
+    RaiseEvent EnumCallback("&H" & Hex$(lng_hWnd))
     EnumWindowsProc = 1  'Continue
 
 End Function

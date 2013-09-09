@@ -16,7 +16,7 @@ Option Explicit
 ' Music and Sound Constants
 Private Music As Long
 Private SoundIndex As Byte
-
+Const BASSFALSE = 0
 Private Sub Class_Initialize()
     ' Change and set the current path, to prevent from VB not finding Bass.dll
     ChDrive App.Path
@@ -38,38 +38,38 @@ Private Sub Class_Initialize()
     End If
 End Sub
 
-Public Sub PlayMusic(filename As String)
-    If Options.Music = 0 Or filename = vbNullString Or CurrentMusic = filename Then Exit Sub
+Public Sub PlayMusic(FileName As String)
+    If Options.Music = 0 Or FileName = vbNullString Or CurrentMusic = FileName Then Exit Sub
     
     Call StopMusic
     
-    If FileExist(App.Path & MUSIC_PATH & filename, True) Then
-        If Left$(filename, 7) = "http://" Then
-            If Right$(filename, 4) = "mid" Then
-                Music = BASS_MIDI_StreamCreateURL(filename, 0, BASS_SAMPLE_LOOP, 0, 0, 0)
+    If FileExist(App.Path & MUSIC_PATH & FileName, True) Then
+        If Left$(FileName, 7) = "http://" Then
+            If Right$(FileName, 4) = "Mid" Then
+                Music = BASS_MidI_StreamCreateURL(FileName, 0, BASS_SAMPLE_LOOP, 0, 0, 0)
             Else
-                Music = BASS_StreamCreateURL(filename, 0, BASS_SAMPLE_LOOP, 0, 0)
+                Music = BASS_StreamCreateURL(FileName, 0, BASS_SAMPLE_LOOP, 0, 0)
             End If
         Else
-            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & filename), 0, 0, BASS_SAMPLE_LOOP)
+            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & FileName), 0, 0, BASS_SAMPLE_LOOP)
         End If
         
         Call BASS_ChannelSetAttribute(Music, BASS_ATTRIB_VOL, Options.MusicVolume)
         Call BASS_ChannelPlay(Music, BASSFALSE)
-        CurrentMusic = filename
+        CurrentMusic = FileName
     Else
         If FormVisible("frmMain") Then
-            Call AddText(filename & " does not exist!", BrightRed)
+            Call AddText(FileName & " does not exist!", BrightRed)
         End If
     End If
 End Sub
 
-Public Sub PlaySound(filename As String, Optional ByVal x As Long, Optional ByVal y As Long)
+Public Sub PlaySound(FileName As String, Optional ByVal X As Long, Optional ByVal Y As Long)
     Dim i As Long
     
-    If Options.Sound = 0 Or filename = vbNullString Then Exit Sub
+    If Options.Sound = 0 Or FileName = vbNullString Then Exit Sub
     
-    If FileExist(App.Path & SOUND_PATH & filename, True) Then
+    If FileExist(App.Path & SOUND_PATH & FileName, True) Then
         ' Find the index
         For i = 1 To MAX_SOUNDS
             If Sounds(i) = 0 Then
@@ -88,14 +88,14 @@ Public Sub PlaySound(filename As String, Optional ByVal x As Long, Optional ByVa
         Next
         
         ' Create the sound
-        Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & filename), 0, 0, 0)
+        Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & FileName), 0, 0, 0)
         Call BASS_ChannelSetAttribute(Sounds(SoundIndex), BASS_ATTRIB_VOL, Options.SoundVolume)
         
         ' Play the sound
         Call BASS_ChannelPlay(Sounds(SoundIndex), BASSFALSE)
     Else
         If FormVisible("frmMain") Then
-            Call AddText(filename & " does not exist!", BrightRed)
+            Call AddText(FileName & " does not exist!", BrightRed)
         End If
     End If
 End Sub
@@ -143,16 +143,16 @@ Sub StopMapSounds()
     End If
 End Sub
 
-Function CalculateSoundVolume(x As Long, y As Long) As Double
+Function CalculateSoundVolume(X As Long, Y As Long) As Double
     Dim X1 As Long, X2 As Long, Y1 As Long, Y2 As Long, Distance As Double, volume As Long
     
     If InGame = False Then CalculateSoundVolume = Options.SoundVolume: Exit Function
     
-    If x > -1 Or y > -1 Then
-        X1 = (Player(MyIndex).x * 32) + TempPlayer(MyIndex).xOffset
-        Y1 = (Player(MyIndex).y * 32) + TempPlayer(MyIndex).yOffset
-        X2 = (x * 32) + 16
-        Y2 = (y * 32) + 16
+    If X > -1 Or Y > -1 Then
+        X1 = (Player(MyIndex).X * 32) + TempPlayer(MyIndex).xOffset
+        Y1 = (Player(MyIndex).Y * 32) + TempPlayer(MyIndex).yOffset
+        X2 = (X * 32) + 16
+        Y2 = (Y * 32) + 16
         
         If ((X1 - X2) ^ 2) + ((Y1 - Y2) ^ 2) < 0 Then
             Distance = Sqr(((X1 - X2) ^ 2) + ((Y1 - Y2) ^ 2) * -1)
@@ -171,17 +171,17 @@ Function CalculateSoundVolume(x As Long, y As Long) As Double
 End Function
 
 Sub UpdateMapSounds()
-    Dim i As Long, x As Long
+    Dim i As Long, X As Long
     
     If MapSoundCount > 0 Then
         For i = 1 To MapSoundCount
-            BASS_ChannelSetAttribute MapSounds(i).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(i).x, MapSounds(MapSoundCount).y)
+            BASS_ChannelSetAttribute MapSounds(i).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(i).X, MapSounds(MapSoundCount).Y)
         Next
     End If
 End Sub
 
 Sub CacheNewMapSounds()
-    Dim i As Long, x As Long, y As Long
+    Dim i As Long, X As Long, Y As Long
     
     StopMapSounds
     
@@ -189,23 +189,23 @@ Sub CacheNewMapSounds()
         MapSoundCount = MapSoundCount + 1
         ReDim Preserve MapSounds(MapSoundCount)
         MapSounds(MapSoundCount).handle = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & Trim$(Map.BGS)), 0, 0, BASS_SAMPLE_LOOP)
-        MapSounds(MapSoundCount).x = -1
-        MapSounds(MapSoundCount).y = -1
-        Call BASS_ChannelSetAttribute(MapSounds(MapSoundCount).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(MapSoundCount).x, MapSounds(MapSoundCount).y))
+        MapSounds(MapSoundCount).X = -1
+        MapSounds(MapSoundCount).Y = -1
+        Call BASS_ChannelSetAttribute(MapSounds(MapSoundCount).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(MapSoundCount).X, MapSounds(MapSoundCount).Y))
         
         ' Play the sound
         Call BASS_ChannelPlay(MapSounds(MapSoundCount).handle, BASSFALSE)
     End If
     
-    For x = 0 To Map.MaxX
-        For y = 0 To Map.MaxY
-            If Map.Tile(x, y).Type = TILE_TYPE_SOUND Then
+    For X = 0 To Map.MaxX
+        For Y = 0 To Map.MaxY
+            If Map.Tile(X, Y).Type = TILE_TYPE_SOUND Then
                 MapSoundCount = MapSoundCount + 1
                 ReDim Preserve MapSounds(MapSoundCount)
-                MapSounds(MapSoundCount).handle = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & Trim$(Map.Tile(x, y).Data4)), 0, 0, BASS_SAMPLE_LOOP)
-                MapSounds(MapSoundCount).x = x
-                MapSounds(MapSoundCount).y = y
-                Call BASS_ChannelSetAttribute(MapSounds(MapSoundCount).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(MapSoundCount).x, MapSounds(MapSoundCount).y))
+                MapSounds(MapSoundCount).handle = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & Trim$(Map.Tile(X, Y).Data4)), 0, 0, BASS_SAMPLE_LOOP)
+                MapSounds(MapSoundCount).X = X
+                MapSounds(MapSoundCount).Y = Y
+                Call BASS_ChannelSetAttribute(MapSounds(MapSoundCount).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(MapSoundCount).X, MapSounds(MapSoundCount).Y))
                 
                 ' Play the sound
                 Call BASS_ChannelPlay(MapSounds(MapSoundCount).handle, BASSFALSE)

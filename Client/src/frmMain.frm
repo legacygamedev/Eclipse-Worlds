@@ -814,6 +814,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -3358,6 +3359,7 @@ Private Const WM_SETFOCUS       As Long = &H7
 Private Const WM_MOUSEWHEEL     As Long = &H20A
 Private Const WM_NCACTIVATE     As Long = &H86
 Private Const WM_MOVE           As Long = &H3
+Private Const WM_DESTROY    As Long = &H2
 Private WithEvents cSubclasserHooker As cSelfSubHookCallback
 Attribute cSubclasserHooker.VB_VarHelpID = -1
 Private taskBarClick As Boolean
@@ -3438,8 +3440,20 @@ Private Sub cmdSave_Click()
     LeaveMapEditorMode True
 End Sub
 
-Private Sub Form_Initialize()
-    Set cSubclasserHooker = New cSelfSubHookCallback
+Public Sub SubDaFocus(hWnd As Long)
+    If cSubclasserHooker.ssc_Subclass(hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_NCACTIVATE, WM_MOVE
+    End If
+End Sub
+Public Sub UnsubDaFocus(hWnd As Long)
+    cSubclasserHooker.ssc_UnSubclass hWnd
+End Sub
+
+Private Sub Form_Load()
+    If cSubclasserHooker Is Nothing Then
+        Set cSubclasserHooker = New cSelfSubHookCallback
+    End If
+
     If cSubclasserHooker.ssc_Subclass(Me.hWnd, ByVal 1, 1, Me) Then
         cSubclasserHooker.ssc_AddMsg Me.hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO, WM_MOUSEWHEEL, WM_NCACTIVATE, WM_MOVE
     End If
@@ -3466,41 +3480,47 @@ Private Sub Form_Initialize()
         cSubclasserHooker.ssc_AddMsg Me.cmdProperties.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
 End Sub
-Public Sub SubDaFocus(hWnd As Long)
-    If cSubclasserHooker.ssc_Subclass(hWnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_NCACTIVATE, WM_MOVE
-    End If
-End Sub
-Public Sub UnsubDaFocus(hWnd As Long)
-    cSubclasserHooker.ssc_UnSubclass hWnd
-End Sub
+
 Private Sub Form_Paint()
     If FormVisible("frmCharEditor") Then
         frmCharEditor.Show
     End If
 End Sub
 
-Private Sub Form_Unload(Cancel As Integer)
+Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Cancel = True
-
-    cSubclasserHooker.ssc_UnSubclass Me.picMapEditor.hWnd
-    cSubclasserHooker.ssc_UnSubclass Me.mapPreviewSwitch.hWnd
-    cSubclasserHooker.ssc_UnSubclass Me.chkEyeDropper.hWnd
-    cSubclasserHooker.ssc_UnSubclass Me.cmdSave.hWnd
-    cSubclasserHooker.ssc_UnSubclass Me.cmdRevert.hWnd
-    cSubclasserHooker.ssc_UnSubclass Me.cmdDelete.hWnd
-    cSubclasserHooker.ssc_UnSubclass Me.cmdProperties.hWnd
-    cSubclasserHooker.ssc_UnSubclass Me.hWnd
+    If Not readyToExit Then
+        Cancel = True
+        Me.Visible = False
+    Else
+        cSubclasserHooker.ssc_UnSubclass Me.picMapEditor.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.mapPreviewSwitch.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.chkEyeDropper.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.cmdSave.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.cmdRevert.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.cmdDelete.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.cmdProperties.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.hWnd
+        Set cSubclasserHooker = Nothing
+    End If
     
-    Set cSubclasserHooker = Nothing
     If InGame Then
         LogoutGame
     End If
-    Exit Sub
-    
+
+
+' Error handler
+errorhandler:
+    HandleError "Form_QueryUnload", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
 ' Error handler
 errorhandler:
     HandleError "Form_Unload", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
@@ -4285,7 +4305,7 @@ Private Sub picOptionBattleMusic_Click()
     Else
         Options.BattleMusic = 0
         Call Audio.PlaySound(ButtonBuzzer)
-        If Trim(Map.Music) = vbNullString Then
+        If Trim$(Map.Music) = vbNullString Then
             Call Audio.StopMusic
         Else
             Call Audio.PlayMusic(Trim$(Map.Music))
@@ -5474,23 +5494,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-' Winsock event
-Private Sub Socket_DataArrival(ByVal bytesTotal As Long)
-
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If IsConnected Then
-        Call IncomingData(bytesTotal)
-    End If
-    Exit Sub
-    
-' Error handler
-errorhandler:
-    HandleError "Socket_DataArrival", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Sub
-
 Private Sub Form_KeyPress(KeyAscii As Integer)
     Dim i As Long
     Dim NPCDistanceX(1 To MAX_MAP_NPCS) As Long
@@ -6535,25 +6538,6 @@ Private Sub DropItem(ByVal InvNum As Byte)
             Call SendDropItem(InvNum, 0)
         End If
     End If
-End Sub
-
-Private Sub GameWindowProc(ByVal bBefore As Boolean, _
-                      ByRef bHandled As Boolean, _
-                      ByRef lReturn As Long, _
-                      ByVal lng_hWnd As Long, _
-                      ByVal uMsg As Long, _
-                      ByVal wParam As Long, _
-                      ByVal lParam As Long, _
-                      ByRef lParamUser As Long)
-    Select Case uMsg
-
-    End Select
-
-' *************************************************************
-' C A U T I O N   C A U T I O N   C A U T I O N   C A U T I O N
-' -------------------------------------------------------------
-' DO NOT ADD ANY OTHER CODE BELOW THE "END SUB" STATEMENT BELOW
-' *************************************************************
 End Sub
 Private Sub myWndProc(ByVal bBefore As Boolean, _
                       ByRef bHandled As Boolean, _

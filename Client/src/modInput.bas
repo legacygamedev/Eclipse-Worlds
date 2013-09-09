@@ -395,7 +395,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             name = vbNullString
 
             ' Get the desired player from the user text
-            For i = 1 To Len(ChatText)
+            Dim size As Long
+            size = Len(ChatText)
+            For i = 1 To size
                 If Not Mid$(ChatText, i, 1) = " " Then
                     name = name & Mid$(ChatText, i, 1)
                 Else
@@ -421,7 +423,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
         ' Commands
         If Left$(MyText, 1) = "/" Then
-            Command = Split(MyText, Space(1))
+            Command = Split(MyText, Space$(1))
 
             Select Case LCase$(Command(0))
                 Case "/pquit"

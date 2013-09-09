@@ -737,7 +737,7 @@ Function GetPlayerHDSerial() As String
     GetVolumeInformation "C:\", VName, 255, Serial, 0, 0, FSName, 255
     VName = Left$(VName, InStr(1, VName, vbNullChar) - 1)
     FSName = Left$(FSName, InStr(1, FSName, vbNullChar) - 1)
-    GetPlayerHDSerial = Trim$(str(Serial))
+    GetPlayerHDSerial = Trim$(str$(Serial))
     Exit Function
    
 ' Error handler

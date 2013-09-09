@@ -531,7 +531,7 @@ errorhandler:
 End Sub
 
 Private Sub Form_Activate()
-    hwndLastActiveWnd = hwnd
+    hwndLastActiveWnd = hWnd
     If FormVisible("frmAdmin") And adminMin Then
         frmAdmin.centerMiniVert Width, Height, Left, Top
     End If
@@ -540,7 +540,7 @@ End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    frmMain.SubDaFocus Me.hwnd
+    frmMain.SubDaFocus Me.hWnd
     scrlReward.max = MAX_ITEMS
     scrlNormalPic.max = NumResources
     scrlExhaustedPic.max = NumResources
@@ -577,14 +577,14 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    frmMain.UnsubDaFocus Me.hwnd
+    frmMain.UnsubDaFocus Me.hWnd
     If EditorSave = False Then
         ResourceEditorCancel
     Else
         EditorSave = False
     End If
     frmAdmin.chkEditor(EDITOR_RESOURCE).Value = False
-    BringWindowToTop (frmAdmin.hwnd)
+    BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
     
 ' Error handler
@@ -649,7 +649,7 @@ Private Sub scrlExp_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblEXP.Caption = "Exp: " & scrlExp.Value
+    lblExp.Caption = "Exp: " & scrlExp.Value
     Resource(EditorIndex).Exp = scrlExp.Value
     Exit Sub
     

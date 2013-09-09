@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmEditor_Events 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Event Editor"
@@ -4809,7 +4809,7 @@ Private Sub cmdDeletePage_Click()
     ' Set the tabs
     tabPages.Tabs.Clear
     For i = 1 To tmpEvent.PageCount
-        tabPages.Tabs.Add , , str(i)
+        tabPages.Tabs.Add , , str$(i)
     Next
     
     ' Set the tab back
@@ -5194,7 +5194,7 @@ Private Sub cmdNewPage_Click()
     tabPages.Tabs.Clear
     
     For i = 1 To tmpEvent.PageCount
-        tabPages.Tabs.Add , , str(i)
+        tabPages.Tabs.Add , , str$(i)
     Next
     
     cmdDeletePage.Enabled = True

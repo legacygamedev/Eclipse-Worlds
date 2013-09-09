@@ -357,7 +357,7 @@ Public updatingItem As Boolean
 
 Private Declare Function SendMessage Lib "user32" Alias _
  "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, _
- ByVal wParam As Long, lparam As Any) As Long
+ ByVal wParam As Long, lParam As Any) As Long
  
 Public Function ListView_SetIconSpacing(hWndLV As Long, cX As Long, cY As Long) As Long
     Dim LVM_SETICONSPACING As Long
@@ -447,7 +447,7 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
         Set listItems.Icons = itemsImageList
                 
         For i = 0 To UBound(tempItems)
-            listItems.listItems.Add , , Trim(tempItems(i).name), itemsImageList.ListImages(i + 1).Index
+            listItems.listItems.Add , , Trim$(tempItems(i).name), itemsImageList.ListImages(i + 1).Index
         Next
         currentItemIndex = 0
         generateItemsForTab = True
@@ -466,7 +466,7 @@ Dim i As Byte
         Set listItems.Icons = itemsImageList
                 
         For i = 0 To UBound(lastSpawnedItems) - 1
-            listItems.listItems.Add , , Trim(item(lastSpawnedItems(i)).name), itemsImageList.ListImages(i + 1).Index
+            listItems.listItems.Add , , Trim$(item(lastSpawnedItems(i)).name), itemsImageList.ListImages(i + 1).Index
         Next
         cmdSpawn.Enabled = True
         currentItemIndex = 0
@@ -569,10 +569,10 @@ Private Sub listItems_ItemClick(ByVal item As MSComctlLib.ListItem)
     Me.Caption = "Item Spawner - Going to spawn " & txtAmount.text & " " & listItems.listItems(item.Index).text
 End Sub
 
-Private Sub listItems_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub listItems_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim oListItem As ListItem, indexx As Long, num As Long
     
-    Set oListItem = listItems.HitTest(x, y)
+    Set oListItem = listItems.HitTest(X, Y)
     If Not oListItem Is Nothing Then
         indexx = oListItem.Index
         If Not FormVisible("frmItemDesc") Then
@@ -585,7 +585,7 @@ Private Sub listItems_MouseMove(Button As Integer, Shift As Integer, x As Single
             Else
                 num = currentlyListedIndexes(indexx - 1)
             End If
-            frmItemDesc.lblName = Trim(item(num).name)
+            frmItemDesc.lblName = Trim$(item(num).name)
             frmItemDesc.lblStack = "Stackable: " & IIf(item(num).stackable > 0, "yes", "no")
             frmItemDesc.lblLevel = "LVL: " & item(num).LevelReq
             frmItemDesc.lblType = "Type: " & getItemType(item(num).Type)
@@ -747,7 +747,7 @@ Private Sub selectValue(ByRef textBox As textBox)
     textBox.SelLength = Len(textBox.text)
 End Sub
 
-Private Sub tabItems_MouseMove(Button As Integer, Shift As Integer, x As Single, y As Single)
+Private Sub tabItems_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If FormVisible("frmItemDesc") Then Unload frmItemDesc
 End Sub
 

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmAdmin 
    BackColor       =   &H80000002&
    BorderStyle     =   1  'Fixed Single
@@ -1078,14 +1078,6 @@ Public lastIndex As Integer
 Public currentCategory As String
 Public ignoreChange As Boolean
 Public reverse As Boolean
-Private Const WM_ChangeUIState As Long = &H127
-Private Const UIS_HideRectangle As Integer = &H1
-Private Const UIS_ShowRectangle As Integer = &H2
-Private Const UISF_FocusRectangle As Integer = &H1
-Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, _
-ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
-
-Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
 
 Public Sub ShowEyeFor(Editor As Byte)
     picEye(Editor).Visible = True
@@ -1341,14 +1333,14 @@ Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String
         If Success = 0 Then
             For i = 0 To UBound(g_playersOnline)
                 If InStr(1, g_playersOnline(i), PlayerName) Then
-                    Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
+                    Mid$(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
                     setAdminAccessLevel
                     
                     DisplayStatus Message, Status.Error
                 End If
             Next i
         ElseIf Success = 1 Then
-            Mid(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
+            Mid$(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
             setAdminAccessLevel
             
             DisplayStatus Message, Status.Correct
@@ -1423,7 +1415,7 @@ Private Sub setAdminAccessLevel()
 
             End If
             
-            If Player(MyIndex).Access > CLng(accessLvl) And Player(MyIndex).Access >= 4 And Trim(Player(MyIndex).name) <> cmbPlayersOnline.text Then
+            If Player(MyIndex).Access > CLng(accessLvl) And Player(MyIndex).Access >= 4 And Trim$(Player(MyIndex).name) <> cmbPlayersOnline.text Then
                 cmbAccess.Enabled = True
             Else
                 cmbAccess.Enabled = False
@@ -1912,7 +1904,7 @@ End Sub
 
 Public Sub selectMyself()
     For i = 0 To cmbPlayersOnline.ListCount
-        If Trim(cmbPlayersOnline.List(i)) = Trim(Player(MyIndex).name) Then
+        If Trim$(cmbPlayersOnline.List(i)) = Trim$(Player(MyIndex).name) Then
             cmbPlayersOnline.ListIndex = i
             cmbPlayersOnline_Click
             Exit Sub
@@ -1956,7 +1948,7 @@ Public Sub UpdatePlayersOnline()
             currentIgnore = currentIgnore + 1
             
         For i = 0 To UBound(Staff)
-            cmbPlayersOnline.AddItem (Trim(Staff(i)))
+            cmbPlayersOnline.AddItem (Trim$(Staff(i)))
             currentIgnore = currentIgnore + 1
         Next
         overallCounter = overallCounter + stuffCounter
@@ -1969,7 +1961,7 @@ Public Sub UpdatePlayersOnline()
             ignoreIndexes(1) = currentIgnore
             currentIgnore = currentIgnore + 1
         For i = 0 To UBound(players)
-            cmbPlayersOnline.AddItem (Trim(players(i)))
+            cmbPlayersOnline.AddItem (Trim$(players(i)))
             currentIgnore = currentIgnore + 1
         Next
         overallCounter = overallCounter + playersCounter
@@ -2108,7 +2100,7 @@ Public Sub Form_Load()
     frmAdmin.picRefresh.BorderStyle = 0
     
     Me.Move frmMain.Left + frmMain.Width, frmMain.Top
-    If Trim(cmbPlayersOnline.text) = "Choose Player" Then
+    If Trim$(cmbPlayersOnline.text) = "Choose Player" Then
         txtSprite.Enabled = False
         upSprite.Enabled = False
     End If
@@ -2357,7 +2349,7 @@ Private Sub txtSprite_Change()
         ElseIf txtSprite.text > 0 Then
             For i = 0 To UBound(g_playersOnline)
                 If InStr(1, g_playersOnline(i), cmbPlayersOnline.text) Then
-                    Mid(g_playersOnline(i), InStr(InStr(1, g_playersOnline(i), ":") + 1, g_playersOnline(i), ":"), Len(txtSprite.text) + 1) = ":" & txtSprite.text
+                    Mid$(g_playersOnline(i), InStr(InStr(1, g_playersOnline(i), ":") + 1, g_playersOnline(i), ":"), Len(txtSprite.text) + 1) = ":" & txtSprite.text
                 End If
             Next i
 

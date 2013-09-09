@@ -1204,7 +1204,7 @@ Private Sub txtChance_Validate(Cancel As Boolean)
     End If
     
     If Right$(txtChance.text, 1) = "%" Then
-        txtChance.text = Left(txtChance.text, Len(txtChance.text) - 1) / 100
+        txtChance.text = Left$(txtChance.text, Len(txtChance.text) - 1) / 100
     ElseIf InStr(1, txtChance.text, "/") > 0 Then
         i = Split(txtChance.text, "/")
         txtChance.text = Int(i(0) / i(1) * 1000) / 1000

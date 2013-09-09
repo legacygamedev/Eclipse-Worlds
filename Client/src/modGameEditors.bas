@@ -79,7 +79,6 @@ Private Function WindowProc(ByVal hWnd As Long, ByVal msg As Long, ByVal wParam 
         Case WM_DESTROY
             WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, msg, wParam, lParam)
             Call SetWindowLong(hWnd, GWL_WNDPROC, GetWindowLong(hWnd, -21))
-            Exit Function
     End Select
     WindowProc = CallWindowProc(GetWindowLong(hWnd, -21), hWnd, msg, wParam, lParam)
 End Function
@@ -1853,14 +1852,14 @@ Public Sub BanEditorInit()
     Ban_Changed(EditorIndex) = True
 
     With frmEditor_Ban
-        .txtName.text = Trim(Ban(EditorIndex).PlayerName)
-        .txtLogin.text = Trim(Ban(EditorIndex).PlayerLogin)
-        .txtIP.text = Trim(Ban(EditorIndex).IP)
-        .txtSerial.text = Trim(Ban(EditorIndex).HDSerial)
-        .txtReason.text = Trim(Ban(EditorIndex).Reason)
-        .txtDate.text = Trim(Ban(EditorIndex).Date)
-        .txtTime.text = Trim(Ban(EditorIndex).time)
-        .txtBy.text = Trim(Ban(EditorIndex).By)
+        .txtName.text = Trim$(Ban(EditorIndex).PlayerName)
+        .txtLogin.text = Trim$(Ban(EditorIndex).PlayerLogin)
+        .txtIP.text = Trim$(Ban(EditorIndex).IP)
+        .txtSerial.text = Trim$(Ban(EditorIndex).HDSerial)
+        .txtReason.text = Trim$(Ban(EditorIndex).Reason)
+        .txtDate.text = Trim$(Ban(EditorIndex).Date)
+        .txtTime.text = Trim$(Ban(EditorIndex).time)
+        .txtBy.text = Trim$(Ban(EditorIndex).By)
     End With
     Exit Sub
 
@@ -2084,7 +2083,7 @@ Public Sub MoralEditorInit()
     Moral_Changed(EditorIndex) = True
     
     With frmEditor_Moral
-        .txtName.text = Trim(Moral(EditorIndex).name)
+        .txtName.text = Trim$(Moral(EditorIndex).name)
         If Moral(EditorIndex).Color = 0 Then Moral(EditorIndex).Color = 1
         .scrlColor.Value = Moral(EditorIndex).Color
         .chkCanCast.Value = Moral(EditorIndex).CanCast
@@ -2169,7 +2168,7 @@ Public Sub ClassEditorInit()
     Class_Changed(EditorIndex) = True
     
     With frmEditor_Class
-        .txtName.text = Trim(Class(EditorIndex).name)
+        .txtName.text = Trim$(Class(EditorIndex).name)
         .chkSwapGender = 0
         
         .chkLocked.Value = Class(EditorIndex).Locked
@@ -2500,7 +2499,7 @@ errorhandler:
 End Sub
 
 Sub AddEvent(X As Long, Y As Long, Optional ByVal CancelLoad As Boolean = False)
-    Dim count As Long, PageCount As Long, i As Long
+    Dim count As Long, pageCount As Long, i As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -2527,9 +2526,9 @@ Sub AddEvent(X As Long, Y As Long, Optional ByVal CancelLoad As Boolean = False)
     Map.events(count).Y = Y
     
     ' Give it a new page
-    PageCount = Map.events(count).PageCount + 1
-    Map.events(count).PageCount = PageCount
-    ReDim Preserve Map.events(count).Pages(PageCount)
+    pageCount = Map.events(count).pageCount + 1
+    Map.events(count).pageCount = pageCount
+    ReDim Preserve Map.events(count).Pages(pageCount)
     
     ' Load the editor
     If Not CancelLoad Then EventEditorInit count
@@ -2607,8 +2606,8 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
         ' Set the tabs
         .tabPages.Tabs.Clear
         
-        For i = 1 To tmpEvent.PageCount
-            .tabPages.Tabs.Add , , str(i)
+        For i = 1 To tmpEvent.pageCount
+            .tabPages.Tabs.Add , , str$(i)
         Next
         
         ' Variables
@@ -2639,7 +2638,7 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
         .txtName.text = Trim$(tmpEvent.name)
         
         ' Enable delete button
-        If tmpEvent.PageCount > 1 Then
+        If tmpEvent.pageCount > 1 Then
             .cmdDeletePage.Enabled = True
         Else
             .cmdDeletePage.Enabled = False
@@ -2880,7 +2879,7 @@ newlist:
                             ReDim Preserve EventList(X)
                             EventList(X).CommandList = CurList
                             EventList(X).CommandNum = 0
-                            frmEditor_Events.lstCommands.AddItem Mid(indent, 1, Len(indent) - 4) & " : " & "Else"
+                            frmEditor_Events.lstCommands.AddItem Mid$(indent, 1, Len(indent) - 4) & " : " & "Else"
                             listleftoff(CurList) = i
                             conditionalstage(CurList) = 2
                             CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.ElseCommandList
@@ -2889,8 +2888,8 @@ newlist:
                             ReDim Preserve EventList(X)
                             EventList(X).CommandList = CurList
                             EventList(X).CommandNum = 0
-                            frmEditor_Events.lstCommands.AddItem Mid(indent, 1, Len(indent) - 4) & " : " & "End Branch"
-                            indent = Mid(indent, 1, Len(indent) - 7)
+                            frmEditor_Events.lstCommands.AddItem Mid$(indent, 1, Len(indent) - 4) & " : " & "End Branch"
+                            indent = Mid$(indent, 1, Len(indent) - 7)
                             listleftoff(CurList) = i
                             conditionalstage(CurList) = 0
                     End Select
@@ -2902,7 +2901,7 @@ newlist:
                             ReDim Preserve EventList(X)
                             EventList(X).CommandList = CurList
                             EventList(X).CommandNum = i
-                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Choices - Prompt: " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "..."
+                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Choices - Prompt: " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "..."
                             
                             indent = indent & "       "
                             listleftoff(CurList) = i
@@ -2913,7 +2912,7 @@ newlist:
                                 ReDim Preserve EventList(X)
                                 EventList(X).CommandList = CurList
                                 EventList(X).CommandNum = 0
-                                frmEditor_Events.lstCommands.AddItem Mid(indent, 1, Len(indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text2) & "]"
+                                frmEditor_Events.lstCommands.AddItem Mid$(indent, 1, Len(indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text2) & "]"
                                 listleftoff(CurList) = i
                                 conditionalstage(CurList) = 2
                                 CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
@@ -2930,7 +2929,7 @@ newlist:
                                 ReDim Preserve EventList(X)
                                 EventList(X).CommandList = CurList
                                 EventList(X).CommandNum = 0
-                                frmEditor_Events.lstCommands.AddItem Mid(indent, 1, Len(indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text3) & "]"
+                                frmEditor_Events.lstCommands.AddItem Mid$(indent, 1, Len(indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text3) & "]"
                                 listleftoff(CurList) = i
                                 conditionalstage(CurList) = 3
                                 CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2
@@ -2947,7 +2946,7 @@ newlist:
                                 ReDim Preserve EventList(X)
                                 EventList(X).CommandList = CurList
                                 EventList(X).CommandNum = 0
-                                frmEditor_Events.lstCommands.AddItem Mid(indent, 1, Len(indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text4) & "]"
+                                frmEditor_Events.lstCommands.AddItem Mid$(indent, 1, Len(indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text4) & "]"
                                 listleftoff(CurList) = i
                                 conditionalstage(CurList) = 4
                                 CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
@@ -2964,7 +2963,7 @@ newlist:
                                 ReDim Preserve EventList(X)
                                 EventList(X).CommandList = CurList
                                 EventList(X).CommandNum = 0
-                                frmEditor_Events.lstCommands.AddItem Mid(indent, 1, Len(indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text5) & "]"
+                                frmEditor_Events.lstCommands.AddItem Mid$(indent, 1, Len(indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text5) & "]"
                                 listleftoff(CurList) = i
                                 conditionalstage(CurList) = 5
                                 CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4
@@ -2980,8 +2979,8 @@ newlist:
                             ReDim Preserve EventList(X)
                             EventList(X).CommandList = CurList
                             EventList(X).CommandNum = 0
-                            frmEditor_Events.lstCommands.AddItem Mid(indent, 1, Len(indent) - 4) & " : " & "Branch End"
-                            indent = Mid(indent, 1, Len(indent) - 7)
+                            frmEditor_Events.lstCommands.AddItem Mid$(indent, 1, Len(indent) - 4) & " : " & "Branch End"
+                            indent = Mid$(indent, 1, Len(indent) - 7)
                             listleftoff(CurList) = i
                             conditionalstage(CurList) = 0
                     End Select
@@ -2995,14 +2994,14 @@ newlist:
                         Case EventType.evAddText
                             Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2
                                 Case 0
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Add Text - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " - Chat Type: Player"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Add Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " - Chat Type: Player"
                                 Case 1
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Add Text - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " - Chat Type: Map"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Add Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " - Chat Type: Map"
                                 Case 2
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Add Text - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " - Chat Type: Global"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Add Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " - Chat Type: Global"
                             End Select
                         Case EventType.evShowText
-                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Text - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "..."
+                            frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "..."
                         Case EventType.evPlayerVar
                             Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2
                                 Case 0
@@ -3137,15 +3136,15 @@ newlist:
                         Case EventType.evShowChatBubble
                             Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                                 Case TARGET_TYPE_PLAYER
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Player"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Player"
                                 Case TARGET_TYPE_NPC
                                     If Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) <= 0 Then
-                                        frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". ]"
+                                        frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". ]"
                                     Else
-                                        frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2)).name) & "]"
+                                        frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2)).name) & "]"
                                     End If
                                 Case TARGET_TYPE_EVENT
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).name) & "]"
                             End Select
                         Case EventType.evLabel
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"

@@ -122,18 +122,18 @@ Private Declare Function GdipDisposeImageAttributes Lib "gdiplus" (ByVal imgAttr
 Private Declare Function GdipCreateImageAttributes Lib "gdiplus" (ByRef imgAttr As Long) As Long
 Private Declare Function GdipSetImageAttributesColorMatrix Lib "gdiplus" (ByVal imgAttr As Long, ByVal clrAdjust As Long, ByVal clrAdjustEnabled As Long, ByRef clrMatrix As Any, ByRef grayMatrix As Any, ByVal clrMatrixFlags As Long) As Long
 Private Declare Function GdipSetImageAttributesColorKeys Lib "GdiPlus.dll" (ByVal mImageattr As Long, ByVal mType As Long, ByVal mEnableFlag As Long, ByVal mColorLow As Long, ByVal mColorHigh As Long) As Long
-Private Declare Function GdipGetImageRawFormat Lib "gdiplus" (ByVal hImage As Long, ByVal GUID As Long) As Long
+Private Declare Function GdipGetImageRawFormat Lib "gdiplus" (ByVal hImage As Long, ByVal Guid As Long) As Long
 Private Declare Function GdipGetImagePixelFormat Lib "gdiplus" (ByVal hImage As Long, PixelFormat As Long) As Long
-Private Declare Function GdipGetImageEncodersSize Lib "gdiplus" (numEncoders As Long, Size As Long) As Long
-Private Declare Function GdipGetImageEncoders Lib "gdiplus" (ByVal numEncoders As Long, ByVal Size As Long, Encoders As Any) As Long
+Private Declare Function GdipGetImageEncodersSize Lib "gdiplus" (numEncoders As Long, size As Long) As Long
+Private Declare Function GdipGetImageEncoders Lib "gdiplus" (ByVal numEncoders As Long, ByVal size As Long, Encoders As Any) As Long
 Private Declare Function GdipSaveImageToStream Lib "gdiplus" (ByVal Image As Long, ByVal Stream As IUnknown, clsidEncoder As Any, encoderParams As Any) As Long
 Private Declare Function GdipSaveAddImage Lib "gdiplus" (ByVal pImage As Long, ByVal newImage As Long, ByRef encoderParams As Any) As Long
 Private Declare Function GdipSaveAdd Lib "GdiPlus.dll" (ByVal mImage As Long, ByRef mEncoderParams As Any) As Long
 Private Declare Function GdipBitmapLockBits Lib "GdiPlus.dll" (ByVal mBitmap As Long, ByRef mRect As RECTI, ByVal mFlags As Long, ByVal mPixelFormat As Long, ByRef mLockedBitmapData As BitmapData) As Long
 Private Declare Function GdipBitmapUnlockBits Lib "GdiPlus.dll" (ByVal mBitmap As Long, ByRef mLockedBitmapData As BitmapData) As Long
-Private Declare Function GdipBitmapGetPixel Lib "GdiPlus.dll" (ByVal pbitmap As Long, ByVal x As Long, ByVal y As Long, ByRef pColor As Long) As Long
-Private Declare Function GdipBitmapSetPixel Lib "GdiPlus.dll" (ByVal pbitmap As Long, ByVal x As Long, ByVal y As Long, ByVal pColor As Long) As Long
-Private Declare Function GdipCreateBitmapFromHBITMAP Lib "GdiPlus.dll" (ByVal hbm As Long, ByVal hpal As Long, ByRef pbitmap As Long) As Long
+Private Declare Function GdipBitmapGetPixel Lib "GdiPlus.dll" (ByVal pbitmap As Long, ByVal X As Long, ByVal Y As Long, ByRef pColor As Long) As Long
+Private Declare Function GdipBitmapSetPixel Lib "GdiPlus.dll" (ByVal pbitmap As Long, ByVal X As Long, ByVal Y As Long, ByVal pColor As Long) As Long
+Private Declare Function GdipCreateBitmapFromHBITMAP Lib "GdiPlus.dll" (ByVal hbm As Long, ByVal hPal As Long, ByRef pbitmap As Long) As Long
 Private Declare Function GdipCreateBitmapFromGraphics Lib "GdiPlus.dll" (ByVal nWidth As Long, ByVal nHeight As Long, ByVal ptarget As Long, ByRef pbitmap As Long) As Long
 Private Declare Function GdipGetImageHorizontalResolution Lib "GdiPlus.dll" (ByVal pImage As Long, ByRef resolution As Single) As Long
 Private Declare Function GdipGetImageVerticalResolution Lib "GdiPlus.dll" (ByVal pImage As Long, ByRef resolution As Single) As Long
@@ -147,7 +147,7 @@ Private Declare Function DeleteObject Lib "gdi32.dll" (ByVal hObject As Long) As
 Private Declare Function GetDC Lib "user32.dll" (ByVal hWnd As Long) As Long
 Private Declare Function ReleaseDC Lib "user32.dll" (ByVal hWnd As Long, ByVal hDC As Long) As Long
 Private Declare Function GetDIBits Lib "gdi32.dll" (ByVal aHDC As Long, ByVal hBitmap As Long, ByVal nStartScan As Long, ByVal nNumScans As Long, ByRef lpBits As Any, ByRef lpBI As Any, ByVal wUsage As Long) As Long
-Private Declare Function CreateDIBSection Lib "gdi32.dll" (ByVal hDC As Long, ByRef pBitmapInfo As Any, ByVal un As Long, ByRef lplpVoid As Long, ByVal handle As Long, ByVal dw As Long) As Long
+Private Declare Function CreateDIBSection Lib "gdi32.dll" (ByVal hDC As Long, ByRef pBitmapInfo As Any, ByVal un As Long, ByRef lplpVoid As Long, ByVal handle As Long, ByVal dW As Long) As Long
 Private Type BITMAPINFOHEADER   ' Structure used within icon image data
     biSize As Long
     biWidth As Long
@@ -178,7 +178,7 @@ Private Type RECTI
     nHeight As Long
 End Type
 Private Type EncoderParameter
-    GUID(0 To 3)   As Long
+    Guid(0 To 3)   As Long
     NumberOfValues As Long
     Type           As Long
     Value          As Long
@@ -348,7 +348,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
     If DestImageClass Is Nothing Then Exit Function
     
     Dim BHI As BITMAPINFO, cRenderer As cGDIpRenderer
-    Dim cX As Long, cY As Long, x As Long, y As Long
+    Dim cX As Long, cY As Long, X As Long, Y As Long
     Dim clipX As Long, clipY As Long, clipCx As Long, clipCy As Long
     Dim hDib As Long, dibPtr As Long, hObj As Long
     Dim dDC As Long, tDC As Long, scanWidth As Long, Angle As Single
@@ -395,8 +395,8 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
         Case imageIcon, imageIconPNG, imageCursor, imageCursorPNG
             .biBitCount = 32                        ' assume transparency exists else need too parse icon/cursor mask to verify
         Case imageGIF                               ' if GIF uses transparency index, assume transparency
-            If m_MultiImage.GetGifFramePalette(gifPal(), x) Then
-                If x = -1& Then .biBitCount = 24 Else .biBitCount = 32
+            If m_MultiImage.GetGifFramePalette(gifPal(), X) Then
+                If X = -1& Then .biBitCount = 24 Else .biBitCount = 32
                 Erase gifPal()
             Else
                 .biBitCount = 32
@@ -446,43 +446,43 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
             CopyMemory bData(0), ByVal dibPtr, BHI.bmiHeader.biSizeImage
             ' trimming rotated image; find real left edge; looking for non-zero Alpha byte
             scanWidth = Width * 4&
-            For x = 3& To scanWidth - 1& Step 4&
-                For y = 0& To Height - 1&
-                    If bData(y * scanWidth + x) Then
-                        clipX = x - 3&         ' trim left starting at this position
-                        x = scanWidth
+            For X = 3& To scanWidth - 1& Step 4&
+                For Y = 0& To Height - 1&
+                    If bData(Y * scanWidth + X) Then
+                        clipX = X - 3&         ' trim left starting at this position
+                        X = scanWidth
                         Exit For
                     End If
                 Next
             Next
             ' Find real bottom edge; looking for non-zero Alpha byte
-            For y = 0& To Height - 1&
-                x = y * scanWidth + 3&
-                For x = x + clipX To x + scanWidth - 1& Step 4&
-                    If bData(x) Then
-                        clipY = y           ' trim top starting at this posiiton
-                        y = Height
+            For Y = 0& To Height - 1&
+                X = Y * scanWidth + 3&
+                For X = X + clipX To X + scanWidth - 1& Step 4&
+                    If bData(X) Then
+                        clipY = Y           ' trim top starting at this posiiton
+                        Y = Height
                         Exit For
                     End If
                 Next
             Next
             ' Find real right edge; looking for non-zero Alpha byte
-            For x = scanWidth - 1& To clipX + 3& Step -4&
-                For y = clipY To Height - 1&
-                    If bData(y * scanWidth + x) Then
-                        clipCx = x - clipX + 1& ' calc non-trimmed width in total bytes
-                        x = 0&
+            For X = scanWidth - 1& To clipX + 3& Step -4&
+                For Y = clipY To Height - 1&
+                    If bData(Y * scanWidth + X) Then
+                        clipCx = X - clipX + 1& ' calc non-trimmed width in total bytes
+                        X = 0&
                         Exit For
                     End If
                 Next
             Next
             ' Find real top edge; looking for non-zero Alpha byte
-            For y = Height - 1& To clipY Step -1&
-                x = y * scanWidth + 3& + clipX
-                For x = x To x + clipCx - 1& Step 4&
-                    If bData(x) Then
-                        clipCy = y - clipY + 1& ' calc number of non-trimmed rows
-                        y = clipY
+            For Y = Height - 1& To clipY Step -1&
+                X = Y * scanWidth + 3& + clipX
+                For X = X To X + clipCx - 1& Step 4&
+                    If bData(X) Then
+                        clipCy = Y - clipY + 1& ' calc number of non-trimmed rows
+                        Y = clipY
                         Exit For
                     End If
                 Next
@@ -495,8 +495,8 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
                 Height = clipCy
                 cY = 0&
                 ReDim bTrim(0 To clipCx * Height - 1&)
-                For y = clipY To clipY + clipCy - 1&
-                    CopyMemory bTrim(cY * clipCx), bData(y * scanWidth + clipX), clipCx
+                For Y = clipY To clipY + clipCy - 1&
+                    CopyMemory bTrim(cY * clipCx), bData(Y * scanWidth + clipX), clipCx
                     cY = cY + 1&
                 Next
                 Erase bData()                       ' create new trimmed DIB
@@ -538,9 +538,9 @@ Public Property Let ExtraTransparentColor(newVal As Long)
     End If
 End Property
 
-Public Function GetPixel(ByVal x As Long, ByVal y As Long) As Long
+Public Function GetPixel(ByVal X As Long, ByVal Y As Long) As Long
     ' Function returns an ARGB color. X,Y must be within 0 to Width-1 & Height-1
-    If m_Image(m_SourceIndex) Then GdipBitmapGetPixel m_Image(m_SourceIndex), x, y, GetPixel
+    If m_Image(m_SourceIndex) Then GdipBitmapGetPixel m_Image(m_SourceIndex), X, Y, GetPixel
 End Function
 
 Public Function GetScaledImageSizes(ByVal destWidth As Long, ByVal destHeight As Long, ScaledWidth As Long, ScaledHeight As Long, _
@@ -728,16 +728,6 @@ Public Function LoadPicture_FromNothing(Width As Long, Height As Long, graphics 
     ' Routine simply opens the file, reads the data, and passes to the LoadPicture_Stream function
     If TokenClass Is Nothing Then Exit Function
     If TokenClass.Token = 0& Then Exit Function
-    
-    Const GENERIC_READ As Long = &H80000000
-    Const OPEN_EXISTING = &H3
-    Const FILE_SHARE_READ = &H1
-    Const FILE_ATTRIBUTE_ARCHIVE As Long = &H20
-    Const FILE_ATTRIBUTE_HIDDEN As Long = &H2
-    Const FILE_ATTRIBUTE_READONLY As Long = &H1
-    Const FILE_ATTRIBUTE_SYSTEM As Long = &H4
-    Const FILE_ATTRIBUTE_NORMAL = &H80&
-    Const INVALID_HANDLE_VALUE As Long = -1&
     
     Dim hImage As Long, IStream As IUnknown
     Dim flags As Long, hFile As Long, bData() As Byte
@@ -931,7 +921,7 @@ End Function
 
 Public Function LockImageBits(ByVal LockMode As LockModeConstants, _
                             Optional ByRef PixelFormat As ImageColorFormatConstants = PixelFormat32bppARGB, _
-                            Optional ByVal x As Long, Optional ByVal y As Long, _
+                            Optional ByVal X As Long, Optional ByVal Y As Long, _
                             Optional ByRef Width As Long, Optional ByRef Height As Long, _
                             Optional ByRef StrideOut As Long) As Long
             
@@ -952,8 +942,8 @@ Public Function LockImageBits(ByVal LockMode As LockModeConstants, _
         Dim BD As BitmapData, R As RECTI
         With R
             .nHeight = Height
-            .nLeft = x
-            .nTop = y
+            .nLeft = X
+            .nTop = Y
             .nWidth = Width
         End With
         If GdipBitmapLockBits(m_Image(m_SourceIndex), R, LockMode, PixelFormat, BD) = 0& Then
@@ -1098,7 +1088,7 @@ Public Function SaveAsJPG(outArray() As Byte, Optional ByVal QualityPct As Long 
                     With uEncParams.Parameter(0)
                         .NumberOfValues = 1
                         .Type = EncoderParameterValueTypeLong
-                        Call CLSIDFromString(StrPtr(JPGEncoderQuality), .GUID(0))
+                        Call CLSIDFromString(StrPtr(JPGEncoderQuality), .Guid(0))
                         If QualityPct < 10& Then
                             QualityPct = 10&
                         ElseIf QualityPct > 100& Then
@@ -1127,7 +1117,7 @@ Public Function SaveAsOriginalFormat(outArray() As Byte) As Boolean
     '   the converted internal bitmap, those chunks will no longer be there, but the returned
     '   bytes will be a PNG format.
     
-    Dim IIStream As IUnknown, IPIC As IPicture
+    Dim IIStream As IUnknown, IPic As IPicture
     Dim lSize As Long, bFalse As Boolean
     
     If m_Source(0) Is Nothing Then  ' a sourceless bitmap
@@ -1140,11 +1130,11 @@ Public Function SaveAsOriginalFormat(outArray() As Byte) As Boolean
         End Select
     Else
         If TypeOf m_Source(0) Is StdPicture Then
-            Set IPIC = m_Source(0)
+            Set IPic = m_Source(0)
             Set IIStream = pvStreamFromArray(0&, 0&)
-            If (IPIC Is Nothing Or IIStream Is Nothing) Then Exit Function
+            If (IPic Is Nothing Or IIStream Is Nothing) Then Exit Function
             ' have VB's stdPicture save to our stream
-            IPIC.SaveAsFile ByVal ObjPtr(IIStream), bFalse, lSize
+            IPic.SaveAsFile ByVal ObjPtr(IIStream), bFalse, lSize
             If lSize = 0& Then Exit Function
         Else
             Set IIStream = m_Source(0)
@@ -1304,7 +1294,7 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
                         lCompress = EncoderValueCompressionLZW
                         .NumberOfValues = 1
                         .Type = EncoderParameterValueTypeLong
-                         CLSIDFromString StrPtr(TIFFCompress), .GUID(0)
+                         CLSIDFromString StrPtr(TIFFCompress), .Guid(0)
                         .Value = VarPtr(lCompress)
                     End With
                     uEncParams.count = 1                        ' keep count
@@ -1313,7 +1303,7 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
                 With uEncParams.Parameter(uEncParams.count)     ' Set up bit depth parameter
                     .NumberOfValues = 1
                     .Type = EncoderParameterValueTypeLong
-                    CLSIDFromString StrPtr(TIFFBitDepth), .GUID(0)
+                    CLSIDFromString StrPtr(TIFFBitDepth), .Guid(0)
                    .Value = VarPtr(lDepth)                      ' will be applied per page
                 End With
                 uEncParams.count = uEncParams.count + 1         ' keep count
@@ -1323,7 +1313,7 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
                     With uEncParams.Parameter(uEncParams.count)
                         .NumberOfValues = 1
                         .Type = EncoderParameterValueTypeLong
-                        CLSIDFromString StrPtr(SaveFlag), .GUID(0)
+                        CLSIDFromString StrPtr(SaveFlag), .Guid(0)
                        .Value = VarPtr(lParamVal)
                     End With
                     uEncParams.count = uEncParams.count + 1     ' keep count
@@ -1429,9 +1419,9 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
     
 End Function
 
-Public Function SetPixel(ByVal x As Long, ByVal y As Long, ByVal ARGBColor As Long) As Boolean
+Public Function SetPixel(ByVal X As Long, ByVal Y As Long, ByVal ARGBColor As Long) As Boolean
     ' Function sets an ARGB color. X,Y must be within Width-1 & Height-1
-    If m_Image(m_SourceIndex) Then SetPixel = (GdipBitmapSetPixel(m_Image(m_SourceIndex), x, y, ARGBColor) = 0&)
+    If m_Image(m_SourceIndex) Then SetPixel = (GdipBitmapSetPixel(m_Image(m_SourceIndex), X, Y, ARGBColor) = 0&)
 End Function
 
 Public Function UnLockImageBits(ByVal PixelFormat As ImageColorFormatConstants, _
@@ -1774,7 +1764,7 @@ End Function
 ' Routine is a helper function for the SavePicture routine
 Private Function pvGetEncoderClsID(strMimeType As String, ClassID() As Long) As Long
   
-  Dim Num      As Long
+  Dim num      As Long
   Dim SizeA    As Long
   Dim SizeB    As Long
   Dim LIdx     As Long
@@ -1782,22 +1772,22 @@ Private Function pvGetEncoderClsID(strMimeType As String, ClassID() As Long) As 
   Dim buffer() As Byte, sMime As String
     
     '-- Get the encoder array size
-    Call GdipGetImageEncodersSize(Num, SizeA)
+    Call GdipGetImageEncodersSize(num, SizeA)
     If (SizeA = 0&) Then Exit Function ' Failed!
     
     '-- Allocate room for the arrays dynamically
-    ReDim ICI(1 To Num) As ImageCodecInfo
+    ReDim ICI(1 To num) As ImageCodecInfo
     ReDim buffer(1 To SizeA) As Byte
     
     '-- Get the array and string data
-    Call GdipGetImageEncoders(Num, SizeA, buffer(1))
+    Call GdipGetImageEncoders(num, SizeA, buffer(1))
     '-- Copy the class headers
-    Call CopyMemory(ICI(1), buffer(1), (Len(ICI(1)) * Num))
+    Call CopyMemory(ICI(1), buffer(1), (Len(ICI(1)) * num))
     
     SizeA = Len(strMimeType)
     sMime = String$(SizeA, vbNullChar)
     '-- Loop through all the codecs
-    For LIdx = Num To 1& Step -1&
+    For LIdx = num To 1& Step -1&
         '-- Must convert the pointer into a usable string
         With ICI(LIdx)
             SizeB = lstrlenW(ByVal .MimeType)
@@ -1828,11 +1818,11 @@ Private Function pvGetImageType(hImage As Long) As ImageTypeConstants
     Const ImageFormatWMF As String = "{B96B3CAD-0728-11D3-9D7B-0000F81EF32E}"
     Const ImageFormatEXIF As String = "{B96B3CB2-0728-11D3-9D7B-0000F81EF32E}"
     ' ^^ note to self: haven't seen any images return this yet. Curious
-    Dim GUID(0 To 3) As Long, sGUID As String, lRet As Long
+    Dim Guid(0 To 3) As Long, sGUID As String, lRet As Long
     
-    If GdipGetImageRawFormat(hImage, VarPtr(GUID(0))) = 0& Then
+    If GdipGetImageRawFormat(hImage, VarPtr(Guid(0))) = 0& Then
         sGUID = String$(40, vbNullChar)
-        lRet = StringFromGUID2(VarPtr(GUID(0)), StrPtr(sGUID), 40&)
+        lRet = StringFromGUID2(VarPtr(Guid(0)), StrPtr(sGUID), 40&)
         Select Case Left$(sGUID, lRet - 1&)
             Case ImageFormatPNG: pvGetImageType = imagePNG
             Case ImageFormatJPEG: pvGetImageType = imageJPEG
@@ -1861,38 +1851,38 @@ Private Function pvIconTo32bpp(Index As Long, resetFlags As pvCleanUpEnum) As Bo
     ' So to support icon/cursor formats, all formats are converted to 32bpp images
     ' Supported bit depths are 1, 2, 4, 8, 16, 24, 32 and PNGs
     
-    Dim x As Long, y As Long, bBits() As Byte, bMask() As Byte, pow2(0 To 10) As Long
+    Dim X As Long, Y As Long, bBits() As Byte, bMask() As Byte, pow2(0 To 10) As Long
     Dim scanWidth As Long, tgtScanWidth As Long, arrOffset As Long
     Dim hImage As Long, hDib As Long, dibPtr As Long, dDC As Long
     Dim imageOffset As Long, bitShift As Long, bitAnd As Long, bitDepth As Long
     Dim srcPtr As Long, dstPtr As Long, palIndex As Long, lColor As Long, bFalse As Boolean
-    Dim BHI As BITMAPINFO, IIStream As IUnknown, IIBackup As IUnknown, IPIC As IPicture
+    Dim BHI As BITMAPINFO, IIStream As IUnknown, IIBackup As IUnknown, IPic As IPicture
     
 
     ' Test for PNG encoded icon. Offset=location in icon source where icon starts
     If TypeOf m_Source(0) Is StdPicture Then
         Set IIStream = pvStreamFromArray(0&, 0&)
         If Not IIStream Is Nothing Then
-            Set IPIC = m_Source(0)
-            IPIC.SaveAsFile ByVal ObjPtr(IIStream), bFalse, x ' have VB's stdPicture save icon to stream for us
-            If x = 0& Then Exit Function ' Failed
+            Set IPic = m_Source(0)
+            IPic.SaveAsFile ByVal ObjPtr(IIStream), bFalse, X ' have VB's stdPicture save icon to stream for us
+            If X = 0& Then Exit Function ' Failed
             If pvStreamToArray(ObjPtr(IIStream), bBits()) = False Then Exit Function
             Set IIStream = Nothing
-            Set IPIC = Nothing
+            Set IPic = Nothing
         End If
     Else
         If pvStreamToArray(ObjPtr(m_Source(0)), bBits()) = False Then Exit Function
     End If
     
     arrOffset = (Index And &HFF&) * 16& + 6&    ' get icon directory
-    CopyMemory y, bBits(arrOffset + 8&), 4&     ' get size of resource
+    CopyMemory Y, bBits(arrOffset + 8&), 4&     ' get size of resource
     CopyMemory arrOffset, bBits(arrOffset + 12&), 4& ' get resource offset from the icon directory
-    CopyMemory x, bBits(arrOffset), 4&          ' test for PNG header1
-    If x = png_Signature1 Then
-        CopyMemory x, bBits(arrOffset + 4&), 4& ' test for PNG header2
-        If x = png_Signature2 Then
+    CopyMemory X, bBits(arrOffset), 4&          ' test for PNG header1
+    If X = png_Signature1 Then
+        CopyMemory X, bBits(arrOffset + 4&), 4& ' test for PNG header2
+        If X = png_Signature2 Then
             ' we have a PNG, try to create GDI+ image
-            Set IIStream = pvStreamFromArray(VarPtr(bBits(arrOffset)), y)
+            Set IIStream = pvStreamFromArray(VarPtr(bBits(arrOffset)), Y)
             If Not IIStream Is Nothing Then
                 If GdipLoadImageFromStream(IIStream, hImage) = 0& Then
                     hImage = pvCreateSourcelessImage(hImage, 0&, 0&, 6&)
@@ -1913,8 +1903,8 @@ Private Function pvIconTo32bpp(Index As Long, resetFlags As pvCleanUpEnum) As Bo
         CopyMemory BHI, bBits(arrOffset), 40&   ' get 1st 40 bytes of embedded header
         BHI.bmiHeader.biCompression = 0&        ' Ensure non-compressed bits returned when needed
         pow2(0) = 1&                        ' build a power of two lookup table
-        For x = 1& To 10&                   ' Note. 2^10 is 16bit max shift value for 2-byte packed value
-            pow2(x) = pow2(x - 1) * 2&
+        For X = 1& To 10&                   ' Note. 2^10 is 16bit max shift value for 2-byte packed value
+            pow2(X) = pow2(X - 1) * 2&
         Next
         With BHI.bmiHeader                  ' update header and set offsets/pointers needed to parse icon
             .biHeight = .biHeight \ 2       ' icons/cursors have double heights
@@ -1940,11 +1930,11 @@ Private Function pvIconTo32bpp(Index As Long, resetFlags As pvCleanUpEnum) As Bo
             Select Case .biBitCount
             Case 1, 4, 8                                        ' paletted bitmaps
                 bitAnd = pow2(bitDepth) - 1&                    ' calc AND mask for packed bytes
-                For y = 0& To .biHeight - 1&                    ' unpack bytes to 32bpp format
-                    srcPtr = y * scanWidth + imageOffset        ' where current source row starts
-                    dstPtr = y * tgtScanWidth
+                For Y = 0& To .biHeight - 1&                    ' unpack bytes to 32bpp format
+                    srcPtr = Y * scanWidth + imageOffset        ' where current source row starts
+                    dstPtr = Y * tgtScanWidth
                     bitShift = 8& - bitDepth                    ' calc bit shifting start
-                    For x = 0& To .biWidth - 1&                 ' get palette index from packed byte
+                    For X = 0& To .biWidth - 1&                 ' get palette index from packed byte
                         palIndex = ((bBits(srcPtr) \ pow2(bitShift)) And bitAnd)
                         CopyMemory bMask(dstPtr), BHI.bmiColors(palIndex), 4& ' copy color to target
                         dstPtr = dstPtr + 4&                    ' Move target pointer along
@@ -1962,33 +1952,33 @@ Private Function pvIconTo32bpp(Index As Long, resetFlags As pvCleanUpEnum) As Bo
                     Case Else: lColor = PixelFormat8bppIndexed
                 End Select
             Case 32                                             ' true color with alpha channel
-                For y = 0& To .biHeight - 1&                    ' Move source pixels to target
-                    srcPtr = y * scanWidth + imageOffset        ' where current source row starts
-                    dstPtr = y * tgtScanWidth
-                    For x = dstPtr To dstPtr + tgtScanWidth - 1& Step 4& ' transfer pixel data
-                        CopyMemory bMask(x), bBits(srcPtr), 4&  ' ARGB format in source; no mask parsing required
+                For Y = 0& To .biHeight - 1&                    ' Move source pixels to target
+                    srcPtr = Y * scanWidth + imageOffset        ' where current source row starts
+                    dstPtr = Y * tgtScanWidth
+                    For X = dstPtr To dstPtr + tgtScanWidth - 1& Step 4& ' transfer pixel data
+                        CopyMemory bMask(X), bBits(srcPtr), 4&  ' ARGB format in source; no mask parsing required
                         srcPtr = srcPtr + 4&                    ' Move source pointer along
                     Next
                 Next
                 lColor = PixelFormat32bppARGB
                 
             Case 24                                             ' true color without alpha channel
-                For y = 0& To .biHeight - 1&                    ' Move source pixels to target
-                    srcPtr = y * scanWidth + imageOffset        ' where current source row starts
-                    dstPtr = y * tgtScanWidth
-                    For x = dstPtr To dstPtr + tgtScanWidth - 1& Step 4& ' transfer pixel data
-                        CopyMemory bMask(x), bBits(srcPtr), 3&
+                For Y = 0& To .biHeight - 1&                    ' Move source pixels to target
+                    srcPtr = Y * scanWidth + imageOffset        ' where current source row starts
+                    dstPtr = Y * tgtScanWidth
+                    For X = dstPtr To dstPtr + tgtScanWidth - 1& Step 4& ' transfer pixel data
+                        CopyMemory bMask(X), bBits(srcPtr), 3&
                         srcPtr = srcPtr + 3&                    ' Move source pointer along
                     Next
                 Next
                 lColor = PixelFormat24bppRGB
                 
             Case 16                                             ' 16bpp images, assumes 5-bits for each R,G,B (i.e, 555 format)
-                For y = 0& To .biHeight - 1&
-                    srcPtr = y * scanWidth + imageOffset        ' where current source row starts
-                    dstPtr = y * tgtScanWidth
+                For Y = 0& To .biHeight - 1&
+                    srcPtr = Y * scanWidth + imageOffset        ' where current source row starts
+                    dstPtr = Y * tgtScanWidth
                     bitShift = 0&                               ' Reset
-                    For x = 0& To .biWidth * 3& - 1&            ' get next 16bits (Integer)
+                    For X = 0& To .biWidth * 3& - 1&            ' get next 16bits (Integer)
                         If bitShift = 0& Then CopyMemory lColor, bBits(srcPtr), 2&
                         palIndex = ((lColor \ pow2(bitShift)) And &H1F&) ' Extract RGB component value
                         If palIndex = &H1F& Then                ' Set value to target component
@@ -2016,11 +2006,11 @@ Private Function pvIconTo32bpp(Index As Long, resetFlags As pvCleanUpEnum) As Bo
             If .biBitCount < 32& Then
                 imageOffset = imageOffset + scanWidth * .biHeight ' where mask starts in source data
                 scanWidth = pvByteAlignOnWord(1, .biWidth)        ' Mask scan width
-                For y = 0& To .biHeight - 1&
-                    srcPtr = y * scanWidth + imageOffset        ' where current mask row starts
+                For Y = 0& To .biHeight - 1&
+                    srcPtr = Y * scanWidth + imageOffset        ' where current mask row starts
                     bitShift = 7&                               ' Reset
-                    dstPtr = y * tgtScanWidth + 3&              ' where current row's alpha starts
-                    For x = 0 To .biWidth - 1&                  ' Make pixel is transparent if needed
+                    dstPtr = Y * tgtScanWidth + 3&              ' where current row's alpha starts
+                    For X = 0 To .biWidth - 1&                  ' Make pixel is transparent if needed
                         If ((bBits(srcPtr) \ pow2(bitShift)) And 1&) = 0 Then bMask(dstPtr) = 255
                         dstPtr = dstPtr + 4&                    ' Move target pointer along
                         If bitShift = 0& Then                   ' done shifting
@@ -2060,15 +2050,15 @@ Private Function pvIconTo32bpp(Index As Long, resetFlags As pvCleanUpEnum) As Bo
     End If
     If pvIconTo32bpp = True Then
         If (Index And &H80000000) Then ' called from the Load function not m_MultiImage
-            CopyMemory x, bBits(2), 2&  ' get type of resource
-            If (x And &HFF&) = 1& Then
+            CopyMemory X, bBits(2), 2&  ' get type of resource
+            If (X And &HFF&) = 1& Then
                 m_ImageType = imageIcon Or (m_ImageType And 32&)
             Else
                 m_ImageType = imageCursor Or (m_ImageType And 32&)
             End If
-            CopyMemory x, bBits(4), 2&  ' get count in resource
+            CopyMemory X, bBits(4), 2&  ' get count in resource
             Set m_MultiImage = New cGDIpMultiImage
-            m_MultiImage.frSetImage (x And &HFF&), m_ImageType
+            m_MultiImage.frSetImage (X And &HFF&), m_ImageType
         End If
         GdipImageRotateFlip hImage, (m_Mirror Xor 6)
         Call GdipGetImageBounds(hImage, m_Size, UnitPixel) ' Retrieve dimensions/offsets
@@ -2083,7 +2073,7 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
     Dim hImage As Long, xyRatio As Single
     Dim cX As Long, cY As Long, lColorType As Long
     Dim bFalse As Boolean, lSize As Long, dibPtr As Long
-    Dim IIStream As IUnknown, IPIC As IPicture, Bounds As RECTF
+    Dim IIStream As IUnknown, IPic As IPicture, Bounds As RECTF
     Dim BHI As BITMAPINFO, cRenderer As cGDIpRenderer
     Dim dDC As Long, tDC As Long, scanWidth As Long
     Dim hObj As Long, hDib As Long, hGraphics As Long
@@ -2091,12 +2081,12 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
     Const PICTURE_TRANSPARENT = &H2
     
     If TypeOf metaSource Is StdPicture Then        ' called from LoadPicture_stdPicture
-        Set IPIC = metaSource
-        Set IIStream = IPIC                                         ' new source if load is successful
-        If (IPIC.Attributes And PICTURE_TRANSPARENT) Then lColorType = PixelFormat32bppARGB Else lColorType = PixelFormat24bppRGB
-        hImage = IPIC.handle                                        ' Make non-zero
-        cX = IPIC.Width * 1440& / 2540& / Screen.TwipsPerPixelX     ' get size in pixels
-        cY = IPIC.Height * 1440& / 2540& / Screen.TwipsPerPixelY
+        Set IPic = metaSource
+        Set IIStream = IPic                                         ' new source if load is successful
+        If (IPic.Attributes And PICTURE_TRANSPARENT) Then lColorType = PixelFormat32bppARGB Else lColorType = PixelFormat24bppRGB
+        hImage = IPic.handle                                        ' Make non-zero
+        cX = IPic.Width * 1440& / 2540& / Screen.TwipsPerPixelX     ' get size in pixels
+        cY = IPic.Height * 1440& / 2540& / Screen.TwipsPerPixelY
     Else                                        ' called from LoadPicture_Stream
         Call GdipGetImageHorizontalResolution(theImage, xyRatio)     ' calc size
         If xyRatio > 0! Then
@@ -2137,7 +2127,7 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
             ' alpha values to zero and we know where the transparent pixels are: they have an alpha of 255.
             If BHI.bmiHeader.biBitCount = 32 Then FillMemory ByVal dibPtr, BHI.bmiHeader.biSizeImage, 255
             hObj = SelectObject(tDC, hDib)
-            If IPIC Is Nothing Then                             ' Rendering from stream object not stdPicture object
+            If IPic Is Nothing Then                             ' Rendering from stream object not stdPicture object
                 Set cRenderer = New cGDIpRenderer
                 cRenderer.AttachTokenClass m_Token
                 hGraphics = cRenderer.CreateHGraphicsFromHDC(tDC)
@@ -2149,7 +2139,7 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
                 End If
                 Set cRenderer = Nothing
             Else                                                ' Rendering from stdPicture object
-                IPIC.Render tDC + 0&, 0&, 0&, cX + 0&, cY + 0&, 0&, IPIC.Height, IPIC.Width, -IPIC.Height, ByVal 0&
+                IPic.Render tDC + 0&, 0&, 0&, cX + 0&, cY + 0&, 0&, IPic.Height, IPic.Width, -IPic.Height, ByVal 0&
             End If
             SelectObject tDC, hObj
             DeleteDC tDC
@@ -2157,7 +2147,7 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
             If hImage = 0& Then                                 ' continue?
                 DeleteObject hDib
             Else
-                If IPIC Is Nothing Then GdipDisposeImage theImage ' destroy passed theImage
+                If IPic Is Nothing Then GdipDisposeImage theImage ' destroy passed theImage
                 hImage = 0&
                 If BHI.bmiHeader.biBitCount = 24 Then           ' create new bitmap from DIB; no alpha checks necessary. Done.
                     GdipCreateBitmapFromHBITMAP hDib, 0&, hImage
@@ -2292,15 +2282,15 @@ Private Function pvProcessAlphaBitmap(inArray() As Byte, Width As Long, Height A
 
     ' This is a non-foolproof method of determining whether image uses ARGB or pARGB alpha channel
 
-    Dim x As Long, y As Long, scanWidth As Long, hDib As Long, dibPtr As Long, dDC As Long
+    Dim X As Long, Y As Long, scanWidth As Long, hDib As Long, dibPtr As Long, dDC As Long
     Dim B As Long, lColorFormat As Long, hImage As Long, hdrSize As Long
     Dim tPIC As StdPicture, nullAlphas As Long, fullAlphas As Long
     
     If Width = 0& And Height = 0& Then      ' called from LoadPicture_Stream
         CopyMemory B, inArray(0), 2&        ' Magic number
         If B <> bmp_Signature Then Exit Function  ' not a bitmap
-        CopyMemory x, inArray(28), 2&       ' bit depth
-        If x <> 32 Then Exit Function       '  not processed here
+        CopyMemory X, inArray(28), 2&       ' bit depth
+        If X <> 32 Then Exit Function       '  not processed here
         CopyMemory B, inArray(26), 2&       ' validate planes (must be 1)
         If B <> 1& Then Exit Function
         CopyMemory Width, inArray(18), 4&
@@ -2316,20 +2306,20 @@ Private Function pvProcessAlphaBitmap(inArray() As Byte, Width As Long, Height A
     End If
     
     scanWidth = Width * 4&                  ' bytes per row
-    For y = 0& To Height - 1                ' loop thru image, abort early if possible
-        x = hdrSize + y * scanWidth
-        For x = x + 3& To x + scanWidth - 1& Step 4&
-            If inArray(x) = 0 Then
+    For Y = 0& To Height - 1                ' loop thru image, abort early if possible
+        X = hdrSize + Y * scanWidth
+        For X = X + 3& To X + scanWidth - 1& Step 4&
+            If inArray(X) = 0 Then
                 nullAlphas = nullAlphas + 1& ' track zero alpha bytes
-            ElseIf inArray(x) = 255 Then
+            ElseIf inArray(X) = 255 Then
                 fullAlphas = fullAlphas + 1& ' track fully opaque bytes
             Else
-                For B = x - 3& To x - 1&
-                    If inArray(B) > inArray(x) Then
+                For B = X - 3& To X - 1&
+                    If inArray(B) > inArray(X) Then
                         ' pARGB can never have a R,G,B value > alpha value so this must be ARGB
                         lColorFormat = PixelFormat32bppARGB ' ARGB format; done checking
-                        x = x + scanWidth   ' Exit X loop
-                        y = Height          ' Exit Y loop
+                        X = X + scanWidth   ' Exit X loop
+                        Y = Height          ' Exit Y loop
                         Exit For
                     End If
                 Next

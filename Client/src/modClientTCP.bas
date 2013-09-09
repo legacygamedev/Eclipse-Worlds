@@ -14,8 +14,8 @@ Sub TcpInit()
     Set PlayerBuffer = New clsBuffer
 
     ' Connect
-    frmMain.Socket.RemoteHost = Options.IP
-    frmMain.Socket.RemotePort = Options.Port
+    frmMenu.Socket.RemoteHost = Options.IP
+    frmMenu.Socket.RemotePort = Options.Port
     
     ' Enable news now that we are done
     frmMenu.tmrUpdateNews.Enabled = True
@@ -31,7 +31,7 @@ Sub DestroyTCP()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    frmMain.Socket.close
+    frmMenu.Socket.close
     Exit Sub
     
 ' Error handler
@@ -47,7 +47,7 @@ Public Sub IncomingData(ByVal DataLength As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    frmMain.Socket.GetData buffer, vbUnicode, DataLength
+    frmMenu.Socket.GetData buffer, vbUnicode, DataLength
     
     PlayerBuffer.WriteBytes buffer()
     
@@ -84,9 +84,9 @@ Public Function ConnectToServer(ByVal i As Long) As Boolean
     End If
     
     Wait = timeGetTime
-    frmMain.Socket.close
-    frmMain.Socket.Connect
-    
+    frmMenu.Socket.close
+    frmMenu.Socket.Connect
+
     SetStatus "Connecting to server..."
     
     ' Wait until connected or 3 seconds have passed and report the server being down
@@ -106,8 +106,8 @@ End Function
 Function IsConnected() As Boolean
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
-    
-    If frmMain.Socket.State = sckConnected Then
+
+    If frmMenu.Socket.State = sckConnected Then
         IsConnected = True
     End If
     Exit Function
@@ -144,7 +144,7 @@ Sub SendData(ByRef data() As Byte)
         Set buffer = New clsBuffer
         buffer.WriteLong (UBound(data) - LBound(data)) + 1
         buffer.WriteBytes data()
-        frmMain.Socket.SendData buffer.ToArray()
+        frmMenu.Socket.SendData buffer.ToArray()
     End If
     Exit Sub
     
@@ -541,10 +541,10 @@ Public Sub SendSaveMap()
                 buffer.WriteLong .Global
                 buffer.WriteLong .X
                 buffer.WriteLong .Y
-                buffer.WriteLong .PageCount
+                buffer.WriteLong .pageCount
             End With
-            If Map.events(i).PageCount > 0 Then
-                For X = 1 To Map.events(i).PageCount
+            If Map.events(i).pageCount > 0 Then
+                For X = 1 To Map.events(i).pageCount
                     With Map.events(i).Pages(X)
                         buffer.WriteLong .chkVariable
                         buffer.WriteLong .VariableIndex
@@ -2336,7 +2336,7 @@ Sub SendLeaveGame()
     buffer.WriteLong CLeaveGame
     SendData buffer.ToArray()
     Set buffer = Nothing
-    frmMain.Socket.close
+    frmMenu.Socket.close
 End Sub
 
 Sub SendSaveBan(ByVal BanNum As Long)

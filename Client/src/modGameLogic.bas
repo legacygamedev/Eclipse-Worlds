@@ -243,7 +243,7 @@ Public Sub GameLoop()
         End If
     Loop
 
-    frmMain.Visible = False
+    'frmMain.Visible = False
     
     If IsLogging Then
         IsLogging = False

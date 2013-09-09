@@ -24,11 +24,6 @@ End Type
 
 Private Vertex_List(3) As TLVERTEX ' 4 vertices will make a square.
 
-' Some color depth constants to help make the DX constants more readable.
-Private Const COLOR_DEPTH_16_BIT As Long = D3DFMT_R5G6B5
-Private Const COLOR_DEPTH_24_BIT As Long = D3DFMT_A8R8G8B8
-Private Const COLOR_DEPTH_32_BIT As Long = D3DFMT_X8R8G8B8
-
 Public RenderingMode As Long
 
 Private Direct3D_Window As D3DPRESENT_PARAMETERS ' Backbuffer and viewport description.
@@ -1656,7 +1651,9 @@ Public Sub DrawPlayer(ByVal Index As Long)
     Call DrawSprite(Sprite, X, Y, rec)
     
     ' Check for paperdolling
-    For i = 1 To UBound(PaperdollOrder)
+    Dim size As Long
+    size = UBound(PaperdollOrder)
+    For i = 1 To size
         If GetPlayerEquipment(Index, PaperdollOrder(i)) > 0 Then
             If item(GetPlayerEquipment(Index, PaperdollOrder(i))).Paperdoll > 0 Then
                 Call DrawPaperdoll(X, Y, item(GetPlayerEquipment(Index, PaperdollOrder(i))).Paperdoll, Anim, spritetop)
@@ -2398,7 +2395,7 @@ Sub DrawInventory()
                             Color = BrightGreen
                         End If
                         
-                        RenderText Font_Default, Format$(ConvertCurrency(str(Amount)), "#,###,###,###"), X, Y, Color
+                        RenderText Font_Default, Format$(ConvertCurrency(str$(Amount)), "#,###,###,###"), X, Y, Color
                     End If
                 End If
             End If
@@ -2488,7 +2485,7 @@ Sub DrawTrade()
                             Color = BrightGreen
                         End If
                         
-                        RenderText Font_Default, Format$(ConvertCurrency(str(Amount)), "#,###,###,###"), X, Y, Color
+                        RenderText Font_Default, Format$(ConvertCurrency(str$(Amount)), "#,###,###,###"), X, Y, Color
                     End If
                 End If
             End If
@@ -2539,7 +2536,7 @@ Sub DrawTrade()
                             Color = BrightGreen
                         End If
                         
-                        RenderText Font_Default, Format$(ConvertCurrency(str(Amount)), "#,###,###,###"), X, Y, Color
+                        RenderText Font_Default, Format$(ConvertCurrency(str$(Amount)), "#,###,###,###"), X, Y, Color
                     End If
                 End If
             End If

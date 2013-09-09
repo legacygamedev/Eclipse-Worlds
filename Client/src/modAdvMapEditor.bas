@@ -1,17 +1,7 @@
 Attribute VB_Name = "modAdvMapEditor"
 Option Explicit
 
-Private Const GWL_WNDPROC       As Long = (-4)
-Private Const GWL_USERDATA      As Long = (-21)
 Private Const GWL_STYLE         As Long = (-16)
-
-Private Const WM_DESTROY        As Long = &H2
-Private Const WM_MOUSEMOVE      As Long = &H200
-Private Const WM_LBUTTONDOWN    As Long = &H201
-Private Const WM_LBUTTONUP      As Long = &H202
-Private Const WM_CAPTURECHANGED As Long = &H215
-Private Const WM_GETMINMAXINFO  As Long = &H24
-Private Const WM_NCDESTROY      As Long = &H82
 
 Private Const SWP_NOACTIVATE    As Long = &H10
 Private Const SWP_NOOWNERZORDER As Long = &H200
@@ -19,8 +9,6 @@ Private Const SWP_NOZORDER      As Long = &H4
 Private Const SWP_NOSIZE        As Long = &H1
 Private Const SWP_FRAMECHANGED  As Long = &H20
 Private Const SWP_NOMOVE        As Long = &H2
-
-Private Const WS_CAPTION        As Long = &HC00000
 
 'API Declarations
 Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
@@ -30,7 +18,6 @@ Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVa
 Private Declare Function GetCursorPos Lib "user32" (lpPoint As POINTAPI) As Long
 Private Declare Function GetWindowRect Lib "user32.dll" (ByVal hWnd As Long, lpRect As RECTTT) As Long
 Private Declare Function SetCapture Lib "user32" (ByVal hWnd As Long) As Long
-Private Declare Function GetCapture Lib "user32" () As Long
 Private Declare Function ReleaseCapture Lib "user32" () As Long
 Private Declare Function SetWindowPos Lib "user32.dll" ( _
      ByVal hWnd As Long, _
@@ -40,13 +27,6 @@ Private Declare Function SetWindowPos Lib "user32.dll" ( _
      ByVal cX As Long, _
      ByVal cY As Long, _
      ByVal wFlags As Long) As Long
-Private Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, _
-ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
-Private Declare Function DefWindowProc Lib "user32" Alias "DefWindowProcA" _
-    (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, _
-    ByVal lParam As Long) As Long
-Private Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As Any, ByVal lpWindowName _
-         As Any) As Long
 Private Declare Sub CopyMemory Lib "kernel32" _
    Alias "RtlMoveMemory" _
    (hpvDest As Any, _

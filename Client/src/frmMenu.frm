@@ -1,4 +1,5 @@
 VERSION 5.00
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
 Begin VB.Form frmMenu 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -25,6 +26,13 @@ Begin VB.Form frmMenu
    ScaleWidth      =   515
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin MSWinsockLib.Winsock Socket 
+      Left            =   0
+      Top             =   1155
+      _ExtentX        =   741
+      _ExtentY        =   741
+      _Version        =   393216
+   End
    Begin VB.Timer tmrUpdateNews 
       Interval        =   1000
       Left            =   0
@@ -1023,6 +1031,23 @@ Private Sub picRegister_MouseMove(Button As Integer, Shift As Integer, X As Sing
 ' Error handler
 errorhandler:
     HandleError "picRegister_MouseMove", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+' Winsock event
+Private Sub Socket_DataArrival(ByVal bytesTotal As Long)
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    If IsConnected Then
+        Call IncomingData(bytesTotal)
+    End If
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "Socket_DataArrival", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

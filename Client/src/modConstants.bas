@@ -69,7 +69,6 @@ Public Const MAX_LONG As Long = 2147483647
 
 ' Hardcoded sound effects
 Public Const Sound_ButtonHover As String = "Cursor1.wav"
-Public Const Sound_ButtonClick As String = "Decision1.wav"
 Public Const Sound_Thunder As String = "Thunder1.ogg"
 
 ' Battle Music
@@ -87,18 +86,6 @@ Public Const ButtonBuzzer As String = "Buzzer3.ogg"
 ' Ping constant
 Public PingToDraw As String
 
-' Font variables
-Public Const FONT_Name As String = "Georgia"
-Public Const FONT_SIZE As Byte = 14
-
-' Log Path and variables
-Public Const LOG_PATH As String = "\data files\logs\"
-Public Const LOG_EXT As String = ".txt"
-
-' Map Path and variables
-Public Const MAP_PATH As String = "\data files\maps\"
-Public Const MAP_EXT As String = ".map"
-
 ' Gfx Path and variables
 Public Const GFX_PATH As String = "\data files\graphics\"
 Public Const GFX_EXT As String = ".png"
@@ -112,7 +99,6 @@ Public Const VK_D As Long = &H44
 Public Const VK_S As Long = &H53
 Public Const VK_W As Long = &H57
 Public Const VK_SHIFT As Long = &H10
-Public Const VK_RETURN As Long = &HD
 Public Const VK_CONTROL As Long = &H11
 Public Const VK_TAB As Long = &H9
 Public Const VK_LEFT As Long = &H25
@@ -197,12 +183,7 @@ Public EndXValue As Integer
 Public EndYValue As Integer
 Public CameraEndXValue As Integer
 Public CameraEndYValue As Integer
-Public Const Half_PIC_X As Byte = PIC_X / 2
-Public Const Half_PIC_Y As Byte = PIC_Y / 2
 
-' Screen Sizes
-Public Const SCREEN_SIZE_MEDIUM As Byte = 0
-Public Const SCREEN_SIZE_LARGE As Byte = 1
 
 ' Autotiles
 Public Const AUTO_INNER As Byte = 1
@@ -375,11 +356,6 @@ Public Const STAFF_DEVELOPER As Byte = 3
 Public Const STAFF_ADMIN As Byte = 4
 Public Const STAFF_OWNER As Byte = 5
 
-' GUI consts
-Public Const ChatOffsetX As Long = 6
-Public Const ChatOffsetY As Long = 38
-Public Const ChatWidth As Long = 380
-
 ' NPC constants
 Public Const NPC_BEHAVIOR_ATTACKONSIGHT As Byte = 0
 Public Const NPC_BEHAVIOR_ATTACKWHENATTACKED As Byte = 1
@@ -389,8 +365,6 @@ Public Const NPC_BEHAVIOR_QUEST As Byte = 3
 ' Spell constants
 Public Const SPELL_TYPE_DAMAGEHP As Byte = 0
 Public Const SPELL_TYPE_DAMAGEMP As Byte = 1
-Public Const SPELL_TYPE_HEALHP As Byte = 2
-Public Const SPELL_TYPE_HEALMP As Byte = 3
 Public Const SPELL_TYPE_WARP As Byte = 4
 Public Const SPELL_TYPE_RECALL As Byte = 5
 Public Const SPELL_TYPE_WARPTOTARGET As Byte = 6
@@ -405,6 +379,3 @@ Public Const TARGET_TYPE_EVENT As Byte = 3
 Public Const ACTIONMSG_STATIC As Byte = 0
 Public Const ACTIONMSG_SCROLL As Byte = 1
 Public Const ACTIONMSG_SCREEN As Byte = 2
-
-' Do Events
-Public Const nLng As Long = (&H80 Or &H1 Or &H4 Or &H20) + (&H8 Or &H40)

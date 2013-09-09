@@ -166,7 +166,7 @@ Public Sub Main()
         Unload frm
     Next
     DoEvents
-
+    End
 End Sub
 
 Public Sub MenuLoop()
@@ -596,7 +596,9 @@ Public Function IsStringLegal(ByVal sInput As String) As Boolean
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Prevent high ascii chars
-    For i = 1 To Len(sInput)
+    Dim inputLen As Long
+    inputLen = Len(sInput)
+    For i = 1 To inputLen
         If Asc(Mid$(sInput, i, 1)) < vbKeySpace Or Asc(Mid$(sInput, i, 1)) > vbKeyF15 Then
             Call AlertMsg("You cannot use high ASCII characters in your Name, please re-enter.")
             Exit Function
@@ -822,7 +824,7 @@ Public Sub PopulateLists()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Cache music list
-    StrLoad = Dir(App.Path & MUSIC_PATH & "*")
+    StrLoad = Dir$(App.Path & MUSIC_PATH & "*")
     i = 1
     
     If Not StrLoad = vbNullString Then
@@ -838,7 +840,7 @@ Public Sub PopulateLists()
     End If
     
     ' Cache sound list
-    StrLoad = Dir(App.Path & SOUND_PATH & "*")
+    StrLoad = Dir$(App.Path & SOUND_PATH & "*")
     i = 1
     
     If Not StrLoad = vbNullString Then
@@ -907,8 +909,9 @@ Public Function CheckMessage(ByVal msg As String) As String
     
     ' Do nothing if the filter is turned off
     If Options.SwearFilter = 0 Then Exit Function
-    
-    For i = 0 To UBound(SwearArray)
+    Dim size As Long
+    size = UBound(SwearArray)
+    For i = 0 To size
         CheckMessage = Replace$(CheckMessage, SwearArray(i), ReplaceSwearArray(i), , , vbTextCompare)
     Next
     Exit Function
@@ -1065,7 +1068,13 @@ Function FormCount(ByVal frmName As String) As Long
     Next
     
 End Function
-
+Function FormLoaded(ByVal frmName As String) As Boolean
+    Dim formNum As Long
+    formNum = FormCount(frmName)
+    If formNum >= 0 Then
+        FormLoaded = True
+    End If
+End Function
 Function FormVisible(ByVal frmName As String) As Boolean
     Dim formNum As Long
     formNum = FormCount(frmName)

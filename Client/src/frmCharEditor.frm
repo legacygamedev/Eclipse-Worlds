@@ -618,8 +618,8 @@ Private Sub cmdUpdate_Click()
 End Sub
 
 Private Sub Form_Load()
-    listCharacters.ListItems.Clear
-    listCharacters.ColumnHeaders.Item(1).Width = frmCharEditor.listCharacters.Width - 800
+    listCharacters.listItems.Clear
+    listCharacters.ColumnHeaders.item(1).Width = frmCharEditor.listCharacters.Width - 800
     LastCharSpriteTimer = timeGetTime
     frmCharEditor.Width = 2865
     upSprite.max = NumCharacters
@@ -629,20 +629,20 @@ End Sub
 
 Public Sub ResetCharList()
     listCharacters.Sorted = False
-    listCharacters.ListItems.Clear
+    listCharacters.listItems.Clear
     Dim Length As Long, i As Long
     Length = UBound(charList)
     For i = 0 To Length
-        listCharacters.ListItems.Add , , charList(i, 0)
-        listCharacters.ListItems.Item(i + 1).SubItems(1) = charList(i, 1)
+        listCharacters.listItems.Add , , charList(i, 0)
+        listCharacters.listItems.item(i + 1).SubItems(1) = charList(i, 1)
     Next
-    listCharacters.ColumnHeaders.Item(2).Width = 800
+    listCharacters.ColumnHeaders.item(2).Width = 800
 End Sub
 
 Public Sub fetchPlayerData()
     textureNum = -1
     txtLevel = requestedPlayer.Level
-    txtEXP = requestedPlayer.Exp
+    txtExp = requestedPlayer.Exp
     txtHP.text = requestedPlayer.Vital(1)
     txtMP.text = requestedPlayer.Vital(2)
     txtStr.text = requestedPlayer.Stat(1)
@@ -683,7 +683,7 @@ Private Sub SetSprite()
             ReDim Preserve gTexture(textureNum)
         End If
 
-        Tex_CharSprite.filepath = App.Path & "\data files\graphics\characters\" & Trim(str(requestedPlayer.Sprite)) & ".png"
+        Tex_CharSprite.filepath = App.Path & "\data files\graphics\characters\" & Trim$(str$(requestedPlayer.Sprite)) & ".png"
         Tex_CharSprite.Texture = textureNum
         LoadTexture Tex_CharSprite
     Else
@@ -752,25 +752,25 @@ Private Sub txtEnd_LostFocus()
 End Sub
 
 Private Sub txtExp_Change()
-     correctValue txtEXP, requestedPlayer.Exp, 0, 9999999
+     correctValue txtExp, requestedPlayer.Exp, 0, 9999999
 End Sub
 
 Private Sub txtExp_Click()
-    selectValue txtEXP
+    selectValue txtExp
 End Sub
 
 Private Sub txtEXP_GotFocus()
-    selectValue txtEXP
+    selectValue txtExp
 End Sub
 
 Private Sub txtExp_LostFocus()
-    reviseValue txtEXP, requestedPlayer.Exp
+    reviseValue txtExp, requestedPlayer.Exp
 End Sub
 
 Private Sub txtFilter_Change()
     Dim test As Long
     If txtFilter.text <> "" Then
-        listCharacters.ListItems.Clear
+        listCharacters.listItems.Clear
         
         Dim content As String, Length As Long, i As Long
         content = txtFilter.text
@@ -778,9 +778,9 @@ Private Sub txtFilter_Change()
         Length = UBound(charList)
         listCharacters.Sorted = False
         For i = 0 To Length
-            If InStr(LCase(charList(i, 0)), LCase(content)) <> 0 Then
-                listCharacters.ListItems.Add , , charList(i, 0)
-                listCharacters.ListItems.Item(listCharacters.ListItems.count).SubItems(1) = charList(i, 1)
+            If InStr(LCase$(charList(i, 0)), LCase$(content)) <> 0 Then
+                listCharacters.listItems.Add , , charList(i, 0)
+                listCharacters.listItems.item(listCharacters.listItems.count).SubItems(1) = charList(i, 1)
             End If
         Next
         listCharacters.Sorted = True
