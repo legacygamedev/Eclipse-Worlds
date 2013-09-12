@@ -43,7 +43,7 @@ Public Sub RenderText(ByRef UseFont As CustomFont, ByVal text As String, ByVal X
     Dim Row As Integer
     Dim u As Single
     Dim v As Single
-    Dim i As Long
+    Dim I As Long
     Dim J As Long
     Dim KeyPhrase As Byte
     Dim TempColor As Long
@@ -69,17 +69,17 @@ Public Sub RenderText(ByRef UseFont As CustomFont, ByVal text As String, ByVal X
     Direct3D_Device.SetTexture 0, gTexture(UseFont.Texture.Texture).Texture
     
     ' Loop through each line if there are line breaks (vbCrLf)
-    Dim size As Long
-    size = UBound(TempStr)
-    For i = 0 To size
-        If Len(TempStr(i)) > 0 Then
-            yOffset = i * UseFont.CharHeight
+    Dim Size As Long
+    Size = UBound(TempStr)
+    For I = 0 To Size
+        If Len(TempStr(I)) > 0 Then
+            yOffset = I * UseFont.CharHeight
             count = 0
             ' Convert the characters to the ascii value
-            Ascii() = StrConv(TempStr(i), vbFromUnicode)
+            Ascii() = StrConv(TempStr(I), vbFromUnicode)
             
             Dim size2 As Long
-            size2 = Len(TempStr(i))
+            size2 = Len(TempStr(I))
             ' Loop through the characters
             For J = 1 To size2
                 ' Copy from the cached vertex array to the temp vertex array
@@ -114,7 +114,7 @@ Public Sub RenderText(ByRef UseFont As CustomFont, ByVal text As String, ByVal X
                 End If
             Next J
         End If
-    Next i
+    Next I
 End Sub
 
 Sub EngineInitFontTextures()
@@ -257,9 +257,9 @@ Public Function EngineGetTextWidth(ByRef UseFont As CustomFont, ByVal text As St
     If LenB(text) = 0 Then Exit Function
     
     'Loop through the text
-    Dim size As Long
-    size = Len(text)
-    For LoopI = 1 To size
+    Dim Size As Long
+    Size = Len(text)
+    For LoopI = 1 To Size
         EngineGetTextWidth = EngineGetTextWidth + UseFont.HeaderInfo.CharWidth(Asc(Mid$(text, LoopI, 1)))
     Next LoopI
 End Function
@@ -552,7 +552,7 @@ errorhandler:
 End Function
 
 Sub DrawActionMsg(ByVal Index As Long)
-    Dim X As Long, Y As Long, i As Long, time As Long
+    Dim X As Long, Y As Long, I As Long, time As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -602,11 +602,11 @@ Sub DrawActionMsg(ByVal Index As Long)
             time = 3000
             
             ' This will kill any action screen messages that there in the system
-            For i = Action_HighIndex To 1 Step -1
-                If ActionMsg(i).Type = ACTIONMSG_SCREEN Then
-                    If Not i = Index Then
+            For I = Action_HighIndex To 1 Step -1
+                If ActionMsg(I).Type = ACTIONMSG_SCREEN Then
+                    If Not I = Index Then
                         Call ClearActionMsg(Index)
-                        Index = i
+                        Index = I
                     End If
                 End If
             Next
@@ -706,7 +706,7 @@ Public Sub DrawEventName(ByVal Index As Long)
 
     name = Trim$(Map.MapEvents(Index).name)
     
-    ' calc pos
+    ' Calc pos
     TextX = ConvertMapX(Map.MapEvents(Index).X * PIC_X) + Map.MapEvents(Index).xOffset + (PIC_X \ 2) - (EngineGetTextWidth(Font_Default, (Trim$(name))) / 2)
     If Map.MapEvents(Index).GraphicType = 0 Then
         TextY = ConvertMapY(Map.MapEvents(Index).Y * PIC_Y) + Map.MapEvents(Index).yOffset - 16
@@ -736,7 +736,7 @@ errorhandler:
 End Sub
 
 Public Sub DrawChatBubble(ByVal Index As Long)
-    Dim theArray() As String, X As Long, Y As Long, i As Long, MaxWidth As Long, X2 As Long, Y2 As Long, Color As Long
+    Dim theArray() As String, X As Long, Y As Long, I As Long, MaxWidth As Long, X2 As Long, Y2 As Long, Color As Long
         
     With ChatBubble(Index)
         If .Alpha <= 0 Then
@@ -769,10 +769,10 @@ Public Sub DrawChatBubble(ByVal Index As Long)
         WordWrap_Array .msg, ChatBubbleWidth, theArray
                 
         ' Find max width
-        Dim size As Long
-        size = UBound(theArray)
-        For i = 1 To size
-            If EngineGetTextWidth(Font_Default, theArray(i)) > MaxWidth Then MaxWidth = EngineGetTextWidth(Font_Default, theArray(i))
+        Dim Size As Long
+        Size = UBound(theArray)
+        For I = 1 To Size
+            If EngineGetTextWidth(Font_Default, theArray(I)) > MaxWidth Then MaxWidth = EngineGetTextWidth(Font_Default, theArray(I))
         Next
                 
         ' Calculate the new position
@@ -811,10 +811,10 @@ Public Sub DrawChatBubble(ByVal Index As Long)
         
         ' Little pointy bit
         RenderTexture Tex_ChatBubble, X - 5, Y, 58, 19, 11, 11, 11, 11, D3DColorARGB(ChatBubble(Index).Alpha, 255, 255, 255)
-        size = UBound(theArray)
+        Size = UBound(theArray)
         ' Render each line centralised
-        For i = 1 To size
-            RenderText Font_Georgia, theArray(i), X - (EngineGetTextWidth(Font_Default, theArray(i)) / 2), Y2, DarkBrown, .Alpha
+        For I = 1 To Size
+            RenderText Font_Georgia, theArray(I), X - (EngineGetTextWidth(Font_Default, theArray(I)) / 2), Y2, DarkBrown, .Alpha
             Y2 = Y2 + 12
         Next
         
@@ -826,7 +826,7 @@ Public Sub DrawChatBubble(ByVal Index As Long)
 End Sub
 
 Public Sub WordWrap_Array(ByVal text As String, ByVal MaxLineLen As Long, ByRef theArray() As String)
-    Dim lineCount As Long, i As Long, size As Long, lastSpace As Long, B As Long
+    Dim lineCount As Long, I As Long, Size As Long, lastSpace As Long, B As Long
     Dim textLen As Long
     textLen = Len(text)
     ' Too small of text
@@ -839,29 +839,29 @@ Public Sub WordWrap_Array(ByVal text As String, ByVal MaxLineLen As Long, ByRef 
     ' Default values
     B = 1
     lastSpace = 1
-    size = 0
+    Size = 0
     
-    For i = 1 To textLen
+    For I = 1 To textLen
         ' If it's a space, store it
-        Select Case Mid$(text, i, 1)
-            Case " ": lastSpace = i
-            Case "_": lastSpace = i
-            Case "-": lastSpace = i
+        Select Case Mid$(text, I, 1)
+            Case " ": lastSpace = I
+            Case "_": lastSpace = I
+            Case "-": lastSpace = I
         End Select
         
         ' Add up the size
-        size = size + Font_Default.HeaderInfo.CharWidth(Asc(Mid$(text, i, 1)))
+        Size = Size + Font_Default.HeaderInfo.CharWidth(Asc(Mid$(text, I, 1)))
         
         ' Check for too large of a size
-        If size > MaxLineLen Then
+        If Size > MaxLineLen Then
             ' Check if the last space was too far back
-            If i - lastSpace > 12 Then
+            If I - lastSpace > 12 Then
                 ' Too far away to the last space, so break at the last character
                 lineCount = lineCount + 1
                 ReDim Preserve theArray(1 To lineCount) As String
-                theArray(lineCount) = Trim$(Mid$(text, B, (i - 1) - B))
-                B = i - 1
-                size = 0
+                theArray(lineCount) = Trim$(Mid$(text, B, (I - 1) - B))
+                B = I - 1
+                Size = 0
             Else
                 ' Break at the last space to preserve the word
                 lineCount = lineCount + 1
@@ -870,16 +870,16 @@ Public Sub WordWrap_Array(ByVal text As String, ByVal MaxLineLen As Long, ByRef 
                 B = lastSpace + 1
                 
                 ' Count all the words we ignored (the ones that weren't printed, but are before "i")
-                size = EngineGetTextWidth(Font_Default, Mid$(text, lastSpace, i - lastSpace))
+                Size = EngineGetTextWidth(Font_Default, Mid$(text, lastSpace, I - lastSpace))
             End If
         End If
         
         ' Remainder
-        If i = Len(text) Then
-            If B <> i Then
+        If I = Len(text) Then
+            If B <> I Then
                 lineCount = lineCount + 1
                 ReDim Preserve theArray(1 To lineCount) As String
-                theArray(lineCount) = theArray(lineCount) & Mid$(text, B, i)
+                theArray(lineCount) = theArray(lineCount) & Mid$(text, B, I)
             End If
         End If
     Next
@@ -889,8 +889,8 @@ Public Function WordWrap(ByVal text As String, ByVal MaxLineLen As Integer) As S
     Dim TempSplit() As String
     Dim TSLoop As Long
     Dim lastSpace As Long
-    Dim size As Long
-    Dim i As Long
+    Dim Size As Long
+    Dim I As Long
     Dim B As Long
 
     ' Too small of text
@@ -902,10 +902,10 @@ Public Function WordWrap(ByVal text As String, ByVal MaxLineLen As Integer) As S
     ' Check if there are any line breaks - if so, we will support them
     TempSplit = Split(text, vbNewLine)
 
-    size = UBound(TempSplit)
-    For TSLoop = 0 To size
+    Size = UBound(TempSplit)
+    For TSLoop = 0 To Size
         ' Clear the values for the new line
-        size = 0
+        Size = 0
         B = 1
         lastSpace = 1
         
@@ -918,43 +918,43 @@ Public Function WordWrap(ByVal text As String, ByVal MaxLineLen As Integer) As S
             ' Loop through all the characters
             Dim size2 As Long
             size2 = Len(TempSplit(TSLoop))
-            For i = 1 To size2
+            For I = 1 To size2
             
                 ' If it is a space, store it so we can easily break at it
-                Select Case Mid$(TempSplit(TSLoop), i, 1)
-                    Case " ": lastSpace = i
-                    Case "_": lastSpace = i
-                    Case "-": lastSpace = i
+                Select Case Mid$(TempSplit(TSLoop), I, 1)
+                    Case " ": lastSpace = I
+                    Case "_": lastSpace = I
+                    Case "-": lastSpace = I
                 End Select
     
                 'Add up the size
-                size = size + Font_Default.HeaderInfo.CharWidth(Asc(Mid$(TempSplit(TSLoop), i, 1)))
+                Size = Size + Font_Default.HeaderInfo.CharWidth(Asc(Mid$(TempSplit(TSLoop), I, 1)))
  
                 'Check for too large of a size
-                If size > MaxLineLen Then
+                If Size > MaxLineLen Then
                     'Check if the last space was too far back
-                    If i - lastSpace > 12 Then
+                    If I - lastSpace > 12 Then
                         ' Too far away to the last space, so break at the last character
-                        WordWrap = WordWrap & Trim$(Mid$(TempSplit(TSLoop), B, (i - 1) - B)) & vbNewLine
-                        B = i - 1
-                        size = 0
+                        WordWrap = WordWrap & Trim$(Mid$(TempSplit(TSLoop), B, (I - 1) - B)) & vbNewLine
+                        B = I - 1
+                        Size = 0
                     Else
                         ' Break at the last space to preserve the word
                         WordWrap = WordWrap & Trim$(Mid$(TempSplit(TSLoop), B, lastSpace - B)) & vbNewLine
                         B = lastSpace + 1
                         
                         ' Count all the words we ignored (the ones that weren't printed, but are before "i")
-                        size = EngineGetTextWidth(Font_Default, Mid$(TempSplit(TSLoop), lastSpace, i - lastSpace))
+                        Size = EngineGetTextWidth(Font_Default, Mid$(TempSplit(TSLoop), lastSpace, I - lastSpace))
                     End If
                 End If
                 
                 ' This handles the remainder
-                If i = Len(TempSplit(TSLoop)) Then
-                    If B <> i Then
-                        WordWrap = WordWrap & Mid$(TempSplit(TSLoop), B, i)
+                If I = Len(TempSplit(TSLoop)) Then
+                    If B <> I Then
+                        WordWrap = WordWrap & Mid$(TempSplit(TSLoop), B, I)
                     End If
                 End If
-            Next i
+            Next I
         Else
             WordWrap = WordWrap & TempSplit(TSLoop)
         End If

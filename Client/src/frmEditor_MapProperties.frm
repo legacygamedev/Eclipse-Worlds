@@ -631,7 +631,7 @@ errorhandler:
 End Sub
 
 Private Sub cmbClear_Click()
-    Dim i As Long
+    Dim I As Long
     Dim TmpIndex As Long
     
     ' If debug mode, handle error then exit out
@@ -641,8 +641,8 @@ Private Sub cmbClear_Click()
     If lstNpcs.ListIndex + 1 < 1 Or lstNpcs.ListIndex + 1 > MAX_MAP_NPCS Then Exit Sub
     
     ' Clear the NPCs from the list
-    For i = 1 To MAX_MAP_NPCS
-        Map.NPC(i) = 0
+    For I = 1 To MAX_MAP_NPCS
+        Map.NPC(I) = 0
     Next
     
     TmpIndex = lstNpcs.ListIndex
@@ -792,7 +792,7 @@ errorhandler:
 End Sub
 
 Public Sub cmdSave_Click()
-    Dim i As Long
+    Dim I As Long
     Dim sTemp As Long
     Dim X As Long, X2 As Long
     Dim Y As Long, Y2 As Long
@@ -833,7 +833,7 @@ Public Sub cmdSave_Click()
         .Right = Val(txtRight.text)
         .Moral = cmbMoral.ListIndex + 1
 
-        .Weather = cmbWeather.ListIndex
+        .Weather = CmbWeather.ListIndex
         .WeatherIntensity = scrlWeatherIntensity.Value
         
         .Fog = ScrlFog.Value
@@ -908,7 +908,7 @@ errorhandler:
 End Sub
 
 Private Sub lstNPCs_dblClick()
-    Dim i As Long
+    Dim I As Long
     Dim Index As Long
     
     ' If debug mode, handle error then exit out
@@ -918,12 +918,12 @@ Private Sub lstNPCs_dblClick()
     
     If Index < 1 Or Index > MAX_NPCS Then Exit Sub
     
-    For i = 1 To MAX_NPCS
+    For I = 1 To MAX_NPCS
         If frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": None" Then
             cmbNpcs.ListIndex = 0
             Exit For
-        ElseIf frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": " & Trim$(NPC(i).name) Then
-            cmbNpcs.ListIndex = i
+        ElseIf frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": " & Trim$(NPC(I).name) Then
+            cmbNpcs.ListIndex = I
             Exit For
         End If
     Next

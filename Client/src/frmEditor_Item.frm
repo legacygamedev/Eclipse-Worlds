@@ -1802,6 +1802,7 @@ End Sub
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
+    
     frmMain.UnsubDaFocus Me.hWnd
     If EditorSave = False Then
         ItemEditorCancel
@@ -2087,19 +2088,20 @@ errorhandler:
 End Sub
 
 Private Sub scrlPaperdoll_Change()
-    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
-
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+    
     lblPaperdoll.Caption = "Paperdoll: " & scrlPaperdoll.Value
     item(EditorIndex).Paperdoll = scrlPaperdoll.Value
-    Exit Sub
     
-' Error handler
+    ' Error handler
+    Exit Sub
 errorhandler:
     HandleError "scrlPaperdoll_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+    Exit Sub
 End Sub
 
 Private Sub scrlPic_Change()

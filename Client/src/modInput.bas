@@ -33,7 +33,7 @@ End Sub
 Public Sub CheckInputKeys()
     Dim distanceX As Long
     Dim distanceY As Long
-    Dim i As Long
+    Dim I As Long
         
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -176,10 +176,10 @@ Public Sub CheckInputKeys()
     ' Mouse movement
     If Not MouseX = -1 And Not MouseY = -1 Then
         ' Don't move if a target is there
-        For i = 1 To Player_HighIndex
-            If IsPlaying(i) Then
-                If Player(i).Map = Player(MyIndex).Map Then
-                    If CurX = Player(i).X And CurY = Player(i).Y Then
+        For I = 1 To Player_HighIndex
+            If IsPlaying(I) Then
+                If Player(I).Map = Player(MyIndex).Map Then
+                    If CurX = Player(I).X And CurY = Player(I).Y Then
                         MouseX = -1
                         MouseY = -1
                         Exit Sub
@@ -189,9 +189,9 @@ Public Sub CheckInputKeys()
         Next
         
         ' Don't move if a target is there
-        For i = 1 To Map.NPC_HighIndex
-            If MapNPC(i).num > 0 Then
-                If CurX = MapNPC(i).X And CurY = MapNPC(i).Y Then
+        For I = 1 To Map.NPC_HighIndex
+            If MapNPC(I).num > 0 Then
+                If CurX = MapNPC(I).X And CurY = MapNPC(I).Y Then
                     MouseX = -1
                     MouseY = -1
                     Exit Sub
@@ -240,7 +240,7 @@ End Sub
 Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
     Dim ChatText  As String
     Dim name      As String
-    Dim i         As Long
+    Dim I         As Long
     Dim n         As Long
     Dim Command() As String
     Dim buffer    As clsBuffer
@@ -395,11 +395,11 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             name = vbNullString
 
             ' Get the desired player from the user text
-            Dim size As Long
-            size = Len(ChatText)
-            For i = 1 To size
-                If Not Mid$(ChatText, i, 1) = " " Then
-                    name = name & Mid$(ChatText, i, 1)
+            Dim Size As Long
+            Size = Len(ChatText)
+            For I = 1 To Size
+                If Not Mid$(ChatText, I, 1) = " " Then
+                    name = name & Mid$(ChatText, I, 1)
                 Else
 
                     Exit For
@@ -407,8 +407,8 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Next
             
             ' Make sure they are actually sending something
-            If Len(ChatText) - i > 0 Then
-                ChatText = Mid$(ChatText, i + 1, Len(ChatText) - i)
+            If Len(ChatText) - I > 0 Then
+                ChatText = Mid$(ChatText, I + 1, Len(ChatText) - I)
 
                 ' Send the message to the player
                 Call PrivateMsg(name, ChatText)
@@ -499,14 +499,14 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     ' Empty out text
                     ChatText = vbNullString
 
-                    For i = 1 To MAX_EMOTICONS
+                    For I = 1 To MAX_EMOTICONS
 
-                        If Not Trim$(Emoticon(i).Command) = "/" Then
+                        If Not Trim$(Emoticon(I).Command) = "/" Then
                             If Not ChatText = vbNullString Then
                                 ChatText = ChatText & ", "
                             End If
 
-                            ChatText = ChatText & Trim$(Emoticon(i).Command)
+                            ChatText = ChatText & Trim$(Emoticon(I).Command)
                         End If
 
                     Next
@@ -940,11 +940,11 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Case Else
 
                     ' Check for Emoticons
-                    For i = 1 To MAX_EMOTICONS
+                    For I = 1 To MAX_EMOTICONS
 
-                        If Not Trim$(Emoticon(i).Command) = "/" Then
-                            If Trim$(Emoticon(i).Command) = Command(0) Then
-                                SendCheckEmoticon i
+                        If Not Trim$(Emoticon(I).Command) = "/" Then
+                            If Trim$(Emoticon(I).Command) = Command(0) Then
+                                SendCheckEmoticon I
                                 n = n + 1
 
                                 Exit For

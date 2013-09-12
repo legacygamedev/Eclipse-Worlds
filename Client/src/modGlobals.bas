@@ -15,6 +15,9 @@ Public MusicCache() As String
 Public SoundCache() As String
 Public HasPopulated As Boolean
 
+' Animation
+Public Const AnimColumns As Long = 5
+
 ' Global dialogue Index
 Public DialogueIndex As Long
 Public DialogueData1 As Long
@@ -342,8 +345,6 @@ Public CurrentTintG As Long
 Public CurrentTintB As Long
 Public CurrentTintA As Long
 Public DrawThunder As Long
-Public ParallaxX As Long
-Public ParallaxY As Long
 
 ' Autotiling
 Public autoInner(1 To 4) As PointRec

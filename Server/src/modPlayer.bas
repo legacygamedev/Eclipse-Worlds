@@ -1164,7 +1164,7 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
                 If TempPlayer(Attacker).InParty > 0 Then
                     Call Party_GetLoot(TempPlayer(Attacker).InParty, GetPlayerEquipment(Index, i), 1, GetPlayerX(Index), GetPlayerY(Index))
                 Else
-                    If Moral(GetPlayerMap(Index)).CanDropItem = 0 Then
+                    If Moral(GetPlayerMap(Index)).CanDropItem = 1 Then
                         Call SpawnItem(GetPlayerEquipment(Index, i), 1, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Attacker))
                     Else
                         Call GiveInvItem(Attacker, GetPlayerEquipment(Index, i), 1)

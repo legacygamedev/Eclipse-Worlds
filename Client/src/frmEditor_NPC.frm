@@ -778,7 +778,6 @@ errorhandler:
     Err.Clear
 End Sub
 
-
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler

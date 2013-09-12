@@ -690,7 +690,7 @@ Sub HandleAttack(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As L
     Dim Damage As Long
     Dim TempIndex As Long
     Dim MapNum As Integer, DirReq As Long, ChatNPC As Long
-    Dim x As Long, Y As Long
+    Dim X As Long, Y As Long
     Dim WeaponSlot As Long
     
     ' Can't attack while casting
@@ -719,30 +719,30 @@ Sub HandleAttack(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As L
     
     ' Check if we've got a remote chat tile
     MapNum = GetPlayerMap(Index)
-    x = GetPlayerX(Index)
+    X = GetPlayerX(Index)
     Y = GetPlayerY(Index)
 
     Select Case GetPlayerDir(Index)
         Case DIR_UP
             If GetPlayerY(Index) = 0 Then Exit Sub
-            x = GetPlayerX(Index)
+            X = GetPlayerX(Index)
             Y = GetPlayerY(Index) - 1
         Case DIR_DOWN
             If GetPlayerY(Index) = Map(MapNum).MaxY Then Exit Sub
-            x = GetPlayerX(Index)
+            X = GetPlayerX(Index)
             Y = GetPlayerY(Index) + 1
         Case DIR_LEFT
             If GetPlayerX(Index) = 0 Then Exit Sub
-            x = GetPlayerX(Index) - 1
+            X = GetPlayerX(Index) - 1
             Y = GetPlayerY(Index)
         Case DIR_RIGHT
             If GetPlayerX(Index) = Map(MapNum).MaxX Then Exit Sub
-            x = GetPlayerX(Index) + 1
+            X = GetPlayerX(Index) + 1
             Y = GetPlayerY(Index)
     End Select
     
     ' Check trade skills
-    CheckResource Index, x, Y
+    CheckResource Index, X, Y
 End Sub
 
 ' ::::::::::::::::::::::
@@ -974,7 +974,7 @@ End Sub
 Sub HandleMapData(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
    Dim i As Long
     Dim MapNum As Long
-    Dim x As Long
+    Dim X As Long
     Dim Y As Long, z As Long, w As Long
     Dim Buffer As clsBuffer
     Set Buffer = New clsBuffer
@@ -1021,31 +1021,31 @@ Sub HandleMapData(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
 
     Map(MapNum).NPC_HighIndex = Buffer.ReadByte
     
-    For x = 0 To Map(MapNum).MaxX
+    For X = 0 To Map(MapNum).MaxX
         For Y = 0 To Map(MapNum).MaxY
             For i = 1 To MapLayer.Layer_Count - 1
-                Map(MapNum).Tile(x, Y).Layer(i).x = Buffer.ReadLong
-                Map(MapNum).Tile(x, Y).Layer(i).Y = Buffer.ReadLong
-                Map(MapNum).Tile(x, Y).Layer(i).Tileset = Buffer.ReadLong
+                Map(MapNum).Tile(X, Y).Layer(i).X = Buffer.ReadLong
+                Map(MapNum).Tile(X, Y).Layer(i).Y = Buffer.ReadLong
+                Map(MapNum).Tile(X, Y).Layer(i).Tileset = Buffer.ReadLong
             Next
             
             For z = 1 To MapLayer.Layer_Count - 1
-                Map(MapNum).Tile(x, Y).Autotile(z) = Buffer.ReadLong
+                Map(MapNum).Tile(X, Y).Autotile(z) = Buffer.ReadLong
             Next
             
-            Map(MapNum).Tile(x, Y).Type = Buffer.ReadByte
-            Map(MapNum).Tile(x, Y).Data1 = Buffer.ReadLong
-            Map(MapNum).Tile(x, Y).Data2 = Buffer.ReadLong
-            Map(MapNum).Tile(x, Y).Data3 = Buffer.ReadLong
-            Map(MapNum).Tile(x, Y).Data4 = Buffer.ReadString
-            Map(MapNum).Tile(x, Y).DirBlock = Buffer.ReadByte
+            Map(MapNum).Tile(X, Y).Type = Buffer.ReadByte
+            Map(MapNum).Tile(X, Y).Data1 = Buffer.ReadLong
+            Map(MapNum).Tile(X, Y).Data2 = Buffer.ReadLong
+            Map(MapNum).Tile(X, Y).Data3 = Buffer.ReadLong
+            Map(MapNum).Tile(X, Y).Data4 = Buffer.ReadString
+            Map(MapNum).Tile(X, Y).DirBlock = Buffer.ReadByte
         Next
     Next
 
-    For x = 1 To MAX_MAP_NPCS
-        Map(MapNum).NPC(x) = Buffer.ReadLong
-        Map(MapNum).NPCSpawnType(x) = Buffer.ReadLong
-        Call ClearMapNPC(x, MapNum)
+    For X = 1 To MAX_MAP_NPCS
+        Map(MapNum).NPC(X) = Buffer.ReadLong
+        Map(MapNum).NPCSpawnType(X) = Buffer.ReadLong
+        Call ClearMapNPC(X, MapNum)
     Next
     
     ' Event data
@@ -1057,15 +1057,15 @@ Sub HandleMapData(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
             With Map(MapNum).Events(i)
                 .Name = Buffer.ReadString
                 .Global = Buffer.ReadLong
-                .x = Buffer.ReadLong
+                .X = Buffer.ReadLong
                 .Y = Buffer.ReadLong
                 .PageCount = Buffer.ReadLong
             End With
             
             If Map(MapNum).Events(i).PageCount > 0 Then
                 ReDim Map(MapNum).Events(i).Pages(0 To Map(MapNum).Events(i).PageCount)
-                For x = 1 To Map(MapNum).Events(i).PageCount
-                    With Map(MapNum).Events(i).Pages(x)
+                For X = 1 To Map(MapNum).Events(i).PageCount
+                    With Map(MapNum).Events(i).Pages(X)
                         .chkVariable = Buffer.ReadLong
                         .VariableIndex = Buffer.ReadLong
                         .VariableCondition = Buffer.ReadLong
@@ -1099,7 +1099,7 @@ Sub HandleMapData(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
                         .RepeatMoveRoute = Buffer.ReadLong
                             
                         If .MoveRouteCount > 0 Then
-                            ReDim Map(MapNum).Events(i).Pages(x).MoveRoute(0 To .MoveRouteCount)
+                            ReDim Map(MapNum).Events(i).Pages(X).MoveRoute(0 To .MoveRouteCount)
                             For Y = 1 To .MoveRouteCount
                                 .MoveRoute(Y).Index = Buffer.ReadLong
                                 .MoveRoute(Y).Data1 = Buffer.ReadLong
@@ -1121,15 +1121,15 @@ Sub HandleMapData(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As 
                         .Position = Buffer.ReadLong
                     End With
                         
-                    If Map(MapNum).Events(i).Pages(x).CommandListCount > 0 Then
-                        ReDim Map(MapNum).Events(i).Pages(x).CommandList(0 To Map(MapNum).Events(i).Pages(x).CommandListCount)
-                        For Y = 1 To Map(MapNum).Events(i).Pages(x).CommandListCount
-                            Map(MapNum).Events(i).Pages(x).CommandList(Y).CommandCount = Buffer.ReadLong
-                            Map(MapNum).Events(i).Pages(x).CommandList(Y).ParentList = Buffer.ReadLong
-                            If Map(MapNum).Events(i).Pages(x).CommandList(Y).CommandCount > 0 Then
-                                ReDim Map(MapNum).Events(i).Pages(x).CommandList(Y).Commands(1 To Map(MapNum).Events(i).Pages(x).CommandList(Y).CommandCount)
-                                For z = 1 To Map(MapNum).Events(i).Pages(x).CommandList(Y).CommandCount
-                                    With Map(MapNum).Events(i).Pages(x).CommandList(Y).Commands(z)
+                    If Map(MapNum).Events(i).Pages(X).CommandListCount > 0 Then
+                        ReDim Map(MapNum).Events(i).Pages(X).CommandList(0 To Map(MapNum).Events(i).Pages(X).CommandListCount)
+                        For Y = 1 To Map(MapNum).Events(i).Pages(X).CommandListCount
+                            Map(MapNum).Events(i).Pages(X).CommandList(Y).CommandCount = Buffer.ReadLong
+                            Map(MapNum).Events(i).Pages(X).CommandList(Y).ParentList = Buffer.ReadLong
+                            If Map(MapNum).Events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
+                                ReDim Map(MapNum).Events(i).Pages(X).CommandList(Y).Commands(1 To Map(MapNum).Events(i).Pages(X).CommandList(Y).CommandCount)
+                                For z = 1 To Map(MapNum).Events(i).Pages(X).CommandList(Y).CommandCount
+                                    With Map(MapNum).Events(i).Pages(X).CommandList(Y).Commands(z)
                                         .Index = Buffer.ReadLong
                                         .Text1 = Buffer.ReadString
                                         .Text2 = Buffer.ReadString
@@ -1289,7 +1289,7 @@ Sub HandleMapRespawn(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr 
 
     ' Clear out it all
     For i = 1 To MAX_MAP_ITEMS
-        Call SpawnItemSlot(i, 0, 0, 0, GetPlayerMap(Index), MapItem(GetPlayerMap(Index), i).x, MapItem(GetPlayerMap(Index), i).Y)
+        Call SpawnItemSlot(i, 0, 0, 0, GetPlayerMap(Index), MapItem(GetPlayerMap(Index), i).X, MapItem(GetPlayerMap(Index), i).Y)
         Call ClearMapItem(i, GetPlayerMap(Index))
     Next
 
@@ -1965,7 +1965,7 @@ End Sub
 ' :: Search packet ::
 ' :::::::::::::::::::
 Sub HandleSearch(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim x As Long
+    Dim X As Long
     Dim Y As Long
     Dim i As Long
     Dim Buffer As clsBuffer
@@ -1973,19 +1973,19 @@ Sub HandleSearch(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As L
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
     
-    x = Buffer.ReadLong
+    X = Buffer.ReadLong
     Y = Buffer.ReadLong
     Set Buffer = Nothing
 
     ' Prevent subscript out of range
-    If x < 0 Or x > Map(GetPlayerMap(Index)).MaxX Or Y < 0 Or Y > Map(GetPlayerMap(Index)).MaxY Then Exit Sub
+    If X < 0 Or X > Map(GetPlayerMap(Index)).MaxX Or Y < 0 Or Y > Map(GetPlayerMap(Index)).MaxY Then Exit Sub
     If Not IsPlaying(Index) Then Exit Sub
 
     ' Check for a player
     For i = 1 To Player_HighIndex
         If IsPlaying(i) Then
             If GetPlayerMap(Index) = GetPlayerMap(i) Then
-                If GetPlayerX(i) = x Then
+                If GetPlayerX(i) = X Then
                     If GetPlayerY(i) = Y Then
                         ' Change target
                         If TempPlayer(Index).TargetType = TARGET_TYPE_PLAYER And TempPlayer(Index).Target = i Then
@@ -2011,7 +2011,7 @@ Sub HandleSearch(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As L
     ' Check for an npc
     For i = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
         If MapNPC(GetPlayerMap(Index)).NPC(i).Num > 0 Then
-            If MapNPC(GetPlayerMap(Index)).NPC(i).x = x Then
+            If MapNPC(GetPlayerMap(Index)).NPC(i).X = X Then
                 If MapNPC(GetPlayerMap(Index)).NPC(i).Y = Y Then
                     If TempPlayer(Index).Target = i And TempPlayer(Index).TargetType = TARGET_TYPE_NPC Then
                         ' Change target
@@ -2037,7 +2037,7 @@ Sub HandleSearch(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As L
     ' Check for an item
     For i = 1 To MAX_MAP_ITEMS
         If MapItem(GetPlayerMap(Index), i).Num > 0 Then
-            If MapItem(GetPlayerMap(Index), i).x = x And MapItem(GetPlayerMap(Index), i).Y = Y Then
+            If MapItem(GetPlayerMap(Index), i).X = X And MapItem(GetPlayerMap(Index), i).Y = Y Then
                 If CanPlayerPickupItem(Index, i) Then
                     If Item(MapItem(GetPlayerMap(Index), i).Num).Stackable = 1 Then
                         Call PlayerMsg(Index, "You see " & MapItem(GetPlayerMap(Index), i).Value & " " & Trim$(Item(MapItem(GetPlayerMap(Index), i).Num).Name) & ".", Yellow)
@@ -2293,14 +2293,12 @@ Sub HandleSpawnItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     TmpItem = Buffer.ReadLong
     TmpAmount = Buffer.ReadLong
     
-    If Moral(GetPlayerMap(Index)).CanDropItem = 0 Then
+    If Moral(GetPlayerMap(Index)).CanDropItem = 1 Then
         SpawnItem TmpItem, TmpAmount, Item(TmpItem).Data1, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Index)
         Call PlayerMsg(Index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been dropped beneath you.", BrightGreen)
-            
     Else
         GiveInvItem Index, TmpItem, TmpAmount
         Call PlayerMsg(Index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been added to you Inventory.", BrightGreen)
-            
     End If
     
     Set Buffer = Nothing
@@ -2570,17 +2568,17 @@ End Sub
 
 Sub HandleAdminWarp(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim Buffer As clsBuffer
-    Dim x As Long
+    Dim X As Long
     Dim Y As Long
     
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
     
-    x = Buffer.ReadLong
+    X = Buffer.ReadLong
     Y = Buffer.ReadLong
     
     If GetPlayerAccess(Index) >= STAFF_MAPPER Then
-        SetPlayerX Index, x
+        SetPlayerX Index, X
         SetPlayerY Index, Y
         Call SendPlayerPosition(Index)
     End If
@@ -2727,11 +2725,11 @@ Sub HandleAcceptTradeRequest(ByVal Index As Long, ByRef Data() As Byte, ByVal St
         TempPlayer(TradeTarget).TradeOffer(i).Durability = 0
     Next
     
-    ' Used to init the trade window clientside
+    ' Used to init the trade window client side
     SendTrade Index, TradeTarget
     SendTrade TradeTarget, Index
     
-    ' Send the offer data - Used to clear their client
+    ' Send the offer data - used to clear their client
     SendTradeUpdate Index, 0
     SendTradeUpdate Index, 1
     SendTradeUpdate TradeTarget, 0
@@ -3278,20 +3276,20 @@ Sub Guild_Remove(ByVal Index As Long, ByVal OtherPlayer As Long)
 End Sub
 
 Sub HandleGuildChangeAccess(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim Buffer As clsBuffer, Name As String, x As Long, i As Long
+    Dim Buffer As clsBuffer, Name As String, X As Long, i As Long
     
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
     
     Name = Buffer.ReadString
-    x = Buffer.ReadByte
+    X = Buffer.ReadByte
     i = FindPlayer(Name)
     Set Buffer = Nothing
     
     ' Make sure they are actually in a guild
     If GetPlayerGuild(Index) = 0 Or GetPlayerGuild(i) = 0 Then Exit Sub
     
-    If x < 1 Or x > MAX_GUILDACCESS Then
+    If X < 1 Or X > MAX_GUILDACCESS Then
         Call PlayerMsg(Index, "Invalid access level!", BrightRed)
         Exit Sub
     End If
@@ -3306,8 +3304,8 @@ Sub HandleGuildChangeAccess(ByVal Index As Long, ByRef Data() As Byte, ByVal Sta
         Exit Sub
     End If
     
-    If x < GetPlayerGuildAccess(Index) Then
-        If x = GetPlayerGuildAccess(i) Then
+    If X < GetPlayerGuildAccess(Index) Then
+        If X = GetPlayerGuildAccess(i) Then
             Call PlayerMsg(Index, "That player is already that access level!", BrightRed)
             Exit Sub
         End If
@@ -3323,9 +3321,9 @@ Sub HandleGuildChangeAccess(ByVal Index As Long, ByRef Data() As Byte, ByVal Sta
         End If
         
         ' Set access
-        Call SetPlayerGuildAccess(i, x)
+        Call SetPlayerGuildAccess(i, X)
 
-        Call GuildMsg(i, GetPlayerName(Index) & " has changed " & GetPlayerName(i) & "'s guild rank to " & x & "!", Yellow, True)
+        Call GuildMsg(i, GetPlayerName(Index) & " has changed " & GetPlayerName(i) & "'s guild rank to " & X & "!", Yellow, True)
     Else
         Call PlayerMsg(Index, "You can't promote players to the same or higher guild rank as yourself!", BrightRed)
         Exit Sub
@@ -3467,7 +3465,7 @@ End Sub
 Sub HandleRemoveFriend(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim Buffer As clsBuffer
     Dim Name As String
-    Dim i As Long, x As Long
+    Dim i As Long, X As Long
     
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
@@ -3484,16 +3482,16 @@ Sub HandleRemoveFriend(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAdd
         Exit Sub
     End If
     
-    x = 0
+    X = 0
     
     For i = 1 To Account(Index).Friends.AmountOfFriends
         If Trim$(Account(Index).Friends.Members(i)) = Name Then
-            x = 1
+            X = 1
             Exit For
         End If
     Next
     
-    If Not x = 1 Then
+    If Not X = 1 Then
         Call PlayerMsg(Index, "You don't have a friend with that name!", BrightRed)
     End If
     
@@ -3578,7 +3576,7 @@ End Sub
 Sub HandleRemoveFoe(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim Buffer As clsBuffer
     Dim Name As String
-    Dim i As Long, x As Long
+    Dim i As Long, X As Long
     
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
@@ -3595,16 +3593,16 @@ Sub HandleRemoveFoe(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
         Exit Sub
     End If
     
-    x = 0
+    X = 0
     
     For i = 1 To Account(Index).Foes.Amount
         If Account(Index).Foes.Members(i) = Name Then
-            x = 1
+            X = 1
             Exit For
         End If
     Next
     
-    If Not x = 1 Then
+    If Not X = 1 Then
         Call PlayerMsg(Index, "You don't have a foe with that name!", BrightRed)
     End If
     
@@ -4017,29 +4015,29 @@ Sub HandleEvent(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Lo
     Dim n As Long
     Dim Damage As Long
     Dim TempIndex As Long
-    Dim x As Long, Y As Long, BeginEventProcessing As Boolean, z As Long, Buffer As clsBuffer
+    Dim X As Long, Y As Long, BeginEventProcessing As Boolean, z As Long, Buffer As clsBuffer
 
     ' Check tradeskills
     Select Case GetPlayerDir(Index)
         Case DIR_UP
 
             If GetPlayerY(Index) = 0 Then Exit Sub
-            x = GetPlayerX(Index)
+            X = GetPlayerX(Index)
             Y = GetPlayerY(Index) - 1
         Case DIR_DOWN
 
             If GetPlayerY(Index) = Map(GetPlayerMap(Index)).MaxY Then Exit Sub
-            x = GetPlayerX(Index)
+            X = GetPlayerX(Index)
             Y = GetPlayerY(Index) + 1
         Case DIR_LEFT
 
             If GetPlayerX(Index) = 0 Then Exit Sub
-            x = GetPlayerX(Index) - 1
+            X = GetPlayerX(Index) - 1
             Y = GetPlayerY(Index)
         Case DIR_RIGHT
 
             If GetPlayerX(Index) = Map(GetPlayerMap(Index)).MaxX Then Exit Sub
-            x = GetPlayerX(Index) + 1
+            X = GetPlayerX(Index) + 1
             Y = GetPlayerY(Index)
     End Select
     

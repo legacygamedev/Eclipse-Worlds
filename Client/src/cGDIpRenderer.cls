@@ -47,22 +47,22 @@ Private Declare Function GdipSetCompositingQuality Lib "GdiPlus.dll" (ByVal grap
 Private Declare Function GdipSetPixelOffsetMode Lib "GdiPlus.dll" (ByVal graphics As Long, ByVal PixelOffsetMode As Long) As Long
 Private Declare Function GdipResetWorldTransform Lib "GdiPlus.dll" (ByVal graphics As Long) As Long
 
-Private Declare Function GdipDrawEllipseI Lib "gdiplus" (ByVal hGraphics As Long, ByVal hPen As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
-Private Declare Function GdipFillEllipseI Lib "gdiplus" (ByVal hGraphics As Long, ByVal hBrush As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
+Private Declare Function GdipDrawEllipseI Lib "gdiplus" (ByVal hGraphics As Long, ByVal hPen As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
+Private Declare Function GdipFillEllipseI Lib "gdiplus" (ByVal hGraphics As Long, ByVal hBrush As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
 Private Declare Function GdipDrawLineI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Long
 Private Declare Function GdipDrawLinesI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByRef pPoints As Any, ByVal count As Long) As Long
 Private Declare Function GdipDrawPolygonI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByRef pPoints As Any, ByVal count As Long) As Long
 Private Declare Function GdipFillPolygonI Lib "gdiplus" (ByVal graphics As Long, ByVal brush As Long, ByRef pPoints As Any, ByVal count As Long, ByVal FillMode As Long) As Long
-Private Declare Function GdipDrawRectangleI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
-Private Declare Function GdipFillRectangleI Lib "gdiplus" (ByVal graphics As Long, ByVal brush As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
+Private Declare Function GdipDrawRectangleI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
+Private Declare Function GdipFillRectangleI Lib "gdiplus" (ByVal graphics As Long, ByVal brush As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
 Private Declare Function GdipDrawRectanglesI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByRef rects As Any, ByVal count As Long) As Long
 Private Declare Function GdipFillRectanglesI Lib "gdiplus" (ByVal graphics As Long, ByVal brush As Long, ByRef rects As Any, ByVal count As Long) As Long
 
 Private Const UnitPixel As Long = &H2&
 
 Private Type POINTL
-    x As Long
-    y As Long
+    X As Long
+    Y As Long
 End Type
 
 Public Enum FillModeConstants
@@ -139,7 +139,7 @@ Public Function DestroyHGraphics(ByVal hGraphics As Long) As Boolean
 End Function
 
 Public Function DrawEllipse(ByVal hGraphics As Long, _
-                            ByVal x As Long, ByVal y As Long, _
+                            ByVal X As Long, ByVal Y As Long, _
                             ByVal Width As Long, ByVal Height As Long, _
                             Optional OutlinePenHandle As Long = 0&, _
                             Optional ARGBFillColor As Long = 0&, Optional ByVal FillBrushHandle As Long = 0&) As Boolean
@@ -147,15 +147,15 @@ Public Function DrawEllipse(ByVal hGraphics As Long, _
     If Not (hGraphics = 0& Or (m_Token Is Nothing)) Then
         If m_Token.Token Then
             If FillBrushHandle Then
-                DrawEllipse = GdipFillEllipseI(hGraphics, FillBrushHandle, x, y, Width, Height)
+                DrawEllipse = GdipFillEllipseI(hGraphics, FillBrushHandle, X, Y, Width, Height)
             ElseIf ARGBFillColor Then
                 Call GdipCreateSolidFill(ARGBFillColor, FillBrushHandle)
                 If FillBrushHandle Then
-                    DrawEllipse = GdipFillEllipseI(hGraphics, FillBrushHandle, x, y, Width, Height)
+                    DrawEllipse = GdipFillEllipseI(hGraphics, FillBrushHandle, X, Y, Width, Height)
                     GdipDeleteBrush FillBrushHandle
                 End If
             End If
-            If OutlinePenHandle Then DrawEllipse = (GdipDrawEllipseI(hGraphics, OutlinePenHandle, x, y, Width, Height) = 0&)
+            If OutlinePenHandle Then DrawEllipse = (GdipDrawEllipseI(hGraphics, OutlinePenHandle, X, Y, Width, Height) = 0&)
         End If
     End If
 End Function
@@ -175,7 +175,7 @@ Public Function DrawLines(ByVal hGraphics As Long, ByVal hPen As Long, _
     ' draws multiple lines at once
     ' How to use PointsVarPtr...
     ' your uPoints() array should be a 1D array of POINTAPI structures or a 2D array of longs with X,Y in the lowerbound
-    ' i.e., a simple rect, 4Pts:    Dim uPoints(0 to 4) As POINTAPI
+    ' I.e., a simple rect, 4Pts:    Dim uPoints(0 to 4) As POINTAPI
     '                               ... X values              ... Y Values
     '                               uPoints(0) = Left:       uPoints(0) = Top         ' From Top Left
     '                               uPoints(1) = Width+Left: uPoints(1) = Top         ' to Top Right
@@ -200,7 +200,7 @@ Public Function DrawPolygon(ByVal hGraphics As Long, _
     '   to draw a polygon because it will automatically close the polygon
     ' How to use PointsVarPtr...
     ' your uPoints() array should be a 1D array of POINTAPI structures or a 2D array of longs with X,Y in the lowerbound
-    ' i.e., a simple rect, 4Pts:    Dim uPoints(0 to 3) As POINTAPI
+    ' I.e., a simple rect, 4Pts:    Dim uPoints(0 to 3) As POINTAPI
     '                               ... X values              ... Y Values
     '                               uPoints(0) = Left:       uPoints(0) = Top         ' From Top Left
     '                               uPoints(1) = Width+Left: uPoints(1) = Top         ' to Top Right
@@ -332,9 +332,9 @@ Public Function PlgBltImageClassToDC(ImageClass As cGDIpImage, ByVal hDC As Long
 
     If srcWidth = 0& Then srcWidth = ImageClass.Width
     If srcHeight = 0& Then srcHeight = ImageClass.Height
-    plgPts(0).x = SkewedTopLeftX: plgPts(0).y = SkewedTopLeftY
-    plgPts(1).x = SkewedTopRightX: plgPts(1).y = SkewedTopRightY
-    plgPts(2).x = SkewedBottomLeftX: plgPts(2).y = SkewedBottomLeftY
+    plgPts(0).X = SkewedTopLeftX: plgPts(0).Y = SkewedTopLeftY
+    plgPts(1).X = SkewedTopRightX: plgPts(1).Y = SkewedTopRightY
+    plgPts(2).X = SkewedBottomLeftX: plgPts(2).Y = SkewedBottomLeftY
     
     If EraseBkgBrushHandle Then
         hBrush = EraseBkgBrushHandle
@@ -348,8 +348,8 @@ Public Function PlgBltImageClassToDC(ImageClass As cGDIpImage, ByVal hDC As Long
         plgFillPts(1) = plgPts(0)
         plgFillPts(2) = plgPts(1)
         ' Since the last corner is never passed, we calculate it here
-        plgFillPts(3).x = SkewedTopRightX + (SkewedBottomLeftX - SkewedTopLeftX)
-        plgFillPts(3).y = SkewedTopRightY + (SkewedBottomLeftY - SkewedTopLeftY)
+        plgFillPts(3).X = SkewedTopRightX + (SkewedBottomLeftX - SkewedTopLeftX)
+        plgFillPts(3).Y = SkewedTopRightY + (SkewedBottomLeftY - SkewedTopLeftY)
         Call GdipFillPolygonI(hGraphics, hBrush, ByVal VarPtr(plgFillPts(0)), 4&, FillModeWinding)
     End If
     

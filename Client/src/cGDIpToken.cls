@@ -73,7 +73,7 @@ Private Sub Class_Terminate()
                 CopyMemory oTmp, oPtr, 4&
                 Set o = oTmp
                 CopyMemory oTmp, 0&, 4&
-                o.Clear ' classes added to this collection have a .Clear method
+                o.Clear ' Classes added to this collection have a .Clear method
             Next
             Set m_Users = Nothing
         End If

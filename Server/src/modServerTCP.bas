@@ -639,29 +639,26 @@ Function PlayerData(ByVal Index As Long) As Byte()
     Set Buffer = Nothing
 End Function
 
-
 Sub SendJoinMap(ByVal Index As Long)
     Dim i As Long
     Dim Buffer As clsBuffer
     Set Buffer = New clsBuffer
 
     ' Send all players on current map to index
-    If GetTotalMapPlayers(GetPlayerMap(Index)) > 0 Then
-        For i = 1 To Player_HighIndex
-            If IsPlaying(i) Then
-                SendDataToMap GetPlayerMap(Index), PlayerData(i)
-                Call SendPlayerEquipmentToMapBut(i)
+    For i = 1 To Player_HighIndex
+        If IsPlaying(i) Then
+            If i <> Index Then
+                If GetPlayerMap(i) = GetPlayerMap(Index) Then
+                    SendDataTo Index, PlayerData(i)
+                End If
             End If
-        Next
-    End If
-    
-    ' Send Index's player data to everyone on the map including themself
-    SendDataToMap GetPlayerMap(Index), PlayerData(Index)
+        End If
+    Next
     
     ' Send player's equipment to new map
     SendPlayerEquipmentTo Index
     
-    ' Send the npc targets to the player
+    ' Send the NPC targets to the player
     For i = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
         If MapNPC(GetPlayerMap(Index)).NPC(i).Num > 0 Then
             Call SendMapNPCTarget(GetPlayerMap(Index), i, MapNPC(GetPlayerMap(Index)).NPC(i).Target, MapNPC(GetPlayerMap(Index)).NPC(i).TargetType)
@@ -670,6 +667,9 @@ Sub SendJoinMap(ByVal Index As Long)
             Call SendMapNPCTarget(GetPlayerMap(Index), i, 0, 0)
         End If
     Next
+    
+    ' Send Index's player data to everyone on the map including themself
+    SendDataToMap GetPlayerMap(Index), PlayerData(Index)
     
     Set Buffer = Nothing
 End Sub
@@ -2276,8 +2276,7 @@ Sub SendTradeRequest(ByVal Index As Long, ByVal TradeRequest As Long)
     Set Buffer = New clsBuffer
     Buffer.WriteLong STradeRequest
     
-    Buffer.WriteLong TradeRequest
-    Buffer.WriteString Trim$(Account(TradeRequest).Chars(GetPlayerChar(TradeRequest)).Name)
+    Buffer.WriteString Trim$(GetPlayerName(TradeRequest))
     
     SendDataTo Index, Buffer.ToArray()
     Set Buffer = Nothing

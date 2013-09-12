@@ -339,7 +339,7 @@ Public Function GetShortName(ByVal sLongFileName As String) As String
 
 End Function
 
-Public Sub AlphaBlt(ByVal dhDC As Long, ByVal dX As Long, ByVal dY As Long, ByVal dW As Long, ByVal dH As Long, ByVal shDC As Long, ByVal Sx As Long, ByVal Sy As Long, ByVal sW As Long, ByVal sH As Long, Optional ByVal UseAlpha As Boolean, Optional ByVal AlphaConstant As Byte = 255)
+Public Sub AlphaBlt(ByVal dhDC As Long, ByVal dX As Long, ByVal dY As Long, ByVal dW As Long, ByVal dH As Long, ByVal shDC As Long, ByVal sX As Long, ByVal sY As Long, ByVal sW As Long, ByVal sH As Long, Optional ByVal UseAlpha As Boolean, Optional ByVal AlphaConstant As Byte = 255)
 Dim tmpHDC As Long, hBitmap As Long, BITMAP As Long
 Dim Blend As BLENDFUNCTION, BlendLng As Long
 
@@ -347,10 +347,10 @@ If UseAlpha Then Blend.AlphaFormat = 1 'use source alpha
 Blend.SourceConstantAlpha = AlphaConstant
 CopyMemory BlendLng, Blend, 4
     
-AlphaBlend dhDC, dX, dY, dW, dH, shDC, Sx, Sy, dW, dH, BlendLng
+AlphaBlend dhDC, dX, dY, dW, dH, shDC, sX, sY, dW, dH, BlendLng
 End Sub
 
-Public Sub AlphaTransBlt(ByVal dhDC As Long, ByVal dX As Long, ByVal dY As Long, ByVal dW As Long, ByVal dH As Long, ByVal shDC As Long, ByVal Sx As Long, ByVal Sy As Long, ByVal sW As Long, ByVal sH As Long, Optional ByVal TransColor As Long = 65024, Optional ByVal AlphaConstant As Byte = 255, Optional ByVal PerPixelAlpha As Boolean = False)
+Public Sub AlphaTransBlt(ByVal dhDC As Long, ByVal dX As Long, ByVal dY As Long, ByVal dW As Long, ByVal dH As Long, ByVal shDC As Long, ByVal sX As Long, ByVal sY As Long, ByVal sW As Long, ByVal sH As Long, Optional ByVal TransColor As Long = 65024, Optional ByVal AlphaConstant As Byte = 255, Optional ByVal PerPixelAlpha As Boolean = False)
 Dim tmpHDC As Long, hBitmap As Long, BITMAP As Long
 Dim Blend As BLENDFUNCTION, BlendLng As Long
     
@@ -360,9 +360,9 @@ CopyMemory BlendLng, Blend, 4
     
 If AlphaConstant = 255 Then
     If PerPixelAlpha Then
-    AlphaBlend dhDC, dX, dY, dW, dH, shDC, Sx, Sy, dW, dH, BlendLng
+    AlphaBlend dhDC, dX, dY, dW, dH, shDC, sX, sY, dW, dH, BlendLng
     Else
-    TransparentBlt dhDC, dX, dY, dW, dH, shDC, Sx, Sy, sW, sH, TransColor
+    TransparentBlt dhDC, dX, dY, dW, dH, shDC, sX, sY, sW, sH, TransColor
     End If
 Else
     InitDC tmpHDC, hBitmap, TransColor, dW, dH, True
@@ -370,9 +370,9 @@ Else
     If PerPixelAlpha Then
         Blend.SourceConstantAlpha = 255
         CopyMemory BlendLng, Blend, 4
-        AlphaBlend tmpHDC, 0, 0, dW, dH, shDC, Sx, Sy, dW, dH, BlendLng
+        AlphaBlend tmpHDC, 0, 0, dW, dH, shDC, sX, sY, dW, dH, BlendLng
     Else
-        TransparentBlt tmpHDC, 0, 0, dW, dH, shDC, Sx, Sy, dW, dH, TransColor
+        TransparentBlt tmpHDC, 0, 0, dW, dH, shDC, sX, sY, dW, dH, TransColor
     End If
 
     Blend.SourceConstantAlpha = AlphaConstant

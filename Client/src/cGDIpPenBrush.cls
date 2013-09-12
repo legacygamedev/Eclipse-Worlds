@@ -223,11 +223,11 @@ Public Function ARGBtoRGB(ByVal ARGBColor As Long, Optional ByRef Opacity As Byt
 End Function
 
 Public Sub Clear()
-    Dim i As Long, sKey As String, hBrush As Long
+    Dim I As Long, sKey As String, hBrush As Long
     If Not m_Objects Is Nothing Then
-        For i = m_Objects.count To 1 Step -1&
-            If Not TypeOf m_Objects(i) Is IUnknown Then
-                sKey = m_Objects(i)
+        For I = m_Objects.count To 1 Step -1&
+            If Not TypeOf m_Objects(I) Is IUnknown Then
+                sKey = m_Objects(I)
                 Select Case Left$(sKey, 1)
                 Case "b" ' brush
                     hBrush = CLng(Mid$(sKey, 2))
@@ -239,7 +239,7 @@ Public Sub Clear()
                 Case "p" ' pen
                     GdipDeletePen CLng(Mid$(sKey, 2))
                 End Select
-                m_Objects.Remove i
+                m_Objects.Remove I
             End If
         Next
     End If
@@ -256,11 +256,11 @@ Public Function CreateBrushFromImage(ImageClass As cGDIpImage, Optional WithImag
                 If ImageClass.handle Then
                     Set cNewImage = New cGDIpImage
                     If ImageClass.CloneImage(cNewImage, , , WithImageAttributes) Then
-                        Call GdipCreateTexture(cNewImage.handle, WrapMode, lHandle) ' create the image brush
+                        Call GdipCreateTexture(cNewImage.handle, WrapMode, lHandle) ' Create the image brush
                         If lHandle Then
                             m_Objects.Add "b" & CStr(lHandle), CStr(lHandle)        ' add brush handle to collection
                             m_Objects.Add cNewImage, "o" & CStr(lHandle)            ' add image class to collection
-                            CreateBrushFromImage = lHandle                          ' cross-ref to the brush handle
+                            CreateBrushFromImage = lHandle                          ' Cross-ref to the brush handle
                         End If
                     End If
                 End If

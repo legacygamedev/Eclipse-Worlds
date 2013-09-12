@@ -326,7 +326,7 @@ End Enum
 ' Layers in a map
 Public Enum MapLayer
     Ground = 1
-    Mask
+    mask
     Cover
     Fringe
     Roof

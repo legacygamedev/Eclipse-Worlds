@@ -961,6 +961,9 @@ Function CanNPCAttackNPC(ByVal MapNum As Integer, ByVal Attacker As Long, ByVal 
         Exit Function
     End If
     
+    ' Send this packet so they can see the person attacking
+    Call SendNPCAttack(Attacker, MapNum)
+    
     CanNPCAttackNPC = True
 End Function
 
@@ -1005,9 +1008,6 @@ Sub NPCAttackNPC(ByVal MapNum As Integer, ByVal Attacker As Long, ByVal Victim A
     ' Check for subscript out of range
     If aVictim < 1 Then Exit Sub
     If vVictim < 1 Then Exit Sub
-    
-    ' Send this packet so they can see the person attacking
-    Call SendNPCAttack(Attacker, MapNum)
     
      ' Set the regen timer
     MapNPC(MapNum).NPC(Attacker).StopRegen = True
@@ -1262,6 +1262,9 @@ Function CanNPCAttackPlayer(ByVal MapNPCNum As Long, ByVal Index As Long, Option
                 Exit Function
             End If
             
+            ' Send this packet so they can see the npc attacking
+            Call SendNPCAttack(MapNPCNum, MapNum)
+            
             CanNPCAttackPlayer = True
         End If
     End If
@@ -1313,9 +1316,6 @@ Sub NPCAttackPlayer(ByVal MapNPCNum As Long, ByVal Victim As Long, ByVal Damage 
     
     MapNum = GetPlayerMap(Victim)
     Name = Trim$(NPC(MapNPC(MapNum).NPC(MapNPCNum).Num).Name)
-    
-    ' Send this packet so they can see the npc attacking
-    Call SendNPCAttack(MapNPCNum, MapNum)
     
     ' Reduce durability on the victim's equipment
     If Random(1, 2) = 1 Then ' Which one it will affect

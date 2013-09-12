@@ -124,8 +124,8 @@ Private Declare Function GdipSetImageAttributesColorMatrix Lib "gdiplus" (ByVal 
 Private Declare Function GdipSetImageAttributesColorKeys Lib "GdiPlus.dll" (ByVal mImageattr As Long, ByVal mType As Long, ByVal mEnableFlag As Long, ByVal mColorLow As Long, ByVal mColorHigh As Long) As Long
 Private Declare Function GdipGetImageRawFormat Lib "gdiplus" (ByVal hImage As Long, ByVal Guid As Long) As Long
 Private Declare Function GdipGetImagePixelFormat Lib "gdiplus" (ByVal hImage As Long, PixelFormat As Long) As Long
-Private Declare Function GdipGetImageEncodersSize Lib "gdiplus" (numEncoders As Long, size As Long) As Long
-Private Declare Function GdipGetImageEncoders Lib "gdiplus" (ByVal numEncoders As Long, ByVal size As Long, Encoders As Any) As Long
+Private Declare Function GdipGetImageEncodersSize Lib "gdiplus" (numEncoders As Long, Size As Long) As Long
+Private Declare Function GdipGetImageEncoders Lib "gdiplus" (ByVal numEncoders As Long, ByVal Size As Long, Encoders As Any) As Long
 Private Declare Function GdipSaveImageToStream Lib "gdiplus" (ByVal Image As Long, ByVal Stream As IUnknown, clsidEncoder As Any, encoderParams As Any) As Long
 Private Declare Function GdipSaveAddImage Lib "gdiplus" (ByVal pImage As Long, ByVal newImage As Long, ByRef encoderParams As Any) As Long
 Private Declare Function GdipSaveAdd Lib "GdiPlus.dll" (ByVal mImage As Long, ByRef mEncoderParams As Any) As Long
@@ -224,8 +224,8 @@ Public Enum ImageTypeConstants
     imageTIFF = 8
     imageExIF = 9
     imageCursor = 10
-    imageIconPNG = 38       ' imageIcon Or 32
-    imageCursorPNG = 42     ' imageCurosr or 32
+    imageIconPNG = 38       ' ImageIcon Or 32
+    imageCursorPNG = 42     ' ImageCurosr or 32
 End Enum
 Public Enum GrayScaleConstants
     attrGrayNone = 0
@@ -302,7 +302,7 @@ Private m_OrigColorType As ImageColorFormatConstants ' what color depth image wa
 ' one can no longer select an image within a multi-image format; the result is always the 1st frame/page.
 ' So to workaround this bug, we create a "clone" that is actually a PNG from the current frame/page.
 ' Then that "clone" is used to render with mirroring/attributes. The routines herein remmove the
-' clone when no longer needed.  A similar issue is with MetaFiles, they can be flipped, but cannot be
+' Clone when no longer needed.  A similar issue is with MetaFiles, they can be flipped, but cannot be
 ' Rendered with attributes, so WMF/EMF will be converted to Bitmap for rendering.
 Private m_SourceIndex As Long               ' Ref to original image or PNG clone of TIFF,GIF,WMF,EMF as needed
 ' M_Image & m_Source usage for clarification
@@ -361,7 +361,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
     If WithAttributes Then
         Angle = m_Angle
         Angle = (Int(Angle) Mod 360) + (Angle - Int(Angle))
-        ' if not rotating, not mirroring and no attributes handle created, then cancel WithAttributes
+        ' If not rotating, not mirroring and no attributes handle created, then cancel WithAttributes
         If Angle = 0! And m_Attr = 0& And m_Mirror = attrMirrorNone Then WithAttributes = False
     End If
     
@@ -369,7 +369,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
         cX = Width: cY = Height
         If WithAttributes = False Then              ' applying attributes?
             If cX = m_Size.nWidth And cY = m_Size.nHeight Then
-                If DestImageClass Is Me Then        ' if no attributes and no-resize, then this is easy
+                If DestImageClass Is Me Then        ' If no attributes and no-resize, then this is easy
                     pvCleanUp cuResetAttrs          ' Same class? Simply remove any attributes & reset to frame/page 0
                     If Not m_MultiImage Is Nothing Then m_MultiImage.Index = 0&
                     CloneImage = True
@@ -394,7 +394,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
         Select Case m_ImageType
         Case imageIcon, imageIconPNG, imageCursor, imageCursorPNG
             .biBitCount = 32                        ' assume transparency exists else need too parse icon/cursor mask to verify
-        Case imageGIF                               ' if GIF uses transparency index, assume transparency
+        Case imageGIF                               ' If GIF uses transparency index, assume transparency
             If m_MultiImage.GetGifFramePalette(gifPal(), X) Then
                 If X = -1& Then .biBitCount = 24 Else .biBitCount = 32
                 Erase gifPal()
@@ -419,7 +419,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
         .biPlanes = 1
         .biSizeImage = pvByteAlignOnWord(.biBitCount, cX) * cY
     End With
-    dDC = GetDC(GetDesktopWindow)                   ' create DIB and get DC so we can paint image into it
+    dDC = GetDC(GetDesktopWindow)                   ' Create DIB and get DC so we can paint image into it
     hDib = CreateDIBSection(dDC, BHI, 0&, dibPtr, 0&, 0&)
     If hDib Then
         tDC = CreateCompatibleDC(dDC)
@@ -470,7 +470,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
             For X = scanWidth - 1& To clipX + 3& Step -4&
                 For Y = clipY To Height - 1&
                     If bData(Y * scanWidth + X) Then
-                        clipCx = X - clipX + 1& ' calc non-trimmed width in total bytes
+                        clipCx = X - clipX + 1& ' Calc non-trimmed width in total bytes
                         X = 0&
                         Exit For
                     End If
@@ -481,7 +481,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
                 X = Y * scanWidth + 3& + clipX
                 For X = X To X + clipCx - 1& Step 4&
                     If bData(X) Then
-                        clipCy = Y - clipY + 1& ' calc number of non-trimmed rows
+                        clipCy = Y - clipY + 1& ' Calc number of non-trimmed rows
                         Y = clipY
                         Exit For
                     End If
@@ -499,7 +499,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
                     CopyMemory bTrim(cY * clipCx), bData(Y * scanWidth + clipX), clipCx
                     cY = cY + 1&
                 Next
-                Erase bData()                       ' create new trimmed DIB
+                Erase bData()                       ' Create new trimmed DIB
                 With BHI.bmiHeader
                     .biHeight = Height
                     .biWidth = Width
@@ -654,7 +654,7 @@ Public Function LoadPicture_DIBhandle(DibHandle As Long, TokenClass As cGDIpToke
                 .biSizeImage = .biWidth * .biHeight * 4&
                 ReDim bData(0 To .biSizeImage - 1&)
             End With
-            ' call API again to transfer the pixel data to our array
+            ' Call API again to transfer the pixel data to our array
             If GetDIBits(dDC, DibHandle, 0&, BHI.bmiHeader.biHeight, bData(0), BHI, 0&) Then
                 ReleaseDC GetDesktopWindow(), dDC: dDC = 0&
                 If ClearAttributes Then lClearFlag = cuDestroyAll Else lClearFlag = cuDestroyAll Xor cuResetAttrs
@@ -668,11 +668,11 @@ Public Function LoadPicture_DIBhandle(DibHandle As Long, TokenClass As cGDIpToke
     End If
     If dDC Then ReleaseDC GetDesktopWindow(), dDC
     
-    ' create the stream to cache our bytes & load the image from the stream
+    ' Create the stream to cache our bytes & load the image from the stream
     If GdipCreateBitmapFromHBITMAP(DibHandle, 0&, hImage) = 0& Then
         If ClearAttributes = False Then lClearFlag = cuResetAttrs Else lClearFlag = 0&
         Call pvCleanUp(cuDestroyAll Xor lClearFlag)  ' destroy previous
-        m_Image(0) = hImage         ' cache latest image
+        m_Image(0) = hImage         ' Cache latest image
         m_ImageType = imageBitmap
         Call GdipGetImagePixelFormat(hImage, m_OrigColorType)  ' get size,type and apply attributes
         Call GdipGetImageBounds(hImage, m_Size, UnitPixel)
@@ -766,7 +766,7 @@ Public Function LoadPicture_stdPicture(Picture As StdPicture, TokenClass As cGDI
         LoadPicture_stdPicture = LoadPicture_DIBhandle(Picture.handle, TokenClass, ClearAttributes)
         
     Case vbPicTypeEMetafile, vbPicTypeMetafile
-        If pvMetaFileTo32bpp(Picture, 0&, lClearFlag) = True Then ' convert metafile to bitmap
+        If pvMetaFileTo32bpp(Picture, 0&, lClearFlag) = True Then ' Convert metafile to bitmap
             If Picture.Type = vbPicTypeEMetafile Then m_ImageType = imageEMF Else m_ImageType = imageWMF
             LoadPicture_stdPicture = True
         End If
@@ -776,7 +776,7 @@ Public Function LoadPicture_stdPicture(Picture As StdPicture, TokenClass As cGDI
         Set m_Source(0) = Picture
         oldType = m_ImageType
         m_ImageType = imageIcon
-        If pvCreateClone(&H80000000, lClearFlag) Then ' create the icon
+        If pvCreateClone(&H80000000, lClearFlag) Then ' Create the icon
             LoadPicture_stdPicture = True
         Else
             m_ImageType = oldType       ' Rollback
@@ -819,7 +819,7 @@ Public Function LoadPicture_Stream(Stream() As Byte, TokenClass As cGDIpToken, O
         On Error Resume Next
         CopyMemory lType, Stream(2), 2&
         If lType = 1 Or lType = 2 Then ' validate: must be 1 or 2 to be an icon/cursor
-            CopyMemory lCount, Stream(4), 2& ' count of icon/cursor in resource
+            CopyMemory lCount, Stream(4), 2& ' Count of icon/cursor in resource
             If lCount > 0& Then
                 If lCount * 16& + 6& <= lLength Then  ' Minimial bytes required for now
                     For Index = 0& To lCount - 1&
@@ -832,13 +832,13 @@ Public Function LoadPicture_Stream(Stream() As Byte, TokenClass As cGDIpToken, O
                         CopyMemory lSize, Stream(lValue), 4&
                         If lSize = png_Signature1 Then
                             CopyMemory lSize, Stream(lValue + 4&), 4&
-                            If lSize <> png_Signature2 Then Exit For    ' invalid header size
+                            If lSize <> png_Signature2 Then Exit For    ' Invalid header size
                         Else
-                            If lSize < 40& Then Exit For                ' invalid header size
+                            If lSize < 40& Then Exit For                ' Invalid header size
                             CopyMemory lSize, Stream(lValue + 4&), 4&
-                            If lSize < 1& Then Exit For                 ' invalid width
+                            If lSize < 1& Then Exit For                 ' Invalid width
                             CopyMemory lSize, Stream(lValue + 8&), 4&
-                            If lSize < 1& Then Exit For                 ' invalid height
+                            If lSize < 1& Then Exit For                 ' Invalid height
                             CopyMemory lSize, Stream(lValue + 14&), 2&
                             Select Case (lSize And &HFFFF&)             ' validate bit count
                                 Case 1, 2, 4, 8 ' Supported
@@ -859,7 +859,7 @@ Public Function LoadPicture_Stream(Stream() As Byte, TokenClass As cGDIpToken, O
                             Set m_Source(0) = IStream
                             lValue = m_ImageType                    ' back up if icon fails to load
                             m_ImageType = imageIcon
-                            If pvCreateClone(&H80000000, lClearFlag) Then   ' create image from icon
+                            If pvCreateClone(&H80000000, lClearFlag) Then   ' Create image from icon
                                 LoadPicture_Stream = True
                                 Exit Function
                             End If
@@ -898,17 +898,17 @@ Public Function LoadPicture_Stream(Stream() As Byte, TokenClass As cGDIpToken, O
                         lClearFlag = lClearFlag Xor cuDestroyMultiImage
                         Set m_MultiImage = newMultiImage
                     Else
-                        hImage = pvCreateSourcelessImage(hImage, 0&, 0&, m_Mirror * Abs(ClearAttributes = False)) ' convert to sourceless
+                        hImage = pvCreateSourcelessImage(hImage, 0&, 0&, m_Mirror * Abs(ClearAttributes = False)) ' Convert to sourceless
                         If hImage = 0& Then Exit Function
                     End If
-                    Call pvCleanUp(lClearFlag)                      ' clear existing image
+                    Call pvCleanUp(lClearFlag)                      ' Clear existing image
                     m_Image(m_SourceIndex) = hImage
                     m_OrigColorType = lValue
                     Call GdipGetImageBounds(hImage, m_Size, UnitPixel)
                     m_ImageType = lType
-                    If m_ImageType = imageGIF Or m_ImageType = imageTIFF Then   ' cache original data for gifs & multipage tiffs
+                    If m_ImageType = imageGIF Or m_ImageType = imageTIFF Then   ' Cache original data for gifs & multipage tiffs
                         If m_ImageType = imageGIF Or m_MultiImage.count > 1& Then Set m_Source(m_SourceIndex) = IStream
-                        If (m_Attr Or m_Mirror) Then Call pvModifyAttributes  ' create clone if necessary
+                        If (m_Attr Or m_Mirror) Then Call pvModifyAttributes  ' Create clone if necessary
                     End If
                 End If
                 LoadPicture_Stream = True
@@ -971,7 +971,7 @@ Public Property Let Mirrored(newVal As MirrorConstants)
     If newVal > -1& And newVal < 4& Then
         If (newVal <> m_Mirror \ 2) Then
             If newVal = attrMirrorNone Then
-                If (m_Attr = 0& And m_SourceIndex = 1&) Then ' clone exists; but no longer needed
+                If (m_Attr = 0& And m_SourceIndex = 1&) Then ' Clone exists; but no longer needed
                     Call pvCleanUp(cuDestroyClone)
                     m_Mirror = attrMirrorNone
                 End If
@@ -981,8 +981,8 @@ Public Property Let Mirrored(newVal As MirrorConstants)
                     If m_MultiImage.count > 1& And m_SourceIndex = 0& Then ' not yet cloned
                         Debug.Assert (m_Image(1) = 0&)          ' testing purposes. Not executed when compiled
                         m_Mirror = (newVal * 2&)                ' Set mirror state
-                        pvCreateClone m_MultiImage.Index, 0&    ' create clone, got a multi-image GIF/TIF
-                        Exit Property                           ' clone routine flips/applies attributes
+                        pvCreateClone m_MultiImage.Index, 0&    ' Create clone, got a multi-image GIF/TIF
+                        Exit Property                           ' Clone routine flips/applies attributes
                     End If
                 End If
             End If
@@ -1045,7 +1045,7 @@ Public Function SaveAsBMP(outArray() As Byte, Optional ApplyImageAttributes As B
                     If GdipSaveImageToStream(hImage, IIStream, uEncCLSID(0), ByVal 0&) = 0& Then
                         SaveAsBMP = pvStreamToArray(ObjPtr(IIStream), outArray())
                     End If
-                    If ApplyImageAttributes = False Then ' if we un-mirrored above, re-mirror now
+                    If ApplyImageAttributes = False Then ' If we un-mirrored above, re-mirror now
                         If m_Mirror Then GdipImageRotateFlip hImage, m_Mirror
                     End If
                 End If
@@ -1100,7 +1100,7 @@ Public Function SaveAsJPG(outArray() As Byte, Optional ByVal QualityPct As Long 
                     If GdipSaveImageToStream(hImage, IIStream, uEncCLSID(0), uEncParams) = 0& Then
                         SaveAsJPG = pvStreamToArray(ObjPtr(IIStream), outArray())
                     End If
-                    If ApplyImageAttributes = False Then ' if we un-mirrored above, re-mirror now
+                    If ApplyImageAttributes = False Then ' If we un-mirrored above, re-mirror now
                         If m_Mirror Then GdipImageRotateFlip hImage, m_Mirror
                     End If
                 End If
@@ -1121,7 +1121,7 @@ Public Function SaveAsOriginalFormat(outArray() As Byte) As Boolean
     Dim lSize As Long, bFalse As Boolean
     
     If m_Source(0) Is Nothing Then  ' a sourceless bitmap
-        Select Case m_ImageType     ' convert to original format type
+        Select Case m_ImageType     ' Convert to original format type
             Case imagePNG: SaveAsOriginalFormat = SaveAsPNG(outArray())
             Case imageJPEG: SaveAsOriginalFormat = SaveAsJPG(outArray(), 100&)
             Case imageBitmap: SaveAsOriginalFormat = SaveAsBMP(outArray())
@@ -1174,7 +1174,7 @@ Public Function SaveAsPNG(outArray() As Byte, Optional ApplyImageAttributes As B
                     If GdipSaveImageToStream(hImage, IIStream, uEncCLSID(0), ByVal 0&) = 0& Then
                         SaveAsPNG = pvStreamToArray(ObjPtr(IIStream), outArray())
                     End If
-                    If ApplyImageAttributes = False Then ' if we un-mirrored above, re-mirror now
+                    If ApplyImageAttributes = False Then ' If we un-mirrored above, re-mirror now
                         If m_Mirror Then GdipImageRotateFlip hImage, m_Mirror
                     End If
                 End If
@@ -1193,7 +1193,7 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
     ' Parameters:
     '   outArray() :: byte array will be resized if function returns true
     '   ArrayOfImageClasses :: a 1D zero-bound array of cGDIpImage classes to create
-    '                          a multipage-tiff else this class' image is used
+    '                          a multipage-tiff else this class' Image is used
     '   UseCompression :: if true tiff is compressed else it is not
     '   ColorDepth :: Color depth to save tiff page(s) in
     '       Notes regarding TIFF_DepthAuto:
@@ -1220,15 +1220,15 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
     Const EncoderParameterValueTypeLong As Long = &H4&
 
     ' /// This section is used for sanity checks....
-    If IsMissing(ArrayOfImageClasses) Then      ' is an array of images provided?
-        If m_Image(m_SourceIndex) Then          ' if not, we use this class
+    If IsMissing(ArrayOfImageClasses) Then      ' Is an array of images provided?
+        If m_Image(m_SourceIndex) Then          ' If not, we use this class
             ReDim cNewImages(0 To 0)
             ReDim bUnMirror(0 To 0)
-            If ApplyImageAttributes = True Then ' include rotation, grayscaling, mirroring, etc
+            If ApplyImageAttributes = True Then ' Include rotation, grayscaling, mirroring, etc
                 If (m_Attr = 0& And m_Angle = 0!) = True Then
                     Set cNewImages(0) = Me
                 Else
-                    Set cNewImages(0) = New cGDIpImage      ' create new class with attributes
+                    Set cNewImages(0) = New cGDIpImage      ' Create new class with attributes
                     If CloneImage(cNewImages(0), , , True) Then nrImages = 1&
                 End If
             Else
@@ -1247,7 +1247,7 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
         Else
             If LBound(ArrayOfImageClasses) <> 0 Then Exit Function
         End If
-        ' check for invalid objects, empty objects, classes without images, etc
+        ' Check for invalid objects, empty objects, classes without images, etc
         ReDim cNewImages(0 To nrImages - 1&)
         ReDim bUnMirror(0 To nrImages - 1&)
         For Index = 0& To nrImages - 1&
@@ -1259,7 +1259,7 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
                             ' only mirroring will be applicable, don't create clone
                             Set cNewImages(lParamVal) = ArrayOfImageClasses(Index)
                             lParamVal = lParamVal + 1&
-                        Else ' create clone with applied attributes
+                        Else ' Create clone with applied attributes
                             Set cNewImages(lParamVal) = New cGDIpImage
                             If ArrayOfImageClasses(Index).CloneImage(cNewImages(lParamVal), , , True) Then lParamVal = lParamVal + 1&
                         End If
@@ -1286,7 +1286,7 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
     If nrImages Then    ' Failure
     
         If pvGetEncoderClsID(MimeType, uEncCLSID) <> -1& Then   ' get TIFF encoder class
-            Set IIStream = pvStreamFromArray(0&, 0&)            ' create IStream
+            Set IIStream = pvStreamFromArray(0&, 0&)            ' Create IStream
             If Not IIStream Is Nothing Then
                 
                 If UseCompression Then                          ' use compression to keep bytes size low
@@ -1324,7 +1324,7 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
                         Case imageIcon, imageIconPNG, imageCursor, imageCursorPNG
                             ' without processing icon mask to verify, must assume icons/cursors/gifs use alpha channel
                             lDepth = 32&
-                        Case imageGIF   ' if gif has transparency index, assume uses transparency
+                        Case imageGIF   ' If gif has transparency index, assume uses transparency
                             If cNewImages(Index).MultiImageInfo.GetGifFramePalette(gifPal(), lDepth) Then
                                 If lDepth = -1& Then lDepth = 24& Else lDepth = 32&
                                 Erase gifPal()
@@ -1351,7 +1351,7 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
                         If bUnMirror(Index) Then GdipImageRotateFlip cNewImages(Index).handle, cNewImages(Index).Mirrored
                         If hImage = 0& Then ' already wrote first image?
                             If GdipSaveImageToStream(cNewImages(Index).handle, IIStream, uEncCLSID(0&), uEncParams) = 0& Then
-                                hImage = cNewImages(Index).handle   ' cache first image handle
+                                hImage = cNewImages(Index).handle   ' Cache first image handle
                                 lParamVal = EncoderValuePageDims    ' Set flag for non-1st page, additional pages
                             ElseIf lDepth < 32& Then ' Failure, try to save as 32bit
                                 lDepth = 32&
@@ -1488,7 +1488,7 @@ Private Sub pvCleanUp(Mode As pvCleanUpEnum)
             m_Attr = 0&
         End If
         If (Mode And cuDestroyImage) = 0& Then ' not a full pvCleanUp?
-            If m_Mirror Then            ' if mirrored & not cloned, then unmirror
+            If m_Mirror Then            ' If mirrored & not cloned, then unmirror
                 If m_Image(1) = 0& Then GdipImageRotateFlip m_Image(0), m_Mirror
             End If
         End If
@@ -1538,12 +1538,12 @@ Private Function pvCreateClone(Index As Long, resetFlags As pvCleanUpEnum) As Bo
     Dim uEncCLSID(0 To 3) As Long
     Dim hImage As Long, lColorType As Long, IIStream As IUnknown
     
-    If (m_ImageType = imageIcon Or m_ImageType = imageCursor Or ((m_ImageType And 32&) = 32&)) Then ' icons/cursors
+    If (m_ImageType = imageIcon Or m_ImageType = imageCursor Or ((m_ImageType And 32&) = 32&)) Then ' Icons/cursors
         pvCreateClone = pvIconTo32bpp(Index, (resetFlags Or cuDestroyClone Or cuDestroyImage) And Not cuDestroyMultiImage)
         ' when icon is processed any existing clone is cleaned up
     
     Else ' Multi-frame/page GIF/TIFF
-        ' create clone only if absolutely needed
+        ' Create clone only if absolutely needed
         Call GdipGetImagePixelFormat(m_Image(0), lColorType)
         If ((m_Attr = 0& And m_Mirror = attrMirrorNone)) Then
             hImage = m_Image(m_SourceIndex)
@@ -1615,12 +1615,12 @@ Private Function pvCreateSourcelessImage2(hImage As Long, Width As Long, Height 
             cRender.AttachTokenClass TokenClass
             oldImage = m_Image(m_SourceIndex)                   ' using the cGDIpRenderer class
             m_Image(m_SourceIndex) = hImage                     ' which requires this class to reflect correct image handle
-            hGraphics = hGraphics1 ' create a generic graphics object
+            hGraphics = hGraphics1 ' Create a generic graphics object
             If hGraphics Then                                   ' then create new GDI+ bitmap
                 If GdipCreateBitmapFromGraphics(Width, Height, hGraphics, newImage) = 0& Then
                     cRender.DestroyHGraphics hGraphics
                     Call GdipGetImageBounds(hImage, tSize, UnitPixel)
-                    m_Image(m_SourceIndex) = newImage           ' create graphics object around new bitmap
+                    m_Image(m_SourceIndex) = newImage           ' Create graphics object around new bitmap
                     hGraphics = cRender.CreateGraphicsFromImageClass(Me)
                     If hGraphics Then                           ' draw the passed bitmap onto the new bitmap & clean up
                         Call cRender.RenderToHGraphics(hImage, hGraphics, 0&, 0&, Width, Height, tSize.nLeft, tSize.nTop, tSize.nWidth, tSize.nHeight)
@@ -1707,12 +1707,12 @@ Private Function pvCreateSourcelessImage(hImage As Long, Width As Long, Height A
             cRender.AttachTokenClass m_Token
             oldImage = m_Image(m_SourceIndex)                   ' using the cGDIpRenderer class
             m_Image(m_SourceIndex) = hImage                     ' which requires this class to reflect correct image handle
-            hGraphics = cRender.CreateGraphicsFromImageClass(Me) ' create a generic graphics object
+            hGraphics = cRender.CreateGraphicsFromImageClass(Me) ' Create a generic graphics object
             If hGraphics Then                                   ' then create new GDI+ bitmap
                 If GdipCreateBitmapFromGraphics(Width, Height, hGraphics, newImage) = 0& Then
                     cRender.DestroyHGraphics hGraphics
                     Call GdipGetImageBounds(hImage, tSize, UnitPixel)
-                    m_Image(m_SourceIndex) = newImage           ' create graphics object around new bitmap
+                    m_Image(m_SourceIndex) = newImage           ' Create graphics object around new bitmap
                     hGraphics = cRender.CreateGraphicsFromImageClass(Me)
                     If hGraphics Then                           ' draw the passed bitmap onto the new bitmap & clean up
                         Call cRender.RenderToHGraphics(hImage, hGraphics, 0&, 0&, Width, Height, tSize.nLeft, tSize.nTop, tSize.nWidth, tSize.nHeight)
@@ -1907,7 +1907,7 @@ Private Function pvIconTo32bpp(Index As Long, resetFlags As pvCleanUpEnum) As Bo
             pow2(X) = pow2(X - 1) * 2&
         Next
         With BHI.bmiHeader                  ' update header and set offsets/pointers needed to parse icon
-            .biHeight = .biHeight \ 2       ' icons/cursors have double heights
+            .biHeight = .biHeight \ 2       ' Icons/cursors have double heights
             imageOffset = .biSize + arrOffset  ' where pixel data starts
             bitDepth = .biBitCount
             If .biBitCount < 9 Then         ' paletted icon/cursor
@@ -1924,19 +1924,19 @@ Private Function pvIconTo32bpp(Index As Long, resetFlags As pvCleanUpEnum) As Bo
             End If
             scanWidth = pvByteAlignOnWord(bitDepth, .biWidth)   ' Source scan width
             tgtScanWidth = .biWidth * 4&                        ' Scan width of our 32bit DIB
-            .biSizeImage = tgtScanWidth * .biHeight             ' calc target pixel image size
+            .biSizeImage = tgtScanWidth * .biHeight             ' Calc target pixel image size
             ReDim bMask(0 To .biSizeImage - 1&)                 ' target pixel data
             
             Select Case .biBitCount
             Case 1, 4, 8                                        ' paletted bitmaps
-                bitAnd = pow2(bitDepth) - 1&                    ' calc AND mask for packed bytes
+                bitAnd = pow2(bitDepth) - 1&                    ' Calc AND mask for packed bytes
                 For Y = 0& To .biHeight - 1&                    ' unpack bytes to 32bpp format
                     srcPtr = Y * scanWidth + imageOffset        ' where current source row starts
                     dstPtr = Y * tgtScanWidth
-                    bitShift = 8& - bitDepth                    ' calc bit shifting start
+                    bitShift = 8& - bitDepth                    ' Calc bit shifting start
                     For X = 0& To .biWidth - 1&                 ' get palette index from packed byte
                         palIndex = ((bBits(srcPtr) \ pow2(bitShift)) And bitAnd)
-                        CopyMemory bMask(dstPtr), BHI.bmiColors(palIndex), 4& ' copy color to target
+                        CopyMemory bMask(dstPtr), BHI.bmiColors(palIndex), 4& ' Copy color to target
                         dstPtr = dstPtr + 4&                    ' Move target pointer along
                         If bitShift = 0& Then                   ' done with this byte?
                             bitShift = 8& - bitDepth            ' Reset
@@ -2026,13 +2026,13 @@ Private Function pvIconTo32bpp(Index As Long, resetFlags As pvCleanUpEnum) As Bo
             .biBitCount = 32                                    ' prepare to create DIB to wrap GDI+ image around
             .biClrUsed = 0&
             .biClrImportant = 0&
-            dDC = GetDC(GetDesktopWindow)                       ' create the DIB
+            dDC = GetDC(GetDesktopWindow)                       ' Create the DIB
             hDib = CreateDIBSection(dDC, BHI, 0&, dibPtr, 0&, 0&)
             ReleaseDC GetDesktopWindow(), dDC
         End With
         If hDib Then
-            CopyMemory ByVal dibPtr, bMask(0), BHI.bmiHeader.biSizeImage ' copy the unpacked pixel data to DIB
-            Erase bMask()                                   ' create the GDI+ image
+            CopyMemory ByVal dibPtr, bMask(0), BHI.bmiHeader.biSizeImage ' Copy the unpacked pixel data to DIB
+            Erase bMask()                                   ' Create the GDI+ image
             If GdipCreateBitmapFromScan0(BHI.bmiHeader.biWidth, BHI.bmiHeader.biHeight, tgtScanWidth, PixelFormat32bppARGB, ByVal dibPtr, hImage) = 0& Then
                 hImage = pvCreateSourcelessImage(hImage, BHI.bmiHeader.biWidth, BHI.bmiHeader.biHeight, 0&)
                 If hImage Then
@@ -2049,7 +2049,7 @@ Private Function pvIconTo32bpp(Index As Long, resetFlags As pvCleanUpEnum) As Bo
         End If
     End If
     If pvIconTo32bpp = True Then
-        If (Index And &H80000000) Then ' called from the Load function not m_MultiImage
+        If (Index And &H80000000) Then ' Called from the Load function not m_MultiImage
             CopyMemory X, bBits(2), 2&  ' get type of resource
             If (X And &HFF&) = 1& Then
                 m_ImageType = imageIcon Or (m_ImageType And 32&)
@@ -2080,15 +2080,15 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
     Dim bBits() As Byte
     Const PICTURE_TRANSPARENT = &H2
     
-    If TypeOf metaSource Is StdPicture Then        ' called from LoadPicture_stdPicture
+    If TypeOf metaSource Is StdPicture Then        ' Called from LoadPicture_stdPicture
         Set IPic = metaSource
         Set IIStream = IPic                                         ' new source if load is successful
         If (IPic.Attributes And PICTURE_TRANSPARENT) Then lColorType = PixelFormat32bppARGB Else lColorType = PixelFormat24bppRGB
         hImage = IPic.handle                                        ' Make non-zero
         cX = IPic.Width * 1440& / 2540& / Screen.TwipsPerPixelX     ' get size in pixels
         cY = IPic.Height * 1440& / 2540& / Screen.TwipsPerPixelY
-    Else                                        ' called from LoadPicture_Stream
-        Call GdipGetImageHorizontalResolution(theImage, xyRatio)     ' calc size
+    Else                                        ' Called from LoadPicture_Stream
+        Call GdipGetImageHorizontalResolution(theImage, xyRatio)     ' Calc size
         If xyRatio > 0! Then
             Call GdipGetImageBounds(theImage, Bounds, UnitPixel)        ' get reported size & convert to himetric to pixels
             cX = Bounds.nWidth * (2540! / xyRatio) * 1440! / 2540! / Screen.TwipsPerPixelX
@@ -2105,7 +2105,7 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
     If hImage = 0& Then                                         ' bug out
         If theImage Then GdipDisposeImage theImage
     Else
-        With BHI.bmiHeader                                      ' create DIB to render metafile to
+        With BHI.bmiHeader                                      ' Create DIB to render metafile to
             If lColorType = PixelFormat24bppRGB Then .biBitCount = 24 Else .biBitCount = 32
             .biHeight = cY
             .biWidth = cX
@@ -2144,12 +2144,12 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
             SelectObject tDC, hObj
             DeleteDC tDC
             
-            If hImage = 0& Then                                 ' continue?
+            If hImage = 0& Then                                 ' Continue?
                 DeleteObject hDib
             Else
                 If IPic Is Nothing Then GdipDisposeImage theImage ' destroy passed theImage
                 hImage = 0&
-                If BHI.bmiHeader.biBitCount = 24 Then           ' create new bitmap from DIB; no alpha checks necessary. Done.
+                If BHI.bmiHeader.biBitCount = 24 Then           ' Create new bitmap from DIB; no alpha checks necessary. Done.
                     GdipCreateBitmapFromHBITMAP hDib, 0&, hImage
                 Else                                            ' GDI+ can't do alpha bitmaps, so we do it manually
                     scanWidth = cX * 4&
@@ -2160,7 +2160,7 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
                     Next
                     CopyMemory ByVal dibPtr, bBits(0), BHI.bmiHeader.biSizeImage
                     Erase bBits()
-                                                                ' create new GDI+ image & convert to stand alone image
+                                                                ' Create new GDI+ image & convert to stand alone image
                     GdipCreateBitmapFromScan0 cX, cY, scanWidth, PixelFormat32bppPARGB, ByVal dibPtr, hImage
                     If hImage Then hImage = pvCreateSourcelessImage(hImage, cX, cY, 6&)
                 End If
@@ -2244,7 +2244,7 @@ Private Sub pvModifyAttributes()
                 clrMatrix(4, 4) = 1! ' Required; cannot be anything else
             End If
         End If
-        If clrMatrix(4, 4) = 1! Then ' create attributes?
+        If clrMatrix(4, 4) = 1! Then ' Create attributes?
             If GdipCreateImageAttributes(m_Attr) = 0& Then
                 If GdipSetImageAttributesColorMatrix(m_Attr, ColorAdjustTypeBitmap, 1&, clrMatrix(0, 0), clrMatrix(0, 0), 0&) Then
                     GdipDisposeImageAttributes m_Attr
@@ -2286,7 +2286,7 @@ Private Function pvProcessAlphaBitmap(inArray() As Byte, Width As Long, Height A
     Dim B As Long, lColorFormat As Long, hImage As Long, hdrSize As Long
     Dim tPIC As StdPicture, nullAlphas As Long, fullAlphas As Long
     
-    If Width = 0& And Height = 0& Then      ' called from LoadPicture_Stream
+    If Width = 0& And Height = 0& Then      ' Called from LoadPicture_Stream
         CopyMemory B, inArray(0), 2&        ' Magic number
         If B <> bmp_Signature Then Exit Function  ' not a bitmap
         CopyMemory X, inArray(28), 2&       ' bit depth
@@ -2302,7 +2302,7 @@ Private Function pvProcessAlphaBitmap(inArray() As Byte, Width As Long, Height A
         If B > UBound(inArray) Then Exit Function
         hdrSize = hdrSize + 14&
     Else
-        dibPtr = VarPtr(inArray(0))         ' called from LoadPicture_DIBhandle
+        dibPtr = VarPtr(inArray(0))         ' Called from LoadPicture_DIBhandle
     End If
     
     scanWidth = Width * 4&                  ' bytes per row
@@ -2328,11 +2328,11 @@ Private Function pvProcessAlphaBitmap(inArray() As Byte, Width As Long, Height A
     Next
     ' decision time
     B = Width * Height ' total number of bytes/pixels
-    ' if the image is not 100% zero alpha or 100% full alpha then it uses the alpha channel
+    ' If the image is not 100% zero alpha or 100% full alpha then it uses the alpha channel
     If ((nullAlphas = B) Or (fullAlphas = B)) Then  ' 32bpp with no alpha in play
         lColorFormat = PixelFormat32bppRGB
     Else
-        ' if we didn't detect ARGB formatting then assume pARGB formatting
+        ' If we didn't detect ARGB formatting then assume pARGB formatting
         ' This logic isn't 100% foolproof but exceptions to this logic would be extremely rare
         If lColorFormat = 0& Then lColorFormat = PixelFormat32bppPARGB
     End If

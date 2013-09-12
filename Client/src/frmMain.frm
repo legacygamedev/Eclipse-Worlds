@@ -817,7 +817,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -3448,6 +3447,7 @@ Public Sub SubDaFocus(hWnd As Long)
         cSubclasserHooker.ssc_AddMsg hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_NCACTIVATE, WM_MOVE
     End If
 End Sub
+
 Public Sub UnsubDaFocus(hWnd As Long)
     cSubclasserHooker.ssc_UnSubclass hWnd
 End Sub
@@ -3707,14 +3707,14 @@ errorhandler:
 End Sub
 
 Private Sub ClearChatButton(Index As Integer)
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 1 To 4
-        If frmMain.lblChoices.item(i).ForeColor = vbYellow And Not Index = i Then
-            frmMain.lblChoices.item(i).ForeColor = &H80000003
+    For I = 1 To 4
+        If frmMain.lblChoices.item(I).ForeColor = vbYellow And Not Index = I Then
+            frmMain.lblChoices.item(I).ForeColor = &H80000003
         End If
     Next
     
@@ -3773,18 +3773,18 @@ errorhandler:
 End Sub
 
 Sub ClearEventChat()
-    Dim i As Long
+    Dim I As Long
     
     If AnotherChat = 1 Then
-        For i = 1 To 4
-            frmMain.lblChoices(i).Visible = False
+        For I = 1 To 4
+            frmMain.lblChoices(I).Visible = False
         Next
         
         frmMain.lblEventChat.Caption = ""
         frmMain.lblEventChatContinue.Visible = False
     ElseIf AnotherChat = 2 Then
-        For i = 1 To 4
-            frmMain.lblChoices(i).Visible = False
+        For I = 1 To 4
+            frmMain.lblChoices(I).Visible = False
         Next
         
         frmMain.lblEventChat.Visible = False
@@ -4121,17 +4121,17 @@ Private Sub lstDropDownBox_MouseDown(Button As Integer, Shift As Integer, X As S
 End Sub
 
 Private Sub lstTitles_Click()
-    Dim i As Byte
+    Dim I As Byte
     
     ' Check if we're setting it to one we already have as our current title
     If lstTitles.ListIndex = Player(MyIndex).CurTitle Then Exit Sub
         
     If Not lstTitles.ListIndex = 0 Then
-        For i = 1 To MAX_TITLES
-            If Not Player(MyIndex).CurTitle = i Then
-                If lstTitles.List(lstTitles.ListIndex) = Trim$(title(i).name) Then
-                    lblDesc.Caption = Trim$(title(i).Desc)
-                    Call SendSetTitle(i)
+        For I = 1 To MAX_TITLES
+            If Not Player(MyIndex).CurTitle = I Then
+                If lstTitles.List(lstTitles.ListIndex) = Trim$(title(I).name) Then
+                    lblDesc.Caption = Trim$(title(I).Desc)
+                    Call SendSetTitle(I)
                     Exit For
                 End If
             End If
@@ -4563,7 +4563,7 @@ Private Sub picButton_Click(Index As Integer)
         ' Don't set it if it's the trade/GUI adjusting button
         If Not Index = 5 And Not Index = 14 And Not Index = 15 Then
             CurButton_Main = Index
-            picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).FileName & "_click.jpg")
+            picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).fileName & "_click.jpg")
             Call ResetMainButtons
         End If
         
@@ -4590,7 +4590,7 @@ Private Sub picButton_MouseMove(Index As Integer, Button As Integer, Shift As In
     
     If Not LastButton_Main = Index And Not CurButton_Main = Index Then
         Call ResetMainButtons
-        picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).FileName & "_hover.jpg")
+        picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).fileName & "_hover.jpg")
         Call Audio.PlaySound(ButtonHover)
         LastButton_Main = Index
     End If
@@ -4604,7 +4604,7 @@ errorhandler:
 End Sub
 
 Public Sub TogglePanel(ByVal PanelNum As Long)
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -4656,18 +4656,18 @@ Public Sub TogglePanel(ByVal PanelNum As Long)
         Case 14
             ButtonsVisible = Not ButtonsVisible
             If ButtonsVisible Then
-                MainButton(14).FileName = "btn_hidepanels"
+                MainButton(14).fileName = "btn_hidepanels"
             Else
-                MainButton(14).FileName = "btn_showpanels"
+                MainButton(14).fileName = "btn_showpanels"
             End If
             Call ResetMainButtons
             Call ToggleButtons(ButtonsVisible)
         Case 15
             GUIVisible = Not GUIVisible
             If GUIVisible Then
-                MainButton(15).FileName = "btn_hidegui"
+                MainButton(15).fileName = "btn_hidegui"
             Else
-                MainButton(15).FileName = "btn_showgui"
+                MainButton(15).fileName = "btn_showgui"
             End If
             Call ResetMainButtons
             Call ToggleGUI(GUIVisible)
@@ -4684,14 +4684,14 @@ errorhandler:
 End Sub
 
 Public Sub ResetMainButtons()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 1 To MAX_MAINBUTTONS
-        If Not CurButton_Main = i Then
-            picButton(i).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(i).FileName & "_norm.jpg")
+    For I = 1 To MAX_MAINBUTTONS
+        If Not CurButton_Main = I Then
+            picButton(I).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(I).fileName & "_norm.jpg")
         End If
     Next
     Exit Sub
@@ -4763,23 +4763,23 @@ errorhandler:
 End Sub
 
 Private Sub picHotbar_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Dim i As Long, rec_pos As RECT
+    Dim I As Long, rec_pos As RECT
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Hotbar
-    For i = 1 To MAX_HOTBAR
+    For I = 1 To MAX_HOTBAR
         With rec_pos
             .Top = picHotbar.Top - picHotbar.Top
-            .Left = picHotbar.Left - picHotbar.Left + (HotbarOffsetX * (i - 1)) + (32 * (i - 1))
+            .Left = picHotbar.Left - picHotbar.Left + (HotbarOffsetX * (I - 1)) + (32 * (I - 1))
             .Right = .Left + 32
             .Bottom = picHotbar.Top - picHotbar.Top + 32
         End With
         
         If X >= rec_pos.Left And X <= rec_pos.Right Then
             If Y >= rec_pos.Top And Y <= rec_pos.Bottom Then
-                SendSwapHotbarSlots DragHotbarSlot, i
+                SendSwapHotbarSlots DragHotbarSlot, I
             End If
         End If
     Next
@@ -4796,7 +4796,7 @@ errorhandler:
 End Sub
 
 Private Sub picHotbar_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Dim SlotNum As Long, i As Long
+    Dim SlotNum As Long, I As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -4808,9 +4808,9 @@ Private Sub picHotbar_MouseDown(Button As Integer, Shift As Integer, X As Single
             If ShiftDown Then
                 DragHotbarSlot = SlotNum
                 
-                For i = 1 To MAX_PLAYER_SPELLS
-                    If Hotbar(DragHotbarSlot).Slot = PlayerSpells(i) Then
-                        DragHotbarSpell = i
+                For I = 1 To MAX_PLAYER_SPELLS
+                    If Hotbar(DragHotbarSlot).Slot = PlayerSpells(I) Then
+                        DragHotbarSpell = I
                     End If
                 Next
             Else
@@ -4829,7 +4829,7 @@ errorhandler:
 End Sub
 
 Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Dim SlotNum As Long, i As Long
+    Dim SlotNum As Long, I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -4849,7 +4849,7 @@ Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, X As Single
         SlotNum = IsHotbarSlot(X, Y)
         
         If SlotNum <> 0 Then
-              If Hotbar(SlotNum).sType = 1 Then ' item
+              If Hotbar(SlotNum).sType = 1 Then ' Item
                 X = X + picHotbar.Left - picItemDesc.Width - 1
                 Y = Y + picHotbar.Top
                 UpdateItemDescWindow Hotbar(SlotNum).Slot, X, Y
@@ -4861,9 +4861,9 @@ Private Sub picHotbar_MouseMove(Button As Integer, Shift As Integer, X As Single
                 UpdateSpellDescWindow Hotbar(SlotNum).Slot, X, Y
                 LastSpellDesc = Hotbar(SlotNum).Slot
 
-                For i = 1 To MAX_PLAYER_SPELLS
-                    If Hotbar(SlotNum).Slot = PlayerSpells(i) Then
-                        LastSpellSlotDesc = i
+                For I = 1 To MAX_PLAYER_SPELLS
+                    If Hotbar(SlotNum).Slot = PlayerSpells(I) Then
+                        LastSpellSlotDesc = I
                     End If
                 Next
                 Exit Sub
@@ -5067,23 +5067,23 @@ End Sub
 
 Private Function IsShopItem(ByVal X As Single, ByVal Y As Single) As Long
     Dim TempRec As RECT
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    For i = 1 To MAX_TRADES
-        If Shop(InShop).TradeItem(i).item > 0 And Shop(InShop).TradeItem(i).item <= MAX_ITEMS Then
+    For I = 1 To MAX_TRADES
+        If Shop(InShop).TradeItem(I).item > 0 And Shop(InShop).TradeItem(I).item <= MAX_ITEMS Then
             With TempRec
-                .Top = ShopTop + ((ShopOffsetY + PIC_Y) * ((i - 1) \ ShopColumns))
+                .Top = ShopTop + ((ShopOffsetY + PIC_Y) * ((I - 1) \ ShopColumns))
                 .Bottom = .Top + PIC_Y
-                .Left = ShopLeft + ((ShopOffsetX + PIC_X) * (((i - 1) Mod ShopColumns)))
+                .Left = ShopLeft + ((ShopOffsetX + PIC_X) * (((I - 1) Mod ShopColumns)))
                 .Right = .Left + PIC_X
             End With
 
             If X >= TempRec.Left And X <= TempRec.Right Then
                 If Y >= TempRec.Top And Y <= TempRec.Bottom Then
-                    IsShopItem = i
+                    IsShopItem = I
                     Exit Function
                 End If
             End If
@@ -5272,7 +5272,7 @@ errorhandler:
 End Sub
 
 Private Sub picSpells_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Dim i As Long
+    Dim I As Long
     Dim rec_pos As RECT
 
     ' If debug mode, handle error then exit out
@@ -5280,19 +5280,19 @@ Private Sub picSpells_MouseUp(Button As Integer, Shift As Integer, X As Single, 
 
     If DragSpellSlot > 0 Then
         ' Drag and Drop
-        For i = 1 To MAX_PLAYER_SPELLS
+        For I = 1 To MAX_PLAYER_SPELLS
             With rec_pos
-                .Top = SpellTop + ((SpellOffsetY + 32) * ((i - 1) \ SpellColumns))
+                .Top = SpellTop + ((SpellOffsetY + 32) * ((I - 1) \ SpellColumns))
                 .Bottom = .Top + PIC_Y
-                .Left = SpellLeft + ((SpellOffsetX + PIC_X) * (((i - 1) Mod SpellColumns)))
+                .Left = SpellLeft + ((SpellOffsetX + PIC_X) * (((I - 1) Mod SpellColumns)))
                 .Right = .Left + PIC_X
             End With
 
             If X >= rec_pos.Left And X <= rec_pos.Right Then
                 If Y >= rec_pos.Top And Y <= rec_pos.Bottom Then
-                    If Not DragSpellSlot = i Then
+                    If Not DragSpellSlot = I Then
                         If Not DialogueIndex = DIALOGUE_TYPE_FORGET Then
-                            SendChangeSpellSlots DragSpellSlot, i
+                            SendChangeSpellSlots DragSpellSlot, I
                         End If
                         Exit For
                     End If
@@ -5301,17 +5301,17 @@ Private Sub picSpells_MouseUp(Button As Integer, Shift As Integer, X As Single, 
         Next
         
         ' Hotbar
-        For i = 1 To MAX_HOTBAR
+        For I = 1 To MAX_HOTBAR
             With rec_pos
                 .Top = picHotbar.Top - picSpells.Top
-                .Left = picHotbar.Left - picSpells.Left + (HotbarOffsetX * (i - 1)) + (32 * (i - 1))
+                .Left = picHotbar.Left - picSpells.Left + (HotbarOffsetX * (I - 1)) + (32 * (I - 1))
                 .Right = .Left + 32
                 .Bottom = picHotbar.Top - picSpells.Top + 32
             End With
             
             If X >= rec_pos.Left And X <= rec_pos.Right Then
                 If Y >= rec_pos.Top And Y <= rec_pos.Bottom Then
-                    SendHotbarChange 2, DragSpellSlot, i
+                    SendHotbarChange 2, DragSpellSlot, I
                     DragSpellSlot = 0
                     picTempSpell.Visible = False
                     Exit Sub
@@ -5498,7 +5498,7 @@ errorhandler:
 End Sub
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
-    Dim i As Long
+    Dim I As Long
     Dim NPCDistanceX(1 To MAX_MAP_NPCS) As Long
     Dim NPCDistanceY(1 To MAX_MAP_NPCS) As Long
     Dim PlayerDistanceX(1 To MAX_PLAYERS) As Long
@@ -5536,26 +5536,26 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
 
     If KeyAscii = vbKeyTab And ShiftDown = False Then
         ' Set the NPC distance for all the NPCs on the map
-        For i = 1 To Map.NPC_HighIndex
-            NPCDistanceX(i) = MapNPC(i).X - GetPlayerX(MyIndex)
-            NPCDistanceY(i) = MapNPC(i).Y - GetPlayerY(MyIndex)
+        For I = 1 To Map.NPC_HighIndex
+            NPCDistanceX(I) = MapNPC(I).X - GetPlayerX(MyIndex)
+            NPCDistanceY(I) = MapNPC(I).Y - GetPlayerY(MyIndex)
     
             ' Make sure we get a positive Value
-            If NPCDistanceX(i) < 0 Then NPCDistanceX(i) = NPCDistanceX(i) * -1
-            If NPCDistanceY(i) < 0 Then NPCDistanceY(i) = NPCDistanceY(i) * -1
+            If NPCDistanceX(I) < 0 Then NPCDistanceX(I) = NPCDistanceX(I) * -1
+            If NPCDistanceY(I) < 0 Then NPCDistanceY(I) = NPCDistanceY(I) * -1
         Next
         
         ' Clear the target constant
         PlayerTarget = 0
         
         ' Find the closest NPC target
-        For i = 1 To Map.NPC_HighIndex
-            If i = 1 Then
-                LowestDistance = NPCDistanceX(i) + NPCDistanceY(i)
-                PlayerTarget = i
-            ElseIf NPCDistanceX(i) + NPCDistanceY(i) < LowestDistance Then
-                LowestDistance = NPCDistanceX(i) + NPCDistanceY(i)
-                PlayerTarget = i
+        For I = 1 To Map.NPC_HighIndex
+            If I = 1 Then
+                LowestDistance = NPCDistanceX(I) + NPCDistanceY(I)
+                PlayerTarget = I
+            ElseIf NPCDistanceX(I) + NPCDistanceY(I) < LowestDistance Then
+                LowestDistance = NPCDistanceX(I) + NPCDistanceY(I)
+                PlayerTarget = I
             End If
         Next
         
@@ -5569,27 +5569,27 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     
     If KeyAscii = vbKeyTab And ShiftDown Then
         ' Set the Player distance for all the Players on the map
-        For i = 1 To Player_HighIndex
-            PlayerDistanceX(i) = Player(i).X - GetPlayerX(MyIndex)
-            PlayerDistanceY(i) = Player(i).Y - GetPlayerY(MyIndex)
+        For I = 1 To Player_HighIndex
+            PlayerDistanceX(I) = Player(I).X - GetPlayerX(MyIndex)
+            PlayerDistanceY(I) = Player(I).Y - GetPlayerY(MyIndex)
     
             ' Make sure we get a positive Value
-            If PlayerDistanceX(i) < 0 Then PlayerDistanceX(i) = PlayerDistanceX(i) * -1
-            If PlayerDistanceY(i) < 0 Then PlayerDistanceY(i) = PlayerDistanceY(i) * -1
+            If PlayerDistanceX(I) < 0 Then PlayerDistanceX(I) = PlayerDistanceX(I) * -1
+            If PlayerDistanceY(I) < 0 Then PlayerDistanceY(I) = PlayerDistanceY(I) * -1
         Next
         
         ' Clear the target constant
         PlayerTarget = 0
         
-        ' Find the closest Player target
-        For i = 1 To Player_HighIndex
-            If Not i = MyIndex Then
-                If i = 1 Then
-                    LowestDistance = PlayerDistanceX(i) + PlayerDistanceY(i)
-                    PlayerTarget = i
-                ElseIf PlayerDistanceX(i) + PlayerDistanceY(i) < LowestDistance Then
-                    LowestDistance = PlayerDistanceX(i) + PlayerDistanceY(i)
-                    PlayerTarget = i
+        ' Find the closest player target
+        For I = 1 To Player_HighIndex
+            If Not I = MyIndex Then
+                If I = 1 Then
+                    LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
+                    PlayerTarget = I
+                ElseIf PlayerDistanceX(I) + PlayerDistanceY(I) < LowestDistance Then
+                    LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
+                    PlayerTarget = I
                 End If
             End If
         Next
@@ -5606,8 +5606,8 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
 
     ' Check if we need to call a label
     If frmMain.picCurrency.Visible Then
-        If KeyAscii = vbKeyReturn = True Then Call lblCurrencyOk_Click
-        If KeyAscii = vbKeyEscape = True Then Call lblCurrencyCancel_Click
+        If KeyAscii = vbKeyReturn Then Call lblCurrencyOk_Click
+        If KeyAscii = vbKeyEscape Then Call lblCurrencyCancel_Click
     End If
     
     If frmMain.picDialogue.Visible Then
@@ -5630,7 +5630,7 @@ errorhandler:
 End Sub
 
 Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -5740,27 +5740,31 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
     End If
     
      ' Hotbar
-    If Options.WASD = 1 Then
-        For i = 1 To MAX_HOTBAR - 3 '
-            If KeyCode = 48 + i Then
-                SendHotbarUse i
-            End If
-        Next
-        ' Hot bar button 0
-        If KeyCode = 48 Then SendHotbarUse 10
-        
-        ' Hot bar button -
-        If KeyCode = 189 Then SendHotbarUse 11
-        
-        ' Hot bar button +
-        If KeyCode = 187 Then SendHotbarUse 12
-        Exit Sub
+    If frmMain.picCurrency.Visible Or (Not ChatLocked And Options.WASD = 1) Then
+        ' Do nothing
     Else
-        For i = 1 To MAX_HOTBAR
-            If KeyCode = 111 + i Then
-                SendHotbarUse i
-            End If
-        Next
+        If Options.WASD = 1 Then
+            For I = 1 To MAX_HOTBAR - 3 '
+                If KeyCode = 48 + I Then
+                    SendHotbarUse I
+                End If
+            Next
+            ' Hot bar button 0
+            If KeyCode = 48 Then SendHotbarUse 10
+            
+            ' Hot bar button -
+            If KeyCode = 189 Then SendHotbarUse 11
+            
+            ' Hot bar button +
+            If KeyCode = 187 Then SendHotbarUse 12
+            Exit Sub
+        Else
+            For I = 1 To MAX_HOTBAR
+                If KeyCode = 111 + I Then
+                    SendHotbarUse I
+                End If
+            Next
+        End If
     End If
     Exit Sub
     
@@ -5842,7 +5846,7 @@ Private Sub picInventory_DblClick()
     Dim InvNum As Long
     Dim Value As Long
     Dim Multiplier As Double
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -5884,12 +5888,12 @@ Private Sub picInventory_DblClick()
         ' In trade
         If InTrade > 0 Then
             ' Exit out if we're offering that item
-            For i = 1 To MAX_INV
-                If TradeYourOffer(i).num = InvNum Then
+            For I = 1 To MAX_INV
+                If TradeYourOffer(I).num = InvNum Then
                     ' Is currency?
-                    If item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).num)).stackable = 1 Then
+                    If item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(I).num)).stackable = 1 Then
                         ' Only exit out if we're offering all of it
-                        If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).num) Then Exit Sub
+                        If TradeYourOffer(I).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(I).num) Then Exit Sub
                     Else
                         Exit Sub
                     End If
@@ -5940,23 +5944,23 @@ End Sub
 
 Private Function IsEqItem(ByVal X As Single, ByVal Y As Single) As Long
     Dim TempRec As RECT
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    For i = 1 To Equipment.Equipment_Count - 1
-        If GetPlayerEquipment(MyIndex, i) > 0 And GetPlayerEquipment(MyIndex, i) <= MAX_ITEMS Then
+    For I = 1 To Equipment.Equipment_Count - 1
+        If GetPlayerEquipment(MyIndex, I) > 0 And GetPlayerEquipment(MyIndex, I) <= MAX_ITEMS Then
             With TempRec
-                .Top = EquipSlotTop(i)
+                .Top = EquipSlotTop(I)
                 .Bottom = .Top + PIC_Y
-                .Left = EquipSlotLeft(i)
+                .Left = EquipSlotLeft(I)
                 .Right = .Left + PIC_X
             End With
 
             If X >= TempRec.Left And X <= TempRec.Right Then
                 If Y >= TempRec.Top And Y <= TempRec.Bottom Then
-                    IsEqItem = i
+                    IsEqItem = I
                     Exit Function
                 End If
             End If
@@ -5972,23 +5976,23 @@ End Function
 
 Private Function IsInvItem(ByVal X As Single, ByVal Y As Single) As Long
     Dim TempRec As RECT
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    For i = 1 To MAX_INV
-        If GetPlayerInvItemNum(MyIndex, i) > 0 And GetPlayerInvItemNum(MyIndex, i) <= MAX_ITEMS Then
+    For I = 1 To MAX_INV
+        If GetPlayerInvItemNum(MyIndex, I) > 0 And GetPlayerInvItemNum(MyIndex, I) <= MAX_ITEMS Then
             With TempRec
-                .Top = InvTop + ((InvOffsetY + 32) * ((i - 1) \ InvColumns))
+                .Top = InvTop + ((InvOffsetY + 32) * ((I - 1) \ InvColumns))
                 .Bottom = .Top + PIC_Y
-                .Left = InvLeft + ((InvOffsetX + PIC_X) * (((i - 1) Mod InvColumns)))
+                .Left = InvLeft + ((InvOffsetX + PIC_X) * (((I - 1) Mod InvColumns)))
                 .Right = .Left + PIC_X
             End With
 
             If X >= TempRec.Left And X <= TempRec.Right Then
                 If Y >= TempRec.Top And Y <= TempRec.Bottom Then
-                    IsInvItem = i
+                    IsInvItem = I
                     Exit Function
                 End If
             End If
@@ -6004,23 +6008,23 @@ End Function
 
 Private Function IsPlayerSpell(ByVal X As Single, ByVal Y As Single) As Long
     Dim TempRec As RECT
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    For i = 1 To MAX_PLAYER_SPELLS
-        If PlayerSpells(i) > 0 And PlayerSpells(i) <= MAX_PLAYER_SPELLS Then
+    For I = 1 To MAX_PLAYER_SPELLS
+        If PlayerSpells(I) > 0 And PlayerSpells(I) <= MAX_PLAYER_SPELLS Then
             With TempRec
-                .Top = SpellTop + ((SpellOffsetY + 32) * ((i - 1) \ SpellColumns))
+                .Top = SpellTop + ((SpellOffsetY + 32) * ((I - 1) \ SpellColumns))
                 .Bottom = .Top + PIC_Y
-                .Left = SpellLeft + ((SpellOffsetX + PIC_X) * (((i - 1) Mod SpellColumns)))
+                .Left = SpellLeft + ((SpellOffsetX + PIC_X) * (((I - 1) Mod SpellColumns)))
                 .Right = .Left + PIC_X
             End With
 
             If X >= TempRec.Left And X <= TempRec.Right Then
                 If Y >= TempRec.Top And Y <= TempRec.Bottom Then
-                    IsPlayerSpell = i
+                    IsPlayerSpell = I
                     Exit Function
                 End If
             End If
@@ -6036,30 +6040,30 @@ End Function
 
 Private Function IsTradeItem(ByVal X As Single, ByVal Y As Single, ByVal Yours As Boolean) As Long
     Dim TempRec As RECT
-    Dim i As Long
+    Dim I As Long
     Dim ItemNum As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 1 To MAX_INV
+    For I = 1 To MAX_INV
         If Yours Then
-            ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).num)
+            ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(I).num)
         Else
-            ItemNum = TradeTheirOffer(i).num
+            ItemNum = TradeTheirOffer(I).num
         End If
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
             With TempRec
-                .Top = InvTop - 12 + ((InvOffsetY + 32) * ((i - 1) \ InvColumns))
+                .Top = InvTop - 12 + ((InvOffsetY + 32) * ((I - 1) \ InvColumns))
                 .Bottom = .Top + PIC_Y
-                .Left = InvLeft + ((InvOffsetX + PIC_X) * (((i - 1) Mod InvColumns)))
+                .Left = InvLeft + ((InvOffsetX + PIC_X) * (((I - 1) Mod InvColumns)))
                 .Right = .Left + PIC_X
             End With
 
             If X >= TempRec.Left And X <= TempRec.Right Then
                 If Y >= TempRec.Top And Y <= TempRec.Bottom Then
-                    IsTradeItem = i
+                    IsTradeItem = I
                     Exit Function
                 End If
             End If
@@ -6144,7 +6148,7 @@ End Sub
 
 Private Sub picInventory_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim InvNum As Byte
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -6161,12 +6165,12 @@ Private Sub picInventory_MouseMove(Button As Integer, Shift As Integer, X As Sin
         If Not InvNum = 0 Then
             ' Exit out if we're offering that item
             If InTrade > 0 Then
-                For i = 1 To MAX_INV
-                    If TradeYourOffer(i).num = InvNum Then
-                        ' is currency?
-                        If item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(i).num)).stackable = 1 Then
+                For I = 1 To MAX_INV
+                    If TradeYourOffer(I).num = InvNum Then
+                        ' Is currency?
+                        If item(GetPlayerInvItemNum(MyIndex, TradeYourOffer(I).num)).stackable = 1 Then
                             ' Only exit out if we're offering all of it
-                            If TradeYourOffer(i).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(i).num) Then Exit Sub
+                            If TradeYourOffer(I).Value = GetPlayerInvItemValue(MyIndex, TradeYourOffer(I).num) Then Exit Sub
                         Else
                             Exit Sub
                         End If
@@ -6194,7 +6198,7 @@ errorhandler:
 End Sub
 
 Private Sub picInventory_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Dim i As Long
+    Dim I As Long
     Dim rec_pos As RECT
     
     ' If debug mode, handle error then exit out
@@ -6204,18 +6208,18 @@ Private Sub picInventory_MouseUp(Button As Integer, Shift As Integer, X As Singl
     
     If DragInvSlot > 0 Then
         ' Drag and Drop
-        For i = 1 To MAX_INV
+        For I = 1 To MAX_INV
             With rec_pos
-                .Top = InvTop + ((InvOffsetY + 32) * ((i - 1) \ InvColumns))
+                .Top = InvTop + ((InvOffsetY + 32) * ((I - 1) \ InvColumns))
                 .Bottom = .Top + PIC_Y
-                .Left = InvLeft + ((InvOffsetX + PIC_X) * (((i - 1) Mod InvColumns)))
+                .Left = InvLeft + ((InvOffsetX + PIC_X) * (((I - 1) Mod InvColumns)))
                 .Right = .Left + PIC_X
             End With
 
             If X >= rec_pos.Left And X <= rec_pos.Right Then
                 If Y >= rec_pos.Top And Y <= rec_pos.Bottom Then '
-                    If Not DragInvSlot = i Then
-                        SendChangeInvSlots DragInvSlot, i
+                    If Not DragInvSlot = I Then
+                        SendChangeInvSlots DragInvSlot, I
                         Exit For
                     End If
                 End If
@@ -6223,17 +6227,17 @@ Private Sub picInventory_MouseUp(Button As Integer, Shift As Integer, X As Singl
         Next
         
         ' Hotbar
-        For i = 1 To MAX_HOTBAR
+        For I = 1 To MAX_HOTBAR
             With rec_pos
                 .Top = picHotbar.Top - picInventory.Top
-                .Left = picHotbar.Left - picInventory.Left + (HotbarOffsetX * (i - 1)) + (32 * (i - 1))
+                .Left = picHotbar.Left - picInventory.Left + (HotbarOffsetX * (I - 1)) + (32 * (I - 1))
                 .Right = .Left + 32
                 .Bottom = picHotbar.Top - picInventory.Top + 32
             End With
             
             If X >= rec_pos.Left And X <= rec_pos.Right Then
                 If Y >= rec_pos.Top And Y <= rec_pos.Bottom Then
-                    SendHotbarChange 1, DragInvSlot, i
+                    SendHotbarChange 1, DragInvSlot, I
                     DragInvSlot = 0
                     picTempInv.Visible = False
                     Exit Sub
@@ -6384,25 +6388,25 @@ errorhandler:
 End Sub
 
 Private Sub picBank_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    Dim i As Long
+    Dim I As Long
     Dim rec_pos As RECT
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If DragBankSlot > 0 Then
-        For i = 1 To MAX_BANK
+        For I = 1 To MAX_BANK
             With rec_pos
-                .Top = BankTop + ((BankOffsetY + 32) * ((i - 1) \ BankColumns))
+                .Top = BankTop + ((BankOffsetY + 32) * ((I - 1) \ BankColumns))
                 .Bottom = .Top + PIC_Y
-                .Left = BankLeft + ((BankOffsetX + PIC_X) * (((i - 1) Mod BankColumns)))
+                .Left = BankLeft + ((BankOffsetX + PIC_X) * (((I - 1) Mod BankColumns)))
                 .Right = .Left + PIC_X
             End With
 
             If X >= rec_pos.Left And X <= rec_pos.Right Then
                 If Y >= rec_pos.Top And Y <= rec_pos.Bottom Then
-                    If DragBankSlot <> i Then
-                        SwapBankSlots DragBankSlot, i
+                    If DragBankSlot <> I Then
+                        SwapBankSlots DragBankSlot, I
                         Exit For
                     End If
                 End If
@@ -6456,25 +6460,25 @@ End Sub
 
 Private Function IsBankItem(ByVal X As Single, ByVal Y As Single) As Long
     Dim TempRec As RECT
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     IsBankItem = 0
     
-    For i = 1 To MAX_BANK
-        If GetBankItemNum(i) > 0 And GetBankItemNum(i) <= MAX_ITEMS Then
+    For I = 1 To MAX_BANK
+        If GetBankItemNum(I) > 0 And GetBankItemNum(I) <= MAX_ITEMS Then
             With TempRec
-                .Top = BankTop + ((BankOffsetY + 32) * ((i - 1) \ BankColumns))
+                .Top = BankTop + ((BankOffsetY + 32) * ((I - 1) \ BankColumns))
                 .Bottom = .Top + PIC_Y
-                .Left = BankLeft + ((BankOffsetX + PIC_X) * (((i - 1) Mod BankColumns)))
+                .Left = BankLeft + ((BankOffsetX + PIC_X) * (((I - 1) Mod BankColumns)))
                 .Right = .Left + PIC_X
             End With
             
             If X >= TempRec.Left And X <= TempRec.Right Then
                 If Y >= TempRec.Top And Y <= TempRec.Bottom Then
-                    IsBankItem = i
+                    IsBankItem = I
                     Exit Function
                 End If
             End If

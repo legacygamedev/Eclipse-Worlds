@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.OCX"
 Begin VB.Form frmItemSpawner 
    Appearance      =   0  'Flat
    BorderStyle     =   4  'Fixed ToolWindow
@@ -157,7 +157,7 @@ Begin VB.Form frmItemSpawner
             ImageVarType    =   2
          EndProperty
          BeginProperty Tab10 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
-            Caption         =   "Sprite Changer"
+            Caption         =   "Sprite Change"
             ImageVarType    =   2
          EndProperty
       EndProperty

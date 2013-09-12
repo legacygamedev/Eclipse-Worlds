@@ -50,7 +50,6 @@ Public Sub Trim()
 End Sub
 
 Public Sub WriteByte(ByVal nByte As Byte)
-
     If WriteHead > BufferSize Then Allocate 1
  
     Buffer(WriteHead) = nByte
@@ -70,7 +69,6 @@ On Error Resume Next
 End Sub
 
 Public Sub WriteInteger(ByVal nInteger As Integer)
-
     If WriteHead + 1 > BufferSize Then Allocate 2
         
     CopyMemory Buffer(WriteHead), nInteger, 2
@@ -78,7 +76,6 @@ Public Sub WriteInteger(ByVal nInteger As Integer)
 End Sub
 
 Public Sub WriteLong(ByVal nLong As Long)
-
     If WriteHead + 3 > BufferSize Then Allocate 4
     
     CopyMemory Buffer(WriteHead), nLong, 4
@@ -87,7 +84,7 @@ End Sub
 
 Public Sub WriteString(ByRef nString As String)
     Dim sBytes() As Byte
-        Dim sLength As Long
+    Dim sLength As Long
     
     sLength = Len(nString)
     sBytes = StrConv(nString, vbFromUnicode)

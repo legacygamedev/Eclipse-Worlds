@@ -776,6 +776,7 @@ End Sub
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
+    
     frmMain.SubDaFocus Me.hWnd
     txtName.MaxLength = NAME_LENGTH
     txtSearch.MaxLength = NAME_LENGTH

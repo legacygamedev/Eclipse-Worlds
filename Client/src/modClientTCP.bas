@@ -71,7 +71,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Function ConnectToServer(ByVal i As Long) As Boolean
+Public Function ConnectToServer(ByVal I As Long) As Boolean
     Dim Wait As Long
 
     ' If debug mode, handle error then exit out
@@ -457,7 +457,7 @@ Public Sub SendSaveMap()
     Dim packet As String
     Dim X As Long
     Dim Y As Long
-    Dim i As Long, Z As Long, w As Long
+    Dim I As Long, Z As Long, w As Long
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -504,10 +504,10 @@ Public Sub SendSaveMap()
     For X = 0 To Map.MaxX
         For Y = 0 To Map.MaxY
             With Map.Tile(X, Y)
-                For i = 1 To MapLayer.Layer_Count - 1
-                    buffer.WriteLong .Layer(i).X
-                    buffer.WriteLong .Layer(i).Y
-                    buffer.WriteLong .Layer(i).Tileset
+                For I = 1 To MapLayer.Layer_Count - 1
+                    buffer.WriteLong .Layer(I).X
+                    buffer.WriteLong .Layer(I).Y
+                    buffer.WriteLong .Layer(I).Tileset
                 Next
                 
                 For Z = 1 To MapLayer.Layer_Count - 1
@@ -535,17 +535,17 @@ Public Sub SendSaveMap()
     buffer.WriteLong Map.EventCount
         
     If Map.EventCount > 0 Then
-        For i = 1 To Map.EventCount
-            With Map.events(i)
+        For I = 1 To Map.EventCount
+            With Map.events(I)
                 buffer.WriteString .name
                 buffer.WriteLong .Global
                 buffer.WriteLong .X
                 buffer.WriteLong .Y
-                buffer.WriteLong .pageCount
+                buffer.WriteLong .PageCount
             End With
-            If Map.events(i).pageCount > 0 Then
-                For X = 1 To Map.events(i).pageCount
-                    With Map.events(i).Pages(X)
+            If Map.events(I).PageCount > 0 Then
+                For X = 1 To Map.events(I).PageCount
+                    With Map.events(I).Pages(X)
                         buffer.WriteLong .chkVariable
                         buffer.WriteLong .VariableIndex
                         buffer.WriteLong .VariableCondition
@@ -599,13 +599,13 @@ Public Sub SendSaveMap()
                         buffer.WriteLong .Position
                     End With
                         
-                    If Map.events(i).Pages(X).CommandListCount > 0 Then
-                        For Y = 1 To Map.events(i).Pages(X).CommandListCount
-                            buffer.WriteLong Map.events(i).Pages(X).CommandList(Y).CommandCount
-                            buffer.WriteLong Map.events(i).Pages(X).CommandList(Y).ParentList
-                            If Map.events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
-                                For Z = 1 To Map.events(i).Pages(X).CommandList(Y).CommandCount
-                                    With Map.events(i).Pages(X).CommandList(Y).Commands(Z)
+                    If Map.events(I).Pages(X).CommandListCount > 0 Then
+                        For Y = 1 To Map.events(I).Pages(X).CommandListCount
+                            buffer.WriteLong Map.events(I).Pages(X).CommandList(Y).CommandCount
+                            buffer.WriteLong Map.events(I).Pages(X).CommandList(Y).ParentList
+                            If Map.events(I).Pages(X).CommandList(Y).CommandCount > 0 Then
+                                For Z = 1 To Map.events(I).Pages(X).CommandList(Y).CommandCount
+                                    With Map.events(I).Pages(X).CommandList(Y).Commands(Z)
                                         buffer.WriteLong .Index
                                         buffer.WriteString .Text1
                                         buffer.WriteString .Text2
@@ -2761,7 +2761,7 @@ errorhandler:
 End Sub
 
 Sub RequestSwitchesAndVariables()
-    Dim i As Long, buffer As clsBuffer
+    Dim I As Long, buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -2780,7 +2780,7 @@ errorhandler:
 End Sub
 
 Sub SendSwitchesAndVariables()
-    Dim i As Long, buffer As clsBuffer
+    Dim I As Long, buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -2788,12 +2788,12 @@ Sub SendSwitchesAndVariables()
     Set buffer = New clsBuffer
     buffer.WriteLong CSwitchesAndVariables
     
-    For i = 1 To MAX_SWITCHES
-        buffer.WriteString Switches(i)
+    For I = 1 To MAX_SWITCHES
+        buffer.WriteString Switches(I)
     Next
     
-    For i = 1 To MAX_VARIABLES
-        buffer.WriteString Variables(i)
+    For I = 1 To MAX_VARIABLES
+        buffer.WriteString Variables(I)
     Next
     
     SendData buffer.ToArray

@@ -36,16 +36,16 @@ Private WithEvents subclasser As cSelfSubHookCallback
 Attribute subclasser.VB_VarHelpID = -1
 Private Const WM_MOVE       As Long = &H3
 Public redrawMapPreview As Boolean
+
 Private Function scaleBase() As Byte
-If Map.MaxX >= Map.MaxY Then
-    scaleBase = CByte(255 \ Map.MaxX)
- Else
-    scaleBase = CByte(255 \ Map.MaxY)
-End If
+    If Map.MaxX >= Map.MaxY Then
+        scaleBase = CByte(255 \ Map.MaxX)
+     Else
+        scaleBase = CByte(255 \ Map.MaxY)
+    End If
 End Function
 
 Public Sub RecalcuateDimensions()
-
     Dim mapScale As Byte
     frmMapPreview.Caption = "Map Preview - #" & Player(MyIndex).Map
     mapScale = scaleBase()
@@ -56,14 +56,17 @@ Public Sub RecalcuateDimensions()
     Move frmMain.Left - Width - 80, frmMain.Top + 75
     redrawMapPreview = True
 End Sub
+
 Private Sub Form_Load()
     If subclasser Is Nothing Then
         Set subclasser = New cSelfSubHookCallback
     End If
+    
     If subclasser.ssc_Subclass(Me.hWnd, ByVal 1, 1, Me) Then
         subclasser.ssc_AddMsg Me.hWnd, eMsgWhen.MSG_BEFORE, WM_MOVE
     End If
-        RecalcuateDimensions
+    
+    RecalcuateDimensions
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -71,8 +74,6 @@ Private Sub Form_Unload(Cancel As Integer)
     subclasser.ssc_UnSubclass Me.hWnd
     Set subclasser = Nothing
 End Sub
-
-
 
 Private Sub picMapPreview_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If GetPlayerAccess(MyIndex) >= STAFF_MAPPER Then
@@ -102,4 +103,3 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
 ' DO NOT ADD ANY OTHER CODE BELOW THE "END SUB" STATEMENT BELOW
 ' *************************************************************
 End Sub
-

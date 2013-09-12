@@ -15,8 +15,11 @@ Public Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) 
 ' For Clear functions
 Public Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (Destination As Any, ByVal Length As Long)
 
+Public DX7 As New DirectX7  ' Master Object, early binding
+
 Public gameDestroyed As Boolean
 Public readyToExit As Boolean
+
 ' Swear filter
 Public SwearString As String
 
@@ -196,7 +199,7 @@ errorhandler:
 End Sub
 
 Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
-    Dim i As Long
+    Dim I As Long
 
     ' If we can't find the interface
     On Error GoTo errorhandler
@@ -207,8 +210,8 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
         Exit Sub
     End If
     
-    For i = 1 To MAX_MENUBUTTONS
-        Call RenderButton_Menu(i)
+    For I = 1 To MAX_MENUBUTTONS
+        Call RenderButton_Menu(I)
     Next
 
     ' Menu
@@ -250,8 +253,8 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     frmMain.imgEXPBar.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\experience.jpg")
     
     ' Gui Buttons
-    For i = 1 To MAX_MAINBUTTONS
-        frmMain.picButton(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\buttons\" & MainButton(i).FileName & "_norm.jpg")
+    For I = 1 To MAX_MAINBUTTONS
+        frmMain.picButton(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\buttons\" & MainButton(I).fileName & "_norm.jpg")
     Next
     
     ' Equipment Slots
@@ -278,9 +281,9 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     EXPBar_Width = frmMain.imgEXPBar.Width
         
     ' Main - Party Bars
-    For i = 1 To MAX_PARTY_MEMBERS
-        frmMain.imgPartyHealth(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_health.jpg")
-        frmMain.imgPartySpirit(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_spirit.jpg")
+    For I = 1 To MAX_PARTY_MEMBERS
+        frmMain.imgPartyHealth(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_health.jpg")
+        frmMain.imgPartySpirit(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_spirit.jpg")
     Next
     
     ' Party
@@ -590,7 +593,7 @@ errorhandler:
 End Function
 
 Public Function IsStringLegal(ByVal sInput As String) As Boolean
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -598,8 +601,8 @@ Public Function IsStringLegal(ByVal sInput As String) As Boolean
     ' Prevent high ascii chars
     Dim inputLen As Long
     inputLen = Len(sInput)
-    For i = 1 To inputLen
-        If Asc(Mid$(sInput, i, 1)) < vbKeySpace Or Asc(Mid$(sInput, i, 1)) > vbKeyF15 Then
+    For I = 1 To inputLen
+        If Asc(Mid$(sInput, I, 1)) < vbKeySpace Or Asc(Mid$(sInput, I, 1)) > vbKeyF15 Then
             Call AlertMsg("You cannot use high ASCII characters in your Name, please re-enter.")
             Exit Function
         End If
@@ -623,121 +626,121 @@ Public Sub CacheButtons()
     
     ' Menu - login
     With MenuButton(1)
-        .FileName = "login"
+        .fileName = "login"
         .State = 0 ' Normal
     End With
     
     ' Menu - Register
     With MenuButton(2)
-        .FileName = "register"
+        .fileName = "register"
         .State = 0 ' Normal
     End With
     
     ' Menu - Credits
     With MenuButton(3)
-        .FileName = "credits"
+        .fileName = "credits"
         .State = 0 ' Normal
     End With
     
     ' Menu - Exit
     With MenuButton(4)
-        .FileName = "exit"
+        .fileName = "exit"
         .State = 0 ' Normal
     End With
     
     ' Main - Inventory
     With MainButton(1)
-        .FileName = "btn_inv"
+        .fileName = "btn_inv"
         .State = 0 ' Normal
     End With
     
     ' Main - Spells
     With MainButton(2)
-        .FileName = "btn_spells"
+        .fileName = "btn_spells"
         .State = 0 ' Normal
     End With
     
     ' Main - Character
     With MainButton(3)
-        .FileName = "btn_chara"
+        .fileName = "btn_chara"
         .State = 0 ' Normal
     End With
     
     ' Main - Options
     With MainButton(4)
-        .FileName = "btn_options"
+        .fileName = "btn_options"
         .State = 0 ' Normal
     End With
     
     ' Main - Trade
     With MainButton(5)
-        .FileName = "btn_trade"
+        .fileName = "btn_trade"
         .State = 0 ' Normal
     End With
     
     ' Main - Party
     With MainButton(6)
-        .FileName = "btn_party"
+        .fileName = "btn_party"
         .State = 0 ' Normal
     End With
     
     ' Main - Friends
     With MainButton(7)
-        .FileName = "btn_friends"
+        .fileName = "btn_friends"
         .State = 0 ' Normal
     End With
     
     ' Main - Guild
     With MainButton(8)
-        .FileName = "btn_guild"
+        .fileName = "btn_guild"
         .State = 0 ' Normal
     End With
     
     ' Main - Notes
     With MainButton(9)
-        .FileName = "btn_notes"
+        .fileName = "btn_notes"
         .State = 0 ' Normal
     End With
 
     ' Main - Titles
     With MainButton(10)
-        .FileName = "btn_titles"
+        .fileName = "btn_titles"
         .State = 0 ' Normal
     End With
     
     ' Main - Talents
     With MainButton(11)
-        .FileName = "btn_talents"
+        .fileName = "btn_talents"
         .State = 0  ' Normal
     End With
     
     ' Main - Foes
     With MainButton(12)
-        .FileName = "btn_foes"
+        .fileName = "btn_foes"
         .State = 0 ' Normal
     End With
     
     ' Main - Map
     With MainButton(13)
-        .FileName = "btn_map"
+        .fileName = "btn_map"
         .State = 0 ' Normal
     End With
     
     ' Main - Hide/Show Buttons
     With MainButton(14)
-        .FileName = "btn_showpanels"
+        .fileName = "btn_showpanels"
         .State = 0 ' Normal
     End With
     
     ' Main - Hide/Show GUI
     With MainButton(15)
-        .FileName = "btn_hidegui"
+        .fileName = "btn_hidegui"
         .State = 0 ' Normal
     End With
     
     ' Main - Equipment
     With MainButton(16)
-        .FileName = "btn_equipment"
+        .fileName = "btn_equipment"
         .State = 0 ' Normal
     End With
     Exit Sub
@@ -749,14 +752,14 @@ errorhandler:
 End Sub
 
 Public Sub ResetMenuButtons()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 1 To MAX_MENUBUTTONS
-        If Not CurButton_Menu = i Then
-            frmMenu.ImgButton(i).Picture = LoadPicture(App.Path & GFX_PATH & "gui\menu\buttons\" & MenuButton(i).FileName & "_norm.jpg")
+    For I = 1 To MAX_MENUBUTTONS
+        If Not CurButton_Menu = I Then
+            frmMenu.ImgButton(I).Picture = LoadPicture(App.Path & GFX_PATH & "gui\menu\buttons\" & MenuButton(I).fileName & "_norm.jpg")
         End If
     Next
     Exit Sub
@@ -786,7 +789,7 @@ Public Sub RenderButton_Menu(ByVal ButtonNum As Long)
     End Select
     
     ' Render the button
-    frmMenu.ImgButton(ButtonNum).Picture = LoadPicture(App.Path & MENUBUTTON_PATH & MenuButton(ButtonNum).FileName & bSuffix & ".jpg")
+    frmMenu.ImgButton(ButtonNum).Picture = LoadPicture(App.Path & MENUBUTTON_PATH & MenuButton(ButtonNum).fileName & bSuffix & ".jpg")
     Exit Sub
     
 ' Error handler
@@ -818,21 +821,21 @@ errorhandler:
 End Sub
 
 Public Sub PopulateLists()
-    Dim StrLoad As String, i As Long
+    Dim StrLoad As String, I As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Cache music list
     StrLoad = Dir$(App.Path & MUSIC_PATH & "*")
-    i = 1
+    I = 1
     
     If Not StrLoad = vbNullString Then
         Do While StrLoad > vbNullString
-            ReDim Preserve MusicCache(1 To i) As String
-            MusicCache(i) = StrLoad
+            ReDim Preserve MusicCache(1 To I) As String
+            MusicCache(I) = StrLoad
             StrLoad = Dir
-            i = i + 1
+            I = I + 1
         Loop
     Else
         ReDim Preserve MusicCache(1) As String
@@ -841,18 +844,18 @@ Public Sub PopulateLists()
     
     ' Cache sound list
     StrLoad = Dir$(App.Path & SOUND_PATH & "*")
-    i = 1
+    I = 1
     
     If Not StrLoad = vbNullString Then
         Do While StrLoad > vbNullString
-            ReDim Preserve SoundCache(1 To i) As String
-            SoundCache(i) = StrLoad
+            ReDim Preserve SoundCache(1 To I) As String
+            SoundCache(I) = StrLoad
             StrLoad = Dir
-            i = i + 1
+            I = I + 1
         Loop
     Else
         ReDim Preserve SoundCache(1) As String
-        SoundCache(i) = vbNullString
+        SoundCache(I) = vbNullString
     End If
     Exit Sub
     
@@ -900,7 +903,7 @@ errorhandler:
 End Sub
 
 Public Function CheckMessage(ByVal msg As String) As String
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -909,10 +912,10 @@ Public Function CheckMessage(ByVal msg As String) As String
     
     ' Do nothing if the filter is turned off
     If Options.SwearFilter = 0 Then Exit Function
-    Dim size As Long
-    size = UBound(SwearArray)
-    For i = 0 To size
-        CheckMessage = Replace$(CheckMessage, SwearArray(i), ReplaceSwearArray(i), , , vbTextCompare)
+    Dim Size As Long
+    Size = UBound(SwearArray)
+    For I = 0 To Size
+        CheckMessage = Replace$(CheckMessage, SwearArray(I), ReplaceSwearArray(I), , , vbTextCompare)
     Next
     Exit Function
     
@@ -1013,8 +1016,8 @@ Public Sub LogoutGame()
     frmMain.txtMyChat.text = vbNullString
     
       ' Reset buttons manually
-    MainButton(14).FileName = "btn_showpanels"
-    MainButton(15).FileName = "btn_hidegui"
+    MainButton(14).fileName = "btn_showpanels"
+    MainButton(15).fileName = "btn_hidegui"
     
     Call ToggleButtons(False)
     Call frmMain.ResetMainButtons
@@ -1056,6 +1059,7 @@ Public Sub CloseInterfaces()
     ' Close if in trade
     If frmMain.picTrade.Visible Then CloseTrade
 End Sub
+
 Function FormCount(ByVal frmName As String) As Long
     Dim frm As Form, counter As Long
     FormCount = -1
@@ -1068,6 +1072,7 @@ Function FormCount(ByVal frmName As String) As Long
     Next
     
 End Function
+
 Function FormLoaded(ByVal frmName As String) As Boolean
     Dim formNum As Long
     formNum = FormCount(frmName)
@@ -1075,6 +1080,7 @@ Function FormLoaded(ByVal frmName As String) As Boolean
         FormLoaded = True
     End If
 End Function
+
 Function FormVisible(ByVal frmName As String) As Boolean
     Dim formNum As Long
     formNum = FormCount(frmName)

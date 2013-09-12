@@ -657,7 +657,7 @@ Private Type AnimationRec
     Sprite(0 To 1) As Long
     Frames(0 To 1) As Long
     LoopCount(0 To 1) As Long
-    LoopTime(0 To 1) As Long
+    looptime(0 To 1) As Long
 End Type
 
 Private Type AnimInstanceRec
@@ -666,7 +666,7 @@ Private Type AnimInstanceRec
     Y As Byte
     
     ' Used for locking to players/npcs
-    lockIndex As Long
+    LockIndex As Long
     LockType As Byte
     
     ' Timing

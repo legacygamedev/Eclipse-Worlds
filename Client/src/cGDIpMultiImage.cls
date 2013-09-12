@@ -41,7 +41,7 @@ End Type
 Private Const PropertyTagTypeLong = 4&
 Private Const PropertyTagTypeShort = 3&
 
-Private m_Index As Long             ' current multi-image index
+Private m_Index As Long             ' Current multi-image index
 Private m_Count As Long             ' number of frames/pages/icons
 Private m_GUID(0 To 3) As Long      ' Either TIFF or GIF GUID for pages/frames
 Private m_Image As Long             ' Reference to source image
@@ -57,7 +57,7 @@ Public Function GetGifFramePalette(thePalette() As Long, ByRef TransparencyIndex
     ' Function returns the palette, sized appropriately, and the transparency index
     ' If no transparency index exists then the TransparencyIndex parameter will be -1&
     
-    Dim palSize As Long, tPal() As Long, x As Long
+    Dim palSize As Long, tPal() As Long, X As Long
     Const PaletteFlagsHasAlpha As Long = 1&
     
     ' GDI+ palette structure looks like:
@@ -74,12 +74,12 @@ Public Function GetGifFramePalette(thePalette() As Long, ByRef TransparencyIndex
                      ReDim thePalette(0 To palSize \ 4& - 1&)
                      CopyMemory thePalette(0), tPal(2), palSize
                      If (tPal(0) And PaletteFlagsHasAlpha) Then   ' palette contains alpha channels
-                         For x = 0& To UBound(thePalette)
+                         For X = 0& To UBound(thePalette)
                             ' positive values should be negative since alpha channel is supplied with color
                             ' So a non-negative value should be the index. But we will validate correctly vs
                             ' just checking to see if the palette value is => -1
-                             If (thePalette(x) And &HFFFFFF) = thePalette(x) Then
-                                 TransparencyIndex = x
+                             If (thePalette(X) And &HFFFFFF) = thePalette(X) Then
+                                 TransparencyIndex = X
                                  Exit For
                              End If
                          Next
@@ -198,7 +198,7 @@ Public Sub MovePrevious()
     End If
 End Sub
 
-Friend Sub frSetImage(ByVal lparam As Long, ByVal ImageType As Long)
+Friend Sub frSetImage(ByVal lParam As Long, ByVal ImageType As Long)
     
     Const FrameDimensionTime As String = "{6AEDBD6D-3FB5-418A-83A6-7F45229DC872}"
     Const FrameDimensionPage As String = "{7462DC86-6180-4C7E-8E3F-EE7333A7A483}"
@@ -207,18 +207,18 @@ Friend Sub frSetImage(ByVal lparam As Long, ByVal ImageType As Long)
     m_Index = 0&
     m_IsGIF = False
     If ImageType = 2& Then ' GIF
-        m_Image = lparam
+        m_Image = lParam
         CLSIDFromString StrPtr(FrameDimensionTime), m_GUID(0)
-        Call GdipImageGetFrameCount(lparam, m_GUID(0), m_Count)
+        Call GdipImageGetFrameCount(lParam, m_GUID(0), m_Count)
         Call pvExtractFrameDelays
         m_IsGIF = True
     ElseIf ImageType = 8& Then ' TIFF
-        m_Image = lparam
+        m_Image = lParam
         CLSIDFromString StrPtr(FrameDimensionPage), m_GUID(0)
-        Call GdipImageGetFrameCount(lparam, m_GUID(0), m_Count)
+        Call GdipImageGetFrameCount(lParam, m_GUID(0), m_Count)
     Else    ' ICO or CUR
         ' lParam is the count
-        m_Count = lparam
+        m_Count = lParam
     End If
     
 End Sub
@@ -233,7 +233,7 @@ Private Sub pvChangeFrame(newIndex As Long)
                     m_Index = newIndex
                     RaiseEvent FrameChanged(newIndex)
                 End If
-            Else ' icon/cursor
+            Else ' Icon/cursor
                 m_Index = newIndex
                 RaiseEvent FrameChanged(newIndex)
             End If
@@ -245,7 +245,7 @@ End Sub
 Private Sub pvExtractFrameDelays()
 
     Dim bPropData() As Byte
-    Dim i As Long
+    Dim I As Long
     Dim lPropSize As Long
     Dim tPropItem As PropertyItem
     Const PropertyTagFrameDelay As Long = &H5100&
@@ -261,9 +261,9 @@ Private Sub pvExtractFrameDelays()
                 If tPropItem.Type = PropertyTagTypeLong Then
                     If tPropItem.Length = m_Count * PropertyTagTypeLong Then
                         CopyMemory m_FrameDelays(0), ByVal tPropItem.Value, tPropItem.Length
-                        For i = 0& To m_Count - 1&
+                        For I = 0& To m_Count - 1&
                             ' gif frame delays are in 1/10 seconds, convert to 1/1000
-                            m_FrameDelays(i) = (m_FrameDelays(i) And &HFFFF&) * 10&
+                            m_FrameDelays(I) = (m_FrameDelays(I) And &HFFFF&) * 10&
                         Next
                     End If
                 End If
