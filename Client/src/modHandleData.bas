@@ -396,7 +396,7 @@ Sub HandleMapWornEq(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr A
     
     ' Item number
     For I = 1 To Equipment.Equipment_Count - 1
-        Call SetPlayerEquipment(MyIndex, buffer.ReadLong, I)
+        Call SetPlayerEquipment(playerNum, buffer.ReadLong, I)
     Next
     Exit Sub
     
@@ -606,7 +606,7 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
     
     ' Player titles
     For X = 1 To Player(I).AmountOfTitles
-        Player(I).title(X) = buffer.ReadByte
+        Player(I).Title(X) = buffer.ReadByte
     Next
     
     ' Current title
@@ -744,7 +744,7 @@ Private Sub HandlePlayerTitles(ByVal Index As Long, ByRef data() As Byte, ByVal 
     
     ' Player titles
     For I = 1 To Player(Index).AmountOfTitles
-        Player(Index).title(I) = buffer.ReadByte
+        Player(Index).Title(I) = buffer.ReadByte
     Next
     
     ' Current title
@@ -1132,7 +1132,7 @@ Sub HandleMapData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As 
     buffer.WriteBytes data()
 
     MapNum = buffer.ReadLong
-    Map.Name = buffer.ReadString
+    Map.name = buffer.ReadString
     Map.Music = buffer.ReadString
     Map.BGS = buffer.ReadString
     Map.Revision = buffer.ReadLong
@@ -1476,7 +1476,7 @@ Private Sub HandleItemEditor()
 
         ' Add the names
         For I = 1 To MAX_ITEMS
-            .lstIndex.AddItem I & ": " & Trim$(item(I).Name)
+            .lstIndex.AddItem I & ": " & Trim$(Item(I).name)
         Next
 
         .Show
@@ -1509,7 +1509,7 @@ Private Sub HandleAnimationEditor()
 
         ' Add the names
         For I = 1 To MAX_ANIMATIONS
-            .lstIndex.AddItem I & ": " & Trim$(Animation(I).Name)
+            .lstIndex.AddItem I & ": " & Trim$(Animation(I).name)
         Next
 
         .Show
@@ -1544,10 +1544,10 @@ Private Sub HandleUpdateItem(ByVal Index As Long, ByRef data() As Byte, ByVal St
     n = buffer.ReadLong
     
     ' Update the item
-    ItemSize = LenB(item(n))
+    ItemSize = LenB(Item(n))
     ReDim ItemData(ItemSize - 1)
     ItemData = buffer.ReadBytes(ItemSize)
-    CopyMemory ByVal VarPtr(item(n)), ByVal VarPtr(ItemData(0)), ItemSize
+    CopyMemory ByVal VarPtr(Item(n)), ByVal VarPtr(ItemData(0)), ItemSize
     Set buffer = Nothing
 
     ' Changes to inventory, need to clear any drop menu
@@ -1557,7 +1557,7 @@ Private Sub HandleUpdateItem(ByVal Index As Long, ByRef data() As Byte, ByVal St
     CurrencyMenu = 0 ' Clear
     
     If FormVisible("frmItemSpawner") Then
-        If item(n).Type = frmItemSpawner.tabItems.SelectedItem.Index - 2 Then
+        If Item(n).Type = frmItemSpawner.tabItems.SelectedItem.Index - 2 Then
             frmItemSpawner.updatingItem = True
             frmItemSpawner.tabItems_Click
         End If
@@ -1659,7 +1659,7 @@ Private Sub HandleNPCEditor()
 
         ' Add the names
         For I = 1 To MAX_NPCS
-            .lstIndex.AddItem I & ": " & Trim$(NPC(I).Name)
+            .lstIndex.AddItem I & ": " & Trim$(NPC(I).name)
         Next
 
         .Show
@@ -1686,7 +1686,7 @@ Private Sub HandleUpdateNPC(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     Dim NPCSize As Long
     Dim NPCData() As Byte
     Dim I As Long
-    Dim Name As String
+    Dim name As String
     Dim Letter As String
     
     ' If debug mode, handle error then exit out
@@ -1707,8 +1707,8 @@ Private Sub HandleUpdateNPC(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     If n = MAX_NPCS Then
         For I = 1 To MAX_NPCS
             If LenB(NPC(I)) = 0 Then
-                NPC(I).Name = vbNullString
-                NPC(I).title = vbNullString
+                NPC(I).name = vbNullString
+                NPC(I).Title = vbNullString
                 NPC(I).AttackSay = vbNullString
             End If
         Next
@@ -1734,7 +1734,7 @@ Private Sub HandleResourceEditor()
 
         ' Add the names
         For I = 1 To MAX_RESOURCES
-            .lstIndex.AddItem I & ": " & Trim$(Resource(I).Name)
+            .lstIndex.AddItem I & ": " & Trim$(Resource(I).name)
         Next
 
         .Show
@@ -1850,7 +1850,7 @@ Private Sub HandleShopEditor()
 
         ' Add the names
         For I = 1 To MAX_SHOPS
-            .lstIndex.AddItem I & ": " & Trim$(Shop(I).Name)
+            .lstIndex.AddItem I & ": " & Trim$(Shop(I).name)
         Next
 
         .Show
@@ -1915,7 +1915,7 @@ Private Sub HandleSpellEditor()
 
         ' Add the names
         For I = 1 To MAX_SPELLS
-            .lstIndex.AddItem I & ": " & Trim$(Spell(I).Name)
+            .lstIndex.AddItem I & ": " & Trim$(Spell(I).name)
         Next
 
         .Show
@@ -2270,7 +2270,7 @@ End Sub
 Private Sub HandleSayMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
     Dim Access As Long
-    Dim Name As String
+    Dim name As String
     Dim Message As String
     Dim Color As Long
     Dim Header As String
@@ -2284,7 +2284,7 @@ Private Sub HandleSayMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    Name = buffer.ReadString
+    name = buffer.ReadString
     Access = buffer.ReadLong
     PK = buffer.ReadLong
     Message = CheckMessage(buffer.ReadString)
@@ -2329,7 +2329,7 @@ Private Sub HandleSayMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
     
     frmMain.txtChat.SelStart = Len(frmMain.txtChat.text)
     frmMain.txtChat.SelColor = Color
-    frmMain.txtChat.SelText = vbNewLine & Header & Name & ": "
+    frmMain.txtChat.SelText = vbNewLine & Header & name & ": "
     
     If SayColor < Orange Then
         frmMain.txtChat.SelColor = QBColor(SayColor)
@@ -2416,8 +2416,8 @@ Private Sub HandleBank(ByVal Index As Long, ByRef data() As Byte, ByVal StartAdd
     buffer.WriteBytes data()
     
     For I = 1 To MAX_BANK
-        bank.item(I).num = buffer.ReadLong
-        bank.item(I).Value = buffer.ReadLong
+        Bank.Item(I).num = buffer.ReadLong
+        Bank.Item(I).Value = buffer.ReadLong
     Next
     
     InBank = True
@@ -2489,14 +2489,14 @@ Private Sub HandleTradeUpdate(ByVal Index As Long, ByRef data() As Byte, ByVal S
             TradeYourOffer(I).Value = buffer.ReadLong
         Next
         
-        frmMain.lblYourWorth.Caption = buffer.ReadLong & " " & Trim$(item(1).Name)
+        frmMain.lblYourWorth.Caption = buffer.ReadLong & " " & Trim$(Item(1).name)
     ElseIf DataType = 1 Then ' Theirs
         For I = 1 To MAX_INV
             TradeTheirOffer(I).num = buffer.ReadLong
             TradeTheirOffer(I).Value = buffer.ReadLong
         Next
         
-        frmMain.lblTheirWorth.Caption = buffer.ReadLong & " " & Trim$(item(1).Name)
+        frmMain.lblTheirWorth.Caption = buffer.ReadLong & " " & Trim$(Item(1).name)
     End If
     
     Set buffer = Nothing
@@ -2625,7 +2625,7 @@ End Sub
 
 Private Sub HandlePartyInvite(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim Name As String
+    Dim name As String
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -2633,9 +2633,9 @@ Private Sub HandlePartyInvite(ByVal Index As Long, ByRef data() As Byte, ByVal S
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
 
-    Name = buffer.ReadString
+    name = buffer.ReadString
     
-    Dialogue "Party Invitation", Name & " has invited you to a party. Would you like to join?", DIALOGUE_TYPE_PARTY, True
+    Dialogue "Party Invitation", name & " has invited you to a party. Would you like to join?", DIALOGUE_TYPE_PARTY, True
     Exit Sub
     
 ' Error handler
@@ -2646,7 +2646,7 @@ End Sub
 
 Private Sub HandleGuildInvite(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim Name As String, Guild As String
+    Dim name As String, Guild As String
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
@@ -2654,10 +2654,10 @@ Private Sub HandleGuildInvite(ByVal Index As Long, ByRef data() As Byte, ByVal S
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
 
-    Name = buffer.ReadString
+    name = buffer.ReadString
     Guild = buffer.ReadString
     
-    Dialogue "Guild Invitation", Name & " has invited you to join the guild " & Guild & "!", DIALOGUE_TYPE_GUILD, True
+    Dialogue "Guild Invitation", name & " has invited you to join the guild " & Guild & "!", DIALOGUE_TYPE_GUILD, True
     Exit Sub
     
 ' Error handler
@@ -2772,7 +2772,7 @@ Private Sub HandleSpawnEventPage(ByVal Index As Long, ByRef data() As Byte, ByVa
     End If
 
     With Map.MapEvents(id)
-        .Name = buffer.ReadString
+        .name = buffer.ReadString
         .Dir = buffer.ReadLong
         .ShowDir = .Dir
         .GraphicNum = buffer.ReadLong
@@ -3099,7 +3099,7 @@ Private Sub HandleMapEventData(ByVal Index As Long, ByRef data() As Byte, ByVal 
         ReDim Map.events(0 To Map.EventCount)
         For I = 1 To Map.EventCount
             With Map.events(I)
-                .Name = buffer.ReadString
+                .name = buffer.ReadString
                 .Global = buffer.ReadLong
                 .X = buffer.ReadLong
                 .Y = buffer.ReadLong
@@ -3492,7 +3492,7 @@ Private Sub HandleCheckpoint(ByVal Index As Long, ByRef data() As Byte, ByVal St
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    Player(MyIndex).Name = buffer.ReadLong
+    Player(MyIndex).name = buffer.ReadLong
     Set buffer = Nothing
     Exit Sub
     
@@ -3553,7 +3553,7 @@ Sub HandleFriendsList(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr
     For I = 1 To AmountOfFriends
         FriendsName = buffer.ReadString
         frmMain.lstFriends.AddItem buffer.ReadString
-        Player(MyIndex).Friends(I).Name = FriendsName
+        Player(MyIndex).Friends(I).name = FriendsName
     Next
     
     If frmMain.lstFriends.ListCount > 0 Then
@@ -3593,7 +3593,7 @@ Sub HandleFoesList(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As
     For I = 1 To AmountOfFoes
         FoesName = buffer.ReadString
         frmMain.lstFoes.AddItem buffer.ReadString
-        Player(MyIndex).Foes(I).Name = FoesName
+        Player(MyIndex).Foes(I).name = FoesName
     Next
     
     If frmMain.lstFoes.ListCount > 0 Then
@@ -3775,10 +3775,10 @@ Private Sub HandleUpdateTitle(ByVal Index As Long, ByRef data() As Byte, ByVal S
     n = buffer.ReadLong
     
     ' Update the Title
-    TitleSize = LenB(title(n))
+    TitleSize = LenB(Title(n))
     ReDim TitleData(TitleSize - 1)
     TitleData = buffer.ReadBytes(TitleSize)
-    CopyMemory ByVal VarPtr(title(n)), ByVal VarPtr(TitleData(0)), TitleSize
+    CopyMemory ByVal VarPtr(Title(n)), ByVal VarPtr(TitleData(0)), TitleSize
     Set buffer = Nothing
     Exit Sub
     
@@ -3801,7 +3801,7 @@ Private Sub HandleTitleEditor(ByVal Index As Long, ByRef data() As Byte, ByVal S
         
         ' Add the names
         For I = 1 To MAX_TITLES
-            .lstIndex.AddItem I & ": " & Trim$(title(I).Name)
+            .lstIndex.AddItem I & ": " & Trim$(Title(I).name)
         Next
 
         .Show
@@ -3866,7 +3866,7 @@ Private Sub HandleMoralEditor(ByVal Index As Long, _
         
         ' Add the names
         For I = 1 To MAX_MORALS
-            .lstIndex.AddItem I & ": " & Trim$(Moral(I).Name)
+            .lstIndex.AddItem I & ": " & Trim$(Moral(I).name)
         Next
 
         .Show
@@ -3904,7 +3904,7 @@ Private Sub HandleClassEditor(ByVal Index As Long, _
         
         ' Add the names
         For I = 1 To MAX_CLASSES
-            .lstIndex.AddItem I & ": " & Trim$(Class(I).Name)
+            .lstIndex.AddItem I & ": " & Trim$(Class(I).name)
         Next
 
         .Show
@@ -4070,8 +4070,8 @@ Private Sub UpdateCharacterMenu()
     n = 1
     
     For I = 1 To MAX_CLASSES
-        If Class(I).Locked = 0 And Not Trim$(Class(I).Name) = vbNullString Then
-            frmMenu.cmbClass.AddItem Trim$(Class(I).Name)
+        If Class(I).Locked = 0 And Not Trim$(Class(I).name) = vbNullString Then
+            frmMenu.cmbClass.AddItem Trim$(Class(I).name)
             ClassSelection(n) = I
             n = n + 1
         End If

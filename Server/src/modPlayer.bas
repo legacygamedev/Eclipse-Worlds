@@ -36,8 +36,9 @@ Sub JoinGame(ByVal Index As Long)
     Call SendSpells(Index)
     Call SendResources(Index)
     Call SendInventory(Index)
+    Call SendWornEquipment(Index)
+    Call SendMapEquipment(Index)
     Call CheckEquippedItems(Index)
-    Call SendPlayerEquipmentTo(Index)
     Call SendHotbar(Index)
     Call SendTitles(Index)
     Call SendMorals(Index)
@@ -255,9 +256,11 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     
     ' Save old map to send erase player data to
     OldMap = GetPlayerMap(Index)
+    
     If OldMap <> MapNum Then
         UpdateMapBlock OldMap, GetPlayerX(Index), GetPlayerY(Index), False
     End If
+    
     Call SetPlayerX(Index, X)
     Call SetPlayerY(Index, Y)
     UpdateMapBlock MapNum, X, Y, True
@@ -303,6 +306,20 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     If Not OldMap = MapNum Then
         ' Set the new map
         Call SetPlayerMap(Index, MapNum)
+    End If
+    
+    ' Send player's equipment to new map
+    SendMapEquipment Index
+    
+    ' Send equipment of all people on new map
+    If GetTotalMapPlayers(MapNum) > 0 Then
+        For i = 1 To Player_HighIndex
+            If IsPlaying(i) Then
+                If GetPlayerMap(i) = MapNum Then
+                    SendMapEquipmentTo i, Index
+                End If
+            End If
+        Next
     End If
     
     ' Now we check if there were any players left on the map the player just left, and if not stop processing npcs
@@ -1525,8 +1542,8 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                 
                 ' Send update
                 SendInventoryUpdate Index, InvNum
-                SendPlayerEquipmentTo Index
-                SendPlayerEquipmentToMapBut Index
+                Call SendWornEquipment(Index)
+                Call SendMapEquipment(Index)
                 SendPlayerStats Index
                 
                 ' Send vitals
@@ -2152,7 +2169,8 @@ Public Sub DamagePlayerEquipment(ByVal Index As Long, ByVal EquipmentSlot As Byt
         
             ' Take away 1 durability
             Call SetPlayerEquipmentDur(Index, GetPlayerEquipmentDur(Index, EquipmentSlot) - 1, EquipmentSlot)
-            Call SendPlayerEquipmentTo(Index)
+            Call SendWornEquipment(Index)
+            Call SendMapEquipment(Index)
                 
             If GetPlayerEquipmentDur(Index, EquipmentSlot) < 1 Then
                 Call PlayerMsg(Index, "Your " & Trim$(Item(ItemNum).Name) & " has broken.", BrightRed)

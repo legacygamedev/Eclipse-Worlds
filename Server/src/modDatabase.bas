@@ -727,6 +727,7 @@ Sub ClearItem(ByVal Index As Long)
     Item(Index).Name = vbNullString
     Item(Index).Desc = vbNullString
     Item(Index).Sound = vbNullString
+    Item(Index).Rarity = 1
 End Sub
 
 Sub ClearItems()

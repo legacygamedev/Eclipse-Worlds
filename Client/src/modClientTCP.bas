@@ -847,9 +847,9 @@ Public Sub SendSaveItem(ByVal ItemNum As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
-    ItemSize = LenB(item(ItemNum))
+    ItemSize = LenB(Item(ItemNum))
     ReDim ItemData(ItemSize - 1)
-    CopyMemory ItemData(0), ByVal VarPtr(item(ItemNum)), ItemSize
+    CopyMemory ItemData(0), ByVal VarPtr(Item(ItemNum)), ItemSize
     buffer.WriteLong CSaveItem
     buffer.WriteLong ItemNum
     buffer.WriteBytes ItemData
@@ -1038,7 +1038,7 @@ Public Sub SendDropItem(ByVal InvNum As Byte, ByVal Amount As Long)
     ' Do basic checks
     If InvNum < 1 Or InvNum > MAX_INV Then Exit Sub
     If PlayerInv(InvNum).num < 1 Or PlayerInv(InvNum).num > MAX_ITEMS Then Exit Sub
-    If item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
+    If Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
         If Amount < 1 Or Amount > PlayerInv(InvNum).Value Then Exit Sub
     End If
     
@@ -1552,7 +1552,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub SendSpawnItem(ByVal TmpItem As Long, ByVal TmpAmount As Long, where As Boolean)
+Sub SendSpawnItem(ByVal TmpItem As Long, ByVal TmpAmount As Long, Where As Boolean)
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -1562,7 +1562,12 @@ Sub SendSpawnItem(ByVal TmpItem As Long, ByVal TmpAmount As Long, where As Boole
     buffer.WriteLong CSpawnItem
     buffer.WriteLong TmpItem
     buffer.WriteLong TmpAmount
-    buffer.WriteInteger where
+    
+    If Where Then
+        buffer.WriteInteger 1
+    Else
+        buffer.WriteInteger 0
+    End If
     
     SendData buffer.ToArray()
     Set buffer = Nothing
@@ -1891,7 +1896,7 @@ Public Sub SendHotbarChange(ByVal sType As Byte, ByVal Slot As Byte, ByVal Hotba
     
     If sType = 1 Then
         ' Don't add None/Currency/Auto Life type items
-        If item(GetPlayerInvItemNum(MyIndex, Slot)).stackable = 1 Or item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_NONE Or item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_AUTOLIFE Then
+        If Item(GetPlayerInvItemNum(MyIndex, Slot)).stackable = 1 Or Item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(MyIndex, Slot)).Type = ITEM_TYPE_AUTOLIFE Then
             Call AddText("You can't add that type of item to your hotbar!", BrightRed)
             Exit Sub
         End If
@@ -2405,9 +2410,9 @@ Sub SendSaveTitle(ByVal TitleNum As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
-    TitleSize = LenB(title(TitleNum))
+    TitleSize = LenB(Title(TitleNum))
     ReDim TitleData(TitleSize - 1)
-    CopyMemory TitleData(0), ByVal VarPtr(title(TitleNum)), TitleSize
+    CopyMemory TitleData(0), ByVal VarPtr(Title(TitleNum)), TitleSize
     buffer.WriteLong CSaveTitle
     buffer.WriteLong TitleNum
     buffer.WriteBytes TitleData

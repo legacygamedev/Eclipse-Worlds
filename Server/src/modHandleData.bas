@@ -2282,6 +2282,7 @@ Sub HandleSpawnItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     Dim Buffer As clsBuffer
     Dim TmpItem As Long
     Dim TmpAmount As Long
+    Dim Where As Integer
     
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
@@ -2293,7 +2294,10 @@ Sub HandleSpawnItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     TmpItem = Buffer.ReadLong
     TmpAmount = Buffer.ReadLong
     
-    If Moral(GetPlayerMap(Index)).CanDropItem = 1 Then
+    ' Location
+    Where = Buffer.ReadInteger
+    
+    If Moral(GetPlayerMap(Index)).CanDropItem = 1 And Where = 1 Then
         SpawnItem TmpItem, TmpAmount, Item(TmpItem).Data1, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Index)
         Call PlayerMsg(Index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been dropped beneath you.", BrightGreen)
     Else

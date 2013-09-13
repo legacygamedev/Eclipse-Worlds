@@ -655,8 +655,8 @@ Sub SendJoinMap(ByVal Index As Long)
         End If
     Next
     
-    ' Send player's equipment to new map
-    SendPlayerEquipmentTo Index
+    ' Send index's player data to everyone on the map including themself
+    SendDataToMap GetPlayerMap(Index), PlayerData(Index)
     
     ' Send the NPC targets to the player
     For i = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
@@ -667,9 +667,6 @@ Sub SendJoinMap(ByVal Index As Long)
             Call SendMapNPCTarget(GetPlayerMap(Index), i, 0, 0)
         End If
     Next
-    
-    ' Send Index's player data to everyone on the map including themself
-    SendDataToMap GetPlayerMap(Index), PlayerData(Index)
     
     Set Buffer = Nothing
 End Sub
@@ -1029,7 +1026,7 @@ Sub SendInventoryUpdate(ByVal Index As Long, ByVal InvSlot As Byte)
     Set Buffer = Nothing
 End Sub
 
-Sub SendPlayerEquipmentTo(ByVal Index As Long)
+Sub SendWornEquipment(ByVal Index As Long)
     Dim Buffer As clsBuffer
     Set Buffer = New clsBuffer
     Dim i As Byte
@@ -1048,12 +1045,13 @@ Sub SendPlayerEquipmentTo(ByVal Index As Long)
     Set Buffer = Nothing
 End Sub
 
-Sub SendPlayerEquipmentToMap(ByVal Index As Long)
+Sub SendMapEquipment(ByVal Index As Long)
     Dim Buffer As clsBuffer
-    Set Buffer = New clsBuffer
     Dim i As Byte
     
+    Set Buffer = New clsBuffer
     Buffer.WriteLong SMapWornEq
+    
     Buffer.WriteLong Index
     
     For i = 1 To Equipment.Equipment_Count - 1
@@ -1064,20 +1062,21 @@ Sub SendPlayerEquipmentToMap(ByVal Index As Long)
     Set Buffer = Nothing
 End Sub
 
-Sub SendPlayerEquipmentToMapBut(ByVal Index As Long)
+Sub SendMapEquipmentTo(ByVal PlayerNum As Long, ByVal Index As Long)
     Dim Buffer As clsBuffer
     Dim i As Byte
     
     Set Buffer = New clsBuffer
     
     Buffer.WriteLong SMapWornEq
-    Buffer.WriteLong Index
+    Buffer.WriteLong PlayerNum
     
     For i = 1 To Equipment.Equipment_Count - 1
-        Buffer.WriteLong GetPlayerEquipment(Index, i)
+        Buffer.WriteLong GetPlayerEquipment(PlayerNum, i)
     Next
     
-    SendDataToMapBut Index, GetPlayerMap(Index), Buffer.ToArray()
+    SendDataTo Index, Buffer.ToArray()
+    
     Set Buffer = Nothing
 End Sub
 

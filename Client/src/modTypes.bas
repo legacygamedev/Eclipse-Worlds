@@ -4,10 +4,10 @@ Option Explicit
 ' Public data structures
 Public Map As MapRec
 Public TempMap As MapRec
-Public bank As BankRec
+Public Bank As BankRec
 Public Player(1 To MAX_PLAYERS) As PlayerRec
 Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
-Public item(1 To MAX_ITEMS) As ItemRec
+Public Item(1 To MAX_ITEMS) As ItemRec
 Public NPC(1 To MAX_NPCS) As NPCRec
 Public MapItem(1 To MAX_MAP_ITEMS) As MapItemRec
 Public MapNPC(1 To MAX_MAP_NPCS) As MapNPCRec
@@ -17,7 +17,7 @@ Public Resource(1 To MAX_RESOURCES) As ResourceRec
 Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
 Public events(1 To MAX_EVENTS) As EventWrapperRec
 Public Ban(1 To MAX_BANS) As BanRec
-Public title(1 To MAX_TITLES) As TitleRec
+Public Title(1 To MAX_TITLES) As TitleRec
 Public Moral(1 To MAX_MORALS) As MoralRec
 Public Class(1 To MAX_CLASSES) As ClassRec
 Public Emoticon(1 To MAX_EMOTICONS) As EmoticonRec
@@ -102,7 +102,7 @@ Public Type PlayerItemRec
 End Type
 
 Private Type BankRec
-    item(1 To MAX_BANK) As PlayerItemRec
+    Item(1 To MAX_BANK) As PlayerItemRec
 End Type
 
 Private Type SpellAnim
@@ -163,7 +163,7 @@ Public Type PlayerRec
     AmountOfTitles As Byte
     
     ' Titles
-    title(1 To MAX_TITLES) As Byte
+    Title(1 To MAX_TITLES) As Byte
     
     ' Current title
     CurTitle As Byte
@@ -508,7 +508,7 @@ End Type
 
 Private Type NPCRec
     name As String * NAME_LENGTH
-    title As String * NAME_LENGTH
+    Title As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     Sound As String * FILE_LENGTH
     
@@ -555,7 +555,7 @@ Private Type MapNPCRec
 End Type
 
 Private Type TradeItemRec
-    item As Long
+    Item As Long
     ItemValue As Long
     CostItem As Long
     CostValue As Long

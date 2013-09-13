@@ -1660,7 +1660,7 @@ Private Sub cmdShowGame_Click()
 End Sub
 
 Private Sub cmdSpawnRecent_Click()
-    Dim item As Byte
+    Dim Item As Byte
     Dim I    As Byte
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
@@ -1668,14 +1668,14 @@ Private Sub cmdSpawnRecent_Click()
         Exit Sub
     End If
 
-    item = lastSpawnedItems(rcSwitcher.Value)
+    Item = lastSpawnedItems(rcSwitcher.Value)
 
-    SendSpawnItem item, CLng(txtRecentAmount), True
+    SendSpawnItem Item, CLng(txtRecentAmount), True
 
     Dim found As Integer, limit As Integer
 
     For I = 0 To UBound(lastSpawnedItems) - 1
-        If lastSpawnedItems(I) = item Then
+        If lastSpawnedItems(I) = Item Then
             found = I
 
             Exit For
@@ -1693,7 +1693,7 @@ Private Sub cmdSpawnRecent_Click()
         InsertByPtr lastSpawnedItems, 0
     End If
 
-    lastSpawnedItems(0) = item
+    lastSpawnedItems(0) = Item
     frmAdmin.UpdateRecentSpawner
     If FormVisible("frmItemSpawner") Then
         If frmItemSpawner.tabItems.SelectedItem.Index = 1 Then
@@ -1799,7 +1799,6 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
                 picSpawner.Visible = True
                 ignoreChange = True
                 frmItemSpawner.tabItems.SelectedItem = frmItemSpawner.tabItems.Tabs(Index + 1)
-                frmItemSpawner.Move frmAdmin.Left - frmItemSpawner.Width, frmAdmin.Top
                 frmItemSpawner.updateFreeSlots
                 frmItemSpawner.tabItems.Tabs(Index + 1).Selected = True
                 BringWindowToTop (frmItemSpawner.hWnd)
@@ -2086,7 +2085,7 @@ Public Sub UpdateRecentSpawner()
             rcSwitcher.max = UBound(lastSpawnedItems) - 1
             rcSwitcher.Enabled = True
             picRecentItem.Enabled = True
-            lblItemName.Caption = item(lastSpawnedItems(rcSwitcher.Value)).name
+            lblItemName.Caption = Item(lastSpawnedItems(rcSwitcher.Value)).name
             txtRecentAmount.text = 1
         End If
     End If

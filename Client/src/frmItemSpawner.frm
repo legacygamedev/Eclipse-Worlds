@@ -14,6 +14,7 @@ Begin VB.Form frmItemSpawner
    ScaleHeight     =   4935
    ScaleWidth      =   8325
    ShowInTaskbar   =   0   'False
+   StartUpPosition =   1  'CenterOwner
    Begin MSComctlLib.ImageList itemsImageList 
       Left            =   7710
       Top             =   4290
@@ -418,7 +419,7 @@ Private Sub styleListwView(sType As Status, Optional msg As String)
 End Sub
 
 Private Function generateItemsForTab(tabNum As Byte) As Boolean
-    Dim i As Long, Z As Long, tempItems() As ItemRec, ret As Boolean
+    Dim I As Long, Z As Long, tempItems() As ItemRec, ret As Boolean
     
     tabNum = tabNum - 2
     
@@ -446,8 +447,8 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
     If ret Then
         Set listItems.Icons = itemsImageList
                 
-        For i = 0 To UBound(tempItems)
-            listItems.listItems.Add , , Trim$(tempItems(i).name), itemsImageList.ListImages(i + 1).Index
+        For I = 0 To UBound(tempItems)
+            listItems.listItems.Add , , Trim$(tempItems(I).name), itemsImageList.ListImages(I + 1).Index
         Next
         currentItemIndex = 0
         generateItemsForTab = True
@@ -455,18 +456,18 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
 End Function
 
 Private Sub generateRecentItems()
-Dim i As Byte
+Dim I As Byte
     If ArrayIsInitialized(lastSpawnedItems) = 0 Then
         styleListwView Status.Error, "You haven't spawned any items yet!"
     Else
         styleListwView Status.Correct
-        For i = 0 To UBound(lastSpawnedItems) - 1
-            itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & item(lastSpawnedItems(i)).Pic & GFX_EXT, False, 32, 32, 16777215)
-        Next i
+        For I = 0 To UBound(lastSpawnedItems) - 1
+            itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & Item(lastSpawnedItems(I)).Pic & GFX_EXT, False, 32, 32, 16777215)
+        Next I
         Set listItems.Icons = itemsImageList
                 
-        For i = 0 To UBound(lastSpawnedItems) - 1
-            listItems.listItems.Add , , Trim$(item(lastSpawnedItems(i)).name), itemsImageList.ListImages(i + 1).Index
+        For I = 0 To UBound(lastSpawnedItems) - 1
+            listItems.listItems.Add , , Trim$(Item(lastSpawnedItems(I)).name), itemsImageList.ListImages(I + 1).Index
         Next
         cmdSpawn.Enabled = True
         currentItemIndex = 0
@@ -474,39 +475,35 @@ Dim i As Byte
 End Sub
 
 Private Sub cmdSpawn_Click()
+    Dim Item As Byte
+    Dim I As Byte
+    
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    Dim item As Byte
-    Dim i As Byte
-
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
-
         Exit Sub
-
     End If
 
     If tabItems.SelectedItem.Index > 1 Then
-        item = currentlyListedIndexes(currentItemIndex)
+        Item = currentlyListedIndexes(currentItemIndex)
     Else
-        item = lastSpawnedItems(currentItemIndex)
+        Item = lastSpawnedItems(currentItemIndex)
     End If
 
-    SendSpawnItem item, CLng(txtAmount), IIf(radioGround.Value, True, False)
+    SendSpawnItem Item, CLng(txtAmount), IIf(radioGround.Value, True, False)
 
     Dim found As Integer, limit As Integer
 
     found = -1
     If ArrayIsInitialized(lastSpawnedItems) Then
      If UBound(lastSpawnedItems) > 0 Then
-        For i = 0 To UBound(lastSpawnedItems) - 1
-    
-            If lastSpawnedItems(i) = item Then
-                found = i
+        For I = 0 To UBound(lastSpawnedItems) - 1
+            If lastSpawnedItems(I) = Item Then
+                found = I
                 Exit For
             End If
-    
         Next
     End If
     Else
@@ -523,7 +520,7 @@ Private Sub cmdSpawn_Click()
         InsertByPtr lastSpawnedItems, 0
     End If
 
-    lastSpawnedItems(0) = item
+    lastSpawnedItems(0) = Item
     frmAdmin.UpdateRecentSpawner
     
     If chkClose.Value = 1 Then
@@ -561,12 +558,12 @@ Private Sub Form_Unload(Cancel As Integer)
     currentItemIndex = -1
 End Sub
 
-Private Sub listItems_ItemClick(ByVal item As MSComctlLib.ListItem)
+Private Sub listItems_ItemClick(ByVal Item As MSComctlLib.ListItem)
     cmdSpawn.Enabled = True
-    currentItemIndex = item.Index - 1
+    currentItemIndex = Item.Index - 1
     picked = True
     updateMaxLimit
-    Me.Caption = "Item Spawner - Going to spawn " & txtAmount.text & " " & listItems.listItems(item.Index).text
+    Me.Caption = "Item Spawner - Going to spawn " & txtAmount.text & " " & listItems.listItems(Item.Index).text
 End Sub
 
 Private Sub listItems_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
@@ -585,11 +582,11 @@ Private Sub listItems_MouseMove(Button As Integer, Shift As Integer, X As Single
             Else
                 num = currentlyListedIndexes(indexx - 1)
             End If
-            frmItemDesc.lblName = Trim$(item(num).name)
-            frmItemDesc.lblStack = "Stackable: " & IIf(item(num).stackable > 0, "yes", "no")
-            frmItemDesc.lblLevel = "LVL: " & item(num).LevelReq
-            frmItemDesc.lblType = "Type: " & getItemType(item(num).Type)
-            frmItemDesc.lbl2Hand = "2-Handed: " & IIf(item(num).TwoHanded > 0, "yes", "no")
+            frmItemDesc.lblName = Trim$(Item(num).name)
+            frmItemDesc.lblStack = "Stackable: " & IIf(Item(num).stackable > 0, "yes", "no")
+            frmItemDesc.lblLevel = "LVL: " & Item(num).LevelReq
+            frmItemDesc.lblType = "Type: " & getItemType(Item(num).Type)
+            frmItemDesc.lbl2Hand = "2-Handed: " & IIf(Item(num).TwoHanded > 0, "yes", "no")
             
             frmItemDesc.Visible = True
         End If
