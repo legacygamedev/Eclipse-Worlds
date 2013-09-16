@@ -123,14 +123,6 @@ Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal Y 
             If frmEditor_Events.Visible = False Then
                 AddEvent CurX, CurY
             End If
-        ElseIf frmEditor_Map.OptEvents.Value Then
-            If frmEditor_Events.Visible = False Then
-                AddEvent CurX, CurY
-            End If
-        ElseIf frmEditor_Map.OptEvents.Value Then
-            If frmEditor_Events.Visible = False Then
-                AddEvent CurX, CurY
-            End If
         ElseIf frmEditor_Map.OptAttributes.Value Then
             Call MapEditorSetAttributes(Button, CurX, CurY, MovedMouse)
         ElseIf frmEditor_Map.OptBlock.Value Then
@@ -735,7 +727,7 @@ Public Sub ItemEditorInit()
         frmEditor_Item.cmbSound.AddItem SoundCache(I)
     Next
 
-    With item(EditorIndex)
+    With Item(EditorIndex)
         ' Check for invalid values
         If .Pic < 1 Then .Pic = 1
         If .Pic > frmEditor_Item.scrlPic.max Then .Pic = frmEditor_Item.scrlPic.max
@@ -762,11 +754,11 @@ Public Sub ItemEditorInit()
         ' Reusable
         If .IsReusable Then
             For I = 1 To frmEditor_Item.chkReusable.count - 1
-                frmEditor_Item.chkReusable.item(I) = 1
+                frmEditor_Item.chkReusable.Item(I) = 1
             Next
         Else
             For I = 1 To frmEditor_Item.chkReusable.count - 1
-                frmEditor_Item.chkReusable.item(I) = 0
+                frmEditor_Item.chkReusable.Item(I) = 0
             Next
         End If
         
@@ -806,8 +798,8 @@ Public Sub ItemEditorInit()
         If Not SoundSet Or frmEditor_Item.cmbSound.ListIndex = -1 Then frmEditor_Item.cmbSound.ListIndex = 0
 
         ' Resources
-        If item(EditorIndex).ChanceModifier = 0 Then item(EditorIndex).ChanceModifier = 1
-        frmEditor_Item.scrlChanceModifier.Value = item(EditorIndex).ChanceModifier
+        If Item(EditorIndex).ChanceModifier = 0 Then Item(EditorIndex).ChanceModifier = 1
+        frmEditor_Item.scrlChanceModifier.Value = Item(EditorIndex).ChanceModifier
 
         With frmEditor_Item
             If frmEditor_Item.cmbTool.ListIndex > 0 And frmEditor_Item.cmbTool.ListIndex <> 4 Then
@@ -1429,14 +1421,14 @@ Public Sub UpdateShopTrade(Optional ByVal tmpPos As Long = 0)
     For I = 1 To MAX_TRADES
         With Shop(EditorIndex).TradeItem(I)
             ' If none, show as none
-            If .item = 0 Or .CostItem = 0 And .CostItem2 = 0 Then
+            If .Item = 0 Or .CostItem = 0 And .CostItem2 = 0 Then
                 frmEditor_Shop.lstTradeItem.AddItem "Empty Trade Slot"
             ElseIf .CostItem2 = 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem I & ": " & .ItemValue & "X " & Trim$(item(.item).name) & " for " & .CostValue & "X " & Trim$(item(.CostItem).name)
+                frmEditor_Shop.lstTradeItem.AddItem I & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).name)
             ElseIf .CostItem = 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem I & ": " & .ItemValue & "X " & Trim$(item(.item).name) & " for " & .CostValue & "X " & Trim$(item(.CostItem2).name)
+                frmEditor_Shop.lstTradeItem.AddItem I & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem2).name)
             ElseIf .CostItem > 0 And .CostItem2 > 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem I & ": " & .ItemValue & "X " & Trim$(item(.item).name) & " for " & .CostValue & "X " & Trim$(item(.CostItem).name) & " & " & .CostValue2 & "X " & Trim$(item(.CostItem2).name)
+                frmEditor_Shop.lstTradeItem.AddItem I & ": " & .ItemValue & "X " & Trim$(Item(.Item).name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).name) & " & " & .CostValue2 & "X " & Trim$(Item(.CostItem2).name)
             End If
         End With
     Next
@@ -2246,7 +2238,7 @@ Public Sub UpdateSpellScrollBars()
         End If
         
         .lblSpell.Caption = "Spell: " & .scrlSpell.Value
-        item(EditorIndex).Data1 = .scrlSpell.Value
+        Item(EditorIndex).Data1 = .scrlSpell.Value
     End With
 End Sub
 
@@ -2254,13 +2246,13 @@ End Sub
 Public Function populateSpecificType(ByRef tempItems() As ItemRec, ItemType As Byte) As Boolean
     Dim I As Long, counter As Long, found As Boolean
     For I = 1 To MAX_ITEMS
-        If item(I).Type = ItemType And item(I).Pic > 0 And Len(item(I).name) > 0 Then
+        If Item(I).Type = ItemType And Item(I).Pic > 0 And Len(Item(I).name) > 0 Then
             found = True
             ReDim Preserve tempItems(counter)
-            tempItems(counter) = item(I)
+            tempItems(counter) = Item(I)
             ReDim Preserve currentlyListedIndexes(counter)
             currentlyListedIndexes(counter) = I
-            frmItemSpawner.itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & item(I).Pic & GFX_EXT, False, 32, 32, 16777215)
+            frmItemSpawner.itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & Item(I).Pic & GFX_EXT, False, 32, 32, 16777215)
 
             counter = counter + 1
         End If
@@ -2306,7 +2298,7 @@ Public Sub ItemClassReqListInit()
     For I = 1 To MAX_CLASSES
         frmEditor_Item.cmbClassReq.AddItem Class(I).name
     Next
-    frmEditor_Item.cmbClassReq.ListIndex = item(EditorIndex).ClassReq
+    frmEditor_Item.cmbClassReq.ListIndex = Item(EditorIndex).ClassReq
 End Sub
 
 ' //////////////////
@@ -2625,7 +2617,7 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
         .cmbHasItem.AddItem "None"
         
         For I = 1 To MAX_ITEMS
-            .cmbHasItem.AddItem I & ": " & Trim$(item(I).name)
+            .cmbHasItem.AddItem I & ": " & Trim$(Item(I).name)
         Next
         
         ' Name
@@ -2818,7 +2810,7 @@ newlist:
                                         frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1) & "] == " & "False"
                                     End If
                                 Case 2
-                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Has Item [" & Trim$(item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1).name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player Has Item [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1).name) & "]"
                                 Case 3
                                     frmEditor_Events.lstCommands.AddItem indent & "@>" & "Conditional Branch: Player's Class Is [" & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1).name) & "]"
                                 Case 4
@@ -3044,11 +3036,11 @@ newlist:
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Exit Event Processing"
                         Case EventType.evChangeItems
                             If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Item Amount of [" & Trim$(item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).name) & "] to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Set Item Amount of [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).name) & "] to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & " " & Trim$(item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).name) & "(s)"
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).name) & "(s)"
                             ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 2 Then
-                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Take " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & " " & Trim$(item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).name) & "(s) from Player."
+                                frmEditor_Events.lstCommands.AddItem indent & "@>" & "Take " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).name) & "(s) from Player."
                             End If
                         Case EventType.evRestoreHP
                             frmEditor_Events.lstCommands.AddItem indent & "@>" & "Restore Player HP"
