@@ -1390,7 +1390,6 @@ Sub CheckResource(ByVal index As Long, ByVal X As Long, ByVal Y As Long)
                         ' Send message if it exists
                         If Len(Trim$(Resource(Resource_Index).FailMessage)) > 0 Then
                             SendActionMsg GetPlayerMap(index), Trim$(Resource(Resource_Index).FailMessage), BrightRed, 1, (GetPlayerX(index) * 32), (GetPlayerY(index) * 32)
-                            Exit Sub
                         End If
                     End If
                     
