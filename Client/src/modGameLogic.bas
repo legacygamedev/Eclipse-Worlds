@@ -406,7 +406,7 @@ Public Sub CheckAttack()
 
         ' Speed from weapon
         If GetPlayerEquipment(MyIndex, Weapon) > 0 Then
-            AttackSpeed = item(GetPlayerEquipment(MyIndex, Weapon)).WeaponSpeed
+            AttackSpeed = Item(GetPlayerEquipment(MyIndex, Weapon)).WeaponSpeed
         Else
             AttackSpeed = 1000
         End If
@@ -686,9 +686,21 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
             X = GetPlayerX(MyIndex) + 1
             Y = GetPlayerY(MyIndex)
     End Select
+
+    ' Check to see if the map tile is blocked or not
+    If Map.Tile(X, Y).Type = TILE_TYPE_BLOCKED Then
+        CheckDirection = True
+        Exit Function
+    End If
+
+    ' Check to see if the map tile is a resource or not
+    If Map.Tile(X, Y).Type = TILE_TYPE_RESOURCE Then
+        CheckDirection = True
+        Exit Function
+    End If
     
     ' Check if event is touched
-    If timeGetTime > TempPlayer(MyIndex).EventTimer Then
+    If timeGetTime = TempPlayer(MyIndex).EventTimer Then
         For I = 1 To Map.CurrentEvents
             If Map.MapEvents(I).Visible = 1 And Map.MapEvents(I).Trigger = 1 Then
                 If Map.MapEvents(I).X = X And Map.MapEvents(I).Y = Y Then
@@ -701,18 +713,6 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
                 End If
             End If
         Next
-    End If
-
-    ' Check to see if the map tile is blocked or not
-    If Map.Tile(X, Y).Type = TILE_TYPE_BLOCKED Then
-        CheckDirection = True
-        Exit Function
-    End If
-
-    ' Check to see if the map tile is a resource or not
-    If Map.Tile(X, Y).Type = TILE_TYPE_RESOURCE Then
-        CheckDirection = True
-        Exit Function
     End If
     
     ' Check to see if a player is already on that tile
@@ -1094,12 +1094,12 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal X As Long, ByVal Y 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    FirstLetter = LCase$(Left$(Trim$(item(ItemNum).name), 1))
+    FirstLetter = LCase$(Left$(Trim$(Item(ItemNum).name), 1))
    
     If FirstLetter = "$" Then
-        name = (Mid$(Trim$(item(ItemNum).name), 2, Len(Trim$(item(ItemNum).name)) - 1))
+        name = (Mid$(Trim$(Item(ItemNum).name), 2, Len(Trim$(Item(ItemNum).name)) - 1))
     Else
-        name = Trim$(item(ItemNum).name)
+        name = Trim$(Item(ItemNum).name)
     End If
     
     ' Check for off-screen
@@ -1118,7 +1118,7 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal X As Long, ByVal Y 
         If LastItemDesc = ItemNum Then Exit Sub ' Exit out after setting X + Y so we don't reset values
     
         ' Set the Name
-        Select Case item(ItemNum).Rarity
+        Select Case Item(ItemNum).Rarity
             Case 0 ' Grey
                 .lblItemName.ForeColor = Grey
             Case 1 ' White
@@ -1137,7 +1137,7 @@ Public Sub UpdateItemDescWindow(ByVal ItemNum As Long, ByVal X As Long, ByVal Y 
         
         ' Set captions
         .lblItemName.Caption = name
-        .lblItemDesc.Caption = Trim$(item(ItemNum).Desc)
+        .lblItemDesc.Caption = Trim$(Item(ItemNum).Desc)
         .lblItemDesc = .lblItemDesc & vbNewLine
         
         LastItemDesc = 0
@@ -1401,7 +1401,7 @@ errorhandler:
 End Sub
 
 Public Sub CheckAnimInstance(ByVal Index As Long)
-    Dim loopTime As Long
+    Dim looptime As Long
     Dim Layer As Long
     Dim FrameCount As Long
     Dim LockIndex As Long
@@ -1415,7 +1415,7 @@ Public Sub CheckAnimInstance(ByVal Index As Long)
     
     For Layer = 0 To 1
         If AnimInstance(Index).Used(Layer) Then
-            loopTime = Animation(AnimInstance(Index).Animation).loopTime(Layer)
+            looptime = Animation(AnimInstance(Index).Animation).looptime(Layer)
             FrameCount = Animation(AnimInstance(Index).Animation).Frames(Layer)
             
             ' If zero'd then set so we don't have extra loop and/or frame
@@ -1423,7 +1423,7 @@ Public Sub CheckAnimInstance(ByVal Index As Long)
             If AnimInstance(Index).LoopIndex(Layer) = 0 Then AnimInstance(Index).LoopIndex(Layer) = 1
             
             ' Check if frame timer is set, and needs to have a frame change
-            If AnimInstance(Index).Timer(Layer) + loopTime <= timeGetTime Then
+            If AnimInstance(Index).Timer(Layer) + looptime <= timeGetTime Then
                 ' Check if out of range
                 If AnimInstance(Index).frameIndex(Layer) >= FrameCount Then
                     AnimInstance(Index).LoopIndex(Layer) = AnimInstance(Index).LoopIndex(Layer) + 1
@@ -1486,7 +1486,7 @@ Public Function GetBankItemNum(ByVal BankSlot As Byte) As Integer
         Exit Function
     End If
     
-    GetBankItemNum = bank.item(BankSlot).num
+    GetBankItemNum = Bank.Item(BankSlot).num
     Exit Function
     
 ' Error handler
@@ -1499,7 +1499,7 @@ Public Sub SetBankItemNum(ByVal BankSlot As Byte, ByVal ItemNum As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    bank.item(BankSlot).num = ItemNum
+    Bank.Item(BankSlot).num = ItemNum
     Exit Sub
     
 ' Error handler
@@ -1512,7 +1512,7 @@ Public Function GetBankItemValue(ByVal BankSlot As Byte) As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    GetBankItemValue = bank.item(BankSlot).Value
+    GetBankItemValue = Bank.Item(BankSlot).Value
     Exit Function
     
 ' Error handler
@@ -1525,7 +1525,7 @@ Public Sub SetBankItemValue(ByVal BankSlot As Byte, ByVal ItemValue As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    bank.item(BankSlot).Value = ItemValue
+    Bank.Item(BankSlot).Value = ItemValue
     Exit Sub
     
 ' Error handler
@@ -1539,7 +1539,7 @@ Function GetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte) 
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
-    GetPlayerBankItemDurValue = bank.item(Index).Durability
+    GetPlayerBankItemDurValue = Bank.Item(Index).Durability
     Exit Function
     
 ' Error handler
@@ -1552,7 +1552,7 @@ Sub SetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte, ByVal
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    bank.item(Index).Durability = DurValue
+    Bank.Item(Index).Durability = DurValue
     Exit Sub
     
 ' Error handler
@@ -1668,7 +1668,7 @@ Public Sub PlaySoundEntity(ByVal X As Long, ByVal Y As Long, ByVal EntityType As
         ' Items
         Case SoundEntity.seItem
             If EntityNum > MAX_ITEMS Then Exit Sub
-            SoundName = Trim$(item(EntityNum).Sound)
+            SoundName = Trim$(Item(EntityNum).Sound)
         
         ' NPCs
         Case SoundEntity.seNPC
@@ -1737,12 +1737,12 @@ Public Sub Dialogue(ByVal DiTitle As String, ByVal DiText As String, ByVal DiInd
     ' Show txtDialogue if it is friend and set labels
     If DialogueIndex = DIALOGUE_TYPE_ADDFRIEND Or DialogueIndex = DIALOGUE_TYPE_REMOVEFRIEND Or DialogueIndex = DIALOGUE_TYPE_ADDFOE Or DialogueIndex = DIALOGUE_TYPE_REMOVEFOE Or DialogueIndex = DIALOGUE_TYPE_CHANGEGUILDACCESS Or DialogueIndex = DIALOGUE_TYPE_PARTYINVITE Or DialogueIndex = DIALOGUE_TYPE_GUILDINVITE Or DialogueIndex = DIALOGUE_TYPE_GUILDREMOVE Then
         frmMain.txtDialogue.Visible = True
-        frmMain.lblDialogue_Button.item(2).Caption = "Accept"
-        frmMain.lblDialogue_Button.item(3).Caption = "Cancel"
+        frmMain.lblDialogue_Button.Item(2).Caption = "Accept"
+        frmMain.lblDialogue_Button.Item(3).Caption = "Cancel"
     Else
         frmMain.txtDialogue.Visible = False
-        frmMain.lblDialogue_Button.item(2).Caption = "Yes"
-        frmMain.lblDialogue_Button.item(3).Caption = "No"
+        frmMain.lblDialogue_Button.Item(2).Caption = "Yes"
+        frmMain.lblDialogue_Button.Item(3).Caption = "No"
     End If
 
     ' Show the dialogue box
