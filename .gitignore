@@ -6,7 +6,6 @@ data files/
 data/
 logs/
 
-git config core.ignorecase true
 *.exe
 *.dropbox
 *_i.c
@@ -31,10 +30,6 @@ git config core.ignorecase true
 .builds
 *.pidb
 *.scc
-*.dll
-*.zip
-*.rar
-*.vbw
 
 # Others
 sql/
