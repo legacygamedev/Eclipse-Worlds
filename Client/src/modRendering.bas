@@ -301,7 +301,7 @@ Public Sub DrawGDI()
         End If
         If ArrayIsInitialized(lastSpawnedItems) Then
             If UBound(lastSpawnedItems) > 0 Then
-                drawRecentItem item(lastSpawnedItems(frmAdmin.rcSwitcher.Value)).Pic
+                drawRecentItem Item(lastSpawnedItems(frmAdmin.rcSwitcher.Value)).Pic
             End If
         End If
     End If
@@ -1049,7 +1049,7 @@ Public Sub DrawMapItem(ByVal ItemNum As Long)
         End If
     End If
 
-    picNum = item(MapItem(ItemNum).num).Pic
+    picNum = Item(MapItem(ItemNum).num).Pic
 
     If picNum < 1 Or picNum > NumItems Then Exit Sub
     
@@ -1288,69 +1288,71 @@ Private Sub DrawBars()
     If Options.PlayerVitals = 1 Then
         For I = 1 To Player_HighIndex
             If IsPlaying(I) Then
-                ' Draw own health bar
-                If GetPlayerVital(I, Vitals.HP) < GetPlayerMaxVital(I, Vitals.HP) Then
-                    ' lock to Player
-                    tmpx = GetPlayerX(I) * PIC_X + TempPlayer(I).xOffset + 16 - (sWidth / 2)
-                    tmpy = GetPlayerY(I) * PIC_X + TempPlayer(I).yOffset + 35
-                
-                    ' Calculate the width to fill
-                    BarWidth = ((GetPlayerVital(I, Vitals.HP) / sWidth) / (GetPlayerMaxVital(I, Vitals.HP) / sWidth)) * sWidth
+                If GetPlayerMap(MyIndex) = GetPlayerMap(I) Then
+                    ' Draw own health bar
+                    If GetPlayerVital(I, Vitals.HP) < GetPlayerMaxVital(I, Vitals.HP) Then
+                        ' lock to Player
+                        tmpx = GetPlayerX(I) * PIC_X + TempPlayer(I).xOffset + 16 - (sWidth / 2)
+                        tmpy = GetPlayerY(I) * PIC_X + TempPlayer(I).yOffset + 35
                     
-                    ' Draw bar background
-                    With sRECT
-                        .Top = sHeight * 3 ' HP bar background
-                        .Left = 0
-                        .Right = .Left + sWidth
-                        .Bottom = .Top + sHeight
-                    End With
-                    
-                    RenderTexture Tex_Bars, ConvertMapX(tmpx), ConvertMapY(tmpy), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
-                   
-                    ' Draw the bar proper
-                    With sRECT
-                        .Top = 0 ' HP bar
-                        .Left = 0
-                        .Right = .Left + BarWidth
-                        .Bottom = .Top + sHeight
-                    End With
-                    
-                    RenderTexture Tex_Bars, ConvertMapX(tmpx), ConvertMapY(tmpy), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
-                End If
-                
-                ' Draw own mana bar
-                If GetPlayerVital(I, Vitals.MP) < GetPlayerMaxVital(I, Vitals.MP) Then
-                    ' lock to Player
-                    tmpx = GetPlayerX(I) * PIC_X + TempPlayer(I).xOffset + 16 - (sWidth / 2)
-                    
-                    If GetPlayerVital(I, HP) = GetPlayerMaxVital(I, Vitals.HP) Then
-                        tmpy = GetPlayerY(I) * PIC_Y + TempPlayer(I).yOffset + 35
-                    Else
-                        tmpy = GetPlayerY(I) * PIC_Y + TempPlayer(I).yOffset + 35 + sHeight
+                        ' Calculate the width to fill
+                        BarWidth = ((GetPlayerVital(I, Vitals.HP) / sWidth) / (GetPlayerMaxVital(I, Vitals.HP) / sWidth)) * sWidth
+                        
+                        ' Draw bar background
+                        With sRECT
+                            .Top = sHeight * 3 ' HP bar background
+                            .Left = 0
+                            .Right = .Left + sWidth
+                            .Bottom = .Top + sHeight
+                        End With
+                        
+                        RenderTexture Tex_Bars, ConvertMapX(tmpx), ConvertMapY(tmpy), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
+                       
+                        ' Draw the bar proper
+                        With sRECT
+                            .Top = 0 ' HP bar
+                            .Left = 0
+                            .Right = .Left + BarWidth
+                            .Bottom = .Top + sHeight
+                        End With
+                        
+                        RenderTexture Tex_Bars, ConvertMapX(tmpx), ConvertMapY(tmpy), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
                     End If
-                   
-                    ' Calculate the width to fill
-                    BarWidth = ((GetPlayerVital(I, Vitals.MP) / sWidth) / (GetPlayerMaxVital(I, Vitals.MP) / sWidth)) * sWidth
-                   
-                    ' Draw bar background
-                    With sRECT
-                        .Top = sHeight * 3 ' MP bar background
-                        .Left = 0
-                        .Right = .Left + sWidth
-                        .Bottom = .Top + sHeight
-                    End With
                     
-                    RenderTexture Tex_Bars, ConvertMapX(tmpx), ConvertMapY(tmpy), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
-                   
-                    ' Draw the bar proper
-                    With sRECT
-                        .Top = sHeight * 1 ' MP bar
-                        .Left = 0
-                        .Right = .Left + BarWidth
-                        .Bottom = .Top + sHeight
-                    End With
-                    
-                    RenderTexture Tex_Bars, ConvertMapX(tmpx), ConvertMapY(tmpy), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
+                    ' Draw own mana bar
+                    If GetPlayerVital(I, Vitals.MP) < GetPlayerMaxVital(I, Vitals.MP) Then
+                        ' lock to Player
+                        tmpx = GetPlayerX(I) * PIC_X + TempPlayer(I).xOffset + 16 - (sWidth / 2)
+                        
+                        If GetPlayerVital(I, HP) = GetPlayerMaxVital(I, Vitals.HP) Then
+                            tmpy = GetPlayerY(I) * PIC_Y + TempPlayer(I).yOffset + 35
+                        Else
+                            tmpy = GetPlayerY(I) * PIC_Y + TempPlayer(I).yOffset + 35 + sHeight
+                        End If
+                       
+                        ' Calculate the width to fill
+                        BarWidth = ((GetPlayerVital(I, Vitals.MP) / sWidth) / (GetPlayerMaxVital(I, Vitals.MP) / sWidth)) * sWidth
+                       
+                        ' Draw bar background
+                        With sRECT
+                            .Top = sHeight * 3 ' MP bar background
+                            .Left = 0
+                            .Right = .Left + sWidth
+                            .Bottom = .Top + sHeight
+                        End With
+                        
+                        RenderTexture Tex_Bars, ConvertMapX(tmpx), ConvertMapY(tmpy), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
+                       
+                        ' Draw the bar proper
+                        With sRECT
+                            .Top = sHeight * 1 ' MP bar
+                            .Left = 0
+                            .Right = .Left + BarWidth
+                            .Bottom = .Top + sHeight
+                        End With
+                        
+                        RenderTexture Tex_Bars, ConvertMapX(tmpx), ConvertMapY(tmpy), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
+                    End If
                 End If
             End If
         Next
@@ -1471,10 +1473,10 @@ Public Sub DrawHotbar()
     
         Select Case Hotbar(I).sType
             Case 1 ' Inventory
-                If Len(item(Hotbar(I).Slot).name) > 0 Then
-                    If item(Hotbar(I).Slot).Pic > 0 Then
-                        If item(Hotbar(I).Slot).Pic <= NumItems Then
-                            RenderTextureByRects Tex_Item(item(Hotbar(I).Slot).Pic), sRECT, dRect
+                If Len(Item(Hotbar(I).Slot).name) > 0 Then
+                    If Item(Hotbar(I).Slot).Pic > 0 Then
+                        If Item(Hotbar(I).Slot).Pic <= NumItems Then
+                            RenderTextureByRects Tex_Item(Item(Hotbar(I).Slot).Pic), sRECT, dRect
                         End If
                     End If
                 End If
@@ -1546,7 +1548,7 @@ Public Sub DrawPlayer(ByVal Index As Long)
 
     ' Speed from weapon
     If GetPlayerEquipment(Index, Weapon) > 0 Then
-        AttackSpeed = item(GetPlayerEquipment(Index, Weapon)).WeaponSpeed
+        AttackSpeed = Item(GetPlayerEquipment(Index, Weapon)).WeaponSpeed
     Else
         AttackSpeed = 1000
     End If
@@ -1634,8 +1636,8 @@ Public Sub DrawPlayer(ByVal Index As Long)
     Size = UBound(PaperdollOrder)
     For I = 1 To Size
         If GetPlayerEquipment(Index, PaperdollOrder(I)) > 0 Then
-            If item(GetPlayerEquipment(Index, PaperdollOrder(I))).Paperdoll > 0 Then
-                Call DrawPaperdoll(X, Y, item(GetPlayerEquipment(Index, PaperdollOrder(I))).Paperdoll, Anim, spritetop)
+            If Item(GetPlayerEquipment(Index, PaperdollOrder(I))).Paperdoll > 0 Then
+                Call DrawPaperdoll(X, Y, Item(GetPlayerEquipment(Index, PaperdollOrder(I))).Paperdoll, Anim, spritetop)
             End If
         End If
     Next
@@ -1834,7 +1836,7 @@ Sub DrawAnimatedItems()
     ' Check for map animation changes
     For I = 1 To MAX_MAP_ITEMS
         If MapItem(I).num > 0 Then
-            ItemPic = item(MapItem(I).num).Pic
+            ItemPic = Item(MapItem(I).num).Pic
 
             If ItemPic < 1 Or ItemPic > NumItems Then Exit Sub
             MaxFrames = Tex_Item(ItemPic).Width / PIC_X ' Work out how many frames there are.
@@ -1851,7 +1853,7 @@ Sub DrawAnimatedItems()
         ItemNum = GetPlayerInvItemNum(MyIndex, I)
         
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = item(ItemNum).Pic
+            ItemPic = Item(ItemNum).Pic
             AmountModifier = 0
             NoRender(I) = 0
             
@@ -1861,7 +1863,7 @@ Sub DrawAnimatedItems()
                     TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(X).num)
                     If TradeYourOffer(X).num = I Then
                         ' Check if currency
-                        If Not item(TmpItem).stackable = 1 Then
+                        If Not Item(TmpItem).stackable = 1 Then
                             ' Normal item don't render
                             NoRender(I) = 1
                         Else
@@ -1934,7 +1936,7 @@ Sub DrawAnimatedItems()
             ItemNum = GetBankItemNum(I)
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-                ItemPic = item(ItemNum).Pic
+                ItemPic = Item(ItemNum).Pic
     
                 If ItemPic > 0 And ItemPic <= NumItems Then
                     If Tex_Item(ItemPic).Width > PIC_X Then
@@ -1989,10 +1991,10 @@ Sub DrawAnimatedItems()
     
     If InShop > 0 Then
         For I = 1 To MAX_TRADES
-            ItemNum = Shop(InShop).TradeItem(I).item
+            ItemNum = Shop(InShop).TradeItem(I).Item
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-                ItemPic = item(ItemNum).Pic
+                ItemPic = Item(ItemNum).Pic
     
                 If ItemPic > 0 And ItemPic <= NumItems Then
                     If Tex_Item(ItemPic).Width > PIC_X Then
@@ -2050,7 +2052,7 @@ Sub DrawAnimatedItems()
             ItemNum = TradeTheirOffer(I).num
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-                ItemPic = item(ItemNum).Pic
+                ItemPic = Item(ItemNum).Pic
     
                 If ItemPic > 0 And ItemPic <= NumItems Then
                     If Tex_Item(ItemPic).Width > PIC_X Then
@@ -2106,7 +2108,7 @@ Sub DrawAnimatedItems()
             ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(I).num)
             
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-                ItemPic = item(ItemNum).Pic
+                ItemPic = Item(ItemNum).Pic
     
                 If ItemPic > 0 And ItemPic <= NumItems Then
                     If Tex_Item(ItemPic).Width > PIC_X Then
@@ -2316,7 +2318,7 @@ Sub DrawInventory()
         ItemNum = GetPlayerInvItemNum(MyIndex, I)
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = item(ItemNum).Pic
+            ItemPic = Item(ItemNum).Pic
             AmountModifier = 0
             
             ' Exit out if we're offering item in a trade.
@@ -2325,7 +2327,7 @@ Sub DrawInventory()
                     TmpItem = GetPlayerInvItemNum(MyIndex, TradeYourOffer(X).num)
                     If TradeYourOffer(X).num = I Then
                         ' Check if currency
-                        If Not item(TmpItem).stackable = 1 Then
+                        If Not Item(TmpItem).stackable = 1 Then
                             ' Normal item, exit out
                             GoTo NextLoop
                         Else
@@ -2429,7 +2431,7 @@ Sub DrawTrade()
         ItemNum = GetPlayerInvItemNum(MyIndex, TradeYourOffer(I).num)
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = item(ItemNum).Pic
+            ItemPic = Item(ItemNum).Pic
 
             If ItemPic > 0 And ItemPic <= NumItems Then
                 If Tex_Item(ItemPic).Width <= 32 Then
@@ -2496,7 +2498,7 @@ Sub DrawTrade()
         ItemNum = TradeTheirOffer(I).num
 
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = item(ItemNum).Pic
+            ItemPic = Item(ItemNum).Pic
 
             If ItemPic > 0 And ItemPic <= NumItems Then
                 If Tex_Item(ItemPic).Width <= 32 Then
@@ -2660,10 +2662,10 @@ Sub DrawShop()
     Direct3D_Device.BeginScene
     
     For I = 1 To MAX_TRADES
-        ItemNum = Shop(InShop).TradeItem(I).item
+        ItemNum = Shop(InShop).TradeItem(I).Item
         
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = item(ItemNum).Pic
+            ItemPic = Item(ItemNum).Pic
 
             If ItemPic > 0 And ItemPic <= NumItems Then
                 If Tex_Item(ItemPic).Width <= 32 Then
@@ -2746,7 +2748,7 @@ Public Sub DrawDraggedItem(ByVal X As Long, ByVal Y As Long, Optional ByVal IsHo
         Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
         Direct3D_Device.BeginScene
     
-        ItemPic = item(ItemNum).Pic
+        ItemPic = Item(ItemNum).Pic
         
         If ItemPic < 1 Or ItemPic > NumItems Then Exit Sub
         
@@ -2909,7 +2911,7 @@ Public Sub DrawItemDesc(ByVal ItemNum As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-        ItemPic = item(ItemNum).Pic
+        ItemPic = Item(ItemNum).Pic
 
         If ItemPic = 0 Then Exit Sub
         
@@ -3559,7 +3561,7 @@ Sub DrawBank()
         For I = 1 To MAX_BANK
             ItemNum = GetBankItemNum(I)
             If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-                Sprite = item(ItemNum).Pic
+                Sprite = Item(ItemNum).Pic
                 
                 If Sprite > 0 Or Sprite <= NumItems Then
                     If Tex_Item(Sprite).Width <= 32 Then
@@ -3634,7 +3636,7 @@ Public Sub DrawBankItem(ByVal X As Long, ByVal Y As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ItemNum = GetBankItemNum(DragBankSlot)
-    Sprite = item(GetBankItemNum(DragBankSlot)).Pic
+    Sprite = Item(GetBankItemNum(DragBankSlot)).Pic
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 255), 1#, 0
     Direct3D_Device.BeginScene
     
@@ -4320,7 +4322,7 @@ Public Sub DrawEquipment()
         
         ' If there is an item draw it, if not do NOTHING!
         If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
-            ItemPic = item(ItemNum).Pic
+            ItemPic = Item(ItemNum).Pic
             
             ' If the picture exists then render it
             If ItemPic > 0 And ItemPic <= NumItems Then
@@ -4459,7 +4461,7 @@ Public Sub EditorAnim_DrawAnim()
         Animationnum = frmEditor_Animation.scrlSprite(I).Value
         
         If Animationnum <= 0 Or Animationnum > NumAnimations Then
-            frmEditor_Animation.picSprite.item(I).Cls
+            frmEditor_Animation.picSprite.Item(I).Cls
         Else
             sRECT.Top = 0
             sRECT.Left = 0
@@ -4656,7 +4658,7 @@ Public Sub EditorMap_DrawMapItem()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    ItemNum = item(frmEditor_Map.scrlMapItem.Value).Pic
+    ItemNum = Item(frmEditor_Map.scrlMapItem.Value).Pic
 
     If ItemNum < 1 Or ItemNum > NumItems Then
         frmEditor_Map.picMapItem.Cls
