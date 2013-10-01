@@ -2225,7 +2225,7 @@ End Function
 Function IsPlayerBusy(ByVal index As Long, ByVal OtherPlayer As Long) As Boolean
     ' Make sure they're not busy doing something else
     If IsPlaying(OtherPlayer) Then
-        If TempPlayer(OtherPlayer).InBank Or TempPlayer(OtherPlayer).InShop > 0 Or TempPlayer(OtherPlayer).InTrade > 0 Or TempPlayer(OtherPlayer).PartyInvite > 0 Or TempPlayer(OtherPlayer).TradeRequest > 0 Or TempPlayer(OtherPlayer).GuildInvite > 0 Then
+        If TempPlayer(OtherPlayer).InBank Or TempPlayer(OtherPlayer).InShop > 0 Or TempPlayer(OtherPlayer).InTrade > 0 Or (TempPlayer(OtherPlayer).PartyInvite > 0 And TempPlayer(OtherPlayer).PartyInvite <> index) Or (TempPlayer(OtherPlayer).TradeRequest > 0 And TempPlayer(OtherPlayer).TradeRequest <> index) Or (TempPlayer(OtherPlayer).GuildInvite > 0 And TempPlayer(OtherPlayer).GuildInvite <> index) Then
             IsPlayerBusy = True
             PlayerMsg index, GetPlayerName(OtherPlayer) & " is busy!", BrightRed
             Exit Function
