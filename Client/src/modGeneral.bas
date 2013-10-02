@@ -29,6 +29,9 @@ Public Sub Main()
         AlertMsg "This application is already running!"
         End
     End If
+    
+    ChDrive App.Path
+    ChDir App.Path
 
     ' Set the high-resolution timer
     timeBeginPeriod 1
@@ -254,7 +257,7 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     
     ' Gui Buttons
     For I = 1 To MAX_MAINBUTTONS
-        frmMain.picButton(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\buttons\" & MainButton(I).fileName & "_norm.jpg")
+        frmMain.picButton(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\buttons\" & MainButton(I).FileName & "_norm.jpg")
     Next
     
     ' Equipment Slots
@@ -626,121 +629,121 @@ Public Sub CacheButtons()
     
     ' Menu - login
     With MenuButton(1)
-        .fileName = "login"
+        .FileName = "login"
         .State = 0 ' Normal
     End With
     
     ' Menu - Register
     With MenuButton(2)
-        .fileName = "register"
+        .FileName = "register"
         .State = 0 ' Normal
     End With
     
     ' Menu - Credits
     With MenuButton(3)
-        .fileName = "credits"
+        .FileName = "credits"
         .State = 0 ' Normal
     End With
     
     ' Menu - Exit
     With MenuButton(4)
-        .fileName = "exit"
+        .FileName = "exit"
         .State = 0 ' Normal
     End With
     
     ' Main - Inventory
     With MainButton(1)
-        .fileName = "btn_inv"
+        .FileName = "btn_inv"
         .State = 0 ' Normal
     End With
     
     ' Main - Spells
     With MainButton(2)
-        .fileName = "btn_spells"
+        .FileName = "btn_spells"
         .State = 0 ' Normal
     End With
     
     ' Main - Character
     With MainButton(3)
-        .fileName = "btn_chara"
+        .FileName = "btn_chara"
         .State = 0 ' Normal
     End With
     
     ' Main - Options
     With MainButton(4)
-        .fileName = "btn_options"
+        .FileName = "btn_options"
         .State = 0 ' Normal
     End With
     
     ' Main - Trade
     With MainButton(5)
-        .fileName = "btn_trade"
+        .FileName = "btn_trade"
         .State = 0 ' Normal
     End With
     
     ' Main - Party
     With MainButton(6)
-        .fileName = "btn_party"
+        .FileName = "btn_party"
         .State = 0 ' Normal
     End With
     
     ' Main - Friends
     With MainButton(7)
-        .fileName = "btn_friends"
+        .FileName = "btn_friends"
         .State = 0 ' Normal
     End With
     
     ' Main - Guild
     With MainButton(8)
-        .fileName = "btn_guild"
+        .FileName = "btn_guild"
         .State = 0 ' Normal
     End With
     
     ' Main - Notes
     With MainButton(9)
-        .fileName = "btn_notes"
+        .FileName = "btn_notes"
         .State = 0 ' Normal
     End With
 
     ' Main - Titles
     With MainButton(10)
-        .fileName = "btn_titles"
+        .FileName = "btn_titles"
         .State = 0 ' Normal
     End With
     
     ' Main - Talents
     With MainButton(11)
-        .fileName = "btn_talents"
+        .FileName = "btn_talents"
         .State = 0  ' Normal
     End With
     
     ' Main - Foes
     With MainButton(12)
-        .fileName = "btn_foes"
+        .FileName = "btn_foes"
         .State = 0 ' Normal
     End With
     
     ' Main - Map
     With MainButton(13)
-        .fileName = "btn_map"
+        .FileName = "btn_map"
         .State = 0 ' Normal
     End With
     
     ' Main - Hide/Show Buttons
     With MainButton(14)
-        .fileName = "btn_showpanels"
+        .FileName = "btn_showpanels"
         .State = 0 ' Normal
     End With
     
     ' Main - Hide/Show GUI
     With MainButton(15)
-        .fileName = "btn_hidegui"
+        .FileName = "btn_hidegui"
         .State = 0 ' Normal
     End With
     
     ' Main - Equipment
     With MainButton(16)
-        .fileName = "btn_equipment"
+        .FileName = "btn_equipment"
         .State = 0 ' Normal
     End With
     Exit Sub
@@ -759,7 +762,7 @@ Public Sub ResetMenuButtons()
     
     For I = 1 To MAX_MENUBUTTONS
         If Not CurButton_Menu = I Then
-            frmMenu.ImgButton(I).Picture = LoadPicture(App.Path & GFX_PATH & "gui\menu\buttons\" & MenuButton(I).fileName & "_norm.jpg")
+            frmMenu.ImgButton(I).Picture = LoadPicture(App.Path & GFX_PATH & "gui\menu\buttons\" & MenuButton(I).FileName & "_norm.jpg")
         End If
     Next
     Exit Sub
@@ -789,7 +792,7 @@ Public Sub RenderButton_Menu(ByVal ButtonNum As Long)
     End Select
     
     ' Render the button
-    frmMenu.ImgButton(ButtonNum).Picture = LoadPicture(App.Path & MENUBUTTON_PATH & MenuButton(ButtonNum).fileName & bSuffix & ".jpg")
+    frmMenu.ImgButton(ButtonNum).Picture = LoadPicture(App.Path & MENUBUTTON_PATH & MenuButton(ButtonNum).FileName & bSuffix & ".jpg")
     Exit Sub
     
 ' Error handler
@@ -1016,8 +1019,8 @@ Public Sub LogoutGame()
     frmMain.txtMyChat.text = vbNullString
     
       ' Reset buttons manually
-    MainButton(14).fileName = "btn_showpanels"
-    MainButton(15).fileName = "btn_hidegui"
+    MainButton(14).FileName = "btn_showpanels"
+    MainButton(15).FileName = "btn_hidegui"
     
     Call ToggleButtons(False)
     Call frmMain.ResetMainButtons

@@ -23,12 +23,6 @@ Public Segment As DirectMusicSegment
 Public Loader As DirectMusicLoader
 
 Private Sub Class_Initialize()
-    Dim newFont As Long
-
-    ' Change and set the current path, to prevent from VB not finding Bass.dll
-    ChDrive App.Path
-    ChDir App.Path
-
     ' Don't run while in IDE
     'If App.LogMode = 0 Then Exit Sub
 
@@ -52,31 +46,31 @@ Private Sub Class_Initialize()
     Performance.SetMasterAutoDownload True
 End Sub
 
-Public Sub PlayMusic(fileName As String)
+Public Sub PlayMusic(FileName As String)
     Dim SplitMusic() As String
     
-    If Options.Music = 0 Or fileName = vbNullString Or CurrentMusic = fileName Then Exit Sub
+    If Options.Music = 0 Or FileName = vbNullString Or CurrentMusic = FileName Then Exit Sub
     
     Call StopMusic
     
     ' File doesn't exist
-    If Not FileExist(App.Path & MUSIC_PATH & fileName, True) Then
+    If Not FileExist(App.Path & MUSIC_PATH & FileName, True) Then
         If FormVisible("frmMain") Then
-            Call AddText(fileName & " does not exist!", BrightRed)
+            Call AddText(FileName & " does not exist!", BrightRed)
         End If
         Exit Sub
     End If
     
-    If Right$(fileName, 4) = ".mid" Then
-        SplitMusic = Split(fileName, ".", , vbTextCompare)
+    If Right$(FileName, 4) = ".mid" Then
+        SplitMusic = Split(FileName, ".", , vbTextCompare)
         
         If Performance Is Nothing Then Exit Sub
-        If LenB(Trim$(fileName)) < 1 Then Exit Sub
+        If LenB(Trim$(FileName)) < 1 Then Exit Sub
         If UBound(SplitMusic) <> 1 Then Exit Sub
         If SplitMusic(1) <> "mid" Then Exit Sub
         
         Set Segment = Nothing
-        Set Segment = Loader.LoadSegment(App.Path & MUSIC_PATH & fileName)
+        Set Segment = Loader.LoadSegment(App.Path & MUSIC_PATH & FileName)
         
         ' Repeat midi file
         Segment.SetLoopPoints 0, 0
@@ -85,26 +79,26 @@ Public Sub PlayMusic(fileName As String)
         
         Performance.PlaySegment Segment, 0, 0
         
-        CurrentMusic = fileName
+        CurrentMusic = FileName
     Else
-        If Left$(fileName, 7) = "http://" Then
-            Music = BASS_StreamCreateURL(fileName, 0, BASS_SAMPLE_LOOP, 0, 0)
+        If Left$(FileName, 7) = "http://" Then
+            Music = BASS_StreamCreateURL(FileName, 0, BASS_SAMPLE_LOOP, 0, 0)
         Else
-            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & fileName), 0, 0, BASS_SAMPLE_LOOP)
+            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & FileName), 0, 0, BASS_SAMPLE_LOOP)
         End If
         
         Call BASS_ChannelSetAttribute(Music, BASS_ATTRIB_VOL, Options.MusicVolume)
         Call BASS_ChannelPlay(Music, BASSFALSE)
-        CurrentMusic = fileName
+        CurrentMusic = FileName
     End If
 End Sub
 
-Public Sub PlaySound(fileName As String, Optional ByVal X As Long, Optional ByVal Y As Long)
+Public Sub PlaySound(FileName As String, Optional ByVal X As Long, Optional ByVal Y As Long)
     Dim I As Long
     
-    If Options.Sound = 0 Or fileName = vbNullString Then Exit Sub
+    If Options.Sound = 0 Or FileName = vbNullString Then Exit Sub
     
-    If FileExist(App.Path & SOUND_PATH & fileName, True) Then
+    If FileExist(App.Path & SOUND_PATH & FileName, True) Then
         ' Find the index
         For I = 1 To MAX_SOUNDS
             If Sounds(I) = 0 Then
@@ -123,7 +117,7 @@ Public Sub PlaySound(fileName As String, Optional ByVal X As Long, Optional ByVa
         Next
         
         ' Create the sound
-        Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & fileName), 0, 0, 0)
+        Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & FileName), 0, 0, 0)
         
         Call BASS_ChannelSetAttribute(Sounds(SoundIndex), BASS_ATTRIB_VOL, Options.SoundVolume)
         
@@ -131,7 +125,7 @@ Public Sub PlaySound(fileName As String, Optional ByVal X As Long, Optional ByVa
         Call BASS_ChannelPlay(Sounds(SoundIndex), BASSFALSE)
     Else
         If FormVisible("frmMain") Then
-            Call AddText(fileName & " does not exist!", BrightRed)
+            Call AddText(FileName & " does not exist!", BrightRed)
         End If
     End If
 End Sub
