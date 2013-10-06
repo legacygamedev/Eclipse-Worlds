@@ -188,11 +188,6 @@ Public vbQuote As String
 Public CurX As Long
 Public CurY As Long
 
-' Drop down box
-Public TmplstDropDownBoxHeight As Byte
-Public TmpInvNum As Byte
-Public TmpSpellSlot As Byte
-
 ' Game editors
 Public Editor As Byte
 Public EditorIndex As Long

@@ -28,14 +28,6 @@ Begin VB.Form frmMain
    StartUpPosition =   2  'CenterScreen
    Tag             =   " "
    Visible         =   0   'False
-   Begin VB.ListBox lstDropDownBox 
-      Height          =   270
-      Left            =   0
-      TabIndex        =   142
-      Top             =   0
-      Visible         =   0   'False
-      Width           =   1095
-   End
    Begin VB.PictureBox picSpellDesc 
       Appearance      =   0  'Flat
       AutoSize        =   -1  'True
@@ -859,7 +851,7 @@ Begin VB.Form frmMain
          ScaleHeight     =   186
          ScaleMode       =   0  'User
          ScaleWidth      =   482
-         TabIndex        =   143
+         TabIndex        =   142
          TabStop         =   0   'False
          Top             =   5760
          Visible         =   0   'False
@@ -872,7 +864,7 @@ Begin VB.Form frmMain
             ScaleHeight     =   100
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   100
-            TabIndex        =   144
+            TabIndex        =   143
             TabStop         =   0   'False
             Top             =   120
             Visible         =   0   'False
@@ -896,7 +888,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   1
             Left            =   240
-            TabIndex        =   150
+            TabIndex        =   149
             Top             =   1920
             Width           =   975
          End
@@ -918,7 +910,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   2
             Left            =   240
-            TabIndex        =   149
+            TabIndex        =   148
             Top             =   2400
             Width           =   975
          End
@@ -940,7 +932,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   3
             Left            =   3240
-            TabIndex        =   148
+            TabIndex        =   147
             Top             =   1920
             Width           =   975
          End
@@ -962,7 +954,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   4
             Left            =   3240
-            TabIndex        =   147
+            TabIndex        =   146
             Top             =   2400
             Width           =   975
          End
@@ -983,7 +975,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H80000003&
             Height          =   210
             Left            =   6000
-            TabIndex        =   146
+            TabIndex        =   145
             Top             =   2400
             Width           =   1095
          End
@@ -1004,7 +996,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   1335
             Left            =   180
-            TabIndex        =   145
+            TabIndex        =   144
             Top             =   120
             Width           =   6915
          End
@@ -2925,7 +2917,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   72
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   798
-      TabIndex        =   151
+      TabIndex        =   150
       Top             =   12360
       Width           =   12000
       Begin VB.CheckBox chkLayers 
@@ -2935,7 +2927,7 @@ Begin VB.Form frmMain
          Height          =   540
          Left            =   3585
          Style           =   1  'Graphical
-         TabIndex        =   171
+         TabIndex        =   170
          ToolTipText     =   "Eye Dropper (Shift + LMouse)"
          Top             =   210
          Width           =   540
@@ -2947,7 +2939,7 @@ Begin VB.Form frmMain
          Height          =   540
          Left            =   5190
          Style           =   1  'Graphical
-         TabIndex        =   166
+         TabIndex        =   165
          ToolTipText     =   "Eye Dropper (Shift + LMouse)"
          Top             =   210
          Width           =   540
@@ -2957,7 +2949,7 @@ Begin VB.Form frmMain
          Caption         =   "Dim Layers"
          Height          =   225
          Left            =   10215
-         TabIndex        =   165
+         TabIndex        =   164
          ToolTipText     =   "Will dim tiles of layers that are below your current layer."
          Top             =   870
          Value           =   1  'Checked
@@ -2968,7 +2960,7 @@ Begin VB.Form frmMain
          Height          =   420
          Left            =   8910
          Style           =   1  'Graphical
-         TabIndex        =   164
+         TabIndex        =   163
          ToolTipText     =   "Delete all content of this map. "
          Top             =   615
          Width           =   420
@@ -2978,7 +2970,7 @@ Begin VB.Form frmMain
          Height          =   420
          Left            =   8910
          Style           =   1  'Graphical
-         TabIndex        =   163
+         TabIndex        =   162
          ToolTipText     =   "Revert/Cancel all changes to this map."
          Top             =   180
          Width           =   420
@@ -2988,7 +2980,7 @@ Begin VB.Form frmMain
          Height          =   420
          Left            =   8475
          Style           =   1  'Graphical
-         TabIndex        =   162
+         TabIndex        =   161
          ToolTipText     =   "Map Properties"
          Top             =   615
          Width           =   420
@@ -2998,7 +2990,7 @@ Begin VB.Form frmMain
          Height          =   540
          Left            =   8355
          Style           =   1  'Graphical
-         TabIndex        =   161
+         TabIndex        =   160
          ToolTipText     =   "Save Map"
          Top             =   60
          Width           =   540
@@ -3008,7 +3000,7 @@ Begin VB.Form frmMain
          Caption         =   "Draw Events"
          Height          =   225
          Left            =   10215
-         TabIndex        =   160
+         TabIndex        =   159
          ToolTipText     =   "Draw white square around events "
          Top             =   660
          Value           =   1  'Checked
@@ -3019,7 +3011,7 @@ Begin VB.Form frmMain
          Caption         =   "Show Attributes"
          Height          =   225
          Left            =   10215
-         TabIndex        =   159
+         TabIndex        =   158
          ToolTipText     =   "Show attributes like Block, Warp etc. "
          Top             =   435
          Width           =   1740
@@ -3029,7 +3021,7 @@ Begin VB.Form frmMain
          Caption         =   "Show Grid"
          Height          =   225
          Left            =   10215
-         TabIndex        =   158
+         TabIndex        =   157
          Top             =   210
          Width           =   1395
       End
@@ -3038,7 +3030,7 @@ Begin VB.Form frmMain
          Caption         =   "Tile Preview"
          Height          =   225
          Left            =   10215
-         TabIndex        =   157
+         TabIndex        =   156
          Top             =   0
          Value           =   1  'Checked
          Width           =   1395
@@ -3050,7 +3042,7 @@ Begin VB.Form frmMain
          Height          =   540
          Left            =   2070
          Style           =   1  'Graphical
-         TabIndex        =   155
+         TabIndex        =   154
          ToolTipText     =   "Eye Dropper (Shift + LMouse)"
          Top             =   210
          Width           =   540
@@ -3062,7 +3054,7 @@ Begin VB.Form frmMain
          Height          =   540
          Left            =   255
          Style           =   1  'Graphical
-         TabIndex        =   153
+         TabIndex        =   152
          ToolTipText     =   "Map Preview - Docked"
          Top             =   210
          Width           =   540
@@ -3082,7 +3074,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000011&
          Height          =   180
          Left            =   3330
-         TabIndex        =   173
+         TabIndex        =   172
          Top             =   885
          Width           =   1140
       End
@@ -3100,7 +3092,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   240
          Left            =   3615
-         TabIndex        =   172
+         TabIndex        =   171
          Top             =   705
          Width           =   480
       End
@@ -3119,7 +3111,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000011&
          Height          =   180
          Left            =   240
-         TabIndex        =   170
+         TabIndex        =   169
          Top             =   885
          Width           =   570
       End
@@ -3138,7 +3130,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000011&
          Height          =   180
          Left            =   1770
-         TabIndex        =   169
+         TabIndex        =   168
          Top             =   885
          Width           =   1140
       End
@@ -3157,7 +3149,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000011&
          Height          =   180
          Left            =   4965
-         TabIndex        =   168
+         TabIndex        =   167
          Top             =   900
          Width           =   1095
       End
@@ -3175,7 +3167,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   240
          Left            =   5055
-         TabIndex        =   167
+         TabIndex        =   166
          Top             =   720
          Width           =   870
       End
@@ -3193,7 +3185,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   240
          Left            =   1920
-         TabIndex        =   156
+         TabIndex        =   155
          Top             =   705
          Width           =   870
       End
@@ -3211,7 +3203,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   240
          Left            =   60
-         TabIndex        =   154
+         TabIndex        =   153
          Top             =   705
          Width           =   930
       End
@@ -3231,7 +3223,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00000000&
          Height          =   225
          Left            =   15
-         TabIndex        =   152
+         TabIndex        =   151
          Top             =   -30
          Width           =   4650
       End
@@ -3663,7 +3655,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub lblChoices_MouseDown(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lblChoices_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
@@ -3674,12 +3666,12 @@ Private Sub lblChoices_MouseDown(index As Integer, Button As Integer, Shift As I
     buffer.WriteLong CEventChatReply
     buffer.WriteLong EventReplyID
     buffer.WriteLong EventReplyPage
-    buffer.WriteLong index
+    buffer.WriteLong Index
     SendData buffer.ToArray
     Set buffer = Nothing
     ClearEventChat
     
-    Call ClearChatButton(index)
+    Call ClearChatButton(Index)
     InEvent = False
     Audio.PlaySound ButtonClick
     Exit Sub
@@ -3690,14 +3682,14 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub lblChoices_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lblChoices_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Call ClearChatButton(index)
-    If frmMain.lblChoices(index).Visible = False Then Exit Sub
-    If frmMain.lblChoices.Item(index).ForeColor = vbYellow Then Exit Sub
-    frmMain.lblChoices.Item(index).ForeColor = vbYellow
+    Call ClearChatButton(Index)
+    If frmMain.lblChoices(Index).Visible = False Then Exit Sub
+    If frmMain.lblChoices.Item(Index).ForeColor = vbYellow Then Exit Sub
+    frmMain.lblChoices.Item(Index).ForeColor = vbYellow
     Audio.PlaySound ButtonHover
     Exit Sub
     
@@ -3707,14 +3699,14 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub ClearChatButton(index As Integer)
+Private Sub ClearChatButton(Index As Integer)
     Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For I = 1 To 4
-        If frmMain.lblChoices.Item(I).ForeColor = vbYellow And Not index = I Then
+        If frmMain.lblChoices.Item(I).ForeColor = vbYellow And Not Index = I Then
             frmMain.lblChoices.Item(I).ForeColor = &H80000003
         End If
     Next
@@ -3969,12 +3961,12 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub lblDialogue_Button_Click(index As Integer)
+Private Sub lblDialogue_Button_Click(Index As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Call the handler
-    DialogueHandler index
+    DialogueHandler Index
     
     txtDialogue.text = vbNullString
     picDialogue.Visible = False
@@ -4074,51 +4066,18 @@ Private Sub lblSpellName_MouseMove(Button As Integer, Shift As Integer, X As Sin
     LastSpellDesc = 0 ' No spell was last loaded
 End Sub
 
-Private Sub lblTrainStat_Click(index As Integer)
+Private Sub lblTrainStat_Click(Index As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerPOINTS(MyIndex) = 0 Then Exit Sub
-    SendTrainStat index
+    SendTrainStat Index
     Exit Sub
     
 ' Error handler
 errorhandler:
     HandleError "lblTrainStat_Click", "frmMain", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
-End Sub
-
-Private Sub lstDropDownBox_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    If (TmpInvNum < 1 Or TmpInvNum > MAX_INV) And (TmpSpellSlot < 1 Or TmpSpellSlot > MAX_PLAYER_SPELLS) Then Exit Sub
-    If lstDropDownBox.ListIndex = -1 Then Exit Sub
-    
-    If TmpInvNum > 0 Then
-        If lstDropDownBox.List(lstDropDownBox.ListIndex) = "Use" Or lstDropDownBox.List(lstDropDownBox.ListIndex) = "Equip" Then
-            Call SendUseItem(TmpInvNum)
-        ElseIf lstDropDownBox.List(lstDropDownBox.ListIndex) = "Drop" Then
-            Call DropItem(TmpInvNum)
-        'ElseIf lstDropDownBox.List(lstDropDownBox.ListIndex) = "Examine" Then
-        '    If Trim$(Item(GetPlayerInvItemNum(MyIndex, TmpInvNum)).Desc) = vbNullString Then
-        '        Call AddText("This item does not have a description, report this to a Staff member!", BrightRed)
-        '    Else
-        '        Call AddText(Trim$(Item(GetPlayerInvItemNum(MyIndex, TmpInvNum)).Desc), Yellow)
-        '    End If
-        End If
-    Else
-        If lstDropDownBox.List(lstDropDownBox.ListIndex) = "Cast" Then
-            Call SendCastSpell(TmpSpellSlot)
-        ElseIf lstDropDownBox.List(lstDropDownBox.ListIndex) = "Forget" Then
-            Dialogue "Forget Spell", "Are you sure you want to forget how to cast " & Trim$(Spell(PlayerSpells(TmpSpellSlot)).name) & "?", DIALOGUE_TYPE_FORGET, True, TmpSpellSlot
-        'ElseIf lstDropDownBox.List(lstDropDownBox.ListIndex) = "Examine" Then
-        '    If Trim$(Spell(PlayerSpells(TmpSpellSlot)).Desc) = vbNullString Then
-        '        Call AddText("This spell does not have a description, report this to a Staff member!", BrightRed)
-        '    Else
-        '        Call AddText(Trim$(Spell(PlayerSpells(TmpSpellSlot)).Desc), Yellow)
-        '    End If
-        End If
-    End If
-    Call Audio.PlaySound(ButtonClick)
-    lstDropDownBox.Visible = False
 End Sub
 
 Private Sub lstTitles_Click()
@@ -4554,21 +4513,21 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picButton_Click(index As Integer)
+Private Sub picButton_Click(Index As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Not CurButton_Main = index Then
+    If Not CurButton_Main = Index Then
         Call Audio.PlaySound(ButtonClick)
         
         ' Don't set it if it's the trade/GUI adjusting button
-        If Not index = 5 And Not index = 14 And Not index = 15 Then
-            CurButton_Main = index
-            picButton(index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(index).FileName & "_click.jpg")
+        If Not Index = 5 And Not Index = 14 And Not Index = 15 Then
+            CurButton_Main = Index
+            picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).FileName & "_click.jpg")
             Call ResetMainButtons
         End If
         
-        Call TogglePanel(index)
+        Call TogglePanel(Index)
     Else ' Hide the panel, if it is the open one
         CurButton_Main = 0
         LastButton_Main = 0
@@ -4585,15 +4544,15 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picButton_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picButton_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Not LastButton_Main = index And Not CurButton_Main = index Then
+    If Not LastButton_Main = Index And Not CurButton_Main = Index Then
         Call ResetMainButtons
-        picButton(index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(index).FileName & "_hover.jpg")
+        picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).FileName & "_hover.jpg")
         Call Audio.PlaySound(ButtonHover)
-        LastButton_Main = index
+        LastButton_Main = Index
     End If
     Call ClearChatButton(0)
     Exit Sub
@@ -4707,7 +4666,6 @@ Private Sub picForm_MouseMove(Button As Integer, Shift As Integer, X As Single, 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lstDropDownBox.Visible = False
     picItemDesc.Visible = False
     picSpellDesc.Visible = False
     LastSpellDesc = 0 ' No spell was last loaded
@@ -5051,7 +5009,6 @@ Private Sub picScreen_MouseMove(Button As Integer, Shift As Integer, X As Single
     LastY = CurY
     
     ' Set the description windows off
-    lstDropDownBox.Visible = False
     picItemDesc.Visible = False
     picSpellDesc.Visible = False
     LastSpellDesc = 0 ' No spell was last loaded
@@ -5261,7 +5218,6 @@ Private Sub picSpells_MouseMove(Button As Integer, Shift As Integer, X As Single
         End If
     End If
     
-    lstDropDownBox.Visible = False
     picSpellDesc.Visible = False
     LastSpellDesc = 0
     Exit Sub
@@ -5348,39 +5304,7 @@ Private Sub picSpells_MouseDown(Button As Integer, Shift As Integer, X As Single
         End If
     ElseIf Button = 2 Then ' Right click
         If SpellNum > 0 And SpellNum <= MAX_PLAYER_SPELLS Then
-            X = X + picSpells.Left
-            Y = Y + picSpells.Top
-            lstDropDownBox.Top = Y
-            lstDropDownBox.Left = X
-            
-            ' If the original height is stored then set the height and clear it
-            If TmplstDropDownBoxHeight > 0 Then
-                lstDropDownBox.Height = TmplstDropDownBoxHeight
-                TmplstDropDownBoxHeight = 0
-            End If
-            
-            ' Set the height
-            TmplstDropDownBoxHeight = lstDropDownBox.Height
-            
-            ' Clear the list
-            lstDropDownBox.Clear
-            
-            ' Build the list
-            lstDropDownBox.AddItem "Cast"
-            lstDropDownBox.AddItem "Forget"
-            'lstDropDownBox.AddItem "Examine"
-            
-            ' Set the new height
-            lstDropDownBox.Height = lstDropDownBox.Height * lstDropDownBox.ListCount
-            
-            ' Other stuff
-            lstDropDownBox.ListIndex = -1
-            lstDropDownBox.ZOrder (0)
-            lstDropDownBox.Visible = True
-            
-            ' Store the spell number for future use
-            TmpSpellSlot = SpellNum
-            TmpInvNum = 0
+            Dialogue "Forget Spell", "Are you sure you want to forget how to cast " & Trim$(Spell(PlayerSpells(SpellNum)).name) & "?", DIALOGUE_TYPE_FORGET, True, SpellNum
         End If
     End If
     Exit Sub
@@ -5391,7 +5315,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picToggleButtons_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picToggleButtons_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call ResetMainButtons
 End Sub
 
@@ -5535,7 +5459,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         End If
     End If
 
-   If KeyAscii = vbKeyTab And ShiftDown = False And ChatLocked Then
+   If KeyAscii = vbKeyTab And ChatLocked Then
         ' Set the NPC distance for all the NPCs on the map
         For I = 1 To Map.NPC_HighIndex
             If Map.NPC(I) > 0 Then
@@ -5567,10 +5491,12 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         
         ' Set the target
         If PlayerTarget > 0 Then
-            If Not MyTarget = PlayerTarget Then
+            If MyTarget = PlayerTarget And MyTargetType = TARGET_TYPE_NPC Then
+                ' Skip
+            Else
                 MyTarget = PlayerTarget
                 MyTargetType = TARGET_TYPE_NPC
-                Call PlayerSearch(MapNPC(PlayerTarget).X, MapNPC(PlayerTarget).Y)
+                Call SendTarget
             End If
         End If
     ElseIf KeyAscii = 96 And ChatLocked Then
@@ -5578,7 +5504,9 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         For I = 1 To Player_HighIndex
             If IsPlaying(I) Then
                 If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
-                    If Not MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
+                    If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
+                        ' Skip
+                    Else
                         PlayerDistanceX(I) = Player(I).X - GetPlayerX(MyIndex)
                         PlayerDistanceY(I) = Player(I).Y - GetPlayerY(MyIndex)
                 
@@ -5611,10 +5539,12 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         
         ' Set the target
         If PlayerTarget > 0 Then
-            If Not MyTarget = PlayerTarget Then
+            If MyTarget = PlayerTarget And MyTargetType = TARGET_TYPE_PLAYER Then
+                ' Skip
+            Else
                 MyTarget = PlayerTarget
                 MyTargetType = TARGET_TYPE_PLAYER
-                Call PlayerSearch(Player(PlayerTarget).X, Player(PlayerTarget).Y)
+                Call SendTarget
             End If
         End If
     End If
@@ -6111,44 +6041,7 @@ Private Sub picInventory_MouseDown(Button As Integer, Shift As Integer, X As Sin
         End If
     ElseIf Button = 2 Then
         If InvNum > 0 And InvNum <= MAX_INV Then
-            X = X + picInventory.Left
-            Y = Y + picInventory.Top
-            lstDropDownBox.Top = Y
-            lstDropDownBox.Left = X
-            
-            ' If the original height is stored then set the height and clear it
-            If TmplstDropDownBoxHeight > 0 Then
-                lstDropDownBox.Height = TmplstDropDownBoxHeight
-                TmplstDropDownBoxHeight = 0
-            End If
-            
-            ' Set the height
-            TmplstDropDownBoxHeight = lstDropDownBox.Height
-            
-            ' Clear the list
-            lstDropDownBox.Clear
-            
-            ' Build the list
-            If Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE And Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 And Not Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
-                lstDropDownBox.AddItem "Use"
-            ElseIf Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_EQUIPMENT Then
-                lstDropDownBox.AddItem "Equip"
-            End If
-            
-            lstDropDownBox.AddItem "Drop"
-            'lstDropDownBox.AddItem "Examine"
-            
-            ' Set the new height
-            lstDropDownBox.Height = lstDropDownBox.Height * lstDropDownBox.ListCount
-            
-            ' Other stuff
-            lstDropDownBox.ListIndex = -1
-            lstDropDownBox.ZOrder (0)
-            lstDropDownBox.Visible = True
-            
-            ' Store the inventory number for future use
-            TmpInvNum = InvNum
-            TmpSpellSlot = 0
+            Call DropItem(InvNum)
         End If
     End If
 
@@ -6205,7 +6098,6 @@ Private Sub picInventory_MouseMove(Button As Integer, Shift As Integer, X As Sin
 
     picItemDesc.Visible = False
     LastItemDesc = 0 ' No item was last loaded
-    lstDropDownBox.Visible = False
     Exit Sub
     
 ' Error handler
