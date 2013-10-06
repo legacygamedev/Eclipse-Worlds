@@ -118,12 +118,12 @@ errorhandler:
     Err.Clear
 End Function
 
-Function IsPlaying(ByVal Index As Long) As Boolean
+Function IsPlaying(ByVal index As Long) As Boolean
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' If the player doesn't exist, the Name will equal 0
-    If Len(GetPlayerName(Index)) > 0 Then
+    If Len(GetPlayerName(index)) > 0 Then
         IsPlaying = True
     End If
     Exit Function
@@ -579,7 +579,7 @@ Public Sub SendSaveMap()
                             
                         If .MoveRouteCount > 0 Then
                             For Y = 1 To .MoveRouteCount
-                                buffer.WriteLong .MoveRoute(Y).Index
+                                buffer.WriteLong .MoveRoute(Y).index
                                 buffer.WriteLong .MoveRoute(Y).Data1
                                 buffer.WriteLong .MoveRoute(Y).Data2
                                 buffer.WriteLong .MoveRoute(Y).Data3
@@ -606,7 +606,7 @@ Public Sub SendSaveMap()
                             If Map.events(I).Pages(X).CommandList(Y).CommandCount > 0 Then
                                 For Z = 1 To Map.events(I).Pages(X).CommandList(Y).CommandCount
                                     With Map.events(I).Pages(X).CommandList(Y).Commands(Z)
-                                        buffer.WriteLong .Index
+                                        buffer.WriteLong .index
                                         buffer.WriteString .Text1
                                         buffer.WriteString .Text2
                                         buffer.WriteString .Text3
@@ -627,7 +627,7 @@ Public Sub SendSaveMap()
                                         buffer.WriteLong .MoveRouteCount
                                         If .MoveRouteCount > 0 Then
                                             For w = 1 To .MoveRouteCount
-                                                buffer.WriteLong .MoveRoute(w).Index
+                                                buffer.WriteLong .MoveRoute(w).index
                                                 buffer.WriteLong .MoveRoute(w).Data1
                                                 buffer.WriteLong .MoveRoute(w).Data2
                                                 buffer.WriteLong .MoveRoute(w).Data3
@@ -1998,18 +1998,74 @@ End Sub
 
 Sub PlayerSearch(ByVal CurX As Long, ByVal CurY As Long)
     Dim buffer As clsBuffer
-
+    Dim I As Long
+    Dim Found_Target As Boolean
+    Dim TargetType As Byte
+    
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If IsInBounds Then
-        Set buffer = New clsBuffer
-        buffer.WriteLong CSearch
-        buffer.WriteLong CurX
-        buffer.WriteLong CurY
-        SendData buffer.ToArray()
-        Set buffer = Nothing
+    ' Player
+    For I = 1 To Player_HighIndex
+        If IsPlaying(I) Then
+            If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
+                If Player(I).X = CurX Then
+                    If Player(I).Y = CurY Then
+                        MyTarget = I
+                        MyTargetType = TARGET_TYPE_PLAYER
+                        Found_Target = True
+                        TargetType = TARGET_TYPE_PLAYER
+                        Exit For
+                    End If
+                End If
+            End If
+        End If
+    Next
+    
+    If TargetType = 0 Then
+        ' NPC
+        For I = 1 To Map.NPC_HighIndex
+            If MapNPC(I).num > 0 Then
+                If MapNPC(I).X = CurX Then
+                    If MapNPC(I).Y = CurY Then
+                        MyTarget = I
+                        MyTargetType = TARGET_TYPE_NPC
+                        Found_Target = True
+                        TargetType = TARGET_TYPE_NPC
+                        Exit For
+                    End If
+                End If
+            End If
+        Next
     End If
+    
+     If TargetType = 0 Then
+        ' Check for an item
+        For I = 1 To MAX_MAP_ITEMS
+            If MapItem(I).num > 0 Then
+                If MapItem(I).X = CurX And MapItem(I).Y = CurY Then
+                    If CanPlayerPickupItem(MyIndex, I) Then
+                        If Item(MapItem(I).num).stackable = 1 Then
+                            Call AddText("You see " & MapItem(I).Value & " " & Trim$(Item(MapItem(I).num).name) & ".", Yellow)
+                        Else
+                            Call AddText("You see " & CheckGrammar(Trim$(Item(MapItem(I).num).name)) & ".", Yellow)
+                        End If
+                        Exit Sub
+                    End If
+                End If
+            End If
+        Next
+    End If
+    
+    ' Don't send packet if no target was found
+    If Found_Target = False Then Exit Sub
+    
+    Set buffer = New clsBuffer
+    buffer.WriteLong CSearch
+    buffer.WriteByte TargetType
+    buffer.WriteLong MyTarget
+    SendData buffer.ToArray()
+    Set buffer = Nothing
     Exit Sub
 
 ' Error handler
@@ -2410,9 +2466,9 @@ Sub SendSaveTitle(ByVal TitleNum As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     Set buffer = New clsBuffer
-    TitleSize = LenB(Title(TitleNum))
+    TitleSize = LenB(title(TitleNum))
     ReDim TitleData(TitleSize - 1)
-    CopyMemory TitleData(0), ByVal VarPtr(Title(TitleNum)), TitleSize
+    CopyMemory TitleData(0), ByVal VarPtr(title(TitleNum)), TitleSize
     buffer.WriteLong CSaveTitle
     buffer.WriteLong TitleNum
     buffer.WriteBytes TitleData
@@ -2519,7 +2575,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub SendChangeStatus(Index As Long, Status As String)
+Sub SendChangeStatus(index As Long, Status As String)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out

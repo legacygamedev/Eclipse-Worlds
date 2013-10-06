@@ -253,42 +253,42 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub ProcessPlayerMovement(ByVal Index As Long)
+Sub ProcessPlayerMovement(ByVal index As Long)
     Dim MovementSpeed As Long
 
    ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Check if player is walking, and if so process moving them over
-    Select Case TempPlayer(Index).Moving
+    Select Case TempPlayer(index).Moving
         Case MOVING_WALKING: MovementSpeed = ((ElapsedTime / 1000) * ((MOVEMENT_SPEED / 2) * SIZE_X))
         Case MOVING_RUNNING: MovementSpeed = ((ElapsedTime / 1000) * (MOVEMENT_SPEED * SIZE_X))
         Case Else: Exit Sub
     End Select
     
-    Select Case GetPlayerDir(Index)
+    Select Case GetPlayerDir(index)
         Case DIR_UP
-            TempPlayer(Index).yOffset = TempPlayer(Index).yOffset - MovementSpeed
-            If TempPlayer(Index).yOffset < 0 Then TempPlayer(Index).yOffset = 0
+            TempPlayer(index).yOffset = TempPlayer(index).yOffset - MovementSpeed
+            If TempPlayer(index).yOffset < 0 Then TempPlayer(index).yOffset = 0
         Case DIR_DOWN
-            TempPlayer(Index).yOffset = TempPlayer(Index).yOffset + MovementSpeed
-            If TempPlayer(Index).yOffset > 0 Then TempPlayer(Index).yOffset = 0
+            TempPlayer(index).yOffset = TempPlayer(index).yOffset + MovementSpeed
+            If TempPlayer(index).yOffset > 0 Then TempPlayer(index).yOffset = 0
         Case DIR_LEFT
-            TempPlayer(Index).xOffset = TempPlayer(Index).xOffset - MovementSpeed
-            If TempPlayer(Index).xOffset < 0 Then TempPlayer(Index).xOffset = 0
+            TempPlayer(index).xOffset = TempPlayer(index).xOffset - MovementSpeed
+            If TempPlayer(index).xOffset < 0 Then TempPlayer(index).xOffset = 0
         Case DIR_RIGHT
-            TempPlayer(Index).xOffset = TempPlayer(Index).xOffset + MovementSpeed
-            If TempPlayer(Index).xOffset > 0 Then TempPlayer(Index).xOffset = 0
+            TempPlayer(index).xOffset = TempPlayer(index).xOffset + MovementSpeed
+            If TempPlayer(index).xOffset > 0 Then TempPlayer(index).xOffset = 0
     End Select
 
     ' Check if completed walking over to the next tile
-    If TempPlayer(Index).Moving > 0 Then
-        If (TempPlayer(Index).xOffset = 0) And (TempPlayer(Index).yOffset = 0) Then
-            TempPlayer(Index).Moving = 0
-            If TempPlayer(Index).Step = 1 Then
-                TempPlayer(Index).Step = 3
+    If TempPlayer(index).Moving > 0 Then
+        If (TempPlayer(index).xOffset = 0) And (TempPlayer(index).yOffset = 0) Then
+            TempPlayer(index).Moving = 0
+            If TempPlayer(index).Step = 1 Then
+                TempPlayer(index).Step = 3
             Else
-                TempPlayer(Index).Step = 1
+                TempPlayer(index).Step = 1
             End If
         End If
     End If
@@ -909,6 +909,9 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
         AddText "Spell has not cooled down yet!", BrightRed
         Exit Sub
     End If
+    
+    ' Don't allow them to cast if stunned
+    If StunDuration > 0 Then Exit Sub
 
     If PlayerSpells(SpellSlot) > 0 Then
         ' Check if player has enough MP
@@ -1326,11 +1329,11 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub ClearActionMsg(ByVal Index As Byte, Optional ByVal SetHighIndex As Boolean = True)
+Public Sub ClearActionMsg(ByVal index As Byte, Optional ByVal SetHighIndex As Boolean = True)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    With ActionMsg(Index)
+    With ActionMsg(index)
         .Message = vbNullString
         .Timer = 0
         .Type = 0
@@ -1352,11 +1355,11 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub ClearBlood(ByVal Index As Long, Optional ByVal SetHighIndex As Boolean = True)
+Public Sub ClearBlood(ByVal index As Long, Optional ByVal SetHighIndex As Boolean = True)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    With Blood(Index)
+    With Blood(index)
         .X = 0
         .Y = 0
         .Sprite = 0
@@ -1375,11 +1378,11 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub ClearChatBubble(ByVal Index As Long, Optional ByVal SetHighIndex As Boolean = True)
+Public Sub ClearChatBubble(ByVal index As Long, Optional ByVal SetHighIndex As Boolean = True)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    With ChatBubble(Index)
+    With ChatBubble(index)
         .msg = vbNullString
         .Color = 0
         .Target = 0
@@ -1400,7 +1403,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub CheckAnimInstance(ByVal Index As Long)
+Public Sub CheckAnimInstance(ByVal index As Long)
     Dim looptime As Long
     Dim Layer As Long
     Dim FrameCount As Long
@@ -1410,38 +1413,38 @@ Public Sub CheckAnimInstance(ByVal Index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' If doesn't exist then exit sub
-    If AnimInstance(Index).Animation < 1 Then Exit Sub
-    If AnimInstance(Index).Animation > MAX_ANIMATIONS Then Exit Sub
+    If AnimInstance(index).Animation < 1 Then Exit Sub
+    If AnimInstance(index).Animation > MAX_ANIMATIONS Then Exit Sub
     
     For Layer = 0 To 1
-        If AnimInstance(Index).Used(Layer) Then
-            looptime = Animation(AnimInstance(Index).Animation).looptime(Layer)
-            FrameCount = Animation(AnimInstance(Index).Animation).Frames(Layer)
+        If AnimInstance(index).Used(Layer) Then
+            looptime = Animation(AnimInstance(index).Animation).looptime(Layer)
+            FrameCount = Animation(AnimInstance(index).Animation).Frames(Layer)
             
             ' If zero'd then set so we don't have extra loop and/or frame
-            If AnimInstance(Index).frameIndex(Layer) = 0 Then AnimInstance(Index).frameIndex(Layer) = 1
-            If AnimInstance(Index).LoopIndex(Layer) = 0 Then AnimInstance(Index).LoopIndex(Layer) = 1
+            If AnimInstance(index).frameIndex(Layer) = 0 Then AnimInstance(index).frameIndex(Layer) = 1
+            If AnimInstance(index).LoopIndex(Layer) = 0 Then AnimInstance(index).LoopIndex(Layer) = 1
             
             ' Check if frame timer is set, and needs to have a frame change
-            If AnimInstance(Index).Timer(Layer) + looptime <= timeGetTime Then
+            If AnimInstance(index).Timer(Layer) + looptime <= timeGetTime Then
                 ' Check if out of range
-                If AnimInstance(Index).frameIndex(Layer) >= FrameCount Then
-                    AnimInstance(Index).LoopIndex(Layer) = AnimInstance(Index).LoopIndex(Layer) + 1
-                    If AnimInstance(Index).LoopIndex(Layer) > Animation(AnimInstance(Index).Animation).LoopCount(Layer) Then
-                        AnimInstance(Index).Used(Layer) = False
+                If AnimInstance(index).frameIndex(Layer) >= FrameCount Then
+                    AnimInstance(index).LoopIndex(Layer) = AnimInstance(index).LoopIndex(Layer) + 1
+                    If AnimInstance(index).LoopIndex(Layer) > Animation(AnimInstance(index).Animation).LoopCount(Layer) Then
+                        AnimInstance(index).Used(Layer) = False
                     Else
-                        AnimInstance(Index).frameIndex(Layer) = 1
+                        AnimInstance(index).frameIndex(Layer) = 1
                     End If
                 Else
-                    AnimInstance(Index).frameIndex(Layer) = AnimInstance(Index).frameIndex(Layer) + 1
+                    AnimInstance(index).frameIndex(Layer) = AnimInstance(index).frameIndex(Layer) + 1
                 End If
-                AnimInstance(Index).Timer(Layer) = timeGetTime
+                AnimInstance(index).Timer(Layer) = timeGetTime
             End If
         End If
     Next
     
     ' If neither layer is used, clear
-    If AnimInstance(Index).Used(0) = False And AnimInstance(Index).Used(1) = False Then Call ClearAnimInstance(Index)
+    If AnimInstance(index).Used(0) = False And AnimInstance(index).Used(1) = False Then Call ClearAnimInstance(index)
     Exit Sub
     
 ' Error handler
@@ -1534,12 +1537,12 @@ errorhandler:
     Err.Clear
 End Sub
 
-Function GetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte) As Long
+Function GetPlayerBankItemDurValue(ByVal index As Long, ByVal BankSlot As Byte) As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
-    GetPlayerBankItemDurValue = Bank.Item(Index).Durability
+    If index < 1 Or index > MAX_PLAYERS Then Exit Function
+    GetPlayerBankItemDurValue = Bank.Item(index).Durability
     Exit Function
     
 ' Error handler
@@ -1548,11 +1551,11 @@ errorhandler:
     Err.Clear
 End Function
 
-Sub SetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte, ByVal DurValue As Long)
+Sub SetPlayerBankItemDurValue(ByVal index As Long, ByVal BankSlot As Byte, ByVal DurValue As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Bank.Item(Index).Durability = DurValue
+    Bank.Item(index).Durability = DurValue
     Exit Sub
     
 ' Error handler
@@ -1619,6 +1622,32 @@ Public Function CheckGrammar(ByVal Word As String, Optional ByVal Caps As Byte =
 ' Error handler
 errorhandler:
     HandleError "CheckGrammar", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Function
+
+Function CanPlayerPickupItem(ByVal index As Long, ByVal MapItemNum As Integer)
+    Dim MapNum As Integer
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    MapNum = GetPlayerMap(index)
+    
+    ' Check for subscript out of range
+    If MapNum < 1 Or MapNum > MAX_MAPS Then Exit Function
+    
+    If Moral(Map.Moral).CanPickupItem = 1 Then
+        ' No lock or locked to player?
+        If Trim$(MapItem(MapItemNum).PlayerName) = vbNullString Or Trim$(MapItem(MapItemNum).PlayerName) = GetPlayerName(index) Then
+            CanPlayerPickupItem = True
+            Exit Function
+        End If
+    End If
+    Exit Function
+    
+' Error handler
+errorhandler:
+    HandleError "CanPlayerPickupItem", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
@@ -1760,14 +1789,14 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub DialogueHandler(ByVal Index As Long)
+Public Sub DialogueHandler(ByVal index As Long)
     ' Find out which button
-    If Index = 1 Then ' Okay button
+    If index = 1 Then ' Okay button
         ' Dialogue Index
         Select Case DialogueIndex
         
         End Select
-    ElseIf Index = 2 Then ' Yes button
+    ElseIf index = 2 Then ' Yes button
         ' Dialogue Index
         Select Case DialogueIndex
             Case DIALOGUE_TYPE_TRADE
@@ -1803,7 +1832,7 @@ Public Sub DialogueHandler(ByVal Index As Long)
             Case DIALOGUE_TYPE_PARTYINVITE
                 Call SendPartyRequest(frmMain.txtDialogue.text)
         End Select
-    ElseIf Index = 3 Then ' No button
+    ElseIf index = 3 Then ' No button
         ' Dialogue Index
         Select Case DialogueIndex
             Case DIALOGUE_TYPE_TRADE

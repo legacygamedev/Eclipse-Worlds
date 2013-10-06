@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "mswinsck.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
@@ -817,6 +817,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -3662,7 +3663,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub lblChoices_MouseDown(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lblChoices_MouseDown(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
@@ -3673,12 +3674,12 @@ Private Sub lblChoices_MouseDown(Index As Integer, Button As Integer, Shift As I
     buffer.WriteLong CEventChatReply
     buffer.WriteLong EventReplyID
     buffer.WriteLong EventReplyPage
-    buffer.WriteLong Index
+    buffer.WriteLong index
     SendData buffer.ToArray
     Set buffer = Nothing
     ClearEventChat
     
-    Call ClearChatButton(Index)
+    Call ClearChatButton(index)
     InEvent = False
     Audio.PlaySound ButtonClick
     Exit Sub
@@ -3689,14 +3690,14 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub lblChoices_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lblChoices_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Call ClearChatButton(Index)
-    If frmMain.lblChoices(Index).Visible = False Then Exit Sub
-    If frmMain.lblChoices.Item(Index).ForeColor = vbYellow Then Exit Sub
-    frmMain.lblChoices.Item(Index).ForeColor = vbYellow
+    Call ClearChatButton(index)
+    If frmMain.lblChoices(index).Visible = False Then Exit Sub
+    If frmMain.lblChoices.Item(index).ForeColor = vbYellow Then Exit Sub
+    frmMain.lblChoices.Item(index).ForeColor = vbYellow
     Audio.PlaySound ButtonHover
     Exit Sub
     
@@ -3706,14 +3707,14 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub ClearChatButton(Index As Integer)
+Private Sub ClearChatButton(index As Integer)
     Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     For I = 1 To 4
-        If frmMain.lblChoices.Item(I).ForeColor = vbYellow And Not Index = I Then
+        If frmMain.lblChoices.Item(I).ForeColor = vbYellow And Not index = I Then
             frmMain.lblChoices.Item(I).ForeColor = &H80000003
         End If
     Next
@@ -3968,12 +3969,12 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub lblDialogue_Button_Click(Index As Integer)
+Private Sub lblDialogue_Button_Click(index As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' Call the handler
-    DialogueHandler Index
+    DialogueHandler index
     
     txtDialogue.text = vbNullString
     picDialogue.Visible = False
@@ -4073,12 +4074,12 @@ Private Sub lblSpellName_MouseMove(Button As Integer, Shift As Integer, X As Sin
     LastSpellDesc = 0 ' No spell was last loaded
 End Sub
 
-Private Sub lblTrainStat_Click(Index As Integer)
+Private Sub lblTrainStat_Click(index As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If GetPlayerPOINTS(MyIndex) = 0 Then Exit Sub
-    SendTrainStat Index
+    SendTrainStat index
     Exit Sub
     
 ' Error handler
@@ -4129,8 +4130,8 @@ Private Sub lstTitles_Click()
     If Not lstTitles.ListIndex = 0 Then
         For I = 1 To MAX_TITLES
             If Not Player(MyIndex).CurTitle = I Then
-                If lstTitles.List(lstTitles.ListIndex) = Trim$(Title(I).name) Then
-                    lblDesc.Caption = Trim$(Title(I).Desc)
+                If lstTitles.List(lstTitles.ListIndex) = Trim$(title(I).name) Then
+                    lblDesc.Caption = Trim$(title(I).Desc)
                     Call SendSetTitle(I)
                     Exit For
                 End If
@@ -4553,21 +4554,21 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picButton_Click(Index As Integer)
+Private Sub picButton_Click(index As Integer)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Not CurButton_Main = Index Then
+    If Not CurButton_Main = index Then
         Call Audio.PlaySound(ButtonClick)
         
         ' Don't set it if it's the trade/GUI adjusting button
-        If Not Index = 5 And Not Index = 14 And Not Index = 15 Then
-            CurButton_Main = Index
-            picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).FileName & "_click.jpg")
+        If Not index = 5 And Not index = 14 And Not index = 15 Then
+            CurButton_Main = index
+            picButton(index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(index).FileName & "_click.jpg")
             Call ResetMainButtons
         End If
         
-        Call TogglePanel(Index)
+        Call TogglePanel(index)
     Else ' Hide the panel, if it is the open one
         CurButton_Main = 0
         LastButton_Main = 0
@@ -4584,15 +4585,15 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picButton_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picButton_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If Not LastButton_Main = Index And Not CurButton_Main = Index Then
+    If Not LastButton_Main = index And Not CurButton_Main = index Then
         Call ResetMainButtons
-        picButton(Index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(Index).FileName & "_hover.jpg")
+        picButton(index).Picture = LoadPicture(App.Path & GFX_PATH & "gui\main\buttons\" & MainButton(index).FileName & "_hover.jpg")
         Call Audio.PlaySound(ButtonHover)
-        LastButton_Main = Index
+        LastButton_Main = index
     End If
     Call ClearChatButton(0)
     Exit Sub
@@ -5390,7 +5391,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Private Sub picToggleButtons_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picToggleButtons_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Call ResetMainButtons
 End Sub
 
@@ -5534,62 +5535,32 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         End If
     End If
 
-    If KeyAscii = vbKeyTab And ShiftDown = False Then
+   If KeyAscii = vbKeyTab And ShiftDown = False And ChatLocked Then
         ' Set the NPC distance for all the NPCs on the map
         For I = 1 To Map.NPC_HighIndex
-            NPCDistanceX(I) = MapNPC(I).X - GetPlayerX(MyIndex)
-            NPCDistanceY(I) = MapNPC(I).Y - GetPlayerY(MyIndex)
-    
-            ' Make sure we get a positive Value
-            If NPCDistanceX(I) < 0 Then NPCDistanceX(I) = NPCDistanceX(I) * -1
-            If NPCDistanceY(I) < 0 Then NPCDistanceY(I) = NPCDistanceY(I) * -1
-        Next
+            If Map.NPC(I) > 0 Then
+                NPCDistanceX(I) = MapNPC(I).X - GetPlayerX(MyIndex)
+                NPCDistanceY(I) = MapNPC(I).Y - GetPlayerY(MyIndex)
         
-        ' Clear the target constant
-        PlayerTarget = 0
+                ' Make sure we get a positive Value
+                If NPCDistanceX(I) < 0 Then NPCDistanceX(I) = NPCDistanceX(I) * -1
+                If NPCDistanceY(I) < 0 Then NPCDistanceY(I) = NPCDistanceY(I) * -1
+            End If
+        Next
         
         ' Find the closest NPC target
         For I = 1 To Map.NPC_HighIndex
-            If I = 1 Then
-                LowestDistance = NPCDistanceX(I) + NPCDistanceY(I)
-                PlayerTarget = I
-            ElseIf NPCDistanceX(I) + NPCDistanceY(I) < LowestDistance Then
-                LowestDistance = NPCDistanceX(I) + NPCDistanceY(I)
-                PlayerTarget = I
-            End If
-        Next
-        
-        ' Set the target
-        If PlayerTarget > 0 Then
-            If Not MyTarget = PlayerTarget Then
-                Call PlayerSearch(MapNPC(PlayerTarget).X, MapNPC(PlayerTarget).Y)
-            End If
-        End If
-    End If
-    
-    If KeyAscii = vbKeyTab And ShiftDown Then
-        ' Set the Player distance for all the Players on the map
-        For I = 1 To Player_HighIndex
-            PlayerDistanceX(I) = Player(I).X - GetPlayerX(MyIndex)
-            PlayerDistanceY(I) = Player(I).Y - GetPlayerY(MyIndex)
-    
-            ' Make sure we get a positive Value
-            If PlayerDistanceX(I) < 0 Then PlayerDistanceX(I) = PlayerDistanceX(I) * -1
-            If PlayerDistanceY(I) < 0 Then PlayerDistanceY(I) = PlayerDistanceY(I) * -1
-        Next
-        
-        ' Clear the target constant
-        PlayerTarget = 0
-        
-        ' Find the closest player target
-        For I = 1 To Player_HighIndex
-            If Not I = MyIndex Then
-                If I = 1 Then
-                    LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
-                    PlayerTarget = I
-                ElseIf PlayerDistanceX(I) + PlayerDistanceY(I) < LowestDistance Then
-                    LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
-                    PlayerTarget = I
+            If Map.NPC(I) > 0 Then
+                If MyTarget = I And MyTargetType = TARGET_TYPE_NPC Then
+                    ' Skip
+                Else
+                    If PlayerTarget = 0 Then
+                        LowestDistance = NPCDistanceX(I) + NPCDistanceY(I)
+                        PlayerTarget = I
+                    ElseIf NPCDistanceX(I) + NPCDistanceY(I) < LowestDistance Then
+                        LowestDistance = NPCDistanceX(I) + NPCDistanceY(I)
+                        PlayerTarget = I
+                    End If
                 End If
             End If
         Next
@@ -5597,6 +5568,52 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         ' Set the target
         If PlayerTarget > 0 Then
             If Not MyTarget = PlayerTarget Then
+                MyTarget = PlayerTarget
+                MyTargetType = TARGET_TYPE_NPC
+                Call PlayerSearch(MapNPC(PlayerTarget).X, MapNPC(PlayerTarget).Y)
+            End If
+        End If
+    ElseIf KeyAscii = 96 And ChatLocked Then
+        ' Set the Player distance for all the Players on the map
+        For I = 1 To Player_HighIndex
+            If IsPlaying(I) Then
+                If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
+                    If Not MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
+                        PlayerDistanceX(I) = Player(I).X - GetPlayerX(MyIndex)
+                        PlayerDistanceY(I) = Player(I).Y - GetPlayerY(MyIndex)
+                
+                        ' Make sure we get a positive Value
+                        If PlayerDistanceX(I) < 0 Then PlayerDistanceX(I) = PlayerDistanceX(I) * -1
+                        If PlayerDistanceY(I) < 0 Then PlayerDistanceY(I) = PlayerDistanceY(I) * -1
+                    End If
+                End If
+            End If
+        Next
+        
+        ' Find the closest player target
+        For I = 1 To Player_HighIndex
+            If IsPlaying(I) Then
+                If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
+                    ' Skip
+                Else
+                    If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
+                        If PlayerTarget = 0 Then
+                            LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
+                            PlayerTarget = I
+                        ElseIf PlayerDistanceX(I) + PlayerDistanceY(I) < LowestDistance Then
+                            LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
+                            PlayerTarget = I
+                        End If
+                    End If
+                End If
+            End If
+        Next
+        
+        ' Set the target
+        If PlayerTarget > 0 Then
+            If Not MyTarget = PlayerTarget Then
+                MyTarget = PlayerTarget
+                MyTargetType = TARGET_TYPE_PLAYER
                 Call PlayerSearch(Player(PlayerTarget).X, Player(PlayerTarget).Y)
             End If
         End If
