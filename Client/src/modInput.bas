@@ -21,13 +21,112 @@ Public Sub CheckKeys()
     
     If GetAsyncKeyState(VK_CONTROL) >= 0 Then ControlDown = False
     If GetAsyncKeyState(VK_SHIFT) >= 0 Then ShiftDown = False
-    If GetAsyncKeyState(VK_TAB) >= 0 Then TabDown = False
     Exit Sub
     
 ' Error handler
 errorhandler:
     HandleError "CheckKeys", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+End Sub
+
+Public Sub FindNearestTarget()
+    Dim I As Long
+    Dim NPCDistanceX(1 To MAX_MAP_NPCS) As Long
+    Dim NPCDistanceY(1 To MAX_MAP_NPCS) As Long
+    Dim PlayerDistanceX(1 To MAX_PLAYERS) As Long
+    Dim PlayerDistanceY(1 To MAX_PLAYERS) As Long
+    Dim LowestDistance As Long
+    Dim PlayerTarget As Byte
+    
+    If GetKeyState(vbKeyTab) < 0 And ChatLocked Then
+        ' Set the NPC distance for all the NPCs on the map
+        For I = 1 To Map.NPC_HighIndex
+            If Map.NPC(I) > 0 Then
+                NPCDistanceX(I) = MapNPC(I).X - GetPlayerX(MyIndex)
+                NPCDistanceY(I) = MapNPC(I).Y - GetPlayerY(MyIndex)
+        
+                ' Make sure we get a positive Value
+                If NPCDistanceX(I) < 0 Then NPCDistanceX(I) = NPCDistanceX(I) * -1
+                If NPCDistanceY(I) < 0 Then NPCDistanceY(I) = NPCDistanceY(I) * -1
+            End If
+        Next
+        
+        ' Find the closest NPC target
+        For I = 1 To Map.NPC_HighIndex
+            If Map.NPC(I) > 0 Then
+                If MyTarget = I And MyTargetType = TARGET_TYPE_NPC Then
+                    ' Skip
+                Else
+                    If PlayerTarget = 0 Then
+                        LowestDistance = NPCDistanceX(I) + NPCDistanceY(I)
+                        PlayerTarget = I
+                    ElseIf NPCDistanceX(I) + NPCDistanceY(I) < LowestDistance Then
+                        LowestDistance = NPCDistanceX(I) + NPCDistanceY(I)
+                        PlayerTarget = I
+                    End If
+                End If
+            End If
+        Next
+        
+        ' Set the target
+        If PlayerTarget > 0 Then
+            If MyTarget = PlayerTarget And MyTargetType = TARGET_TYPE_NPC Then
+                ' Skip
+            Else
+                MyTarget = PlayerTarget
+                MyTargetType = TARGET_TYPE_NPC
+                Call SendTarget
+            End If
+        End If
+    ElseIf GetKeyState(96) < 0 And ChatLocked Then
+        ' Set the Player distance for all the Players on the map
+        For I = 1 To Player_HighIndex
+            If IsPlaying(I) Then
+                If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
+                    If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
+                        ' Skip
+                    Else
+                        PlayerDistanceX(I) = Player(I).X - GetPlayerX(MyIndex)
+                        PlayerDistanceY(I) = Player(I).Y - GetPlayerY(MyIndex)
+                
+                        ' Make sure we get a positive Value
+                        If PlayerDistanceX(I) < 0 Then PlayerDistanceX(I) = PlayerDistanceX(I) * -1
+                        If PlayerDistanceY(I) < 0 Then PlayerDistanceY(I) = PlayerDistanceY(I) * -1
+                    End If
+                End If
+            End If
+        Next
+        
+        ' Find the closest player target
+        For I = 1 To Player_HighIndex
+            If IsPlaying(I) Then
+                If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
+                    ' Skip
+                Else
+                    If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
+                        If PlayerTarget = 0 Then
+                            LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
+                            PlayerTarget = I
+                        ElseIf PlayerDistanceX(I) + PlayerDistanceY(I) < LowestDistance Then
+                            LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
+                            PlayerTarget = I
+                        End If
+                    End If
+                End If
+            End If
+        Next
+        
+        ' Set the target
+        If PlayerTarget > 0 Then
+            If MyTarget = PlayerTarget And MyTargetType = TARGET_TYPE_PLAYER Then
+                ' Skip
+            Else
+                MyTarget = PlayerTarget
+                MyTargetType = TARGET_TYPE_PLAYER
+                Call SendTarget
+            End If
+        End If
+    End If
 End Sub
 
 Public Sub CheckInputKeys()
@@ -42,12 +141,6 @@ Public Sub CheckInputKeys()
         ShiftDown = True
     Else
         ShiftDown = False
-    End If
-    
-    If GetKeyState(vbKeyTab) < 0 Then
-        TabDown = True
-    Else
-        TabDown = False
     End If
 
     If GetKeyState(vbKeyControl) < 0 Then

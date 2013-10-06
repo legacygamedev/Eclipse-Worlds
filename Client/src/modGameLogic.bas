@@ -8,7 +8,7 @@ Public Sub GameLoop()
     Dim FPS As Long
     Dim I As Long
     Dim WalkTimer As Long
-    Dim tmr25 As Long, tmr100 As Long, tmr250 As Long, tmr10000 As Long, targetTmr As Long
+    Dim tmr25 As Long, tmr100 As Long, tmr250 As Long, tmr10000 As Long
     Dim X As Long, Y As Long
     Dim tmr500, Fadetmr As Long
     Dim Fogtmr As Long
@@ -84,6 +84,7 @@ Public Sub GameLoop()
                 If NumItems > 0 Then DrawAnimatedItems
                 
                 tmr100 = tick + 100
+                Call FindNearestTarget
             End If
             
             For I = 1 To MAX_ANIMATIONS
@@ -130,14 +131,6 @@ Public Sub GameLoop()
             End If
 
             WalkTimer = tick + 15 ' Edit this Value to change WalkTimer
-        End If
-        
-        ' Targetting
-        If targetTmr < tick Then
-            If TabDown Then
-                FindNearestTarget
-            End If
-            targetTmr = tick + 50
         End If
         
           ' Fog scrolling
@@ -253,42 +246,42 @@ errorhandler:
     Err.Clear
 End Sub
 
-Sub ProcessPlayerMovement(ByVal index As Long)
+Sub ProcessPlayerMovement(ByVal Index As Long)
     Dim MovementSpeed As Long
 
    ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     ' Check if player is walking, and if so process moving them over
-    Select Case TempPlayer(index).Moving
+    Select Case TempPlayer(Index).Moving
         Case MOVING_WALKING: MovementSpeed = ((ElapsedTime / 1000) * ((MOVEMENT_SPEED / 2) * SIZE_X))
         Case MOVING_RUNNING: MovementSpeed = ((ElapsedTime / 1000) * (MOVEMENT_SPEED * SIZE_X))
         Case Else: Exit Sub
     End Select
     
-    Select Case GetPlayerDir(index)
+    Select Case GetPlayerDir(Index)
         Case DIR_UP
-            TempPlayer(index).yOffset = TempPlayer(index).yOffset - MovementSpeed
-            If TempPlayer(index).yOffset < 0 Then TempPlayer(index).yOffset = 0
+            TempPlayer(Index).yOffset = TempPlayer(Index).yOffset - MovementSpeed
+            If TempPlayer(Index).yOffset < 0 Then TempPlayer(Index).yOffset = 0
         Case DIR_DOWN
-            TempPlayer(index).yOffset = TempPlayer(index).yOffset + MovementSpeed
-            If TempPlayer(index).yOffset > 0 Then TempPlayer(index).yOffset = 0
+            TempPlayer(Index).yOffset = TempPlayer(Index).yOffset + MovementSpeed
+            If TempPlayer(Index).yOffset > 0 Then TempPlayer(Index).yOffset = 0
         Case DIR_LEFT
-            TempPlayer(index).xOffset = TempPlayer(index).xOffset - MovementSpeed
-            If TempPlayer(index).xOffset < 0 Then TempPlayer(index).xOffset = 0
+            TempPlayer(Index).xOffset = TempPlayer(Index).xOffset - MovementSpeed
+            If TempPlayer(Index).xOffset < 0 Then TempPlayer(Index).xOffset = 0
         Case DIR_RIGHT
-            TempPlayer(index).xOffset = TempPlayer(index).xOffset + MovementSpeed
-            If TempPlayer(index).xOffset > 0 Then TempPlayer(index).xOffset = 0
+            TempPlayer(Index).xOffset = TempPlayer(Index).xOffset + MovementSpeed
+            If TempPlayer(Index).xOffset > 0 Then TempPlayer(Index).xOffset = 0
     End Select
 
     ' Check if completed walking over to the next tile
-    If TempPlayer(index).Moving > 0 Then
-        If (TempPlayer(index).xOffset = 0) And (TempPlayer(index).yOffset = 0) Then
-            TempPlayer(index).Moving = 0
-            If TempPlayer(index).Step = 1 Then
-                TempPlayer(index).Step = 3
+    If TempPlayer(Index).Moving > 0 Then
+        If (TempPlayer(Index).xOffset = 0) And (TempPlayer(Index).yOffset = 0) Then
+            TempPlayer(Index).Moving = 0
+            If TempPlayer(Index).Step = 1 Then
+                TempPlayer(Index).Step = 3
             Else
-                TempPlayer(index).Step = 1
+                TempPlayer(Index).Step = 1
             End If
         End If
     End If
@@ -1329,11 +1322,11 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub ClearActionMsg(ByVal index As Byte, Optional ByVal SetHighIndex As Boolean = True)
+Public Sub ClearActionMsg(ByVal Index As Byte, Optional ByVal SetHighIndex As Boolean = True)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    With ActionMsg(index)
+    With ActionMsg(Index)
         .Message = vbNullString
         .Timer = 0
         .Type = 0
@@ -1355,11 +1348,11 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub ClearBlood(ByVal index As Long, Optional ByVal SetHighIndex As Boolean = True)
+Public Sub ClearBlood(ByVal Index As Long, Optional ByVal SetHighIndex As Boolean = True)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    With Blood(index)
+    With Blood(Index)
         .X = 0
         .Y = 0
         .Sprite = 0
@@ -1378,11 +1371,11 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub ClearChatBubble(ByVal index As Long, Optional ByVal SetHighIndex As Boolean = True)
+Public Sub ClearChatBubble(ByVal Index As Long, Optional ByVal SetHighIndex As Boolean = True)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    With ChatBubble(index)
+    With ChatBubble(Index)
         .msg = vbNullString
         .Color = 0
         .Target = 0
@@ -1403,7 +1396,7 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub CheckAnimInstance(ByVal index As Long)
+Public Sub CheckAnimInstance(ByVal Index As Long)
     Dim looptime As Long
     Dim Layer As Long
     Dim FrameCount As Long
@@ -1413,38 +1406,38 @@ Public Sub CheckAnimInstance(ByVal index As Long)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     ' If doesn't exist then exit sub
-    If AnimInstance(index).Animation < 1 Then Exit Sub
-    If AnimInstance(index).Animation > MAX_ANIMATIONS Then Exit Sub
+    If AnimInstance(Index).Animation < 1 Then Exit Sub
+    If AnimInstance(Index).Animation > MAX_ANIMATIONS Then Exit Sub
     
     For Layer = 0 To 1
-        If AnimInstance(index).Used(Layer) Then
-            looptime = Animation(AnimInstance(index).Animation).looptime(Layer)
-            FrameCount = Animation(AnimInstance(index).Animation).Frames(Layer)
+        If AnimInstance(Index).Used(Layer) Then
+            looptime = Animation(AnimInstance(Index).Animation).looptime(Layer)
+            FrameCount = Animation(AnimInstance(Index).Animation).Frames(Layer)
             
             ' If zero'd then set so we don't have extra loop and/or frame
-            If AnimInstance(index).frameIndex(Layer) = 0 Then AnimInstance(index).frameIndex(Layer) = 1
-            If AnimInstance(index).LoopIndex(Layer) = 0 Then AnimInstance(index).LoopIndex(Layer) = 1
+            If AnimInstance(Index).frameIndex(Layer) = 0 Then AnimInstance(Index).frameIndex(Layer) = 1
+            If AnimInstance(Index).LoopIndex(Layer) = 0 Then AnimInstance(Index).LoopIndex(Layer) = 1
             
             ' Check if frame timer is set, and needs to have a frame change
-            If AnimInstance(index).Timer(Layer) + looptime <= timeGetTime Then
+            If AnimInstance(Index).Timer(Layer) + looptime <= timeGetTime Then
                 ' Check if out of range
-                If AnimInstance(index).frameIndex(Layer) >= FrameCount Then
-                    AnimInstance(index).LoopIndex(Layer) = AnimInstance(index).LoopIndex(Layer) + 1
-                    If AnimInstance(index).LoopIndex(Layer) > Animation(AnimInstance(index).Animation).LoopCount(Layer) Then
-                        AnimInstance(index).Used(Layer) = False
+                If AnimInstance(Index).frameIndex(Layer) >= FrameCount Then
+                    AnimInstance(Index).LoopIndex(Layer) = AnimInstance(Index).LoopIndex(Layer) + 1
+                    If AnimInstance(Index).LoopIndex(Layer) > Animation(AnimInstance(Index).Animation).LoopCount(Layer) Then
+                        AnimInstance(Index).Used(Layer) = False
                     Else
-                        AnimInstance(index).frameIndex(Layer) = 1
+                        AnimInstance(Index).frameIndex(Layer) = 1
                     End If
                 Else
-                    AnimInstance(index).frameIndex(Layer) = AnimInstance(index).frameIndex(Layer) + 1
+                    AnimInstance(Index).frameIndex(Layer) = AnimInstance(Index).frameIndex(Layer) + 1
                 End If
-                AnimInstance(index).Timer(Layer) = timeGetTime
+                AnimInstance(Index).Timer(Layer) = timeGetTime
             End If
         End If
     Next
     
     ' If neither layer is used, clear
-    If AnimInstance(index).Used(0) = False And AnimInstance(index).Used(1) = False Then Call ClearAnimInstance(index)
+    If AnimInstance(Index).Used(0) = False And AnimInstance(Index).Used(1) = False Then Call ClearAnimInstance(Index)
     Exit Sub
     
 ' Error handler
@@ -1537,12 +1530,12 @@ errorhandler:
     Err.Clear
 End Sub
 
-Function GetPlayerBankItemDurValue(ByVal index As Long, ByVal BankSlot As Byte) As Long
+Function GetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte) As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerBankItemDurValue = Bank.Item(index).Durability
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerBankItemDurValue = Bank.Item(Index).Durability
     Exit Function
     
 ' Error handler
@@ -1551,11 +1544,11 @@ errorhandler:
     Err.Clear
 End Function
 
-Sub SetPlayerBankItemDurValue(ByVal index As Long, ByVal BankSlot As Byte, ByVal DurValue As Long)
+Sub SetPlayerBankItemDurValue(ByVal Index As Long, ByVal BankSlot As Byte, ByVal DurValue As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    Bank.Item(index).Durability = DurValue
+    Bank.Item(Index).Durability = DurValue
     Exit Sub
     
 ' Error handler
@@ -1625,20 +1618,20 @@ errorhandler:
     Err.Clear
 End Function
 
-Function CanPlayerPickupItem(ByVal index As Long, ByVal MapItemNum As Integer)
+Function CanPlayerPickupItem(ByVal Index As Long, ByVal MapItemNum As Integer)
     Dim MapNum As Integer
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    MapNum = GetPlayerMap(index)
+    MapNum = GetPlayerMap(Index)
     
     ' Check for subscript out of range
     If MapNum < 1 Or MapNum > MAX_MAPS Then Exit Function
     
     If Moral(Map.Moral).CanPickupItem = 1 Then
         ' No lock or locked to player?
-        If Trim$(MapItem(MapItemNum).PlayerName) = vbNullString Or Trim$(MapItem(MapItemNum).PlayerName) = GetPlayerName(index) Then
+        If Trim$(MapItem(MapItemNum).PlayerName) = vbNullString Or Trim$(MapItem(MapItemNum).PlayerName) = GetPlayerName(Index) Then
             CanPlayerPickupItem = True
             Exit Function
         End If
@@ -1789,14 +1782,14 @@ errorhandler:
     Err.Clear
 End Sub
 
-Public Sub DialogueHandler(ByVal index As Long)
+Public Sub DialogueHandler(ByVal Index As Long)
     ' Find out which button
-    If index = 1 Then ' Okay button
+    If Index = 1 Then ' Okay button
         ' Dialogue Index
         Select Case DialogueIndex
         
         End Select
-    ElseIf index = 2 Then ' Yes button
+    ElseIf Index = 2 Then ' Yes button
         ' Dialogue Index
         Select Case DialogueIndex
             Case DIALOGUE_TYPE_TRADE
@@ -1832,7 +1825,7 @@ Public Sub DialogueHandler(ByVal index As Long)
             Case DIALOGUE_TYPE_PARTYINVITE
                 Call SendPartyRequest(frmMain.txtDialogue.text)
         End Select
-    ElseIf index = 3 Then ' No button
+    ElseIf Index = 3 Then ' No button
         ' Dialogue Index
         Select Case DialogueIndex
             Case DIALOGUE_TYPE_TRADE
@@ -2357,86 +2350,4 @@ Function IsEven(Number As Long) As Boolean
     Else
         IsEven = True
     End If
-End Function
-
-Public Sub FindNearestTarget()
-    Dim I As Long, X As Long, Y As Long, X2 As Long, Y2 As Long, xDif As Long, yDif As Long
-    Dim bestX As Long, bestY As Long, bestIndex As Long
-
-    X2 = GetPlayerX(MyIndex)
-    Y2 = GetPlayerY(MyIndex)
-    
-    bestX = 255
-    bestY = 255
-    
-    For I = 1 To MAX_MAP_NPCS
-        If MapNPC(I).num > 0 Then
-            X = MapNPC(I).X
-            Y = MapNPC(I).Y
-            
-            ' Find the difference - x
-            If X < X2 Then
-                xDif = X2 - X
-            ElseIf X > X2 Then
-                xDif = X - X2
-            Else
-                xDif = 0
-            End If
-            
-            ' Find the difference - y
-            If Y < Y2 Then
-                yDif = Y2 - Y
-            ElseIf Y > Y2 Then
-                yDif = Y - Y2
-            Else
-                yDif = 0
-            End If
-            
-            ' Best so far?
-            If (xDif + yDif) < (bestX + bestY) Then
-                bestX = xDif
-                bestY = yDif
-                bestIndex = I
-            End If
-        End If
-    Next
-    
-    ' target the best
-    If bestIndex > 0 And bestIndex <> MyTarget Then PlayerTarget bestIndex, TARGET_TYPE_NPC
-End Sub
-
-Public Function FindTarget() As Boolean
-    Dim I As Long, X As Long, Y As Long
-
-    ' Check players
-    For I = 1 To MAX_PLAYERS
-        If IsPlaying(I) And GetPlayerMap(MyIndex) = GetPlayerMap(I) Then
-            X = (GetPlayerX(I) * 32) + TempPlayer(I).xOffset + 32
-            Y = (GetPlayerY(I) * 32) + TempPlayer(I).yOffset + 32
-            If X >= CurX And X <= CurX + 32 Then
-                If Y >= CurY And Y <= CurY + 32 Then
-                    ' Found our target!
-                    PlayerTarget I, TARGET_TYPE_PLAYER
-                    FindTarget = True
-                    Exit Function
-                End If
-            End If
-        End If
-    Next
-    
-    ' Check NPCs
-    For I = 1 To Map.NPC_HighIndex
-        If MapNPC(I).num > 0 Then
-            X = (MapNPC(I).X * 32) + MapNPC(I).xOffset + 32
-            Y = (MapNPC(I).Y * 32) + MapNPC(I).yOffset + 32
-            If X >= CurX And X <= CurX + 32 Then
-                If Y >= CurY And Y <= CurY + 32 Then
-                    ' Found our target!
-                    PlayerTarget I, TARGET_TYPE_NPC
-                    FindTarget = True
-                    Exit Function
-                End If
-            End If
-        End If
-    Next
 End Function
