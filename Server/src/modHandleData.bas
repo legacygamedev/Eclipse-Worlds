@@ -1966,38 +1966,38 @@ End Sub
 ' :::::::::::::::::::
 Sub HandleSearch(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim Buffer As clsBuffer
-    Dim TargetType As Byte
-    Dim Target As Long
+    Dim targetType As Byte
+    Dim target As Long
     Dim CurrentMap As Long
     
     CurrentMap = GetPlayerMap(index)
     Set Buffer = New clsBuffer
     Buffer.WriteBytes Data()
-    TargetType = Buffer.ReadByte
-    Target = Buffer.ReadLong
+    targetType = Buffer.ReadByte
+    target = Buffer.ReadLong
     Set Buffer = Nothing
     
     ' Prevent subscript out of range
     If Not IsPlaying(index) Then Exit Sub
-    If TargetType < 1 Or TargetType > 2 Then Exit Sub
-    If Target < 1 Then Exit Sub
-    If Target > Player_HighIndex And TargetType = TARGET_TYPE_PLAYER Then Exit Sub
-    If Target > Map(CurrentMap).NPC_HighIndex And TargetType = TARGET_TYPE_NPC Then Exit Sub
+    If targetType < 1 Or targetType > 2 Then Exit Sub
+    If target < 1 Then Exit Sub
+    If target > Player_HighIndex And targetType = TARGET_TYPE_PLAYER Then Exit Sub
+    If target > Map(CurrentMap).NPC_HighIndex And targetType = TARGET_TYPE_NPC Then Exit Sub
     
-    If TargetType = TARGET_TYPE_PLAYER Then
-        If IsPlaying(Target) Then
-            If CurrentMap = GetPlayerMap(Target) Then
-                If index = Target Then
+    If targetType = TARGET_TYPE_PLAYER Then
+        If IsPlaying(target) Then
+            If CurrentMap = GetPlayerMap(target) Then
+                If index = target Then
                     ' Change target
-                    If TempPlayer(index).TargetType = TARGET_TYPE_PLAYER And TempPlayer(index).Target = Target Then
-                        TempPlayer(index).Target = 0
-                        TempPlayer(index).TargetType = TARGET_TYPE_NONE
+                    If TempPlayer(index).targetType = TARGET_TYPE_PLAYER And TempPlayer(index).target = target Then
+                        TempPlayer(index).target = 0
+                        TempPlayer(index).targetType = TARGET_TYPE_NONE
                         
                         ' Send target to player
                         SendPlayerTarget index
                     Else
-                        TempPlayer(index).Target = Target
-                        TempPlayer(index).TargetType = TARGET_TYPE_PLAYER
+                        TempPlayer(index).target = target
+                        TempPlayer(index).targetType = TARGET_TYPE_PLAYER
                         
                         ' Send target to player
                         SendPlayerTarget index
@@ -2005,15 +2005,15 @@ Sub HandleSearch(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As L
                     Exit Sub
                 Else
                     ' Change target
-                    If TempPlayer(index).TargetType = TARGET_TYPE_PLAYER And TempPlayer(index).Target = Target Then
-                        TempPlayer(index).Target = 0
-                        TempPlayer(index).TargetType = TARGET_TYPE_NONE
+                    If TempPlayer(index).targetType = TARGET_TYPE_PLAYER And TempPlayer(index).target = target Then
+                        TempPlayer(index).target = 0
+                        TempPlayer(index).targetType = TARGET_TYPE_NONE
                         
                         ' Send target to player
                         SendPlayerTarget index
                     Else
-                        TempPlayer(index).Target = Target
-                        TempPlayer(index).TargetType = TARGET_TYPE_PLAYER
+                        TempPlayer(index).target = target
+                        TempPlayer(index).targetType = TARGET_TYPE_PLAYER
                         
                         ' Send target to player
                         SendPlayerTarget index
@@ -2022,19 +2022,19 @@ Sub HandleSearch(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As L
                 End If
             End If
         End If
-    ElseIf TargetType = TARGET_TYPE_NPC Then
-        If MapNPC(CurrentMap).NPC(Target).Num > 0 Then
-            If TempPlayer(index).Target = Target And TempPlayer(index).TargetType = TARGET_TYPE_NPC Then
+    ElseIf targetType = TARGET_TYPE_NPC Then
+        If MapNPC(CurrentMap).NPC(target).Num > 0 Then
+            If TempPlayer(index).target = target And TempPlayer(index).targetType = TARGET_TYPE_NPC Then
                 ' Change target
-                TempPlayer(index).Target = 0
-                TempPlayer(index).TargetType = TARGET_TYPE_NONE
+                TempPlayer(index).target = 0
+                TempPlayer(index).targetType = TARGET_TYPE_NONE
                 
                 ' Send target to player
                 SendPlayerTarget index
             Else
                 ' Change target
-                TempPlayer(index).Target = Target
-                TempPlayer(index).TargetType = TARGET_TYPE_NPC
+                TempPlayer(index).target = target
+                TempPlayer(index).targetType = TARGET_TYPE_NPC
                 
                 ' Send target to player
                 SendPlayerTarget index
@@ -2657,10 +2657,10 @@ Sub HandleTradeRequest(ByVal index As Long, ByRef Data() As Byte, ByVal StartAdd
     Dim TradeTarget As Long
     
     ' Can't trade with npcs
-    If Not TempPlayer(index).TargetType = TARGET_TYPE_PLAYER Then Exit Sub
+    If Not TempPlayer(index).targetType = TARGET_TYPE_PLAYER Then Exit Sub
 
     ' Find the target
-    TradeTarget = TempPlayer(index).Target
+    TradeTarget = TempPlayer(index).target
     
     ' Make sure we don't error
     If TradeTarget < 1 Or TradeTarget > MAX_PLAYERS Then Exit Sub
@@ -3384,7 +3384,7 @@ End Sub
 
 Sub HandleBreakSpell(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     If TempPlayer(index).SpellBuffer.Spell > 0 Then
-        Call SendActionMsg(GetPlayerMap(index), "Interrupted", BrightRed, ACTIONMSG_SCROLL, GetPlayerX(index) * 32, GetPlayerY(index) * 32)
+        Call SendActionMsg(GetPlayerMap(index), "Interrupted " & Trim$(Spell(TempPlayer(index).SpellBuffer.Spell).Name), BrightRed, ACTIONMSG_SCROLL, GetPlayerX(index) * 32, GetPlayerY(index) * 32)
         Call ClearAccountSpellBuffer(index)
     End If
 End Sub
@@ -4224,18 +4224,18 @@ End Sub
 ' :: Search packet ::
 ' :::::::::::::::::::
 Sub HandleTarget(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-Dim Buffer As clsBuffer, Target As Long, TargetType As Long
+Dim Buffer As clsBuffer, target As Long, targetType As Long
 
     Set Buffer = New clsBuffer
     
     Buffer.WriteBytes Data()
     
-    Target = Buffer.ReadLong
-    TargetType = Buffer.ReadLong
+    target = Buffer.ReadLong
+    targetType = Buffer.ReadLong
     
     Set Buffer = Nothing
     
     ' set player's target - no need to send, it's client side
-    TempPlayer(index).Target = Target
-    TempPlayer(index).TargetType = TargetType
+    TempPlayer(index).target = target
+    TempPlayer(index).targetType = targetType
 End Sub
