@@ -30,6 +30,7 @@ logs/
 .builds
 *.pidb
 *.scc
+*.csi
 
 # Others
 sql/
