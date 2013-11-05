@@ -394,8 +394,12 @@ Public Sub CheckAttack()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If ControlDown Then
-        If SpellBuffer > 0 Then Exit Sub ' Currently casting a spell, can't attack
-        If StunDuration > 0 Then Exit Sub ' Stunned, can't attack
+        If InEvent Then Exit Sub ' in an event chat, fucking get outta here!
+        If SpellBuffer > 0 Then Exit Sub ' currently casting a spell, can't attack
+        If StunDuration > 0 Then Exit Sub ' stunned, can't attack
+        If InBank Then Exit Sub
+        If InShop > 0 Then Exit Sub
+        If InTrade > 0 Then Exit Sub
 
         ' Speed from weapon
         If GetPlayerEquipment(MyIndex, Weapon) > 0 Then
