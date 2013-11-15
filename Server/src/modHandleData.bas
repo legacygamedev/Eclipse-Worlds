@@ -1886,6 +1886,9 @@ End Sub
 ' :: Who's online packet ::
 ' :::::::::::::::::::::::::
 Sub HandleWhosOnline(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+    ' Prevent hacking
+    If GetPlayerAccess(index) < STAFF_MODERATOR Then Exit Sub
+
     Call SendWhosOnline(index)
 End Sub
 

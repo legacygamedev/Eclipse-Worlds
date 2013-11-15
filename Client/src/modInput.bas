@@ -581,11 +581,11 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     End If
                     
                     ' Send regular help commands
-                    Call AddText("Available Commands: /who, /trade, /gui, /clearchat, /createguild, /gmotd, /pquit, /gquit, /fps, /fpslock, /ping, /afk, /emotes", HelpColor)
+                    Call AddText("Available Commands: /trade, /gui, /clearchat, /createguild, /gmotd, /pquit, /gquit, /fps, /fpslock, /ping, /afk, /emotes", HelpColor)
                     
                     ' Send the admin help commands
                     If GetPlayerAccess(MyIndex) > 0 Then
-                        Call AddText("Available Admin Commands: /admin, /motd, /smotd, /respawn, /loc, /warpmeto, /warptome, /warpto, /setsprite, /setplayersprite, /mapreport, /kick, /ban, /edititem, /editmap, /editevent, /editshop, /editspell, /editresource, /editnpc, /editanimation, /editban, /editclass, /edittitle, /editmoral, /acp", HelpColor)
+                        Call AddText("Available Admin Commands: /who, /admin, /motd, /smotd, /respawn, /loc, /warpmeto, /warptome, /warpto, /setsprite, /setplayersprite, /mapreport, /kick, /ban, /edititem, /editmap, /editevent, /editshop, /editspell, /editresource, /editnpc, /editanimation, /editban, /editclass, /edittitle, /editmoral, /acp", HelpColor)
                     End If
                     
                 Case "/emotes"
@@ -632,6 +632,11 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     
                     ' Who's Online
                 Case "/who"
+                     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
+                        AddText "You have insufficent access to do this!", BrightRed
+                        GoTo Continue
+                    End If
+                    
                     SendWhosOnline
                 
                     ' Kicking a player
