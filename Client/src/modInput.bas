@@ -1039,17 +1039,13 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     ' Check for Emoticons
                     For I = 1 To MAX_EMOTICONS
-
                         If Not Trim$(Emoticon(I).Command) = "/" Then
                             If Trim$(Emoticon(I).Command) = Command(0) Then
                                 SendCheckEmoticon I
-                                n = n + 1
-
+                                n = 1
                                 Exit For
-
                             End If
                         End If
-
                     Next
                     
                     ' If we don't find a Emoticon, then it's an invalid command

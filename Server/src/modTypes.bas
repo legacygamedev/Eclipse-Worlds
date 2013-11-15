@@ -38,7 +38,7 @@ Public Log As LogRec
 Public Options As OptionsRec
 
 Private Type MoveRouteRec
-    Index As Long
+    index As Long
     Data1 As Long
     Data2 As Long
     Data3 As Long
@@ -48,7 +48,7 @@ Private Type MoveRouteRec
 End Type
 
 Private Type GuildMemberRec
-    Index As Long
+    index As Long
     Access As Byte
 End Type
 
@@ -326,7 +326,7 @@ End Type
 Public Type SpellBufferRec
     Spell As Long
     Timer As Long
-    Target As Long
+    target As Long
     TType As Byte
 End Type
 
@@ -340,7 +340,7 @@ Public Type ConditionalBranchRec
 End Type
 
 Private Type EventCommandRec
-    Index As Byte
+    index As Byte
     Text1 As String
     Text2 As String
     Text3 As String
@@ -501,8 +501,8 @@ Public Type TempPlayerRec
     DataTimer As Long
     DataBytes As Long
     DataPackets As Long
-    TargetType As Byte
-    Target As Byte
+    targetType As Byte
+    target As Byte
     PartyStarter As Byte
     GettingMap As Byte
     InShop As Long
@@ -718,8 +718,8 @@ End Type
 
 Private Type MapNPCRec
     Num As Byte
-    Target As Byte
-    TargetType As Byte
+    target As Byte
+    targetType As Byte
     Vital(1 To Vitals.Vital_Count - 1) As Long
     X As Byte
     Y As Byte
