@@ -319,6 +319,18 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub cmbCostItem_Change()
+
+End Sub
+
+Private Sub cmbCostItem2_Change()
+
+End Sub
+
+Private Sub cmbItem_Change()
+
+End Sub
+
 Private Sub cmdDelete_Click()
     Dim TmpIndex As Long
     
@@ -389,7 +401,7 @@ Private Sub cmdUpdate_Click()
     If Index < 1 Or Index > MAX_SHOPS Then Exit Sub
     
     With Shop(EditorIndex).TradeItem(Index)
-        .item = cmbItem.ListIndex
+        .Item = cmbItem.ListIndex
         .ItemValue = Val(txtItemValue.text)
         .CostItem = cmbCostItem.ListIndex
         .CostItem2 = cmbCostItem2.ListIndex
@@ -418,7 +430,7 @@ Private Sub cmdDeleteTrade_Click()
     If Index < 1 Or Index > MAX_SHOPS Then Exit Sub
     
     With Shop(EditorIndex).TradeItem(Index)
-        .item = 0
+        .Item = 0
         .ItemValue = 0
         .CostItem = 0
         .CostItem2 = 0
@@ -464,7 +476,7 @@ Private Sub lstTradeItem_DblClick()
     If Index < 1 Or Index > MAX_SHOPS Then Exit Sub
     
     With Shop(EditorIndex).TradeItem(Index)
-         cmbItem.ListIndex = .item
+         cmbItem.ListIndex = .Item
          txtItemValue.text = .ItemValue
          cmbCostItem.ListIndex = .CostItem
          cmbCostItem2.ListIndex = .CostItem2
@@ -627,9 +639,9 @@ Private Sub Form_Load()
     frmEditor_Shop.cmbCostItem2.AddItem "None"
 
     For I = 1 To MAX_ITEMS
-        frmEditor_Shop.cmbItem.AddItem I & ": " & Trim$(item(I).name)
-        frmEditor_Shop.cmbCostItem.AddItem I & ": " & Trim$(item(I).name)
-        frmEditor_Shop.cmbCostItem2.AddItem I & ": " & Trim$(item(I).name)
+        frmEditor_Shop.cmbItem.AddItem I & ": " & Trim$(Item(I).name)
+        frmEditor_Shop.cmbCostItem.AddItem I & ": " & Trim$(Item(I).name)
+        frmEditor_Shop.cmbCostItem2.AddItem I & ": " & Trim$(Item(I).name)
     Next
     
     frmEditor_Shop.cmbItem.ListIndex = 0
