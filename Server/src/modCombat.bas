@@ -67,9 +67,9 @@ Function GetPlayerDamage(ByVal index As Long) As Long
     ' Check for subscript out of range
     If IsPlaying(index) = False Or index < 1 Or index > Player_HighIndex Then Exit Function
     
-    If GetPlayerEquipment(index, Weapon) > 0 Then
-        If Not GetPlayerEquipmentDur(index, GetPlayerEquipment(index, Weapon)) = 0 Or Item(GetPlayerEquipment(index, Weapon)).Indestructable = 1 Then
-            WeaponNum = GetPlayerEquipment(index, Weapon)
+    If GetPlayerEquipment(index, Equipment.Weapon) > 0 Then
+        If Not GetPlayerEquipmentDur(index, GetPlayerEquipment(index, Equipment.Weapon)) = 0 Or Item(GetPlayerEquipment(index, Equipment.Weapon)).Indestructable = 1 Then
+            WeaponNum = GetPlayerEquipment(index, Equipment.Weapon)
             GetPlayerDamage = 0.085 * 5 * GetPlayerStat(index, Strength) * Item(WeaponNum).Data2 + (GetPlayerLevel(index) / 5)
             Exit Function
         End If
@@ -232,25 +232,20 @@ Public Function CanNPCSpellCritical(ByVal NPCNum As Long) As Boolean
 End Function
 
 Function GetPlayerProtection(ByVal index As Long) As Long
-    Dim Body As Long
-    Dim Helm As Long
-
     ' Check for subscript out of range
     If IsPlaying(index) = False Or index <= 0 Or index > Player_HighIndex Then Exit Function
 
-    Body = GetPlayerEquipment(index, Body)
-    Helm = GetPlayerEquipment(index, Head)
     GetPlayerProtection = (GetPlayerStat(index, Stats.Endurance) \ 4)
 
-    If Body > 0 Then
-        If Not GetPlayerEquipmentDur(index, Body) = 0 Or Item(GetPlayerEquipment(index, Body)).Indestructable = 1 Then
+    If GetPlayerEquipment(index, Equipment.Body) > 0 Then
+        If Not GetPlayerEquipmentDur(index, Equipment.Body) = 0 Or Item(GetPlayerEquipment(index, Equipment.Body)).Indestructable = 1 Then
             GetPlayerProtection = GetPlayerProtection + Item(Body).Data2
         End If
     End If
 
-    If Helm > 0 Then
-        If Not GetPlayerEquipmentDur(index, Helm) = 0 Or Item(GetPlayerEquipment(index, Helm)).Indestructable = 1 Then
-            GetPlayerProtection = GetPlayerProtection + Item(Helm).Data2
+    If GetPlayerEquipment(index, Equipment.Head) > 0 Then
+        If Not GetPlayerEquipmentDur(index, Equipment.Head) = 0 Or Item(GetPlayerEquipment(index, Equipment.Head)).Indestructable = 1 Then
+            GetPlayerProtection = GetPlayerProtection + Item(Equipment.Head).Data2
         End If
     End If
 End Function
@@ -789,7 +784,7 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
     End If
     
     ' Reduce durability of weapon
-    Call DamagePlayerEquipment(Attacker, Weapon)
+    Call DamagePlayerEquipment(Attacker, Equipment.Weapon)
 End Sub
 
 ' ###################################
@@ -1315,9 +1310,9 @@ Sub NPCAttackPlayer(ByVal MapNPCNum As Long, ByVal Victim As Long, ByVal Damage 
     
     ' Reduce durability on the victim's equipment
     If Random(1, 2) = 1 Then ' Which one it will affect
-        Call DamagePlayerEquipment(Victim, Body)
+        Call DamagePlayerEquipment(Victim, Equipment.Body)
     Else
-        Call DamagePlayerEquipment(Victim, Head)
+        Call DamagePlayerEquipment(Victim, Equipment.Head)
     End If
     
     ' Set the regen timer
@@ -1923,9 +1918,9 @@ Sub PlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, ByVal Damag
     
     ' Reduce durability on the victim's equipment
     If Random(1, 2) = 1 Then ' Which one it will affect
-        Call DamagePlayerEquipment(Victim, Body)
+        Call DamagePlayerEquipment(Victim, Equipment.Body)
     Else
-        Call DamagePlayerEquipment(Victim, Head)
+        Call DamagePlayerEquipment(Victim, Equipment.Head)
     End If
     
     If Damage >= GetPlayerVital(Victim, Vitals.HP) Then
@@ -2058,7 +2053,7 @@ Sub PlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, ByVal Damag
     TempPlayer(Attacker).AttackTimer = timeGetTime
     
     ' Reduce durability of weapon
-    Call DamagePlayerEquipment(Attacker, Weapon)
+    Call DamagePlayerEquipment(Attacker, Equipment.Weapon)
 End Sub
 
 ' ############

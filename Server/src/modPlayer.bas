@@ -1348,7 +1348,7 @@ Sub CheckResource(ByVal index As Long, ByVal X As Long, ByVal Y As Long)
                     rY = ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).Y
                 
                     ' Reduce weapon's durability
-                    Call DamagePlayerEquipment(index, Weapon)
+                    Call DamagePlayerEquipment(index, Equipment.Weapon)
                     
                     ' Give the reward random when they deal damage
                     RndNum = Random(Resource(Resource_Index).LowChance, Resource(Resource_Index).HighChance)
