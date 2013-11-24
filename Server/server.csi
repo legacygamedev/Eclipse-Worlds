@@ -1,0 +1,6 @@
+[History]
+1=#P0#=mb	#P1#=GetPlayerProtection	#P2#=Server/modCombat/GetPlayerProtection	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20131121221218	#P7#=0	#P8#=6	.
+2=#P0#=mb	#P1#=PlayerAttackPlayer	#P2#=Server/modCombat/PlayerAttackPlayer	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20131121220155	#P7#=0	#P8#=155	.
+3=#P0#=mb	#P1#=NPCAttackPlayer	#P2#=Server/modCombat/NPCAttackPlayer	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20131121220137	#P7#=0	#P8#=21	.
+4=#P0#=mb	#P1#=GetPlayerEquipmentDur	#P2#=Server/modCommands/GetPlayerEquipmentDur	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20131121215655	#P7#=0	#P8#=4	.
+5=#P0#=mb	#P1#=DamagePlayerEquipment	#P2#=Server/modPlayer/DamagePlayerEquipment	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20131121220121	#P7#=0	#P8#=6	.
