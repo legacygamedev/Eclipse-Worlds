@@ -80,7 +80,7 @@ Begin VB.Form frmEditor_Shop
          Width           =   615
       End
       Begin VB.ComboBox cmbCostItem 
-         Height          =   300
+         Height          =   315
          Left            =   840
          Style           =   2  'Dropdown List
          TabIndex        =   6
@@ -97,7 +97,7 @@ Begin VB.Form frmEditor_Shop
          Width           =   615
       End
       Begin VB.ComboBox cmbItem 
-         Height          =   300
+         Height          =   315
          Left            =   840
          Style           =   2  'Dropdown List
          TabIndex        =   4
@@ -105,7 +105,7 @@ Begin VB.Form frmEditor_Shop
          Width           =   3015
       End
       Begin VB.ListBox lstTradeItem 
-         Height          =   1230
+         Height          =   1425
          ItemData        =   "frmEditor_Shop.frx":038A
          Left            =   120
          List            =   "frmEditor_Shop.frx":03A6
@@ -140,7 +140,7 @@ Begin VB.Form frmEditor_Shop
          Width           =   2415
       End
       Begin VB.ComboBox cmbCostItem2 
-         Height          =   300
+         Height          =   315
          Left            =   840
          Style           =   2  'Dropdown List
          TabIndex        =   8
@@ -389,7 +389,7 @@ Private Sub cmdUpdate_Click()
     If Index < 1 Or Index > MAX_SHOPS Then Exit Sub
     
     With Shop(EditorIndex).TradeItem(Index)
-        .item = cmbItem.ListIndex
+        .Item = cmbItem.ListIndex
         .ItemValue = Val(txtItemValue.text)
         .CostItem = cmbCostItem.ListIndex
         .CostItem2 = cmbCostItem2.ListIndex
@@ -418,7 +418,7 @@ Private Sub cmdDeleteTrade_Click()
     If Index < 1 Or Index > MAX_SHOPS Then Exit Sub
     
     With Shop(EditorIndex).TradeItem(Index)
-        .item = 0
+        .Item = 0
         .ItemValue = 0
         .CostItem = 0
         .CostItem2 = 0
@@ -464,7 +464,7 @@ Private Sub lstTradeItem_DblClick()
     If Index < 1 Or Index > MAX_SHOPS Then Exit Sub
     
     With Shop(EditorIndex).TradeItem(Index)
-         cmbItem.ListIndex = .item
+         cmbItem.ListIndex = .Item
          txtItemValue.text = .ItemValue
          cmbCostItem.ListIndex = .CostItem
          cmbCostItem2.ListIndex = .CostItem2
@@ -627,9 +627,9 @@ Private Sub Form_Load()
     frmEditor_Shop.cmbCostItem2.AddItem "None"
 
     For I = 1 To MAX_ITEMS
-        frmEditor_Shop.cmbItem.AddItem I & ": " & Trim$(item(I).name)
-        frmEditor_Shop.cmbCostItem.AddItem I & ": " & Trim$(item(I).name)
-        frmEditor_Shop.cmbCostItem2.AddItem I & ": " & Trim$(item(I).name)
+        frmEditor_Shop.cmbItem.AddItem I & ": " & Trim$(Item(I).name)
+        frmEditor_Shop.cmbCostItem.AddItem I & ": " & Trim$(Item(I).name)
+        frmEditor_Shop.cmbCostItem2.AddItem I & ": " & Trim$(Item(I).name)
     Next
     
     frmEditor_Shop.cmbItem.ListIndex = 0

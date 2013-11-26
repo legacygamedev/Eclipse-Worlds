@@ -2467,8 +2467,15 @@ Sub HandleSellItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As
     ' Seems to be valid
     ItemNum = GetPlayerInvItemNum(index, InvSlot)
     
+    ' We don't want them to sell bindable items
+    If Item(ItemNum).BindType = BIND_ON_PICKUP Or Item(ItemNum).BindType = BIND_ON_EQUIP Then
+        PlayerMsg index, "You cannot sell bindable items to shops.", BrightRed
+        Exit Sub
+    End If
+    
     ' Work out price
     Multiplier = Shop(TempPlayer(index).InShop).SellRate / 100
+    
     Price = Item(ItemNum).Price * Multiplier
     
     ' Item has cost?
