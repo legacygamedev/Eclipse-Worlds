@@ -387,8 +387,10 @@ Private Sub cmdUpdate_Click()
     Index = lstTradeItem.ListIndex + 1
     
     If Index < 1 Or Index > MAX_SHOPS Then Exit Sub
-    
+
     With Shop(EditorIndex).TradeItem(Index)
+        If .CostItem = 1 Then .CostValue = 0
+        If .CostItem2 = 1 Then .CostValue2 = 0
         .Item = cmbItem.ListIndex
         .ItemValue = Val(txtItemValue.text)
         .CostItem = cmbCostItem.ListIndex

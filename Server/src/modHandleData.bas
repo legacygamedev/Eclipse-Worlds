@@ -2384,12 +2384,16 @@ Sub HandleBuyItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As 
         ' Work out price
         Multiplier = Shop(TempPlayer(index).InShop).BuyRate / 100
         
-        If .CostItem > 0 Then
+        If .CostItem > 0 And .CostItem <> 1 Then
             ItemPrice = .CostValue * Multiplier
+        ElseIf .CostItem = 1 Then
+            ItemPrice = Item(.Item).Price * Multiplier
         End If
         
-        If .CostItem2 > 0 Then
+        If .CostItem2 > 0 And .CostItem2 <> 1 Then
             ItemPrice2 = .CostValue2 * Multiplier
+        ElseIf .CostItem2 = 1 Then
+            ItemPrice = Item(.Item).Price * Multiplier
         End If
         
         ' Calculate how much of the item they have
