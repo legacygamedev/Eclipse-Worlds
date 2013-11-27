@@ -2387,13 +2387,21 @@ Sub HandleBuyItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As 
         If .CostItem > 0 And .CostItem <> 1 Then
             ItemPrice = .CostValue * Multiplier
         ElseIf .CostItem = 1 Then
-            ItemPrice = Item(.Item).Price * Multiplier
+            If .CostValue = 0 Then
+                ItemPrice = Item(.Item).Price * Multiplier
+            Else
+                ItemPrice = Item(.Item).Price * Multiplier * .CostValue
+            End If
         End If
         
         If .CostItem2 > 0 And .CostItem2 <> 1 Then
             ItemPrice2 = .CostValue2 * Multiplier
         ElseIf .CostItem2 = 1 Then
-            ItemPrice = Item(.Item).Price * Multiplier
+            If .CostValue2 = 0 Then
+                ItemPrice2 = Item(.Item).Price * Multiplier
+            Else
+                ItemPrice2 = Item(.Item).Price * Multiplier * .CostValue2
+            End If
         End If
         
         ' Calculate how much of the item they have
