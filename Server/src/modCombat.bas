@@ -2224,11 +2224,11 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
     ' Make sure player has the spell
     If Not HasSpell(index, SpellNum) Then Exit Sub
     
-    ' Make sure they meet the requirements
-    If CanPlayerCastSpell(index, SpellNum) = False Then Exit Sub
-    
     ' They are stunned, don't allow them to cast
     If TempPlayer(index).StunDuration > 0 Then Exit Sub
+    
+    ' Make sure they meet the requirements
+    If CanPlayerCastSpell(index, SpellNum) = False Then Exit Sub
     
     ' Find out what kind of spell it is, self cast, target, or AoE
     If Spell(SpellNum).Range > 0 Then
@@ -2273,11 +2273,9 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
         Case 0 ' Self-cast target
             Select Case Spell(SpellNum).Type
                 Case SPELL_TYPE_HEALHP
-                    SendAnimation MapNum, Spell(SpellNum).SpellAnim, GetPlayerX(index), GetPlayerY(index)
                     SpellPlayer_Effect Vitals.HP, True, index, Vital, SpellNum
                     DidCast = True
                 Case SPELL_TYPE_HEALMP
-                    SendAnimation MapNum, Spell(SpellNum).SpellAnim, GetPlayerX(index), GetPlayerY(index)
                     SpellPlayer_Effect Vitals.MP, True, index, Vital, SpellNum
                     DidCast = True
                 Case SPELL_TYPE_WARP
@@ -2670,6 +2668,7 @@ Public Sub HandleDoT_Player(ByVal index As Long, ByVal dotNum As Long)
         If .Used And .Spell > 0 Then
             ' Time to tick?
             If timeGetTime > .Timer + (Spell(.Spell).Interval * 1000) Then
+                SendAnimation GetPlayerMap(index), Spell(.Spell).SpellAnim, GetPlayerX(index), GetPlayerY(index)
                 If CanPlayerAttackPlayer(.Caster, index, True) Then
                     PlayerAttackPlayer .Caster, index, Spell(.Spell).Vital
                 End If
@@ -2695,6 +2694,7 @@ Public Sub HandleHoT_Player(ByVal index As Long, ByVal hotNum As Long)
         If .Used And .Spell > 0 Then
             ' Time to tick?
             If timeGetTime > .Timer + (Spell(.Spell).Interval * 1000) Then
+                SendAnimation GetPlayerMap(index), Spell(.Spell).SpellAnim, GetPlayerX(index), GetPlayerY(index)
                 If Spell(.Spell).Type = SPELL_TYPE_HEALHP Then
                     SendActionMsg GetPlayerMap(index), "+" & Spell(.Spell).Vital, BrightGreen, ACTIONMSG_SCROLL, GetPlayerX(index) * 32, GetPlayerY(index) * 32
                     SetPlayerVital index, Vitals.HP, GetPlayerVital(index, Vitals.HP) + Spell(.Spell).Vital
@@ -2727,6 +2727,7 @@ Public Sub HandleDoT_NPC(ByVal MapNum As Integer, ByVal index As Long, ByVal dot
         If .Used And .Spell > 0 Then
             ' Time to tick?
             If timeGetTime > .Timer + (Spell(.Spell).Interval * 1000) Then
+                SendAnimation MapNum, Spell(.Spell).SpellAnim, MapNPC(MapNum).NPC(index).X, MapNPC(MapNum).NPC(index).Y
                 If CanPlayerAttackNPC(.Caster, index, True) Then
                     PlayerAttackNPC .Caster, index, Spell(.Spell).Vital, , True
                 End If
@@ -2753,6 +2754,7 @@ Public Sub HandleHoT_NPC(ByVal MapNum As Integer, ByVal index As Long, ByVal hot
         If .Used And .Spell > 0 Then
             ' Time to tick?
             If timeGetTime > .Timer + (Spell(.Spell).Interval * 1000) Then
+                SendAnimation MapNum, Spell(.Spell).SpellAnim, MapNPC(MapNum).NPC(index).X, MapNPC(MapNum).NPC(index).Y
                 If Spell(.Spell).Type = SPELL_TYPE_HEALHP Then
                     SendActionMsg MapNum, "+" & Spell(.Spell).Vital, BrightGreen, ACTIONMSG_SCROLL, MapNPC(MapNum).NPC(index).X * 32, MapNPC(MapNum).NPC(index).Y * 32
                     MapNPC(MapNum).NPC(index).Vital(Vitals.HP) = MapNPC(MapNum).NPC(index).Vital(Vitals.HP) + Spell(.Spell).Vital
