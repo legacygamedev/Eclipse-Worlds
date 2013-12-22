@@ -582,8 +582,8 @@ Sub PlayerSwitchSpellSlots(ByVal index As Long, ByVal OldSlot As Byte, ByVal New
     SetPlayerSpell index, NewSlot, OldNum
     
     ' Switch the spell cooldowns
-    OldSpellCD = Account(index).Chars(GetPlayerChar(index)).SpellCD(OldSlot)
-    NewSpellCD = Account(index).Chars(GetPlayerChar(index)).SpellCD(NewSlot)
+    OldSpellCD = GetPlayerSpellCD(index, OldSlot)
+    NewSpellCD = GetPlayerSpellCD(index, NewSlot)
     Call SetPlayerSpellCD(index, OldSlot, NewSpellCD)
     Call SetPlayerSpellCD(index, NewSlot, OldSpellCD)
     
