@@ -2480,7 +2480,7 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
         Call SetPlayerVital(index, Vitals.MP, GetPlayerVital(index, Vitals.MP) - MPCost)
         Call SendVital(index, Vitals.MP)
         TempPlayer(index).SpellBuffer.Timer = timeGetTime + (Spell(SpellNum).CDTime * 1000)
-        Account(index).Chars(GetPlayerChar(index)).SpellCD(SpellSlot) = timeGetTime + (Spell(SpellNum).CDTime * 1000)
+        Call SetPlayerSpellCD(index, SpellSlot, timeGetTime + (Spell(SpellNum).CDTime * 1000))
         Call SendSpellCooldown(index, SpellSlot)
         SendActionMsg MapNum, Trim$(Spell(SpellNum).Name), BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(index) * 32, GetPlayerY(index) * 32
         
