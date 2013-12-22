@@ -17,7 +17,7 @@ Public Resource(1 To MAX_RESOURCES) As ResourceRec
 Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
 Public events(1 To MAX_EVENTS) As EventWrapperRec
 Public Ban(1 To MAX_BANS) As BanRec
-Public Title(1 To MAX_TITLES) As TitleRec
+Public title(1 To MAX_TITLES) As TitleRec
 Public Moral(1 To MAX_MORALS) As MoralRec
 Public Class(1 To MAX_CLASSES) As ClassRec
 Public Emoticon(1 To MAX_EMOTICONS) As EmoticonRec
@@ -163,7 +163,7 @@ Public Type PlayerRec
     AmountOfTitles As Byte
     
     ' Titles
-    Title(1 To MAX_TITLES) As Byte
+    title(1 To MAX_TITLES) As Byte
     
     ' Current title
     CurTitle As Byte
@@ -508,7 +508,7 @@ End Type
 
 Private Type NPCRec
     name As String * NAME_LENGTH
-    Title As String * NAME_LENGTH
+    title As String * NAME_LENGTH
     Music As String * FILE_LENGTH
     Sound As String * FILE_LENGTH
     

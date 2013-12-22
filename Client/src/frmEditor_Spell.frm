@@ -643,7 +643,7 @@ Private Sub chkWeaponDamage_Click()
     
 ' Error handler
 errorhandler:
-    HandleError "chkAoE_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "chkWeaponDamage_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1293,18 +1293,18 @@ errorhandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If
