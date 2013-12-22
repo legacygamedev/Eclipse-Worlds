@@ -2407,16 +2407,20 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
             Select Case Spell(SpellNum).Type
                 Case SPELL_TYPE_DAMAGEHP
                     If targetType = TARGET_TYPE_PLAYER Then
-                        If CanPlayerAttackPlayer(index, target, False, True) Then
-                            SendAnimation MapNum, Spell(SpellNum).SpellAnim, 0, 0, TARGET_TYPE_PLAYER, target
-                            
-                            If Vital > 0 Then
-                                PlayerAttackPlayer index, target, Vital, SpellNum
-                                DidCast = True
-                            Else
-                                Call SendSoundToMap(GetPlayerMap(i), Options.ResistSound)
-                                SendActionMsg GetPlayerMap(i), "Resist", Pink, 1, (Account(target).Chars(GetPlayerChar(target)).X * 32), (Account(target).Chars(GetPlayerChar(target)).Y * 32)
+                        If index <> target Then
+                            If CanPlayerAttackPlayer(index, target, False, True) Then
+                                SendAnimation MapNum, Spell(SpellNum).SpellAnim, 0, 0, TARGET_TYPE_PLAYER, target
+                                
+                                If Vital > 0 Then
+                                    PlayerAttackPlayer index, target, Vital, SpellNum
+                                    DidCast = True
+                                Else
+                                    Call SendSoundToMap(GetPlayerMap(i), Options.ResistSound)
+                                    SendActionMsg GetPlayerMap(i), "Resist", Pink, 1, (Account(target).Chars(GetPlayerChar(target)).X * 32), (Account(target).Chars(GetPlayerChar(target)).Y * 32)
+                                End If
                             End If
+                        Else
+                            Call PlayerMsg(index, "You can't cast that spell on yourself!", 12)
                         End If
                     Else
                         If CanPlayerAttackNPC(index, target, True) Then
