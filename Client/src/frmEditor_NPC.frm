@@ -26,6 +26,15 @@ Begin VB.Form frmEditor_NPC
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.CheckBox chkShowOnDeath 
+      Caption         =   "Show On Death"
+      Height          =   255
+      Left            =   6480
+      TabIndex        =   69
+      TabStop         =   0   'False
+      Top             =   4680
+      Width           =   1815
+   End
    Begin VB.PictureBox picSprite 
       AutoRedraw      =   -1  'True
       BackColor       =   &H00000000&
@@ -73,6 +82,45 @@ Begin VB.Form frmEditor_NPC
       Top             =   8640
       Width           =   1455
    End
+   Begin VB.Frame fraNPC 
+      Caption         =   "NPC List"
+      Height          =   8895
+      Left            =   120
+      TabIndex        =   31
+      Top             =   120
+      Width           =   3135
+      Begin VB.CommandButton cmdPaste 
+         Caption         =   "Paste"
+         Height          =   315
+         Left            =   2400
+         TabIndex        =   68
+         Top             =   240
+         Width           =   615
+      End
+      Begin VB.TextBox txtSearch 
+         CausesValidation=   0   'False
+         Height          =   270
+         Left            =   120
+         TabIndex        =   67
+         Top             =   240
+         Width           =   1455
+      End
+      Begin VB.CommandButton cmdCopy 
+         Caption         =   "Copy"
+         Height          =   315
+         Left            =   1680
+         TabIndex        =   66
+         Top             =   240
+         Width           =   615
+      End
+      Begin VB.ListBox lstIndex 
+         Height          =   7860
+         Left            =   120
+         TabIndex        =   0
+         Top             =   600
+         Width           =   2895
+      End
+   End
    Begin VB.Frame Frame1 
       Caption         =   "Properties"
       Height          =   8415
@@ -89,7 +137,7 @@ Begin VB.Form frmEditor_NPC
          Width           =   1575
       End
       Begin VB.ComboBox cmbMusic 
-         Height          =   300
+         Height          =   315
          Left            =   680
          Style           =   2  'Dropdown List
          TabIndex        =   6
@@ -97,7 +145,7 @@ Begin VB.Form frmEditor_NPC
          Width           =   1815
       End
       Begin VB.ComboBox cmbSound 
-         Height          =   300
+         Height          =   315
          Left            =   3120
          Style           =   2  'Dropdown List
          TabIndex        =   7
@@ -122,7 +170,7 @@ Begin VB.Form frmEditor_NPC
          Width           =   1575
       End
       Begin VB.ComboBox cmbFaction 
-         Height          =   300
+         Height          =   315
          ItemData        =   "frmEditor_NPC.frx":038A
          Left            =   1080
          List            =   "frmEditor_NPC.frx":0397
@@ -185,7 +233,7 @@ Begin VB.Form frmEditor_NPC
          Width           =   1815
       End
       Begin VB.ComboBox cmbBehavior 
-         Height          =   300
+         Height          =   315
          ItemData        =   "frmEditor_NPC.frx":03AD
          Left            =   1080
          List            =   "frmEditor_NPC.frx":03BD
@@ -316,9 +364,155 @@ Begin VB.Form frmEditor_NPC
             Width           =   450
          End
       End
+      Begin VB.CheckBox chkSwapVisibility 
+         Caption         =   "Show Spells"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   65
+         TabStop         =   0   'False
+         Top             =   4560
+         Width           =   1455
+      End
+      Begin VB.Frame fraSpell 
+         Caption         =   "Spell: 1"
+         Height          =   1455
+         Left            =   120
+         TabIndex        =   62
+         Top             =   4920
+         Visible         =   0   'False
+         Width           =   4815
+         Begin VB.HScrollBar scrlSpellNum 
+            Height          =   255
+            Left            =   1200
+            Max             =   255
+            TabIndex        =   23
+            Top             =   1080
+            Width           =   3495
+         End
+         Begin VB.HScrollBar scrlSpell 
+            Height          =   255
+            Left            =   120
+            Min             =   1
+            TabIndex        =   22
+            Top             =   240
+            Value           =   1
+            Width           =   4575
+         End
+         Begin VB.Label lblSpellName 
+            AutoSize        =   -1  'True
+            Caption         =   "Spell: None"
+            Height          =   180
+            Left            =   120
+            TabIndex        =   64
+            Top             =   720
+            Width           =   870
+         End
+         Begin VB.Line Line2 
+            BorderColor     =   &H00C0C0C0&
+            X1              =   120
+            X2              =   4920
+            Y1              =   600
+            Y2              =   600
+         End
+         Begin VB.Label lblSpellNum 
+            AutoSize        =   -1  'True
+            Caption         =   "Number: 0"
+            Height          =   180
+            Left            =   120
+            TabIndex        =   63
+            Top             =   1080
+            Width           =   795
+         End
+      End
+      Begin VB.Frame fraOnDeath 
+         Caption         =   "On Death"
+         Height          =   1935
+         Left            =   120
+         TabIndex        =   70
+         Top             =   6360
+         Visible         =   0   'False
+         Width           =   4935
+         Begin VB.ComboBox cmbPlayerSwitch 
+            Height          =   315
+            ItemData        =   "frmEditor_NPC.frx":03F6
+            Left            =   1560
+            List            =   "frmEditor_NPC.frx":040C
+            Style           =   2  'Dropdown List
+            TabIndex        =   75
+            Top             =   360
+            Width           =   3135
+         End
+         Begin VB.ComboBox cmbPlayerVar 
+            Height          =   315
+            ItemData        =   "frmEditor_NPC.frx":0462
+            Left            =   1560
+            List            =   "frmEditor_NPC.frx":0478
+            Style           =   2  'Dropdown List
+            TabIndex        =   74
+            Top             =   1080
+            Width           =   3135
+         End
+         Begin VB.HScrollBar scrlPlayerSwitch 
+            Height          =   255
+            Left            =   3720
+            Max             =   1
+            TabIndex        =   73
+            Top             =   720
+            Width           =   975
+         End
+         Begin VB.HScrollBar scrlPlayerVar 
+            Height          =   255
+            Left            =   1560
+            Max             =   1000
+            TabIndex        =   72
+            Top             =   1440
+            Width           =   1455
+         End
+         Begin VB.CheckBox chkPlayerVar 
+            Alignment       =   1  'Right Justify
+            Caption         =   "Add To Var:"
+            Height          =   255
+            Left            =   3240
+            TabIndex        =   71
+            Top             =   1440
+            Width           =   1455
+         End
+         Begin VB.Label Label9 
+            Caption         =   "Set Player Switch"
+            Height          =   375
+            Left            =   120
+            TabIndex        =   79
+            Top             =   360
+            Width           =   1455
+         End
+         Begin VB.Label Label8 
+            Caption         =   "Set Player Var:"
+            Height          =   375
+            Left            =   120
+            TabIndex        =   78
+            Top             =   1080
+            Width           =   1455
+         End
+         Begin VB.Label lblPlayerSwitch 
+            Caption         =   "To: False"
+            Height          =   255
+            Left            =   2640
+            TabIndex        =   77
+            Top             =   720
+            Width           =   975
+         End
+         Begin VB.Label lblPlayerVar 
+            Caption         =   "To: 0"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   76
+            Top             =   1440
+            Width           =   975
+         End
+      End
       Begin VB.Frame fraDrop 
          Caption         =   "Drop: 1"
-         Height          =   1815
+         Height          =   1935
          Left            =   120
          TabIndex        =   48
          Top             =   6360
@@ -400,66 +594,6 @@ Begin VB.Form frmEditor_NPC
             X2              =   4800
             Y1              =   600
             Y2              =   600
-         End
-      End
-      Begin VB.CheckBox chkSwapVisibility 
-         Caption         =   "Show Spells"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   65
-         TabStop         =   0   'False
-         Top             =   4560
-         Width           =   1455
-      End
-      Begin VB.Frame fraSpell 
-         Caption         =   "Spell: 1"
-         Height          =   1455
-         Left            =   120
-         TabIndex        =   62
-         Top             =   4920
-         Visible         =   0   'False
-         Width           =   4815
-         Begin VB.HScrollBar scrlSpellNum 
-            Height          =   255
-            Left            =   1200
-            Max             =   255
-            TabIndex        =   23
-            Top             =   1080
-            Width           =   3495
-         End
-         Begin VB.HScrollBar scrlSpell 
-            Height          =   255
-            Left            =   120
-            Min             =   1
-            TabIndex        =   22
-            Top             =   240
-            Value           =   1
-            Width           =   4575
-         End
-         Begin VB.Label lblSpellName 
-            AutoSize        =   -1  'True
-            Caption         =   "Spell: None"
-            Height          =   180
-            Left            =   120
-            TabIndex        =   64
-            Top             =   720
-            Width           =   870
-         End
-         Begin VB.Line Line2 
-            BorderColor     =   &H00C0C0C0&
-            X1              =   120
-            X2              =   4920
-            Y1              =   600
-            Y2              =   600
-         End
-         Begin VB.Label lblSpellNum 
-            AutoSize        =   -1  'True
-            Caption         =   "Number: 0"
-            Height          =   180
-            Left            =   120
-            TabIndex        =   63
-            Top             =   1080
-            Width           =   795
          End
       End
       Begin VB.Label Label7 
@@ -608,45 +742,6 @@ Begin VB.Form frmEditor_NPC
          Width           =   285
       End
    End
-   Begin VB.Frame fraNPC 
-      Caption         =   "NPC List"
-      Height          =   8895
-      Left            =   120
-      TabIndex        =   31
-      Top             =   120
-      Width           =   3135
-      Begin VB.CommandButton cmdPaste 
-         Caption         =   "Paste"
-         Height          =   315
-         Left            =   2400
-         TabIndex        =   68
-         Top             =   240
-         Width           =   615
-      End
-      Begin VB.TextBox txtSearch 
-         CausesValidation=   0   'False
-         Height          =   270
-         Left            =   120
-         TabIndex        =   67
-         Top             =   240
-         Width           =   1455
-      End
-      Begin VB.CommandButton cmdCopy 
-         Caption         =   "Copy"
-         Height          =   315
-         Left            =   1680
-         TabIndex        =   66
-         Top             =   240
-         Width           =   615
-      End
-      Begin VB.ListBox lstIndex 
-         Height          =   7860
-         Left            =   120
-         TabIndex        =   0
-         Top             =   600
-         Width           =   2895
-      End
-   End
 End
 Attribute VB_Name = "frmEditor_NPC"
 Attribute VB_GlobalNameSpace = False
@@ -678,9 +773,36 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub chkShowOnDeath_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    fraDrop.Visible = Not fraDrop.Visible
+    fraOnDeath.Visible = Not fraOnDeath.Visible
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "chkShowOnDeath_Click", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub chkSwapVisibility_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
     fraSpell.Visible = Not fraSpell.Visible
     fraStats.Visible = Not fraStats.Visible
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "chkSwapVisibility_Click", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
 End Sub
 
 Private Sub cmbBehavior_Click()
@@ -735,6 +857,32 @@ Private Sub cmbMusic_Click()
 ' Error handler
 errorhandler:
     HandleError "cmdMusic_Click", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmbPlayerSwitch_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    NPC(EditorIndex).SwitchNum = cmbPlayerSwitch.ListIndex
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmbPlayerSwitch_Click", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmbPlayerVar_Click()
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    NPC(EditorIndex).VariableNum = cmbPlayerVar.ListIndex
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "cmbPlayerVar_Click", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -922,6 +1070,41 @@ errorhandler:
     Err.Clear
 End Sub
 
+Private Sub scrlPlayerSwitch_Change()
+     ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    If scrlPlayerSwitch.Value = 0 Then
+        lblPlayerSwitch.Caption = "To: False"
+    Else
+        lblPlayerSwitch.Caption = "To: True"
+    End If
+    
+    NPC(EditorIndex).SwitchVal = scrlPlayerSwitch.Value
+    
+    ' Error handler
+    Exit Sub
+errorhandler:
+    HandleError "scrlPlayerSwitch_Change", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+    Exit Sub
+End Sub
+
+Private Sub scrlPlayerVar_Change()
+     ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    lblPlayerVar.Caption = "To: " & scrlPlayerVar.Value
+    NPC(EditorIndex).VariableVal = scrlPlayerVar.Value
+    
+    ' Error handler
+    Exit Sub
+errorhandler:
+    HandleError "scrlPlayerVar_Change", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+    Exit Sub
+End Sub
+
 Private Sub scrlSpell_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
@@ -1021,7 +1204,7 @@ Private Sub scrlNum_Change()
     lblNum.Caption = "Number: " & scrlNum.Value
 
     If scrlNum.Value > 0 Then
-        lblItemName.Caption = "Item: " & Trim$(item(scrlNum.Value).name)
+        lblItemName.Caption = "Item: " & Trim$(Item(scrlNum.Value).name)
     Else
         lblItemName.Caption = "Item: None"
     End If
@@ -1189,7 +1372,7 @@ errorhandler:
 End Sub
 
 Private Sub txtChance_Validate(Cancel As Boolean)
-    Dim i() As String
+    Dim I() As String
     
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
@@ -1205,8 +1388,8 @@ Private Sub txtChance_Validate(Cancel As Boolean)
     If Right$(txtChance.text, 1) = "%" Then
         txtChance.text = Left$(txtChance.text, Len(txtChance.text) - 1) / 100
     ElseIf InStr(1, txtChance.text, "/") > 0 Then
-        i = Split(txtChance.text, "/")
-        txtChance.text = Int(i(0) / i(1) * 1000) / 1000
+        I = Split(txtChance.text, "/")
+        txtChance.text = Int(I(0) / I(1) * 1000) / 1000
     End If
     
     If txtChance.text > 1 Then
@@ -1344,18 +1527,18 @@ errorhandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If

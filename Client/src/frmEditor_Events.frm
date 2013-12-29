@@ -135,7 +135,7 @@ Begin VB.Form frmEditor_Events
       TabIndex        =   319
       Top             =   120
       Visible         =   0   'False
-      Width           =   615
+      Width           =   495
       Begin VB.Frame fraRenaming 
          Caption         =   "Renaming Variable/Switch"
          Height          =   8535
@@ -5640,7 +5640,7 @@ Public Sub InitEventEditorForm()
     cmbChangeItemIndex.Clear
     
     For I = 1 To MAX_ITEMS
-        cmbChangeItemIndex.AddItem Trim$(item(I).name)
+        cmbChangeItemIndex.AddItem Trim$(Item(I).name)
     Next
     cmbChangeItemIndex.ListIndex = 0
     
@@ -5921,7 +5921,7 @@ Dim I As Long
     cmbCondition_HasItem.Enabled = False
     cmbCondition_HasItem.Clear
     For I = 1 To MAX_ITEMS
-        cmbCondition_HasItem.AddItem I & ". " & Trim$(item(I).name)
+        cmbCondition_HasItem.AddItem I & ". " & Trim$(Item(I).name)
     Next
     cmbCondition_HasItem.ListIndex = 0
     

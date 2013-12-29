@@ -1178,18 +1178,22 @@ Sub OnDeath(ByVal index As Long, Optional ByVal Attacker As Long)
         ' Drop all worn items
         For i = 1 To Equipment.Equipment_Count - 1
             If GetPlayerEquipment(index, i) > 0 Then
-                If TempPlayer(Attacker).InParty > 0 Then
+                If TempPlayer(index).InParty > 0 Then
                     Call Party_GetLoot(TempPlayer(Attacker).InParty, GetPlayerEquipment(index, i), 1, GetPlayerX(index), GetPlayerY(index))
                 Else
                     If Moral(GetPlayerMap(index)).CanDropItem = 1 Then
-                        Call SpawnItem(GetPlayerEquipment(index, i), 1, GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index), GetPlayerName(Attacker))
+                        If Attacker > 0 Then
+                            Call SpawnItem(GetPlayerEquipment(index, i), 1, 0, GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index), GetPlayerName(Attacker))
+                        Else
+                            Call SpawnItem(GetPlayerEquipment(index, i), 1, 0, GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index))
+                        End If
                     Else
-                        Call GiveInvItem(Attacker, GetPlayerEquipment(index, i), 1)
+                        If Attacker > 0 Then Call GiveInvItem(Attacker, GetPlayerEquipment(index, i), 1)
                     End If
                 End If
-                
+            
                 ' Send a message to the world indicating that they dropped an item
-                Call GlobalMsg(GetPlayerName(index) & " drops " & CheckGrammar(Item(GetPlayerEquipment(index, i)).Name) & "!", Yellow)
+                Call GlobalMsg(GetPlayerName(index) & " drops " & CheckGrammar(Trim$(Item(GetPlayerEquipment(index, i)).Name)) & "!", Yellow)
                 
                 ' Remove equipment item
                 SetPlayerEquipment index, 0, i
@@ -1203,16 +1207,14 @@ Sub OnDeath(ByVal index As Long, Optional ByVal Attacker As Long)
             If GetPlayerInvItemNum(index, i) = 1 Then
                 If Round(GetPlayerInvItemValue(index, i) / 10) > 0 Then
                     Call TakeInvItem(index, GetPlayerInvItemNum(index, i), Round(GetPlayerInvItemValue(index, i) / 10))
-                    Call SpawnItem(1, Round(GetPlayerInvItemValue(index, i) / 10), GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index), GetPlayerName(Attacker))
+                    Call SpawnItem(1, Round(GetPlayerInvItemValue(index, i) / 10), 0, GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index), GetPlayerName(Attacker))
                     Exit For
                 End If
             End If
         Next
-        
+    
         ' Add the player kill
-        If Attacker > 0 Then
-            Account(FindPlayer(GetPlayerName(Attacker))).Chars(GetPlayerChar(i)).PlayerKills = Account(FindPlayer(GetPlayerName(Attacker))).Chars(GetPlayerChar(i)).PlayerKills + 1
-        End If
+        If Attacker > 0 Then Account(FindPlayer(GetPlayerName(Attacker))).Chars(GetPlayerChar(i)).PlayerKills = Account(FindPlayer(GetPlayerName(Attacker))).Chars(GetPlayerChar(i)).PlayerKills + 1
         
         ' Check for new title
         Call CheckPlayerNewTitle(index)

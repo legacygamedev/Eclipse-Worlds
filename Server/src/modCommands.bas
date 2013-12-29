@@ -1,213 +1,213 @@
 Attribute VB_Name = "modCommands"
 Option Explicit
 
-Function GetPlayerLogin(ByVal index As Long) As String
+Function GetPlayerLogin(ByVal Index As Long) As String
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerLogin = Trim$(Account(index).Login)
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerLogin = Trim$(Account(Index).Login)
 End Function
 
-Sub SetPlayerLogin(ByVal index As Long, ByVal Login As String)
-    Account(index).Login = Login
+Sub SetPlayerLogin(ByVal Index As Long, ByVal Login As String)
+    Account(Index).Login = Login
 End Sub
 
-Function GetPlayerPassword(ByVal index As Long) As String
+Function GetPlayerPassword(ByVal Index As Long) As String
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerPassword = Trim$(Account(index).Password)
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerPassword = Trim$(Account(Index).Password)
 End Function
 
-Sub SetPlayerPassword(ByVal index As Long, ByVal Password As String)
-    Account(index).Password = Password
+Sub SetPlayerPassword(ByVal Index As Long, ByVal Password As String)
+    Account(Index).Password = Password
 End Sub
 
-Function GetPlayerName(ByVal index As Long) As String
+Function GetPlayerName(ByVal Index As Long) As String
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerName = Trim$(Account(index).Chars(GetPlayerChar(index)).Name)
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerName = Trim$(Account(Index).Chars(GetPlayerChar(Index)).Name)
 End Function
 
-Sub SetPlayerName(ByVal index As Long, ByVal Name As String)
-    Account(index).Chars(GetPlayerChar(index)).Name = Name
+Sub SetPlayerName(ByVal Index As Long, ByVal Name As String)
+    Account(Index).Chars(GetPlayerChar(Index)).Name = Name
 End Sub
 
-Function GetPlayerChar(ByVal index As Byte) As Byte
+Function GetPlayerChar(ByVal Index As Byte) As Byte
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerChar = Account(index).CurrentChar
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerChar = Account(Index).CurrentChar
 End Function
 
-Sub SetPlayerChar(ByVal index As Long, ByVal Char As Byte)
-    Account(index).CurrentChar = index
+Sub SetPlayerChar(ByVal Index As Long, ByVal Char As Byte)
+    Account(Index).CurrentChar = Index
 End Sub
 
-Function GetPlayerGuildName(ByVal index As Long) As String
+Function GetPlayerGuildName(ByVal Index As Long) As String
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerGuildName = Trim$(Guild(Account(index).Chars(GetPlayerChar(index)).Guild.index).Name)
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerGuildName = Trim$(Guild(Account(Index).Chars(GetPlayerChar(Index)).Guild.Index).Name)
 End Function
 
-Function GetPlayerGuild(ByVal index As Long) As Long
+Function GetPlayerGuild(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerGuild = Account(index).Chars(GetPlayerChar(index)).Guild.index
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerGuild = Account(Index).Chars(GetPlayerChar(Index)).Guild.Index
 End Function
 
-Sub SetPlayerGuild(ByVal index As Long, ByVal GuildNum As Long)
-    Account(index).Chars(GetPlayerChar(index)).Guild.index = GuildNum
+Sub SetPlayerGuild(ByVal Index As Long, ByVal GuildNum As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Guild.Index = GuildNum
 End Sub
 
-Function GetPlayerGuildAccess(ByVal index As Long) As Byte
+Function GetPlayerGuildAccess(ByVal Index As Long) As Byte
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerGuildAccess = Account(index).Chars(GetPlayerChar(index)).Guild.Access
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerGuildAccess = Account(Index).Chars(GetPlayerChar(Index)).Guild.Access
 End Function
 
-Sub SetPlayerGuildAccess(ByVal index As Long, ByVal Access As Byte)
-    Account(index).Chars(GetPlayerChar(index)).Guild.Access = Access
+Sub SetPlayerGuildAccess(ByVal Index As Long, ByVal Access As Byte)
+    Account(Index).Chars(GetPlayerChar(Index)).Guild.Access = Access
 End Sub
 
-Function GetPlayerClass(ByVal index As Long) As Long
+Function GetPlayerClass(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerClass = Account(index).Chars(GetPlayerChar(index)).Class
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerClass = Account(Index).Chars(GetPlayerChar(Index)).Class
 End Function
 
-Sub SetPlayerClass(ByVal index As Long, ByVal ClassNum As Long)
-    Account(index).Chars(GetPlayerChar(index)).Class = ClassNum
+Sub SetPlayerClass(ByVal Index As Long, ByVal ClassNum As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Class = ClassNum
 End Sub
 
-Function GetPlayerSprite(ByVal index As Long) As Long
+Function GetPlayerSprite(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerSprite = Account(index).Chars(GetPlayerChar(index)).Sprite
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerSprite = Account(Index).Chars(GetPlayerChar(Index)).Sprite
 End Function
 
-Sub SetPlayerSprite(ByVal index As Long, ByVal Sprite As Long)
-    Account(index).Chars(GetPlayerChar(index)).Sprite = Sprite
+Sub SetPlayerSprite(ByVal Index As Long, ByVal Sprite As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Sprite = Sprite
 End Sub
 
-Function GetPlayerTitle(ByVal index As Long, ByVal TitleNum As Long) As Long
+Function GetPlayerTitle(ByVal Index As Long, ByVal TitleNum As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerTitle = Account(index).Chars(GetPlayerChar(index)).Title(TitleNum)
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerTitle = Account(Index).Chars(GetPlayerChar(Index)).Title(TitleNum)
 End Function
 
-Sub SetPlayerTitle(ByVal index As Long, ByVal Title As Long, ByVal TitleNum As Long)
-    Account(index).Chars(GetPlayerChar(index)).Title(Title) = TitleNum
+Sub SetPlayerTitle(ByVal Index As Long, ByVal Title As Long, ByVal TitleNum As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Title(Title) = TitleNum
 End Sub
 
-Function GetPlayerFace(ByVal index As Long) As Long
+Function GetPlayerFace(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerFace = Account(index).Chars(GetPlayerChar(index)).Face
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerFace = Account(Index).Chars(GetPlayerChar(Index)).Face
 End Function
 
-Sub SetPlayerFace(ByVal index As Long, ByVal Face As Long)
-    Account(index).Chars(GetPlayerChar(index)).Face = Face
+Sub SetPlayerFace(ByVal Index As Long, ByVal Face As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Face = Face
 End Sub
 
-Function GetPlayerLevel(ByVal index As Long) As Long
+Function GetPlayerLevel(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerLevel = Account(index).Chars(GetPlayerChar(index)).Level
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerLevel = Account(Index).Chars(GetPlayerChar(Index)).Level
 End Function
 
-Function GetPlayerSkill(ByVal index As Long, ByVal SkillNum As Byte) As Long
+Function GetPlayerSkill(ByVal Index As Long, ByVal SkillNum As Byte) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerSkill = Account(index).Chars(GetPlayerChar(index)).Skills(SkillNum).Level
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerSkill = Account(Index).Chars(GetPlayerChar(Index)).Skills(SkillNum).Level
 End Function
 
-Sub SetPlayerLevel(ByVal index As Long, ByVal Level As Byte)
+Sub SetPlayerLevel(ByVal Index As Long, ByVal Level As Byte)
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Sub
-    Account(index).Chars(GetPlayerChar(index)).Level = Level
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+    Account(Index).Chars(GetPlayerChar(Index)).Level = Level
 End Sub
 
-Sub SetPlayerSkill(ByVal index As Long, ByVal Level As Byte, ByVal SkillNum As Byte)
+Sub SetPlayerSkill(ByVal Index As Long, ByVal Level As Byte, ByVal SkillNum As Byte)
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Sub
-    Account(index).Chars(GetPlayerChar(index)).Skills(SkillNum).Level = Level
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+    Account(Index).Chars(GetPlayerChar(Index)).Skills(SkillNum).Level = Level
 End Sub
 
-Function GetPlayerNextLevel(ByVal index As Long) As Long
-    GetPlayerNextLevel = (50 / 3) * ((GetPlayerLevel(index) + 1) ^ 3 - (6 * (GetPlayerLevel(index) + 1) ^ 2) + 17 * (GetPlayerLevel(index) + 1) - 12)
+Function GetPlayerNextLevel(ByVal Index As Long) As Long
+    GetPlayerNextLevel = (50 / 3) * ((GetPlayerLevel(Index) + 1) ^ 3 - (6 * (GetPlayerLevel(Index) + 1) ^ 2) + 17 * (GetPlayerLevel(Index) + 1) - 12)
 End Function
 
-Function GetPlayerNextSkillLevel(ByVal index As Long, ByVal SkillNum As Byte) As Long
-    GetPlayerNextSkillLevel = (50 / 3) * ((GetPlayerSkill(index, SkillNum) + 1) ^ 3 - (6 * (GetPlayerSkill(index, SkillNum) + 1) ^ 2) + 17 * (GetPlayerSkill(index, SkillNum) + 1) - 12)
+Function GetPlayerNextSkillLevel(ByVal Index As Long, ByVal SkillNum As Byte) As Long
+    GetPlayerNextSkillLevel = (50 / 3) * ((GetPlayerSkill(Index, SkillNum) + 1) ^ 3 - (6 * (GetPlayerSkill(Index, SkillNum) + 1) ^ 2) + 17 * (GetPlayerSkill(Index, SkillNum) + 1) - 12)
 End Function
 
-Function GetPlayerExp(ByVal index As Long) As Long
+Function GetPlayerExp(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerExp = Account(index).Chars(GetPlayerChar(index)).Exp
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerExp = Account(Index).Chars(GetPlayerChar(Index)).Exp
 End Function
 
-Function GetPlayerSkillExp(ByVal index As Long, ByVal SkillNum As Byte) As Long
+Function GetPlayerSkillExp(ByVal Index As Long, ByVal SkillNum As Byte) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerSkillExp = Account(index).Chars(GetPlayerChar(index)).Skills(SkillNum).Exp
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerSkillExp = Account(Index).Chars(GetPlayerChar(Index)).Skills(SkillNum).Exp
 End Function
 
-Sub SetPlayerExp(ByVal index As Long, ByVal Exp As Long)
-    Account(index).Chars(GetPlayerChar(index)).Exp = Exp
+Sub SetPlayerExp(ByVal Index As Long, ByVal Exp As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Exp = Exp
 End Sub
 
-Sub SetPlayerSkillExp(ByVal index As Long, ByVal Exp As Long, ByVal SkillNum As Byte)
-    Account(index).Chars(GetPlayerChar(index)).Skills(SkillNum).Exp = Exp
+Sub SetPlayerSkillExp(ByVal Index As Long, ByVal Exp As Long, ByVal SkillNum As Byte)
+    Account(Index).Chars(GetPlayerChar(Index)).Skills(SkillNum).Exp = Exp
 End Sub
 
-Function GetPlayerAccess(ByVal index As Long) As Byte
+Function GetPlayerAccess(ByVal Index As Long) As Byte
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerAccess = Account(index).Chars(GetPlayerChar(index)).Access
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerAccess = Account(Index).Chars(GetPlayerChar(Index)).Access
 End Function
 
-Sub SetPlayerAccess(ByVal index As Long, ByVal Access As Byte)
-    Account(index).Chars(GetPlayerChar(index)).Access = Access
+Sub SetPlayerAccess(ByVal Index As Long, ByVal Access As Byte)
+    Account(Index).Chars(GetPlayerChar(Index)).Access = Access
 End Sub
 
-Function GetPlayerPK(ByVal index As Long) As Byte
+Function GetPlayerPK(ByVal Index As Long) As Byte
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerPK = Account(index).Chars(GetPlayerChar(index)).PK
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerPK = Account(Index).Chars(GetPlayerChar(Index)).PK
 End Function
 
-Sub SetPlayerPK(ByVal index As Long, ByVal PK As Byte)
-    Account(index).Chars(GetPlayerChar(index)).PK = PK
+Sub SetPlayerPK(ByVal Index As Long, ByVal PK As Byte)
+    Account(Index).Chars(GetPlayerChar(Index)).PK = PK
 End Sub
 
-Function GetPlayerVital(ByVal index As Long, ByVal Vital As Vitals) As Long
+Function GetPlayerVital(ByVal Index As Long, ByVal Vital As Vitals) As Long
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerVital = Account(index).Chars(GetPlayerChar(index)).Vital(Vital)
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerVital = Account(Index).Chars(GetPlayerChar(Index)).Vital(Vital)
 End Function
 
-Sub SetPlayerVital(ByVal index As Long, ByVal Vital As Vitals, ByVal Value As Long)
-    Account(index).Chars(GetPlayerChar(index)).Vital(Vital) = Value
+Sub SetPlayerVital(ByVal Index As Long, ByVal Vital As Vitals, ByVal Value As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Vital(Vital) = Value
 
-    If GetPlayerVital(index, Vital) > GetPlayerMaxVital(index, Vital) Then
-        Account(index).Chars(GetPlayerChar(index)).Vital(Vital) = GetPlayerMaxVital(index, Vital)
+    If GetPlayerVital(Index, Vital) > GetPlayerMaxVital(Index, Vital) Then
+        Account(Index).Chars(GetPlayerChar(Index)).Vital(Vital) = GetPlayerMaxVital(Index, Vital)
     End If
 
-    If GetPlayerVital(index, Vital) < 0 Then
-        Account(index).Chars(GetPlayerChar(index)).Vital(Vital) = 0
+    If GetPlayerVital(Index, Vital) < 0 Then
+        Account(Index).Chars(GetPlayerChar(Index)).Vital(Vital) = 0
     End If
 End Sub
 
-Function GetPlayerStat(ByVal index As Long, ByVal Stat As Stats) As Long
+Function GetPlayerStat(ByVal Index As Long, ByVal Stat As Stats) As Long
     Dim X As Long, i As Long
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
     
-    X = Account(index).Chars(GetPlayerChar(index)).Stat(Stat)
+    X = Account(Index).Chars(GetPlayerChar(Index)).Stat(Stat)
     
     For i = 1 To Equipment.Equipment_Count - 1
-        If Account(index).Chars(GetPlayerChar(index)).Equipment(i).Num > 0 Then
-            If Item(Account(index).Chars(GetPlayerChar(index)).Equipment(i).Num).Add_Stat(Stat) > 0 Then
-                X = X + Item(Account(index).Chars(GetPlayerChar(index)).Equipment(i).Num).Add_Stat(Stat)
+        If Account(Index).Chars(GetPlayerChar(Index)).Equipment(i).Num > 0 Then
+            If Item(Account(Index).Chars(GetPlayerChar(Index)).Equipment(i).Num).Add_Stat(Stat) > 0 Then
+                X = X + Item(Account(Index).Chars(GetPlayerChar(Index)).Equipment(i).Num).Add_Stat(Stat)
             End If
         End If
     Next
@@ -215,225 +215,250 @@ Function GetPlayerStat(ByVal index As Long, ByVal Stat As Stats) As Long
     GetPlayerStat = X
 End Function
 
-Function GetPlayerRawStat(ByVal index As Long, ByVal Stat As Stats) As Long
+Function GetPlayerRawStat(ByVal Index As Long, ByVal Stat As Stats) As Long
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerRawStat = Account(index).Chars(GetPlayerChar(index)).Stat(Stat)
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerRawStat = Account(Index).Chars(GetPlayerChar(Index)).Stat(Stat)
 End Function
 
-Sub SetPlayerStat(ByVal index As Long, ByVal Stat As Stats, ByVal Value As Long)
-    Account(index).Chars(GetPlayerChar(index)).Stat(Stat) = Value
+Sub SetPlayerStat(ByVal Index As Long, ByVal Stat As Stats, ByVal Value As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Stat(Stat) = Value
 End Sub
 
-Function GetPlayerPoints(ByVal index As Long) As Long
+Function GetPlayerPoints(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerPoints = Account(index).Chars(GetPlayerChar(index)).Points
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerPoints = Account(Index).Chars(GetPlayerChar(Index)).Points
 End Function
 
-Sub SetPlayerPoints(ByVal index As Long, ByVal Points As Integer)
-    Account(index).Chars(GetPlayerChar(index)).Points = Points
+Sub SetPlayerPoints(ByVal Index As Long, ByVal Points As Integer)
+    Account(Index).Chars(GetPlayerChar(Index)).Points = Points
 End Sub
 
-Function GetPlayerMap(ByVal index As Long) As Long
+Function GetPlayerMap(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerMap = Account(index).Chars(GetPlayerChar(index)).Map
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerMap = Account(Index).Chars(GetPlayerChar(Index)).Map
 End Function
 
-Sub SetPlayerMap(ByVal index As Long, ByVal MapNum As Integer)
+Sub SetPlayerMap(ByVal Index As Long, ByVal MapNum As Integer)
 
     If MapNum > 0 And MapNum <= MAX_MAPS Then
-        Account(index).Chars(GetPlayerChar(index)).Map = MapNum
+        Account(Index).Chars(GetPlayerChar(Index)).Map = MapNum
     End If
 End Sub
 
-Function GetPlayerX(ByVal index As Long) As Long
+Function GetPlayerX(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerX = Account(index).Chars(GetPlayerChar(index)).X
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerX = Account(Index).Chars(GetPlayerChar(Index)).X
 End Function
 
-Sub SetPlayerX(ByVal index As Long, ByVal X As Long)
+Sub SetPlayerX(ByVal Index As Long, ByVal X As Long)
     
-    Account(index).Chars(GetPlayerChar(index)).X = X
+    Account(Index).Chars(GetPlayerChar(Index)).X = X
 End Sub
 
-Function GetPlayerY(ByVal index As Long) As Long
+Function GetPlayerY(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerY = Account(index).Chars(GetPlayerChar(index)).Y
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerY = Account(Index).Chars(GetPlayerChar(Index)).Y
 End Function
 
-Sub SetPlayerY(ByVal index As Long, ByVal Y As Long)
-    Account(index).Chars(GetPlayerChar(index)).Y = Y
+Sub SetPlayerY(ByVal Index As Long, ByVal Y As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Y = Y
 End Sub
 
-Function GetPlayerDir(ByVal index As Long) As Long
+Function GetPlayerDir(ByVal Index As Long) As Long
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerDir = Account(index).Chars(GetPlayerChar(index)).Dir
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerDir = Account(Index).Chars(GetPlayerChar(Index)).Dir
 End Function
 
-Sub SetPlayerDir(ByVal index As Long, ByVal Dir As Byte)
-    Account(index).Chars(GetPlayerChar(index)).Dir = Dir
+Sub SetPlayerDir(ByVal Index As Long, ByVal Dir As Byte)
+    Account(Index).Chars(GetPlayerChar(Index)).Dir = Dir
 End Sub
 
-Function GetPlayerIP(ByVal index As Long) As String
+Function GetPlayerIP(ByVal Index As Long) As String
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerIP = frmServer.Socket(index).RemoteHostIP
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerIP = frmServer.Socket(Index).RemoteHostIP
 End Function
 
-Function GetPlayerInvItemNum(ByVal index As Long, ByVal InvSlot As Byte) As Long
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
+Function GetPlayerInvItemNum(ByVal Index As Long, ByVal InvSlot As Byte) As Long
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
     If InvSlot = 0 Then Exit Function
     
-    GetPlayerInvItemNum = Account(index).Chars(GetPlayerChar(index)).Inv(InvSlot).Num
+    GetPlayerInvItemNum = Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Num
 End Function
 
-Sub SetPlayerInvItemNum(ByVal index As Long, ByVal InvSlot As Byte, ByVal ItemNum As Integer)
-    Account(index).Chars(GetPlayerChar(index)).Inv(InvSlot).Num = ItemNum
+Sub SetPlayerInvItemNum(ByVal Index As Long, ByVal InvSlot As Byte, ByVal ItemNum As Integer)
+    Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Num = ItemNum
 End Sub
 
-Function GetPlayerInvItemValue(ByVal index As Long, ByVal InvSlot As Byte) As Long
+Function GetPlayerInvItemValue(ByVal Index As Long, ByVal InvSlot As Byte) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerInvItemValue = Account(index).Chars(GetPlayerChar(index)).Inv(InvSlot).Value
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerInvItemValue = Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Value
 End Function
 
-Sub SetPlayerInvItemValue(ByVal index As Long, ByVal InvSlot As Byte, ByVal ItemValue As Long)
-    Account(index).Chars(GetPlayerChar(index)).Inv(InvSlot).Value = ItemValue
+Sub SetPlayerInvItemValue(ByVal Index As Long, ByVal InvSlot As Byte, ByVal ItemValue As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Value = ItemValue
 End Sub
 
-Function GetPlayerSpell(ByVal index As Long, ByVal SpellSlot As Byte) As Long
+Function GetPlayerSpell(ByVal Index As Long, ByVal SpellSlot As Byte) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerSpell = Account(index).Chars(GetPlayerChar(index)).Spell(SpellSlot)
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerSpell = Account(Index).Chars(GetPlayerChar(Index)).Spell(SpellSlot)
 End Function
 
-Sub SetPlayerSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal SpellNum As Long)
-    Account(index).Chars(GetPlayerChar(index)).Spell(SpellSlot) = SpellNum
+Sub SetPlayerSpell(ByVal Index As Long, ByVal SpellSlot As Byte, ByVal SpellNum As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).Spell(SpellSlot) = SpellNum
 End Sub
 
-Function GetPlayerSpellCD(ByVal index As Long, ByVal SpellSlot As Byte) As Long
+Function GetPlayerSpellCD(ByVal Index As Long, ByVal SpellSlot As Byte) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerSpellCD = Account(index).Chars(GetPlayerChar(index)).SpellCD(SpellSlot)
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerSpellCD = Account(Index).Chars(GetPlayerChar(Index)).SpellCD(SpellSlot)
 End Function
 
-Sub SetPlayerSpellCD(ByVal index As Long, ByVal SpellSlot As Byte, ByVal NewCD As Long)
-    Account(index).Chars(GetPlayerChar(index)).SpellCD(SpellSlot) = NewCD
+Sub SetPlayerSpellCD(ByVal Index As Long, ByVal SpellSlot As Byte, ByVal NewCD As Long)
+    Account(Index).Chars(GetPlayerChar(Index)).SpellCD(SpellSlot) = NewCD
 End Sub
 
-Function GetPlayerEquipment(ByVal index As Long, ByVal EquipmentSlot As Byte) As Byte
+Function GetPlayerSwitch(ByVal Index As Long, ByVal SwitchNum As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    If EquipmentSlot = 0 Or EquipmentSlot > Equipment.Equipment_Count - 1 Then Exit Function
-    GetPlayerEquipment = Account(index).Chars(GetPlayerChar(index)).Equipment(EquipmentSlot).Num
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerSwitch = Account(Index).Chars(GetPlayerChar(Index)).Switches(SwitchNum)
 End Function
 
-Sub SetPlayerEquipment(ByVal index As Long, ByVal InvNum As Byte, ByVal EquipmentSlot As Byte)
+Sub SetPlayerSwitch(ByVal Index As Long, ByVal SwitchNum As Long, ByVal NewValue As Long)
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Sub
-    Account(index).Chars(GetPlayerChar(index)).Equipment(EquipmentSlot).Num = InvNum
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+    Account(Index).Chars(GetPlayerChar(Index)).Switches(SwitchNum) = NewValue
 End Sub
 
-Function GetPlayerEquipmentDur(ByVal index As Long, ByVal EquipmentSlot As Byte) As Byte
+Function GetPlayerVariable(ByVal Index As Long, ByVal VarNum As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    If EquipmentSlot = 0 Or EquipmentSlot > Equipment.Equipment_Count - 1 Then Exit Function
-    GetPlayerEquipmentDur = Account(index).Chars(GetPlayerChar(index)).Equipment(EquipmentSlot).Durability
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerVariable = Account(Index).Chars(GetPlayerChar(Index)).Variables(VarNum)
 End Function
 
-Sub SetPlayerEquipmentDur(ByVal index As Long, ByVal DurValue As Integer, ByVal EquipmentSlot As Byte)
+Sub SetPlayerVariable(ByVal Index As Long, ByVal VarNum As Long, ByVal NewValue As Long)
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Sub
-    Account(index).Chars(GetPlayerChar(index)).Equipment(EquipmentSlot).Durability = DurValue
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+    Account(Index).Chars(GetPlayerChar(Index)).Variables(VarNum) = NewValue
 End Sub
 
-Function GetPlayerEquipmentBind(ByVal index As Long, ByVal EquipmentSlot As Byte) As Byte
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
+Function GetPlayerEquipment(ByVal Index As Long, ByVal EquipmentSlot As Byte) As Byte
+
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    If EquipmentSlot = 0 Or EquipmentSlot > Equipment.Equipment_Count - 1 Then Exit Function
+    GetPlayerEquipment = Account(Index).Chars(GetPlayerChar(Index)).Equipment(EquipmentSlot).Num
+End Function
+
+Sub SetPlayerEquipment(ByVal Index As Long, ByVal InvNum As Byte, ByVal EquipmentSlot As Byte)
+    
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+    Account(Index).Chars(GetPlayerChar(Index)).Equipment(EquipmentSlot).Num = InvNum
+End Sub
+
+Function GetPlayerEquipmentDur(ByVal Index As Long, ByVal EquipmentSlot As Byte) As Byte
+
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    If EquipmentSlot = 0 Or EquipmentSlot > Equipment.Equipment_Count - 1 Then Exit Function
+    GetPlayerEquipmentDur = Account(Index).Chars(GetPlayerChar(Index)).Equipment(EquipmentSlot).Durability
+End Function
+
+Sub SetPlayerEquipmentDur(ByVal Index As Long, ByVal DurValue As Integer, ByVal EquipmentSlot As Byte)
+    
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+    Account(Index).Chars(GetPlayerChar(Index)).Equipment(EquipmentSlot).Durability = DurValue
+End Sub
+
+Function GetPlayerEquipmentBind(ByVal Index As Long, ByVal EquipmentSlot As Byte) As Byte
+
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
     If EquipmentSlot = 0 Then Exit Function
-    GetPlayerEquipmentBind = Account(index).Chars(GetPlayerChar(index)).Equipment(EquipmentSlot).Bind
+    GetPlayerEquipmentBind = Account(Index).Chars(GetPlayerChar(Index)).Equipment(EquipmentSlot).Bind
 End Function
 
-Sub SetPlayerEquipmentBind(ByVal index As Long, ByVal BindType As Byte, ByVal EquipmentSlot As Byte)
+Sub SetPlayerEquipmentBind(ByVal Index As Long, ByVal BindType As Byte, ByVal EquipmentSlot As Byte)
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Sub
-    Account(index).Chars(GetPlayerChar(index)).Equipment(EquipmentSlot).Bind = BindType
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+    Account(Index).Chars(GetPlayerChar(Index)).Equipment(EquipmentSlot).Bind = BindType
 End Sub
 
-Function GetPlayerBankItemNum(ByVal index As Long, ByVal BankSlot As Byte) As Integer
+Function GetPlayerBankItemNum(ByVal Index As Long, ByVal BankSlot As Byte) As Integer
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerBankItemNum = Account(index).Bank.Item(BankSlot).Num
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerBankItemNum = Account(Index).Bank.Item(BankSlot).Num
 End Function
 
-Sub SetPlayerBankItemNum(ByVal index As Long, ByVal BankSlot As Byte, ByVal ItemNum As Integer)
-    Account(index).Bank.Item(BankSlot).Num = ItemNum
+Sub SetPlayerBankItemNum(ByVal Index As Long, ByVal BankSlot As Byte, ByVal ItemNum As Integer)
+    Account(Index).Bank.Item(BankSlot).Num = ItemNum
 End Sub
 
-Function GetPlayerBankItemValue(ByVal index As Long, ByVal BankSlot As Byte) As Long
+Function GetPlayerBankItemValue(ByVal Index As Long, ByVal BankSlot As Byte) As Long
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerBankItemValue = Account(index).Bank.Item(BankSlot).Value
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerBankItemValue = Account(Index).Bank.Item(BankSlot).Value
 End Function
 
-Sub SetPlayerBankItemValue(ByVal index As Long, ByVal BankSlot As Byte, ByVal ItemValue As Long)
-    Account(index).Bank.Item(BankSlot).Value = ItemValue
+Sub SetPlayerBankItemValue(ByVal Index As Long, ByVal BankSlot As Byte, ByVal ItemValue As Long)
+    Account(Index).Bank.Item(BankSlot).Value = ItemValue
 End Sub
 
-Function GetPlayerBankItemDur(ByVal index As Long, ByVal BankSlot As Byte) As Long
+Function GetPlayerBankItemDur(ByVal Index As Long, ByVal BankSlot As Byte) As Long
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerBankItemDur = Account(index).Bank.Item(BankSlot).Durability
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerBankItemDur = Account(Index).Bank.Item(BankSlot).Durability
 End Function
 
-Sub SetPlayerBankItemDur(ByVal index As Long, ByVal BankSlot As Byte, ByVal DurValue As Long)
-    Account(index).Bank.Item(BankSlot).Durability = DurValue
+Sub SetPlayerBankItemDur(ByVal Index As Long, ByVal BankSlot As Byte, ByVal DurValue As Long)
+    Account(Index).Bank.Item(BankSlot).Durability = DurValue
 End Sub
 
-Function GetPlayerBankItemBind(ByVal index As Long, ByVal BankSlot As Byte) As Long
+Function GetPlayerBankItemBind(ByVal Index As Long, ByVal BankSlot As Byte) As Long
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerBankItemBind = Account(index).Bank.Item(BankSlot).Bind
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerBankItemBind = Account(Index).Bank.Item(BankSlot).Bind
 End Function
 
-Sub SetPlayerBankItemBind(ByVal index As Long, ByVal BankSlot As Byte, ByVal BindValue As Long)
-    Account(index).Bank.Item(BankSlot).Bind = BindValue
+Sub SetPlayerBankItemBind(ByVal Index As Long, ByVal BankSlot As Byte, ByVal BindValue As Long)
+    Account(Index).Bank.Item(BankSlot).Bind = BindValue
 End Sub
 
-Function GetPlayerGender(ByVal index As Long) As Long
+Function GetPlayerGender(ByVal Index As Long) As Long
 
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerGender = Account(index).Chars(GetPlayerChar(index)).Gender
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerGender = Account(Index).Chars(GetPlayerChar(Index)).Gender
     Exit Function
 End Function
 
-Sub SetPlayerGender(ByVal index As Long, GenderNum As Byte)
-    Account(index).Chars(GetPlayerChar(index)).Gender = GenderNum
+Sub SetPlayerGender(ByVal Index As Long, GenderNum As Byte)
+    Account(Index).Chars(GetPlayerChar(Index)).Gender = GenderNum
 End Sub
 
-Function GetPlayerInvItemDur(ByVal index As Long, ByVal InvSlot As Byte) As Integer
+Function GetPlayerInvItemDur(ByVal Index As Long, ByVal InvSlot As Byte) As Integer
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerInvItemDur = Account(index).Chars(GetPlayerChar(index)).Inv(InvSlot).Durability
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerInvItemDur = Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Durability
 End Function
 
-Sub SetPlayerInvItemDur(ByVal index As Long, ByVal InvSlot As Byte, ByVal ItemDur As Integer)
-    Account(index).Chars(GetPlayerChar(index)).Inv(InvSlot).Durability = ItemDur
+Sub SetPlayerInvItemDur(ByVal Index As Long, ByVal InvSlot As Byte, ByVal ItemDur As Integer)
+    Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Durability = ItemDur
 End Sub
 
-Function GetPlayerInvItemBind(ByVal index As Long, ByVal InvSlot As Byte) As Integer
+Function GetPlayerInvItemBind(ByVal Index As Long, ByVal InvSlot As Byte) As Integer
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerInvItemBind = Account(index).Chars(GetPlayerChar(index)).Inv(InvSlot).Bind
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerInvItemBind = Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Bind
 End Function
 
-Sub SetPlayerInvItemBind(ByVal index As Long, ByVal InvSlot As Byte, ByVal BindType As Byte)
-    Account(index).Chars(GetPlayerChar(index)).Inv(InvSlot).Bind = BindType
+Sub SetPlayerInvItemBind(ByVal Index As Long, ByVal InvSlot As Byte, ByVal BindType As Byte)
+    Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Bind = BindType
 End Sub
 
 Function GetMapItemX(ByVal MapNum As Integer, ByVal MapItemNum As Integer)
@@ -452,10 +477,10 @@ Sub SetMapItemY(ByVal MapNum As Integer, ByVal MapItemNum As Integer, ByVal Valu
     MapItem(MapNum, MapItemNum).Y = Value
 End Sub
 
-Function GetPlayerHDSerial(ByVal index As Long) As String
+Function GetPlayerHDSerial(ByVal Index As Long) As String
     
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerHDSerial = Trim$(TempPlayer(index).HDSerial)
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerHDSerial = Trim$(TempPlayer(Index).HDSerial)
 End Function
 
 Function GetClassName(ByVal ClassesNum As Long) As String
@@ -466,10 +491,10 @@ Function GetClasseStat(ByVal ClassesNum As Long, ByVal Stat As Stats) As Long
     GetClasseStat = Class(ClassesNum).Stat(Stat)
 End Function
 
-Function GetPlayerProficiency(ByVal index As Long, ByVal ProficiencyNum As Byte) As Long
-    If index < 1 Or index > MAX_PLAYERS Then Exit Function
+Function GetPlayerProficiency(ByVal Index As Long, ByVal ProficiencyNum As Byte) As Long
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
     
-    Select Case Class(GetPlayerClass(index)).CombatTree
+    Select Case Class(GetPlayerClass(Index)).CombatTree
         Case 1: ' Melee
             If ProficiencyNum = Proficiency.Axe Or ProficiencyNum = Proficiency.Dagger Or ProficiencyNum = Proficiency.Mace Or ProficiencyNum = Proficiency.Spear Or ProficiencyNum = Proficiency.Sword Or ProficiencyNum = Proficiency.Heavy Or ProficiencyNum = Proficiency.Light Or ProficiencyNum = Proficiency.Medium Then
                 GetPlayerProficiency = 1

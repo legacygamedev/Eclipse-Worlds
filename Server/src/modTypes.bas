@@ -714,6 +714,11 @@ Private Type NPCRec
     Faction As Byte
     AttackSay As String * 100
     FactionThreat As Boolean
+    SwitchNum As Long
+    VariableNum As Long
+    SwitchVal As Byte
+    VariableVal As Long
+    AddToVariable As Byte
 End Type
 
 Private Type MapNPCRec

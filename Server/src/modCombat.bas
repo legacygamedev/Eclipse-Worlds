@@ -711,6 +711,19 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
         ' Send death to the map
         Call SendNPCDeath(MapNPCNum, MapNum)
         
+        ' Set the player variables/swithces
+        If NPC(NPCNum).SwitchNum > 0 Then
+            Call SetPlayerSwitch(Attacker, NPC(NPCNum).SwitchNum, NPC(NPCNum).SwitchVal)
+        End If
+
+        If NPC(NPCNum).VariableNum > 0 Then
+            If NPC(NPCNum).AddToVariable = 1 Then
+                Call SetPlayerVariable(Attacker, NPC(NPCNum).VariableNum, GetPlayerVariable(Attacker, NPC(NPCNum).VariableNum) + NPC(NPCNum).VariableVal)
+            Else
+                Call SetPlayerVariable(Attacker, NPC(NPCNum).VariableNum, NPC(NPCNum).VariableVal)
+            End If
+        End If
+        
         ' Loop through entire map and purge npcs from players
         For i = 1 To Player_HighIndex
             If IsPlaying(i) Then
@@ -1329,7 +1342,7 @@ Sub NPCAttackPlayer(ByVal MapNPCNum As Long, ByVal Victim As Long, ByVal Damage 
         ' Kill player
         KillPlayer Victim
         
-        Call GlobalMsg(GetPlayerName(Victim) & " has been killed by " & CheckGrammar(Name) & "!", BrightRed)
+        Call GlobalMsg(GetPlayerName(Victim) & " has been killed by " & CheckGrammar(Trim$(Name)) & "!", BrightRed)
 
         ' Set npc target to 0
         MapNPC(MapNum).NPC(MapNPCNum).target = 0

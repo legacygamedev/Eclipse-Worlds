@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmAdmin 
    BackColor       =   &H80000002&
    BorderStyle     =   1  'Fixed Single
@@ -72,10 +72,11 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H000000C0&
          Height          =   270
          Index           =   12
-         Left            =   1545
+         Left            =   1560
          Style           =   1  'Graphical
          TabIndex        =   67
-         Top             =   4590
+         Top             =   6960
+         Visible         =   0   'False
          Width           =   1065
       End
       Begin VB.PictureBox picEye 
@@ -84,11 +85,12 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000008&
          Height          =   240
          Index           =   12
-         Left            =   2625
+         Left            =   2640
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   66
-         Top             =   4605
+         Top             =   6960
+         Visible         =   0   'False
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -101,7 +103,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   65
-         Top             =   6735
+         Top             =   4590
          Width           =   240
       End
       Begin VB.PictureBox picEye 
@@ -256,7 +258,7 @@ Begin VB.Form frmAdmin
          Left            =   1545
          Style           =   1  'Graphical
          TabIndex        =   53
-         Top             =   6735
+         Top             =   4590
          Width           =   1065
       End
       Begin VB.CheckBox chkEditor 
