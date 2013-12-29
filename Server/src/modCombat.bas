@@ -433,7 +433,7 @@ Public Sub TryPlayerAttackNPC(ByVal index As Long, ByVal MapNPCNum As Long)
         If CanPlayerCritical(index) Then
             Damage = Damage * 1.5
             Call SendSoundToMap(MapNum, Options.CriticalSound)
-            SendAnimation MapNum, Options.CriticalAnimation, GetPlayerX(index), GetPlayerY(index)
+            SendAnimation MapNum, Options.CriticalAnimation, 0, 0, TARGET_TYPE_PLAYER, index
         End If
         
         ' Take away protection from the damage
@@ -1179,7 +1179,7 @@ Public Sub TryNPCAttackPlayer(ByVal MapNPCNum As Long, ByVal index As Long)
         
         If Damage < 1 Then
             Call SendSoundToMap(MapNum, Options.MissSound)
-            SendAnimation MapNum, Options.DodgeAnimation, GetPlayerX(index), GetPlayerY(index)
+            SendAnimation MapNum, Options.DodgeAnimation, 0, 0, TARGET_TYPE_PLAYER, index
             Exit Sub
         End If
         
@@ -1266,7 +1266,7 @@ Private Function DidPlayerMitigateNPC(ByVal MapNum As Integer, ByVal index As Lo
         ' Check if player can avoid the attack
         If CanPlayerDodge(index) Then
             Call SendSoundToMap(MapNum, Options.DodgeSound)
-            SendAnimation MapNum, Options.DodgeAnimation, GetPlayerX(index), GetPlayerY(index)
+            SendAnimation MapNum, Options.DodgeAnimation, 0, 0, TARGET_TYPE_PLAYER, index
             DidPlayerMitigateNPC = True
             Exit Function
         End If
@@ -1274,7 +1274,7 @@ Private Function DidPlayerMitigateNPC(ByVal MapNum As Integer, ByVal index As Lo
         ' Check if player can deflect the attack
         If CanPlayerDeflect(index) Then
             Call SendSoundToMap(MapNum, Options.DeflectSound)
-            SendAnimation MapNum, Options.DeflectAnimation, GetPlayerX(index), GetPlayerY(index)
+            SendAnimation MapNum, Options.DeflectAnimation, 0, 0, TARGET_TYPE_PLAYER, index
             DidPlayerMitigateNPC = True
             Exit Function
         End If
@@ -1282,7 +1282,7 @@ Private Function DidPlayerMitigateNPC(ByVal MapNum As Integer, ByVal index As Lo
         ' Check if player can block the attack
         If CanPlayerBlock(index) Then
             Call SendSoundToMap(MapNum, Options.BlockSound)
-            SendAnimation MapNum, Options.DeflectAnimation, GetPlayerX(index), GetPlayerY(index)
+            SendAnimation MapNum, Options.DeflectAnimation, 0, 0, TARGET_TYPE_PLAYER, index
             DidPlayerMitigateNPC = True
             Exit Function
         End If
@@ -2187,7 +2187,7 @@ Public Sub BufferPlayerSpell(ByVal index As Long, ByVal SpellSlot As Byte)
     End Select
     
     If HasBuffered Then
-        SendAnimation MapNum, Spell(SpellNum).CastAnim, GetPlayerX(index), GetPlayerY(index)
+        SendAnimation MapNum, Spell(SpellNum).CastAnim, 0, 0, TARGET_TYPE_PLAYER, index
         
         If Spell(SpellNum).CastTime > 0 Then
             SendActionMsg MapNum, "Casting " & Trim$(Spell(SpellNum).Name), BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(index) * 32, GetPlayerY(index) * 32
@@ -2266,7 +2266,7 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
     If CanPlayerSpellCritical(index) Then
         Vital = Vital * 1.5
         Call SendSoundToMap(MapNum, Options.CriticalSound)
-        SendAnimation MapNum, Options.CriticalAnimation, GetPlayerX(index), GetPlayerY(index)
+        SendAnimation MapNum, Options.CriticalAnimation, 0, 0, TARGET_TYPE_PLAYER, index
     End If
     
     Select Case SpellCastType
@@ -2279,11 +2279,11 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
                     SpellPlayer_Effect Vitals.MP, True, index, Vital, SpellNum
                     DidCast = True
                 Case SPELL_TYPE_WARP
-                    SendAnimation MapNum, Spell(SpellNum).SpellAnim, GetPlayerX(index), GetPlayerY(index)
+                    SendAnimation MapNum, Spell(SpellNum).SpellAnim, 0, 0, TARGET_TYPE_PLAYER, index
                     PlayerWarp index, Spell(SpellNum).Map, Spell(SpellNum).X, Spell(SpellNum).Y
                     DidCast = True
                 Case SPELL_TYPE_RECALL
-                    SendAnimation MapNum, Spell(SpellNum).SpellAnim, GetPlayerX(index), GetPlayerY(index)
+                    SendAnimation MapNum, Spell(SpellNum).SpellAnim, 0, 0, TARGET_TYPE_PLAYER, index
                     WarpToCheckPoint (index)
                     DidCast = True
                 Case SPELL_TYPE_WARPTOTARGET
@@ -2523,7 +2523,7 @@ Public Sub SpellPlayer_Effect(ByVal Vital As Byte, ByVal Increment As Boolean, B
             If Vital = Vitals.MP Then Color = Blue
         End If
     
-        SendAnimation GetPlayerMap(index), Spell(SpellNum).SpellAnim, GetPlayerX(index), GetPlayerY(index)
+        SendAnimation GetPlayerMap(index), Spell(SpellNum).SpellAnim, 0, 0, TARGET_TYPE_PLAYER, index
         SendActionMsg GetPlayerMap(index), sSymbol & Damage, Color, ACTIONMSG_SCROLL, GetPlayerX(index) * 32, GetPlayerY(index) * 32
         
         ' Send the sound
@@ -2672,7 +2672,7 @@ Public Sub HandleDoT_Player(ByVal index As Long, ByVal dotNum As Long)
         If .Used And .Spell > 0 Then
             ' Time to tick?
             If timeGetTime > .Timer + (Spell(.Spell).Interval * 1000) Then
-                SendAnimation GetPlayerMap(index), Spell(.Spell).SpellAnim, GetPlayerX(index), GetPlayerY(index)
+                SendAnimation GetPlayerMap(index), Spell(.Spell).SpellAnim, 0, 0, TARGET_TYPE_PLAYER, index
                 If CanPlayerAttackPlayer(.Caster, index, True) Then
                     PlayerAttackPlayer .Caster, index, Spell(.Spell).Vital
                 End If
@@ -2698,7 +2698,7 @@ Public Sub HandleHoT_Player(ByVal index As Long, ByVal hotNum As Long)
         If .Used And .Spell > 0 Then
             ' Time to tick?
             If timeGetTime > .Timer + (Spell(.Spell).Interval * 1000) Then
-                SendAnimation GetPlayerMap(index), Spell(.Spell).SpellAnim, GetPlayerX(index), GetPlayerY(index)
+                SendAnimation GetPlayerMap(index), Spell(.Spell).SpellAnim, 0, 0, TARGET_TYPE_PLAYER, index
                 If Spell(.Spell).Type = SPELL_TYPE_HEALHP Then
                     SendActionMsg GetPlayerMap(index), "+" & Spell(.Spell).Vital, BrightGreen, ACTIONMSG_SCROLL, GetPlayerX(index) * 32, GetPlayerY(index) * 32
                     SetPlayerVital index, Vitals.HP, GetPlayerVital(index, Vitals.HP) + Spell(.Spell).Vital
@@ -2731,7 +2731,7 @@ Public Sub HandleDoT_NPC(ByVal MapNum As Integer, ByVal index As Long, ByVal dot
         If .Used And .Spell > 0 Then
             ' Time to tick?
             If timeGetTime > .Timer + (Spell(.Spell).Interval * 1000) Then
-                SendAnimation MapNum, Spell(.Spell).SpellAnim, MapNPC(MapNum).NPC(index).X, MapNPC(MapNum).NPC(index).Y
+                SendAnimation MapNum, Spell(.Spell).SpellAnim, 0, 0, TARGET_TYPE_NPC, index
                 If CanPlayerAttackNPC(.Caster, index, True) Then
                     PlayerAttackNPC .Caster, index, Spell(.Spell).Vital, , True
                 End If
@@ -2758,7 +2758,7 @@ Public Sub HandleHoT_NPC(ByVal MapNum As Integer, ByVal index As Long, ByVal hot
         If .Used And .Spell > 0 Then
             ' Time to tick?
             If timeGetTime > .Timer + (Spell(.Spell).Interval * 1000) Then
-                SendAnimation MapNum, Spell(.Spell).SpellAnim, MapNPC(MapNum).NPC(index).X, MapNPC(MapNum).NPC(index).Y
+                SendAnimation MapNum, Spell(.Spell).SpellAnim, 0, 0, TARGET_TYPE_NPC, index
                 If Spell(.Spell).Type = SPELL_TYPE_HEALHP Then
                     SendActionMsg MapNum, "+" & Spell(.Spell).Vital, BrightGreen, ACTIONMSG_SCROLL, MapNPC(MapNum).NPC(index).X * 32, MapNPC(MapNum).NPC(index).Y * 32
                     MapNPC(MapNum).NPC(index).Vital(Vitals.HP) = MapNPC(MapNum).NPC(index).Vital(Vitals.HP) + Spell(.Spell).Vital

@@ -1142,7 +1142,7 @@ Private Function AutoLife(ByVal index As Long) As Boolean
                         Call TakeInvItem(index, Account(index).Chars(GetPlayerChar(index)).Inv(i).Num, 0)
                     End If
                     
-                    Call SendAnimation(GetPlayerMap(index), Item(GetPlayerInvItemNum(index, i)).Animation, GetPlayerX(index), GetPlayerY(index))
+                    Call SendAnimation(GetPlayerMap(index), Item(GetPlayerInvItemNum(index, i)).Animation, 0, 0, TARGET_TYPE_PLAYER, index)
                     
                     ' Warp player away
                     If Item(Account(index).Chars(GetPlayerChar(index)).Inv(i).Num).Data1 = 1 Then
