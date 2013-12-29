@@ -1160,7 +1160,7 @@ Private Function AutoLife(ByVal index As Long) As Boolean
 End Function
 
 Sub OnDeath(ByVal index As Long, Optional ByVal Attacker As Long)
-    Dim i As Long
+    Dim i As Long, RemoveItem As Boolean
    
     ' Set HP to 0
     Call SetPlayerVital(index, Vitals.HP, 0)
@@ -1177,28 +1177,38 @@ Sub OnDeath(ByVal index As Long, Optional ByVal Attacker As Long)
 
         ' Drop all worn items
         For i = 1 To Equipment.Equipment_Count - 1
+            RemoveItem = False
+            
             If GetPlayerEquipment(index, i) > 0 Then
                 If TempPlayer(index).InParty > 0 Then
                     Call Party_GetLoot(TempPlayer(Attacker).InParty, GetPlayerEquipment(index, i), 1, GetPlayerX(index), GetPlayerY(index))
+                    RemoveItem = True
                 Else
                     If Moral(GetPlayerMap(index)).CanDropItem = 1 Then
                         If Attacker > 0 Then
                             Call SpawnItem(GetPlayerEquipment(index, i), 1, 0, GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index), GetPlayerName(Attacker))
+                            RemoveItem = True
                         Else
                             Call SpawnItem(GetPlayerEquipment(index, i), 1, 0, GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index))
+                            RemoveItem = True
                         End If
                     Else
-                        If Attacker > 0 Then Call GiveInvItem(Attacker, GetPlayerEquipment(index, i), 1)
+                        If Attacker > 0 Then
+                            Call GiveInvItem(Attacker, GetPlayerEquipment(index, i), 1)
+                            RemoveItem = True
+                        End If
                     End If
                 End If
-            
-                ' Send a message to the world indicating that they dropped an item
-                Call GlobalMsg(GetPlayerName(index) & " drops " & CheckGrammar(Trim$(Item(GetPlayerEquipment(index, i)).Name)) & "!", Yellow)
-                
+                            
                 ' Remove equipment item
-                SetPlayerEquipment index, 0, i
-                SetPlayerEquipmentDur index, 0, i
-                SetPlayerEquipmentBind index, 0, i
+                If RemoveItem Then
+                    ' Send a message to the world indicating that they dropped an item
+                    Call GlobalMsg(GetPlayerName(index) & " drops " & CheckGrammar(Trim$(Item(GetPlayerEquipment(index, i)).Name)) & "!", Yellow)
+                    
+                    SetPlayerEquipment index, 0, i
+                    SetPlayerEquipmentDur index, 0, i
+                    SetPlayerEquipmentBind index, 0, i
+                End If
             End If
         Next
         
