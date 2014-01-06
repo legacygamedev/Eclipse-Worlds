@@ -29,7 +29,7 @@ Begin VB.Form frmEditor_Spell
       Caption         =   "Save"
       Height          =   375
       Left            =   4320
-      TabIndex        =   27
+      TabIndex        =   28
       Top             =   7800
       Width           =   1455
    End
@@ -37,7 +37,7 @@ Begin VB.Form frmEditor_Spell
       Caption         =   "Cancel"
       Height          =   375
       Left            =   7680
-      TabIndex        =   29
+      TabIndex        =   30
       Top             =   7800
       Width           =   1455
    End
@@ -45,7 +45,7 @@ Begin VB.Form frmEditor_Spell
       Caption         =   "Delete"
       Height          =   375
       Left            =   6000
-      TabIndex        =   28
+      TabIndex        =   29
       Top             =   7800
       Width           =   1455
    End
@@ -53,7 +53,7 @@ Begin VB.Form frmEditor_Spell
       Caption         =   "Spell List"
       Height          =   8175
       Left            =   120
-      TabIndex        =   30
+      TabIndex        =   31
       Top             =   0
       Width           =   3135
       Begin VB.CommandButton cmdPaste 
@@ -68,7 +68,7 @@ Begin VB.Form frmEditor_Spell
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   66
+         TabIndex        =   0
          Top             =   240
          Width           =   1455
       End
@@ -76,14 +76,14 @@ Begin VB.Form frmEditor_Spell
          Caption         =   "Copy"
          Height          =   315
          Left            =   1680
-         TabIndex        =   65
+         TabIndex        =   66
          Top             =   240
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
          Height          =   7275
          Left            =   120
-         TabIndex        =   0
+         TabIndex        =   1
          Top             =   600
          Width           =   2895
       End
@@ -92,14 +92,14 @@ Begin VB.Form frmEditor_Spell
       Caption         =   "Properties"
       Height          =   7695
       Left            =   3360
-      TabIndex        =   31
+      TabIndex        =   32
       Top             =   0
       Width           =   6855
       Begin VB.Frame Frame4 
          Caption         =   "Description"
          Height          =   1095
          Left            =   120
-         TabIndex        =   58
+         TabIndex        =   59
          Top             =   6000
          Width           =   3255
          Begin VB.TextBox txtDesc 
@@ -108,7 +108,7 @@ Begin VB.Form frmEditor_Spell
             MaxLength       =   255
             MultiLine       =   -1  'True
             ScrollBars      =   2  'Vertical
-            TabIndex        =   10
+            TabIndex        =   11
             Top             =   240
             Width           =   3015
          End
@@ -117,7 +117,7 @@ Begin VB.Form frmEditor_Spell
          Height          =   300
          Left            =   720
          Style           =   2  'Dropdown List
-         TabIndex        =   26
+         TabIndex        =   27
          Top             =   7200
          Width           =   6015
       End
@@ -125,13 +125,13 @@ Begin VB.Form frmEditor_Spell
          Caption         =   "Data"
          Height          =   6855
          Left            =   3480
-         TabIndex        =   42
+         TabIndex        =   43
          Top             =   240
          Width           =   3255
          Begin VB.HScrollBar scrlRankUp 
             Height          =   255
             Left            =   120
-            TabIndex        =   25
+            TabIndex        =   26
             Top             =   6480
             Width           =   3015
          End
@@ -139,7 +139,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Weapon Damage"
             Height          =   495
             Left            =   1680
-            TabIndex        =   59
+            TabIndex        =   60
             TabStop         =   0   'False
             Top             =   1440
             Width           =   1455
@@ -148,7 +148,7 @@ Begin VB.Form frmEditor_Spell
             Height          =   255
             Left            =   120
             Max             =   100
-            TabIndex        =   11
+            TabIndex        =   12
             Top             =   480
             Width           =   1455
          End
@@ -156,7 +156,7 @@ Begin VB.Form frmEditor_Spell
             Height          =   255
             Left            =   120
             Max             =   255
-            TabIndex        =   13
+            TabIndex        =   14
             Top             =   1080
             Width           =   1455
          End
@@ -164,7 +164,7 @@ Begin VB.Form frmEditor_Spell
             Height          =   255
             Left            =   1680
             Max             =   255
-            TabIndex        =   14
+            TabIndex        =   15
             Top             =   1080
             Width           =   1455
          End
@@ -172,14 +172,14 @@ Begin VB.Form frmEditor_Spell
             Height          =   255
             Left            =   1680
             Max             =   3
-            TabIndex        =   12
+            TabIndex        =   13
             Top             =   480
             Width           =   1455
          End
          Begin VB.HScrollBar scrlVital 
             Height          =   255
             Left            =   120
-            TabIndex        =   15
+            TabIndex        =   16
             Top             =   1680
             Width           =   1455
          End
@@ -187,7 +187,7 @@ Begin VB.Form frmEditor_Spell
             Height          =   255
             Left            =   120
             Max             =   60
-            TabIndex        =   16
+            TabIndex        =   17
             Top             =   2280
             Width           =   1455
          End
@@ -195,35 +195,35 @@ Begin VB.Form frmEditor_Spell
             Height          =   255
             Left            =   1680
             Max             =   60
-            TabIndex        =   17
+            TabIndex        =   18
             Top             =   2280
             Width           =   1455
          End
          Begin VB.HScrollBar scrlRange 
             Height          =   255
             Left            =   120
-            TabIndex        =   18
+            TabIndex        =   19
             Top             =   2880
             Width           =   1455
          End
          Begin VB.HScrollBar scrlAOE 
             Height          =   255
             Left            =   120
-            TabIndex        =   20
+            TabIndex        =   21
             Top             =   3480
             Width           =   1455
          End
          Begin VB.HScrollBar scrlAnimCast 
             Height          =   255
             Left            =   120
-            TabIndex        =   21
+            TabIndex        =   22
             Top             =   4080
             Width           =   3015
          End
          Begin VB.HScrollBar scrlAnim 
             Height          =   255
             Left            =   120
-            TabIndex        =   22
+            TabIndex        =   23
             Top             =   4680
             Width           =   3015
          End
@@ -231,14 +231,14 @@ Begin VB.Form frmEditor_Spell
             Height          =   255
             Left            =   120
             Max             =   60
-            TabIndex        =   23
+            TabIndex        =   24
             Top             =   5280
             Width           =   3015
          End
          Begin VB.HScrollBar scrlSprite 
             Height          =   255
             Left            =   1680
-            TabIndex        =   19
+            TabIndex        =   20
             Top             =   2880
             Width           =   1455
          End
@@ -246,7 +246,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Area of Effect"
             Height          =   375
             Left            =   1680
-            TabIndex        =   43
+            TabIndex        =   44
             TabStop         =   0   'False
             Top             =   3425
             Width           =   1335
@@ -255,7 +255,7 @@ Begin VB.Form frmEditor_Spell
             Height          =   255
             Left            =   120
             Max             =   60
-            TabIndex        =   24
+            TabIndex        =   25
             Top             =   5880
             Width           =   3015
          End
@@ -263,7 +263,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Rank Up Spell: 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   60
+            TabIndex        =   61
             Top             =   6240
             Width           =   3015
          End
@@ -271,7 +271,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Map: 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   56
+            TabIndex        =   57
             Top             =   240
             Width           =   1455
          End
@@ -279,7 +279,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "X: 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   55
+            TabIndex        =   56
             Top             =   840
             Width           =   1455
          End
@@ -287,7 +287,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Y: 0"
             Height          =   255
             Left            =   1680
-            TabIndex        =   54
+            TabIndex        =   55
             Top             =   840
             Width           =   1455
          End
@@ -295,7 +295,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Direction: Up"
             Height          =   255
             Left            =   1680
-            TabIndex        =   53
+            TabIndex        =   54
             Top             =   240
             Width           =   1455
          End
@@ -303,7 +303,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Vital: 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   52
+            TabIndex        =   53
             Top             =   1440
             Width           =   1455
          End
@@ -311,7 +311,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Duration: 0 s"
             Height          =   255
             Left            =   120
-            TabIndex        =   51
+            TabIndex        =   52
             Top             =   2040
             Width           =   1455
          End
@@ -319,7 +319,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Interval: 0 s"
             Height          =   255
             Left            =   1680
-            TabIndex        =   50
+            TabIndex        =   51
             Top             =   2040
             Width           =   1455
          End
@@ -327,7 +327,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Range: Self-cast"
             Height          =   255
             Left            =   120
-            TabIndex        =   49
+            TabIndex        =   50
             Top             =   2640
             Width           =   1575
          End
@@ -335,7 +335,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "AoE Range: Self-cast"
             Height          =   255
             Left            =   120
-            TabIndex        =   48
+            TabIndex        =   49
             Top             =   3240
             Width           =   1695
          End
@@ -343,7 +343,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Cast Animation: None"
             Height          =   255
             Left            =   120
-            TabIndex        =   47
+            TabIndex        =   48
             Top             =   3840
             Width           =   2895
          End
@@ -351,7 +351,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Animation: None"
             Height          =   255
             Left            =   120
-            TabIndex        =   46
+            TabIndex        =   47
             Top             =   4440
             Width           =   2895
          End
@@ -359,7 +359,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Stun Duration: None"
             Height          =   255
             Left            =   120
-            TabIndex        =   45
+            TabIndex        =   46
             Top             =   5040
             Width           =   2895
          End
@@ -367,7 +367,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Sprite: 0"
             Height          =   255
             Left            =   1680
-            TabIndex        =   44
+            TabIndex        =   45
             Top             =   2640
             Width           =   1455
          End
@@ -375,7 +375,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Casting Time: 0 s"
             Height          =   255
             Left            =   120
-            TabIndex        =   61
+            TabIndex        =   62
             Top             =   5640
             Width           =   1935
          End
@@ -384,27 +384,27 @@ Begin VB.Form frmEditor_Spell
          Caption         =   "Information"
          Height          =   5775
          Left            =   120
-         TabIndex        =   32
+         TabIndex        =   33
          Top             =   240
          Width           =   3255
          Begin VB.HScrollBar scrlCastRequired 
             Height          =   255
             Left            =   120
-            TabIndex        =   7
+            TabIndex        =   8
             Top             =   4080
             Width           =   3015
          End
          Begin VB.TextBox txtCool 
             Height          =   270
             Left            =   120
-            TabIndex        =   8
+            TabIndex        =   9
             Top             =   4680
             Width           =   3015
          End
          Begin VB.HScrollBar scrlIcon 
             Height          =   255
             Left            =   120
-            TabIndex        =   9
+            TabIndex        =   10
             Top             =   5280
             Width           =   2415
          End
@@ -412,7 +412,7 @@ Begin VB.Form frmEditor_Spell
             Height          =   300
             Left            =   120
             Style           =   2  'Dropdown List
-            TabIndex        =   6
+            TabIndex        =   7
             Top             =   3480
             Width           =   3015
          End
@@ -420,7 +420,7 @@ Begin VB.Form frmEditor_Spell
             Height          =   255
             Left            =   120
             Max             =   5
-            TabIndex        =   5
+            TabIndex        =   6
             Top             =   2880
             Width           =   3015
          End
@@ -428,14 +428,14 @@ Begin VB.Form frmEditor_Spell
             Height          =   255
             Left            =   120
             Max             =   255
-            TabIndex        =   4
+            TabIndex        =   5
             Top             =   2280
             Width           =   3015
          End
          Begin VB.HScrollBar scrlMP 
             Height          =   255
             Left            =   120
-            TabIndex        =   3
+            TabIndex        =   4
             Top             =   1680
             Width           =   3015
          End
@@ -445,14 +445,14 @@ Begin VB.Form frmEditor_Spell
             Left            =   120
             List            =   "frmEditor_Spell.frx":03A3
             Style           =   2  'Dropdown List
-            TabIndex        =   2
+            TabIndex        =   3
             Top             =   1080
             Width           =   3015
          End
          Begin VB.TextBox txtName 
             Height          =   270
             Left            =   120
-            TabIndex        =   1
+            TabIndex        =   2
             Top             =   480
             Width           =   3015
          End
@@ -465,7 +465,7 @@ Begin VB.Form frmEditor_Spell
             ScaleHeight     =   34
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   34
-            TabIndex        =   41
+            TabIndex        =   42
             TabStop         =   0   'False
             Top             =   5000
             Width           =   540
@@ -486,7 +486,7 @@ Begin VB.Form frmEditor_Spell
                ScaleHeight     =   32
                ScaleMode       =   3  'Pixel
                ScaleWidth      =   32
-               TabIndex        =   63
+               TabIndex        =   64
                TabStop         =   0   'False
                Top             =   15
                Width           =   480
@@ -508,7 +508,7 @@ Begin VB.Form frmEditor_Spell
                   ScaleHeight     =   32
                   ScaleMode       =   3  'Pixel
                   ScaleWidth      =   32
-                  TabIndex        =   64
+                  TabIndex        =   65
                   TabStop         =   0   'False
                   Top             =   0
                   Width           =   480
@@ -519,7 +519,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Cast Required: 0"
             Height          =   255
             Left            =   120
-            TabIndex        =   62
+            TabIndex        =   63
             Top             =   3840
             Width           =   3015
          End
@@ -527,7 +527,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Icon: None"
             Height          =   255
             Left            =   120
-            TabIndex        =   40
+            TabIndex        =   41
             Top             =   5040
             Width           =   2415
          End
@@ -535,7 +535,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Cooldown Time:"
             Height          =   255
             Left            =   120
-            TabIndex        =   39
+            TabIndex        =   40
             Top             =   4440
             Width           =   1935
          End
@@ -543,7 +543,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Class Required:"
             Height          =   255
             Left            =   120
-            TabIndex        =   38
+            TabIndex        =   39
             Top             =   3240
             Width           =   1815
          End
@@ -551,7 +551,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Access Required: None"
             Height          =   255
             Left            =   120
-            TabIndex        =   37
+            TabIndex        =   38
             Top             =   2640
             Width           =   2895
          End
@@ -559,7 +559,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Level Required: None"
             Height          =   255
             Left            =   120
-            TabIndex        =   36
+            TabIndex        =   37
             Top             =   2040
             Width           =   1815
          End
@@ -567,7 +567,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Mana Cost: None"
             Height          =   255
             Left            =   120
-            TabIndex        =   35
+            TabIndex        =   36
             Top             =   1440
             Width           =   1815
          End
@@ -575,7 +575,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Type:"
             Height          =   255
             Left            =   120
-            TabIndex        =   34
+            TabIndex        =   35
             Top             =   840
             Width           =   1815
          End
@@ -584,7 +584,7 @@ Begin VB.Form frmEditor_Spell
             Caption         =   "Name:"
             Height          =   180
             Left            =   120
-            TabIndex        =   33
+            TabIndex        =   34
             Top             =   240
             Width           =   495
          End
@@ -593,7 +593,7 @@ Begin VB.Form frmEditor_Spell
          Caption         =   "Sound:"
          Height          =   255
          Left            =   120
-         TabIndex        =   57
+         TabIndex        =   58
          Top             =   7200
          Width           =   615
       End

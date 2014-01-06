@@ -20,7 +20,7 @@ Begin VB.Form frmEditor_Moral
       Caption         =   "Player Blocked"
       Height          =   255
       Left            =   4200
-      TabIndex        =   17
+      TabIndex        =   18
       TabStop         =   0   'False
       Top             =   2280
       Width           =   1455
@@ -29,14 +29,14 @@ Begin VB.Form frmEditor_Moral
       Caption         =   "Properties"
       Height          =   3495
       Left            =   2760
-      TabIndex        =   7
+      TabIndex        =   8
       Top             =   0
       Width           =   3015
       Begin VB.HScrollBar scrlColor 
          Height          =   255
          Left            =   120
          Max             =   17
-         TabIndex        =   2
+         TabIndex        =   3
          Top             =   1200
          Width           =   2775
       End
@@ -53,7 +53,7 @@ Begin VB.Form frmEditor_Moral
          EndProperty
          Height          =   285
          Left            =   120
-         TabIndex        =   1
+         TabIndex        =   2
          Top             =   600
          Width           =   2775
       End
@@ -61,7 +61,7 @@ Begin VB.Form frmEditor_Moral
          Caption         =   "Can PvP"
          Height          =   255
          Left            =   120
-         TabIndex        =   14
+         TabIndex        =   15
          TabStop         =   0   'False
          Top             =   1560
          Width           =   975
@@ -70,7 +70,7 @@ Begin VB.Form frmEditor_Moral
          Caption         =   "Can Cast"
          Height          =   255
          Left            =   120
-         TabIndex        =   13
+         TabIndex        =   14
          TabStop         =   0   'False
          Top             =   1920
          Width           =   975
@@ -79,7 +79,7 @@ Begin VB.Form frmEditor_Moral
          Caption         =   "Can Use Item"
          Height          =   255
          Left            =   120
-         TabIndex        =   12
+         TabIndex        =   13
          TabStop         =   0   'False
          Top             =   2280
          Width           =   1335
@@ -88,7 +88,7 @@ Begin VB.Form frmEditor_Moral
          Caption         =   "Drop Items On Death"
          Height          =   255
          Left            =   120
-         TabIndex        =   11
+         TabIndex        =   12
          TabStop         =   0   'False
          Top             =   2640
          Width           =   1815
@@ -97,7 +97,7 @@ Begin VB.Form frmEditor_Moral
          Caption         =   "Lose Experience On Death"
          Height          =   255
          Left            =   120
-         TabIndex        =   10
+         TabIndex        =   11
          TabStop         =   0   'False
          Top             =   3000
          Width           =   2295
@@ -106,7 +106,7 @@ Begin VB.Form frmEditor_Moral
          Caption         =   "Can Drop Item"
          Height          =   255
          Left            =   1320
-         TabIndex        =   9
+         TabIndex        =   10
          TabStop         =   0   'False
          Top             =   1920
          Width           =   1455
@@ -115,7 +115,7 @@ Begin VB.Form frmEditor_Moral
          Caption         =   "Can Pickup Item"
          Height          =   255
          Left            =   1320
-         TabIndex        =   8
+         TabIndex        =   9
          TabStop         =   0   'False
          Top             =   1560
          Width           =   1575
@@ -135,7 +135,7 @@ Begin VB.Form frmEditor_Moral
          EndProperty
          Height          =   165
          Left            =   120
-         TabIndex        =   16
+         TabIndex        =   17
          Top             =   960
          Width           =   750
       End
@@ -154,7 +154,7 @@ Begin VB.Form frmEditor_Moral
          EndProperty
          Height          =   165
          Left            =   120
-         TabIndex        =   15
+         TabIndex        =   16
          Top             =   360
          Width           =   420
       End
@@ -172,7 +172,7 @@ Begin VB.Form frmEditor_Moral
       EndProperty
       Height          =   375
       Left            =   4800
-      TabIndex        =   5
+      TabIndex        =   6
       Top             =   3600
       Width           =   855
    End
@@ -189,7 +189,7 @@ Begin VB.Form frmEditor_Moral
       EndProperty
       Height          =   375
       Left            =   3840
-      TabIndex        =   4
+      TabIndex        =   5
       Top             =   3600
       Width           =   855
    End
@@ -206,7 +206,7 @@ Begin VB.Form frmEditor_Moral
       EndProperty
       Height          =   375
       Left            =   2880
-      TabIndex        =   3
+      TabIndex        =   4
       Top             =   3600
       Width           =   855
    End
@@ -214,7 +214,7 @@ Begin VB.Form frmEditor_Moral
       Caption         =   "Moral List"
       Height          =   3975
       Left            =   120
-      TabIndex        =   6
+      TabIndex        =   7
       Top             =   0
       Width           =   2535
       Begin VB.CommandButton cmdPaste 
@@ -229,7 +229,7 @@ Begin VB.Form frmEditor_Moral
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   19
+         TabIndex        =   0
          Top             =   240
          Width           =   855
       End
@@ -237,14 +237,14 @@ Begin VB.Form frmEditor_Moral
          Caption         =   "Copy"
          Height          =   315
          Left            =   1080
-         TabIndex        =   18
+         TabIndex        =   19
          Top             =   240
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
          Height          =   2985
          Left            =   120
-         TabIndex        =   0
+         TabIndex        =   1
          Top             =   600
          Width           =   2295
       End
@@ -535,18 +535,18 @@ errorhandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If

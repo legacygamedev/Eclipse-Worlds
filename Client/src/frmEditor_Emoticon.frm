@@ -19,14 +19,14 @@ Begin VB.Form frmEditor_Emoticon
       Caption         =   "Properties"
       Height          =   2535
       Left            =   3720
-      TabIndex        =   7
+      TabIndex        =   8
       Top             =   0
       Width           =   3975
       Begin VB.CommandButton cmdDelete 
          Caption         =   "Delete"
          Height          =   375
          Left            =   1440
-         TabIndex        =   4
+         TabIndex        =   5
          Top             =   2040
          Width           =   1095
       End
@@ -34,7 +34,7 @@ Begin VB.Form frmEditor_Emoticon
          Caption         =   "Cancel"
          Height          =   375
          Left            =   2760
-         TabIndex        =   5
+         TabIndex        =   6
          Top             =   2040
          Width           =   1095
       End
@@ -42,7 +42,7 @@ Begin VB.Form frmEditor_Emoticon
          Caption         =   "Save"
          Height          =   375
          Left            =   120
-         TabIndex        =   3
+         TabIndex        =   4
          Top             =   2040
          Width           =   1095
       End
@@ -55,7 +55,7 @@ Begin VB.Form frmEditor_Emoticon
          ScaleHeight     =   34
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   34
-         TabIndex        =   10
+         TabIndex        =   11
          TabStop         =   0   'False
          Top             =   960
          Width           =   540
@@ -76,7 +76,7 @@ Begin VB.Form frmEditor_Emoticon
             ScaleHeight     =   32
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   32
-            TabIndex        =   11
+            TabIndex        =   12
             TabStop         =   0   'False
             Top             =   15
             Width           =   480
@@ -99,7 +99,7 @@ Begin VB.Form frmEditor_Emoticon
                ScaleHeight     =   32
                ScaleMode       =   3  'Pixel
                ScaleWidth      =   128
-               TabIndex        =   12
+               TabIndex        =   13
                TabStop         =   0   'False
                Top             =   0
                Width           =   1920
@@ -110,7 +110,7 @@ Begin VB.Form frmEditor_Emoticon
          Height          =   255
          Left            =   120
          Max             =   1000
-         TabIndex        =   2
+         TabIndex        =   3
          Top             =   1680
          Value           =   1
          Width           =   3735
@@ -128,7 +128,7 @@ Begin VB.Form frmEditor_Emoticon
          Height          =   285
          Left            =   120
          MaxLength       =   15
-         TabIndex        =   1
+         TabIndex        =   2
          Top             =   480
          Width           =   3735
       End
@@ -146,7 +146,7 @@ Begin VB.Form frmEditor_Emoticon
          EndProperty
          Height          =   195
          Left            =   120
-         TabIndex        =   9
+         TabIndex        =   10
          Top             =   240
          Width           =   750
       End
@@ -163,7 +163,7 @@ Begin VB.Form frmEditor_Emoticon
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   8
+         TabIndex        =   9
          Top             =   1440
          Width           =   1215
       End
@@ -172,7 +172,7 @@ Begin VB.Form frmEditor_Emoticon
       Caption         =   "Emoticon List"
       Height          =   2535
       Left            =   120
-      TabIndex        =   6
+      TabIndex        =   7
       Top             =   0
       Width           =   3495
       Begin VB.CommandButton cmdPaste 
@@ -195,14 +195,14 @@ Begin VB.Form frmEditor_Emoticon
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   13
+         TabIndex        =   0
          Top             =   240
          Width           =   1815
       End
       Begin VB.ListBox lstIndex 
          Height          =   1815
          Left            =   120
-         TabIndex        =   0
+         TabIndex        =   1
          Top             =   600
          Width           =   3255
       End
@@ -257,20 +257,20 @@ errorhandler:
 End Sub
 
 Private Sub cmdSave_Click()
-    Dim i As Long, n As Long
+    Dim I As Long, n As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 1 To MAX_EMOTICONS
+    For I = 1 To MAX_EMOTICONS
         ' Loop through a second time to compare if any match
         For n = 1 To MAX_EMOTICONS
-            If Not Trim$(Emoticon(i).Command) = "/" And Not Trim$(Emoticon(n).Command) = "/" Then
+            If Not Trim$(Emoticon(I).Command) = "/" And Not Trim$(Emoticon(n).Command) = "/" Then
                 ' Make sure they are not the same one
-                If Not i = n Then
-                    If Trim$(Emoticon(i).Command) = Trim$(Emoticon(n).Command) Then
+                If Not I = n Then
+                    If Trim$(Emoticon(I).Command) = Trim$(Emoticon(n).Command) Then
                         AlertMsg "There is more than one command that uses " & Trim$(txtCommand.text) & "!", True
                         Exit Sub
                     End If
@@ -322,7 +322,7 @@ errorhandler:
 End Sub
 
 Private Sub txtCommand_Validate(Cancel As Boolean)
-    Dim i As Long, TmpIndex As Long
+    Dim I As Long, TmpIndex As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
@@ -407,18 +407,18 @@ errorhandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If

@@ -30,7 +30,7 @@ Begin VB.Form frmEditor_Shop
       Caption         =   "Properties"
       Height          =   4455
       Left            =   3360
-      TabIndex        =   17
+      TabIndex        =   18
       Top             =   0
       Width           =   5295
       Begin VB.HScrollBar scrlSell 
@@ -39,7 +39,7 @@ Begin VB.Form frmEditor_Shop
          Left            =   2640
          Max             =   1000
          Min             =   1
-         TabIndex        =   3
+         TabIndex        =   4
          Top             =   1080
          Value           =   100
          Width           =   2505
@@ -48,7 +48,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Can Fix"
          Height          =   180
          Left            =   4200
-         TabIndex        =   26
+         TabIndex        =   27
          TabStop         =   0   'False
          Top             =   240
          Width           =   975
@@ -57,7 +57,7 @@ Begin VB.Form frmEditor_Shop
          Alignment       =   1  'Right Justify
          Height          =   285
          Left            =   4560
-         TabIndex        =   9
+         TabIndex        =   10
          Text            =   "1"
          Top             =   2160
          Width           =   615
@@ -66,7 +66,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Update"
          Height          =   255
          Left            =   120
-         TabIndex        =   10
+         TabIndex        =   11
          Top             =   2520
          Width           =   2415
       End
@@ -74,7 +74,7 @@ Begin VB.Form frmEditor_Shop
          Alignment       =   1  'Right Justify
          Height          =   285
          Left            =   4560
-         TabIndex        =   7
+         TabIndex        =   8
          Text            =   "1"
          Top             =   1800
          Width           =   615
@@ -83,7 +83,7 @@ Begin VB.Form frmEditor_Shop
          Height          =   315
          Left            =   840
          Style           =   2  'Dropdown List
-         TabIndex        =   6
+         TabIndex        =   7
          Top             =   1800
          Width           =   3015
       End
@@ -91,7 +91,7 @@ Begin VB.Form frmEditor_Shop
          Alignment       =   1  'Right Justify
          Height          =   285
          Left            =   4560
-         TabIndex        =   5
+         TabIndex        =   6
          Text            =   "1"
          Top             =   1440
          Width           =   615
@@ -100,7 +100,7 @@ Begin VB.Form frmEditor_Shop
          Height          =   315
          Left            =   840
          Style           =   2  'Dropdown List
-         TabIndex        =   4
+         TabIndex        =   5
          Top             =   1440
          Width           =   3015
       End
@@ -109,14 +109,14 @@ Begin VB.Form frmEditor_Shop
          ItemData        =   "frmEditor_Shop.frx":038A
          Left            =   120
          List            =   "frmEditor_Shop.frx":03A6
-         TabIndex        =   12
+         TabIndex        =   13
          Top             =   2880
          Width           =   5055
       End
       Begin VB.TextBox txtName 
          Height          =   285
          Left            =   720
-         TabIndex        =   1
+         TabIndex        =   2
          Top             =   480
          Width           =   4455
       End
@@ -126,7 +126,7 @@ Begin VB.Form frmEditor_Shop
          Left            =   120
          Max             =   1000
          Min             =   1
-         TabIndex        =   2
+         TabIndex        =   3
          Top             =   1080
          Value           =   100
          Width           =   2460
@@ -135,7 +135,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Delete"
          Height          =   255
          Left            =   2760
-         TabIndex        =   11
+         TabIndex        =   12
          Top             =   2520
          Width           =   2415
       End
@@ -143,7 +143,7 @@ Begin VB.Form frmEditor_Shop
          Height          =   315
          Left            =   840
          Style           =   2  'Dropdown List
-         TabIndex        =   8
+         TabIndex        =   9
          Top             =   2160
          Width           =   3015
       End
@@ -151,7 +151,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Sell Rate: 100%"
          Height          =   255
          Left            =   2640
-         TabIndex        =   27
+         TabIndex        =   28
          Top             =   840
          Width           =   2415
       End
@@ -160,7 +160,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Price 2:"
          Height          =   180
          Left            =   120
-         TabIndex        =   25
+         TabIndex        =   26
          Top             =   2160
          Width           =   600
       End
@@ -169,7 +169,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Value:"
          Height          =   180
          Left            =   3960
-         TabIndex        =   24
+         TabIndex        =   25
          Top             =   2160
          UseMnemonic     =   0   'False
          Width           =   495
@@ -179,7 +179,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Value:"
          Height          =   180
          Left            =   3960
-         TabIndex        =   23
+         TabIndex        =   24
          Top             =   1800
          UseMnemonic     =   0   'False
          Width           =   495
@@ -189,7 +189,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Price:"
          Height          =   180
          Left            =   120
-         TabIndex        =   22
+         TabIndex        =   23
          Top             =   1800
          Width           =   450
       End
@@ -198,7 +198,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Value:"
          Height          =   180
          Left            =   3960
-         TabIndex        =   21
+         TabIndex        =   22
          Top             =   1440
          Width           =   495
       End
@@ -207,7 +207,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Item:"
          Height          =   180
          Left            =   120
-         TabIndex        =   20
+         TabIndex        =   21
          Top             =   1440
          Width           =   420
       End
@@ -216,7 +216,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Name:"
          Height          =   180
          Left            =   120
-         TabIndex        =   19
+         TabIndex        =   20
          Top             =   480
          UseMnemonic     =   0   'False
          Width           =   495
@@ -226,7 +226,7 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Buy Rate: 100%"
          Height          =   180
          Left            =   120
-         TabIndex        =   18
+         TabIndex        =   19
          Top             =   840
          Width           =   2460
       End
@@ -235,7 +235,7 @@ Begin VB.Form frmEditor_Shop
       Caption         =   "Delete"
       Height          =   375
       Left            =   5280
-      TabIndex        =   14
+      TabIndex        =   15
       Top             =   4560
       Width           =   1455
    End
@@ -243,7 +243,7 @@ Begin VB.Form frmEditor_Shop
       Caption         =   "Shop List"
       Height          =   4935
       Left            =   120
-      TabIndex        =   16
+      TabIndex        =   17
       Top             =   0
       Width           =   3135
       Begin VB.CommandButton cmdPaste 
@@ -258,7 +258,7 @@ Begin VB.Form frmEditor_Shop
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   29
+         TabIndex        =   0
          Top             =   240
          Width           =   1455
       End
@@ -266,14 +266,14 @@ Begin VB.Form frmEditor_Shop
          Caption         =   "Copy"
          Height          =   315
          Left            =   1680
-         TabIndex        =   28
+         TabIndex        =   29
          Top             =   240
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
          Height          =   4155
          Left            =   120
-         TabIndex        =   0
+         TabIndex        =   1
          Top             =   600
          Width           =   2895
       End
@@ -282,7 +282,7 @@ Begin VB.Form frmEditor_Shop
       Caption         =   "Save"
       Height          =   375
       Left            =   3480
-      TabIndex        =   13
+      TabIndex        =   14
       Top             =   4560
       Width           =   1575
    End
@@ -290,7 +290,7 @@ Begin VB.Form frmEditor_Shop
       Caption         =   "Cancel"
       Height          =   420
       Left            =   6960
-      TabIndex        =   15
+      TabIndex        =   16
       Top             =   4560
       Width           =   1575
    End

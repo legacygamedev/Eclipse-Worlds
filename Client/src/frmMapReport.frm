@@ -28,7 +28,7 @@ Begin VB.Form frmMapReport
       EndProperty
       Height          =   375
       Left            =   1680
-      TabIndex        =   3
+      TabIndex        =   4
       Top             =   4080
       Width           =   1245
    End
@@ -45,7 +45,7 @@ Begin VB.Form frmMapReport
       EndProperty
       Height          =   375
       Left            =   120
-      TabIndex        =   2
+      TabIndex        =   3
       Top             =   4080
       Width           =   1245
    End
@@ -62,7 +62,7 @@ Begin VB.Form frmMapReport
       EndProperty
       Height          =   375
       Left            =   3240
-      TabIndex        =   4
+      TabIndex        =   5
       Top             =   4080
       Width           =   1245
    End
@@ -79,14 +79,14 @@ Begin VB.Form frmMapReport
       EndProperty
       Height          =   3975
       Left            =   120
-      TabIndex        =   0
+      TabIndex        =   1
       Top             =   0
       Width           =   4395
       Begin VB.TextBox txtSearch 
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   5
+         TabIndex        =   0
          Top             =   240
          Width           =   4095
       End
@@ -102,7 +102,7 @@ Begin VB.Form frmMapReport
          EndProperty
          Height          =   2790
          Left            =   120
-         TabIndex        =   1
+         TabIndex        =   2
          Top             =   600
          Width           =   4155
       End
@@ -169,18 +169,18 @@ errorhandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 0 To lstMaps.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstMaps.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstMaps.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstMaps.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstMaps.ListIndex = i
+        If Len(lstMaps.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstMaps.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstMaps.ListIndex = I
                 Exit For
             End If
         End If

@@ -28,7 +28,7 @@ Begin VB.Form frmEditor_Animation
       Caption         =   "Delete"
       Height          =   375
       Left            =   5880
-      TabIndex        =   12
+      TabIndex        =   13
       Top             =   7080
       Width           =   1455
    End
@@ -36,7 +36,7 @@ Begin VB.Form frmEditor_Animation
       Caption         =   "Cancel"
       Height          =   375
       Left            =   7560
-      TabIndex        =   13
+      TabIndex        =   14
       Top             =   7080
       Width           =   1455
    End
@@ -44,7 +44,7 @@ Begin VB.Form frmEditor_Animation
       Caption         =   "Save"
       Height          =   375
       Left            =   4200
-      TabIndex        =   11
+      TabIndex        =   12
       Top             =   7080
       Width           =   1455
    End
@@ -52,14 +52,14 @@ Begin VB.Form frmEditor_Animation
       Caption         =   "Properties"
       Height          =   6975
       Left            =   3360
-      TabIndex        =   15
+      TabIndex        =   16
       Top             =   0
       Width           =   6615
       Begin VB.ComboBox cmbSound 
          Height          =   300
          Left            =   4080
          Style           =   2  'Dropdown List
-         TabIndex        =   2
+         TabIndex        =   3
          Top             =   240
          Width           =   2415
       End
@@ -68,7 +68,7 @@ Begin VB.Form frmEditor_Animation
          Index           =   1
          Left            =   3360
          Min             =   1
-         TabIndex        =   10
+         TabIndex        =   11
          Top             =   3120
          Value           =   1
          Width           =   3135
@@ -78,7 +78,7 @@ Begin VB.Form frmEditor_Animation
          Index           =   0
          Left            =   120
          Min             =   1
-         TabIndex        =   9
+         TabIndex        =   10
          Top             =   3120
          Value           =   1
          Width           =   3135
@@ -86,7 +86,7 @@ Begin VB.Form frmEditor_Animation
       Begin VB.TextBox txtName 
          Height          =   285
          Left            =   840
-         TabIndex        =   1
+         TabIndex        =   2
          Top             =   240
          Width           =   2535
       End
@@ -95,7 +95,7 @@ Begin VB.Form frmEditor_Animation
          Index           =   1
          Left            =   3360
          Min             =   1
-         TabIndex        =   8
+         TabIndex        =   9
          Top             =   2520
          Value           =   1
          Width           =   3135
@@ -104,6 +104,48 @@ Begin VB.Form frmEditor_Animation
          Height          =   255
          Index           =   1
          Left            =   3360
+         Min             =   1
+         TabIndex        =   7
+         Top             =   1920
+         Value           =   1
+         Width           =   3135
+      End
+      Begin VB.PictureBox picSprite 
+         AutoRedraw      =   -1  'True
+         BackColor       =   &H80000012&
+         Height          =   3135
+         Index           =   1
+         Left            =   3360
+         ScaleHeight     =   3075
+         ScaleWidth      =   3075
+         TabIndex        =   23
+         TabStop         =   0   'False
+         Top             =   3600
+         Width           =   3135
+      End
+      Begin VB.HScrollBar scrlSprite 
+         Height          =   255
+         Index           =   1
+         Left            =   3360
+         TabIndex        =   5
+         Top             =   1320
+         Value           =   1
+         Width           =   3135
+      End
+      Begin VB.HScrollBar scrlFrameCount 
+         Height          =   255
+         Index           =   0
+         Left            =   120
+         Min             =   1
+         TabIndex        =   8
+         Top             =   2520
+         Value           =   1
+         Width           =   3135
+      End
+      Begin VB.HScrollBar scrlLoopCount 
+         Height          =   255
+         Index           =   0
+         Left            =   120
          Min             =   1
          TabIndex        =   6
          Top             =   1920
@@ -114,62 +156,20 @@ Begin VB.Form frmEditor_Animation
          AutoRedraw      =   -1  'True
          BackColor       =   &H80000012&
          Height          =   3135
-         Index           =   1
-         Left            =   3360
+         Index           =   0
+         Left            =   120
          ScaleHeight     =   3075
          ScaleWidth      =   3075
-         TabIndex        =   22
+         TabIndex        =   19
          TabStop         =   0   'False
          Top             =   3600
          Width           =   3135
       End
       Begin VB.HScrollBar scrlSprite 
          Height          =   255
-         Index           =   1
-         Left            =   3360
+         Index           =   0
+         Left            =   120
          TabIndex        =   4
-         Top             =   1320
-         Value           =   1
-         Width           =   3135
-      End
-      Begin VB.HScrollBar scrlFrameCount 
-         Height          =   255
-         Index           =   0
-         Left            =   120
-         Min             =   1
-         TabIndex        =   7
-         Top             =   2520
-         Value           =   1
-         Width           =   3135
-      End
-      Begin VB.HScrollBar scrlLoopCount 
-         Height          =   255
-         Index           =   0
-         Left            =   120
-         Min             =   1
-         TabIndex        =   5
-         Top             =   1920
-         Value           =   1
-         Width           =   3135
-      End
-      Begin VB.PictureBox picSprite 
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H80000012&
-         Height          =   3135
-         Index           =   0
-         Left            =   120
-         ScaleHeight     =   3075
-         ScaleWidth      =   3075
-         TabIndex        =   18
-         TabStop         =   0   'False
-         Top             =   3600
-         Width           =   3135
-      End
-      Begin VB.HScrollBar scrlSprite 
-         Height          =   255
-         Index           =   0
-         Left            =   120
-         TabIndex        =   3
          Top             =   1320
          Value           =   1
          Width           =   3135
@@ -178,7 +178,7 @@ Begin VB.Form frmEditor_Animation
          Caption         =   "Sound:"
          Height          =   255
          Left            =   3480
-         TabIndex        =   29
+         TabIndex        =   30
          Top             =   240
          Width           =   1455
       End
@@ -187,7 +187,7 @@ Begin VB.Form frmEditor_Animation
          Height          =   255
          Index           =   1
          Left            =   3360
-         TabIndex        =   28
+         TabIndex        =   29
          Top             =   2880
          Width           =   2655
       End
@@ -196,7 +196,7 @@ Begin VB.Form frmEditor_Animation
          Height          =   255
          Index           =   0
          Left            =   120
-         TabIndex        =   27
+         TabIndex        =   28
          Top             =   2880
          Width           =   2655
       End
@@ -204,7 +204,7 @@ Begin VB.Form frmEditor_Animation
          Caption         =   "Name:"
          Height          =   255
          Left            =   120
-         TabIndex        =   26
+         TabIndex        =   27
          Top             =   240
          Width           =   1575
       End
@@ -213,7 +213,7 @@ Begin VB.Form frmEditor_Animation
          Caption         =   "Layer 1 (Above Player)"
          Height          =   180
          Left            =   3360
-         TabIndex        =   25
+         TabIndex        =   26
          Top             =   720
          Width           =   1740
       End
@@ -223,7 +223,7 @@ Begin VB.Form frmEditor_Animation
          Height          =   180
          Index           =   1
          Left            =   3360
-         TabIndex        =   24
+         TabIndex        =   25
          Top             =   2280
          Width           =   1170
       End
@@ -233,7 +233,7 @@ Begin VB.Form frmEditor_Animation
          Height          =   180
          Index           =   1
          Left            =   3360
-         TabIndex        =   23
+         TabIndex        =   24
          Top             =   1680
          Width           =   1065
       End
@@ -243,7 +243,7 @@ Begin VB.Form frmEditor_Animation
          Height          =   180
          Index           =   1
          Left            =   3360
-         TabIndex        =   21
+         TabIndex        =   22
          Top             =   1080
          Width           =   660
       End
@@ -253,7 +253,7 @@ Begin VB.Form frmEditor_Animation
          Height          =   180
          Index           =   0
          Left            =   120
-         TabIndex        =   20
+         TabIndex        =   21
          Top             =   2280
          Width           =   1170
       End
@@ -263,7 +263,7 @@ Begin VB.Form frmEditor_Animation
          Height          =   180
          Index           =   0
          Left            =   120
-         TabIndex        =   19
+         TabIndex        =   20
          Top             =   1680
          Width           =   1065
       End
@@ -273,7 +273,7 @@ Begin VB.Form frmEditor_Animation
          Height          =   180
          Index           =   0
          Left            =   120
-         TabIndex        =   17
+         TabIndex        =   18
          Top             =   1080
          Width           =   660
       End
@@ -282,7 +282,7 @@ Begin VB.Form frmEditor_Animation
          Caption         =   "Layer 0 (Below Player)"
          Height          =   180
          Left            =   120
-         TabIndex        =   16
+         TabIndex        =   17
          Top             =   720
          Width           =   1695
       End
@@ -291,14 +291,14 @@ Begin VB.Form frmEditor_Animation
       Caption         =   "Animation List"
       Height          =   7455
       Left            =   120
-      TabIndex        =   14
+      TabIndex        =   15
       Top             =   0
       Width           =   3135
       Begin VB.TextBox txtSearch 
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   32
+         TabIndex        =   0
          Top             =   240
          Width           =   1455
       End
@@ -306,7 +306,7 @@ Begin VB.Form frmEditor_Animation
          Caption         =   "Copy"
          Height          =   315
          Left            =   1680
-         TabIndex        =   31
+         TabIndex        =   32
          Top             =   240
          Width           =   615
       End
@@ -314,7 +314,7 @@ Begin VB.Form frmEditor_Animation
          Caption         =   "Paste"
          Height          =   315
          Left            =   2400
-         TabIndex        =   30
+         TabIndex        =   31
          Top             =   240
          Width           =   615
       End
@@ -323,7 +323,7 @@ Begin VB.Form frmEditor_Animation
          ItemData        =   "frmEditor_Animation.frx":038A
          Left            =   120
          List            =   "frmEditor_Animation.frx":038C
-         TabIndex        =   0
+         TabIndex        =   1
          Top             =   600
          Width           =   2895
       End
@@ -416,16 +416,16 @@ errorhandler:
 End Sub
 
 Private Sub Form_Load()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     frmMain.SubDaFocus Me.hWnd
-    For i = 0 To 1
-        scrlSprite(i).max = NumAnimations
-        scrlLoopCount(i).max = 100
-        scrlFrameCount(i).max = 100
-        scrlLoopTime(i).max = 1000
+    For I = 0 To 1
+        scrlSprite(I).max = NumAnimations
+        scrlLoopCount(I).max = 100
+        scrlFrameCount(I).max = 100
+        scrlLoopTime(I).max = 1000
     Next
     
     txtName.MaxLength = NAME_LENGTH
@@ -522,7 +522,7 @@ Private Sub scrlLoopTime_Change(Index As Integer)
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblLoopTime(Index).Caption = "Loop Time: " & scrlLoopTime(Index).Value
-    Animation(EditorIndex).LoopTime(Index) = scrlLoopTime(Index).Value
+    Animation(EditorIndex).looptime(Index) = scrlLoopTime(Index).Value
     Exit Sub
     
 ' Error handler
@@ -631,18 +631,18 @@ errorhandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If

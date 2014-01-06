@@ -30,7 +30,7 @@ Begin VB.Form frmEditor_Resource
       Caption         =   "Delete"
       Height          =   375
       Left            =   5160
-      TabIndex        =   18
+      TabIndex        =   19
       Top             =   8160
       Width           =   1455
    End
@@ -38,7 +38,7 @@ Begin VB.Form frmEditor_Resource
       Caption         =   "Cancel"
       Height          =   375
       Left            =   6840
-      TabIndex        =   19
+      TabIndex        =   20
       Top             =   8160
       Width           =   1455
    End
@@ -46,7 +46,7 @@ Begin VB.Form frmEditor_Resource
       Caption         =   "Save"
       Height          =   375
       Left            =   3480
-      TabIndex        =   17
+      TabIndex        =   18
       Top             =   8160
       Width           =   1455
    End
@@ -54,7 +54,7 @@ Begin VB.Form frmEditor_Resource
       Caption         =   "Properties"
       Height          =   8055
       Left            =   3360
-      TabIndex        =   21
+      TabIndex        =   22
       Top             =   0
       Width           =   5055
       Begin VB.HScrollBar scrlRespawn 
@@ -74,7 +74,7 @@ Begin VB.Form frmEditor_Resource
       Begin VB.HScrollBar scrlExp 
          Height          =   255
          Left            =   2640
-         TabIndex        =   9
+         TabIndex        =   10
          Top             =   4680
          Width           =   2295
       End
@@ -83,7 +83,7 @@ Begin VB.Form frmEditor_Resource
          Left            =   120
          Max             =   3
          Min             =   1
-         TabIndex        =   11
+         TabIndex        =   12
          Top             =   7080
          Value           =   1
          Width           =   2295
@@ -92,14 +92,14 @@ Begin VB.Form frmEditor_Resource
          Height          =   300
          Left            =   960
          Style           =   2  'Dropdown List
-         TabIndex        =   5
+         TabIndex        =   6
          Top             =   1680
          Width           =   3975
       End
       Begin VB.TextBox txtFail 
          Height          =   285
          Left            =   960
-         TabIndex        =   3
+         TabIndex        =   4
          Top             =   960
          Width           =   3975
       End
@@ -108,7 +108,7 @@ Begin VB.Form frmEditor_Resource
          Left            =   2640
          Max             =   255
          Min             =   2
-         TabIndex        =   15
+         TabIndex        =   16
          Top             =   6480
          Value           =   2
          Width           =   2295
@@ -118,7 +118,7 @@ Begin VB.Form frmEditor_Resource
          Left            =   120
          Max             =   255
          Min             =   1
-         TabIndex        =   14
+         TabIndex        =   15
          Top             =   6480
          Value           =   1
          Width           =   2295
@@ -128,7 +128,7 @@ Begin VB.Form frmEditor_Resource
          Left            =   2640
          Max             =   255
          Min             =   1
-         TabIndex        =   13
+         TabIndex        =   14
          Top             =   5880
          Value           =   1
          Width           =   2295
@@ -137,14 +137,14 @@ Begin VB.Form frmEditor_Resource
          Height          =   255
          Left            =   120
          Max             =   6000
-         TabIndex        =   16
+         TabIndex        =   17
          Top             =   7680
          Width           =   4815
       End
       Begin VB.HScrollBar scrlExhaustedPic 
          Height          =   255
          Left            =   2640
-         TabIndex        =   7
+         TabIndex        =   8
          Top             =   2280
          Width           =   2295
       End
@@ -167,7 +167,7 @@ Begin VB.Form frmEditor_Resource
          ScaleHeight     =   112
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   152
-         TabIndex        =   30
+         TabIndex        =   31
          TabStop         =   0   'False
          Top             =   2640
          Width           =   2280
@@ -175,21 +175,21 @@ Begin VB.Form frmEditor_Resource
       Begin VB.TextBox txtName 
          Height          =   285
          Left            =   960
-         TabIndex        =   1
+         TabIndex        =   2
          Top             =   240
          Width           =   3975
       End
       Begin VB.HScrollBar scrlNormalPic 
          Height          =   255
          Left            =   120
-         TabIndex        =   6
+         TabIndex        =   7
          Top             =   2280
          Width           =   2295
       End
       Begin VB.HScrollBar scrlReward 
          Height          =   255
          Left            =   120
-         TabIndex        =   8
+         TabIndex        =   9
          Top             =   4680
          Width           =   2295
       End
@@ -197,7 +197,7 @@ Begin VB.Form frmEditor_Resource
          Height          =   255
          Left            =   120
          Max             =   3
-         TabIndex        =   10
+         TabIndex        =   11
          Top             =   5280
          Width           =   2295
       End
@@ -206,7 +206,7 @@ Begin VB.Form frmEditor_Resource
          Left            =   120
          Max             =   255
          Min             =   1
-         TabIndex        =   12
+         TabIndex        =   13
          Top             =   5880
          Value           =   1
          Width           =   2295
@@ -230,7 +230,7 @@ Begin VB.Form frmEditor_Resource
          ScaleHeight     =   112
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   152
-         TabIndex        =   22
+         TabIndex        =   23
          TabStop         =   0   'False
          Top             =   2640
          Width           =   2280
@@ -238,14 +238,14 @@ Begin VB.Form frmEditor_Resource
       Begin VB.TextBox txtSuccess 
          Height          =   285
          Left            =   960
-         TabIndex        =   2
+         TabIndex        =   3
          Top             =   600
          Width           =   3975
       End
       Begin VB.TextBox txtEmpty 
          Height          =   285
          Left            =   960
-         TabIndex        =   4
+         TabIndex        =   5
          Top             =   1320
          Width           =   3975
       End
@@ -274,7 +274,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Exp: 0"
          Height          =   195
          Left            =   2640
-         TabIndex        =   39
+         TabIndex        =   40
          Top             =   4440
          Width           =   2235
       End
@@ -283,7 +283,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Skill: None"
          Height          =   180
          Left            =   120
-         TabIndex        =   38
+         TabIndex        =   39
          Top             =   6840
          Width           =   2145
       End
@@ -291,7 +291,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Sound:"
          Height          =   255
          Left            =   120
-         TabIndex        =   37
+         TabIndex        =   38
          Top             =   1680
          Width           =   1455
       End
@@ -300,7 +300,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Low Chance: 1"
          Height          =   180
          Left            =   120
-         TabIndex        =   36
+         TabIndex        =   37
          Top             =   6240
          Width           =   2295
       End
@@ -309,7 +309,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "High Chance: 2"
          Height          =   180
          Left            =   2640
-         TabIndex        =   35
+         TabIndex        =   36
          Top             =   6240
          Width           =   2250
       End
@@ -318,7 +318,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Maximum Reward: 1"
          Height          =   180
          Left            =   2640
-         TabIndex        =   34
+         TabIndex        =   35
          Top             =   5640
          Width           =   2235
       End
@@ -328,7 +328,7 @@ Begin VB.Form frmEditor_Resource
          DataSource      =   "in"
          Height          =   180
          Left            =   120
-         TabIndex        =   33
+         TabIndex        =   34
          Top             =   5640
          Width           =   2295
       End
@@ -337,7 +337,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Animation: None"
          Height          =   180
          Left            =   120
-         TabIndex        =   32
+         TabIndex        =   33
          Top             =   7440
          Width           =   4740
       End
@@ -346,7 +346,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Exhausted Image: 0"
          Height          =   180
          Left            =   2640
-         TabIndex        =   31
+         TabIndex        =   32
          Top             =   2040
          Width           =   2130
       End
@@ -355,7 +355,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Name:"
          Height          =   180
          Left            =   120
-         TabIndex        =   29
+         TabIndex        =   30
          Top             =   240
          Width           =   495
       End
@@ -364,7 +364,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Fail:"
          Height          =   180
          Left            =   120
-         TabIndex        =   28
+         TabIndex        =   29
          Top             =   960
          Width           =   330
       End
@@ -373,7 +373,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Normal Image: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   27
+         TabIndex        =   28
          Top             =   2040
          Width           =   2175
       End
@@ -382,7 +382,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Reward: None"
          Height          =   180
          Left            =   120
-         TabIndex        =   26
+         TabIndex        =   27
          Top             =   4440
          Width           =   2235
       End
@@ -391,7 +391,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Tool Required: None"
          Height          =   180
          Left            =   120
-         TabIndex        =   25
+         TabIndex        =   26
          Top             =   5040
          Width           =   2250
       End
@@ -400,7 +400,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Success:"
          Height          =   180
          Left            =   120
-         TabIndex        =   24
+         TabIndex        =   25
          Top             =   600
          Width           =   705
       End
@@ -410,7 +410,7 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Empty:"
          Height          =   180
          Left            =   120
-         TabIndex        =   23
+         TabIndex        =   24
          Top             =   1320
          Width           =   540
       End
@@ -419,7 +419,7 @@ Begin VB.Form frmEditor_Resource
       Caption         =   "Resource List"
       Height          =   8535
       Left            =   120
-      TabIndex        =   20
+      TabIndex        =   21
       Top             =   0
       Width           =   3135
       Begin VB.CommandButton cmdPaste 
@@ -434,7 +434,7 @@ Begin VB.Form frmEditor_Resource
          CausesValidation=   0   'False
          Height          =   270
          Left            =   120
-         TabIndex        =   41
+         TabIndex        =   0
          Top             =   240
          Width           =   1455
       End
@@ -442,14 +442,14 @@ Begin VB.Form frmEditor_Resource
          Caption         =   "Copy"
          Height          =   315
          Left            =   1680
-         TabIndex        =   40
+         TabIndex        =   41
          Top             =   240
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
          Height          =   7665
          Left            =   120
-         TabIndex        =   0
+         TabIndex        =   1
          Top             =   600
          Width           =   2895
       End
@@ -780,7 +780,7 @@ Private Sub scrlReward_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If scrlReward.Value > 0 Then
-        lblReward.Caption = "Reward: " & Trim$(item(scrlReward.Value).name)
+        lblReward.Caption = "Reward: " & Trim$(Item(scrlReward.Value).name)
     Else
         lblReward.Caption = "Reward: None"
     End If
@@ -958,18 +958,18 @@ errorhandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If
