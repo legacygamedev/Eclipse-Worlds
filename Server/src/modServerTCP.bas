@@ -1922,11 +1922,13 @@ Sub SendTradeUpdate(ByVal index As Long, ByVal DataType As Byte)
             Buffer.WriteLong TempPlayer(index).TradeOffer(i).Value
             ' add total worth
             If TempPlayer(index).TradeOffer(i).Num > 0 Then
-                ' currency?
-                If Item(TempPlayer(index).TradeOffer(i).Num).Stackable = 1 Then
-                    TotalWorth = TotalWorth + (Item(GetPlayerInvItemNum(index, TempPlayer(index).TradeOffer(i).Num)).Price * TempPlayer(index).TradeOffer(i).Value)
-                Else
-                    TotalWorth = TotalWorth + Item(GetPlayerInvItemNum(index, TempPlayer(index).TradeOffer(i).Num)).Price
+                 If GetPlayerInvItemNum(index, TempPlayer(index).TradeOffer(i).Num) > 0 Then
+                    ' currency?
+                    If Item(TempPlayer(index).TradeOffer(i).Num).Stackable = 1 Then
+                        TotalWorth = TotalWorth + (Item(GetPlayerInvItemNum(index, TempPlayer(index).TradeOffer(i).Num)).Price * TempPlayer(index).TradeOffer(i).Value)
+                    Else
+                        TotalWorth = TotalWorth + Item(GetPlayerInvItemNum(index, TempPlayer(index).TradeOffer(i).Num)).Price
+                    End If
                 End If
             End If
         Next
