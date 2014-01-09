@@ -329,7 +329,7 @@ End Sub
 Function GetPlayerSwitch(ByVal index As Long, ByVal SwitchNum As Long) As Long
 
     If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    If SwitchNum < 1 Or SwitchNum > MAX_SWITCHES Then Exit Sub
+    If SwitchNum < 1 Or SwitchNum > MAX_SWITCHES Then Exit Function
     GetPlayerSwitch = Account(index).Chars(GetPlayerChar(index)).Switches(SwitchNum)
 End Function
 
@@ -343,7 +343,7 @@ End Sub
 Function GetPlayerVariable(ByVal index As Long, ByVal VarNum As Long) As Long
 
     If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    If VarNum < 1 Or VarNum > MAX_VARIABLES Then Exit Sub
+    If VarNum < 1 Or VarNum > MAX_VARIABLES Then Exit Function
     GetPlayerVariable = Account(index).Chars(GetPlayerChar(index)).Variables(VarNum)
 End Function
 
