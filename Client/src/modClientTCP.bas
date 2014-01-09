@@ -1855,6 +1855,11 @@ Public Sub TradeItem(ByVal InvSlot As Byte, ByVal Amount As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
+    If Item(GetPlayerInvItemNum(MyIndex, InvSlot)).BindType = 1 Then
+        AddText "You cannot trade this item, because it is binded to you.", BrightRed
+        Exit Sub
+    End If
+    
     Set buffer = New clsBuffer
     buffer.WriteLong CTradeItem
     buffer.WriteByte InvSlot
