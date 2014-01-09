@@ -858,6 +858,8 @@ Function GiveInvItem(ByVal index As Long, ByVal ItemNum As Integer, ByVal ItemVa
         
         If ItemBind = BIND_ON_PICKUP Or Item(GetPlayerInvItemNum(index, i)).BindType = BIND_ON_PICKUP Then
             Call SetPlayerInvItemBind(index, i, BIND_ON_PICKUP)
+        ElseIf ItemBind = BIND_ON_EQUIP Or Item(GetPlayerInvItemNum(index, i)).BindType = BIND_ON_EQUIP Then
+            Call SetPlayerInvItemBind(index, i, BIND_ON_EQUIP)
         Else
             Call SetPlayerInvItemBind(index, i, 0)
         End If
@@ -935,6 +937,8 @@ Sub PlayerMapGetItem(ByVal index As Long, ByVal i As Long)
                         
                         If Item(GetPlayerInvItemNum(index, n)).BindType = BIND_ON_PICKUP Then
                             Call SetPlayerInvItemBind(index, i, BIND_ON_PICKUP)
+                        ElseIf Item(GetPlayerInvItemNum(index, n)).BindType = BIND_ON_EQUIP Then
+                            Call SetPlayerInvItemBind(index, i, BIND_ON_EQUIP)
                         Else
                             Call SetPlayerInvItemBind(index, i, 0)
                         End If
@@ -1539,7 +1543,7 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
     ' Set the bind
     If Item(GetPlayerInvItemNum(index, InvNum)).Type = ITEM_TYPE_EQUIPMENT Then
         If Item(GetPlayerInvItemNum(index, InvNum)).BindType = BIND_ON_EQUIP Then
-            Call SetPlayerInvItemBind(index, InvNum, BIND_ON_EQUIP)
+            Call SetPlayerInvItemBind(index, InvNum, BIND_ON_PICKUP)
         End If
     End If
             

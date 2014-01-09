@@ -2480,7 +2480,7 @@ Sub HandleSellItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As
     ItemNum = GetPlayerInvItemNum(index, InvSlot)
     
     ' We don't want them to sell bindable items
-    If Item(ItemNum).BindType = BIND_ON_PICKUP Or Item(ItemNum).BindType = BIND_ON_EQUIP Then
+    If Item(ItemNum).BindType = BIND_ON_PICKUP Then
         PlayerMsg index, "You cannot sell bindable items to shops.", BrightRed
         Exit Sub
     End If
