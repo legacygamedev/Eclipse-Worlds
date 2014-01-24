@@ -1043,7 +1043,7 @@ Public Sub SendDropItem(ByVal InvNum As Byte, ByVal Amount As Long)
     End If
     
     ' Make sure it is not bound
-    If GetPlayerInvItemBind(MyIndex, InvNum) = 1 Then
+    If GetPlayerInvItemBind(MyIndex, InvNum) = BIND_ON_PICKUP Then
         Dialogue "Destroy Item", "Would you like to destroy this item?", DIALOGUE_TYPE_DESTROYITEM, True, InvNum
         Exit Sub
     End If

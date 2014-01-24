@@ -370,16 +370,16 @@ Begin VB.Form frmEditor_MapProperties
       TabIndex        =   18
       Top             =   1320
       Width           =   4215
-      Begin VB.CheckBox chkDoNotAutoSpawn 
+      Begin VB.CheckBox chkAutoSpawn 
          BackColor       =   &H80000004&
-         Caption         =   "Don't Auto Spawn"
+         Caption         =   "Auto Spawn"
          ForeColor       =   &H80000008&
          Height          =   255
-         Left            =   1200
+         Left            =   1440
          MaskColor       =   &H00000000&
          TabIndex        =   53
          Top             =   1920
-         Width           =   1935
+         Width           =   1335
       End
       Begin VB.ListBox lstNpcs 
          Height          =   1230
@@ -601,18 +601,18 @@ Private Sub chkAutoPlay_MouseUp(Button As Integer, Shift As Integer, X As Single
     Me.lstMusic.SetFocus
 End Sub
 
-Private Sub chkDoNotAutoSpawn_Click()
+Private Sub chkAutoSpawn_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     If lstNpcs.ListIndex > -1 Then
-        Map.NPCSpawnType(lstNpcs.ListIndex + 1) = chkDoNotAutoSpawn.Value
+        Map.NPCSpawnType(lstNpcs.ListIndex + 1) = chkAutoSpawn.Value
     End If
     Exit Sub
     
 ' Error handler
 errorhandler:
-    HandleError "chkDoNotAutoSpawn_Click", "frmEditor_MapProperties", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "chkAutoSpawn_Click", "frmEditor_MapProperties", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -833,7 +833,7 @@ Public Sub cmdSave_Click()
         .Right = Val(txtRight.text)
         .Moral = cmbMoral.ListIndex + 1
 
-        .Weather = CmbWeather.ListIndex
+        .Weather = cmbWeather.ListIndex
         .WeatherIntensity = scrlWeatherIntensity.Value
         
         .Fog = ScrlFog.Value
@@ -939,7 +939,7 @@ Private Sub lstNPCs_Click()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    chkDoNotAutoSpawn.Value = Map.NPCSpawnType(lstNpcs.ListIndex + 1)
+    chkAutoSpawn.Value = Map.NPCSpawnType(lstNpcs.ListIndex + 1)
     Exit Sub
     
 ' Error handler

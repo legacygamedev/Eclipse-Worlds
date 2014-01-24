@@ -1120,7 +1120,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtEXP.text = NPC(EditorIndex).Exp
+        .txtExp.text = NPC(EditorIndex).Exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -1702,7 +1702,7 @@ Public Sub MapPropertiesInit()
     End If
 
     With frmEditor_MapProperties
-        .chkDoNotAutoSpawn.Value = Map.NPCSpawnType(1)
+        .chkAutoSpawn.Value = Map.NPCSpawnType(1)
         
         ' Clear the list
         .lstMusic.Clear
