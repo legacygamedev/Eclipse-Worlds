@@ -2287,17 +2287,25 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
             Select Case Spell(SpellNum).Type
                 Case SPELL_TYPE_HEALHP
                     SpellPlayer_Effect Vitals.HP, True, index, Vital, SpellNum
+                    ' Send the sound
+                    SendMapSound MapNum, index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seSpell, SpellNum
                     DidCast = True
                 Case SPELL_TYPE_HEALMP
                     SpellPlayer_Effect Vitals.MP, True, index, Vital, SpellNum
+                    ' Send the sound
+                    SendMapSound MapNum, index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seSpell, SpellNum
                     DidCast = True
                 Case SPELL_TYPE_WARP
                     SendAnimation MapNum, Spell(SpellNum).SpellAnim, 0, 0, TARGET_TYPE_PLAYER, index
                     PlayerWarp index, Spell(SpellNum).Map, Spell(SpellNum).X, Spell(SpellNum).Y
+                    ' Send the sound
+                    SendMapSound MapNum, index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seSpell, SpellNum
                     DidCast = True
                 Case SPELL_TYPE_RECALL
                     SendAnimation MapNum, Spell(SpellNum).SpellAnim, 0, 0, TARGET_TYPE_PLAYER, index
                     WarpToCheckPoint (index)
+                    ' Send the sound
+                    SendMapSound MapNum, index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seSpell, SpellNum
                     DidCast = True
                 Case SPELL_TYPE_WARPTOTARGET
                     Call PlayerMsg(index, "This spell has been made incorrectly, report this to a staff member!", BrightRed)
@@ -2486,6 +2494,10 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
                     
                 Case SPELL_TYPE_WARPTOTARGET
                     Call PlayerWarp(index, MapNum, X, Y)
+                    SendAnimation MapNum, Spell(SpellNum).SpellAnim, X, Y
+                    ' Send the sound
+                    SendMapSound index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seSpell, SpellNum
+                    DidCast = True
             End Select
     End Select
     

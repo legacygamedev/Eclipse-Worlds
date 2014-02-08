@@ -337,7 +337,7 @@ Begin VB.Form frmEditor_Spell
             Left            =   120
             TabIndex        =   49
             Top             =   3240
-            Width           =   1695
+            Width           =   2895
          End
          Begin VB.Label lblAnimCast 
             Caption         =   "Cast Animation: None"
