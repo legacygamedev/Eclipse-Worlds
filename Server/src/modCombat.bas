@@ -2496,7 +2496,7 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
                     Call PlayerWarp(index, MapNum, X, Y)
                     SendAnimation MapNum, Spell(SpellNum).SpellAnim, X, Y
                     ' Send the sound
-                    SendMapSound index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seSpell, SpellNum
+                    SendMapSound MapNum, index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seSpell, SpellNum
                     DidCast = True
             End Select
     End Select
