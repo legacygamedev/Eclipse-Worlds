@@ -86,13 +86,6 @@ Sub InitServer()
         Call CreateFullMapCache
         Call SetStatus("Loading system tray...")
         Call LoadSystemTray
-        
-        ' Check if the master charlist file exists for checking duplicate names, and if it doesnt make it
-        If Not FileExist("\data\accounts\charlist.txt") Then
-            F = FreeFile
-            Open App.path & "\data\accounts\charlist.txt" For Output As #F
-            Close #F
-        End If
     
         ' Start listening
         .Socket(0).Listen
@@ -180,9 +173,9 @@ Public Sub ClearGameData()
     Call SetStatus("Clearing map items...")
     Call ClearMapItems
     Call SetStatus("Clearing map npcs...")
-    Call ClearMapNpcs
+    Call ClearMapNPCs
     Call SetStatus("Clearing npcs...")
-    Call ClearNpcs
+    Call ClearNPCs
     Call SetStatus("Clearing resources...")
     Call ClearResources
     Call SetStatus("Clearing items...")
@@ -213,7 +206,7 @@ Private Sub LoadGameData()
     Call SetStatus("Loading items...")
     Call LoadItems
     Call SetStatus("Loading npcs...")
-    Call LoadNpcs
+    Call LoadNPCs
     Call SetStatus("Loading resources...")
     Call LoadResources
     Call SetStatus("Loading shops...")
