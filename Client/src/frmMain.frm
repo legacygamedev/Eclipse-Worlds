@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -809,6 +809,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -3370,7 +3371,7 @@ Private Sub chkEyeDropper_Click()
     End If
 End Sub
 
-Private Sub chkLayers_Click()
+Public Sub chkLayers_Click()
     If frmMain.chkLayers.Value Then
         frmMain.chkLayers.Picture = LoadResPicture("LAYERS_DOWN", vbResBitmap)
     Else
@@ -6423,7 +6424,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
         Case WM_MOUSEWHEEL
             If InMapEditor Then
                 Dim Up As Boolean, curTil As Long
-                Up = IIf(HiWord(wParam) > 0, False, True)
+                Up = IIf(HiWord(wParam) = 120, False, True)
                 If displayTilesets Then
                     curTil = frmEditor_Map.scrlTileSet.Value
                     frmEditor_Map.scrlTileSet.Value = (IIf((curTil = 1 And Not Up) Or (curTil = NumTileSets And Up), curTil, IIf(Up, 1, -1) + curTil))

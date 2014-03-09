@@ -606,7 +606,7 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
     
     ' Player titles
     For X = 1 To Player(I).AmountOfTitles
-        Player(I).Title(X) = buffer.ReadByte
+        Player(I).title(X) = buffer.ReadByte
     Next
     
     ' Current title
@@ -744,7 +744,7 @@ Private Sub HandlePlayerTitles(ByVal Index As Long, ByRef data() As Byte, ByVal 
     
     ' Player titles
     For I = 1 To Player(Index).AmountOfTitles
-        Player(Index).Title(I) = buffer.ReadByte
+        Player(Index).title(I) = buffer.ReadByte
     Next
     
     ' Current title
@@ -1708,7 +1708,7 @@ Private Sub HandleUpdateNPC(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
         For I = 1 To MAX_NPCS
             If LenB(NPC(I)) = 0 Then
                 NPC(I).name = vbNullString
-                NPC(I).Title = vbNullString
+                NPC(I).title = vbNullString
                 NPC(I).AttackSay = vbNullString
             End If
         Next
@@ -1798,6 +1798,7 @@ Private Sub HandleEditMap()
     
     ' Show the form
     MapEditorMode True
+    frmMain.chkLayers_Click
     frmEditor_Map.Visible = True
     Call MapEditorInit
     
@@ -3775,10 +3776,10 @@ Private Sub HandleUpdateTitle(ByVal Index As Long, ByRef data() As Byte, ByVal S
     n = buffer.ReadLong
     
     ' Update the Title
-    TitleSize = LenB(Title(n))
+    TitleSize = LenB(title(n))
     ReDim TitleData(TitleSize - 1)
     TitleData = buffer.ReadBytes(TitleSize)
-    CopyMemory ByVal VarPtr(Title(n)), ByVal VarPtr(TitleData(0)), TitleSize
+    CopyMemory ByVal VarPtr(title(n)), ByVal VarPtr(TitleData(0)), TitleSize
     Set buffer = Nothing
     Exit Sub
     
@@ -3801,7 +3802,7 @@ Private Sub HandleTitleEditor(ByVal Index As Long, ByRef data() As Byte, ByVal S
         
         ' Add the names
         For I = 1 To MAX_TITLES
-            .lstIndex.AddItem I & ": " & Trim$(Title(I).name)
+            .lstIndex.AddItem I & ": " & Trim$(title(I).name)
         Next
 
         .Show

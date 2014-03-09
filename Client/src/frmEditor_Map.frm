@@ -1117,6 +1117,7 @@ Begin VB.Form frmEditor_Map
          Width           =   960
       End
       Begin VB.Label lblRevision 
+         Alignment       =   2  'Center
          BackStyle       =   0  'Transparent
          Caption         =   "Revision:"
          BeginProperty Font 
@@ -1129,7 +1130,7 @@ Begin VB.Form frmEditor_Map
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   240
+         Left            =   0
          TabIndex        =   69
          Top             =   480
          Width           =   1335
@@ -2058,8 +2059,8 @@ Private Sub optItem_Click()
     picAttributes.Visible = True
     fraMapItem.Visible = True
     
-    If Not Trim$(item(scrlMapItem.Value).name) = vbNullString Then
-        lblMapItem.Caption = Trim$(item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    If Not Trim$(Item(scrlMapItem.Value).name) = vbNullString Then
+        lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
     End If
     Exit Sub
     
@@ -2155,15 +2156,15 @@ Private Sub scrlMapItem_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    If item(scrlMapItem.Value).stackable = 1 Then
+    If Item(scrlMapItem.Value).stackable = 1 Then
         scrlMapItemValue.Enabled = True
     Else
         scrlMapItemValue.Value = 1
         scrlMapItemValue.Enabled = False
     End If
     
-    If Not Trim$(item(scrlMapItem.Value).name) = vbNullString Then
-        lblMapItem.Caption = Trim$(item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    If Not Trim$(Item(scrlMapItem.Value).name) = vbNullString Then
+        lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
     Else
         lblMapItem.Caption = "None"
         frmEditor_Map.picMapItem.Cls
@@ -2193,7 +2194,7 @@ Private Sub scrlMapItemValue_Change()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
-    lblMapItem.Caption = Trim$(item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
+    lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).name) & " x" & scrlMapItemValue.Value
     Exit Sub
     
 ' Error handler
