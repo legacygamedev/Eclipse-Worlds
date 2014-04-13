@@ -21,7 +21,6 @@ Begin VB.Form frmMain
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
-   MinButton       =   0   'False
    ScaleHeight     =   898
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   800

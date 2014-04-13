@@ -70,12 +70,14 @@ Function GetPlayerDamage(ByVal index As Long) As Long
     If GetPlayerEquipment(index, Equipment.Weapon) > 0 Then
         If Not GetPlayerEquipmentDur(index, GetPlayerEquipment(index, Equipment.Weapon)) = 0 Or Item(GetPlayerEquipment(index, Equipment.Weapon)).Indestructable = 1 Then
             WeaponNum = GetPlayerEquipment(index, Equipment.Weapon)
-            GetPlayerDamage = 0.085 * 5 * GetPlayerStat(index, Strength) * Item(WeaponNum).Data2 + (GetPlayerLevel(index) / 5)
+            GetPlayerDamage = 0.085 * 5 * GetPlayerStat(index, Strength) * Item(WeaponNum).Data2 + (GetPlayerLevel(index) * 0.2)
             Exit Function
+        Else
+            GetPlayerDamage = 0.085 * 5 * GetPlayerStat(index, Strength) + (GetPlayerLevel(index) * 0.2)
         End If
+    Else
+        GetPlayerDamage = 0.085 * 5 * GetPlayerStat(index, Strength) + (GetPlayerLevel(index) * 0.2)
     End If
-    
-    GetPlayerDamage = 0.085 * 5 * GetPlayerStat(index, Strength) + (GetPlayerLevel(index) / 5)
 End Function
 
 Public Function GetNPCSpellVital(ByVal MapNum As Integer, ByVal MapNPCNum As Byte, ByVal Victim As Byte, ByVal SpellNum As Long, Optional ByVal HealingSpell As Boolean = False) As Long
