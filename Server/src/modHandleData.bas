@@ -336,7 +336,7 @@ Private Sub HandleLogin(ByVal index As Long, ByRef Data() As Byte, ByVal StartAd
     If Not IsPlaying(index) Then
         ' Make sure the server isn't being shutdown or restarted
         If IsShuttingDown Then
-            Call AlertMsg(index, "Server is either rebooting or being shutdown.")
+            Call AlertMsg(index, "Server is either rebooting or shutting down.")
             Exit Sub
         End If
         

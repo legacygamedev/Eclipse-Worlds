@@ -46,7 +46,7 @@ Sub JoinGame(ByVal index As Long)
     
     ' Spell Cooldowns
     For i = 1 To MAX_PLAYER_SPELLS
-        If GetPlayerSpell(index, i) > 0 And GetPlayerSpellCD(index, i) > 0 Then
+        If GetPlayerSpell(index, i) > 0 Then
             ' Check if the CD has expired
             If GetPlayerSpellCD(index, i) - timeGetTime < 1 Then Call SetPlayerSpellCD(index, i, 0)
             If GetPlayerSpellCD(index, i) - timeGetTime >= Spell(GetPlayerSpell(index, i)).CDTime * 1000 Then Call SetPlayerSpellCD(index, i, 0)
@@ -273,6 +273,8 @@ Sub PlayerWarp(ByVal index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     ' if same map then just send their co-ordinates
     If MapNum = GetPlayerMap(index) And Not NeedMap Then
         Call SendPlayerPosition(index)
+        ' Clear spell casting
+        ClearAccountSpellBuffer index
         Exit Sub
     End If
     
@@ -333,7 +335,10 @@ Sub PlayerWarp(ByVal index As Long, ByVal MapNum As Integer, ByVal X As Long, By
             End If
         Next
     End If
-
+    
+    ' Clear spell casting
+    ClearAccountSpellBuffer index
+    
     ' Sets it so we know to process npcs on the map
     PlayersOnMap(MapNum) = YES
     TempPlayer(index).GettingMap = YES
@@ -1274,7 +1279,6 @@ Sub OnDeath(ByVal index As Long, Optional ByVal Attacker As Long)
     
     ' Clear spell casting
     Call ClearAccountSpellBuffer(index)
-    Call SendClearAccountSpellBuffer(index)
     
     ' Restore vitals
     Call SetPlayerVital(index, Vitals.HP, GetPlayerMaxVital(index, Vitals.HP))

@@ -898,7 +898,7 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
     If SpellSlot < 1 Or SpellSlot > MAX_PLAYER_SPELLS Then Exit Sub
     
     If SpellBuffer > 0 Then
-        AddText "You cannot cast another spell until the current spell has been completed.", BrightRed
+        AddText "You can't cast another spell until the current spell has been completed.", BrightRed
         Exit Sub
     End If
     
