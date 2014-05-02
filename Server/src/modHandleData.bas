@@ -2738,6 +2738,8 @@ Sub HandleAcceptTradeRequest(ByVal index As Long, ByRef Data() As Byte, ByVal St
     For i = 1 To MAX_INV
         TempPlayer(index).TradeOffer(i).Num = 0
         TempPlayer(index).TradeOffer(i).Value = 0
+        TempPlayer(index).TradeOffer(i).Bind = 0
+        TempPlayer(index).TradeOffer(i).Durability = 0
         TempPlayer(TradeTarget).TradeOffer(i).Num = 0
         TempPlayer(TradeTarget).TradeOffer(i).Value = 0
         TempPlayer(TradeTarget).TradeOffer(i).Bind = 0
