@@ -838,9 +838,6 @@ Private Sub HandlePlayerMove(ByVal Index As Long, ByRef data() As Byte, ByVal St
     Call SetPlayerY(I, Y)
     Call SetPlayerDir(I, Dir)
     
-    ' Let the client know we can move.
-    IsWaitingForMove = False
-    
     TempPlayer(I).Moving = n
     TempPlayer(I).xOffset = distanceX * PIC_X * -1
     TempPlayer(I).yOffset = distanceY * PIC_Y * -1
@@ -880,9 +877,6 @@ Private Sub HandlePlayerWarp(ByVal Index As Long, ByRef data() As Byte, ByVal St
         .yOffset = 0
         .Moving = 0
     End With
-    
-    ' Let the client know we can move.
-    IsWaitingForMove = False
     Exit Sub
     
 ' Error handler

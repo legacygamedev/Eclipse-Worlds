@@ -493,12 +493,6 @@ Function CanMove() As Boolean
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     CanMove = True
-    
-    ' Make sure we have not moved and are waiting.
-    If IsWaitingForMove Then
-        CanMove = False
-        Exit Function
-    End If
 
     ' Make sure they aren't trying to move when they are already moving
     If TempPlayer(MyIndex).Moving <> 0 Then

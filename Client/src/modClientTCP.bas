@@ -423,9 +423,6 @@ Public Sub SendPlayerMove()
     buffer.WriteInteger Player(MyIndex).Y
     SendData buffer.ToArray()
     Set buffer = Nothing
-    
-    ' Now tell the stupid client to wait.
-    IsWaitingForMove = True
     Exit Sub
     
 ' Error handler

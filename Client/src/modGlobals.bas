@@ -32,9 +32,6 @@ Public LastButton_Menu As Long
 Public CurButton_Main As Long
 Public CurButton_Menu As Byte
 
-' Movement
-Public IsWaitingForMove As Boolean
-
 ' Events
 Public InEvent As Boolean
 Public EventFace As Long
