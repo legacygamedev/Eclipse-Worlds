@@ -181,11 +181,6 @@ Public Type HotbarRec
     SType As Byte
 End Type
 
-Public Type SkillRec
-    Level As Byte
-    Exp As Long
-End Type
-
 Public Type FriendsRec
     AmountOfFriends As Byte
     Members(1 To MAX_PEOPLE) As String
@@ -196,13 +191,18 @@ Public Type FoesRec
     Members(1 To MAX_PEOPLE) As String
 End Type
 
+Public Type SkillRec
+    Level As Byte
+    exp As Long
+End Type
+
 Public Type PlayerRec
     ' Face - both
     Face As Integer
     
     ' Both
     Level As Byte
-    Exp As Long
+    exp As Long
     
     ' Stats - both
     Stat(1 To Stats.Stat_count - 1) As Integer
@@ -283,7 +283,7 @@ Public Type PlayerEditableRec
     Class As Byte
     Sprite As Integer
     Level As Byte
-    Exp As Long
+    exp As Long
     Access As Byte
 
     ' Vitals
@@ -674,6 +674,10 @@ Private Type ItemRec
     Stackable As Byte
     Indestructable As Byte
     SkillReq As Byte
+    ToolRequired As Integer
+    Skill As Byte
+    SkillExp As Integer
+    SkillLevelReq As Byte
 End Type
 
 Private Type MapItemRec
@@ -707,7 +711,7 @@ Private Type NPCRec
     Stat(1 To Stats.Stat_count - 1) As Integer
     HP As Long
     MP As Long
-    Exp As Long
+    exp As Long
     Animation As Long
     Level As Byte
     Spell(1 To MAX_NPC_SPELLS) As Integer
@@ -832,7 +836,7 @@ Private Type ResourceRec
     Sound As String * FILE_LENGTH
     
     Skill As Byte
-    Exp As Integer
+    exp As Integer
     ResourceImage As Byte
     ExhaustedImage As Byte
     ItemReward As Long

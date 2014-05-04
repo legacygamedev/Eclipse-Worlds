@@ -187,7 +187,7 @@ Function GetPlayerExp(ByVal Index As Long) As Long
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
-    GetPlayerExp = Player(Index).Exp
+    GetPlayerExp = Player(Index).exp
     Exit Function
     
 ' Error handler
@@ -196,18 +196,91 @@ errorhandler:
     Err.Clear
 End Function
 
-Sub SetPlayerExp(ByVal Index As Long, ByVal Exp As Long)
+Sub SetPlayerExp(ByVal Index As Long, ByVal exp As Long)
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo errorhandler
 
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
     
-    Player(Index).Exp = Exp
+    Player(Index).exp = exp
     Exit Sub
         
 ' Error handler
 errorhandler:
     HandleError "SetPlayerExp", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Function GetPlayerSkill(ByVal Index As Long, ByVal SkillNum As Byte) As Long
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    
+    GetPlayerSkill = Player(Index).Skills(SkillNum).Level
+    Exit Function
+        
+' Error handler
+errorhandler:
+    HandleError "GetPlayerSkill", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Function
+
+Sub SetPlayerSkill(ByVal Index As Long, ByVal Level As Byte, ByVal SkillNum As Byte)
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+    
+    Player(Index).Skills(SkillNum).Level = Level
+    Exit Sub
+        
+' Error handler
+errorhandler:
+    HandleError "SetPlayerSkill", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Function GetPlayerNextSkillLevel(ByVal Index As Long, ByVal SkillNum As Byte) As Long
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    
+    GetPlayerNextSkillLevel = (50 / 3) * ((GetPlayerSkill(Index, SkillNum) + 1) ^ 3 - (6 * (GetPlayerSkill(Index, SkillNum) + 1) ^ 2) + 17 * (GetPlayerSkill(Index, SkillNum) + 1) - 12)
+    Exit Function
+        
+' Error handler
+errorhandler:
+    HandleError "GetPlayerNextSkillLevel", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Function
+
+Function GetPlayerSkillExp(ByVal Index As Long, ByVal SkillNum As Byte) As Long
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    GetPlayerSkillExp = Player(Index).Skills(SkillNum).exp
+    Exit Function
+        
+' Error handler
+errorhandler:
+    HandleError "GetPlayerSkillExp", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Function
+
+Sub SetPlayerSkillExp(ByVal Index As Long, ByVal exp As Long, ByVal SkillNum As Byte)
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+
+    If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+    Player(Index).Skills(SkillNum).exp = exp
+    Exit Sub
+        
+' Error handler
+errorhandler:
+    HandleError "SetPlayerSkillExp", "modDatabase", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

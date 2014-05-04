@@ -600,6 +600,8 @@ Sub LoadAccount(ByVal index As Long, ByVal Name As String)
 End Sub
 
 Sub ClearAccount(ByVal index As Long)
+    Dim i As Long
+    
     Call ZeroMemory(ByVal VarPtr(TempPlayer(index)), LenB(TempPlayer(index)))
     TempPlayer(index).HDSerial = vbNullString
     Set TempPlayer(index).Buffer = New clsBuffer
@@ -611,6 +613,10 @@ Sub ClearAccount(ByVal index As Long)
     Account(index).Chars(GetPlayerChar(index)).Name = vbNullString
     Account(index).Chars(GetPlayerChar(index)).Status = vbNullString
     Account(index).Chars(GetPlayerChar(index)).Class = 1
+    
+    For i = 1 To Skills.Skill_Count - 1
+        Call SetPlayerSkill(index, 1, i)
+    Next
     
     frmServer.lvwInfo.ListItems(index).SubItems(1) = vbNullString
     frmServer.lvwInfo.ListItems(index).SubItems(2) = vbNullString

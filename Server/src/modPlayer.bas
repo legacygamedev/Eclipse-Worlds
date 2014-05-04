@@ -1389,7 +1389,7 @@ Sub CheckResource(ByVal index As Long, ByVal X As Long, ByVal Y As Long)
                         
                         If GetPlayerSkill(index, Resource(Resource_Index).Skill) < MAX_LEVEL Then
                             ' Add the experience to the skill
-                            Call SetPlayerSkillExp(index, GetPlayerSkillExp(index, Resource(Resource_Index).Skill) + Resource(Resource_Index).Exp * EXP_RATE, Resource(Resource_Index).Skill)
+                            Call SetPlayerSkillExp(index, GetPlayerSkillExp(index, Resource(Resource_Index).Skill) + Resource(Resource_Index).exp * EXP_RATE, Resource(Resource_Index).Skill)
                             
                             ' Check for skill level up
                             Call CheckPlayerSkillLevelUp(index, Resource(Resource_Index).Skill)
@@ -1511,23 +1511,23 @@ Sub TakeBankItem(ByVal index As Long, ByVal BankSlot As Byte, ByVal Amount As Lo
 End Sub
 
 Public Sub KillPlayer(ByVal index As Long)
-    Dim Exp As Long
+    Dim exp As Long
 
     ' Calculate exp to give to attacker
-    Exp = GetPlayerExp(index) \ 4
+    exp = GetPlayerExp(index) \ 4
     
     ' Randomize
-    Exp = Random(Exp * 0.95, Exp * 1.05)
+    exp = Random(exp * 0.95, exp * 1.05)
 
     ' Make sure the exp we get isn't less than 0
-    If Exp < 0 Then Exp = 0
+    If exp < 0 Then exp = 0
     
-    If Exp = 0 Or Moral(Map(GetPlayerMap(index)).Moral).LoseExp = 0 Then
+    If exp = 0 Or Moral(Map(GetPlayerMap(index)).Moral).LoseExp = 0 Then
         Call PlayerMsg(index, "You did not lose any experience.", Grey)
     ElseIf GetPlayerLevel(index) < MAX_LEVEL Then
-        Call SetPlayerExp(index, GetPlayerExp(index) - Exp)
+        Call SetPlayerExp(index, GetPlayerExp(index) - exp)
         SendPlayerExp index
-        Call PlayerMsg(index, "You lost " & Exp & " experience.", Grey)
+        Call PlayerMsg(index, "You lost " & exp & " experience.", Grey)
     End If
     
     Call OnDeath(index)
@@ -1535,7 +1535,14 @@ End Sub
 
 Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
     Dim n As Long, i As Long, X As Long, Y As Long, TotalPoints As Integer, EquipSlot As Byte
-    
+    Dim Item1 As Long
+    Dim Item2 As Long
+    Dim Result As Long
+    Dim Skill As Byte
+    Dim SkillExp As Integer
+    Dim SkillLevelReq As Byte
+    Dim ToolReq As Long
+
     ' Check subscript out of range
     If InvNum < 1 Or InvNum > MAX_INV Then Exit Sub
     
@@ -1746,6 +1753,56 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
             
             ' Send the sound
             SendPlayerSound index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seItem, GetPlayerInvItemNum(index, InvNum)
+        
+        Case ITEM_TYPE_RECIPE
+            ' Get the recipe information
+            Item1 = Item(GetPlayerInvItemNum(index, InvNum)).Data1
+            Item2 = Item(GetPlayerInvItemNum(index, InvNum)).Data2
+            Result = Item(GetPlayerInvItemNum(index, InvNum)).Data3
+            Skill = Item(GetPlayerInvItemNum(index, InvNum)).Skill
+            SkillExp = Item(GetPlayerInvItemNum(index, InvNum)).SkillExp
+            SkillLevelReq = Item(GetPlayerInvItemNum(index, InvNum)).SkillLevelReq
+            ToolReq = Item(GetPlayerInvItemNum(index, InvNum)).ToolRequired
+            
+            ' Perform Recipe checks
+            If Item1 <= 0 Or Item2 <= 0 Or Result <= 0 Or Skill <= 0 Then
+                Call PlayerMsg(index, "This is an incomplete recipe...", BrightRed)
+                Exit Sub
+            End If
+            
+            If GetPlayerEquipment(index, Weapon) <> ToolReq And HasItem(index, ToolReq) = 0 And ToolReq <> 0 Then
+                Call PlayerMsg(index, "You don't have the proper tool required to craft this item!", BrightRed)
+                Exit Sub
+            End If
+            
+            If GetPlayerSkill(index, Skill) < SkillLevelReq Then
+                Call PlayerMsg(index, "Your " & GetSkillName(Skill) & " skill isn't high enough to craft this item (" & SkillLevelReq & ")!", BrightRed)
+                Exit Sub
+            End If
+            
+            ' Give the resulting item
+            If HasItem(index, Item1) Then
+                If HasItem(index, Item2) Then
+                    Call TakeInvItem(index, Item1, 1)
+                    Call TakeInvItem(index, Item2, 1)
+                    Call GiveInvItem(index, Result, 1)
+                    Call PlayerMsg(index, "You have successfully created " & Trim(Item(Result).Name) & " and earned " & SkillExp & " experience for the skill " & GetSkillName(Skill) & ".", BrightGreen)
+                    
+                    If GetPlayerSkill(index, Skill) < MAX_LEVEL Then
+                        ' Add the experience to the skill
+                        Call SetPlayerSkillExp(index, GetPlayerSkillExp(index, Skill) + SkillExp, Skill)
+                        
+                        ' Check for skill level up
+                        Call CheckPlayerSkillLevelUp(index, Skill)
+                    End If
+                Else
+                    Call PlayerMsg(index, "You do not have all of the ingredients.", BrightRed)
+                    Exit Sub
+                End If
+            Else
+                Call PlayerMsg(index, "You do not have all of the ingredients.", BrightRed)
+                Exit Sub
+            End If
     End Select
 End Sub
 

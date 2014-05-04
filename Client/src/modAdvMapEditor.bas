@@ -111,6 +111,7 @@ Public Sub MapEditorMode(switch As Boolean)
     End If
     'Call FlipBit(WS_CAPTION, Not switch)
 End Sub
+
 Public Sub LeaveMapEditorMode(Cancel As Boolean)
 
     If EditorSave = False And Cancel Then

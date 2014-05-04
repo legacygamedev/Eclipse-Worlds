@@ -126,6 +126,11 @@ Type FoesRec
     name As String * NAME_LENGTH
 End Type
 
+Public Type SkillRec
+    Level As Byte
+    exp As Long
+End Type
+
 Public Type PlayerRec
     ' Account
     Login As String * NAME_LENGTH
@@ -140,7 +145,7 @@ Public Type PlayerRec
     Class As Byte
     Sprite As Integer
     Level As Byte
-    Exp As Long
+    exp As Long
     Access As Byte
     PK As Byte
     Status As String * NAME_LENGTH
@@ -186,6 +191,9 @@ Public Type PlayerRec
     
     ' Foes
     Foes(1 To MAX_PEOPLE) As FoesRec
+    
+    ' Skill
+    Skills(1 To Skill_Count - 1) As SkillRec
 End Type
 
 ' Character editor
@@ -200,7 +208,7 @@ Public Type PlayerEditableRec
     Class As Byte
     Sprite As Integer
     Level As Byte
-    Exp As Long
+    exp As Long
     Access As Byte
 
     ' Vitals
@@ -494,6 +502,10 @@ Public Type ItemRec
     stackable As Byte
     Indestructable As Byte
     SkillReq As Byte
+    ToolRequired As Integer
+    Skill As Byte
+    SkillExp As Integer
+    SkillLevelReq As Byte
 End Type
 
 Private Type MapItemRec
@@ -523,7 +535,7 @@ Private Type NPCRec
     Stat(1 To Stats.Stat_Count - 1) As Integer
     HP As Long
     MP As Long
-    Exp As Long
+    exp As Long
     Animation As Long
     Level As Byte
     Spell(1 To MAX_NPC_SPELLS) As Integer
@@ -622,7 +634,7 @@ Private Type ResourceRec
     Sound As String * FILE_LENGTH
 
     Skill As Byte
-    Exp As Integer
+    exp As Integer
     ResourceImage As Byte
     ExhaustedImage As Byte
     ItemReward As Long

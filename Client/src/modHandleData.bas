@@ -658,6 +658,14 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
             Next
         End If
         
+        If frmMain.picSkills.Visible Then
+            For I = 1 To Skills.Skill_Count - 1
+                frmMain.lblSkill.Item(I - 1).Caption = GetSkillName(I)
+                frmMain.lblLevel.Item(I - 1).Caption = Player(MyIndex).Skills(I).Level
+                frmMain.lblSkillExp.Item(I - 1).Caption = Player(MyIndex).Skills(I).Exp & "/" & GetPlayerNextSkillLevel(MyIndex, I)
+            Next
+        End If
+        
         ' Hide admin panel if visible and access is 0
         If FormVisible("frmAdmin") Then
             If frmAdmin.Visible And Player(MyIndex).Access < STAFF_MODERATOR Then

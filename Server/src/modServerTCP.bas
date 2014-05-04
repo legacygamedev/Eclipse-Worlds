@@ -635,6 +635,11 @@ Function PlayerData(ByVal index As Long) As Byte()
     ' Send player status
     Buffer.WriteString Account(index).Chars(GetPlayerChar(index)).Status
     
+    For i = 1 To Skills.Skill_Count - 1
+        Buffer.WriteByte GetPlayerSkill(index, i)
+        Buffer.WriteLong GetPlayerSkillExp(index, i)
+    Next
+    
     PlayerData = Buffer.ToArray()
     Set Buffer = Nothing
 End Function
@@ -755,7 +760,7 @@ use_online_player:
     requestedClientPlayer.Level = tempPlayer_.Level
     requestedClientPlayer.Class = tempPlayer_.Class
     requestedClientPlayer.Access = tempPlayer_.Access
-    requestedClientPlayer.Exp = tempPlayer_.Exp
+    requestedClientPlayer.exp = tempPlayer_.exp
     requestedClientPlayer.Gender = tempPlayer_.Gender
     requestedClientPlayer.Login = "XXXX" ' Do we really want to edit it in client? Is it safe to send it?
     requestedClientPlayer.Password = "XXXX" ' Do we really want to edit it in client? Is it safe to send it?

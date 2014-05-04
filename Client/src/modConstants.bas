@@ -334,6 +334,7 @@ Public Const ITEM_TYPE_TELEPORT As Byte = 5
 Public Const ITEM_TYPE_RESETSTATS As Byte = 6
 Public Const ITEM_TYPE_AUTOLIFE As Byte = 7
 Public Const ITEM_TYPE_SPRITE As Byte = 8
+Public Const ITEM_TYPE_RECIPE As Byte = 9
 
 ' Equip constants
 Public Const BIND_ON_PICKUP As Byte = 1

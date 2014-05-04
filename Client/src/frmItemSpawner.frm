@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.ocx"
 Begin VB.Form frmItemSpawner 
    Appearance      =   0  'Flat
    BorderStyle     =   4  'Fixed ToolWindow
@@ -7,12 +7,12 @@ Begin VB.Form frmItemSpawner
    ClientHeight    =   4935
    ClientLeft      =   8280
    ClientTop       =   4425
-   ClientWidth     =   8325
+   ClientWidth     =   9015
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   4935
-   ScaleWidth      =   8325
+   ScaleWidth      =   9015
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin MSComctlLib.ImageList itemsImageList 
@@ -41,8 +41,8 @@ Begin VB.Form frmItemSpawner
       Left            =   45
       TabIndex        =   9
       Top             =   1185
-      Width           =   8235
-      _ExtentX        =   14526
+      Width           =   8835
+      _ExtentX        =   15584
       _ExtentY        =   6562
       Arrange         =   2
       LabelEdit       =   1
@@ -112,15 +112,15 @@ Begin VB.Form frmItemSpawner
    End
    Begin MSComctlLib.TabStrip tabItems 
       Height          =   4185
-      Left            =   15
+      Left            =   0
       TabIndex        =   0
-      Top             =   780
-      Width           =   8370
-      _ExtentX        =   14764
+      Top             =   840
+      Width           =   8970
+      _ExtentX        =   15822
       _ExtentY        =   7382
       _Version        =   393216
       BeginProperty Tabs {1EFB6598-857C-11D1-B16A-00C0F0283628} 
-         NumTabs         =   10
+         NumTabs         =   11
          BeginProperty Tab1 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
             Caption         =   "Recent"
             ImageVarType    =   2
@@ -159,6 +159,10 @@ Begin VB.Form frmItemSpawner
          EndProperty
          BeginProperty Tab10 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
             Caption         =   "Sprite Change"
+            ImageVarType    =   2
+         EndProperty
+         BeginProperty Tab11 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
+            Caption         =   "Recipe"
             ImageVarType    =   2
          EndProperty
       EndProperty
@@ -208,7 +212,7 @@ Begin VB.Form frmItemSpawner
       EndProperty
       ForeColor       =   &H00FF8080&
       Height          =   240
-      Left            =   6090
+      Left            =   6840
       TabIndex        =   14
       Top             =   480
       Width           =   1305
@@ -268,6 +272,7 @@ Begin VB.Form frmItemSpawner
       Width           =   645
    End
    Begin VB.Label lblHelp1 
+      Alignment       =   2  'Center
       BackStyle       =   0  'Transparent
       Caption         =   "Choose the item, input Amount"
       BeginProperty Font 
@@ -280,11 +285,11 @@ Begin VB.Form frmItemSpawner
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00FF8080&
-      Height          =   240
+      Height          =   465
       Left            =   6090
       TabIndex        =   5
       Top             =   270
-      Width           =   2220
+      Width           =   2805
       WordWrap        =   -1  'True
    End
    Begin VB.Line lineHow 
@@ -309,7 +314,7 @@ Begin VB.Form frmItemSpawner
       EndProperty
       ForeColor       =   &H00FF8080&
       Height          =   255
-      Left            =   7095
+      Left            =   6720
       TabIndex        =   4
       Top             =   0
       Width           =   1185
@@ -434,14 +439,16 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
             ret = populateSpecificType(tempItems, ITEM_TYPE_TITLE)
         Case ITEM_TYPE_SPELL
             ret = populateSpecificType(tempItems, ITEM_TYPE_SPELL)
-       Case ITEM_TYPE_TELEPORT
+        Case ITEM_TYPE_TELEPORT
             ret = populateSpecificType(tempItems, ITEM_TYPE_TELEPORT)
-       Case ITEM_TYPE_RESETSTATS
+        Case ITEM_TYPE_RESETSTATS
             ret = populateSpecificType(tempItems, ITEM_TYPE_RESETSTATS)
-       Case ITEM_TYPE_AUTOLIFE
+        Case ITEM_TYPE_AUTOLIFE
             ret = populateSpecificType(tempItems, ITEM_TYPE_AUTOLIFE)
-       Case ITEM_TYPE_SPRITE
+        Case ITEM_TYPE_SPRITE
             ret = populateSpecificType(tempItems, ITEM_TYPE_SPRITE)
+        Case ITEM_TYPE_RECIPE
+            ret = populateSpecificType(tempItems, ITEM_TYPE_RECIPE)
     End Select
     
     If ret Then

@@ -25,6 +25,128 @@ Begin VB.Form frmEditor_Item
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.Frame fraRecipe 
+      Caption         =   "Recipe Data"
+      Height          =   3015
+      Left            =   3360
+      TabIndex        =   125
+      Top             =   4680
+      Visible         =   0   'False
+      Width           =   6255
+      Begin VB.HScrollBar scrlItem1 
+         Height          =   255
+         Left            =   120
+         Max             =   5
+         TabIndex        =   132
+         Top             =   1080
+         Width           =   2535
+      End
+      Begin VB.HScrollBar scrlItem2 
+         Height          =   255
+         Left            =   2880
+         Max             =   5
+         TabIndex        =   131
+         Top             =   1080
+         Width           =   2535
+      End
+      Begin VB.HScrollBar scrlResult 
+         Height          =   255
+         Left            =   120
+         Max             =   5
+         TabIndex        =   130
+         Top             =   1800
+         Width           =   2535
+      End
+      Begin VB.HScrollBar scrlSkill 
+         Height          =   255
+         Left            =   2880
+         Max             =   5
+         TabIndex        =   129
+         Top             =   1800
+         Width           =   2535
+      End
+      Begin VB.HScrollBar ScrlSkillExp 
+         Height          =   255
+         Left            =   120
+         Max             =   5
+         TabIndex        =   128
+         Top             =   2640
+         Width           =   2535
+      End
+      Begin VB.HScrollBar ScrlToolRequired 
+         Height          =   255
+         Left            =   3000
+         Max             =   5
+         TabIndex        =   127
+         Top             =   360
+         Width           =   2535
+      End
+      Begin VB.HScrollBar ScrlSkillLevelReq 
+         Height          =   255
+         Left            =   2880
+         Max             =   5
+         TabIndex        =   126
+         Top             =   2640
+         Width           =   2535
+      End
+      Begin VB.Label lblToolRequired 
+         AutoSize        =   -1  'True
+         Caption         =   "Tool Required: None"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   139
+         Top             =   360
+         Width           =   1530
+      End
+      Begin VB.Label lblItem1 
+         Caption         =   "Item 1: None"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   138
+         Top             =   720
+         Width           =   2535
+      End
+      Begin VB.Label lblItem2 
+         Caption         =   "Item 2: None"
+         Height          =   255
+         Left            =   2880
+         TabIndex        =   137
+         Top             =   720
+         Width           =   3135
+      End
+      Begin VB.Label lblResult 
+         Caption         =   "Result: None"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   136
+         Top             =   1440
+         Width           =   2535
+      End
+      Begin VB.Label lblSkill 
+         Caption         =   "Skill: None"
+         Height          =   255
+         Left            =   2880
+         TabIndex        =   135
+         Top             =   1440
+         Width           =   2535
+      End
+      Begin VB.Label lblSkillExp 
+         Caption         =   "Skill Exp: None"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   134
+         Top             =   2280
+         Width           =   2535
+      End
+      Begin VB.Label lblSkillLevelReq 
+         Caption         =   "Skill Level Req: None"
+         Height          =   255
+         Left            =   2880
+         TabIndex        =   133
+         Top             =   2280
+         Width           =   2535
+      End
+   End
    Begin VB.Frame fraEquipment 
       Caption         =   "Equipment Data"
       Height          =   3015
@@ -1755,6 +1877,12 @@ Private Sub cmbType_Click()
         fraTitle.Visible = False
     End If
     
+    If (frmEditor_Item.cmbType.ListIndex = ITEM_TYPE_RECIPE) Then
+        frmEditor_Item.fraRecipe.Visible = True
+    Else
+        frmEditor_Item.fraRecipe.Visible = False
+    End If
+    
     With frmEditor_Item
         ' Specific options when selecting the weapon type
         lblDamage.Caption = "Damage: " & scrlDamage.Value
@@ -2250,6 +2378,167 @@ Private Sub scrlTitle_Change()
 ' Error handler
 errorhandler:
     HandleError "scrlTitle_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub ScrlToolRequired_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If fraRecipe.Visible = False Then Exit Sub
+    
+    If ScrlToolRequired.Value > 0 Then
+        lblToolRequired.Caption = "Tool Required: " & Trim$(Item(ScrlToolRequired.Value).name)
+    Else
+        lblToolRequired.Caption = "Tool Required: None"
+    End If
+    
+    Item(EditorIndex).ToolRequired = ScrlToolRequired.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "ScrlToolRequired_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlResult_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If fraRecipe.Visible = False Then Exit Sub
+    
+    If scrlResult.Value > 0 Then
+        lblResult.Caption = "Result: " & Trim$(Item(scrlResult.Value).name)
+    Else
+        lblResult.Caption = "Result: None"
+    End If
+    
+    Item(EditorIndex).Data3 = scrlResult.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "scrlResult_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlSkill_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If fraRecipe.Visible = False Then Exit Sub
+    
+    If scrlSkill.Value > 0 Then
+        lblSkill.Caption = "Skill: " & GetSkillName(scrlSkill.Value)
+    Else
+        lblSkill.Caption = "Skill: None"
+    End If
+    
+    Item(EditorIndex).Skill = scrlSkill.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "scrlSkill_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub ScrlSkillExp_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If fraRecipe.Visible = False Then Exit Sub
+    
+    If ScrlSkillExp.Value > 0 Then
+        lblSkillExp.Caption = "Skill Exp: " & ScrlSkillExp.Value
+    Else
+        lblSkillExp.Caption = "Skill Exp: None"
+    End If
+    
+    Item(EditorIndex).SkillExp = ScrlSkillExp.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "ScrlSkillExp_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub ScrlSkillLevelReq_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If fraRecipe.Visible = False Then Exit Sub
+    
+    If ScrlSkillLevelReq.Value > 0 Then
+        lblSkillLevelReq.Caption = "Skill Level Required: " & ScrlSkillLevelReq.Value
+    Else
+        lblSkillLevelReq.Caption = "Skill Level Required: None"
+    End If
+    
+    Item(EditorIndex).SkillLevelReq = ScrlSkillLevelReq.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "ScrlSkillLevelReq_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlItem1_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If fraRecipe.Visible = False Then Exit Sub
+    
+    If scrlItem1.Value > 0 Then
+        lblItem1.Caption = "Item 1: " & Trim$(Item(scrlItem1.Value).name)
+    Else
+        lblItem1.Caption = "Item 1: None"
+    End If
+    
+    Item(EditorIndex).Data1 = scrlItem1.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "scrlItem1_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlItem2_Change()
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo errorhandler
+    
+    If fraRecipe.Visible = False Then Exit Sub
+    
+    If scrlItem2.Value > 0 Then
+        lblItem2.Caption = "Item 2: " & Trim$(Item(scrlItem2.Value).name)
+    Else
+        lblItem2.Caption = "Item 2: None"
+    End If
+    
+    Item(EditorIndex).Data2 = scrlItem2.Value
+    Exit Sub
+    
+' Error handler
+errorhandler:
+    HandleError "scrlItem2_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

@@ -248,6 +248,7 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     frmMain.picCurrency.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\currency.jpg")
     frmMain.picTitles.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\base.jpg")
     frmMain.ImgFix.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\fix.bmp")
+    frmMain.picSkills.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\skills.jpg")
     
     ' Vital Bars on Main
     frmMain.picGUI_Vitals_Base.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\vitals_base.bmp")
@@ -711,9 +712,9 @@ Public Sub CacheButtons()
         .State = 0 ' Normal
     End With
     
-    ' Main - Talents
+    ' Main - Quests
     With MainButton(11)
-        .FileName = "btn_talents"
+        .FileName = "btn_quests"
         .State = 0  ' Normal
     End With
     

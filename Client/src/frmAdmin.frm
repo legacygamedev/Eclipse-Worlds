@@ -32,7 +32,7 @@ Begin VB.Form frmAdmin
       EndProperty
       ForeColor       =   &H80000008&
       Height          =   8655
-      Left            =   -15
+      Left            =   0
       ScaleHeight     =   577
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   205
@@ -40,6 +40,17 @@ Begin VB.Form frmAdmin
       TabStop         =   0   'False
       Top             =   15
       Width           =   3075
+      Begin VB.OptionButton optCat 
+         Height          =   420
+         Index           =   10
+         Left            =   540
+         MaskColor       =   &H80000001&
+         Style           =   1  'Graphical
+         TabIndex        =   71
+         ToolTipText     =   "Change sprites via dbl click."
+         Top             =   6090
+         Width           =   420
+      End
       Begin VB.PictureBox picSizer 
          Appearance      =   0  'Flat
          BackColor       =   &H80000002&
@@ -396,12 +407,12 @@ Begin VB.Form frmAdmin
       Begin VB.OptionButton optCat 
          Height          =   420
          Index           =   9
-         Left            =   540
+         Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
          TabIndex        =   41
          ToolTipText     =   "Change sprites via dbl click."
-         Top             =   6075
+         Top             =   6090
          Width           =   420
       End
       Begin VB.PictureBox picRecentItem 
@@ -715,7 +726,7 @@ Begin VB.Form frmAdmin
          Left            =   165
          TabIndex        =   7
          TabStop         =   0   'False
-         Top             =   3495
+         Top             =   3480
          Width           =   1155
       End
       Begin VB.CommandButton cmdAWarp 
@@ -850,7 +861,7 @@ Begin VB.Form frmAdmin
          TabIndex        =   70
          Top             =   3975
          Visible         =   0   'False
-         Width           =   1065
+         Width           =   1185
       End
       Begin VB.Line Line5 
          BorderColor     =   &H00800080&
@@ -1740,6 +1751,8 @@ Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integ
             lblCat.Caption = "Auto Life"
         Case 9
             lblCat.Caption = "Change Sprite"
+        Case 10
+            lblCat.Caption = "Recipe"
         
     End Select
 End Sub
