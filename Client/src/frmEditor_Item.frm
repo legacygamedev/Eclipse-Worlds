@@ -1789,6 +1789,14 @@ Public Sub Form_Load()
     For I = 1 To Skill_Count - 1
         cmbSkillReq.AddItem GetSkillName(I)
     Next
+    
+    scrlItem1.max = MAX_ITEMS
+    scrlItem2.max = MAX_ITEMS
+    scrlResult.max = MAX_ITEMS
+    ScrlSkillExp.max = 32767
+    ScrlToolRequired.max = MAX_ITEMS
+    ScrlSkillLevelReq.max = MAX_LEVEL
+    scrlSkill.max = Skill_Count - 1
     Exit Sub
     
 ' Error handler
