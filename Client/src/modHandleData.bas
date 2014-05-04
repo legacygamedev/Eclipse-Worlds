@@ -615,6 +615,11 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
     ' Status
     Player(I).Status = buffer.ReadString
     
+    For X = 1 To Skills.Skill_Count - 1
+        Player(I).Skills(X).Level = buffer.ReadByte
+        Player(I).Skills(X).exp = buffer.ReadLong
+    Next
+    
     ' Check if the player is the client player
     If I = MyIndex Then
         ' Update the form guild boxes
@@ -662,7 +667,7 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
             For I = 1 To Skills.Skill_Count - 1
                 frmMain.lblSkill.Item(I - 1).Caption = GetSkillName(I)
                 frmMain.lblLevel.Item(I - 1).Caption = Player(MyIndex).Skills(I).Level
-                frmMain.lblSkillExp.Item(I - 1).Caption = Player(MyIndex).Skills(I).Exp & "/" & GetPlayerNextSkillLevel(MyIndex, I)
+                frmMain.lblSkillExp.Item(I - 1).Caption = Player(MyIndex).Skills(I).exp & "/" & GetPlayerNextSkillLevel(MyIndex, I)
             Next
         End If
         

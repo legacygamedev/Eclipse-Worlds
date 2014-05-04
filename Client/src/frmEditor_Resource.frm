@@ -470,6 +470,7 @@ Private Sub cmbSound_Click()
     
     If cmbSound.ListIndex > 0 Then
         Resource(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
+        Audio.PlaySound Resource(EditorIndex).Sound
     Else
         Resource(EditorIndex).Sound = vbNullString
     End If
@@ -652,7 +653,7 @@ Private Sub scrlExp_Change()
     If Options.Debug = 1 Then On Error GoTo errorhandler
     
     lblExp.Caption = "Exp: " & scrlExp.Value
-    Resource(EditorIndex).Exp = scrlExp.Value
+    Resource(EditorIndex).exp = scrlExp.Value
     Exit Sub
     
 ' Error handler

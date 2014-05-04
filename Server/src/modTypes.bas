@@ -193,7 +193,7 @@ End Type
 
 Public Type SkillRec
     Level As Byte
-    exp As Long
+    Exp As Long
 End Type
 
 Public Type PlayerRec
@@ -202,7 +202,7 @@ Public Type PlayerRec
     
     ' Both
     Level As Byte
-    exp As Long
+    Exp As Long
     
     ' Stats - both
     Stat(1 To Stats.Stat_count - 1) As Integer
@@ -255,7 +255,7 @@ Public Type PlayerRec
     ' Guild - both
     Guild As GuildMemberRec
     
-    ' Skill - server only
+    ' Skill - both
     Skills(1 To Skill_Count - 1) As SkillRec
     
     ' Events - server only
@@ -283,7 +283,7 @@ Public Type PlayerEditableRec
     Class As Byte
     Sprite As Integer
     Level As Byte
-    exp As Long
+    Exp As Long
     Access As Byte
 
     ' Vitals
@@ -711,7 +711,7 @@ Private Type NPCRec
     Stat(1 To Stats.Stat_count - 1) As Integer
     HP As Long
     MP As Long
-    exp As Long
+    Exp As Long
     Animation As Long
     Level As Byte
     Spell(1 To MAX_NPC_SPELLS) As Integer
@@ -836,7 +836,7 @@ Private Type ResourceRec
     Sound As String * FILE_LENGTH
     
     Skill As Byte
-    exp As Integer
+    Exp As Integer
     ResourceImage As Byte
     ExhaustedImage As Byte
     ItemReward As Long

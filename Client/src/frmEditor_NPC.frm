@@ -892,6 +892,7 @@ Private Sub cmbSound_Click()
     
     If cmbSound.ListIndex > 0 Then
         NPC(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
+        Audio.PlaySound NPC(EditorIndex).Sound
     Else
         NPC(EditorIndex).Sound = vbNullString
     End If
@@ -1287,7 +1288,7 @@ Private Sub txtExp_Change()
     If Not IsNumeric(txtExp.text) Then txtExp.text = 0
     If txtExp.text > MAX_LONG Then txtExp.text = MAX_LONG
     If txtExp.text < 0 Then txtExp.text = 0
-    NPC(EditorIndex).Exp = txtExp.text
+    NPC(EditorIndex).exp = txtExp.text
     Exit Sub
     
 ' Error handler

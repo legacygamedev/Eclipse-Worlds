@@ -537,7 +537,7 @@ Begin VB.Form frmEditor_Item
          Height          =   300
          ItemData        =   "frmEditor_Item.frx":0422
          Left            =   720
-         List            =   "frmEditor_Item.frx":0441
+         List            =   "frmEditor_Item.frx":0444
          Style           =   2  'Dropdown List
          TabIndex        =   3
          Top             =   1200
@@ -647,9 +647,9 @@ Begin VB.Form frmEditor_Item
             Strikethrough   =   0   'False
          EndProperty
          Height          =   300
-         ItemData        =   "frmEditor_Item.frx":04A1
+         ItemData        =   "frmEditor_Item.frx":04AC
          Left            =   4080
-         List            =   "frmEditor_Item.frx":04AE
+         List            =   "frmEditor_Item.frx":04B9
          Style           =   2  'Dropdown List
          TabIndex        =   6
          Top             =   600
@@ -834,9 +834,9 @@ Begin VB.Form frmEditor_Item
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmEditor_Item.frx":04D7
+         ItemData        =   "frmEditor_Item.frx":04E2
          Left            =   480
-         List            =   "frmEditor_Item.frx":04E4
+         List            =   "frmEditor_Item.frx":04EF
          Style           =   2  'Dropdown List
          TabIndex        =   119
          Top             =   360
@@ -862,9 +862,9 @@ Begin VB.Form frmEditor_Item
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmEditor_Item.frx":04FC
+         ItemData        =   "frmEditor_Item.frx":0507
          Left            =   3840
-         List            =   "frmEditor_Item.frx":04FE
+         List            =   "frmEditor_Item.frx":0509
          Style           =   2  'Dropdown List
          TabIndex        =   109
          Top             =   360
@@ -881,9 +881,9 @@ Begin VB.Form frmEditor_Item
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmEditor_Item.frx":0500
+         ItemData        =   "frmEditor_Item.frx":050B
          Left            =   2760
-         List            =   "frmEditor_Item.frx":050D
+         List            =   "frmEditor_Item.frx":0518
          Style           =   2  'Dropdown List
          TabIndex        =   11
          Top             =   720
@@ -1696,6 +1696,7 @@ Private Sub cmbSound_Click()
     
     If cmbSound.ListIndex > 0 Then
         Item(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
+        Audio.PlaySound Item(EditorIndex).Sound
     Else
         Item(EditorIndex).Sound = vbNullString
     End If
@@ -1878,9 +1879,9 @@ Private Sub cmbType_Click()
     End If
     
     If (frmEditor_Item.cmbType.ListIndex = ITEM_TYPE_RECIPE) Then
-        frmEditor_Item.fraRecipe.Visible = True
+        fraRecipe.Visible = True
     Else
-        frmEditor_Item.fraRecipe.Visible = False
+        fraRecipe.Visible = False
     End If
     
     With frmEditor_Item
