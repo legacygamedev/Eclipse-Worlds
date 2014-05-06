@@ -27,6 +27,100 @@ Begin VB.Form frmMain
    StartUpPosition =   2  'CenterScreen
    Tag             =   " "
    Visible         =   0   'False
+   Begin VB.PictureBox picQuestAccept 
+      BackColor       =   &H00000000&
+      ForeColor       =   &H00C0FFFF&
+      Height          =   2175
+      Left            =   2393
+      ScaleHeight     =   2115
+      ScaleWidth      =   7155
+      TabIndex        =   214
+      Top             =   3000
+      Visible         =   0   'False
+      Width           =   7215
+      Begin VB.Label lblQuestStartMsg 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         BorderStyle     =   1  'Fixed Single
+         Caption         =   "Quest Start Message"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H0080FFFF&
+         Height          =   1215
+         Left            =   120
+         TabIndex        =   218
+         Top             =   480
+         Width           =   6915
+      End
+      Begin VB.Label lblAccept 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Accept"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00C0FFFF&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   217
+         Top             =   1800
+         Width           =   3015
+      End
+      Begin VB.Label lblDecline 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Decline"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00C0FFFF&
+         Height          =   255
+         Left            =   3960
+         TabIndex        =   216
+         Top             =   1800
+         Width           =   3015
+      End
+      Begin VB.Label lblQuestName 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         BorderStyle     =   1  'Fixed Single
+         Caption         =   "Quest Name"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H0080FFFF&
+         Height          =   375
+         Left            =   120
+         TabIndex        =   215
+         Top             =   0
+         Width           =   6915
+      End
+   End
    Begin VB.PictureBox picQuestDesc 
       BackColor       =   &H00000000&
       ForeColor       =   &H0080FFFF&
@@ -221,100 +315,6 @@ Begin VB.Form frmMain
          TabIndex        =   221
          Top             =   120
          Width           =   2415
-      End
-   End
-   Begin VB.PictureBox picQuestAccept 
-      BackColor       =   &H00000000&
-      ForeColor       =   &H00C0FFFF&
-      Height          =   2175
-      Left            =   2393
-      ScaleHeight     =   2115
-      ScaleWidth      =   7155
-      TabIndex        =   214
-      Top             =   3000
-      Visible         =   0   'False
-      Width           =   7215
-      Begin VB.Label lblQuestStartMsg 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         BorderStyle     =   1  'Fixed Single
-         Caption         =   "Quest Start Message"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H0080FFFF&
-         Height          =   1215
-         Left            =   120
-         TabIndex        =   218
-         Top             =   480
-         Width           =   6915
-      End
-      Begin VB.Label lblAccept 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Accept"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00C0FFFF&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   217
-         Top             =   1800
-         Width           =   3015
-      End
-      Begin VB.Label lblDecline 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Decline"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00C0FFFF&
-         Height          =   255
-         Left            =   3960
-         TabIndex        =   216
-         Top             =   1800
-         Width           =   3015
-      End
-      Begin VB.Label lblQuestName 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         BorderStyle     =   1  'Fixed Single
-         Caption         =   "Quest Name"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H0080FFFF&
-         Height          =   375
-         Left            =   120
-         TabIndex        =   215
-         Top             =   0
-         Width           =   6915
       End
    End
    Begin VB.PictureBox picSpellDesc 
@@ -2423,7 +2423,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -4564,6 +4563,7 @@ Dim buffer As clsBuffer
         buffer.WriteLong QuestRequest
         Call SendData(buffer.ToArray())
         QuestRequest = 0
+        picQuestAccept.Visible = False
     Set buffer = Nothing
 End Sub
 
