@@ -38,7 +38,7 @@ Public Log As LogRec
 Public Options As OptionsRec
 
 Private Type MoveRouteRec
-    index As Long
+    Index As Long
     Data1 As Long
     Data2 As Long
     Data3 As Long
@@ -48,7 +48,7 @@ Private Type MoveRouteRec
 End Type
 
 Private Type GuildMemberRec
-    index As Long
+    Index As Long
     Access As Byte
 End Type
 
@@ -269,6 +269,12 @@ Public Type PlayerRec
     CanTrade As Boolean
     TempSprite As Integer
     PlayerKills As Integer
+    
+    ' Questing
+    QuestCompleted(1 To MAX_QUESTS) As Boolean
+    QuestCLIID(1 To MAX_QUESTS) As Long
+    QuestTaskID(1 To MAX_QUESTS) As Long
+    QuestAmount(1 To MAX_QUESTS) As Long
 End Type
 
 ' Character Editor
@@ -340,7 +346,7 @@ Public Type ConditionalBranchRec
 End Type
 
 Private Type EventCommandRec
-    index As Byte
+    Index As Byte
     Text1 As String
     Text2 As String
     Text3 As String
@@ -494,7 +500,7 @@ End Type
 
 Public Type TempPlayerRec
     ' Non saved local vars
-    Buffer As clsBuffer
+    buffer As clsBuffer
     HDSerial As String * NAME_LENGTH
     InGame As Boolean
     AttackTimer As Long

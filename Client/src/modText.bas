@@ -272,7 +272,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     Dim text, Guild, Level As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ' Check access level
     If GetPlayerPK(Index) = NO Then
@@ -298,7 +298,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
         End If
     End If
 
-    text = Trim$(Player(Index).name)
+    text = Trim$(Player(Index).Name)
     TextX = GetPlayerTextX(Index) - GetFontWidth(text)
     
     If Options.Levels = 1 Then
@@ -351,10 +351,10 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     End If
     
     If Options.Titles = 1 And Player(Index).CurTitle > 0 Then
-        text = Trim$(title(Player(Index).CurTitle).name)
+        text = Trim$(title(Player(Index).CurTitle).Name)
         Color = Trim$(title(Player(Index).CurTitle).Color)
         
-        TextX = GetPlayerTextX(Index) - GetFontWidth(Trim$(title(Player(Index).CurTitle).name))
+        TextX = GetPlayerTextX(Index) - GetFontWidth(Trim$(title(Player(Index).CurTitle).Name))
         TextY = TextY - 12
         
         ' Draw title
@@ -397,7 +397,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawPlayerName", "modText", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -407,14 +407,60 @@ Public Sub DrawNPCName(ByVal Index As Long)
     Dim TextY As Long
     Dim Color As Long
     Dim NPCNum As Long
-    Dim name As String
+    Dim Name As String
     Dim Level As String
     Dim Difference As Long
+    Dim I As Long, II As Long, tIcon As String
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     NPCNum = MapNPC(Index).num
+    
+'///////////////////////////////////
+'//////////QUEST DISPLAY////////////
+'///////////////////////////////////
+
+    'run through quests and see if this NPC can start/manage one.
+    For I = 1 To MAX_QUESTS
+        For II = 1 To Quest(I).Max_CLI
+            If Quest(I).CLI(II).ItemIndex = NPCNum Then 'this quest is assigned to this NPC
+                'show the icon based off quest status
+                If Player(MyIndex).QuestCLIID(I) = 0 Then 'haven't started this quest yet
+                    If II = 1 Then 'make sure this is the first Greeter of the quest
+                        tIcon = Trim$(Quest(I).Icon_Start)
+                        GoTo PastQuestDataRetrieval
+                    End If
+                ElseIf Player(MyIndex).QuestCLIID(I) = II Then 'make sure the player is on this NPC within the progress of the quest
+                    tIcon = Trim$(Quest(I).Icon_Progress)
+                    GoTo PastQuestDataRetrieval
+                End If
+            End If
+        Next II
+    Next I
+    
+PastQuestDataRetrieval:
+    'display it above the NPC's name
+    If Len(tIcon) > 0 Then
+        TextX = GetNPCTextX(Index) - GetFontWidth((tIcon))
+        ' Set the basic Y Value
+        If NPC(NPCNum).Sprite < 1 Or NPC(NPCNum).Sprite > NumCharacters Then
+            TextY = GetNPCTextY(Index) - 32
+        Else
+            ' Determine location for the text
+            TextY = GetNPCTextY(Index) - (Tex_Character(NPC(NPCNum).Sprite).Height / 4)
+        
+            If (Tex_Character(NPC(NPCNum).Sprite).Height / 4) < 32 Then
+                TextY = TextY - 16
+            End If
+        End If
+        
+        Call RenderText(Font_Default, tIcon, TextX, TextY, White)
+    End If
+
+'///////////////////////////////////
+'//////////QUEST DISPLAY////////////
+'///////////////////////////////////
     
     ' Set the basic Y Value
     If NPC(NPCNum).Sprite < 1 Or NPC(NPCNum).Sprite > NumCharacters Then
@@ -439,10 +485,10 @@ Public Sub DrawNPCName(ByVal Index As Long)
             Color = Yellow
     End Select
     
-    name = Trim$(NPC(NPCNum).name)
+    Name = Trim$(NPC(NPCNum).Name)
     
-    If Len(name) > 0 Then
-        TextX = GetNPCTextX(Index) - GetFontWidth((name))
+    If Len(Name) > 0 Then
+        TextX = GetNPCTextX(Index) - GetFontWidth((Name))
         
         If Options.Levels = 1 And NPC(NPCNum).Level > 0 Then
             Level = "Lv: " & NPC(NPCNum).Level
@@ -453,7 +499,7 @@ Public Sub DrawNPCName(ByVal Index As Long)
         End If
         
         ' Draw Name
-        Call RenderText(Font_Default, name, TextX, TextY, Color)
+        Call RenderText(Font_Default, Name, TextX, TextY, Color)
     End If
     
     If Options.Levels = 1 And NPC(NPCNum).Level > 0 Then
@@ -488,7 +534,7 @@ Public Sub DrawNPCName(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawNPCName", "modText", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -500,7 +546,7 @@ Public Function DrawMapAttributes()
     Dim tY As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If frmEditor_Map.OptAttributes.Value Or frmMain.chkShowAttributes.Value Then
         For X = TileView.Left To TileView.Right
@@ -546,7 +592,7 @@ Public Function DrawMapAttributes()
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawMapAttributes", "modText", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -555,7 +601,7 @@ Sub DrawActionMsg(ByVal Index As Long)
     Dim X As Long, Y As Long, I As Long, time As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Does it exist
     If ActionMsg(Index).Timer = 0 Then Exit Sub
@@ -626,34 +672,34 @@ Sub DrawActionMsg(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawActionMsg", "modText", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Function GetFontWidth(ByVal text As String) As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     GetFontWidth = frmMain.TextWidth(text) / 2
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "GetFontWidth", "modText", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
-Public Sub AddText(ByVal msg As String, ByVal Color As Long)
+Public Sub AddText(ByVal Msg As String, ByVal Color As Long)
     Dim S As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' No message just exit
-    If msg = vbNullString Then Exit Sub
+    If Msg = vbNullString Then Exit Sub
     
-    S = vbNewLine & msg
+    S = vbNewLine & Msg
     
     frmMain.txtChat.SelStart = Len(frmMain.txtChat.text)
     
@@ -668,14 +714,14 @@ Public Sub AddText(ByVal msg As String, ByVal Color As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "AddText", "modText", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub SetPing()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     PingToDraw = Ping
 
@@ -687,7 +733,7 @@ Public Sub SetPing()
     End Select
     Exit Sub
     
-errorhandler:
+ErrorHandler:
     HandleError "SetPing", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -696,18 +742,18 @@ Public Sub DrawEventName(ByVal Index As Long)
     Dim TextX As Long
     Dim TextY As Long
     Dim Color As Long
-    Dim name As String
+    Dim Name As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     If InMapEditor Then Exit Sub
 
     Color = White
 
-    name = Trim$(Map.MapEvents(Index).name)
+    Name = Trim$(Map.MapEvents(Index).Name)
     
     ' Calc pos
-    TextX = ConvertMapX(Map.MapEvents(Index).X * PIC_X) + Map.MapEvents(Index).xOffset + (PIC_X \ 2) - (EngineGetTextWidth(Font_Default, (Trim$(name))) / 2)
+    TextX = ConvertMapX(Map.MapEvents(Index).X * PIC_X) + Map.MapEvents(Index).xOffset + (PIC_X \ 2) - (EngineGetTextWidth(Font_Default, (Trim$(Name))) / 2)
     If Map.MapEvents(Index).GraphicType = 0 Then
         TextY = ConvertMapY(Map.MapEvents(Index).Y * PIC_Y) + Map.MapEvents(Index).yOffset - 16
     ElseIf Map.MapEvents(Index).GraphicType = 1 Then
@@ -726,11 +772,11 @@ Public Sub DrawEventName(ByVal Index As Long)
     End If
 
     ' Draw name
-    RenderText Font_Default, name, TextX, TextY, Color
+    RenderText Font_Default, Name, TextX, TextY, Color
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawEventName", "modText", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -766,7 +812,7 @@ Public Sub DrawChatBubble(ByVal Index As Long)
         End If
         
         ' Word wrap the text
-        WordWrap_Array .msg, ChatBubbleWidth, theArray
+        WordWrap_Array .Msg, ChatBubbleWidth, theArray
                 
         ' Find max width
         Dim Size As Long

@@ -134,6 +134,10 @@ Public Enum ServerPackets
     
     SAccessVerificator
     
+    SEditQuest
+    SUpdateQuest
+    SQuestRequest
+    
     ' Make sure SMSG_COUNT is below everything else
     SMSG_COUNT
 End Enum
@@ -281,6 +285,12 @@ Public Enum ClientPackets
     CCharacterUpdate
     
     CTarget
+    
+    CRequestEditQuests
+    CSaveQuest
+    CQuitQuest
+    CAcceptQuest
+    CRequestQuests
     
     ' Make sure CMSG_COUNT is below everything else
     CMSG_COUNT
@@ -437,4 +447,5 @@ Public Enum EventType
     evSetTint
     evWait
 End Enum
+
 

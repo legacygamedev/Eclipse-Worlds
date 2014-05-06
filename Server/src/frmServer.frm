@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "Tabctl32.ocx"
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmServer 
    BorderStyle     =   1  'Fixed Single
@@ -8,7 +8,7 @@ Begin VB.Form frmServer
    ClientHeight    =   3555
    ClientLeft      =   45
    ClientTop       =   330
-   ClientWidth     =   7320
+   ClientWidth     =   7425
    BeginProperty Font 
       Name            =   "Microsoft Sans Serif"
       Size            =   8.25
@@ -22,15 +22,15 @@ Begin VB.Form frmServer
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    ScaleHeight     =   3555
-   ScaleWidth      =   7320
+   ScaleWidth      =   7425
    StartUpPosition =   2  'CenterScreen
    Begin TabDlg.SSTab SSTab1 
       Height          =   3375
       Left            =   120
       TabIndex        =   0
       Top             =   120
-      Width           =   7095
-      _ExtentX        =   12515
+      Width           =   7215
+      _ExtentX        =   12726
       _ExtentY        =   5953
       _Version        =   393216
       Style           =   1
@@ -67,7 +67,9 @@ Begin VB.Form frmServer
       TabPicture(2)   =   "frmServer.frx":170C2
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "fraDatabase"
+      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "fraServer"
+      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "News"
       TabPicture(3)   =   "frmServer.frx":170DE
@@ -89,7 +91,7 @@ Begin VB.Form frmServer
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   -69720
+         Left            =   -69600
          TabIndex        =   22
          Top             =   480
          Width           =   1695
@@ -130,14 +132,14 @@ Begin VB.Form frmServer
          ScrollBars      =   2  'Vertical
          TabIndex        =   20
          Top             =   960
-         Width           =   6855
+         Width           =   6975
       End
       Begin VB.TextBox txtChat 
          Height          =   375
          Left            =   120
          TabIndex        =   16
          Top             =   2880
-         Width           =   6855
+         Width           =   6975
       End
       Begin VB.TextBox txtText 
          Height          =   2175
@@ -146,7 +148,7 @@ Begin VB.Form frmServer
          ScrollBars      =   2  'Vertical
          TabIndex        =   15
          Top             =   600
-         Width           =   6855
+         Width           =   6975
       End
       Begin VB.Frame fraServer 
          Caption         =   "Server"
@@ -160,7 +162,7 @@ Begin VB.Form frmServer
             Strikethrough   =   0   'False
          EndProperty
          Height          =   2775
-         Left            =   -69480
+         Left            =   -69360
          TabIndex        =   1
          Top             =   480
          Width           =   1455
@@ -291,7 +293,25 @@ Begin VB.Form frmServer
          Left            =   -74880
          TabIndex        =   4
          Top             =   480
-         Width           =   4215
+         Width           =   5415
+         Begin VB.CommandButton cmdReloadQuests 
+            Caption         =   "Quests"
+            Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Tahoma"
+               Size            =   9
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   375
+            Left            =   4080
+            TabIndex        =   32
+            Top             =   240
+            Width           =   1215
+         End
          Begin VB.CommandButton cmdReloadEmoticons 
             Caption         =   "Emoticons"
             Enabled         =   0   'False
@@ -568,8 +588,8 @@ Begin VB.Form frmServer
          Left            =   -74880
          TabIndex        =   23
          Top             =   480
-         Width           =   6855
-         _ExtentX        =   12091
+         Width           =   6975
+         _ExtentX        =   12303
          _ExtentY        =   4895
          View            =   3
          Arrange         =   1
@@ -710,6 +730,19 @@ Private Sub cmdReLoadGuilds_Click()
     Next
 End Sub
 
+Private Sub cmdReloadQuests_Click()
+    Dim i As Long
+    
+    Call LoadQuests
+    Call TextAdd("All quests reloaded.")
+    
+    For i = 1 To Player_HighIndex
+        If IsPlaying(i) Then
+            SendQuests i
+        End If
+    Next
+End Sub
+
 ' ********************
 ' ** Winsock object **
 ' ********************
@@ -813,6 +846,7 @@ Private Sub cmdReloadAll_Click()
     Call cmdReloadOptions_Click
     Call cmdReloadEmoticons_Click
     Call cmdReLoadGuilds_Click
+    Call cmdReloadQuests_Click
 End Sub
 
 Private Sub cmdReloadBans_Click()

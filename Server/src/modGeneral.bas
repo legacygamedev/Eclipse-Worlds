@@ -51,6 +51,7 @@ Sub InitServer()
         ChkDir App.path & "\Data\", "classes"
         ChkDir App.path & "\Data\", "guilds"
         ChkDir App.path & "\Data\", "emoticons"
+        ChkDir App.path & "\Data\", "quests"
         
         ' Set quote character
         vbQuote = ChrW$(34)
@@ -196,6 +197,8 @@ Public Sub ClearGameData()
     Call ClearMorals
     Call SetStatus("Clearing emoticons...")
     Call ClearEmoticons
+    Call SetStatus("Clearing quests...")
+    Call ClearQuests
 End Sub
 
 Private Sub LoadGameData()
@@ -229,6 +232,8 @@ Private Sub LoadGameData()
     Call LoadSwitches
     Call SetStatus("Loading variables...")
     Call LoadVariables
+    Call SetStatus("Loading quests...")
+    Call LoadQuests
 End Sub
 
 Public Sub TextAdd(Msg As String)

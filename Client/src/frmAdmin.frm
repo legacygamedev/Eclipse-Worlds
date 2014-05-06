@@ -40,6 +40,31 @@ Begin VB.Form frmAdmin
       TabStop         =   0   'False
       Top             =   15
       Width           =   3075
+      Begin VB.CheckBox chkEditor 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Quests"
+         ForeColor       =   &H000000C0&
+         Height          =   270
+         Index           =   13
+         Left            =   1560
+         Style           =   1  'Graphical
+         TabIndex        =   73
+         Top             =   6720
+         Width           =   1065
+      End
+      Begin VB.PictureBox picEye 
+         Appearance      =   0  'Flat
+         BackColor       =   &H80000002&
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Index           =   13
+         Left            =   2640
+         ScaleHeight     =   210
+         ScaleWidth      =   210
+         TabIndex        =   72
+         Top             =   6720
+         Width           =   240
+      End
       Begin VB.OptionButton optCat 
          Height          =   420
          Index           =   10
@@ -1100,7 +1125,7 @@ Public Sub chkEditor_Click(Index As Integer)
 
     ' If debug mode, handle error then exit out
     
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     If ignoreChange Then
         ignoreChange = False
         Exit Sub
@@ -1318,6 +1343,21 @@ Public Sub chkEditor_Click(Index As Integer)
                 frmEditor_Events.Visible = False
                 BringWindowToTop (frmAdmin.hWnd)
             End If
+        Case 13 ' Quests
+            If chkEditor(Index).Value = 1 Then
+                If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
+                    AddText "You have insufficent access to do this!", BrightRed
+                    ignoreChange = True
+                    chkEditor(Index).Value = 0
+                End If
+                    
+                SendRequestEditQuests
+                chkEditor(Index).FontBold = True
+            Else
+                chkEditor(Index).FontBold = False
+                frmEditor_Quest.Visible = False
+                BringWindowToTop (frmAdmin.hWnd)
+            End If
 
     End Select
     
@@ -1325,7 +1365,7 @@ Public Sub chkEditor_Click(Index As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkEditor_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1362,20 +1402,20 @@ Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String
     cmbPlayersOnline.Enabled = True
 End Sub
 
-Public Sub DisplayStatus(ByVal msg As String, msgType As Status)
+Public Sub DisplayStatus(ByVal Msg As String, msgType As Status)
     Select Case msgType
         Case Status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = msg
+            lblStatus.Caption = Msg
         Case Status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = msg
+            lblStatus.Caption = Msg
         Case Status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = msg
+            lblStatus.Caption = Msg
         Case Status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = msg
+            lblStatus.Caption = Msg
     End Select
     lblStatus.Visible = True
 End Sub
@@ -1428,7 +1468,7 @@ Private Sub setAdminAccessLevel()
 
             End If
             
-            If Player(MyIndex).Access > CLng(accessLvl) And Player(MyIndex).Access >= 4 And Trim$(Player(MyIndex).name) <> cmbPlayersOnline.text Then
+            If Player(MyIndex).Access > CLng(accessLvl) And Player(MyIndex).Access >= 4 And Trim$(Player(MyIndex).Name) <> cmbPlayersOnline.text Then
                 cmbAccess.Enabled = True
             Else
                 cmbAccess.Enabled = False
@@ -1458,7 +1498,7 @@ End Sub
 
 Private Sub cmdLevelUp_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1469,14 +1509,14 @@ Private Sub cmdLevelUp_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdLevelUp_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdALoc_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1487,7 +1527,7 @@ Private Sub cmdALoc_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdALoc_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1496,7 +1536,7 @@ End Sub
 
 Private Sub cmdAWarpToMe_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1510,14 +1550,14 @@ Private Sub cmdAWarpToMe_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdAWarpToMe_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAWarpMeTo_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1532,7 +1572,7 @@ Private Sub cmdAWarpMeTo_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdAWarpMeTo_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1541,7 +1581,7 @@ Private Sub cmdAWarp_Click()
     Dim n As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1563,14 +1603,14 @@ Private Sub cmdAWarp_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdAWarp_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAMapReport_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1581,14 +1621,14 @@ Private Sub cmdAMapReport_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdAMapReport_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdARespawn_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1599,14 +1639,14 @@ Private Sub cmdARespawn_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdARespawn_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAKick_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1619,7 +1659,7 @@ Private Sub cmdAKick_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdAKick_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1628,7 +1668,7 @@ Private Sub cmdABan_Click()
     Dim StrInput As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1643,14 +1683,14 @@ Private Sub cmdABan_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdABan_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdAMute_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1663,7 +1703,7 @@ Private Sub cmdAMute_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdAMute_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1886,6 +1926,16 @@ Private Sub picEye_Click(Index As Integer)
                 BringWindowToTop (frmEditor_Title.hWnd)
             End If
             Exit Sub
+        Case 12 ' Events
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_Events.hWnd)
+            End If
+            Exit Sub
+        Case 13 ' Quest
+            If chkEditor(Index).Value = 1 Then
+                BringWindowToTop (frmEditor_Quest.hWnd)
+            End If
+            Exit Sub
 
     End Select
 End Sub
@@ -1918,7 +1968,7 @@ End Sub
 
 Public Sub selectMyself()
     For I = 0 To cmbPlayersOnline.ListCount
-        If Trim$(cmbPlayersOnline.List(I)) = Trim$(Player(MyIndex).name) Then
+        If Trim$(cmbPlayersOnline.List(I)) = Trim$(Player(MyIndex).Name) Then
             cmbPlayersOnline.ListIndex = I
             cmbPlayersOnline_Click
             Exit Sub
@@ -2018,7 +2068,7 @@ Public Sub findVisibleEditors()
     
     For Each frm In Forms
         If frm.Visible = True Then
-            Select Case frm.name
+            Select Case frm.Name
                 Case "frmEditor_Animation"
                     ignoreChange = True
                     chkEditor(EDITOR_ANIMATION).Value = 1
@@ -2100,7 +2150,7 @@ Public Sub UpdateRecentSpawner()
             rcSwitcher.max = UBound(lastSpawnedItems) - 1
             rcSwitcher.Enabled = True
             picRecentItem.Enabled = True
-            lblItemName.Caption = Item(lastSpawnedItems(rcSwitcher.Value)).name
+            lblItemName.Caption = Item(lastSpawnedItems(rcSwitcher.Value)).Name
             txtRecentAmount.text = 1
         End If
     End If
@@ -2108,7 +2158,7 @@ End Sub
 
 Public Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ignoreChange = False
     frmAdmin.picRefresh.BorderStyle = 0
@@ -2138,7 +2188,7 @@ Public Sub Form_Load()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_Load", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2148,7 +2198,7 @@ Public Sub picSizer_Click()
     
     If adminMin And reverse Then
         For Each ctrl In Controls
-            Select Case ctrl.name
+            Select Case ctrl.Name
                 Case "lblEditors", "picSizer", "chkEditor", "picEye"
                     ctrl.Left = ctrl.Left + 100
                     ctrl.Top = ctrl.Top + 206
@@ -2175,7 +2225,7 @@ Public Sub picSizer_Click()
         cmdShowGame.Visible = False
     Else
         For Each ctrl In Controls
-            Select Case ctrl.name
+            Select Case ctrl.Name
             
                 Case "lblEditors", "picSizer", "chkEditor", "picEye"
                     ctrl.Left = ctrl.Left - 100
@@ -2223,13 +2273,13 @@ End Sub
 
 Private Sub txtAMap_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtAMap.SelStart = Len(txtAMap)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtAMap_GotFocus", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2298,33 +2348,33 @@ Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
-    Dim msg As String
+    Dim Msg As String
     
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
     Else
-        msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
-        displayFieldStatus txtBox, msg, Status.Error
+        Msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
+        displayFieldStatus txtBox, Msg, Status.Error
         verifyValue = False
     End If
 End Function
 
-Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
+Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal Msg As String, msgType As Status)
     lblStatus.Visible = True
     Select Case msgType
 
         Case Status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
         Case Status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
         Case Status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
         Case Status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Replace(txtBox.name, "txt", "") & msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
     End Select
 End Sub
 

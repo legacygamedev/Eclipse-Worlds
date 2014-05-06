@@ -267,6 +267,7 @@ Public FPS_Lock As Boolean
 
 ' Editor edited items array
 Public Item_Changed(1 To MAX_ITEMS) As Boolean
+Public Quest_Changed(1 To MAX_QUESTS) As Boolean
 Public NPC_Changed(1 To MAX_NPCS) As Boolean
 Public Resource_Changed(1 To MAX_NPCS) As Boolean
 Public Animation_Changed(1 To MAX_ANIMATIONS) As Boolean

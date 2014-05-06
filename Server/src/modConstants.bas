@@ -43,6 +43,7 @@ Public Const MAX_VARIABLES As Long = 1000
 Public Const MAX_COMMON_EVENTS As Long = 100
 Public Const MAX_NPC_SPELLS As Byte = 5
 Public Const MAX_CHARS As Byte = 1
+Public Const MAX_QUESTS As Long = 100
 
 ' Gender constants
 Public Const GENDER_MALE As Byte = 0
