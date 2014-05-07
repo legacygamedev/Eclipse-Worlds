@@ -204,7 +204,10 @@ Dim QuestNum As Long
     If QuestNum < 1 Or QuestNum > MAX_QUESTS Then Exit Sub
     QuestRequest = QuestNum
     frmMain.lblQuestName.Caption = Trim$(Quest(QuestNum).Name)
-    frmMain.lblQuestStartMsg.Caption = Trim$(Quest(QuestNum).CLI(1).Action(1).TextHolder)
+    frmMain.lblQuestMsg.Caption = Trim$(Quest(QuestNum).CLI(1).Action(1).TextHolder)
+    frmMain.lblAccept.Visible = True
+    frmMain.lblDecline.Visible = True
+    frmMain.lblDecline.Caption = "Decline"
     frmMain.picQuestAccept.Visible = True
     Call frmMain.picQuestAccept.ZOrder(0)
     
@@ -1489,33 +1492,48 @@ Private Sub HandlePlayerMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     Dim buffer As clsBuffer
     Dim Msg As String
     Dim Color As Byte
+    Dim QuestMsg As Boolean, QuestNum As Long
     Dim I As Long
 
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Set buffer = New clsBuffer
-    buffer.WriteBytes data()
-    Msg = buffer.ReadString
-    Color = buffer.ReadByte
+        buffer.WriteBytes data()
+        Msg = buffer.ReadString
+        Color = buffer.ReadByte
+        QuestMsg = buffer.ReadLong
+        QuestNum = buffer.ReadLong
+    Set buffer = Nothing
     
-    ' Prevent ascii characters
-    Dim Size As Long
-    Size = Len(Msg)
-    For I = 1 To Size
-        ' limit the ASCII
-        If AscW(Mid$(Msg, I, 1)) < 32 Or AscW(Mid$(Msg, I, 1)) > 126 Then
-            ' limit the extended ASCII
-            If AscW(Mid$(Msg, I, 1)) < 128 Or AscW(Mid$(Msg, I, 1)) > 168 Then
+    If Not QuestMsg Then
+        ' Prevent ascii characters
+        Dim Size As Long
+        Size = Len(Msg)
+        For I = 1 To Size
+            ' limit the ASCII
+            If AscW(Mid$(Msg, I, 1)) < 32 Or AscW(Mid$(Msg, I, 1)) > 126 Then
                 ' limit the extended ASCII
-                If AscW(Mid$(Msg, I, 1)) < 224 Or AscW(Mid$(Msg, I, 1)) > 253 Then
-                    Mid$(Msg, I, 1) = ""
+                If AscW(Mid$(Msg, I, 1)) < 128 Or AscW(Mid$(Msg, I, 1)) > 168 Then
+                    ' limit the extended ASCII
+                    If AscW(Mid$(Msg, I, 1)) < 224 Or AscW(Mid$(Msg, I, 1)) > 253 Then
+                        Mid$(Msg, I, 1) = ""
+                    End If
                 End If
             End If
-        End If
-    Next
+        Next
+        
+        Call AddText(CheckMessage(Msg), Color)
+    Else
+        frmMain.lblQuestName.Caption = Trim$(Quest(QuestNum).Name)
+        frmMain.lblQuestMsg.Caption = Msg
+        frmMain.lblAccept.Visible = False
+        frmMain.lblDecline.Visible = True
+        frmMain.lblDecline.Caption = "Okay"
+        frmMain.picQuestAccept.Visible = True
+        Call frmMain.picQuestAccept.ZOrder(0)
+    End If
     
-    Call AddText(CheckMessage(Msg), Color)
     Exit Sub
     
 ' Error handler
@@ -2886,7 +2904,7 @@ ErrorHandler:
 End Sub
 
 Private Sub HandleSpawnEventPage(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim ID As Long, I As Long, Z As Long, X As Long, Y As Long
+    Dim id As Long, I As Long, Z As Long, X As Long, Y As Long
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -2894,14 +2912,14 @@ Private Sub HandleSpawnEventPage(ByVal Index As Long, ByRef data() As Byte, ByVa
     
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
-    ID = buffer.ReadLong
+    id = buffer.ReadLong
     
-    If ID > Map.CurrentEvents Then
-        Map.CurrentEvents = ID
+    If id > Map.CurrentEvents Then
+        Map.CurrentEvents = id
         ReDim Preserve Map.MapEvents(Map.CurrentEvents)
     End If
 
-    With Map.MapEvents(ID)
+    With Map.MapEvents(id)
         .Name = buffer.ReadString
         .Dir = buffer.ReadLong
         .ShowDir = .Dir
@@ -2936,7 +2954,7 @@ ErrorHandler:
 End Sub
 
 Private Sub HandleEventMove(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim ID As Long
+    Dim id As Long
     Dim X As Long
     Dim Y As Long
     Dim Dir As Long, ShowDir As Long
@@ -2948,16 +2966,16 @@ Private Sub HandleEventMove(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
-    ID = buffer.ReadLong
+    id = buffer.ReadLong
     X = buffer.ReadLong
     Y = buffer.ReadLong
     Dir = buffer.ReadLong
     ShowDir = buffer.ReadLong
     MovementSpeed = buffer.ReadLong
     
-    If ID > Map.CurrentEvents Then Exit Sub
+    If id > Map.CurrentEvents Then Exit Sub
 
-    With Map.MapEvents(ID)
+    With Map.MapEvents(id)
         .X = X
         .Y = Y
         .Dir = Dir

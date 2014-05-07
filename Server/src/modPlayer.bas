@@ -11,7 +11,7 @@ Sub HandleUseChar(ByVal Index As Long)
 End Sub
 
 Sub JoinGame(ByVal Index As Long)
-    Dim i As Long
+    Dim I As Long
     Dim n As Long
     Dim Color As Long
 
@@ -46,15 +46,15 @@ Sub JoinGame(ByVal Index As Long)
     Call SendQuests(Index)
     
     ' Spell Cooldowns
-    For i = 1 To MAX_PLAYER_SPELLS
-        If GetPlayerSpell(Index, i) > 0 Then
+    For I = 1 To MAX_PLAYER_SPELLS
+        If GetPlayerSpell(Index, I) > 0 Then
             ' Check if the CD has expired
-            If GetPlayerSpellCD(Index, i) - timeGetTime < 1 Then Call SetPlayerSpellCD(Index, i, 0)
-            If GetPlayerSpellCD(Index, i) - timeGetTime >= Spell(GetPlayerSpell(Index, i)).CDTime * 1000 Then Call SetPlayerSpellCD(Index, i, 0)
-            If GetPlayerSpellCD(Index, i) <= timeGetTime Then Call SetPlayerSpellCD(Index, i, 0)
+            If GetPlayerSpellCD(Index, I) - timeGetTime < 1 Then Call SetPlayerSpellCD(Index, I, 0)
+            If GetPlayerSpellCD(Index, I) - timeGetTime >= Spell(GetPlayerSpell(Index, I)).CDTime * 1000 Then Call SetPlayerSpellCD(Index, I, 0)
+            If GetPlayerSpellCD(Index, I) <= timeGetTime Then Call SetPlayerSpellCD(Index, I, 0)
             
             ' Send it
-            Call SendSpellCooldown(Index, i)
+            Call SendSpellCooldown(Index, I)
         End If
     Next
     
@@ -69,12 +69,12 @@ Sub JoinGame(ByVal Index As Long)
     
     ' Send vitals to player of all other players online
     For n = 1 To Player_HighIndex
-        For i = 1 To Vitals.Vital_Count - 1
+        For I = 1 To Vitals.Vital_Count - 1
             If IsPlaying(n) Then
-                Call SendVitalTo(Index, n, i) ' Sends all players to new player
+                Call SendVitalTo(Index, n, I) ' Sends all players to new player
                 
                 If Not Index = n Then
-                    Call SendVitalTo(n, Index, i) ' Sends new player to logged in players
+                    Call SendVitalTo(n, Index, I) ' Sends new player to logged in players
                 End If
             End If
         Next
@@ -91,8 +91,8 @@ Sub JoinGame(ByVal Index As Long)
     Call SendWelcome(Index)
 
     ' Send Resource cache
-    For i = 0 To ResourceCache(GetPlayerMap(Index)).Resource_Count
-        SendResourceCacheTo Index, i
+    For I = 0 To ResourceCache(GetPlayerMap(Index)).Resource_Count
+        SendResourceCacheTo Index, I
     Next
     
     Call UpdateClassData(Index)
@@ -130,13 +130,13 @@ Sub JoinGame(ByVal Index As Long)
     Call SendInGame(Index)
     
     ' Refresh the friends list to all players online
-    For i = 1 To Player_HighIndex
-        Call UpdateFriendsList(i)
+    For I = 1 To Player_HighIndex
+        Call UpdateFriendsList(I)
     Next
     
     ' Refresh the foes list to all players online
-    For i = 1 To Player_HighIndex
-        Call UpdateFoesList(i)
+    For I = 1 To Player_HighIndex
+        Call UpdateFoesList(I)
     Next
     
     ' Update guild list
@@ -146,7 +146,7 @@ Sub JoinGame(ByVal Index As Long)
 End Sub
 
 Sub LeftGame(ByVal Index As Long)
-    Dim n As Long, i As Long
+    Dim n As Long, I As Long
     Dim TradeTarget As Long
 
     If TempPlayer(Index).InGame Then
@@ -177,9 +177,9 @@ Sub LeftGame(ByVal Index As Long)
             PlayerMsg TradeTarget, Trim$(GetPlayerName(Index)) & " has declined the trade!", BrightRed
             
             ' Clear out trade
-            For i = 1 To MAX_INV
-                TempPlayer(TradeTarget).TradeOffer(i).Num = 0
-                TempPlayer(TradeTarget).TradeOffer(i).Value = 0
+            For I = 1 To MAX_INV
+                TempPlayer(TradeTarget).TradeOffer(I).Num = 0
+                TempPlayer(TradeTarget).TradeOffer(I).Value = 0
             Next
             
             TempPlayer(TradeTarget).InTrade = 0
@@ -190,24 +190,24 @@ Sub LeftGame(ByVal Index As Long)
         Party_PlayerLeave Index
 
         ' Loop through entire map and purge npc targets from player
-        For i = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
-            If MapNPC(GetPlayerMap(Index)).NPC(i).Num > 0 Then
-                If MapNPC(GetPlayerMap(Index)).NPC(i).targetType = TARGET_TYPE_PLAYER Then
-                    If MapNPC(GetPlayerMap(Index)).NPC(i).target = Index Then
-                        MapNPC(GetPlayerMap(Index)).NPC(i).target = 0
-                        MapNPC(GetPlayerMap(Index)).NPC(i).targetType = TARGET_TYPE_NONE
-                        Call SendMapNPCTarget(GetPlayerMap(Index), i, 0, 0)
+        For I = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
+            If MapNPC(GetPlayerMap(Index)).NPC(I).Num > 0 Then
+                If MapNPC(GetPlayerMap(Index)).NPC(I).TargetType = TARGET_TYPE_PLAYER Then
+                    If MapNPC(GetPlayerMap(Index)).NPC(I).Target = Index Then
+                        MapNPC(GetPlayerMap(Index)).NPC(I).Target = 0
+                        MapNPC(GetPlayerMap(Index)).NPC(I).TargetType = TARGET_TYPE_NONE
+                        Call SendMapNPCTarget(GetPlayerMap(Index), I, 0, 0)
                     End If
                 End If
             End If
         Next
         
         ' Refresh guild members
-        For i = 1 To Player_HighIndex
-            If IsPlaying(i) Then
-                If Not i = Index Then
-                    If GetPlayerGuild(i) = GetPlayerGuild(Index) Then
-                        SendPlayerGuildMembers i, Index
+        For I = 1 To Player_HighIndex
+            If IsPlaying(I) Then
+                If Not I = Index Then
+                    If GetPlayerGuild(I) = GetPlayerGuild(Index) Then
+                        SendPlayerGuildMembers I, Index
                     End If
                 End If
             End If
@@ -229,13 +229,13 @@ Sub LeftGame(ByVal Index As Long)
         Call ClearAccount(Index)
         
         ' Refresh the friends list of all players online
-        For i = 1 To Player_HighIndex
-            Call UpdateFriendsList(i)
+        For I = 1 To Player_HighIndex
+            Call UpdateFriendsList(I)
         Next
         
         ' Refresh the foes list of all players online
-        For i = 1 To Player_HighIndex
-            Call UpdateFoesList(i)
+        For I = 1 To Player_HighIndex
+            Call UpdateFoesList(I)
         Next
     End If
 End Sub
@@ -243,7 +243,7 @@ End Sub
 Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal NeedMap = False, Optional ByVal Dir As Integer = -1)
     Dim ShopNum As Long
     Dim OldMap As Long
-    Dim i As Long
+    Dim I As Long
     Dim buffer As clsBuffer
 
     ' Check for subscript out of range
@@ -284,18 +284,18 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     TempPlayer(Index).EventMap.CurrentEvents = 0
     
     ' Clear target
-    TempPlayer(Index).target = 0
-    TempPlayer(Index).targetType = TARGET_TYPE_NONE
+    TempPlayer(Index).Target = 0
+    TempPlayer(Index).TargetType = TARGET_TYPE_NONE
     SendPlayerTarget Index
 
     ' Loop through entire map and purge npc targets from player
-    For i = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
-        If MapNPC(GetPlayerMap(Index)).NPC(i).Num > 0 Then
-            If MapNPC(GetPlayerMap(Index)).NPC(i).targetType = TARGET_TYPE_PLAYER Then
-                If MapNPC(GetPlayerMap(Index)).NPC(i).target = Index Then
-                    MapNPC(GetPlayerMap(Index)).NPC(i).target = 0
-                    MapNPC(GetPlayerMap(Index)).NPC(i).targetType = TARGET_TYPE_NONE
-                    Call SendMapNPCTarget(OldMap, i, 0, 0)
+    For I = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
+        If MapNPC(GetPlayerMap(Index)).NPC(I).Num > 0 Then
+            If MapNPC(GetPlayerMap(Index)).NPC(I).TargetType = TARGET_TYPE_PLAYER Then
+                If MapNPC(GetPlayerMap(Index)).NPC(I).Target = Index Then
+                    MapNPC(GetPlayerMap(Index)).NPC(I).Target = 0
+                    MapNPC(GetPlayerMap(Index)).NPC(I).TargetType = TARGET_TYPE_NONE
+                    Call SendMapNPCTarget(OldMap, I, 0, 0)
                 End If
             End If
         End If
@@ -316,10 +316,10 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
     
     ' Send equipment of all people on new map
     If GetTotalMapPlayers(MapNum) > 0 Then
-        For i = 1 To Player_HighIndex
-            If IsPlaying(i) Then
-                If GetPlayerMap(i) = MapNum Then
-                    SendMapEquipmentTo i, Index
+        For I = 1 To Player_HighIndex
+            If IsPlaying(I) Then
+                If GetPlayerMap(I) = MapNum Then
+                    SendMapEquipmentTo I, Index
                 End If
             End If
         Next
@@ -330,9 +330,9 @@ Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, By
         PlayersOnMap(OldMap) = NO
         
         ' Get all NPCs' vitals
-        For i = 1 To Map(OldMap).NPC_HighIndex
-            If MapNPC(OldMap).NPC(i).Num > 0 Then
-                MapNPC(OldMap).NPC(i).Vital(Vitals.HP) = GetNPCMaxVital(MapNPC(OldMap).NPC(i).Num, Vitals.HP)
+        For I = 1 To Map(OldMap).NPC_HighIndex
+            If MapNPC(OldMap).NPC(I).Num > 0 Then
+                MapNPC(OldMap).NPC(I).Vital(Vitals.HP) = GetNPCMaxVital(MapNPC(OldMap).NPC(I).Num, Vitals.HP)
             End If
         Next
     End If
@@ -349,7 +349,7 @@ End Sub
 
 Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, Optional ByVal SendToSelf As Boolean = False)
     Dim buffer As clsBuffer, MapNum As Integer
-    Dim X As Long, Y As Long, i As Long
+    Dim X As Long, Y As Long, I As Long
     Dim Moved As Byte, MovedSoFar As Boolean
     Dim TileType As Long, VitalType As Long, Color As Long, Amount As Long
 
@@ -361,8 +361,8 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
     
     ' Don't let them move if an event is waiting for their response
     If TempPlayer(Index).EventProcessingCount > 0 Then
-        For i = 1 To TempPlayer(Index).EventProcessingCount
-            If TempPlayer(Index).EventProcessing(i).WaitingForResponse > 0 Then
+        For I = 1 To TempPlayer(Index).EventProcessingCount
+            If TempPlayer(Index).EventProcessing(I).WaitingForResponse > 0 Then
                 Call SendPlayerPosition(Index)
                 Exit Sub
             End If
@@ -405,8 +405,8 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
                     Moved = YES
                     
                     ' Clear their target
-                    TempPlayer(Index).target = 0
-                    TempPlayer(Index).targetType = TARGET_TYPE_NONE
+                    TempPlayer(Index).Target = 0
+                    TempPlayer(Index).TargetType = TARGET_TYPE_NONE
                     SendPlayerTarget Index
                 End If
             End If
@@ -435,8 +435,8 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
                     Moved = YES
                     
                     ' Clear their target
-                    TempPlayer(Index).target = 0
-                    TempPlayer(Index).targetType = TARGET_TYPE_NONE
+                    TempPlayer(Index).Target = 0
+                    TempPlayer(Index).TargetType = TARGET_TYPE_NONE
                     SendPlayerTarget Index
                 End If
             End If
@@ -465,8 +465,8 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
                     Moved = YES
                     
                     ' Clear their target
-                    TempPlayer(Index).target = 0
-                    TempPlayer(Index).targetType = TARGET_TYPE_NONE
+                    TempPlayer(Index).Target = 0
+                    TempPlayer(Index).TargetType = TARGET_TYPE_NONE
                     SendPlayerTarget Index
                 End If
             End If
@@ -495,8 +495,8 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
                     Moved = YES
                     
                     ' Clear their target
-                    TempPlayer(Index).target = 0
-                    TempPlayer(Index).targetType = TARGET_TYPE_NONE
+                    TempPlayer(Index).Target = 0
+                    TempPlayer(Index).TargetType = TARGET_TYPE_NONE
                     SendPlayerTarget Index
                 End If
             End If
@@ -620,28 +620,28 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal Movement As Long, O
 End Sub
 
 Sub EventTouch(ByVal Index As Long, ByVal X As Long, ByVal Y As Long)
-    Dim EventTouched As Boolean, i As Long
+    Dim EventTouched As Boolean, I As Long
     
     If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
-            For i = 1 To TempPlayer(Index).EventMap.CurrentEvents
-                If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Global = 1 Then
-                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).X = X And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then EventTouched = True
+            For I = 1 To TempPlayer(Index).EventMap.CurrentEvents
+                If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(I).eventID).Global = 1 Then
+                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(I).eventID).X = X And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(I).eventID).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(I).eventID).Pages(TempPlayer(Index).EventMap.EventPages(I).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(I).Visible = 1 Then EventTouched = True
                 Else
-                    If TempPlayer(Index).EventMap.EventPages(i).X = X And TempPlayer(Index).EventMap.EventPages(i).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(i).Visible = 1 Then EventTouched = True
+                    If TempPlayer(Index).EventMap.EventPages(I).X = X And TempPlayer(Index).EventMap.EventPages(I).Y = Y And Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(I).eventID).Pages(TempPlayer(Index).EventMap.EventPages(I).PageID).Trigger = 1 And TempPlayer(Index).EventMap.EventPages(I).Visible = 1 Then EventTouched = True
                 End If
                 
                 If EventTouched Then
                     ' Process this event, it is on-touch and everything checks out.
-                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount > 0 Then
+                    If Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(I).eventID).Pages(TempPlayer(Index).EventMap.EventPages(I).PageID).CommandListCount > 0 Then
                         TempPlayer(Index).EventProcessingCount = TempPlayer(Index).EventProcessingCount + 1
                         ReDim Preserve TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount)
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ActionTimer = timeGetTime
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).CurList = 1
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).CurSlot = 1
-                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).eventID = TempPlayer(Index).EventMap.EventPages(i).eventID
-                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).PageID = TempPlayer(Index).EventMap.EventPages(i).PageID
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).eventID = TempPlayer(Index).EventMap.EventPages(I).eventID
+                        TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).PageID = TempPlayer(Index).EventMap.EventPages(I).PageID
                         TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).WaitingForResponse = 0
-                        ReDim TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ListLeftOff(0 To Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(i).eventID).Pages(TempPlayer(Index).EventMap.EventPages(i).PageID).CommandListCount)
+                        ReDim TempPlayer(Index).EventProcessing(TempPlayer(Index).EventProcessingCount).ListLeftOff(0 To Map(GetPlayerMap(Index)).Events(TempPlayer(Index).EventMap.EventPages(I).eventID).Pages(TempPlayer(Index).EventMap.EventPages(I).PageID).CommandListCount)
                     End If
                     
                     EventTouched = False
@@ -668,109 +668,110 @@ End Sub
 Sub CheckEquippedItems(ByVal Index As Long)
     Dim Slot As Long
     Dim ItemNum As Integer
-    Dim i As Long
+    Dim I As Long
 
     ' We want to check incase an admin takes away an object but they had it equipped
-    For i = 1 To Equipment.Equipment_Count - 1
-        ItemNum = GetPlayerEquipment(Index, i)
+    For I = 1 To Equipment.Equipment_Count - 1
+        ItemNum = GetPlayerEquipment(Index, I)
 
         If ItemNum > 0 Then
-            If Not Item(ItemNum).Type = ITEM_TYPE_EQUIPMENT Or Not Item(ItemNum).EquipSlot = i Then SetPlayerEquipment Index, 0, i
+            If Not Item(ItemNum).Type = ITEM_TYPE_EQUIPMENT Or Not Item(ItemNum).EquipSlot = I Then SetPlayerEquipment Index, 0, I
         Else
-            SetPlayerEquipment Index, 0, i
+            SetPlayerEquipment Index, 0, I
         End If
     Next
 End Sub
 
 Function FindOpenInvSlot(ByVal Index As Long, ByVal ItemNum As Long) As Long
-    Dim i As Long
+    Dim I As Long
 
     ' Check for subscript out of range
     If IsPlaying(Index) = False Or ItemNum <= 0 Or ItemNum > MAX_ITEMS Then Exit Function
 
     If Item(ItemNum).Stackable = 1 Then
         ' If currency then check to see if they already have an instance of the item and add it to that
-        For i = 1 To MAX_INV
-            If GetPlayerInvItemNum(Index, i) = ItemNum Then
-                FindOpenInvSlot = i
+        For I = 1 To MAX_INV
+            If GetPlayerInvItemNum(Index, I) = ItemNum Then
+                FindOpenInvSlot = I
                 Exit Function
             End If
         Next
 
     End If
 
-    For i = 1 To MAX_INV
+    For I = 1 To MAX_INV
         ' Try to find an open free slot
-        If GetPlayerInvItemNum(Index, i) = 0 Then
-            FindOpenInvSlot = i
+        If GetPlayerInvItemNum(Index, I) = 0 Then
+            FindOpenInvSlot = I
             Exit Function
         End If
     Next
 End Function
 
 Function FindOpenBankSlot(ByVal Index As Long, ByVal ItemNum As Integer) As Byte
-    Dim i As Long
+    Dim I As Long
 
     ' Check for subscript out of range
     If Not IsPlaying(Index) Or ItemNum < 1 Or ItemNum > MAX_ITEMS Then Exit Function
 
     If Not Item(ItemNum).Type = ITEM_TYPE_EQUIPMENT Then
-        For i = 1 To MAX_BANK
-            If GetPlayerBankItemNum(Index, i) = ItemNum Then
-                FindOpenBankSlot = i
+        For I = 1 To MAX_BANK
+            If GetPlayerBankItemNum(Index, I) = ItemNum Then
+                FindOpenBankSlot = I
                 Exit Function
             End If
         Next
     End If
 
-    For i = 1 To MAX_BANK
-        If GetPlayerBankItemNum(Index, i) = 0 Then
-            FindOpenBankSlot = i
+    For I = 1 To MAX_BANK
+        If GetPlayerBankItemNum(Index, I) = 0 Then
+            FindOpenBankSlot = I
             Exit Function
         End If
     Next
 End Function
 
 Function HasItem(ByVal Index As Long, ByVal ItemNum As Integer) As Long
-    Dim i As Long
+    Dim I As Long
+    Dim Cnt As Long
 
     ' Check for subscript out of range
     If IsPlaying(Index) = False Or ItemNum < 1 Or ItemNum > MAX_ITEMS Then Exit Function
 
-    For i = 1 To MAX_INV
+    For I = 1 To MAX_INV
         ' Check to see if the player has the item
-        If GetPlayerInvItemNum(Index, i) = ItemNum Then
+        If GetPlayerInvItemNum(Index, I) = ItemNum Then
             If Item(ItemNum).Stackable = 1 Then
-                HasItem = GetPlayerInvItemValue(Index, i)
+                HasItem = GetPlayerInvItemValue(Index, I)
+                Exit Function
             Else
-                HasItem = 1
+                Cnt = Cnt + 1
             End If
-            
-            Exit Function
         End If
     Next
+    
+    HasItem = Cnt
 End Function
 
 Function TakeInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVal As Long, Optional Update As Boolean = True) As Boolean
-    Dim i As Long
+    Dim I As Long
     Dim n As Long
+    Dim Cnt As Long
 
     ' Check for subscript out of range
     If IsPlaying(Index) = False Or ItemNum <= 0 Or ItemNum > MAX_ITEMS Then Exit Function
 
-    For i = 1 To MAX_INV
+    For I = 1 To MAX_INV
         ' Check to see if the player has the item
-        If GetPlayerInvItemNum(Index, i) = ItemNum Then
+        If GetPlayerInvItemNum(Index, I) = ItemNum Then
             If Item(ItemNum).Stackable = 1 Then
                 ' Is what we are trying to take away more then what they have?  If so just set it to zero
-                If ItemVal >= GetPlayerInvItemValue(Index, i) Then
+                If ItemVal >= GetPlayerInvItemValue(Index, I) Then
                     TakeInvItem = True
                 Else
-                    Call SetPlayerInvItemValue(Index, i, GetPlayerInvItemValue(Index, i) - ItemVal)
+                    Call SetPlayerInvItemValue(Index, I, GetPlayerInvItemValue(Index, I) - ItemVal)
                     
-                    If Update Then
-                        Call SendInventoryUpdate(Index, i)
-                    End If
+                    If Update Then Call SendInventoryUpdate(Index, I)
                     
                     Exit Function
                 End If
@@ -779,21 +780,23 @@ Function TakeInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVa
             End If
 
             If TakeInvItem Then
-                Call SetPlayerInvItemNum(Index, i, 0)
-                Call SetPlayerInvItemValue(Index, i, 0)
-                Call SetPlayerInvItemDur(Index, i, 0)
-                Call SetPlayerInvItemBind(Index, i, 0)
-                
-                ' Send the inventory update
-                If Update Then Call SendInventoryUpdate(Index, i)
-                Exit Function
+                Cnt = Cnt + 1
+                If Not Cnt > ItemVal Then
+                    Call SetPlayerInvItemNum(Index, I, 0)
+                    Call SetPlayerInvItemValue(Index, I, 0)
+                    Call SetPlayerInvItemDur(Index, I, 0)
+                    Call SetPlayerInvItemBind(Index, I, 0)
+                End If
             End If
         End If
     Next
+    
+    ' Send the inventory update
+    If Update Then Call SendInventory(Index)
 End Function
 
 Function TakeInvSlot(ByVal Index As Long, ByVal InvSlot As Byte, ByVal ItemVal As Long, Optional ByVal Update As Boolean = True) As Boolean
-    Dim i As Long
+    Dim I As Long
     Dim n As Long
     Dim ItemNum As Integer
 
@@ -836,54 +839,54 @@ Function TakeInvSlot(ByVal Index As Long, ByVal InvSlot As Byte, ByVal ItemVal A
 End Function
 
 Function GiveInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVal As Long, Optional ByVal ItemDur As Integer = -1, Optional ByVal ItemBind As Integer = 0, Optional ByVal SendUpdate As Boolean = True) As Byte
-    Dim i As Long
+    Dim I As Long
 
     ' Check for subscript out of range
     If IsPlaying(Index) = False Or ItemNum <= 0 Or ItemNum > MAX_ITEMS Then Exit Function
 
-    i = FindOpenInvSlot(Index, ItemNum)
+    I = FindOpenInvSlot(Index, ItemNum)
 
     ' Check to see if inventory is full
-    If i > 0 And i <= MAX_INV Then
-        If CDec(GetPlayerInvItemValue(Index, i)) + CDec(ItemVal) > 2147483468 Then
+    If I > 0 And I <= MAX_INV Then
+        If CDec(GetPlayerInvItemValue(Index, I)) + CDec(ItemVal) > 2147483468 Then
             Call PlayerMsg(Index, "Cannot give it to you - it exceeds maximum limit!", BrightRed)
             GiveInvItem = 0
             Exit Function
         Else
-            Call SetPlayerInvItemNum(Index, i, ItemNum)
-            Call SetPlayerInvItemValue(Index, i, GetPlayerInvItemValue(Index, i) + ItemVal)
+            Call SetPlayerInvItemNum(Index, I, ItemNum)
+            Call SetPlayerInvItemValue(Index, I, GetPlayerInvItemValue(Index, I) + ItemVal)
         End If
         
-        If Item(GetPlayerInvItemNum(Index, i)).Type = ITEM_TYPE_EQUIPMENT Then
+        If Item(GetPlayerInvItemNum(Index, I)).Type = ITEM_TYPE_EQUIPMENT Then
             If ItemDur = -1 Then
-                Call SetPlayerInvItemDur(Index, i, Item(ItemNum).Data1)
+                Call SetPlayerInvItemDur(Index, I, Item(ItemNum).Data1)
             Else
-                Call SetPlayerInvItemDur(Index, i, ItemDur)
+                Call SetPlayerInvItemDur(Index, I, ItemDur)
             End If
         End If
         
-        If ItemBind = BIND_ON_PICKUP Or Item(GetPlayerInvItemNum(Index, i)).BindType = BIND_ON_PICKUP Then
-            Call SetPlayerInvItemBind(Index, i, BIND_ON_PICKUP)
-        ElseIf ItemBind = BIND_ON_EQUIP Or Item(GetPlayerInvItemNum(Index, i)).BindType = BIND_ON_EQUIP Then
-            Call SetPlayerInvItemBind(Index, i, BIND_ON_EQUIP)
+        If ItemBind = BIND_ON_PICKUP Or Item(GetPlayerInvItemNum(Index, I)).BindType = BIND_ON_PICKUP Then
+            Call SetPlayerInvItemBind(Index, I, BIND_ON_PICKUP)
+        ElseIf ItemBind = BIND_ON_EQUIP Or Item(GetPlayerInvItemNum(Index, I)).BindType = BIND_ON_EQUIP Then
+            Call SetPlayerInvItemBind(Index, I, BIND_ON_EQUIP)
         Else
-            Call SetPlayerInvItemBind(Index, i, 0)
+            Call SetPlayerInvItemBind(Index, I, 0)
         End If
         
-        If SendUpdate Then Call SendInventoryUpdate(Index, i)
+        If SendUpdate Then Call SendInventoryUpdate(Index, I)
         GiveInvItem = True
     Else
         Call PlayerMsg(Index, "Your inventory is full!", BrightRed)
     End If
     
-    GiveInvItem = i
+    GiveInvItem = I
 End Function
 
 Function HasSpell(ByVal Index As Long, ByVal SpellNum As Long) As Boolean
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_PLAYER_SPELLS
-        If GetPlayerSpell(Index, i) = SpellNum Then
+    For I = 1 To MAX_PLAYER_SPELLS
+        If GetPlayerSpell(Index, I) = SpellNum Then
             HasSpell = True
             Exit Function
         End If
@@ -891,17 +894,17 @@ Function HasSpell(ByVal Index As Long, ByVal SpellNum As Long) As Boolean
 End Function
 
 Function FindOpenSpellSlot(ByVal Index As Long) As Long
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_PLAYER_SPELLS
-        If GetPlayerSpell(Index, i) = 0 Then
-            FindOpenSpellSlot = i
+    For I = 1 To MAX_PLAYER_SPELLS
+        If GetPlayerSpell(Index, I) = 0 Then
+            FindOpenSpellSlot = I
             Exit Function
         End If
     Next
 End Function
 
-Sub PlayerMapGetItem(ByVal Index As Long, ByVal i As Long)
+Sub PlayerMapGetItem(ByVal Index As Long, ByVal I As Long)
     Dim n As Long
     Dim MapNum As Integer
     Dim Msg As String
@@ -913,51 +916,51 @@ Sub PlayerMapGetItem(ByVal Index As Long, ByVal i As Long)
     MapNum = GetPlayerMap(Index)
 
     ' See if there's even an item here
-    If (MapItem(MapNum, i).Num > 0) And (MapItem(MapNum, i).Num <= MAX_ITEMS) Then
+    If (MapItem(MapNum, I).Num > 0) And (MapItem(MapNum, I).Num <= MAX_ITEMS) Then
         ' Can we pick the item up?
-        If CanPlayerPickupItem(Index, i) Then
+        If CanPlayerPickupItem(Index, I) Then
             ' Check if item is at the same location as the player
-            If (MapItem(MapNum, i).X = GetPlayerX(Index)) Then
-                If (MapItem(MapNum, i).Y = GetPlayerY(Index)) Then
+            If (MapItem(MapNum, I).X = GetPlayerX(Index)) Then
+                If (MapItem(MapNum, I).Y = GetPlayerY(Index)) Then
                     ' Find open slot
-                    n = FindOpenInvSlot(Index, MapItem(MapNum, i).Num)
+                    n = FindOpenInvSlot(Index, MapItem(MapNum, I).Num)
 
                     ' Open slot available?
                     If Not n = 0 Then
                         ' Set item in the player's inventory
-                        Call SetPlayerInvItemNum(Index, n, MapItem(MapNum, i).Num)
+                        Call SetPlayerInvItemNum(Index, n, MapItem(MapNum, I).Num)
 
                         If Item(GetPlayerInvItemNum(Index, n)).Stackable = 1 Then
-                            If CDec(GetPlayerInvItemValue(Index, n)) + CDec(MapItem(MapNum, i).Value) > 2147483468 Then
+                            If CDec(GetPlayerInvItemValue(Index, n)) + CDec(MapItem(MapNum, I).Value) > 2147483468 Then
                                 Call PlayerMsg(Index, "You can't take it. It exceeds maximum limit.", BrightRed)
                             Else
-                                Call SetPlayerInvItemValue(Index, n, GetPlayerInvItemValue(Index, n) + MapItem(MapNum, i).Value)
-                                Msg = MapItem(MapNum, i).Value & " " & Trim$(Item(GetPlayerInvItemNum(Index, n)).Name)
+                                Call SetPlayerInvItemValue(Index, n, GetPlayerInvItemValue(Index, n) + MapItem(MapNum, I).Value)
+                                Msg = MapItem(MapNum, I).Value & " " & Trim$(Item(GetPlayerInvItemNum(Index, n)).Name)
                             End If
                         Else
                             Call SetPlayerInvItemValue(Index, n, 0)
                             Msg = Trim$(Item(GetPlayerInvItemNum(Index, n)).Name)
                         End If
                         
-                        Call SetPlayerInvItemDur(Index, n, MapItem(MapNum, i).Durability)
+                        Call SetPlayerInvItemDur(Index, n, MapItem(MapNum, I).Durability)
                         
                         If Item(GetPlayerInvItemNum(Index, n)).BindType = BIND_ON_PICKUP Then
-                            Call SetPlayerInvItemBind(Index, i, BIND_ON_PICKUP)
+                            Call SetPlayerInvItemBind(Index, I, BIND_ON_PICKUP)
                         ElseIf Item(GetPlayerInvItemNum(Index, n)).BindType = BIND_ON_EQUIP Then
-                            Call SetPlayerInvItemBind(Index, i, BIND_ON_EQUIP)
+                            Call SetPlayerInvItemBind(Index, I, BIND_ON_EQUIP)
                         Else
-                            Call SetPlayerInvItemBind(Index, i, 0)
+                            Call SetPlayerInvItemBind(Index, I, 0)
                         End If
                         
                         ' Erase the item from the map
-                        MapItem(MapNum, i).Num = 0
-                        MapItem(MapNum, i).Value = 0
-                        MapItem(MapNum, i).Durability = 0
-                        MapItem(MapNum, i).X = 0
-                        MapItem(MapNum, i).Y = 0
+                        MapItem(MapNum, I).Num = 0
+                        MapItem(MapNum, I).Value = 0
+                        MapItem(MapNum, I).Durability = 0
+                        MapItem(MapNum, I).X = 0
+                        MapItem(MapNum, I).Y = 0
                         
                         Call SendInventoryUpdate(Index, n)
-                        Call SpawnItemSlot(i, 0, 0, 0, GetPlayerMap(Index), 0, 0)
+                        Call SpawnItemSlot(I, 0, 0, 0, GetPlayerMap(Index), 0, 0)
                         SendActionMsg GetPlayerMap(Index), Msg, Yellow, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
                     Else
                         Call PlayerMsg(Index, "Your inventory is full.", BrightRed)
@@ -986,45 +989,45 @@ Function CanPlayerPickupItem(ByVal Index As Long, ByVal MapItemNum As Integer)
 End Function
 
 Sub PlayerMapDropItem(ByVal Index As Long, ByVal InvNum As Byte, ByVal Amount As Long)
-    Dim i As Long
+    Dim I As Long
     Dim Msg As String
     
     If (GetPlayerInvItemNum(Index, InvNum) <= MAX_ITEMS) Then
-        i = FindOpenMapItemSlot(GetPlayerMap(Index))
+        I = FindOpenMapItemSlot(GetPlayerMap(Index))
 
-        If Not i = 0 Then
-            MapItem(GetPlayerMap(Index), i).Num = GetPlayerInvItemNum(Index, InvNum)
-            MapItem(GetPlayerMap(Index), i).X = GetPlayerX(Index)
-            MapItem(GetPlayerMap(Index), i).Y = GetPlayerY(Index)
-            MapItem(GetPlayerMap(Index), i).playerName = Trim$(GetPlayerName(Index))
-            MapItem(GetPlayerMap(Index), i).PlayerTimer = timeGetTime + ITEM_SPAWN_TIME
-            MapItem(GetPlayerMap(Index), i).CanDespawn = True
-            MapItem(GetPlayerMap(Index), i).DespawnTimer = timeGetTime + ITEM_DESPAWN_TIME
+        If Not I = 0 Then
+            MapItem(GetPlayerMap(Index), I).Num = GetPlayerInvItemNum(Index, InvNum)
+            MapItem(GetPlayerMap(Index), I).X = GetPlayerX(Index)
+            MapItem(GetPlayerMap(Index), I).Y = GetPlayerY(Index)
+            MapItem(GetPlayerMap(Index), I).playerName = Trim$(GetPlayerName(Index))
+            MapItem(GetPlayerMap(Index), I).PlayerTimer = timeGetTime + ITEM_SPAWN_TIME
+            MapItem(GetPlayerMap(Index), I).CanDespawn = True
+            MapItem(GetPlayerMap(Index), I).DespawnTimer = timeGetTime + ITEM_DESPAWN_TIME
 
             If Item(GetPlayerInvItemNum(Index, InvNum)).Type = ITEM_TYPE_EQUIPMENT Then
-                MapItem(GetPlayerMap(Index), i).Durability = GetPlayerInvItemDur(Index, InvNum)
+                MapItem(GetPlayerMap(Index), I).Durability = GetPlayerInvItemDur(Index, InvNum)
             Else
-                MapItem(GetPlayerMap(Index), i).Durability = 0
+                MapItem(GetPlayerMap(Index), I).Durability = 0
             End If
             
             If Item(GetPlayerInvItemNum(Index, InvNum)).Stackable = 1 Then
                 ' Check if its more then they have and if so drop it all
                 If Amount >= GetPlayerInvItemValue(Index, InvNum) Then
-                    MapItem(GetPlayerMap(Index), i).Value = GetPlayerInvItemValue(Index, InvNum)
+                    MapItem(GetPlayerMap(Index), I).Value = GetPlayerInvItemValue(Index, InvNum)
                     Msg = GetPlayerInvItemValue(Index, InvNum) & " " & Trim$(Item(GetPlayerInvItemNum(Index, InvNum)).Name)
                     Call SetPlayerInvItemNum(Index, InvNum, 0)
                     Call SetPlayerInvItemValue(Index, InvNum, 0)
                     Call SetPlayerInvItemDur(Index, InvNum, 0)
                     Call SetPlayerInvItemBind(Index, InvNum, 0)
                 Else
-                    MapItem(GetPlayerMap(Index), i).Value = Amount
+                    MapItem(GetPlayerMap(Index), I).Value = Amount
                     Msg = Amount & " " & Trim$(Item(GetPlayerInvItemNum(Index, InvNum)).Name)
                     Call SetPlayerInvItemValue(Index, InvNum, GetPlayerInvItemValue(Index, InvNum) - Amount)
                 End If
             Else
                 ' It's not a currency object so this is easy
                 Msg = Trim$(Item(GetPlayerInvItemNum(Index, InvNum)).Name)
-                MapItem(GetPlayerMap(Index), i).Value = 0
+                MapItem(GetPlayerMap(Index), I).Value = 0
                 Call SetPlayerInvItemNum(Index, InvNum, 0)
                 Call SetPlayerInvItemValue(Index, InvNum, 0)
                 Call SetPlayerInvItemDur(Index, InvNum, 0)
@@ -1038,7 +1041,7 @@ Sub PlayerMapDropItem(ByVal Index As Long, ByVal InvNum As Byte, ByVal Amount As
             Call SendInventoryUpdate(Index, InvNum)
             
             ' Spawn the item before we set the num or we'll get a different free map item slot
-            Call SpawnItemSlot(i, MapItem(GetPlayerMap(Index), i).Num, Amount, MapItem(GetPlayerMap(Index), i).Durability, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index))
+            Call SpawnItemSlot(I, MapItem(GetPlayerMap(Index), I).Num, Amount, MapItem(GetPlayerMap(Index), I).Durability, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index))
         Else
             Call PlayerMsg(Index, "There are too many items on the ground to drop anything else.", BrightRed)
         End If
@@ -1046,7 +1049,7 @@ Sub PlayerMapDropItem(ByVal Index As Long, ByVal InvNum As Byte, ByVal Amount As
 End Sub
 
 Sub CheckPlayerLevelUp(ByVal Index As Long)
-    Dim i As Long
+    Dim I As Long
     Dim ExpRollOver As Long
     Dim Level_Count As Long
 
@@ -1070,20 +1073,20 @@ Sub CheckPlayerLevelUp(ByVal Index As Long)
             End If
             
             ' Restore and send vitals
-            For i = 1 To Vitals.Vital_Count - 1
-                Call SetPlayerVital(Index, i, GetPlayerMaxVital(Index, i))
-                Call SendVital(Index, i)
+            For I = 1 To Vitals.Vital_Count - 1
+                Call SetPlayerVital(Index, I, GetPlayerMaxVital(Index, I))
+                Call SendVital(Index, I)
             Next
             
             ' Check for new title
             Call CheckPlayerNewTitle(Index)
             
             ' Check if any of the player's spells can rank up
-            For i = 1 To MAX_PLAYER_SPELLS
-                If GetPlayerSpell(Index, i) > 0 Then
-                    If Spell(GetPlayerSpell(Index, i)).NewSpell > 0 Then
-                        If Spell(Spell(GetPlayerSpell(Index, i)).NewSpell).CastRequired > 0 Then
-                            Call CheckSpellRankUp(Index, GetPlayerSpell(Index, i), i)
+            For I = 1 To MAX_PLAYER_SPELLS
+                If GetPlayerSpell(Index, I) > 0 Then
+                    If Spell(GetPlayerSpell(Index, I)).NewSpell > 0 Then
+                        If Spell(Spell(GetPlayerSpell(Index, I)).NewSpell).CastRequired > 0 Then
+                            Call CheckSpellRankUp(Index, GetPlayerSpell(Index, I), I)
                         End If
                     End If
                 End If
@@ -1119,43 +1122,43 @@ Sub CheckPlayerSkillLevelUp(ByVal Index As Long, ByVal SkillNum As Byte)
 End Sub
 
 Private Function AutoLife(ByVal Index As Long) As Boolean
-    Dim i As Byte
+    Dim I As Byte
     
-    For i = 1 To MAX_INV
-        If GetPlayerInvItemNum(Index, i) > 0 Then
-            If Item(GetPlayerInvItemNum(Index, i)).Type = ITEM_TYPE_AUTOLIFE Then
-                If CanPlayerUseItem(Index, GetPlayerInvItemNum(Index, i), False) Then
+    For I = 1 To MAX_INV
+        If GetPlayerInvItemNum(Index, I) > 0 Then
+            If Item(GetPlayerInvItemNum(Index, I)).Type = ITEM_TYPE_AUTOLIFE Then
+                If CanPlayerUseItem(Index, GetPlayerInvItemNum(Index, I), False) Then
                     ' HP
-                    If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).AddHP > 0 Then
-                        If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).AddHP > GetPlayerMaxVital(Index, HP) Then
+                    If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num).AddHP > 0 Then
+                        If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num).AddHP > GetPlayerMaxVital(Index, HP) Then
                             SendActionMsg GetPlayerMap(Index), "+" & GetPlayerMaxVital(Index, HP), BrightGreen, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32
                         Else
-                            SendActionMsg GetPlayerMap(Index), "+" & Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).AddHP, BrightGreen, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32
+                            SendActionMsg GetPlayerMap(Index), "+" & Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num).AddHP, BrightGreen, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32
                         End If
-                        Call SetPlayerVital(Index, Vitals.HP, GetPlayerVital(Index, Vitals.HP) + Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).AddHP)
+                        Call SetPlayerVital(Index, Vitals.HP, GetPlayerVital(Index, Vitals.HP) + Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num).AddHP)
                         Call SendVital(Index, Vitals.HP)
                     End If
                     
                     ' MP
-                    If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).AddMP > 0 Then
-                        If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).AddMP > GetPlayerMaxVital(Index, MP) Then
+                    If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num).AddMP > 0 Then
+                        If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num).AddMP > GetPlayerMaxVital(Index, MP) Then
                             SendActionMsg GetPlayerMap(Index), "+" & GetPlayerMaxVital(Index, MP), BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32
                         Else
-                            SendActionMsg GetPlayerMap(Index), "+" & Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).AddMP, BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32
+                            SendActionMsg GetPlayerMap(Index), "+" & Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num).AddMP, BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32
                         End If
                         Call SendVital(Index, Vitals.MP)
-                        Call SetPlayerVital(Index, Vitals.MP, GetPlayerVital(Index, Vitals.MP) + Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).AddMP)
+                        Call SetPlayerVital(Index, Vitals.MP, GetPlayerVital(Index, Vitals.MP) + Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num).AddMP)
                     End If
                     
                     ' If it is not reusable then take the item away
-                    If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).IsReusable = False Then
-                        Call TakeInvItem(Index, Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num, 0)
+                    If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num).IsReusable = False Then
+                        Call TakeInvItem(Index, Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num, 0)
                     End If
                     
-                    Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, i)).Animation, 0, 0, TARGET_TYPE_PLAYER, Index)
+                    Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, I)).Animation, 0, 0, TARGET_TYPE_PLAYER, Index)
                     
                     ' Warp player away
-                    If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(i).Num).Data1 = 1 Then
+                    If Item(Account(Index).Chars(GetPlayerChar(Index)).Inv(I).Num).Data1 = 1 Then
                         Call WarpPlayer(Index)
                     End If
                     
@@ -1170,7 +1173,7 @@ Private Function AutoLife(ByVal Index As Long) As Boolean
 End Function
 
 Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
-    Dim i As Long, RemoveItem As Boolean
+    Dim I As Long, RemoveItem As Boolean
    
     ' Set HP to 0
     Call SetPlayerVital(Index, Vitals.HP, 0)
@@ -1186,25 +1189,25 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
         End If
 
         ' Drop all worn items
-        For i = 1 To Equipment.Equipment_Count - 1
+        For I = 1 To Equipment.Equipment_Count - 1
             RemoveItem = False
             
-            If GetPlayerEquipment(Index, i) > 0 Then
+            If GetPlayerEquipment(Index, I) > 0 Then
                 If TempPlayer(Index).InParty > 0 Then
-                    Call Party_GetLoot(TempPlayer(Attacker).InParty, GetPlayerEquipment(Index, i), 1, GetPlayerX(Index), GetPlayerY(Index))
+                    Call Party_GetLoot(TempPlayer(Attacker).InParty, GetPlayerEquipment(Index, I), 1, GetPlayerX(Index), GetPlayerY(Index))
                     RemoveItem = True
                 Else
                     If Moral(GetPlayerMap(Index)).CanDropItem = 1 Then
                         If Attacker > 0 Then
-                            Call SpawnItem(GetPlayerEquipment(Index, i), 1, 0, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Attacker))
+                            Call SpawnItem(GetPlayerEquipment(Index, I), 1, 0, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Attacker))
                             RemoveItem = True
                         Else
-                            Call SpawnItem(GetPlayerEquipment(Index, i), 1, 0, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index))
+                            Call SpawnItem(GetPlayerEquipment(Index, I), 1, 0, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index))
                             RemoveItem = True
                         End If
                     Else
                         If Attacker > 0 Then
-                            Call GiveInvItem(Attacker, GetPlayerEquipment(Index, i), 1)
+                            Call GiveInvItem(Attacker, GetPlayerEquipment(Index, I), 1)
                             RemoveItem = True
                         End If
                     End If
@@ -1213,41 +1216,41 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
                 ' Remove equipment item
                 If RemoveItem Then
                     ' Send a message to the world indicating that they dropped an item
-                    Call GlobalMsg(GetPlayerName(Index) & " drops " & CheckGrammar(Trim$(Item(GetPlayerEquipment(Index, i)).Name)) & "!", Yellow)
+                    Call GlobalMsg(GetPlayerName(Index) & " drops " & CheckGrammar(Trim$(Item(GetPlayerEquipment(Index, I)).Name)) & "!", Yellow)
                     
-                    SetPlayerEquipment Index, 0, i
-                    SetPlayerEquipmentDur Index, 0, i
-                    SetPlayerEquipmentBind Index, 0, i
+                    SetPlayerEquipment Index, 0, I
+                    SetPlayerEquipmentDur Index, 0, I
+                    SetPlayerEquipmentBind Index, 0, I
                 End If
             End If
         Next
         
         ' Drop 10% of their Gold
-        For i = 1 To MAX_INV
-            If GetPlayerInvItemNum(Index, i) = 1 Then
-                If Round(GetPlayerInvItemValue(Index, i) / 10) > 0 Then
-                    Call TakeInvItem(Index, GetPlayerInvItemNum(Index, i), Round(GetPlayerInvItemValue(Index, i) / 10))
-                    Call SpawnItem(1, Round(GetPlayerInvItemValue(Index, i) / 10), 0, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Attacker))
+        For I = 1 To MAX_INV
+            If GetPlayerInvItemNum(Index, I) = 1 Then
+                If Round(GetPlayerInvItemValue(Index, I) / 10) > 0 Then
+                    Call TakeInvItem(Index, GetPlayerInvItemNum(Index, I), Round(GetPlayerInvItemValue(Index, I) / 10))
+                    Call SpawnItem(1, Round(GetPlayerInvItemValue(Index, I) / 10), 0, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Attacker))
                     Exit For
                 End If
             End If
         Next
     
         ' Add the player kill
-        If Attacker > 0 Then Account(FindPlayer(GetPlayerName(Attacker))).Chars(GetPlayerChar(i)).PlayerKills = Account(FindPlayer(GetPlayerName(Attacker))).Chars(GetPlayerChar(i)).PlayerKills + 1
+        If Attacker > 0 Then Account(FindPlayer(GetPlayerName(Attacker))).Chars(GetPlayerChar(I)).PlayerKills = Account(FindPlayer(GetPlayerName(Attacker))).Chars(GetPlayerChar(I)).PlayerKills + 1
         
         ' Check for new title
         Call CheckPlayerNewTitle(Index)
     End If
     
     ' Loop through entire map and purge npc targets from player
-    For i = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
-        If MapNPC(GetPlayerMap(Index)).NPC(i).Num > 0 Then
-            If MapNPC(GetPlayerMap(Index)).NPC(i).targetType = TARGET_TYPE_PLAYER Then
-                If MapNPC(GetPlayerMap(Index)).NPC(i).target = Index Then
-                    MapNPC(GetPlayerMap(Index)).NPC(i).target = 0
-                    MapNPC(GetPlayerMap(Index)).NPC(i).targetType = TARGET_TYPE_NONE
-                    Call SendMapNPCTarget(GetPlayerMap(Index), i, 0, 0)
+    For I = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
+        If MapNPC(GetPlayerMap(Index)).NPC(I).Num > 0 Then
+            If MapNPC(GetPlayerMap(Index)).NPC(I).TargetType = TARGET_TYPE_PLAYER Then
+                If MapNPC(GetPlayerMap(Index)).NPC(I).Target = Index Then
+                    MapNPC(GetPlayerMap(Index)).NPC(I).Target = 0
+                    MapNPC(GetPlayerMap(Index)).NPC(I).TargetType = TARGET_TYPE_NONE
+                    Call SendMapNPCTarget(GetPlayerMap(Index), I, 0, 0)
                 End If
             End If
         End If
@@ -1260,8 +1263,8 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
     Call WarpPlayer(Index)
     
     ' Clear all DoTs and HoTs
-    For i = 1 To MAX_DOTS
-        With TempPlayer(Index).DoT(i)
+    For I = 1 To MAX_DOTS
+        With TempPlayer(Index).DoT(I)
             .Used = False
             .Spell = 0
             .Timer = 0
@@ -1269,7 +1272,7 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
             .StartTime = 0
         End With
         
-        With TempPlayer(Index).HoT(i)
+        With TempPlayer(Index).HoT(I)
             .Used = False
             .Spell = 0
             .Timer = 0
@@ -1289,8 +1292,8 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
     If TempPlayer(Index).InParty > 0 Then SendPartyVitals TempPlayer(Index).InParty, Index
     
     ' Send vitals
-    For i = 1 To Vitals.Vital_Count - 1
-        Call SendVital(Index, i)
+    For I = 1 To Vitals.Vital_Count - 1
+        Call SendVital(Index, I)
     Next
 End Sub
 
@@ -1315,7 +1318,7 @@ Sub CheckResource(ByVal Index As Long, ByVal X As Long, ByVal Y As Long)
     Dim Resource_Num As Long
     Dim Resource_Index As Long
     Dim rX As Long, rY As Long
-    Dim i As Long
+    Dim I As Long
     Dim Damage As Long
     Dim RndNum As Long
     
@@ -1324,10 +1327,10 @@ Sub CheckResource(ByVal Index As Long, ByVal X As Long, ByVal Y As Long)
         Resource_Index = Map(GetPlayerMap(Index)).Tile(X, Y).Data1
 
         ' Get the cache number
-        For i = 0 To ResourceCache(GetPlayerMap(Index)).Resource_Count
-            If ResourceCache(GetPlayerMap(Index)).ResourceData(i).X = X Then
-                If ResourceCache(GetPlayerMap(Index)).ResourceData(i).Y = Y Then
-                    Resource_Num = i
+        For I = 0 To ResourceCache(GetPlayerMap(Index)).Resource_Count
+            If ResourceCache(GetPlayerMap(Index)).ResourceData(I).X = X Then
+                If ResourceCache(GetPlayerMap(Index)).ResourceData(I).Y = Y Then
+                    Resource_Num = I
                 End If
             End If
         Next
@@ -1535,7 +1538,7 @@ Public Sub KillPlayer(ByVal Index As Long)
 End Sub
 
 Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
-    Dim n As Long, i As Long, X As Long, Y As Long, TotalPoints As Integer, EquipSlot As Byte
+    Dim n As Long, I As Long, X As Long, Y As Long, TotalPoints As Integer, EquipSlot As Byte
     Dim Item1 As Long
     Dim Item2 As Long
     Dim Result As Long
@@ -1580,8 +1583,8 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                 SendPlayerStats Index
                 
                 ' Send vitals
-                For i = 1 To Vitals.Vital_Count - 1
-                    Call SendVital(Index, i)
+                For I = 1 To Vitals.Vital_Count - 1
+                    Call SendVital(Index, I)
                 Next
                 
                 ' Send vitals to party if in one
@@ -1668,21 +1671,21 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
             n = Item(GetPlayerInvItemNum(Index, InvNum)).Data1
 
             If n > 0 Then
-                i = FindOpenSpellSlot(Index)
+                I = FindOpenSpellSlot(Index)
 
                 ' Make sure they have an open spell slot
-                If i > 0 Then
+                If I > 0 Then
                     ' Make sure they don't already have the spell
                     If Not HasSpell(Index, n) Then
                         ' Make sure it's a valid name and their is an icon
                         If Not Trim$(Spell(n).Name) = vbNullString And Not Spell(n).Icon = 0 Then
                             ' Send the sound
                             SendPlayerSound Index, GetPlayerX(Index), GetPlayerY(Index), SoundEntity.seItem, GetPlayerInvItemNum(Index, InvNum)
-                            Call SetPlayerSpell(Index, i, n)
+                            Call SetPlayerSpell(Index, I, n)
                             Call SendAnimation(GetPlayerMap(Index), Item(GetPlayerInvItemNum(Index, InvNum)).Animation, GetPlayerX(Index), GetPlayerY(Index))
                             Call TakeInvItem(Index, GetPlayerInvItemNum(Index, InvNum), 0)
                             Call PlayerMsg(Index, "You have learned a new spell!", BrightGreen)
-                            Call SendPlayerSpell(Index, i)
+                            Call SendPlayerSpell(Index, I)
                         Else
                             Call PlayerMsg(Index, "This spell either does not have a name or icon, report this to a staff member.", BrightRed)
                             Exit Sub
@@ -1720,9 +1723,9 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
         Case ITEM_TYPE_RESETSTATS
             TotalPoints = GetPlayerPoints(Index)
             
-            For i = 1 To Stats.Stat_count - 1
-                TotalPoints = TotalPoints + (GetPlayerStat(Index, i) - Class(GetPlayerClass(Index)).Stat(i))
-                Call SetPlayerStat(Index, i, Class(GetPlayerClass(Index)).Stat(i))
+            For I = 1 To Stats.Stat_count - 1
+                TotalPoints = TotalPoints + (GetPlayerStat(Index, I) - Class(GetPlayerClass(Index)).Stat(I))
+                Call SetPlayerStat(Index, I, Class(GetPlayerClass(Index)).Stat(I))
             Next
             
             ' Send the sound
@@ -1823,7 +1826,7 @@ Public Sub SetCheckpoint(ByVal Index As Long, ByVal MapNum As Integer, ByVal X A
 End Sub
 
 Public Sub UpdatePlayerEquipmentItems(ByVal Index As Long)
-    Dim i As Long
+    Dim I As Long
     
     If GetPlayerEquipment(Index, Shield) > 0 And GetPlayerEquipment(Index, Weapon) > 0 Then
         If Item(GetPlayerEquipment(Index, Weapon)).TwoHanded = 1 Then
@@ -1831,17 +1834,17 @@ Public Sub UpdatePlayerEquipmentItems(ByVal Index As Long)
         End If
     End If
     
-    For i = 1 To Equipment_Count - 1
-        If GetPlayerEquipment(Index, i) > 0 Then
-            If Item(GetPlayerEquipment(Index, i)).EquipSlot <> i Then
-                Call PlayerUnequipItem(Index, i)
+    For I = 1 To Equipment_Count - 1
+        If GetPlayerEquipment(Index, I) > 0 Then
+            If Item(GetPlayerEquipment(Index, I)).EquipSlot <> I Then
+                Call PlayerUnequipItem(Index, I)
             End If
         End If
     Next
 End Sub
 
 Public Sub UpdateAllPlayerEquipmentItems()
-    Dim n As Long, i As Long
+    Dim n As Long, I As Long
     
     For n = 1 To Player_HighIndex
         If IsPlaying(n) Then
@@ -1851,10 +1854,10 @@ Public Sub UpdateAllPlayerEquipmentItems()
                 End If
             End If
             
-            For i = 1 To Equipment_Count - 1
-                If GetPlayerEquipment(n, i) > 0 Then
-                    If Item(GetPlayerEquipment(n, i)).EquipSlot <> i Then
-                        Call PlayerUnequipItem(n, i)
+            For I = 1 To Equipment_Count - 1
+                If GetPlayerEquipment(n, I) > 0 Then
+                    If Item(GetPlayerEquipment(n, I)).EquipSlot <> I Then
+                        Call PlayerUnequipItem(n, I)
                     End If
                 End If
             Next
@@ -1864,23 +1867,23 @@ End Sub
 
 Public Sub UpdatePlayerItems(ByVal Index As Long)
     Dim TmpItem As Long
-    Dim i As Byte, X As Byte
+    Dim I As Byte, X As Byte
 
     ' Make sure the inventory items are not cached as a currency
-    For i = 1 To MAX_INV
-        If GetPlayerInvItemNum(Index, i) > 0 And GetPlayerInvItemNum(Index, i) <= MAX_INV Then
-            If Not Item(GetPlayerInvItemNum(Index, i)).Stackable = 1 Then
-                If GetPlayerInvItemValue(Index, i) > 1 Then
-                    TmpItem = GetPlayerInvItemNum(Index, i)
+    For I = 1 To MAX_INV
+        If GetPlayerInvItemNum(Index, I) > 0 And GetPlayerInvItemNum(Index, I) <= MAX_INV Then
+            If Not Item(GetPlayerInvItemNum(Index, I)).Stackable = 1 Then
+                If GetPlayerInvItemValue(Index, I) > 1 Then
+                    TmpItem = GetPlayerInvItemNum(Index, I)
                     Call TakeInvItem(Index, TmpItem, 1)
                     Call GiveInvItem(Index, TmpItem, 1)
                 End If
             End If
             
-            If GetPlayerInvItemNum(Index, i) > 0 And GetPlayerInvItemNum(Index, i) <= MAX_INV Then
-                If Item(GetPlayerInvItemNum(Index, i)).Stackable = 1 Then
-                    If GetPlayerInvItemValue(Index, i) = 0 Then
-                        TmpItem = GetPlayerInvItemNum(Index, i)
+            If GetPlayerInvItemNum(Index, I) > 0 And GetPlayerInvItemNum(Index, I) <= MAX_INV Then
+                If Item(GetPlayerInvItemNum(Index, I)).Stackable = 1 Then
+                    If GetPlayerInvItemValue(Index, I) = 0 Then
+                        TmpItem = GetPlayerInvItemNum(Index, I)
                         Call TakeInvItem(Index, TmpItem, 1)
                         X = X + 1
                     End If
@@ -1896,20 +1899,20 @@ Public Sub UpdatePlayerItems(ByVal Index As Long)
     X = 0
     
     ' Make sure the bank items are not cached as a currency
-    For i = 1 To MAX_BANK
-        If GetPlayerBankItemNum(Index, i) > 0 And GetPlayerBankItemNum(Index, i) <= MAX_BANK Then
-            If Not Item(GetPlayerBankItemNum(Index, i)).Stackable = 1 Then
-                If GetPlayerBankItemValue(Index, i) > 1 Then
-                    TmpItem = GetPlayerBankItemNum(Index, i)
+    For I = 1 To MAX_BANK
+        If GetPlayerBankItemNum(Index, I) > 0 And GetPlayerBankItemNum(Index, I) <= MAX_BANK Then
+            If Not Item(GetPlayerBankItemNum(Index, I)).Stackable = 1 Then
+                If GetPlayerBankItemValue(Index, I) > 1 Then
+                    TmpItem = GetPlayerBankItemNum(Index, I)
                     Call TakeBankItem(Index, TmpItem, 1)
                     Call GiveBankItem(Index, TmpItem, 1)
                 End If
             End If
             
-            If GetPlayerBankItemNum(Index, i) > 0 And GetPlayerBankItemNum(Index, i) <= MAX_BANK Then
-                If Item(GetPlayerBankItemNum(Index, i)).Stackable = 1 Then
-                    If GetPlayerBankItemValue(Index, i) = 0 Then
-                        TmpItem = GetPlayerBankItemNum(Index, i)
+            If GetPlayerBankItemNum(Index, I) > 0 And GetPlayerBankItemNum(Index, I) <= MAX_BANK Then
+                If Item(GetPlayerBankItemNum(Index, I)).Stackable = 1 Then
+                    If GetPlayerBankItemValue(Index, I) = 0 Then
+                        TmpItem = GetPlayerBankItemNum(Index, I)
                         Call TakeBankItem(Index, TmpItem, 1)
                         X = X + 1
                     End If
@@ -1925,26 +1928,26 @@ End Sub
 
 Public Sub UpdateAllPlayerItems(ByVal ItemNum As Integer)
     Dim TmpItem As Long
-    Dim n As Long, i As Byte, X As Byte
+    Dim n As Long, I As Byte, X As Byte
 
     For n = 1 To Player_HighIndex
         If IsPlaying(n) Then
             ' Make sure the inv items are not cached as a currency
-            For i = 1 To MAX_INV
-                If GetPlayerInvItemNum(n, i) > 0 And GetPlayerInvItemNum(n, i) <= MAX_INV Then
-                    If GetPlayerInvItemNum(n, i) = ItemNum Then
-                        TmpItem = GetPlayerInvItemNum(n, i)
+            For I = 1 To MAX_INV
+                If GetPlayerInvItemNum(n, I) > 0 And GetPlayerInvItemNum(n, I) <= MAX_INV Then
+                    If GetPlayerInvItemNum(n, I) = ItemNum Then
+                        TmpItem = GetPlayerInvItemNum(n, I)
                         
-                        If Not Item(GetPlayerInvItemNum(n, i)).Stackable = 1 Then
-                            If GetPlayerInvItemValue(n, i) > 1 Then
+                        If Not Item(GetPlayerInvItemNum(n, I)).Stackable = 1 Then
+                            If GetPlayerInvItemValue(n, I) > 1 Then
                                 Call TakeInvItem(n, TmpItem, 1)
                                 Call GiveInvItem(n, TmpItem, 1)
                             End If
                         End If
                         
-                        If GetPlayerInvItemNum(n, i) > 0 And GetPlayerInvItemNum(n, i) <= MAX_INV Then
-                            If Item(GetPlayerInvItemNum(n, i)).Stackable = 1 Then
-                                If GetPlayerInvItemValue(n, i) = 0 Then
+                        If GetPlayerInvItemNum(n, I) > 0 And GetPlayerInvItemNum(n, I) <= MAX_INV Then
+                            If Item(GetPlayerInvItemNum(n, I)).Stackable = 1 Then
+                                If GetPlayerInvItemValue(n, I) = 0 Then
                                     Call TakeInvItem(n, TmpItem, 1)
                                     X = X + 1
                                 End If
@@ -1961,21 +1964,21 @@ Public Sub UpdateAllPlayerItems(ByVal ItemNum As Integer)
             X = 0
             
             ' Make sure the Bank items are not cached as a currency
-            For i = 1 To MAX_BANK
-                If GetPlayerBankItemNum(n, i) > 0 And GetPlayerBankItemNum(n, i) <= MAX_BANK Then
-                    If GetPlayerBankItemNum(n, i) = ItemNum Then
-                        TmpItem = GetPlayerBankItemNum(n, i)
+            For I = 1 To MAX_BANK
+                If GetPlayerBankItemNum(n, I) > 0 And GetPlayerBankItemNum(n, I) <= MAX_BANK Then
+                    If GetPlayerBankItemNum(n, I) = ItemNum Then
+                        TmpItem = GetPlayerBankItemNum(n, I)
                         
-                        If Not Item(GetPlayerBankItemNum(n, i)).Stackable = 1 Then
-                            If GetPlayerBankItemValue(n, i) > 1 Then
+                        If Not Item(GetPlayerBankItemNum(n, I)).Stackable = 1 Then
+                            If GetPlayerBankItemValue(n, I) > 1 Then
                                 Call TakeBankItem(n, TmpItem, 1)
                                 Call GiveBankItem(n, TmpItem, 1)
                             End If
                         End If
                         
-                        If GetPlayerBankItemNum(n, i) > 0 And GetPlayerBankItemNum(n, i) <= MAX_BANK Then
-                            If Item(GetPlayerBankItemNum(n, i)).Stackable = 1 Then
-                                If GetPlayerBankItemValue(n, i) = 0 Then
+                        If GetPlayerBankItemNum(n, I) > 0 And GetPlayerBankItemNum(n, I) <= MAX_BANK Then
+                            If Item(GetPlayerBankItemNum(n, I)).Stackable = 1 Then
+                                If GetPlayerBankItemValue(n, I) = 0 Then
                                     Call TakeBankItem(n, TmpItem, 1)
                                     X = X + 1
                                 End If
@@ -1993,13 +1996,13 @@ Public Sub UpdateAllPlayerItems(ByVal ItemNum As Integer)
 End Sub
 
 Public Sub UpdateClassData(ByVal Index As Long)
-     Dim i As Long
+     Dim I As Long
     Dim TotalPoints As Long
     Dim TotalPoints2 As Long
     
-    For i = 1 To Stats.Stat_count - 1
+    For I = 1 To Stats.Stat_count - 1
         TotalPoints = TotalPoints + STATS_LEVEL
-        TotalPoints2 = TotalPoints2 + GetPlayerRawStat(Index, i)
+        TotalPoints2 = TotalPoints2 + GetPlayerRawStat(Index, I)
     Next
     
     TotalPoints = TotalPoints + ((GetPlayerLevel(Index) - 1) * STATS_LEVEL)
@@ -2007,8 +2010,8 @@ Public Sub UpdateClassData(ByVal Index As Long)
     
     ' Verify incorrect class data
     If TotalPoints <> TotalPoints2 Then
-        For i = 1 To Stats.Stat_count - 1
-            Call SetPlayerStat(Index, i, Class(GetPlayerClass(Index)).Stat(i))
+        For I = 1 To Stats.Stat_count - 1
+            Call SetPlayerStat(Index, I, Class(GetPlayerClass(Index)).Stat(I))
         Next
         Call SetPlayerPoints(Index, (GetPlayerLevel(Index) - 1) * STATS_LEVEL)
     End If
@@ -2041,13 +2044,13 @@ Public Sub UpdateClassData(ByVal Index As Long)
 End Sub
 
 Public Sub UpdateAllClassData()
-    Dim i, X As Long
+    Dim I, X As Long
     
     For X = 1 To Player_HighIndex
         ' Verify incorrect class data
-        For i = 1 To Stats.Stat_count - 1
-            If Not Class(GetPlayerClass(X)).Stat(i) = GetPlayerStat(X, i) - ((GetPlayerLevel(X) - 1) * 5) Then
-                Call SetPlayerStat(X, i, Class(GetPlayerClass(X)).Stat(i) + ((GetPlayerLevel(X) - 1) * 5))
+        For I = 1 To Stats.Stat_count - 1
+            If Not Class(GetPlayerClass(X)).Stat(I) = GetPlayerStat(X, I) - ((GetPlayerLevel(X) - 1) * 5) Then
+                Call SetPlayerStat(X, I, Class(GetPlayerClass(X)).Stat(I) + ((GetPlayerLevel(X) - 1) * 5))
             End If
         Next
         
@@ -2117,7 +2120,7 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     Dim AccessReq As Byte
     Dim ClassReq As Byte
     Dim GenderReq As Byte
-    Dim i As Long
+    Dim I As Long
 
     ' Can't use items while in a map that doesn't allow it
     If Moral(Map(GetPlayerMap(Index)).Moral).CanUseItem = 0 Then
@@ -2174,8 +2177,8 @@ Function CanPlayerUseItem(ByVal Index As Long, ByVal ItemNum As Integer, Optiona
     End If
     
     ' Check if they have the stats required to use this item
-    For i = 1 To Stats.Stat_count - 1
-        If GetPlayerRawStat(Index, i) < Item(ItemNum).Stat_Req(i) Then
+    For I = 1 To Stats.Stat_count - 1
+        If GetPlayerRawStat(Index, I) < Item(ItemNum).Stat_Req(I) Then
             If Message Then
                 PlayerMsg Index, "You do not meet the stat requirements to use this item.", BrightRed
             End If
@@ -2287,11 +2290,11 @@ Public Sub WarpToCheckPoint(Index As Long)
 End Sub
 
 Function IsAFriend(ByVal Index As Long, ByVal OtherPlayer As Long) As Boolean
-    Dim i As Long
+    Dim I As Long
     
     ' Are they on the user's friend list
-    For i = 1 To Account(OtherPlayer).Friends.AmountOfFriends
-        If Trim$(Account(OtherPlayer).Friends.Members(i)) = GetPlayerName(Index) Then
+    For I = 1 To Account(OtherPlayer).Friends.AmountOfFriends
+        If Trim$(Account(OtherPlayer).Friends.Members(I)) = GetPlayerName(Index) Then
             IsAFriend = True
             Exit Function
         End If
@@ -2299,11 +2302,11 @@ Function IsAFriend(ByVal Index As Long, ByVal OtherPlayer As Long) As Boolean
 End Function
 
 Function IsAFoe(ByVal Index As Long, ByVal OtherPlayer As Long) As Boolean
-    Dim i As Long
+    Dim I As Long
     
     ' Are they on the user's foe list
-    For i = 1 To Account(OtherPlayer).Foes.Amount
-        If Trim$(Account(OtherPlayer).Foes.Members(i)) = GetPlayerName(Index) Then
+    For I = 1 To Account(OtherPlayer).Foes.Amount
+        If Trim$(Account(OtherPlayer).Foes.Members(I)) = GetPlayerName(Index) Then
             Call PlayerMsg(Index, "You are being ignored by " & GetPlayerName(OtherPlayer) & "!", BrightRed)
             IsAFoe = True
             Exit Function

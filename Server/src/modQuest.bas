@@ -101,17 +101,17 @@ Sub SetPlayerQuestAmount(ByVal Index As Long, ByVal QuestID As Long, Value As Lo
 End Sub
 
 Public Function IsQuestCLI(ByVal Index As Long, ByVal NPCIndex As Long) As FindQuestRec
-Dim i As Long, II As Long, III As Long
+Dim I As Long, II As Long, III As Long
 Dim temp As FindQuestRec
 
     'Dynamically find the correct quest item
-    For i = 1 To MAX_QUESTS
-        With Quest(i)
+    For I = 1 To MAX_QUESTS
+        With Quest(I)
             For II = 1 To .Max_CLI
                 'See if this npc is within a started quest first.
                 If .CLI(II).ItemIndex = NPCIndex Then 'found a matching quest cli item, this npc is part of a quest
-                    If IsInQuest(Index, i) Then
-                        temp.QuestIndex = i
+                    If IsInQuest(Index, I) Then
+                        temp.QuestIndex = I
                         temp.CLIIndex = II
                         IsQuestCLI = temp
                         Exit Function
@@ -119,15 +119,15 @@ Dim temp As FindQuestRec
                 End If
             Next II
         End With
-    Next i
+    Next I
     
-    For i = 1 To MAX_QUESTS
-        With Quest(i)
+    For I = 1 To MAX_QUESTS
+        With Quest(I)
             For II = 1 To .Max_CLI
                 'It's not within a started quest, so see if it's a start to a new quest
                 If .CLI(II).ItemIndex = NPCIndex Then 'found a matching quest cli item, this npc is part of a quest
                     If II = 1 Then
-                        temp.QuestIndex = i
+                        temp.QuestIndex = I
                         temp.CLIIndex = II
                         IsQuestCLI = temp
                         Exit Function
@@ -135,11 +135,11 @@ Dim temp As FindQuestRec
                 End If
             Next II
         End With
-    Next i
+    Next I
 End Function
 
 Public Sub CheckQuest(ByVal Index As Long, QuestIndex As Long, CLIIndex As Long, TaskIndex As Long)
-Dim i As Long
+Dim I As Long
     'Is the player on this quest?  If not, cancel out.
     If IsInQuest(Index, QuestIndex) Then
         'Is the player currently on this Chronological list item?
@@ -148,17 +148,17 @@ Dim i As Long
         Else
             'Dynamically show message from last known cli
             If GetPlayerQuestCLIID(Index, QuestIndex) - 1 > 0 Then
-                For i = Quest(QuestIndex).CLI(GetPlayerQuestCLIID(Index, QuestIndex) - 1).Max_Actions To 1 Step -1
-                    With Quest(QuestIndex).CLI(GetPlayerQuestCLIID(Index, QuestIndex) - 1).Action(i)
+                For I = Quest(QuestIndex).CLI(GetPlayerQuestCLIID(Index, QuestIndex) - 1).Max_Actions To 1 Step -1
+                    With Quest(QuestIndex).CLI(GetPlayerQuestCLIID(Index, QuestIndex) - 1).Action(I)
                         'quit early if we run into a task.  Means we don't have a msg to display
                         If .ActionID > 0 And .ActionID < 4 Then Exit For
                         
                         If .ActionID = ACTION_SHOWMSG Then
-                            Call PlayerMsg(Index, Trim$(.TextHolder), White)
+                            Call PlayerMsg(Index, Trim$(.TextHolder), White, True, QuestIndex)
                             Exit For
                         End If
                     End With
-                Next i
+                Next I
             End If
         End If
     Else
@@ -167,7 +167,7 @@ Dim i As Long
             ' see if the player has taken it all ready and if it can be retaken
             If IsQuestCompleted(Index, QuestIndex) Then
                 If Quest(QuestIndex).CanBeRetaken = False Then
-                    Call PlayerMsg(Index, "This quest cannot be retaken.", Green)
+                    Call PlayerMsg(Index, "This quest cannot be retaken.", Green, True, QuestIndex)
                     Exit Sub
                 End If
             End If
@@ -177,43 +177,43 @@ Dim i As Long
                 'check level
                 If .LevelReq > 0 Then
                     If Not GetPlayerLevel(Index) >= .LevelReq Then
-                        Call PlayerMsg(Index, "Your level does not meet the requirements to start this quest.", BrightRed)
+                        Call PlayerMsg(Index, "Your level does not meet the requirements to start this quest.", BrightRed, True, QuestIndex)
                         Exit Sub
                     End If
                 End If
                 'check class
                 If .ClassReq > 0 Then
                     If Not GetPlayerClass(Index) = .ClassReq Then
-                        Call PlayerMsg(Index, "Your class does not meet the requirements to start this quest.", BrightRed)
+                        Call PlayerMsg(Index, "Your class does not meet the requirements to start this quest.", BrightRed, True, QuestIndex)
                         Exit Sub
                     End If
                 End If
                 'check gender
                 If .GenderReq > 0 Then
                     If Not GetPlayerGender(Index) = .GenderReq Then
-                        Call PlayerMsg(Index, "Your gender does not meet the requirements to start this quest.", BrightRed)
+                        Call PlayerMsg(Index, "Your gender does not meet the requirements to start this quest.", BrightRed, True, QuestIndex)
                         Exit Sub
                     End If
                 End If
                 'check access
                 If Not GetPlayerAccess(Index) >= .AccessReq Then
-                    Call PlayerMsg(Index, "Your administrative access level does not meet the requirements to start this quest.", BrightRed)
+                    Call PlayerMsg(Index, "Your administrative access level does not meet the requirements to start this quest.", BrightRed, True, QuestIndex)
                     Exit Sub
                 End If
                 'check skill
                 If .SkillReq > 0 Then
                     If Not GetPlayerSkill(Index, .SkillReq) >= .SkillLevelReq Then
-                        Call PlayerMsg(Index, "Your " & GetSkillName(.SkillLevelReq) & " level does not meet the requirements to start this quest.", BrightRed)
+                        Call PlayerMsg(Index, "Your " & GetSkillName(.SkillLevelReq) & " level does not meet the requirements to start this quest.", BrightRed, True, QuestIndex)
                         Exit Sub
                     End If
                 End If
                 'check stats
-                For i = 1 To Stats.Stat_count - 1
-                    If Not GetPlayerStat(Index, i) >= .Stat_Req(i) Then
-                        Call PlayerMsg(Index, "Your stats do not meet the requirements to start this quest.", BrightRed)
+                For I = 1 To Stats.Stat_count - 1
+                    If Not GetPlayerStat(Index, I) >= .Stat_Req(I) Then
+                        Call PlayerMsg(Index, "Your stats do not meet the requirements to start this quest.", BrightRed, True, QuestIndex)
                         Exit Sub
                     End If
-                Next i
+                Next I
             End With
             
             'send the request to the player
@@ -223,7 +223,7 @@ Dim i As Long
 End Sub
 
 Public Sub HandleQuestTask(ByVal Index As Long, ByVal QuestID As Long, ByVal CLIID As Long, ByVal TaskID As Long, Optional ByVal ShowRebuttal As Boolean = True)
-Dim i As Long, tmp As Long
+Dim I As Long, tmp As Long
     'Manage the current task the player is on and move player forward through the quest.
     If QuestID < 1 Or QuestID > MAX_QUESTS Then Exit Sub
     If CLIID < 1 Then Exit Sub
@@ -233,10 +233,14 @@ Dim i As Long, tmp As Long
         Select Case .Action(TaskID).ActionID
             Case TASK_GATHER
                 'check if the player gathered enough of the item
-                If HasItem(Index, .Action(TaskID).MainData) = .Action(TaskID).Amount Then
+                If HasItem(Index, .Action(TaskID).MainData) >= .Action(TaskID).Amount Then
                     'player has the right amount.  move forward.
                     Call SetPlayerQuestAmount(Index, QuestID, 0)
                     Call CheckNextTask(Index, QuestID, CLIID, TaskID)
+                    
+                    If .Action(TaskID).SecondaryData = vbChecked Then 'take the item
+                        Call TakeInvItem(Index, .Action(TaskID).MainData, .Action(TaskID).Amount, True)
+                    End If
                 Else
                     'we don't have the required amount, see if we need to say a rebuttal msg
                     If ShowRebuttal Then Call CheckRebuttal(Index, QuestID, CLIID, TaskID)
@@ -269,13 +273,13 @@ Dim i As Long, tmp As Long
                 If Item(.Action(TaskID).MainData).Stackable > 0 Then
                     tmp = GiveInvItem(Index, .Action(TaskID).MainData, .Action(TaskID).Amount, , , True)
                 Else
-                    For i = 1 To .Action(TaskID).Amount
+                    For I = 1 To .Action(TaskID).Amount
                         tmp = GiveInvItem(Index, .Action(TaskID).MainData, 1, , , True)
-                    Next i
+                    Next I
                 End If
                 
                 If tmp < 1 Or tmp > MAX_INV Then
-                    Call PlayerMsg(Index, "Not enough space in your inventory.  Please come back when you can hold everything I have to give you.", BrightRed)
+                    Call PlayerMsg(Index, "Not enough space in your inventory.  Please come back when you can hold everything I have to give you.", BrightRed, True, QuestID)
                     Exit Sub
                 End If
                 Call CheckNextTask(Index, QuestID, CLIID, TaskID)
@@ -287,7 +291,7 @@ Dim i As Long, tmp As Long
                 
             Case ACTION_SHOWMSG
                 'show the player a message
-                Call PlayerMsg(Index, ModifyTxt(Index, QuestID, Trim$(.Action(TaskID).TextHolder)), .Action(TaskID).TertiaryData)
+                Call PlayerMsg(Index, ModifyTxt(Index, QuestID, Trim$(.Action(TaskID).TextHolder)), .Action(TaskID).TertiaryData, True, QuestID)
                 Call CheckNextTask(Index, QuestID, CLIID, TaskID)
                 
             Case ACTION_ADJUST_LVL
@@ -342,24 +346,24 @@ NextCLI:
             Call SetPlayerQuestCLIID(Index, QuestID, 0)
             Call SetPlayerQuestTaskID(Index, QuestID, 0)
             Call SetPlayerQuestAmount(Index, QuestID, 0)
-            Call PlayerMsg(Index, "Congratulations!  You completed the " & Trim$(Quest(QuestID).Name) & " quest.", BrightGreen)
+            Call PlayerMsg(Index, "Congratulations!  You completed the " & Trim$(Quest(QuestID).Name) & " quest.", BrightGreen, True, QuestID)
             Call SendPlayerData(Index)
         End If
     End With
 End Sub
 
 Public Sub CheckRebuttal(ByVal Index As Long, QuestID As Long, CLIID As Long, TaskID As Long)
-Dim i As Long
+Dim I As Long
     With Quest(QuestID).CLI(CLIID)
-        For i = TaskID To .Max_Actions
-            If .Action(i).ActionID = ACTION_SHOWMSG Then
-                If .Action(i).SecondaryData = vbChecked Then
+        For I = TaskID To .Max_Actions
+            If .Action(I).ActionID = ACTION_SHOWMSG Then
+                If .Action(I).SecondaryData = vbChecked Then
                     'send the msg
-                    Call PlayerMsg(Index, ModifyTxt(Index, QuestID, Trim$(.Action(i).TextHolder)), .Action(i).TertiaryData)
+                    Call PlayerMsg(Index, ModifyTxt(Index, QuestID, Trim$(.Action(I).TextHolder)), .Action(I).TertiaryData, True, QuestID)
                     Exit Sub
                 End If
             End If
-        Next i
+        Next I
     End With
 End Sub
 
@@ -370,34 +374,39 @@ Dim nMsg As String
 End Function
 
 Public Sub CheckIfQuestKill(ByVal Index As Long, ByVal NPCNum As Long)
-Dim i As Long, II As Long, III As Long
+Dim I As Long, II As Long, III As Long
+Dim Kills As Long, Needed As Long
     'Cycle through all the quests the player could be in
-    For i = 1 To MAX_QUESTS
-        II = GetPlayerQuestCLIID(Index, i)
-        III = GetPlayerQuestTaskID(Index, i)
+    For I = 1 To MAX_QUESTS
+        II = GetPlayerQuestCLIID(Index, I)
+        III = GetPlayerQuestTaskID(Index, I)
         If II > 0 Then
             If III > 0 Then
                 'Make sure the player's current task for this quest is to kill enemies
-                If Quest(i).CLI(II).Action(III).ActionID = TASK_KILL Then
+                If Quest(I).CLI(II).Action(III).ActionID = TASK_KILL Then
                     'Make sure this is the NPC we're supposed to kill for this quest
-                    If Quest(i).CLI(II).Action(III).MainData = NPCNum Then
+                    If Quest(I).CLI(II).Action(III).MainData = NPCNum Then
                 
-                        Call SetPlayerQuestAmount(Index, i, 1, True)
-                        If Not GetPlayerQuestAmount(Index, i) >= Quest(i).CLI(II).Action(III).Amount Then
-                            Call PlayerMsg(Index, "Quest Kills: " & GetPlayerQuestAmount(Index, i) & " / " & Quest(i).CLI(II).Action(III).Amount, White)
+                        Call SetPlayerQuestAmount(Index, I, 1, True)
+                        Kills = GetPlayerQuestAmount(Index, I)
+                        Needed = Quest(I).CLI(II).Action(III).Amount
+                        
+                        If Not Kills >= Needed Then
+                            Call PlayerMsg(Index, "Quest Kills: " & Kills & " / " & Needed, White)
+                            Call SendActionMsg(GetPlayerMap(Index), Kills & "/" & Needed & " kills", Green, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 37))
                         Else
-                            Call PlayerMsg(Index, "Quest Task Completed!  Kills: " & GetPlayerQuestAmount(Index, i) & " / " & Quest(i).CLI(II).Action(III).Amount & _
-                            "  Go back and speak with " & Trim$(NPC(Quest(i).CLI(II).ItemIndex).Name) & " to continue.", BrightGreen)
+                            Call PlayerMsg(Index, "Quest Task Completed!  Kills: " & GetPlayerQuestAmount(Index, I) & " / " & Quest(I).CLI(II).Action(III).Amount & _
+                            "  Go back and speak with " & Trim$(NPC(Quest(I).CLI(II).ItemIndex).Name) & " to continue.", BrightGreen, True, I)
                         End If
                     End If
                 End If
             End If
         End If
-    Next i
+    Next I
 End Sub
 
 Public Function IsQuestCompleted(ByVal Index As Long, ByVal QuestID As Long) As Boolean
-Dim i As Long
+Dim I As Long
     IsQuestCompleted = False
     If Not QuestID > 0 Then Exit Function
     
@@ -407,7 +416,7 @@ Dim i As Long
 End Function
 
 Public Sub MarkQuestCompleted(ByVal Index As Long, ByVal QuestID As Long)
-Dim i As Long
+Dim I As Long
     If Not QuestID > 0 Then Exit Sub
     
     Account(Index).Chars(GetPlayerChar(Index)).QuestCompleted(QuestID) = True

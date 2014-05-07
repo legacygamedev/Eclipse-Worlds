@@ -137,6 +137,7 @@ Public Enum ServerPackets
     SEditQuest
     SUpdateQuest
     SQuestRequest
+    SQuestMsg
     
     ' Make sure SMSG_COUNT is below everything else
     SMSG_COUNT

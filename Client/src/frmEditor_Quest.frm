@@ -2,17 +2,128 @@ VERSION 5.00
 Begin VB.Form frmEditor_Quest 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
-   Caption         =   "Quest Editor"
-   ClientHeight    =   10110
+   Caption         =   $"frmEditor_Quest.frx":0000
+   ClientHeight    =   10170
    ClientLeft      =   45
    ClientTop       =   375
    ClientWidth     =   18975
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   10110
+   ScaleHeight     =   10170
    ScaleWidth      =   18975
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Frame fmeSelectItem 
+      BackColor       =   &H00E0E0E0&
+      Caption         =   "Select Item To Give"
+      Height          =   2655
+      Left            =   15000
+      TabIndex        =   51
+      Top             =   3120
+      Visible         =   0   'False
+      Width           =   3615
+      Begin VB.CheckBox chkTake 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Take the item the player gathers?"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   78
+         Top             =   1800
+         Visible         =   0   'False
+         Width           =   3375
+      End
+      Begin VB.HScrollBar scrlItemAmount 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   57
+         Top             =   1440
+         Width           =   3375
+      End
+      Begin VB.CommandButton btnAddItem 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Accept"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   120
+         Style           =   1  'Graphical
+         TabIndex        =   55
+         Top             =   2160
+         Width           =   1335
+      End
+      Begin VB.CommandButton btnAItemCancel 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Cancel"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   2160
+         Style           =   1  'Graphical
+         TabIndex        =   54
+         Top             =   2160
+         Width           =   1335
+      End
+      Begin VB.HScrollBar scrlItem 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   53
+         Top             =   840
+         Width           =   3375
+      End
+      Begin VB.Label lblAmount 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Amount: 0"
+         BeginProperty Font 
+            Name            =   "Times New Roman"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   120
+         TabIndex        =   56
+         Top             =   1200
+         Width           =   3360
+      End
+      Begin VB.Label lblItem 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Item: 0"
+         BeginProperty Font 
+            Name            =   "Times New Roman"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   120
+         TabIndex        =   52
+         Top             =   240
+         Width           =   3360
+      End
+   End
    Begin VB.Frame fmeShowMsg 
       BackColor       =   &H00E0E0E0&
       Caption         =   "Show player a message"
@@ -24,9 +135,9 @@ Begin VB.Form frmEditor_Quest
       Width           =   4455
       Begin VB.ComboBox cmbColor 
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":0000
+         ItemData        =   "frmEditor_Quest.frx":0089
          Left            =   720
-         List            =   "frmEditor_Quest.frx":003A
+         List            =   "frmEditor_Quest.frx":00C3
          Style           =   2  'Dropdown List
          TabIndex        =   97
          Top             =   1800
@@ -213,7 +324,7 @@ Begin VB.Form frmEditor_Quest
       End
       Begin VB.Label Label8 
          BackStyle       =   0  'Transparent
-         Caption         =   $"frmEditor_Quest.frx":00DB
+         Caption         =   $"frmEditor_Quest.frx":0164
          Height          =   855
          Left            =   120
          TabIndex        =   96
@@ -260,9 +371,9 @@ Begin VB.Form frmEditor_Quest
          Strikethrough   =   0   'False
       EndProperty
       Height          =   3495
-      Left            =   15120
+      Left            =   15000
       TabIndex        =   23
-      Top             =   6120
+      Top             =   5880
       Visible         =   0   'False
       Width           =   8295
       Begin VB.HScrollBar scrlSkill 
@@ -321,9 +432,9 @@ Begin VB.Form frmEditor_Quest
       Begin VB.ComboBox cmbClassReq 
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":01CD
+         ItemData        =   "frmEditor_Quest.frx":0256
          Left            =   6360
-         List            =   "frmEditor_Quest.frx":01CF
+         List            =   "frmEditor_Quest.frx":0258
          Style           =   2  'Dropdown List
          TabIndex        =   29
          Top             =   1200
@@ -348,9 +459,9 @@ Begin VB.Form frmEditor_Quest
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":01D1
+         ItemData        =   "frmEditor_Quest.frx":025A
          Left            =   3720
-         List            =   "frmEditor_Quest.frx":01DE
+         List            =   "frmEditor_Quest.frx":0267
          Style           =   2  'Dropdown List
          TabIndex        =   27
          Top             =   1200
@@ -376,9 +487,9 @@ Begin VB.Form frmEditor_Quest
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":01F6
+         ItemData        =   "frmEditor_Quest.frx":027F
          Left            =   1200
-         List            =   "frmEditor_Quest.frx":01F8
+         List            =   "frmEditor_Quest.frx":0281
          Style           =   2  'Dropdown List
          TabIndex        =   25
          Top             =   600
@@ -596,9 +707,9 @@ Begin VB.Form frmEditor_Quest
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":01FA
+         ItemData        =   "frmEditor_Quest.frx":0283
          Left            =   1200
-         List            =   "frmEditor_Quest.frx":01FC
+         List            =   "frmEditor_Quest.frx":0285
          Style           =   2  'Dropdown List
          TabIndex        =   88
          ToolTipText     =   "Select the specific skill the player will need to reach a level for."
@@ -911,7 +1022,7 @@ Begin VB.Form frmEditor_Quest
       Height          =   1335
       Left            =   1560
       TabIndex        =   47
-      Top             =   5640
+      Top             =   4320
       Visible         =   0   'False
       Width           =   1815
       Begin VB.CommandButton btnHide 
@@ -1266,6 +1377,7 @@ Begin VB.Form frmEditor_Quest
          Alignment       =   2  'Center
          BackColor       =   &H00FFFFFF&
          BorderStyle     =   1  'Fixed Single
+         Caption         =   "Right-Click a list below for additional options."
          BeginProperty Font 
             Name            =   "Times New Roman"
             Size            =   11.25
@@ -1281,117 +1393,6 @@ Begin VB.Form frmEditor_Quest
          TabIndex        =   46
          Top             =   360
          Width           =   6675
-      End
-   End
-   Begin VB.Frame fmeSelectItem 
-      BackColor       =   &H00E0E0E0&
-      Caption         =   "Select Item To Give"
-      Height          =   2655
-      Left            =   15000
-      TabIndex        =   51
-      Top             =   3120
-      Visible         =   0   'False
-      Width           =   3615
-      Begin VB.CheckBox chkTake 
-         BackColor       =   &H00E0E0E0&
-         Caption         =   "Take the item the player gathers?"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   78
-         Top             =   1800
-         Visible         =   0   'False
-         Width           =   3375
-      End
-      Begin VB.HScrollBar scrlItemAmount 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   57
-         Top             =   1440
-         Width           =   3375
-      End
-      Begin VB.CommandButton btnAddItem 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Accept"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   120
-         Style           =   1  'Graphical
-         TabIndex        =   55
-         Top             =   2160
-         Width           =   1335
-      End
-      Begin VB.CommandButton btnAItemCancel 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Cancel"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   2160
-         Style           =   1  'Graphical
-         TabIndex        =   54
-         Top             =   2160
-         Width           =   1335
-      End
-      Begin VB.HScrollBar scrlItem 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   53
-         Top             =   840
-         Width           =   3375
-      End
-      Begin VB.Label lblAmount 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Amount: 0"
-         BeginProperty Font 
-            Name            =   "Times New Roman"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   120
-         TabIndex        =   56
-         Top             =   1200
-         Width           =   3360
-      End
-      Begin VB.Label lblItem 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Item: 0"
-         BeginProperty Font 
-            Name            =   "Times New Roman"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   120
-         TabIndex        =   52
-         Top             =   240
-         Width           =   3360
       End
    End
    Begin VB.Menu mnuCLI 
@@ -1509,7 +1510,7 @@ ErrorHandler:
 End Sub
 
 Private Sub btnAddItem_Click()
-Dim Index As Long, Amnt As Long, Itm As Long, ID As Long, I As Long
+Dim Index As Long, Amnt As Long, Itm As Long, id As Long, I As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
@@ -1521,11 +1522,11 @@ Dim Index As Long, Amnt As Long, Itm As Long, ID As Long, I As Long
     If Amnt < 1 Then Exit Sub
     
     If Gather Then
-        ID = TASK_GATHER
+        id = TASK_GATHER
     ElseIf GiveItem Then
-        ID = ACTION_GIVE_ITEM
+        id = ACTION_GIVE_ITEM
     ElseIf TakeItem Then
-        ID = ACTION_TAKE_ITEM
+        id = ACTION_TAKE_ITEM
     End If
     
     'add the item to the list
@@ -1539,7 +1540,7 @@ Dim Index As Long, Amnt As Long, Itm As Long, ID As Long, I As Long
             I = .Max_Actions
         End If
         
-        .Action(I).ActionID = ID
+        .Action(I).ActionID = id
         .Action(I).MainData = Itm
         .Action(I).Amount = Amnt
         .Action(I).SecondaryData = chkTake.Value
@@ -1680,7 +1681,7 @@ Private Sub btnHide_Click()
 End Sub
 
 Private Sub btnModAccept_Click()
-Dim Index As Long, ID As Long
+Dim Index As Long, id As Long
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
@@ -1692,21 +1693,21 @@ Dim Index As Long, ID As Long
         
         With Quest(EditorIndex).CLI(Index)
             If Editing_Task Then
-                ID = Editing_Task_Index
+                id = Editing_Task_Index
             Else
                 .Max_Actions = .Max_Actions + 1
                 ReDim Preserve .Action(1 To .Max_Actions)
-                ID = .Max_Actions
+                id = .Max_Actions
             End If
                 
             If opEXP.Value = True Then
-                .Action(ID).ActionID = ACTION_ADJUST_EXP
+                .Action(id).ActionID = ACTION_ADJUST_EXP
             ElseIf opLvl.Value = True Then
-                .Action(ID).ActionID = ACTION_ADJUST_LVL
+                .Action(id).ActionID = ACTION_ADJUST_LVL
             End If
             
-            .Action(ID).Amount = scrlModify.Value
-            .Action(ID).MainData = chkSet.Value
+            .Action(id).Amount = scrlModify.Value
+            .Action(id).MainData = chkSet.Value
             Editing_Task_Index = 0
             Editing_Task = False
         End With
@@ -1738,7 +1739,7 @@ End Sub
 
 Private Sub btnMsgAccept_Click()
 Dim Index As Long, Msg As String
-Dim I As Long, II As Long, III As Long, ID As Long
+Dim I As Long, II As Long, III As Long, id As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
@@ -1746,7 +1747,7 @@ Dim I As Long, II As Long, III As Long, ID As Long
     Msg = txtMsg.text
     If Index < 1 Then Exit Sub
     If Len(Msg) < 1 Then
-        Call QMsg("Please type a message.")
+        Call QMsg("Please type a message to show the player.")
         Exit Sub
     End If
     If cmbColor.ListIndex < 0 Then
@@ -1758,18 +1759,18 @@ Dim I As Long, II As Long, III As Long, ID As Long
     'add the item to the list
     With Quest(EditorIndex).CLI(Index)
         If Editing_Task Then
-            ID = Editing_Task_Index
+            id = Editing_Task_Index
         Else
             .Max_Actions = .Max_Actions + 1
             ReDim Preserve .Action(1 To .Max_Actions)
-            ID = .Max_Actions
+            id = .Max_Actions
         End If
         
-        .Action(ID).ActionID = ACTION_SHOWMSG
-        .Action(ID).MainData = chkStart.Value
-        .Action(ID).SecondaryData = chkRes.Value
-        .Action(ID).TertiaryData = cmbColor.ListIndex
-        .Action(ID).TextHolder = Msg
+        .Action(id).ActionID = ACTION_SHOWMSG
+        .Action(id).MainData = chkStart.Value
+        .Action(id).SecondaryData = chkRes.Value
+        .Action(id).TertiaryData = cmbColor.ListIndex
+        .Action(id).TextHolder = Msg
         Editing_Task_Index = 0
         Editing_Task = False
             
@@ -1807,7 +1808,7 @@ Dim Index As Long
 End Sub
 
 Private Sub btnObAccept_Click()
-Dim Index As Long, Amnt As Long, ID As Long, SkillID As Long
+Dim Index As Long, Amnt As Long, id As Long, SkillID As Long
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
@@ -1822,16 +1823,16 @@ Dim Index As Long, Amnt As Long, ID As Long, SkillID As Long
     
     With Quest(EditorIndex).CLI(Index)
         If Editing_Task Then
-            ID = Editing_Task_Index
+            id = Editing_Task_Index
         Else
             .Max_Actions = .Max_Actions + 1
             ReDim Preserve .Action(1 To .Max_Actions)
-            ID = .Max_Actions
+            id = .Max_Actions
         End If
         
-        .Action(ID).ActionID = TASK_GETSKILL
-        .Action(ID).MainData = SkillID
-        .Action(ID).Amount = Amnt
+        .Action(id).ActionID = TASK_GETSKILL
+        .Action(id).MainData = SkillID
+        .Action(id).Amount = Amnt
         Editing_Task_Index = 0
         Editing_Task = False
         
@@ -2135,7 +2136,8 @@ Dim S_CHAR As String * 1
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmEditor_Quest.Width = 14895
-    frmEditor_Quest.Height = 9165
+    frmEditor_Quest.Height = 9195
+    frmEditor_Quest.Caption = "Quest Editor"
     frmMain.SubDaFocus Me.hWnd
     frmEditor_Quest.scrlLevelReq.max = MAX_LEVEL
     txtName.MaxLength = QUESTNAME_LENGTH
@@ -2554,19 +2556,21 @@ ErrorHandler:
 End Sub
 
 Private Sub ResetEditButtons()
-    btnNewCLI.Enabled = True
-    btnRemoveCLI.Enabled = True
-    btnRemoveTask.Enabled = True
-    btnNewAction.Enabled = True
+    mnuACLI.Enabled = True
+    mnuRCLI.Enabled = True
+    mnuAAction.Enabled = True
+    mnuRTask.Enabled = True
+    mnuEdit.Enabled = True
     btnReq.Enabled = True
     CLI.Enabled = True
 End Sub
 
 Private Sub DisableEditButtons()
-    btnNewCLI.Enabled = False
-    btnRemoveCLI.Enabled = False
-    btnRemoveTask.Enabled = False
-    btnNewAction.Enabled = False
+    mnuACLI.Enabled = False
+    mnuRCLI.Enabled = False
+    mnuAAction.Enabled = False
+    mnuRTask.Enabled = False
+    mnuEdit.Enabled = False
     btnReq.Enabled = False
     CLI.Enabled = False
 End Sub

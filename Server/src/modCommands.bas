@@ -208,16 +208,16 @@ Sub SetPlayerVital(ByVal Index As Long, ByVal Vital As Vitals, ByVal Value As Lo
 End Sub
 
 Function GetPlayerStat(ByVal Index As Long, ByVal Stat As Stats) As Long
-    Dim X As Long, i As Long
+    Dim X As Long, I As Long
     
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
     
     X = Account(Index).Chars(GetPlayerChar(Index)).Stat(Stat)
     
-    For i = 1 To Equipment.Equipment_Count - 1
-        If Account(Index).Chars(GetPlayerChar(Index)).Equipment(i).Num > 0 Then
-            If Item(Account(Index).Chars(GetPlayerChar(Index)).Equipment(i).Num).Add_Stat(Stat) > 0 Then
-                X = X + Item(Account(Index).Chars(GetPlayerChar(Index)).Equipment(i).Num).Add_Stat(Stat)
+    For I = 1 To Equipment.Equipment_Count - 1
+        If Account(Index).Chars(GetPlayerChar(Index)).Equipment(I).Num > 0 Then
+            If Item(Account(Index).Chars(GetPlayerChar(Index)).Equipment(I).Num).Add_Stat(Stat) > 0 Then
+                X = X + Item(Account(Index).Chars(GetPlayerChar(Index)).Equipment(I).Num).Add_Stat(Stat)
             End If
         End If
     Next
@@ -297,7 +297,7 @@ End Function
 
 Function GetPlayerInvItemNum(ByVal Index As Long, ByVal InvSlot As Byte) As Long
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
-    If InvSlot = 0 Then Exit Function
+    If InvSlot < 1 Or InvSlot > MAX_INV Then Exit Function
     
     GetPlayerInvItemNum = Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Num
 End Function
@@ -309,6 +309,7 @@ End Sub
 Function GetPlayerInvItemValue(ByVal Index As Long, ByVal InvSlot As Byte) As Long
 
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    If InvSlot < 1 Or InvSlot > MAX_INV Then Exit Function
     GetPlayerInvItemValue = Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Value
 End Function
 
@@ -458,6 +459,7 @@ End Sub
 Function GetPlayerInvItemDur(ByVal Index As Long, ByVal InvSlot As Byte) As Integer
     
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    If InvSlot < 1 Or InvSlot > MAX_INV Then Exit Function
     GetPlayerInvItemDur = Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Durability
 End Function
 
@@ -468,6 +470,7 @@ End Sub
 Function GetPlayerInvItemBind(ByVal Index As Long, ByVal InvSlot As Byte) As Integer
     
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
+    If InvSlot < 1 Or InvSlot > MAX_INV Then Exit Function
     GetPlayerInvItemBind = Account(Index).Chars(GetPlayerChar(Index)).Inv(InvSlot).Bind
 End Function
 

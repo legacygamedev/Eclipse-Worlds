@@ -230,7 +230,7 @@ Public Sub AdminMsg(ByVal Msg As String, Color As Long)
     Set buffer = Nothing
 End Sub
 
-Public Sub PlayerMsg(ByVal Index As Long, ByVal Msg As String, ByVal Color As Long)
+Public Sub PlayerMsg(ByVal Index As Long, ByVal Msg As String, ByVal Color As Long, Optional ByVal QuestMsg As Boolean = False, Optional ByVal QuestNum As Long = 0)
     Dim buffer As clsBuffer
     
     Set buffer = New clsBuffer
@@ -238,6 +238,8 @@ Public Sub PlayerMsg(ByVal Index As Long, ByVal Msg As String, ByVal Color As Lo
     buffer.WriteLong SPlayerMsg
     buffer.WriteString Msg
     buffer.WriteByte Color
+    buffer.WriteLong QuestMsg
+    buffer.WriteLong QuestNum
     SendDataTo Index, buffer.ToArray
     
     Set buffer = Nothing
@@ -668,7 +670,7 @@ Sub SendJoinMap(ByVal Index As Long)
     ' Send the NPC targets to the player
     For i = 1 To Map(GetPlayerMap(Index)).NPC_HighIndex
         If MapNPC(GetPlayerMap(Index)).NPC(i).Num > 0 Then
-            Call SendMapNPCTarget(GetPlayerMap(Index), i, MapNPC(GetPlayerMap(Index)).NPC(i).target, MapNPC(GetPlayerMap(Index)).NPC(i).targetType)
+            Call SendMapNPCTarget(GetPlayerMap(Index), i, MapNPC(GetPlayerMap(Index)).NPC(i).Target, MapNPC(GetPlayerMap(Index)).NPC(i).TargetType)
         Else
             ' Send 0 so it uncaches any old data
             Call SendMapNPCTarget(GetPlayerMap(Index), i, 0, 0)
@@ -860,15 +862,15 @@ Sub SendMapNPCVitals(ByVal MapNum As Integer, ByVal MapNPCNum As Byte)
     Set buffer = Nothing
 End Sub
 
-Sub SendMapNPCTarget(ByVal MapNum As Integer, ByVal MapNPCNum As Byte, ByVal target As Byte, ByVal targetType As Byte)
+Sub SendMapNPCTarget(ByVal MapNum As Integer, ByVal MapNPCNum As Byte, ByVal Target As Byte, ByVal TargetType As Byte)
     Dim buffer As clsBuffer
     
     Set buffer = New clsBuffer
     
     buffer.WriteLong SMapNPCTarget
     buffer.WriteByte MapNPCNum
-    buffer.WriteByte target
-    buffer.WriteByte targetType
+    buffer.WriteByte Target
+    buffer.WriteByte TargetType
 
     SendDataToMap MapNum, buffer.ToArray()
     Set buffer = Nothing
@@ -2049,8 +2051,8 @@ Sub SendPlayerTarget(ByVal Index As Long)
     Set buffer = New clsBuffer
     buffer.WriteLong STarget
     
-    buffer.WriteByte TempPlayer(Index).target
-    buffer.WriteByte TempPlayer(Index).targetType
+    buffer.WriteByte TempPlayer(Index).Target
+    buffer.WriteByte TempPlayer(Index).TargetType
     
     SendDataTo Index, buffer.ToArray()
     Set buffer = Nothing
@@ -2576,14 +2578,14 @@ Sub SendCheckEmoticon(ByVal Index As Long, ByVal MapNum As Long, ByVal EmoticonN
     SendDataToMap MapNum, buffer.ToArray()
 End Sub
 
-Sub SendChatBubble(ByVal MapNum As Long, ByVal target As Long, ByVal targetType As Long, ByVal Message As String, ByVal Color As Long)
+Sub SendChatBubble(ByVal MapNum As Long, ByVal Target As Long, ByVal TargetType As Long, ByVal Message As String, ByVal Color As Long)
     Dim buffer As clsBuffer
 
     Set buffer = New clsBuffer
     buffer.WriteLong SChatBubble
     
-    buffer.WriteLong target
-    buffer.WriteLong targetType
+    buffer.WriteLong Target
+    buffer.WriteLong TargetType
     buffer.WriteString Message
     buffer.WriteLong Color
     

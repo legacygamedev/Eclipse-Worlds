@@ -38,7 +38,7 @@ Begin VB.Form frmMain
       Top             =   3000
       Visible         =   0   'False
       Width           =   7215
-      Begin VB.Label lblQuestStartMsg 
+      Begin VB.Label lblQuestMsg 
          Alignment       =   2  'Center
          BackStyle       =   0  'Transparent
          BorderStyle     =   1  'Fixed Single
@@ -2423,6 +2423,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
