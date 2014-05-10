@@ -283,17 +283,17 @@ End Sub
 
 Public Sub BanIndex(ByVal BanPlayerIndex As Long, ByVal BannedByIndex As String, ByVal Reason As String)
     Dim IP As String
-    Dim i As Integer
+    Dim I As Integer
     Dim n As Integer
 
     ' Cut off last portion of IP
     IP = GetPlayerIP(BanPlayerIndex)
     
-    For i = Len(IP) To 1 Step -1
-        If Mid$(IP, i, 1) = "." Then Exit For
-    Next i
+    For I = Len(IP) To 1 Step -1
+        If Mid$(IP, I, 1) = "." Then Exit For
+    Next I
 
-    IP = Mid$(IP, 1, i)
+    IP = Mid$(IP, 1, I)
 
     For n = 1 To MAX_BANS
         If Not Len(Trim$(Ban(n).PlayerLogin)) > 0 And Not Len(Trim$(Ban(n).playerName)) > 0 Then
@@ -371,7 +371,7 @@ Function PasswordOK(ByVal Name As String, ByVal Password As String) As Boolean
 End Function
 
 Sub AddAccount(ByVal Index As Long, ByVal Name As String, ByVal Password As String)
-    Dim i As Long
+    Dim I As Long
     
     ClearAccount Index
     
@@ -419,7 +419,7 @@ Function CharExist(ByVal Index As Long) As Boolean
 End Function
 
 Sub AddChar(ByVal Index As Long, ByVal Name As String, ByVal Gender As Byte, ByVal ClassNum As Byte)
-    Dim i As Long, F As Long
+    Dim I As Long, F As Long
 
     With Account(Index).Chars(GetPlayerChar(Index))
         ' Basic things
@@ -440,13 +440,13 @@ Sub AddChar(ByVal Index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
         .Level = 1
     
         ' Stats
-        For i = 1 To Stats.Stat_count - 1
-            .Stat(i) = Class(ClassNum).Stat(i)
+        For I = 1 To Stats.Stat_count - 1
+            .Stat(I) = Class(ClassNum).Stat(I)
         Next
         
         ' Skills
-        For i = 1 To Skills.Skill_Count - 1
-            Call SetPlayerSkill(Index, 1, i)
+        For I = 1 To Skills.Skill_Count - 1
+            Call SetPlayerSkill(Index, 1, I)
         Next
         
         ' Set the player's start values
@@ -478,22 +478,22 @@ Sub AddChar(ByVal Index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
         Call CheckPlayerNewTitle(Index, False)
         
         ' Set starter equipment
-        For i = 1 To MAX_INV
-            If Class(ClassNum).StartItem(i) > 0 Then
+        For I = 1 To MAX_INV
+            If Class(ClassNum).StartItem(I) > 0 Then
                 ' Item exist?
-                If Len(Trim$(Item(Class(ClassNum).StartItem(i)).Name)) > 0 Then
-                    .Inv(i).Num = Class(ClassNum).StartItem(i)
-                    .Inv(i).Value = Class(ClassNum).StartItemValue(i)
+                If Len(Trim$(Item(Class(ClassNum).StartItem(I)).Name)) > 0 Then
+                    .Inv(I).Num = Class(ClassNum).StartItem(I)
+                    .Inv(I).Value = Class(ClassNum).StartItemValue(I)
                 End If
             End If
         Next
         
         ' Set start spells
-        For i = 1 To MAX_PLAYER_SPELLS
-            If Class(ClassNum).StartSpell(i) > 0 Then
+        For I = 1 To MAX_PLAYER_SPELLS
+            If Class(ClassNum).StartSpell(I) > 0 Then
                 ' Spell exist?
-                If Len(Trim$(Spell(Class(ClassNum).StartItem(i)).Name)) > 0 Then
-                    .Spell(i) = Class(ClassNum).StartSpell(i)
+                If Len(Trim$(Spell(Class(ClassNum).StartItem(I)).Name)) > 0 Then
+                    .Spell(I) = Class(ClassNum).StartSpell(I)
                 End If
             End If
         Next
@@ -563,11 +563,11 @@ End Function
 ' ** Players **
 ' *************
 Sub SaveAllPlayersOnline()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To Player_HighIndex
-        If IsPlaying(i) Then
-            Call SaveAccount(i)
+    For I = 1 To Player_HighIndex
+        If IsPlaying(I) Then
+            Call SaveAccount(I)
         End If
     Next
 End Sub
@@ -600,7 +600,7 @@ Sub LoadAccount(ByVal Index As Long, ByVal Name As String)
 End Sub
 
 Sub ClearAccount(ByVal Index As Long)
-    Dim i As Long
+    Dim I As Long
     
     Call ZeroMemory(ByVal VarPtr(TempPlayer(Index)), LenB(TempPlayer(Index)))
     TempPlayer(Index).HDSerial = vbNullString
@@ -614,8 +614,8 @@ Sub ClearAccount(ByVal Index As Long)
     Account(Index).Chars(GetPlayerChar(Index)).Status = vbNullString
     Account(Index).Chars(GetPlayerChar(Index)).Class = 1
     
-    For i = 1 To Skills.Skill_Count - 1
-        Call SetPlayerSkill(Index, 1, i)
+    For I = 1 To Skills.Skill_Count - 1
+        Call SetPlayerSkill(Index, 1, I)
     Next
     
     frmServer.lvwInfo.ListItems(Index).SubItems(1) = vbNullString
@@ -627,10 +627,10 @@ End Sub
 ' ** Classes **
 ' ***********
 Sub SaveClasses()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_CLASSES
-        Call SaveClass(i)
+    For I = 1 To MAX_CLASSES
+        Call SaveClass(I)
     Next
 End Sub
 
@@ -648,28 +648,28 @@ End Sub
 
 Sub LoadClasses()
     Dim filename As String
-    Dim i As Long
+    Dim I As Long
     Dim F As Long
     
     Call CheckClasses
 
-    For i = 1 To MAX_CLASSES
-        filename = App.path & "\data\classes\" & i & ".dat"
+    For I = 1 To MAX_CLASSES
+        filename = App.path & "\data\classes\" & I & ".dat"
         F = FreeFile
         
         Open filename For Binary As #F
-            Get #F, , Class(i)
+            Get #F, , Class(I)
         Close #F
     Next
 End Sub
 
 Sub CheckClasses()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_CLASSES
-        If Not FileExist("\data\classes\" & i & ".dat") Then
-            Call ClearClass(i)
-            Call SaveClass(i)
+    For I = 1 To MAX_CLASSES
+        If Not FileExist("\data\classes\" & I & ".dat") Then
+            Call ClearClass(I)
+            Call SaveClass(I)
         End If
     Next
 End Sub
@@ -683,10 +683,10 @@ Sub ClearClass(ByVal Index As Long)
 End Sub
 
 Sub ClearClasses()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_CLASSES
-        Call ClearClass(i)
+    For I = 1 To MAX_CLASSES
+        Call ClearClass(I)
     Next
 End Sub
 
@@ -694,10 +694,10 @@ End Sub
 ' ** Items **
 ' ***********
 Sub SaveItems()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_ITEMS
-        Call SaveItem(i)
+    For I = 1 To MAX_ITEMS
+        Call SaveItem(I)
     Next
 End Sub
 
@@ -715,28 +715,28 @@ End Sub
 
 Sub LoadItems()
     Dim filename As String
-    Dim i As Long
+    Dim I As Long
     Dim F As Long
     
     Call CheckItems
 
-    For i = 1 To MAX_ITEMS
-        filename = App.path & "\data\items\" & i & ".dat"
+    For I = 1 To MAX_ITEMS
+        filename = App.path & "\data\items\" & I & ".dat"
         F = FreeFile
         
         Open filename For Binary As #F
-            Get #F, , Item(i)
+            Get #F, , Item(I)
         Close #F
     Next
 End Sub
 
 Sub CheckItems()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_ITEMS
-        If Not FileExist("\data\items\" & i & ".dat") Then
-            Call ClearItem(i)
-            Call SaveItem(i)
+    For I = 1 To MAX_ITEMS
+        If Not FileExist("\data\items\" & I & ".dat") Then
+            Call ClearItem(I)
+            Call SaveItem(I)
         End If
     Next
 End Sub
@@ -750,21 +750,21 @@ Sub ClearItem(ByVal Index As Long)
 End Sub
 
 Sub CheckQuests()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_QUESTS
-        If Not FileExist("\data\quests\" & i & ".dat") Then
-            Call ClearQuest(i)
-            Call SaveQuest(i)
+    For I = 1 To MAX_QUESTS
+        If Not FileExist("\data\quests\" & I & ".dat") Then
+            Call ClearQuest(I)
+            Call SaveQuest(I)
         End If
     Next
 End Sub
 
 Sub ClearQuests()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_QUESTS
-        Call ClearQuest(i)
+    For I = 1 To MAX_QUESTS
+        Call ClearQuest(I)
     Next
 End Sub
 
@@ -775,10 +775,10 @@ Sub ClearQuest(ByVal QuestNum As Long)
 End Sub
 
 Sub ClearItems()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_ITEMS
-        Call ClearItem(i)
+    For I = 1 To MAX_ITEMS
+        Call ClearItem(I)
     Next
 End Sub
 
@@ -786,10 +786,10 @@ End Sub
 ' ** Shops **
 ' ***********
 Sub SaveShops()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_SHOPS
-        Call SaveShop(i)
+    For I = 1 To MAX_SHOPS
+        Call SaveShop(I)
     Next
 End Sub
 
@@ -807,28 +807,28 @@ End Sub
 
 Sub LoadShops()
     Dim filename As String
-    Dim i As Long
+    Dim I As Long
     Dim F As Long
     
     Call CheckShops
 
-    For i = 1 To MAX_SHOPS
-        filename = App.path & "\data\shops\" & i & ".dat"
+    For I = 1 To MAX_SHOPS
+        filename = App.path & "\data\shops\" & I & ".dat"
         F = FreeFile
         
         Open filename For Binary As #F
-            Get #F, , Shop(i)
+            Get #F, , Shop(I)
         Close #F
     Next
 End Sub
 
 Sub CheckShops()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_SHOPS
-        If Not FileExist("\data\shops\" & i & ".dat") Then
-            Call ClearShop(i)
-            Call SaveShop(i)
+    For I = 1 To MAX_SHOPS
+        If Not FileExist("\data\shops\" & I & ".dat") Then
+            Call ClearShop(I)
+            Call SaveShop(I)
         End If
     Next
 End Sub
@@ -839,10 +839,10 @@ Sub ClearShop(ByVal Index As Long)
 End Sub
 
 Sub ClearShops()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_SHOPS
-        Call ClearShop(i)
+    For I = 1 To MAX_SHOPS
+        Call ClearShop(I)
     Next
 End Sub
 
@@ -862,39 +862,39 @@ Sub SaveSpell(ByVal SpellNum As Long)
 End Sub
 
 Sub SaveSpells()
-    Dim i As Long
+    Dim I As Long
     
     Call SetStatus("Saving spells... ")
 
-    For i = 1 To MAX_SPELLS
-        Call SaveSpell(i)
+    For I = 1 To MAX_SPELLS
+        Call SaveSpell(I)
     Next
 End Sub
 
 Sub LoadSpells()
     Dim filename As String
-    Dim i As Long
+    Dim I As Long
     Dim F As Long
     
     Call CheckSpells
 
-    For i = 1 To MAX_SPELLS
-        filename = App.path & "\data\spells\" & i & ".dat"
+    For I = 1 To MAX_SPELLS
+        filename = App.path & "\data\spells\" & I & ".dat"
         F = FreeFile
         
         Open filename For Binary As #F
-            Get #F, , Spell(i)
+            Get #F, , Spell(I)
         Close #F
     Next
 End Sub
 
 Sub CheckSpells()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_SPELLS
-        If Not FileExist("\data\spells\" & i & ".dat") Then
-            Call ClearSpell(i)
-            Call SaveSpell(i)
+    For I = 1 To MAX_SPELLS
+        If Not FileExist("\data\spells\" & I & ".dat") Then
+            Call ClearSpell(I)
+            Call SaveSpell(I)
         End If
     Next
 End Sub
@@ -908,10 +908,10 @@ Sub ClearSpell(ByVal Index As Long)
 End Sub
 
 Sub ClearSpells()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_SPELLS
-        Call ClearSpell(i)
+    For I = 1 To MAX_SPELLS
+        Call ClearSpell(I)
     Next
 End Sub
 
@@ -919,10 +919,10 @@ End Sub
 ' ** NPCs **
 ' **********
 Sub SaveNPCs()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_NPCS
-        Call SaveNPC(i)
+    For I = 1 To MAX_NPCS
+        Call SaveNPC(I)
     Next
 End Sub
 
@@ -939,12 +939,12 @@ Sub SaveNPC(ByVal NPCNum As Long)
 End Sub
 
 Sub LoadNPCs()
-    Dim i As Long
+    Dim I As Long
 
     Call CheckNPCs
 
-    For i = 1 To MAX_NPCS
-        Call LoadNPC(i)
+    For I = 1 To MAX_NPCS
+        Call LoadNPC(I)
     Next
 End Sub
 
@@ -961,14 +961,14 @@ Sub LoadNPC(NPCNum As Long)
 End Sub
 
 Sub CheckNPCs()
-    Dim i As Integer
+    Dim I As Integer
     Dim NPCSize As Long
     Dim NPCData() As Byte
     
-    For i = 1 To MAX_NPCS
-        If Not FileExist("\data\npcs\" & i & ".dat") Then
-            Call ClearNPC(i)
-            Call SaveNPC(i)
+    For I = 1 To MAX_NPCS
+        If Not FileExist("\data\npcs\" & I & ".dat") Then
+            Call ClearNPC(I)
+            Call SaveNPC(I)
         End If
     Next
 End Sub
@@ -983,10 +983,10 @@ Sub ClearNPC(ByVal Index As Long)
 End Sub
 
 Sub ClearNPCs()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_NPCS
-        Call ClearNPC(i)
+    For I = 1 To MAX_NPCS
+        Call ClearNPC(I)
     Next
 End Sub
 
@@ -994,10 +994,10 @@ End Sub
 ' ** Resources **
 ' ***************
 Sub SaveResources()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_RESOURCES
-        Call SaveResource(i)
+    For I = 1 To MAX_RESOURCES
+        Call SaveResource(I)
     Next
 End Sub
 
@@ -1015,29 +1015,29 @@ End Sub
 
 Sub LoadResources()
     Dim filename As String
-    Dim i As Integer
+    Dim I As Integer
     Dim F As Long
     Dim sLen As Long
     
     Call CheckResources
 
-    For i = 1 To MAX_RESOURCES
-        filename = App.path & "\data\resources\" & i & ".dat"
+    For I = 1 To MAX_RESOURCES
+        filename = App.path & "\data\resources\" & I & ".dat"
         F = FreeFile
         
         Open filename For Binary As #F
-            Get #F, , Resource(i)
+            Get #F, , Resource(I)
         Close #F
     Next
 End Sub
 
 Sub CheckResources()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_RESOURCES
-        If Not FileExist("\data\resources\" & i & ".dat") Then
-            Call ClearResource(i)
-            Call SaveResource(i)
+    For I = 1 To MAX_RESOURCES
+        If Not FileExist("\data\resources\" & I & ".dat") Then
+            Call ClearResource(I)
+            Call SaveResource(I)
         End If
     Next
 End Sub
@@ -1052,10 +1052,10 @@ Sub ClearResource(ByVal Index As Long)
 End Sub
 
 Sub ClearResources()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_RESOURCES
-        Call ClearResource(i)
+    For I = 1 To MAX_RESOURCES
+        Call ClearResource(I)
     Next
 End Sub
 
@@ -1063,10 +1063,10 @@ End Sub
 ' ** Animations **
 ' ****************
 Sub SaveAnimations()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_ANIMATIONS
-        Call SaveAnimation(i)
+    For I = 1 To MAX_ANIMATIONS
+        Call SaveAnimation(I)
     Next
 End Sub
 
@@ -1084,29 +1084,29 @@ End Sub
 
 Sub LoadAnimations()
     Dim filename As String
-    Dim i As Integer
+    Dim I As Integer
     Dim F As Long
     Dim sLen As Long
     
     Call CheckAnimations
 
-    For i = 1 To MAX_ANIMATIONS
-        filename = App.path & "\data\animations\" & i & ".dat"
+    For I = 1 To MAX_ANIMATIONS
+        filename = App.path & "\data\animations\" & I & ".dat"
         F = FreeFile
         
         Open filename For Binary As #F
-            Get #F, , Animation(i)
+            Get #F, , Animation(I)
         Close #F
     Next
 End Sub
 
 Sub CheckAnimations()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_ANIMATIONS
-        If Not FileExist("\data\animations\" & i & ".dat") Then
-            Call ClearAnimation(i)
-            Call SaveAnimation(i)
+    For I = 1 To MAX_ANIMATIONS
+        If Not FileExist("\data\animations\" & I & ".dat") Then
+            Call ClearAnimation(I)
+            Call SaveAnimation(I)
         End If
     Next
 End Sub
@@ -1118,10 +1118,10 @@ Sub ClearAnimation(ByVal Index As Long)
 End Sub
 
 Sub ClearAnimations()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_ANIMATIONS
-        Call ClearAnimation(i)
+    For I = 1 To MAX_ANIMATIONS
+        Call ClearAnimation(I)
     Next
 End Sub
 
@@ -1132,7 +1132,7 @@ Sub SaveMap(ByVal MapNum As Long)
     Dim filename As String
     Dim F As Long
     Dim X As Long
-    Dim Y As Long, i As Long, z As Long, w As Long
+    Dim Y As Long, I As Long, z As Long, w As Long
     
     filename = App.path & "\data\maps\" & MapNum & ".dat"
     F = FreeFile
@@ -1187,107 +1187,107 @@ Sub SaveMap(ByVal MapNum As Long)
     PutVar filename, "Events", "EventCount", Val(Map(MapNum).EventCount)
     
     If Map(MapNum).EventCount > 0 Then
-        For i = 1 To Map(MapNum).EventCount
-            With Map(MapNum).Events(i)
-                PutVar filename, "Event" & i, "Name", .Name
-                PutVar filename, "Event" & i, "Global", Val(.Global)
-                PutVar filename, "Event" & i, "x", Val(.X)
-                PutVar filename, "Event" & i, "y", Val(.Y)
-                PutVar filename, "Event" & i, "PageCount", Val(.PageCount)
+        For I = 1 To Map(MapNum).EventCount
+            With Map(MapNum).Events(I)
+                PutVar filename, "Event" & I, "Name", .Name
+                PutVar filename, "Event" & I, "Global", Val(.Global)
+                PutVar filename, "Event" & I, "x", Val(.X)
+                PutVar filename, "Event" & I, "y", Val(.Y)
+                PutVar filename, "Event" & I, "PageCount", Val(.PageCount)
             End With
             
-            If Map(MapNum).Events(i).PageCount > 0 Then
-                For X = 1 To Map(MapNum).Events(i).PageCount
-                    With Map(MapNum).Events(i).Pages(X)
-                        PutVar filename, "Event" & i & "Page" & X, "chkVariable", Val(.chkVariable)
-                        PutVar filename, "Event" & i & "Page" & X, "VariableIndex", Val(.VariableIndex)
-                        PutVar filename, "Event" & i & "Page" & X, "VariableCondition", Val(.VariableCondition)
-                        PutVar filename, "Event" & i & "Page" & X, "VariableCompare", Val(.VariableCompare)
+            If Map(MapNum).Events(I).PageCount > 0 Then
+                For X = 1 To Map(MapNum).Events(I).PageCount
+                    With Map(MapNum).Events(I).Pages(X)
+                        PutVar filename, "Event" & I & "Page" & X, "chkVariable", Val(.chkVariable)
+                        PutVar filename, "Event" & I & "Page" & X, "VariableIndex", Val(.VariableIndex)
+                        PutVar filename, "Event" & I & "Page" & X, "VariableCondition", Val(.VariableCondition)
+                        PutVar filename, "Event" & I & "Page" & X, "VariableCompare", Val(.VariableCompare)
                         
-                        PutVar filename, "Event" & i & "Page" & X, "chkSwitch", Val(.chkSwitch)
-                        PutVar filename, "Event" & i & "Page" & X, "SwitchIndex", Val(.SwitchIndex)
-                        PutVar filename, "Event" & i & "Page" & X, "SwitchCompare", Val(.SwitchCompare)
+                        PutVar filename, "Event" & I & "Page" & X, "chkSwitch", Val(.chkSwitch)
+                        PutVar filename, "Event" & I & "Page" & X, "SwitchIndex", Val(.SwitchIndex)
+                        PutVar filename, "Event" & I & "Page" & X, "SwitchCompare", Val(.SwitchCompare)
                         
-                        PutVar filename, "Event" & i & "Page" & X, "chkHasItem", Val(.chkHasItem)
-                        PutVar filename, "Event" & i & "Page" & X, "HasItemIndex", Val(.HasItemIndex)
+                        PutVar filename, "Event" & I & "Page" & X, "chkHasItem", Val(.chkHasItem)
+                        PutVar filename, "Event" & I & "Page" & X, "HasItemIndex", Val(.HasItemIndex)
                         
-                        PutVar filename, "Event" & i & "Page" & X, "chkSelfSwitch", Val(.chkSelfSwitch)
-                        PutVar filename, "Event" & i & "Page" & X, "SelfSwitchIndex", Val(.SelfSwitchIndex)
-                        PutVar filename, "Event" & i & "Page" & X, "SelfSwitchCompare", Val(.SelfSwitchCompare)
+                        PutVar filename, "Event" & I & "Page" & X, "chkSelfSwitch", Val(.chkSelfSwitch)
+                        PutVar filename, "Event" & I & "Page" & X, "SelfSwitchIndex", Val(.SelfSwitchIndex)
+                        PutVar filename, "Event" & I & "Page" & X, "SelfSwitchCompare", Val(.SelfSwitchCompare)
                         
-                        PutVar filename, "Event" & i & "Page" & X, "GraphicType", Val(.GraphicType)
-                        PutVar filename, "Event" & i & "Page" & X, "Graphic", Val(.Graphic)
-                        PutVar filename, "Event" & i & "Page" & X, "GraphicX", Val(.GraphicX)
-                        PutVar filename, "Event" & i & "Page" & X, "GraphicY", Val(.GraphicY)
-                        PutVar filename, "Event" & i & "Page" & X, "GraphicX2", Val(.GraphicX2)
-                        PutVar filename, "Event" & i & "Page" & X, "GraphicY2", Val(.GraphicY2)
+                        PutVar filename, "Event" & I & "Page" & X, "GraphicType", Val(.GraphicType)
+                        PutVar filename, "Event" & I & "Page" & X, "Graphic", Val(.Graphic)
+                        PutVar filename, "Event" & I & "Page" & X, "GraphicX", Val(.GraphicX)
+                        PutVar filename, "Event" & I & "Page" & X, "GraphicY", Val(.GraphicY)
+                        PutVar filename, "Event" & I & "Page" & X, "GraphicX2", Val(.GraphicX2)
+                        PutVar filename, "Event" & I & "Page" & X, "GraphicY2", Val(.GraphicY2)
                         
-                        PutVar filename, "Event" & i & "Page" & X, "MoveType", Val(.MoveType)
-                        PutVar filename, "Event" & i & "Page" & X, "MoveSpeed", Val(.MoveSpeed)
-                        PutVar filename, "Event" & i & "Page" & X, "MoveFreq", Val(.MoveFreq)
+                        PutVar filename, "Event" & I & "Page" & X, "MoveType", Val(.MoveType)
+                        PutVar filename, "Event" & I & "Page" & X, "MoveSpeed", Val(.MoveSpeed)
+                        PutVar filename, "Event" & I & "Page" & X, "MoveFreq", Val(.MoveFreq)
                         
-                        PutVar filename, "Event" & i & "Page" & X, "IgnoreMoveRoute", Val(.IgnoreMoveRoute)
-                        PutVar filename, "Event" & i & "Page" & X, "RepeatMoveRoute", Val(.RepeatMoveRoute)
+                        PutVar filename, "Event" & I & "Page" & X, "IgnoreMoveRoute", Val(.IgnoreMoveRoute)
+                        PutVar filename, "Event" & I & "Page" & X, "RepeatMoveRoute", Val(.RepeatMoveRoute)
                         
-                        PutVar filename, "Event" & i & "Page" & X, "MoveRouteCount", Val(.MoveRouteCount)
+                        PutVar filename, "Event" & I & "Page" & X, "MoveRouteCount", Val(.MoveRouteCount)
                         
                         If .MoveRouteCount > 0 Then
                             For Y = 1 To .MoveRouteCount
-                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Index", Val(.MoveRoute(Y).Index)
-                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data1", Val(.MoveRoute(Y).Data1)
-                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data2", Val(.MoveRoute(Y).Data2)
-                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data3", Val(.MoveRoute(Y).Data3)
-                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data4", Val(.MoveRoute(Y).Data4)
-                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data5", Val(.MoveRoute(Y).Data5)
-                                PutVar filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data6", Val(.MoveRoute(Y).Data6)
+                                PutVar filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Index", Val(.MoveRoute(Y).Index)
+                                PutVar filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data1", Val(.MoveRoute(Y).Data1)
+                                PutVar filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data2", Val(.MoveRoute(Y).Data2)
+                                PutVar filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data3", Val(.MoveRoute(Y).Data3)
+                                PutVar filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data4", Val(.MoveRoute(Y).Data4)
+                                PutVar filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data5", Val(.MoveRoute(Y).Data5)
+                                PutVar filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data6", Val(.MoveRoute(Y).Data6)
                             Next
                         End If
                         
-                        PutVar filename, "Event" & i & "Page" & X, "WalkAnim", Val(.WalkAnim)
-                        PutVar filename, "Event" & i & "Page" & X, "DirFix", Val(.DirFix)
-                        PutVar filename, "Event" & i & "Page" & X, "WalkThrough", Val(.WalkThrough)
-                        PutVar filename, "Event" & i & "Page" & X, "ShowName", Val(.ShowName)
-                        PutVar filename, "Event" & i & "Page" & X, "Trigger", Val(.Trigger)
-                        PutVar filename, "Event" & i & "Page" & X, "CommandListCount", Val(.CommandListCount)
+                        PutVar filename, "Event" & I & "Page" & X, "WalkAnim", Val(.WalkAnim)
+                        PutVar filename, "Event" & I & "Page" & X, "DirFix", Val(.DirFix)
+                        PutVar filename, "Event" & I & "Page" & X, "WalkThrough", Val(.WalkThrough)
+                        PutVar filename, "Event" & I & "Page" & X, "ShowName", Val(.ShowName)
+                        PutVar filename, "Event" & I & "Page" & X, "Trigger", Val(.Trigger)
+                        PutVar filename, "Event" & I & "Page" & X, "CommandListCount", Val(.CommandListCount)
                         
-                        PutVar filename, "Event" & i & "Page" & X, "Position", Val(.Position)
+                        PutVar filename, "Event" & I & "Page" & X, "Position", Val(.Position)
                     End With
                     
-                    If Map(MapNum).Events(i).Pages(X).CommandListCount > 0 Then
-                        For Y = 1 To Map(MapNum).Events(i).Pages(X).CommandListCount
-                            PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "CommandCount", Val(Map(MapNum).Events(i).Pages(X).CommandList(Y).CommandCount)
-                            PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "ParentList", Val(Map(MapNum).Events(i).Pages(X).CommandList(Y).ParentList)
-                            If Map(MapNum).Events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
-                                For z = 1 To Map(MapNum).Events(i).Pages(X).CommandList(Y).CommandCount
-                                    With Map(MapNum).Events(i).Pages(X).CommandList(Y).Commands(z)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Index", Val(.Index)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Text1", .Text1
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Text2", .Text2
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Text3", .Text3
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Text4", .Text4
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Text5", .Text5
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data1", Val(.Data1)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data2", Val(.Data2)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data3", Val(.Data3)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data4", Val(.Data4)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data5", Val(.Data5)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "Data6", Val(.Data6)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchCommandList", Val(.ConditionalBranch.CommandList)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchCondition", Val(.ConditionalBranch.Condition)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchData1", Val(.ConditionalBranch.Data1)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchData2", Val(.ConditionalBranch.Data2)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchData3", Val(.ConditionalBranch.Data3)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchElseCommandList", Val(.ConditionalBranch.ElseCommandList)
-                                        PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRouteCount", Val(.MoveRouteCount)
+                    If Map(MapNum).Events(I).Pages(X).CommandListCount > 0 Then
+                        For Y = 1 To Map(MapNum).Events(I).Pages(X).CommandListCount
+                            PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "CommandCount", Val(Map(MapNum).Events(I).Pages(X).CommandList(Y).CommandCount)
+                            PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "ParentList", Val(Map(MapNum).Events(I).Pages(X).CommandList(Y).ParentList)
+                            If Map(MapNum).Events(I).Pages(X).CommandList(Y).CommandCount > 0 Then
+                                For z = 1 To Map(MapNum).Events(I).Pages(X).CommandList(Y).CommandCount
+                                    With Map(MapNum).Events(I).Pages(X).CommandList(Y).Commands(z)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Index", Val(.Index)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Text1", .Text1
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Text2", .Text2
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Text3", .Text3
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Text4", .Text4
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Text5", .Text5
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Data1", Val(.Data1)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Data2", Val(.Data2)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Data3", Val(.Data3)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Data4", Val(.Data4)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Data5", Val(.Data5)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "Data6", Val(.Data6)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchCommandList", Val(.ConditionalBranch.CommandList)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchCondition", Val(.ConditionalBranch.Condition)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchData1", Val(.ConditionalBranch.Data1)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchData2", Val(.ConditionalBranch.Data2)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchData3", Val(.ConditionalBranch.Data3)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "ConditionalBranchElseCommandList", Val(.ConditionalBranch.ElseCommandList)
+                                        PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRouteCount", Val(.MoveRouteCount)
                                         If .MoveRouteCount > 0 Then
                                             For w = 1 To .MoveRouteCount
-                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Index", Val(.MoveRoute(w).Index)
-                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data1", Val(.MoveRoute(w).Data1)
-                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data2", Val(.MoveRoute(w).Data2)
-                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data3", Val(.MoveRoute(w).Data3)
-                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data4", Val(.MoveRoute(w).Data4)
-                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data5", Val(.MoveRoute(w).Data5)
-                                                PutVar filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data6", Val(.MoveRoute(w).Data6)
+                                                PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Index", Val(.MoveRoute(w).Index)
+                                                PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data1", Val(.MoveRoute(w).Data1)
+                                                PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data2", Val(.MoveRoute(w).Data2)
+                                                PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data3", Val(.MoveRoute(w).Data3)
+                                                PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data4", Val(.MoveRoute(w).Data4)
+                                                PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data5", Val(.MoveRoute(w).Data5)
+                                                PutVar filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & z & "MoveRoute" & w & "Data6", Val(.MoveRoute(w).Data6)
                                             Next
                                         End If
                                     End With
@@ -1309,7 +1309,7 @@ End Sub
 Sub SaveQuest(ByVal QuestNum As Long)
     Dim filename As String
     Dim F As Long
-    Dim i As Long, II As Long
+    Dim I As Long, II As Long
     
     filename = App.path & "\data\quests\" & QuestNum & ".dat"
     F = FreeFile
@@ -1317,26 +1317,24 @@ Sub SaveQuest(ByVal QuestNum As Long)
     Open filename For Binary As #F
         Put #F, , Quest(QuestNum).Name
         Put #F, , Quest(QuestNum).Description
-        Put #F, , Quest(QuestNum).Icon_Start
-        Put #F, , Quest(QuestNum).Icon_Progress
         Put #F, , Quest(QuestNum).CanBeRetaken
         Put #F, , Quest(QuestNum).Max_CLI
         
-        For i = 1 To Quest(QuestNum).Max_CLI
-            Put #F, , Quest(QuestNum).CLI(i).ItemIndex
-            Put #F, , Quest(QuestNum).CLI(i).isNPC
-            Put #F, , Quest(QuestNum).CLI(i).Max_Actions
+        For I = 1 To Quest(QuestNum).Max_CLI
+            Put #F, , Quest(QuestNum).CLI(I).ItemIndex
+            Put #F, , Quest(QuestNum).CLI(I).isNPC
+            Put #F, , Quest(QuestNum).CLI(I).Max_Actions
             
-            For II = 1 To Quest(QuestNum).CLI(i).Max_Actions
-                Put #F, , Quest(QuestNum).CLI(i).Action(II).TextHolder
-                Put #F, , Quest(QuestNum).CLI(i).Action(II).ActionID
-                Put #F, , Quest(QuestNum).CLI(i).Action(II).Amount
-                Put #F, , Quest(QuestNum).CLI(i).Action(II).MainData
-                Put #F, , Quest(QuestNum).CLI(i).Action(II).QuadData
-                Put #F, , Quest(QuestNum).CLI(i).Action(II).SecondaryData
-                Put #F, , Quest(QuestNum).CLI(i).Action(II).TertiaryData
+            For II = 1 To Quest(QuestNum).CLI(I).Max_Actions
+                Put #F, , Quest(QuestNum).CLI(I).Action(II).TextHolder
+                Put #F, , Quest(QuestNum).CLI(I).Action(II).ActionID
+                Put #F, , Quest(QuestNum).CLI(I).Action(II).Amount
+                Put #F, , Quest(QuestNum).CLI(I).Action(II).MainData
+                Put #F, , Quest(QuestNum).CLI(I).Action(II).QuadData
+                Put #F, , Quest(QuestNum).CLI(I).Action(II).SecondaryData
+                Put #F, , Quest(QuestNum).CLI(I).Action(II).TertiaryData
             Next II
-        Next i
+        Next I
         
         Put #F, , Quest(QuestNum).Requirements
     Close #F
@@ -1344,78 +1342,78 @@ Sub SaveQuest(ByVal QuestNum As Long)
 End Sub
 
 Sub SaveMaps()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_MAPS
-        Call SaveMap(i)
+    For I = 1 To MAX_MAPS
+        Call SaveMap(I)
     Next
 End Sub
 
 Sub LoadMaps()
     Dim filename As String
-    Dim i As Long
+    Dim I As Long
     Dim F As Long
     Dim X As Long
     Dim Y As Long, z As Long, p As Long, w As Long
     Dim newtileset As Long, newtiley As Long
     Call CheckMaps
 
-    For i = 1 To MAX_MAPS
-        filename = App.path & "\data\maps\" & i & ".dat"
+    For I = 1 To MAX_MAPS
+        filename = App.path & "\data\maps\" & I & ".dat"
         F = FreeFile
         Open filename For Binary As #F
-        Get #F, , Map(i).Name
-        Get #F, , Map(i).Music
-        Get #F, , Map(i).BGS
-        Get #F, , Map(i).Revision
-        Get #F, , Map(i).Moral
-        Get #F, , Map(i).Up
-        Get #F, , Map(i).Down
-        Get #F, , Map(i).Left
-        Get #F, , Map(i).Right
-        Get #F, , Map(i).BootMap
-        Get #F, , Map(i).BootX
-        Get #F, , Map(i).BootY
+        Get #F, , Map(I).Name
+        Get #F, , Map(I).Music
+        Get #F, , Map(I).BGS
+        Get #F, , Map(I).Revision
+        Get #F, , Map(I).Moral
+        Get #F, , Map(I).Up
+        Get #F, , Map(I).Down
+        Get #F, , Map(I).Left
+        Get #F, , Map(I).Right
+        Get #F, , Map(I).BootMap
+        Get #F, , Map(I).BootX
+        Get #F, , Map(I).BootY
         
-        Get #F, , Map(i).Weather
-        Get #F, , Map(i).WeatherIntensity
+        Get #F, , Map(I).Weather
+        Get #F, , Map(I).WeatherIntensity
         
-        Get #F, , Map(i).Fog
-        Get #F, , Map(i).FogSpeed
-        Get #F, , Map(i).FogOpacity
+        Get #F, , Map(I).Fog
+        Get #F, , Map(I).FogSpeed
+        Get #F, , Map(I).FogOpacity
         
-        Get #F, , Map(i).Panorama
+        Get #F, , Map(I).Panorama
         
-        Get #F, , Map(i).Red
-        Get #F, , Map(i).Green
-        Get #F, , Map(i).Blue
-        Get #F, , Map(i).Alpha
+        Get #F, , Map(I).Red
+        Get #F, , Map(I).Green
+        Get #F, , Map(I).Blue
+        Get #F, , Map(I).Alpha
         
-        Get #F, , Map(i).MaxX
-        Get #F, , Map(i).MaxY
+        Get #F, , Map(I).MaxX
+        Get #F, , Map(I).MaxY
         
         ' have to set the tile()
-        ReDim Map(i).Tile(0 To Map(i).MaxX, 0 To Map(i).MaxY)
+        ReDim Map(I).Tile(0 To Map(I).MaxX, 0 To Map(I).MaxY)
 
-        Get #F, , Map(i).NPC_HighIndex
+        Get #F, , Map(I).NPC_HighIndex
         
-        For X = 0 To Map(i).MaxX
-            For Y = 0 To Map(i).MaxY
-                Get #F, , Map(i).Tile(X, Y)
+        For X = 0 To Map(I).MaxX
+            For Y = 0 To Map(I).MaxY
+                Get #F, , Map(I).Tile(X, Y)
             Next
         Next
 
         For X = 1 To MAX_MAP_NPCS
-            Get #F, , Map(i).NPC(X)
-            Get #F, , Map(i).NPCSpawnType(X)
-            MapNPC(i).NPC(X).Num = Map(i).NPC(X)
+            Get #F, , Map(I).NPC(X)
+            Get #F, , Map(I).NPCSpawnType(X)
+            MapNPC(I).NPC(X).Num = Map(I).NPC(X)
         Next
 
         Close #F
         
-        CacheResources i
+        CacheResources I
         DoEvents
-        CacheMapBlocks i
+        CacheMapBlocks I
     Next
     
     For z = 1 To MAX_MAPS
@@ -1424,111 +1422,111 @@ Sub LoadMaps()
         
         If Map(z).EventCount > 0 Then
             ReDim Map(z).Events(0 To Map(z).EventCount)
-            For i = 1 To Map(z).EventCount
-                With Map(z).Events(i)
-                    .Name = GetVar(filename, "Event" & i, "Name")
-                    .Global = Val(GetVar(filename, "Event" & i, "Global"))
-                    .X = Val(GetVar(filename, "Event" & i, "x"))
-                    .Y = Val(GetVar(filename, "Event" & i, "y"))
-                    .PageCount = Val(GetVar(filename, "Event" & i, "PageCount"))
+            For I = 1 To Map(z).EventCount
+                With Map(z).Events(I)
+                    .Name = GetVar(filename, "Event" & I, "Name")
+                    .Global = Val(GetVar(filename, "Event" & I, "Global"))
+                    .X = Val(GetVar(filename, "Event" & I, "x"))
+                    .Y = Val(GetVar(filename, "Event" & I, "y"))
+                    .PageCount = Val(GetVar(filename, "Event" & I, "PageCount"))
                 End With
-                If Map(z).Events(i).PageCount > 0 Then
-                    ReDim Map(z).Events(i).Pages(0 To Map(z).Events(i).PageCount)
-                    For X = 1 To Map(z).Events(i).PageCount
-                        With Map(z).Events(i).Pages(X)
-                            .chkVariable = Val(GetVar(filename, "Event" & i & "Page" & X, "chkVariable"))
-                            .VariableIndex = Val(GetVar(filename, "Event" & i & "Page" & X, "VariableIndex"))
-                            .VariableCondition = Val(GetVar(filename, "Event" & i & "Page" & X, "VariableCondition"))
-                            .VariableCompare = Val(GetVar(filename, "Event" & i & "Page" & X, "VariableCompare"))
+                If Map(z).Events(I).PageCount > 0 Then
+                    ReDim Map(z).Events(I).Pages(0 To Map(z).Events(I).PageCount)
+                    For X = 1 To Map(z).Events(I).PageCount
+                        With Map(z).Events(I).Pages(X)
+                            .chkVariable = Val(GetVar(filename, "Event" & I & "Page" & X, "chkVariable"))
+                            .VariableIndex = Val(GetVar(filename, "Event" & I & "Page" & X, "VariableIndex"))
+                            .VariableCondition = Val(GetVar(filename, "Event" & I & "Page" & X, "VariableCondition"))
+                            .VariableCompare = Val(GetVar(filename, "Event" & I & "Page" & X, "VariableCompare"))
                             
-                            .chkSwitch = Val(GetVar(filename, "Event" & i & "Page" & X, "chkSwitch"))
-                            .SwitchIndex = Val(GetVar(filename, "Event" & i & "Page" & X, "SwitchIndex"))
-                            .SwitchCompare = Val(GetVar(filename, "Event" & i & "Page" & X, "SwitchCompare"))
+                            .chkSwitch = Val(GetVar(filename, "Event" & I & "Page" & X, "chkSwitch"))
+                            .SwitchIndex = Val(GetVar(filename, "Event" & I & "Page" & X, "SwitchIndex"))
+                            .SwitchCompare = Val(GetVar(filename, "Event" & I & "Page" & X, "SwitchCompare"))
                             
-                            .chkHasItem = Val(GetVar(filename, "Event" & i & "Page" & X, "chkHasItem"))
-                            .HasItemIndex = Val(GetVar(filename, "Event" & i & "Page" & X, "HasItemIndex"))
+                            .chkHasItem = Val(GetVar(filename, "Event" & I & "Page" & X, "chkHasItem"))
+                            .HasItemIndex = Val(GetVar(filename, "Event" & I & "Page" & X, "HasItemIndex"))
                             
-                            .chkSelfSwitch = Val(GetVar(filename, "Event" & i & "Page" & X, "chkSelfSwitch"))
-                            .SelfSwitchIndex = Val(GetVar(filename, "Event" & i & "Page" & X, "SelfSwitchIndex"))
-                            .SelfSwitchCompare = Val(GetVar(filename, "Event" & i & "Page" & X, "SelfSwitchCompare"))
+                            .chkSelfSwitch = Val(GetVar(filename, "Event" & I & "Page" & X, "chkSelfSwitch"))
+                            .SelfSwitchIndex = Val(GetVar(filename, "Event" & I & "Page" & X, "SelfSwitchIndex"))
+                            .SelfSwitchCompare = Val(GetVar(filename, "Event" & I & "Page" & X, "SelfSwitchCompare"))
                             
-                            .GraphicType = Val(GetVar(filename, "Event" & i & "Page" & X, "GraphicType"))
-                            .Graphic = Val(GetVar(filename, "Event" & i & "Page" & X, "Graphic"))
-                            .GraphicX = Val(GetVar(filename, "Event" & i & "Page" & X, "GraphicX"))
-                            .GraphicY = Val(GetVar(filename, "Event" & i & "Page" & X, "GraphicY"))
-                            .GraphicX2 = Val(GetVar(filename, "Event" & i & "Page" & X, "GraphicX2"))
-                            .GraphicY2 = Val(GetVar(filename, "Event" & i & "Page" & X, "GraphicY2"))
+                            .GraphicType = Val(GetVar(filename, "Event" & I & "Page" & X, "GraphicType"))
+                            .Graphic = Val(GetVar(filename, "Event" & I & "Page" & X, "Graphic"))
+                            .GraphicX = Val(GetVar(filename, "Event" & I & "Page" & X, "GraphicX"))
+                            .GraphicY = Val(GetVar(filename, "Event" & I & "Page" & X, "GraphicY"))
+                            .GraphicX2 = Val(GetVar(filename, "Event" & I & "Page" & X, "GraphicX2"))
+                            .GraphicY2 = Val(GetVar(filename, "Event" & I & "Page" & X, "GraphicY2"))
                             
-                            .MoveType = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveType"))
-                            .MoveSpeed = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveSpeed"))
-                            .MoveFreq = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveFreq"))
+                            .MoveType = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveType"))
+                            .MoveSpeed = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveSpeed"))
+                            .MoveFreq = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveFreq"))
                             
-                            .IgnoreMoveRoute = Val(GetVar(filename, "Event" & i & "Page" & X, "IgnoreMoveRoute"))
-                            .RepeatMoveRoute = Val(GetVar(filename, "Event" & i & "Page" & X, "RepeatMoveRoute"))
+                            .IgnoreMoveRoute = Val(GetVar(filename, "Event" & I & "Page" & X, "IgnoreMoveRoute"))
+                            .RepeatMoveRoute = Val(GetVar(filename, "Event" & I & "Page" & X, "RepeatMoveRoute"))
                             
-                            .MoveRouteCount = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRouteCount"))
+                            .MoveRouteCount = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveRouteCount"))
                             
                             If .MoveRouteCount > 0 Then
-                                ReDim Map(z).Events(i).Pages(X).MoveRoute(0 To .MoveRouteCount)
+                                ReDim Map(z).Events(I).Pages(X).MoveRoute(0 To .MoveRouteCount)
                                 For Y = 1 To .MoveRouteCount
-                                    .MoveRoute(Y).Index = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Index"))
-                                    .MoveRoute(Y).Data1 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data1"))
-                                    .MoveRoute(Y).Data2 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data2"))
-                                    .MoveRoute(Y).Data3 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data3"))
-                                    .MoveRoute(Y).Data4 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data4"))
-                                    .MoveRoute(Y).Data5 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data5"))
-                                    .MoveRoute(Y).Data6 = Val(GetVar(filename, "Event" & i & "Page" & X, "MoveRoute" & Y & "Data6"))
+                                    .MoveRoute(Y).Index = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Index"))
+                                    .MoveRoute(Y).Data1 = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data1"))
+                                    .MoveRoute(Y).Data2 = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data2"))
+                                    .MoveRoute(Y).Data3 = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data3"))
+                                    .MoveRoute(Y).Data4 = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data4"))
+                                    .MoveRoute(Y).Data5 = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data5"))
+                                    .MoveRoute(Y).Data6 = Val(GetVar(filename, "Event" & I & "Page" & X, "MoveRoute" & Y & "Data6"))
                                 Next
                             End If
                             
-                            .WalkAnim = Val(GetVar(filename, "Event" & i & "Page" & X, "WalkAnim"))
-                            .DirFix = Val(GetVar(filename, "Event" & i & "Page" & X, "DirFix"))
-                            .WalkThrough = Val(GetVar(filename, "Event" & i & "Page" & X, "WalkThrough"))
-                            .ShowName = Val(GetVar(filename, "Event" & i & "Page" & X, "ShowName"))
-                            .Trigger = Val(GetVar(filename, "Event" & i & "Page" & X, "Trigger"))
-                            .CommandListCount = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandListCount"))
+                            .WalkAnim = Val(GetVar(filename, "Event" & I & "Page" & X, "WalkAnim"))
+                            .DirFix = Val(GetVar(filename, "Event" & I & "Page" & X, "DirFix"))
+                            .WalkThrough = Val(GetVar(filename, "Event" & I & "Page" & X, "WalkThrough"))
+                            .ShowName = Val(GetVar(filename, "Event" & I & "Page" & X, "ShowName"))
+                            .Trigger = Val(GetVar(filename, "Event" & I & "Page" & X, "Trigger"))
+                            .CommandListCount = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandListCount"))
                          
-                            .Position = Val(GetVar(filename, "Event" & i & "Page" & X, "Position"))
+                            .Position = Val(GetVar(filename, "Event" & I & "Page" & X, "Position"))
                         End With
                             
-                        If Map(z).Events(i).Pages(X).CommandListCount > 0 Then
-                            ReDim Map(z).Events(i).Pages(X).CommandList(0 To Map(z).Events(i).Pages(X).CommandListCount)
-                            For Y = 1 To Map(z).Events(i).Pages(X).CommandListCount
-                                Map(z).Events(i).Pages(X).CommandList(Y).CommandCount = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "CommandCount"))
-                                Map(z).Events(i).Pages(X).CommandList(Y).ParentList = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "ParentList"))
-                                If Map(z).Events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
-                                    ReDim Map(z).Events(i).Pages(X).CommandList(Y).Commands(Map(z).Events(i).Pages(X).CommandList(Y).CommandCount)
-                                    For p = 1 To Map(z).Events(i).Pages(X).CommandList(Y).CommandCount
-                                        With Map(z).Events(i).Pages(X).CommandList(Y).Commands(p)
-                                            .Index = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Index"))
-                                            .Text1 = GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Text1")
-                                            .Text2 = GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Text2")
-                                            .Text3 = GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Text3")
-                                            .Text4 = GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Text4")
-                                            .Text5 = GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Text5")
-                                            .Data1 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data1"))
-                                            .Data2 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data2"))
-                                            .Data3 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data3"))
-                                            .Data4 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data4"))
-                                            .Data5 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data5"))
-                                            .Data6 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "Data6"))
-                                            .ConditionalBranch.CommandList = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchCommandList"))
-                                            .ConditionalBranch.Condition = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchCondition"))
-                                            .ConditionalBranch.Data1 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchData1"))
-                                            .ConditionalBranch.Data2 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchData2"))
-                                            .ConditionalBranch.Data3 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchData3"))
-                                            .ConditionalBranch.ElseCommandList = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchElseCommandList"))
-                                            .MoveRouteCount = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRouteCount"))
+                        If Map(z).Events(I).Pages(X).CommandListCount > 0 Then
+                            ReDim Map(z).Events(I).Pages(X).CommandList(0 To Map(z).Events(I).Pages(X).CommandListCount)
+                            For Y = 1 To Map(z).Events(I).Pages(X).CommandListCount
+                                Map(z).Events(I).Pages(X).CommandList(Y).CommandCount = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "CommandCount"))
+                                Map(z).Events(I).Pages(X).CommandList(Y).ParentList = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "ParentList"))
+                                If Map(z).Events(I).Pages(X).CommandList(Y).CommandCount > 0 Then
+                                    ReDim Map(z).Events(I).Pages(X).CommandList(Y).Commands(Map(z).Events(I).Pages(X).CommandList(Y).CommandCount)
+                                    For p = 1 To Map(z).Events(I).Pages(X).CommandList(Y).CommandCount
+                                        With Map(z).Events(I).Pages(X).CommandList(Y).Commands(p)
+                                            .Index = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Index"))
+                                            .Text1 = GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Text1")
+                                            .Text2 = GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Text2")
+                                            .Text3 = GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Text3")
+                                            .Text4 = GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Text4")
+                                            .Text5 = GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Text5")
+                                            .Data1 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Data1"))
+                                            .Data2 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Data2"))
+                                            .Data3 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Data3"))
+                                            .Data4 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Data4"))
+                                            .Data5 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Data5"))
+                                            .Data6 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "Data6"))
+                                            .ConditionalBranch.CommandList = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchCommandList"))
+                                            .ConditionalBranch.Condition = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchCondition"))
+                                            .ConditionalBranch.Data1 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchData1"))
+                                            .ConditionalBranch.Data2 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchData2"))
+                                            .ConditionalBranch.Data3 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchData3"))
+                                            .ConditionalBranch.ElseCommandList = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "ConditionalBranchElseCommandList"))
+                                            .MoveRouteCount = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRouteCount"))
                                             If .MoveRouteCount > 0 Then
                                                 ReDim .MoveRoute(1 To .MoveRouteCount)
                                                 For w = 1 To .MoveRouteCount
-                                                    .MoveRoute(w).Index = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Index"))
-                                                    .MoveRoute(w).Data1 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data1"))
-                                                    .MoveRoute(w).Data2 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data2"))
-                                                    .MoveRoute(w).Data3 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data3"))
-                                                    .MoveRoute(w).Data4 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data4"))
-                                                    .MoveRoute(w).Data5 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data5"))
-                                                    .MoveRoute(w).Data6 = Val(GetVar(filename, "Event" & i & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data6"))
+                                                    .MoveRoute(w).Index = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Index"))
+                                                    .MoveRoute(w).Data1 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data1"))
+                                                    .MoveRoute(w).Data2 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data2"))
+                                                    .MoveRoute(w).Data3 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data3"))
+                                                    .MoveRoute(w).Data4 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data4"))
+                                                    .MoveRoute(w).Data5 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data5"))
+                                                    .MoveRoute(w).Data6 = Val(GetVar(filename, "Event" & I & "Page" & X, "CommandList" & Y & "Command" & p & "MoveRoute" & w & "Data6"))
                                                 Next
                                             End If
                                         End With
@@ -1547,60 +1545,58 @@ End Sub
 Sub LoadQuests()
     Dim filename As String
     Dim F As Long
-    Dim i As Long, II As Long, III As Long
+    Dim I As Long, II As Long, III As Long
     
     Call CheckQuests
     
-    For i = 1 To MAX_QUESTS
+    For I = 1 To MAX_QUESTS
     
-        filename = App.path & "\data\quests\" & i & ".dat"
+        filename = App.path & "\data\quests\" & I & ".dat"
         F = FreeFile
         
         Open filename For Binary As #F
-            Get #F, , Quest(i).Name
-            Get #F, , Quest(i).Description
-            Get #F, , Quest(i).Icon_Start
-            Get #F, , Quest(i).Icon_Progress
-            Get #F, , Quest(i).CanBeRetaken
-            Get #F, , Quest(i).Max_CLI
+            Get #F, , Quest(I).Name
+            Get #F, , Quest(I).Description
+            Get #F, , Quest(I).CanBeRetaken
+            Get #F, , Quest(I).Max_CLI
             
-            If Quest(i).Max_CLI > 0 Then
-                ReDim Quest(i).CLI(1 To Quest(i).Max_CLI)
+            If Quest(I).Max_CLI > 0 Then
+                ReDim Quest(I).CLI(1 To Quest(I).Max_CLI)
                 
-                For II = 1 To Quest(i).Max_CLI
-                    Get #F, , Quest(i).CLI(II).ItemIndex
-                    Get #F, , Quest(i).CLI(II).isNPC
-                    Get #F, , Quest(i).CLI(II).Max_Actions
+                For II = 1 To Quest(I).Max_CLI
+                    Get #F, , Quest(I).CLI(II).ItemIndex
+                    Get #F, , Quest(I).CLI(II).isNPC
+                    Get #F, , Quest(I).CLI(II).Max_Actions
                     
-                    If Quest(i).CLI(II).Max_Actions > 0 Then
-                        ReDim Preserve Quest(i).CLI(II).Action(1 To Quest(i).CLI(II).Max_Actions)
+                    If Quest(I).CLI(II).Max_Actions > 0 Then
+                        ReDim Preserve Quest(I).CLI(II).Action(1 To Quest(I).CLI(II).Max_Actions)
                         
-                        For III = 1 To Quest(i).CLI(II).Max_Actions
-                            Get #F, , Quest(i).CLI(II).Action(III).TextHolder
-                            Get #F, , Quest(i).CLI(II).Action(III).ActionID
-                            Get #F, , Quest(i).CLI(II).Action(III).Amount
-                            Get #F, , Quest(i).CLI(II).Action(III).MainData
-                            Get #F, , Quest(i).CLI(II).Action(III).QuadData
-                            Get #F, , Quest(i).CLI(II).Action(III).SecondaryData
-                            Get #F, , Quest(i).CLI(II).Action(III).TertiaryData
+                        For III = 1 To Quest(I).CLI(II).Max_Actions
+                            Get #F, , Quest(I).CLI(II).Action(III).TextHolder
+                            Get #F, , Quest(I).CLI(II).Action(III).ActionID
+                            Get #F, , Quest(I).CLI(II).Action(III).Amount
+                            Get #F, , Quest(I).CLI(II).Action(III).MainData
+                            Get #F, , Quest(I).CLI(II).Action(III).QuadData
+                            Get #F, , Quest(I).CLI(II).Action(III).SecondaryData
+                            Get #F, , Quest(I).CLI(II).Action(III).TertiaryData
                         Next III
                     End If
                 Next II
             End If
             
-            Get #F, , Quest(i).Requirements
+            Get #F, , Quest(I).Requirements
         Close #F
         DoEvents
-    Next i
+    Next I
 End Sub
 
 Sub CheckMaps()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_MAPS
-        If Not FileExist("\data\maps\" & i & ".dat") Then
-            Call ClearMap(i)
-            Call SaveMap(i)
+    For I = 1 To MAX_MAPS
+        If Not FileExist("\data\maps\" & I & ".dat") Then
+            Call ClearMap(I)
+            Call SaveMap(I)
         End If
     Next
 End Sub
@@ -1655,10 +1651,10 @@ Sub ClearMap(ByVal MapNum As Long)
 End Sub
 
 Sub ClearMaps()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_MAPS
-        Call ClearMap(i)
+    For I = 1 To MAX_MAPS
+        Call ClearMap(I)
     Next
 End Sub
 
@@ -1666,10 +1662,10 @@ End Sub
 ' ** Guilds **
 ' ************
 Sub SaveGuilds()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_GUILDS
-        Call SaveGuild(i)
+    For I = 1 To MAX_GUILDS
+        Call SaveGuild(I)
     Next
 End Sub
 
@@ -1687,37 +1683,37 @@ End Sub
 
 Sub LoadGuilds()
     Dim filename As String
-    Dim i As Long
+    Dim I As Long
     Dim F As Long
     
     Call CheckGuild
 
-    For i = 1 To MAX_GUILDS
-        filename = App.path & "\data\guilds\" & i & ".dat"
+    For I = 1 To MAX_GUILDS
+        filename = App.path & "\data\guilds\" & I & ".dat"
         F = FreeFile
         
         Open filename For Binary As #F
-            Get #F, , Guild(i)
+            Get #F, , Guild(I)
         Close #F
     Next
 End Sub
 
 Sub CheckGuild()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_GUILDS
-        If Not FileExist("\data\guilds\" & i & ".dat") Then
-            Call ClearGuild(i)
-            Call SaveGuild(i)
+    For I = 1 To MAX_GUILDS
+        If Not FileExist("\data\guilds\" & I & ".dat") Then
+            Call ClearGuild(I)
+            Call SaveGuild(I)
         End If
     Next
 End Sub
 
 Sub ClearGuilds()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_GUILDS
-        Call ClearGuild(i)
+    For I = 1 To MAX_GUILDS
+        Call ClearGuild(I)
     Next
 End Sub
 
@@ -1743,21 +1739,21 @@ Sub SaveBan(ByVal BanNum As Long)
 End Sub
 
 Sub CheckBans()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_BANS
-        If Not FileExist("\data\bans\" & i & ".dat") Then
-            Call ClearBan(i)
-            Call SaveBan(i)
+    For I = 1 To MAX_BANS
+        If Not FileExist("\data\bans\" & I & ".dat") Then
+            Call ClearBan(I)
+            Call SaveBan(I)
         End If
     Next
 End Sub
 
 Sub ClearBans()
-    Dim i As Long
+    Dim I As Long
     
-    For i = 1 To MAX_BANS
-        Call ClearBan(i)
+    For I = 1 To MAX_BANS
+        Call ClearBan(I)
     Next
 End Sub
 
@@ -1789,12 +1785,12 @@ Sub SaveTitle(ByVal TitleNum As Long)
 End Sub
 
 Sub LoadTitles()
-    Dim i As Long
+    Dim I As Long
 
     CheckTitles
     
-    For i = 1 To MAX_TITLES
-        Call LoadTitle(i)
+    For I = 1 To MAX_TITLES
+        Call LoadTitle(I)
     Next
 End Sub
 
@@ -1811,21 +1807,21 @@ Sub LoadTitle(Index As Long)
 End Sub
 
 Sub CheckTitles()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_TITLES
-        If Not FileExist("\data\titles\" & i & ".dat") Then
-            Call ClearTitle(i)
-            Call SaveTitle(i)
+    For I = 1 To MAX_TITLES
+        If Not FileExist("\data\titles\" & I & ".dat") Then
+            Call ClearTitle(I)
+            Call SaveTitle(I)
         End If
     Next
 End Sub
 
 Sub ClearTitles()
-    Dim i As Long
+    Dim I As Long
     
-    For i = 1 To MAX_TITLES
-        Call ClearTitle(i)
+    For I = 1 To MAX_TITLES
+        Call ClearTitle(I)
     Next
 End Sub
 
@@ -1838,10 +1834,10 @@ End Sub
 ' ** Morals **
 ' ************
 Sub SaveMorals()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_MORALS
-        Call SaveMoral(i)
+    For I = 1 To MAX_MORALS
+        Call SaveMoral(I)
     Next
 End Sub
 
@@ -1859,28 +1855,28 @@ End Sub
 
 Sub LoadMorals()
     Dim filename As String
-    Dim i As Long
+    Dim I As Long
     Dim F As Long
     
     Call CheckMorals
 
-    For i = 1 To MAX_MORALS
-        filename = App.path & "\data\morals\" & i & ".dat"
+    For I = 1 To MAX_MORALS
+        filename = App.path & "\data\morals\" & I & ".dat"
         F = FreeFile
         
         Open filename For Binary As #F
-            Get #F, , Moral(i)
+            Get #F, , Moral(I)
         Close #F
     Next
 End Sub
 
 Sub CheckMorals()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_MORALS
-        If Not FileExist("\data\morals\" & i & ".dat") Then
-            Call ClearMoral(i)
-            Call SaveMoral(i)
+    For I = 1 To MAX_MORALS
+        If Not FileExist("\data\morals\" & I & ".dat") Then
+            Call ClearMoral(I)
+            Call SaveMoral(I)
         End If
     Next
 End Sub
@@ -1891,10 +1887,10 @@ Sub ClearMoral(ByVal Index As Long)
 End Sub
 
 Sub ClearMorals()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_MORALS
-        Call ClearMoral(i)
+    For I = 1 To MAX_MORALS
+        Call ClearMoral(I)
     Next
 End Sub
 
@@ -1902,10 +1898,10 @@ End Sub
 ' ** Emoticons **
 ' **************
 Sub SaveEmoticons()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_EMOTICONS
-        Call SaveEmoticon(i)
+    For I = 1 To MAX_EMOTICONS
+        Call SaveEmoticon(I)
     Next
 End Sub
 
@@ -1923,37 +1919,37 @@ End Sub
 
 Sub LoadEmoticons()
     Dim filename As String
-    Dim i As Long
+    Dim I As Long
     Dim F As Long
     
     Call CheckEmoticons
 
-    For i = 1 To MAX_EMOTICONS
-        filename = App.path & "\data\emoticons\" & i & ".dat"
+    For I = 1 To MAX_EMOTICONS
+        filename = App.path & "\data\emoticons\" & I & ".dat"
         F = FreeFile
         
         Open filename For Binary As #F
-            Get #F, , Emoticon(i)
+            Get #F, , Emoticon(I)
         Close #F
     Next
 End Sub
 
 Sub CheckEmoticons()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_EMOTICONS
-        If Not FileExist("\data\emoticons\" & i & ".dat") Then
-            Call ClearEmoticon(i)
-            Call SaveEmoticon(i)
+    For I = 1 To MAX_EMOTICONS
+        If Not FileExist("\data\emoticons\" & I & ".dat") Then
+            Call ClearEmoticon(I)
+            Call SaveEmoticon(I)
         End If
     Next
 End Sub
 
 Sub ClearEmoticons()
-    Dim i As Long
+    Dim I As Long
 
-    For i = 1 To MAX_EMOTICONS
-        Call ClearEmoticon(i)
+    For I = 1 To MAX_EMOTICONS
+        Call ClearEmoticon(I)
     Next
 End Sub
 
@@ -1999,41 +1995,41 @@ Sub ClearTempGuildMember(ByVal Index As Long)
 End Sub
 
 Sub SaveSwitches()
-    Dim i As Long, filename As String
+    Dim I As Long, filename As String
     
     filename = App.path & "\data\switches.ini"
     
-    For i = 1 To MAX_SWITCHES
-        Call PutVar(filename, "Switches", "Switch" & CStr(i) & "Name", Switches(i))
+    For I = 1 To MAX_SWITCHES
+        Call PutVar(filename, "Switches", "Switch" & CStr(I) & "Name", Switches(I))
     Next
 End Sub
 
 Sub SaveVariables()
-    Dim i As Long, filename As String
+    Dim I As Long, filename As String
     
     filename = App.path & "\data\variables.ini"
     
-    For i = 1 To MAX_VARIABLES
-        Call PutVar(filename, "Variables", "Variable" & CStr(i) & "Name", Variables(i))
+    For I = 1 To MAX_VARIABLES
+        Call PutVar(filename, "Variables", "Variable" & CStr(I) & "Name", Variables(I))
     Next
 End Sub
 
 Sub LoadSwitches()
-    Dim i As Long, filename As String
+    Dim I As Long, filename As String
     
     filename = App.path & "\data\switches.ini"
     
-    For i = 1 To MAX_SWITCHES
-        Switches(i) = GetVar(filename, "Switches", "Switch" & CStr(i) & "Name")
+    For I = 1 To MAX_SWITCHES
+        Switches(I) = GetVar(filename, "Switches", "Switch" & CStr(I) & "Name")
     Next
 End Sub
 
 Sub LoadVariables()
-    Dim i As Long, filename As String
+    Dim I As Long, filename As String
     
     filename = App.path & "\data\variables.ini"
     
-    For i = 1 To MAX_VARIABLES
-        Variables(i) = GetVar(filename, "Variables", "Variable" & CStr(i) & "Name")
+    For I = 1 To MAX_VARIABLES
+        Variables(I) = GetVar(filename, "Variables", "Variable" & CStr(I) & "Name")
     Next
 End Sub

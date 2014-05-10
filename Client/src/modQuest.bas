@@ -16,6 +16,10 @@ Public Const ACTION_SHOWMSG As Byte = 7
 Public Const ACTION_ADJUST_LVL As Byte = 8
 Public Const ACTION_ADJUST_EXP As Byte = 9
 
+Public Const Quest_Icon_Start As Byte = 1
+Public Const Quest_Icon_Finished As Byte = 2
+Public Const Quest_Icon_Progress As Byte = 3
+
 'Constants for list mover
 Public Const LIST_CLI As Byte = 1
 Public Const LIST_TASK As Byte = 2
@@ -50,8 +54,6 @@ End Type
 Private Type QuestRec
     Name As String * QUESTNAME_LENGTH
     Description As String * QUESTDESC_LENGTH
-    Icon_Start As String * QUESTICON_LENGTH
-    Icon_Progress As String * QUESTICON_LENGTH
     CanBeRetaken As Byte
     
     'Maxes
@@ -135,8 +137,6 @@ Public Sub QuestEditorInit()
         frmEditor_Quest.txtName.text = Trim$(.Name)
         frmEditor_Quest.txtDesc.text = Trim$(.Description)
         frmEditor_Quest.chkRetake.Value = .CanBeRetaken
-        frmEditor_Quest.txtStart.text = Trim$(.Icon_Start)
-        frmEditor_Quest.txtProgress.text = Trim$(.Icon_Progress)
         
         ' Gender requirement
         frmEditor_Quest.cmbGenderReq.ListIndex = .Requirements.GenderReq

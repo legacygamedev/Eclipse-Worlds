@@ -13,6 +13,134 @@ Begin VB.Form frmEditor_Quest
    ScaleHeight     =   10170
    ScaleWidth      =   18975
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Frame fmeCLI 
+      BackColor       =   &H00E0E0E0&
+      Caption         =   "Add a new NPC/Event the player will need to meet with"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   3735
+      Left            =   15600
+      TabIndex        =   14
+      Top             =   2760
+      Visible         =   0   'False
+      Width           =   5055
+      Begin VB.ComboBox cmbNPC 
+         Height          =   315
+         Left            =   120
+         Style           =   2  'Dropdown List
+         TabIndex        =   95
+         Top             =   1440
+         Width           =   4815
+      End
+      Begin VB.HScrollBar scrlKillAmnt 
+         Height          =   255
+         LargeChange     =   10
+         Left            =   120
+         TabIndex        =   79
+         Top             =   2760
+         Width           =   4815
+      End
+      Begin VB.CommandButton btnCLICancel 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Cancel"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   2760
+         Style           =   1  'Graphical
+         TabIndex        =   45
+         Top             =   3120
+         Width           =   2175
+      End
+      Begin VB.OptionButton opEvent 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "Events"
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   240
+         TabIndex        =   17
+         Top             =   2280
+         Width           =   4455
+      End
+      Begin VB.OptionButton opNPC 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "NPC's"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   16
+         Top             =   1920
+         Value           =   -1  'True
+         Width           =   4455
+      End
+      Begin VB.CommandButton btnAddCLI 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Accept"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   120
+         Style           =   1  'Graphical
+         TabIndex        =   15
+         Top             =   3120
+         Width           =   2175
+      End
+      Begin VB.Label Label8 
+         BackStyle       =   0  'Transparent
+         Caption         =   $"frmEditor_Quest.frx":0089
+         Height          =   855
+         Left            =   120
+         TabIndex        =   96
+         Top             =   480
+         Width           =   4815
+      End
+      Begin VB.Label lblKillAmnt 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Amount: 0"
+         BeginProperty Font 
+            Name            =   "Times New Roman"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   120
+         TabIndex        =   80
+         Top             =   2520
+         Width           =   4800
+      End
+      Begin VB.Line Line3 
+         X1              =   120
+         X2              =   4920
+         Y1              =   240
+         Y2              =   240
+      End
+   End
    Begin VB.Frame fmeSelectItem 
       BackColor       =   &H00E0E0E0&
       Caption         =   "Select Item To Give"
@@ -34,6 +162,7 @@ Begin VB.Form frmEditor_Quest
       End
       Begin VB.HScrollBar scrlItemAmount 
          Height          =   255
+         LargeChange     =   5
          Left            =   120
          TabIndex        =   57
          Top             =   1440
@@ -135,9 +264,9 @@ Begin VB.Form frmEditor_Quest
       Width           =   4455
       Begin VB.ComboBox cmbColor 
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":0089
+         ItemData        =   "frmEditor_Quest.frx":017B
          Left            =   720
-         List            =   "frmEditor_Quest.frx":00C3
+         List            =   "frmEditor_Quest.frx":01B5
          Style           =   2  'Dropdown List
          TabIndex        =   97
          Top             =   1800
@@ -231,133 +360,6 @@ Begin VB.Form frmEditor_Quest
          Width           =   495
       End
    End
-   Begin VB.Frame fmeCLI 
-      BackColor       =   &H00E0E0E0&
-      Caption         =   "Add a new NPC/Event the player will need to meet with"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   3735
-      Left            =   15600
-      TabIndex        =   14
-      Top             =   2760
-      Visible         =   0   'False
-      Width           =   5055
-      Begin VB.ComboBox cmbNPC 
-         Height          =   315
-         Left            =   120
-         Style           =   2  'Dropdown List
-         TabIndex        =   95
-         Top             =   1440
-         Width           =   4815
-      End
-      Begin VB.HScrollBar scrlKillAmnt 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   79
-         Top             =   2760
-         Width           =   4815
-      End
-      Begin VB.CommandButton btnCLICancel 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Cancel"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   2760
-         Style           =   1  'Graphical
-         TabIndex        =   45
-         Top             =   3120
-         Width           =   2175
-      End
-      Begin VB.OptionButton opEvent 
-         BackColor       =   &H00E0E0E0&
-         Caption         =   "Events"
-         Enabled         =   0   'False
-         Height          =   255
-         Left            =   240
-         TabIndex        =   17
-         Top             =   2280
-         Width           =   4455
-      End
-      Begin VB.OptionButton opNPC 
-         BackColor       =   &H00E0E0E0&
-         Caption         =   "NPC's"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   16
-         Top             =   1920
-         Value           =   -1  'True
-         Width           =   4455
-      End
-      Begin VB.CommandButton btnAddCLI 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Accept"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   120
-         Style           =   1  'Graphical
-         TabIndex        =   15
-         Top             =   3120
-         Width           =   2175
-      End
-      Begin VB.Label Label8 
-         BackStyle       =   0  'Transparent
-         Caption         =   $"frmEditor_Quest.frx":0164
-         Height          =   855
-         Left            =   120
-         TabIndex        =   96
-         Top             =   480
-         Width           =   4815
-      End
-      Begin VB.Label lblKillAmnt 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Amount: 0"
-         BeginProperty Font 
-            Name            =   "Times New Roman"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   120
-         TabIndex        =   80
-         Top             =   2520
-         Width           =   4800
-      End
-      Begin VB.Line Line3 
-         X1              =   120
-         X2              =   4920
-         Y1              =   240
-         Y2              =   240
-      End
-   End
    Begin VB.Frame fmeReq 
       BackColor       =   &H00E0E0E0&
       Caption         =   "Quest Requirements"
@@ -371,9 +373,9 @@ Begin VB.Form frmEditor_Quest
          Strikethrough   =   0   'False
       EndProperty
       Height          =   3495
-      Left            =   15000
+      Left            =   6480
       TabIndex        =   23
-      Top             =   5880
+      Top             =   6240
       Visible         =   0   'False
       Width           =   8295
       Begin VB.HScrollBar scrlSkill 
@@ -430,7 +432,6 @@ Begin VB.Form frmEditor_Quest
          Width           =   1455
       End
       Begin VB.ComboBox cmbClassReq 
-         Enabled         =   0   'False
          Height          =   315
          ItemData        =   "frmEditor_Quest.frx":0256
          Left            =   6360
@@ -517,12 +518,12 @@ Begin VB.Form frmEditor_Quest
       Begin VB.Label lblSkill 
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Skill Level:"
+         Caption         =   "Skill Level: 0"
          Height          =   195
          Left            =   3960
          TabIndex        =   65
          Top             =   600
-         Width           =   765
+         Width           =   900
       End
       Begin VB.Line Line6 
          X1              =   120
@@ -690,6 +691,7 @@ Begin VB.Form frmEditor_Quest
       End
       Begin VB.HScrollBar scrlObSkill 
          Height          =   255
+         LargeChange     =   5
          Left            =   1560
          Max             =   255
          TabIndex        =   90
@@ -979,6 +981,7 @@ Begin VB.Form frmEditor_Quest
       End
       Begin VB.HScrollBar scrlModify 
          Height          =   255
+         LargeChange     =   10
          Left            =   120
          Min             =   -32767
          TabIndex        =   73
@@ -1281,50 +1284,10 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Can this quest be retaken?"
          Height          =   255
          Left            =   120
-         TabIndex        =   101
+         TabIndex        =   99
          ToolTipText     =   "This sets whether or not the quest can be retaken again and again after completion."
          Top             =   1320
          Width           =   4095
-      End
-      Begin VB.TextBox txtStart 
-         Alignment       =   2  'Center
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   3120
-         MaxLength       =   5
-         ScrollBars      =   1  'Horizontal
-         TabIndex        =   100
-         ToolTipText     =   "This text will hover above the Greeter to let the player know it's a quest."
-         Top             =   1680
-         Width           =   1215
-      End
-      Begin VB.TextBox txtProgress 
-         Alignment       =   2  'Center
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   3120
-         MaxLength       =   5
-         ScrollBars      =   1  'Horizontal
-         TabIndex        =   99
-         ToolTipText     =   "This text will hover above the Greeter to let the player know it's part of a quest in progress."
-         Top             =   2040
-         Width           =   1215
       End
       Begin VB.Timer tmrMsg 
          Interval        =   3000
@@ -1350,28 +1313,6 @@ Begin VB.Form frmEditor_Quest
          ToolTipText     =   "Edit the requirements for the player to be able to start the quest."
          Top             =   840
          Width           =   6735
-      End
-      Begin VB.Label Label5 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Start Icon:"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   103
-         Top             =   1680
-         UseMnemonic     =   0   'False
-         Width           =   735
-      End
-      Begin VB.Label Label6 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "In Progress Icon:"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   102
-         Top             =   2040
-         UseMnemonic     =   0   'False
-         Width           =   1200
       End
       Begin VB.Label lblMsg 
          Alignment       =   2  'Center
@@ -2130,7 +2071,6 @@ End Sub
 
 Private Sub Form_Load()
 Dim I As Long
-Dim S_CHAR As String * 1
     
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2155,7 +2095,7 @@ Dim S_CHAR As String * 1
     Next I
     
     For I = 1 To MAX_CLASSES
-        If Not InStr(Trim$(Class(I).Name), S_CHAR) > 0 Then
+        If Len(Trim$(Class(I).Name)) > 0 Then
             cmbClassReq.AddItem Trim$(Class(I).Name)
         End If
     Next I
@@ -2700,10 +2640,6 @@ Private Sub QMsg(ByVal Msg As String)
     tmrMsg.Enabled = True
 End Sub
 
-Private Sub txtProgress_Change()
-    Quest(EditorIndex).Icon_Progress = txtProgress.text
-End Sub
-
 Private Sub txtSearch_Click()
     fmeMoveItem.Visible = False
 End Sub
@@ -2726,10 +2662,6 @@ End Sub
 
 Private Sub BTF(ByVal FrameID As Frame)
     Call FrameID.ZOrder(vbBringToFront)
-End Sub
-
-Private Sub txtStart_Change()
-    Quest(EditorIndex).Icon_Start = txtStart.text
 End Sub
 
 Private Sub SetNPCBox(ByVal All As Boolean, Optional ByVal CurCLI As Long = 0, Optional ByVal Adding As Boolean = False)

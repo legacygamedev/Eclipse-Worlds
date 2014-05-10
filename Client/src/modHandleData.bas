@@ -232,8 +232,6 @@ Dim QuestNum As Long
         
             .Name = buffer.ReadString
             .Description = buffer.ReadString
-            .Icon_Start = buffer.ReadString
-            .Icon_Progress = buffer.ReadString
             .CanBeRetaken = buffer.ReadLong
             .Max_CLI = buffer.ReadLong
             

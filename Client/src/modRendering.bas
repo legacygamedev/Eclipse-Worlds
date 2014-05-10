@@ -61,6 +61,13 @@ Public Tex_Fade As DX8TextureRec
 Public Tex_Equip As DX8TextureRec
 Public Tex_Base As DX8TextureRec
 
+Public Quest_Start As DX8TextureRec
+Public Quest_Start_U As DX8TextureRec
+Public Quest_Finished As DX8TextureRec
+Public Quest_Finished_U As DX8TextureRec
+Public Quest_Progress As DX8TextureRec
+Public Quest_Progress_U As DX8TextureRec
+
 ' Caching
 Public lowerTilesCache As Direct3DTexture8
 Public upperTilesCache As Direct3DTexture8
@@ -118,7 +125,7 @@ Public NumTextures As Long
 ' ********************
 Public Function InitDX8() As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Set Directx8 = New Directx8 ' Creates the DirectX object.
     Set Direct3D = Directx8.Direct3DCreate() ' Creates the Direct3D object using the DirectX object.
@@ -173,7 +180,7 @@ Public Function InitDX8() As Boolean
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "InitDX8", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -350,7 +357,7 @@ Public Sub LoadTexture(ByRef TextureRec As DX8TextureRec)
     Dim newWidth As Long, newHeight As Long, ImageData() As Byte, fn As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If TextureRec.HasData = False Then
         Set GDIToken = New cGDIpToken
@@ -400,7 +407,7 @@ Public Sub LoadTexture(ByRef TextureRec As DX8TextureRec)
     gTexture(TextureRec.Texture).TexHeight = newHeight
     Exit Sub
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "LoadTexture", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -409,7 +416,7 @@ Private Sub LoadTextures()
     Dim I As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Call CheckTilesets
     Call CheckCharacters
@@ -423,9 +430,28 @@ Private Sub LoadTextures()
     Call CheckPanoramas
     Call CheckEmoticons
     
-    NumTextures = NumTextures + 12
+    NumTextures = NumTextures + 18
     
     ReDim Preserve gTexture(NumTextures)
+    Quest_Start.filepath = App.Path & "\data files\graphics\gui\main\quest_start.png"
+    Quest_Start.Texture = NumTextures - 17
+    LoadTexture Quest_Start
+    Quest_Start_U.filepath = App.Path & "\data files\graphics\gui\main\quest_start_u.png"
+    Quest_Start_U.Texture = NumTextures - 16
+    LoadTexture Quest_Start_U
+    Quest_Finished.filepath = App.Path & "\data files\graphics\gui\main\quest_finished.png"
+    Quest_Finished.Texture = NumTextures - 15
+    LoadTexture Quest_Finished
+    Quest_Finished_U.filepath = App.Path & "\data files\graphics\gui\main\quest_finished_u.png"
+    Quest_Finished_U.Texture = NumTextures - 14
+    LoadTexture Quest_Finished_U
+    Quest_Progress.filepath = App.Path & "\data files\graphics\gui\main\quest_progress.png"
+    Quest_Progress.Texture = NumTextures - 13
+    LoadTexture Quest_Progress
+    Quest_Progress_U.filepath = App.Path & "\data files\graphics\gui\main\quest_progress_u.png"
+    Quest_Progress_U.Texture = NumTextures - 12
+    LoadTexture Quest_Progress_U
+    
     Tex_Base.filepath = App.Path & "\data files\graphics\gui\main\base.png"
     Tex_Base.Texture = NumTextures - 11
     LoadTexture Tex_Base
@@ -467,7 +493,7 @@ Private Sub LoadTextures()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "LoadTextures", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -545,12 +571,18 @@ Dim I As Long
     Tex_Direction.Texture = 0
     Tex_Target.Texture = 0
     Tex_Selection.Texture = 0
+    Quest_Start.Texture = 0
+    Quest_Start_U.Texture = 0
+    Quest_Finished.Texture = 0
+    Quest_Finished_U.Texture = 0
+    Quest_Progress.Texture = 0
+    Quest_Progress_U.Texture = 0
     
     UnloadFontTextures
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "UnloadTextures", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -562,7 +594,7 @@ Public Sub renderMapPreview()
     Dim destRECT As D3DRECT
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
@@ -582,14 +614,14 @@ Public Sub renderMapPreview()
     Exit Sub
     
     ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "renderMapPreview", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub RenderTexture(ByRef TextureRec As DX8TextureRec, ByVal dX As Single, ByVal dY As Single, ByVal sX As Single, ByVal sY As Single, ByVal dWidth As Single, ByVal dHeight As Single, ByVal sWidth As Single, ByVal sHeight As Single, Optional Color As Long = -1)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Dim textureNum As Long
     Dim textureWidth As Long, textureHeight As Long, sourceX As Single, sourceY As Single, sourceWidth As Single, sourceHeight As Single
@@ -626,14 +658,14 @@ Public Sub RenderTexture(ByRef TextureRec As DX8TextureRec, ByVal dX As Single, 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "RenderTexture", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub RenderCache(ByRef mapChache As Direct3DTexture8, ByVal dX As Single, ByVal dY As Single, ByVal sX As Single, ByVal sY As Single, ByVal dWidth As Single, ByVal dHeight As Single, ByVal sWidth As Single, ByVal sHeight As Single, Optional Color As Long = -1)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Dim textureWidth As Long, textureHeight As Long, sourceX As Single, sourceY As Single, sourceWidth As Single, sourceHeight As Single
     
@@ -675,20 +707,20 @@ Public Sub RenderCache(ByRef mapChache As Direct3DTexture8, ByVal dX As Single, 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "RenderTexture", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub RenderTextureByRects(TextureRec As DX8TextureRec, sRECT As RECT, dRect As RECT)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     RenderTexture TextureRec, dRect.Left, dRect.Top, sRECT.Left, sRECT.Top, dRect.Right - dRect.Left, dRect.Bottom - dRect.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "RenderTextureByRects", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -719,7 +751,7 @@ Public Sub DrawDirection(ByVal X As Long, ByVal Y As Long)
     Dim I As Long, Top As Long, Left As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Render dir blobs
     For I = 1 To 4
@@ -737,7 +769,7 @@ Public Sub DrawDirection(ByVal X As Long, ByVal Y As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawDirection", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -747,7 +779,7 @@ Public Sub DrawTarget(ByVal X As Long, ByVal Y As Long)
     Dim Width As Long, Height As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Tex_Target.Texture = 0 Then Exit Sub
     
@@ -786,7 +818,7 @@ Public Sub DrawTarget(ByVal X As Long, ByVal Y As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawTarget", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -796,7 +828,7 @@ Public Sub DrawHover(ByVal tType As Long, ByVal Target As Long, ByVal X As Long,
     Dim Width As Long, Height As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Tex_Target.Texture = 0 Then Exit Sub
     
@@ -835,7 +867,7 @@ Public Sub DrawHover(ByVal tType As Long, ByVal Target As Long, ByVal X As Long,
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawHover", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -845,7 +877,7 @@ Public Sub DrawWholeMapLowerTiles(ByVal X As Long, ByVal Y As Long)
     Dim I As Long, Alpha As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     With Map.Tile(X, Y)
         For I = MapLayer.Ground To MapLayer.Cover
@@ -874,7 +906,7 @@ Public Sub DrawWholeMapLowerTiles(ByVal X As Long, ByVal Y As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawWholeMapLowerTiles", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -884,7 +916,7 @@ Public Sub DrawWholeMapUpperTiles(ByVal X As Long, ByVal Y As Long)
     Dim I As Long, Alpha As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     With Map.Tile(X, Y)
         For I = MapLayer.Fringe To MapLayer.Roof
@@ -913,7 +945,7 @@ Public Sub DrawWholeMapUpperTiles(ByVal X As Long, ByVal Y As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawWholeMapUpperTiles", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -922,7 +954,7 @@ Public Sub DrawBlood(ByVal Index As Long)
     Dim rec As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Load blood
     BloodCount = Tex_Blood.Width / 32
@@ -947,7 +979,7 @@ Public Sub DrawBlood(ByVal Index As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawBlood", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1027,7 +1059,7 @@ Public Sub DrawAnimation(ByVal Index As Long, ByVal Layer As Long)
     Exit Sub
         
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawAnimation", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1038,7 +1070,7 @@ Public Sub DrawMapItem(ByVal ItemNum As Long)
     Dim MaxFrames As Byte
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     X = 0
     
@@ -1073,7 +1105,7 @@ Public Sub DrawMapItem(ByVal ItemNum As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawMapItem", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1086,7 +1118,7 @@ Public Sub DrawMapResource(ByVal Resource_num As Long)
     Dim X As Long, Y As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ' Make sure it's not out of map
     If MapResource(Resource_num).X > Map.MaxX Then Exit Sub
@@ -1130,7 +1162,7 @@ Public Sub DrawMapResource(ByVal Resource_num As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawMapResource", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1143,7 +1175,7 @@ Private Sub DrawResource(ByVal Resource As Long, ByVal dX As Long, dY As Long, r
     Dim destRECT As RECT
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Resource < 1 Or Resource > NumResources Then Exit Sub
 
@@ -1157,7 +1189,7 @@ Private Sub DrawResource(ByVal Resource As Long, ByVal dX As Long, dY As Long, r
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawResource", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1169,7 +1201,7 @@ Private Sub DrawBars()
     Dim I As Long, NPCNum As Long, PartyIndex As Long, BarWidth As Long, MoveSpeed As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Dynamic bar calculations
     sWidth = Tex_Bars.Width
@@ -1435,7 +1467,7 @@ Private Sub DrawBars()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawBars", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1444,7 +1476,7 @@ Public Sub DrawHotbar()
     Dim sRECT As RECT, dRect As RECT, I As Long, num As String, n As Long, destRECT As D3DRECT
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_HOTBAR
         Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 255), 1#, 0
@@ -1473,7 +1505,7 @@ Public Sub DrawHotbar()
     
         Select Case Hotbar(I).sType
             Case 1 ' Inventory
-                If Len(Item(Hotbar(I).Slot).name) > 0 Then
+                If Len(Item(Hotbar(I).Slot).Name) > 0 Then
                     If Item(Hotbar(I).Slot).Pic > 0 Then
                         If Item(Hotbar(I).Slot).Pic <= NumItems Then
                             RenderTextureByRects Tex_Item(Item(Hotbar(I).Slot).Pic), sRECT, dRect
@@ -1481,7 +1513,7 @@ Public Sub DrawHotbar()
                     End If
                 End If
             Case 2 ' Spell
-                If Len(Spell(Hotbar(I).Slot).name) > 0 Then
+                If Len(Spell(Hotbar(I).Slot).Name) > 0 Then
                     If Spell(Hotbar(I).Slot).Icon > 0 Then
                         With sRECT
                             .Top = 0
@@ -1528,7 +1560,7 @@ Public Sub DrawHotbar()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawHotbar", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1540,7 +1572,7 @@ Public Sub DrawPlayer(ByVal Index As Long)
     Dim AttackSpeed As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Sprite = GetPlayerSprite(Index)
 
@@ -1644,22 +1676,28 @@ Public Sub DrawPlayer(ByVal Index As Long)
     Exit Sub
 
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawPlayer", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub DrawNPC(ByVal MapNPCNum As Long)
-    Dim Anim As Byte, I As Long, X As Long, Y As Long, Sprite As Long, spritetop As Long
+    Dim Anim As Byte, I As Long, II As Long, X As Long, Y As Long, Sprite As Long, spritetop As Long
+    Dim tIcon As Long
     Dim rec As RECT
     Dim AttackSpeed As Long
+    Dim NPCNum As Long
+    Static tmrCount As Long
+    Static setIt As Boolean
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
-
-    If MapNPC(MapNPCNum).num = 0 Then Exit Sub ' No npc set
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    Sprite = NPC(MapNPC(MapNPCNum).num).Sprite
+    NPCNum = MapNPC(MapNPCNum).num
+
+    If NPCNum = 0 Then Exit Sub ' No npc set
+    
+    Sprite = NPC(NPCNum).Sprite
 
     If Sprite < 1 Or Sprite > NumCharacters Then Exit Sub
 
@@ -1738,10 +1776,52 @@ Public Sub DrawNPC(ByVal MapNPCNum As Long)
     End If
 
     Call DrawSprite(Sprite, X, Y, rec)
+    
+    '///////////////////////////////////
+'//////////QUEST DISPLAY////////////
+'///////////////////////////////////
+
+    'run through quests and see if this NPC can start/manage one.
+    For I = 1 To MAX_QUESTS
+        For II = 1 To Quest(I).Max_CLI
+            If Quest(I).CLI(II).ItemIndex = NPCNum Then 'this quest is assigned to this NPC
+                'show the icon based off quest status
+                If Player(MyIndex).QuestCLIID(I) = 0 Then 'haven't started this quest yet
+                    If II = 1 Then 'make sure this is the first Greeter of the quest
+                        tIcon = Quest_Icon_Start
+                        GoTo PastQuestDataRetrieval
+                    End If
+                ElseIf Player(MyIndex).QuestCLIID(I) = II Then 'make sure the player is on this NPC within the progress of the quest
+                    tIcon = Quest_Icon_Progress
+                    GoTo PastQuestDataRetrieval
+                End If
+            End If
+        Next II
+    Next I
+    
+PastQuestDataRetrieval:
+    'display it above the NPC's name
+    If tIcon > 0 Then
+        If timeGetTime >= tmrCount Then
+            Call DrawQuestIcon(CLng(tIcon), MapNPCNum, True)
+            If timeGetTime >= tmrCount + 500 Then setIt = False 'swap back
+        Else
+            Call DrawQuestIcon(CLng(tIcon), MapNPCNum) 'draw normal image.
+        End If
+        
+        If Not setIt Then
+            tmrCount = timeGetTime + 500
+            setIt = True
+        End If
+    End If
+
+'///////////////////////////////////
+'//////////QUEST DISPLAY////////////
+'///////////////////////////////////
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawNPC", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1752,7 +1832,7 @@ Public Sub DrawPaperdoll(ByVal X2 As Long, ByVal Y2 As Long, ByVal Sprite As Lon
     Dim Width As Long, Height As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Sprite < 1 Or Sprite > NumPaperdolls Then Exit Sub
     
@@ -1788,7 +1868,7 @@ Public Sub DrawPaperdoll(ByVal X2 As Long, ByVal Y2 As Long, ByVal Sprite As Lon
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawPaperdoll", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1800,7 +1880,7 @@ Private Sub DrawSprite(ByVal Sprite As Long, ByVal X2 As Long, Y2 As Long, rec A
     Dim Height As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Sprite < 1 Or Sprite > NumCharacters Then Exit Sub
     
@@ -1813,7 +1893,7 @@ Private Sub DrawSprite(ByVal Sprite As Long, ByVal X2 As Long, Y2 As Long, rec A
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawSprite", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1829,7 +1909,7 @@ Sub DrawAnimatedItems()
     Dim NoRender(1 To MAX_INV) As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Not InGame Then Exit Sub
     
@@ -2163,7 +2243,7 @@ Sub DrawAnimatedItems()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawAnimatedItems", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2172,7 +2252,7 @@ Sub DrawPlayerCharFace()
     Dim rec As RECT, rec_pos As RECT, FaceNum As Long, srcRect As D3DRECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If NumFaces = 0 Then Exit Sub
     
@@ -2211,7 +2291,7 @@ Sub DrawPlayerCharFace()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawPlayerCharFace", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2247,7 +2327,7 @@ Private Sub RefreshUpperTilesCacheWhole()
     
     Exit Sub
     ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "RefreshUpperTilesCacheWhole", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2280,8 +2360,56 @@ Private Sub RefreshLowerTilesCacheWhole()
     Set bLower = Nothing
     Exit Sub
     ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "RefreshLowerTilesCacheWhole", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Sub DrawQuestIcon(Image As Long, NPCNum As Long, Optional ByVal Up As Boolean = False)
+    Dim I As Long, X As Long, Y As Long
+    Dim Height As Long, Width As Long
+    Dim tmpDX As DX8TextureRec
+    Dim Sprite As Long
+    
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    Sprite = NPC(MapNPC(NPCNum).num).Sprite
+    
+    
+    Select Case Image
+        Case Quest_Icon_Start
+            If Up Then tmpDX = Quest_Start_U Else tmpDX = Quest_Start
+        Case Quest_Icon_Finished
+            If Up Then tmpDX = Quest_Finished_U Else tmpDX = Quest_Finished
+        Case Quest_Icon_Progress
+            If Up Then tmpDX = Quest_Progress_U Else tmpDX = Quest_Progress
+    End Select
+    
+    ' Calculate the X
+    X = MapNPC(NPCNum).X * PIC_X + MapNPC(NPCNum).xOffset - ((Tex_Character(Sprite).Width / 4 - 32) / 2)
+    
+    ' Is the player's height more than 32..?
+    If (Tex_Character(Sprite).Height / 4) > 32 Then
+        ' Create a 32 pixel offset for larger sprites
+        Y = MapNPC(NPCNum).Y * PIC_Y + MapNPC(NPCNum).yOffset - ((Tex_Character(Sprite).Height / 4) - 32)
+    Else
+        ' Proceed as normal
+        Y = MapNPC(NPCNum).Y * PIC_Y + MapNPC(NPCNum).yOffset
+    End If
+    
+    X = ConvertMapX(X)
+    Y = ConvertMapY(Y) - 40
+    
+    Width = 33
+    Height = 33
+    
+    RenderTexture tmpDX, X, Y, 0, 0, Width, Height, Width, Height
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "DrawQuestIcon", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -2293,7 +2421,7 @@ Sub DrawInventory()
     Dim TmpItem As Long, AmountModifier As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
@@ -2407,7 +2535,7 @@ NextLoop:
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawInventory", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2419,7 +2547,7 @@ Sub DrawTrade()
     Dim Color As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Not InGame Then Exit Sub
     
@@ -2559,7 +2687,7 @@ Sub DrawTrade()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawTrade", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2571,7 +2699,7 @@ Sub DrawPlayerSpells()
     Dim Color As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
@@ -2642,7 +2770,7 @@ Sub DrawPlayerSpells()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawPlayerSpells", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2654,7 +2782,7 @@ Sub DrawShop()
     Dim Color As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Not InGame Then Exit Sub
     
@@ -2726,7 +2854,7 @@ Sub DrawShop()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawShop", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2736,7 +2864,7 @@ Public Sub DrawDraggedItem(ByVal X As Long, ByVal Y As Long, Optional ByVal IsHo
     Dim ItemNum As Long, ItemPic As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If IsHotbarSlot Then
         ItemNum = Hotbar(DragHotbarSlot).Slot
@@ -2795,7 +2923,7 @@ Public Sub DrawDraggedItem(ByVal X As Long, ByVal Y As Long, Optional ByVal IsHo
     Exit Sub
 
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawDraggedItem", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2805,7 +2933,7 @@ Public Sub DrawDraggedSpell(ByVal X As Long, ByVal Y As Long, Optional ByVal IsH
     Dim SpellNum As Long, SpellPic As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If IsHotbarSlot Then
         SpellNum = Hotbar(DragHotbarSlot).Slot
@@ -2898,7 +3026,7 @@ Public Sub DrawDraggedSpell(ByVal X As Long, ByVal Y As Long, Optional ByVal IsH
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawDraggedSpell", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2908,7 +3036,7 @@ Public Sub DrawItemDesc(ByVal ItemNum As Long)
     Dim ItemPic As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If ItemNum > 0 And ItemNum <= MAX_ITEMS Then
         ItemPic = Item(ItemNum).Pic
@@ -2947,7 +3075,7 @@ Public Sub DrawItemDesc(ByVal ItemNum As Long)
     Exit Sub
 
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawItemDesc", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -2957,7 +3085,7 @@ Public Sub DrawSpellDesc(ByVal SpellNum As Long)
     Dim SpellPic As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If SpellNum > 0 And SpellNum <= MAX_SPELLS Then
         SpellPic = Spell(SpellNum).Icon
@@ -3006,7 +3134,7 @@ Public Sub DrawSpellDesc(ByVal SpellNum As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawSpellDesc", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3015,7 +3143,7 @@ Public Sub DrawTileOutline()
     Dim rec As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If frmEditor_Map.OptBlock.Value Then Exit Sub
 
@@ -3030,7 +3158,7 @@ Public Sub DrawTileOutline()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawTileOutline", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3042,7 +3170,7 @@ Public Sub Menu_DrawCharacter()
     Dim Width As Long, Height As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If frmMenu.cmbClass.ListIndex = -1 Then Exit Sub
     
@@ -3097,7 +3225,7 @@ Public Sub Menu_DrawCharacter()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Menu_DrawCharacter", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3110,7 +3238,7 @@ Public Sub Render_Graphics()
     Dim rec_pos As RECT, srcRect As D3DRECT
     
     ' If debug mode, handle error then exit out
-    On Error GoTo errorhandler
+    On Error GoTo ErrorHandler
     
     ' Check for device lost
     If Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICELOST Or Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then HandleDeviceLost: Exit Sub
@@ -3392,7 +3520,7 @@ Public Sub Render_Graphics()
     'End If
 
     ' Draw map name
-    RenderText Font_Default, Map.name, DrawMapNameX, DrawMapNameY, DrawMapNameColor
+    RenderText Font_Default, Map.Name, DrawMapNameX, DrawMapNameY, DrawMapNameColor
     
     If InMapEditor And (frmEditor_Map.OptEvents.Value Or frmMain.chkDrawEvents.Value) Then DrawEvents
     If InMapEditor And frmEditor_Map.OptLayers And Not displayTilesets Then DrawTileOutline
@@ -3441,7 +3569,7 @@ Public Sub Render_Graphics()
     Exit Sub
 
 ' Error handler
-errorhandler:
+ErrorHandler:
     If Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICELOST Or Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then
         HandleDeviceLost
         Exit Sub
@@ -3457,33 +3585,33 @@ End Sub
 
 Public Function ConvertMapX(ByVal X As Long) As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ConvertMapX = X - (TileView.Left * PIC_X) - Camera.Left
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ConvertMapX", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function ConvertMapY(ByVal Y As Long) As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ConvertMapY = Y - (TileView.Top * PIC_Y) - Camera.Top
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ConvertMapY", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function InViewPort(ByVal X As Long, ByVal Y As Long) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If X < TileView.Left Then Exit Function
     If Y < TileView.Top Then Exit Function
@@ -3494,14 +3622,14 @@ Public Function InViewPort(ByVal X As Long, ByVal Y As Long) As Boolean
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "InViewPort", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function IsValidMapPoint(ByVal X As Long, ByVal Y As Long) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If X < 0 Then Exit Function
     If Y < 0 Then Exit Function
@@ -3512,7 +3640,7 @@ Public Function IsValidMapPoint(ByVal X As Long, ByVal Y As Long) As Boolean
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsValidMapPoint", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -3523,7 +3651,7 @@ Public Sub LoadTilesets()
     Dim I As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ReDim TilesetInUse(0 To NumTileSets)
     
@@ -3540,7 +3668,7 @@ Public Sub LoadTilesets()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "LoadTilesets", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3552,7 +3680,7 @@ Sub DrawBank()
     Dim Sprite As Long, Color As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If frmMain.picBank.Visible Then
         Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
@@ -3622,7 +3750,7 @@ Sub DrawBank()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawBank", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3633,7 +3761,7 @@ Public Sub DrawBankItem(ByVal X As Long, ByVal Y As Long)
     Dim Sprite As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ItemNum = GetBankItemNum(DragBankSlot)
     Sprite = Item(GetBankItemNum(DragBankSlot)).Pic
@@ -3686,7 +3814,7 @@ Public Sub DrawBankItem(ByVal X As Long, ByVal Y As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawBankItem", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3695,7 +3823,7 @@ Public Sub DrawAutoTile(ByVal layerNum As Long, ByVal destX As Long, ByVal destY
     Dim yOffset As Long, xOffset As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Calculate the offset
     Select Case Map.Tile(X, Y).Autotile(layerNum)
@@ -3712,7 +3840,7 @@ Public Sub DrawAutoTile(ByVal layerNum As Long, ByVal destX As Long, ByVal destY
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawAutoTile", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3724,7 +3852,7 @@ Public Sub EditorMap_DrawRandom()
     Dim I As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     For I = 0 To 3
         If RandomTileSheet(I) = 0 Then
             Exit Sub
@@ -3755,7 +3883,7 @@ Public Sub EditorMap_DrawRandom()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorMap_DrawRandom", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3768,7 +3896,7 @@ Public Sub EditorChar_AnimSprite(container As PictureBox, SpriteNum As String, B
     Dim X As Byte, Y As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If spritePosition > 15 Then spritePosition = 0
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
@@ -3803,7 +3931,7 @@ Public Sub EditorChar_AnimSprite(container As PictureBox, SpriteNum As String, B
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorChar_AnimSprite", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3813,7 +3941,7 @@ Public Sub drawRecentItem(SpriteNum As Integer)
     Dim drawRect As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
 
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
@@ -3832,7 +3960,7 @@ Public Sub drawRecentItem(SpriteNum As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorChar_AnimSprite", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3842,7 +3970,7 @@ Public Sub EditorClass_DrawFace(ByVal Gender As Byte)
     Dim rec As RECT, rec_pos As RECT, srcRect As D3DRECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If NumFaces = 0 Then Exit Sub
     
@@ -3887,7 +4015,7 @@ Public Sub EditorClass_DrawFace(ByVal Gender As Byte)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorClass_DrawFace", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3896,7 +4024,7 @@ Sub DrawEventChatFace()
     Dim rec As RECT, rec_pos As RECT, srcRect As D3DRECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If NumFaces = 0 Then Exit Sub
     
@@ -3936,7 +4064,7 @@ Sub DrawEventChatFace()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawEventChatFace", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -3946,7 +4074,7 @@ Sub EditorEvent_DrawFace()
     Dim FaceNum As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If NumFaces = 0 Then Exit Sub
     
@@ -3991,7 +4119,7 @@ Sub EditorEvent_DrawFace()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorEvent_DrawFace", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4001,7 +4129,7 @@ Sub EditorEvent_DrawFace2()
     Dim FaceNum As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If NumFaces = 0 Then Exit Sub
     
@@ -4046,14 +4174,14 @@ Sub EditorEvent_DrawFace2()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorEvent_DrawFace2", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Function IsConstAnimated(ByVal Sprite As Long) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If AnimatedSpriteNumbers = vbNullString Then Exit Function
     
@@ -4066,7 +4194,7 @@ Public Function IsConstAnimated(ByVal Sprite As Long) As Boolean
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsConstAnimated", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -4081,7 +4209,7 @@ Public Sub EditorMap_DrawTilePreview()
     Dim destRECT As D3DRECT
     Dim dRect As RECT
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsInBounds Then Exit Sub
     
@@ -4126,7 +4254,7 @@ Public Sub EditorMap_DrawTilePreview()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawMapTilesPreview", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4138,7 +4266,7 @@ Public Sub EditorClass_DrawSprite(ByVal Gender As Byte)
     Dim destRECT As D3DRECT
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Gender = 0 Then
         Sprite = frmEditor_Class.scrlMSprite.Value
@@ -4179,7 +4307,7 @@ Public Sub EditorClass_DrawSprite(ByVal Gender As Byte)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorClass_DrawSprite", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4294,7 +4422,7 @@ Public Sub DrawEquipment()
     Dim destPresentationRect As D3DRECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorRGBA(0, 0, 0, 0), 1#, 0
     Direct3D_Device.BeginScene
@@ -4349,7 +4477,7 @@ Public Sub DrawEquipment()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawEquipment", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4361,7 +4489,7 @@ Public Sub EditorEmoticon_DrawIcon()
     Dim destRECT As D3DRECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     EmoticonNum = frmEditor_Emoticon.scrlEmoticon.Value
 
@@ -4395,7 +4523,7 @@ Public Sub EditorEmoticon_DrawIcon()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorEmoticon_BltIcon", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4406,7 +4534,7 @@ Public Sub DrawEmoticons()
     Dim EmoticonNum As Byte, I As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To Player_HighIndex
         If IsPlaying(I) And GetPlayerMap(MyIndex) = GetPlayerMap(I) Then
@@ -4445,7 +4573,7 @@ Public Sub DrawEmoticons()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawEmoticons", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4455,7 +4583,7 @@ Public Sub EditorAnim_DrawAnim()
     Dim sX As Long, sY As Long, sRECT As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 0 To 1
         Animationnum = frmEditor_Animation.scrlSprite(I).Value
@@ -4510,7 +4638,7 @@ Public Sub EditorAnim_DrawAnim()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorAnim_DrawAnim", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4521,7 +4649,7 @@ Public Sub EditorNPC_DrawSprite()
     Dim dRect As RECT
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Sprite = frmEditor_NPC.scrlSprite.Value
 
@@ -4558,7 +4686,7 @@ Public Sub EditorNPC_DrawSprite()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorNPC_DrawSprite", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4569,7 +4697,7 @@ Public Sub EditorResource_DrawSprite()
     Dim dRect As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ' Normal sprite
     Sprite = frmEditor_Resource.scrlNormalPic.Value
@@ -4645,7 +4773,7 @@ Public Sub EditorResource_DrawSprite()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorResource_DrawSprite", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4656,7 +4784,7 @@ Public Sub EditorMap_DrawMapItem()
     Dim dRect As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ItemNum = Item(frmEditor_Map.scrlMapItem.Value).Pic
 
@@ -4689,7 +4817,7 @@ Public Sub EditorMap_DrawMapItem()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorMap_DrawMapItem", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4700,7 +4828,7 @@ Public Sub EditorItem_DrawItem()
     Dim dRect As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ItemNum = frmEditor_Item.scrlPic.Value
 
@@ -4733,7 +4861,7 @@ Public Sub EditorItem_DrawItem()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorItem_DrawItem", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4744,7 +4872,7 @@ Public Sub EditorItem_DrawPaperdoll()
     Dim dRect As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     Sprite = frmEditor_Item.scrlPaperdoll.Value
 
@@ -4778,7 +4906,7 @@ Public Sub EditorItem_DrawPaperdoll()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorItem_DrawPaperdoll", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4789,7 +4917,7 @@ Public Sub EditorSpell_DrawIcon()
     Dim dRect As RECT
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     IconNum = frmEditor_Spell.scrlIcon.Value
     
@@ -4822,7 +4950,7 @@ Public Sub EditorSpell_DrawIcon()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorSpell_DrawIcon", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4835,7 +4963,7 @@ Public Sub EditorMap_DrawTileset()
     Dim dRect As RECT, scrlX As Long, scrlY As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ' Find tileset number
     Tileset = frmEditor_Map.scrlTileSet.Value
@@ -4870,7 +4998,7 @@ Public Sub EditorMap_DrawTileset()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorMap_DrawTileset", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4901,7 +5029,7 @@ Public Sub DrawEvents()
     Dim Width As Long, Height As Long, I As Long, X As Long, Y As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Map.EventCount <= 0 Then Exit Sub
     
@@ -4981,7 +5109,7 @@ nextevent:
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DrawEvents", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -4991,7 +5119,7 @@ Public Sub EditorEvent_DrawGraphic()
     Dim dRect As RECT
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If frmEditor_Events.picGraphicSel.Visible Then
         Select Case frmEditor_Events.cmbGraphic.ListIndex
@@ -5232,7 +5360,7 @@ Public Sub EditorEvent_DrawGraphic()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorMap_DrawKey", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -6242,7 +6370,7 @@ Public Sub EditorMapProperties_DrawPanorama()
     Dim dRect As RECT
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ' Find Panorama number
     Panorama = frmEditor_MapProperties.scrlPanorama.Value
@@ -6283,7 +6411,7 @@ Public Sub EditorMapProperties_DrawPanorama()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "EditorMapProperties_DrawPanorama", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -6297,7 +6425,7 @@ Public Sub DrawMiniMap()
     Dim CameraXSize As Long, CameraYSize As Long, CameraHalfX As Long, CameraHalfY As Long
  
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     CameraXSize = (MIN_MAPX * PIC_X) - (MIN_MAPX * 4) - 8
     CameraYSize = 64
@@ -6431,7 +6559,7 @@ Public Sub DrawMiniMap()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
 HandleError "DrawMiniMap", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
 Err.Clear
 End Sub

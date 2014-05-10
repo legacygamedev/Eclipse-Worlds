@@ -45,8 +45,6 @@ End Type
 Private Type QuestRec
     Name As String * QUESTNAME_LENGTH
     Description As String * QUESTDESC_LENGTH
-    Icon_Start As String * QUESTICON_LENGTH
-    Icon_Progress As String * QUESTICON_LENGTH
     CanBeRetaken As Byte
     
     'Maxes

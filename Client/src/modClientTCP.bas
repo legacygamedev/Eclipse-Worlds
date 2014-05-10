@@ -664,8 +664,6 @@ Dim I As Long, II As Long
             buffer.WriteLong QuestNum
             buffer.WriteString .Name
             buffer.WriteString .Description
-            buffer.WriteString .Icon_Start
-            buffer.WriteString .Icon_Progress
             buffer.WriteLong .CanBeRetaken
             buffer.WriteLong .Max_CLI
             

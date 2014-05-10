@@ -417,51 +417,6 @@ Public Sub DrawNPCName(ByVal Index As Long)
 
     NPCNum = MapNPC(Index).num
     
-'///////////////////////////////////
-'//////////QUEST DISPLAY////////////
-'///////////////////////////////////
-
-    'run through quests and see if this NPC can start/manage one.
-    For I = 1 To MAX_QUESTS
-        For II = 1 To Quest(I).Max_CLI
-            If Quest(I).CLI(II).ItemIndex = NPCNum Then 'this quest is assigned to this NPC
-                'show the icon based off quest status
-                If Player(MyIndex).QuestCLIID(I) = 0 Then 'haven't started this quest yet
-                    If II = 1 Then 'make sure this is the first Greeter of the quest
-                        tIcon = Trim$(Quest(I).Icon_Start)
-                        GoTo PastQuestDataRetrieval
-                    End If
-                ElseIf Player(MyIndex).QuestCLIID(I) = II Then 'make sure the player is on this NPC within the progress of the quest
-                    tIcon = Trim$(Quest(I).Icon_Progress)
-                    GoTo PastQuestDataRetrieval
-                End If
-            End If
-        Next II
-    Next I
-    
-PastQuestDataRetrieval:
-    'display it above the NPC's name
-    If Len(tIcon) > 0 Then
-        TextX = GetNPCTextX(Index) - GetFontWidth((tIcon))
-        ' Set the basic Y Value
-        If NPC(NPCNum).Sprite < 1 Or NPC(NPCNum).Sprite > NumCharacters Then
-            TextY = GetNPCTextY(Index) - 32
-        Else
-            ' Determine location for the text
-            TextY = GetNPCTextY(Index) - (Tex_Character(NPC(NPCNum).Sprite).Height / 4)
-        
-            If (Tex_Character(NPC(NPCNum).Sprite).Height / 4) < 32 Then
-                TextY = TextY - 16
-            End If
-        End If
-        
-        Call RenderText(Font_Default, tIcon, TextX, TextY, White)
-    End If
-
-'///////////////////////////////////
-'//////////QUEST DISPLAY////////////
-'///////////////////////////////////
-    
     ' Set the basic Y Value
     If NPC(NPCNum).Sprite < 1 Or NPC(NPCNum).Sprite > NumCharacters Then
         TextY = GetNPCTextY(Index) - 16
