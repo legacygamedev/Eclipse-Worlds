@@ -1832,6 +1832,8 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
                 currentCategory = "Auto Life"
             Case 9
                 currentCategory = "Change Sprite"
+            Case 10
+                currencycategory = "Recipe"
         End Select
         lblCat.Caption = currentCategory
     End If
