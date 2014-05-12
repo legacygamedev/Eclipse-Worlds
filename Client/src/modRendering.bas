@@ -1610,6 +1610,14 @@ Public Sub DrawPlayer(ByVal Index As Long)
                     If (TempPlayer(Index).xOffset > 8) Then Anim = TempPlayer(Index).Step
                 Case DIR_RIGHT
                     If (TempPlayer(Index).xOffset < -8) Then Anim = TempPlayer(Index).Step
+                Case DIR_UP_LEFT
+                    If (TempPlayer(Index).yOffset > 8) And (TempPlayer(Index).xOffset > 8) Then Anim = TempPlayer(Index).Step
+                Case DIR_UP_RIGHT
+                    If (TempPlayer(Index).yOffset > 8) And (TempPlayer(Index).xOffset < -8) Then Anim = TempPlayer(Index).Step
+                Case DIR_DOWN_LEFT
+                    If (TempPlayer(Index).yOffset < -8) And (TempPlayer(Index).xOffset > 8) Then Anim = TempPlayer(Index).Step
+                Case DIR_DOWN_RIGHT
+                    If (TempPlayer(Index).yOffset < -8) And (TempPlayer(Index).xOffset < -8) Then Anim = TempPlayer(Index).Step
             End Select
         End If
     
@@ -1639,6 +1647,14 @@ Public Sub DrawPlayer(ByVal Index As Long)
             spritetop = 0
         Case DIR_LEFT
             spritetop = 1
+        Case DIR_UP_LEFT
+            spritetop = 3
+        Case DIR_UP_RIGHT
+            spritetop = 3
+        Case DIR_DOWN_LEFT
+            spritetop = 0
+        Case DIR_DOWN_RIGHT
+            spritetop = 0
     End Select
 
     With rec

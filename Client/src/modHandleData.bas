@@ -761,6 +761,10 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
         DirDown = False
         DirLeft = False
         DirRight = False
+        DirUpLeft = False
+        DirUpRight = False
+        DirDownLeft = False
+        DirDownRight = False
         
         ' Set the character windows
         frmMain.lblCharName = GetPlayerName(MyIndex)

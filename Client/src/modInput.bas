@@ -7,24 +7,32 @@ Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Int
 
 Public Sub CheckKeys()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If GetAsyncKeyState(VK_W) >= 0 Then DirUp = False
     If GetAsyncKeyState(VK_S) >= 0 Then DirDown = False
     If GetAsyncKeyState(VK_A) >= 0 Then DirLeft = False
     If GetAsyncKeyState(VK_D) >= 0 Then DirRight = False
+    If GetAsyncKeyState(VK_W) >= 0 And GetAsyncKeyState(VK_A) >= 0 Then DirUpLeft = False
+    If GetAsyncKeyState(VK_W) >= 0 And GetAsyncKeyState(VK_D) >= 0 Then DirUpRight = False
+    If GetAsyncKeyState(VK_S) >= 0 And GetAsyncKeyState(VK_A) >= 0 Then DirDownLeft = False
+    If GetAsyncKeyState(VK_S) >= 0 And GetAsyncKeyState(VK_D) >= 0 Then DirDownRight = False
     
     If GetAsyncKeyState(VK_UP) >= 0 Then DirUp = False
     If GetAsyncKeyState(VK_DOWN) >= 0 Then DirDown = False
     If GetAsyncKeyState(VK_LEFT) >= 0 Then DirLeft = False
     If GetAsyncKeyState(VK_RIGHT) >= 0 Then DirRight = False
+    If GetAsyncKeyState(VK_UP) >= 0 And GetAsyncKeyState(VK_LEFT) >= 0 Then DirUpLeft = False
+    If GetAsyncKeyState(VK_UP) >= 0 And GetAsyncKeyState(VK_RIGHT) >= 0 Then DirUpRight = False
+    If GetAsyncKeyState(VK_DOWN) >= 0 And GetAsyncKeyState(VK_LEFT) >= 0 Then DirDownLeft = False
+    If GetAsyncKeyState(VK_DOWN) >= 0 And GetAsyncKeyState(VK_RIGHT) >= 0 Then DirDownRight = False
     
     If GetAsyncKeyState(VK_CONTROL) >= 0 Then ControlDown = False
     If GetAsyncKeyState(VK_SHIFT) >= 0 Then ShiftDown = False
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "CheckKeys", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -134,136 +142,143 @@ Public Sub CheckInputKeys()
     Dim distanceY As Long
     Dim I As Long
         
-    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+        ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If GetKeyState(vbKeyShift) < 0 Then
         ShiftDown = True
     Else
         ShiftDown = False
     End If
-
+    
+    If GetKeyState(vbKeyReturn) < 0 Then
+        CheckMapGetItem
+    End If
+    
     If GetKeyState(vbKeyControl) < 0 Then
         ControlDown = True
     Else
         ControlDown = False
     End If
     
-    If GetKeyState(vbKeySpace) < 0 And ChatLocked Then
-        CheckMapGetItem
+    'Move Up Left
+    If Options.WASD = 1 And GetAsyncKeyState(VK_W) < 0 And GetAsyncKeyState(VK_A) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_UP) < 0 And GetAsyncKeyState(VK_LEFT) Then
+        DirUp = False
+        DirDown = False
+        DirLeft = False
+        DirRight = False
+        DirUpLeft = True
+        DirUpRight = False
+        DirDownLeft = False
+        DirDownRight = False
+        Exit Sub
+    Else
+        DirUpLeft = False
     End If
     
-    ' WASD
-    If Options.WASD = 1 Then
-        ' Cancel out if in chat
-        If Not ChatLocked Then Exit Sub
-        
-        ' Move Up
-        If GetKeyState(vbKeyW) < 0 Then
-            DirUp = True
-            DirDown = False
-            DirLeft = False
-            DirRight = False
-            MouseX = -1
-            MouseY = -1
-            Exit Sub
-        Else
-            DirUp = False
-        End If
-    
-        ' Move Right
-        If GetKeyState(vbKeyD) < 0 Then
-            DirUp = False
-            DirDown = False
-            DirLeft = False
-            DirRight = True
-            MouseX = -1
-            MouseY = -1
-            Exit Sub
-        Else
-            DirRight = False
-        End If
-    
-        ' Move down
-        If GetKeyState(vbKeyS) < 0 Then
-            DirUp = False
-            DirDown = True
-            DirLeft = False
-            DirRight = False
-            MouseX = -1
-            MouseY = -1
-            Exit Sub
-        Else
-            DirDown = False
-        End If
-    
-        ' Move left
-        If GetKeyState(vbKeyA) < 0 Then
-            DirUp = False
-            DirDown = False
-            DirLeft = True
-            DirRight = False
-            MouseX = -1
-            MouseY = -1
-            Exit Sub
-        Else
-            DirLeft = False
-        End If
+    'Move Up Right
+    If Options.WASD = 1 And GetAsyncKeyState(VK_W) < 0 And GetAsyncKeyState(VK_D) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_UP) < 0 And GetAsyncKeyState(VK_RIGHT) Then
+        DirUp = False
+        DirDown = False
+        DirLeft = False
+        DirRight = False
+        DirUpLeft = False
+        DirUpRight = True
+        DirDownLeft = False
+        DirDownRight = False
+        Exit Sub
     Else
-        ' Cancel out if in chat
-        If Not ChatLocked Then Exit Sub
-        
-        ' Move Up
-        If GetKeyState(vbKeyUp) < 0 Then
-            DirUp = True
-            DirDown = False
-            DirLeft = False
-            DirRight = False
-            MouseX = -1
-            MouseY = -1
-            Exit Sub
-        Else
-            DirUp = False
-        End If
-    
-        ' Move Right
-        If GetKeyState(vbKeyRight) < 0 Then
-            DirUp = False
-            DirDown = False
-            DirLeft = False
-            DirRight = True
-            MouseX = -1
-            MouseY = -1
-            Exit Sub
-        Else
-            DirRight = False
-        End If
-    
-        ' Move down
-        If GetKeyState(vbKeyDown) < 0 Then
-            DirUp = False
-            DirDown = True
-            DirLeft = False
-            DirRight = False
-            MouseX = -1
-            MouseY = -1
-            Exit Sub
-        Else
-            DirDown = False
-        End If
-    
-        ' Move left
-        If GetKeyState(vbKeyLeft) < 0 Then
-            DirUp = False
-            DirDown = False
-            DirLeft = True
-            DirRight = False
-            MouseX = -1
-            MouseY = -1
-            Exit Sub
-        Else
-            DirLeft = False
-        End If
+        DirUpRight = False
+    End If
+
+    'Move Down Left
+    If Options.WASD = 1 And GetAsyncKeyState(VK_S) < 0 And GetAsyncKeyState(VK_A) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_DOWN) < 0 And GetAsyncKeyState(VK_LEFT) Then
+        DirUp = False
+        DirDown = False
+        DirLeft = False
+        DirRight = False
+        DirUpLeft = False
+        DirUpRight = False
+        DirDownLeft = True
+        DirDownRight = False
+        Exit Sub
+    Else
+        DirDownLeft = False
+    End If
+
+    'Move Down Right
+    If Options.WASD = 1 And GetAsyncKeyState(VK_S) < 0 And GetAsyncKeyState(VK_D) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_DOWN) < 0 And GetAsyncKeyState(VK_RIGHT) Then
+        DirUp = False
+        DirDown = False
+        DirLeft = False
+        DirRight = False
+        DirUpLeft = False
+        DirUpRight = False
+        DirDownLeft = False
+        DirDownRight = True
+        Exit Sub
+    Else
+        DirDownRight = False
+    End If
+
+    'Move Up
+    If Options.WASD = 1 And GetAsyncKeyState(VK_W) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_UP) < 0 Then
+        DirUp = True
+        DirDown = False
+        DirLeft = False
+        DirRight = False
+        DirUpLeft = False
+        DirUpRight = False
+        DirDownLeft = False
+        DirDownRight = False
+        Exit Sub
+    Else
+        DirUp = False
+    End If
+
+    'Move Right
+    If Options.WASD = 1 And GetAsyncKeyState(VK_D) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_RIGHT) < 0 Then
+        DirUp = False
+        DirDown = False
+        DirLeft = False
+        DirRight = True
+        DirUpLeft = False
+        DirUpRight = False
+        DirDownLeft = False
+        DirDownRight = False
+        Exit Sub
+    Else
+        DirRight = False
+    End If
+
+    'Move down
+    If Options.WASD = 1 And GetAsyncKeyState(VK_S) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_DOWN) < 0 Then
+        DirUp = False
+        DirDown = True
+        DirLeft = False
+        DirRight = False
+        DirUpLeft = False
+        DirUpRight = False
+        DirDownLeft = False
+        DirDownRight = False
+        Exit Sub
+    Else
+        DirDown = False
+    End If
+
+    'Move left
+    If Options.WASD = 1 And GetAsyncKeyState(VK_A) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_LEFT) < 0 Then
+        DirUp = False
+        DirDown = False
+        DirLeft = True
+        DirRight = False
+        DirUpLeft = False
+        DirUpRight = False
+        DirDownLeft = False
+        DirDownRight = False
+        Exit Sub
+    Else
+        DirLeft = False
     End If
     
     ' Mouse movement
@@ -325,14 +340,14 @@ Public Sub CheckInputKeys()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "CheckInputKeys", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
     Dim ChatText  As String
-    Dim name      As String
+    Dim Name      As String
     Dim I         As Long
     Dim n         As Long
     Dim Command() As String
@@ -340,7 +355,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
     Dim StrInput  As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ChatText = Trim$(MyText)
 
@@ -485,14 +500,14 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Exit Sub
             End If
             
-            name = vbNullString
+            Name = vbNullString
 
             ' Get the desired player from the user text
             Dim Size As Long
             Size = Len(ChatText)
             For I = 1 To Size
                 If Not Mid$(ChatText, I, 1) = " " Then
-                    name = name & Mid$(ChatText, I, 1)
+                    Name = Name & Mid$(ChatText, I, 1)
                 Else
 
                     Exit For
@@ -504,7 +519,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 ChatText = Mid$(ChatText, I + 1, Len(ChatText) - I)
 
                 ' Send the message to the player
-                Call PrivateMsg(name, ChatText)
+                Call PrivateMsg(Name, ChatText)
             Else
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
             End If
@@ -1119,14 +1134,14 @@ Continue:
     Exit Sub
 
     ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "HandleKeyPresses", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MouseMoveX()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Left movement
     If GetPlayerX(MyIndex) > MouseX Or (GetPlayerDir(MyIndex) = DIR_LEFT And GetPlayerX(MyIndex) = 0) Then
@@ -1150,14 +1165,14 @@ Public Sub MouseMoveX()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "MouseMoveX", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub MouseMoveY()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Up movement
     If GetPlayerY(MyIndex) > MouseY Or (GetPlayerDir(MyIndex) = DIR_UP And GetPlayerY(MyIndex) = 0) Then
@@ -1181,7 +1196,7 @@ Public Sub MouseMoveY()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "MouseMoveY", "modInput", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
