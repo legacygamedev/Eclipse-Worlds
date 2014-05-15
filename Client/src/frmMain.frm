@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -957,7 +957,7 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H0080FFFF&
+         ForeColor       =   &H00FFFFFF&
          Height          =   1215
          Left            =   120
          TabIndex        =   215
@@ -977,7 +977,7 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00C0FFFF&
+         ForeColor       =   &H0080FF80&
          Height          =   255
          Left            =   120
          TabIndex        =   214
@@ -997,7 +997,7 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00C0FFFF&
+         ForeColor       =   &H008080FF&
          Height          =   255
          Left            =   3960
          TabIndex        =   213
@@ -1018,7 +1018,7 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H0080FFFF&
+         ForeColor       =   &H00FFFFFF&
          Height          =   375
          Left            =   120
          TabIndex        =   212
@@ -1044,7 +1044,7 @@ Begin VB.Form frmMain
          Top             =   120
       End
       Begin VB.CommandButton btnQuestCancel 
-         BackColor       =   &H00008080&
+         BackColor       =   &H00E0E0E0&
          Caption         =   "Quit This Quest"
          Height          =   255
          Left            =   120
@@ -1065,7 +1065,7 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H0080FFFF&
+         ForeColor       =   &H00FFFFFF&
          Height          =   1815
          Left            =   120
          Locked          =   -1  'True
@@ -1124,7 +1124,7 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H0080FFFF&
+         ForeColor       =   &H00FFFFFF&
          Height          =   1815
          Left            =   120
          TabIndex        =   224
@@ -1144,7 +1144,7 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00C0FFFF&
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   120
          TabIndex        =   223
@@ -1163,7 +1163,7 @@ Begin VB.Form frmMain
       Visible         =   0   'False
       Width           =   3375
       Begin VB.CommandButton btnCloseQuestLog 
-         BackColor       =   &H00008080&
+         BackColor       =   &H00E0E0E0&
          Caption         =   "X"
          Height          =   255
          Left            =   3060
@@ -1175,7 +1175,7 @@ Begin VB.Form frmMain
       End
       Begin VB.ListBox lstQuests 
          BackColor       =   &H00000000&
-         ForeColor       =   &H0080FFFF&
+         ForeColor       =   &H00FFFFFF&
          Height          =   4050
          Left            =   120
          TabIndex        =   217
@@ -1195,7 +1195,7 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00C0FFFF&
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   120
          TabIndex        =   219
@@ -1215,7 +1215,7 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00C0FFFF&
+         ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   480
          TabIndex        =   218
@@ -2379,6 +2379,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0

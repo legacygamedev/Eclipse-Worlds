@@ -114,7 +114,7 @@ Public Sub FindNearestTarget()
                     If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
                         ' Skip
                     Else
-                        If Player(I).Hiding = 0 Then
+                        'If Player(I).Hiding = 0 Then 'LEFTOFF
                             If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
                                 If PlayerTarget = 0 Then
                                     LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
@@ -124,7 +124,7 @@ Public Sub FindNearestTarget()
                                     PlayerTarget = I
                                 End If
                             End If
-                        End If
+                        'End If
                     End If
                 End If
             End If

@@ -1,6 +1,5 @@
 VERSION 5.00
 Begin VB.Form frmEditor_Quest 
-   BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
    Caption         =   $"frmEditor_Quest.frx":0000
    ClientHeight    =   10170
@@ -14,7 +13,6 @@ Begin VB.Form frmEditor_Quest
    ScaleWidth      =   18975
    StartUpPosition =   2  'CenterScreen
    Begin VB.Frame fmeCLI 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Add a new NPC/Event the player will need to meet with"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
@@ -67,7 +65,6 @@ Begin VB.Form frmEditor_Quest
          Width           =   2175
       End
       Begin VB.OptionButton opEvent 
-         BackColor       =   &H00E0E0E0&
          Caption         =   "Events"
          Enabled         =   0   'False
          Height          =   255
@@ -77,7 +74,6 @@ Begin VB.Form frmEditor_Quest
          Width           =   4455
       End
       Begin VB.OptionButton opNPC 
-         BackColor       =   &H00E0E0E0&
          Caption         =   "NPC's"
          Height          =   255
          Left            =   240
@@ -142,7 +138,6 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame fmeSelectItem 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Select Item To Give"
       Height          =   2655
       Left            =   15000
@@ -151,7 +146,6 @@ Begin VB.Form frmEditor_Quest
       Visible         =   0   'False
       Width           =   3615
       Begin VB.CheckBox chkTake 
-         BackColor       =   &H00E0E0E0&
          Caption         =   "Take the item the player gathers?"
          Height          =   255
          Left            =   120
@@ -254,7 +248,6 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame fmeShowMsg 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Show player a message"
       Height          =   2775
       Left            =   15000
@@ -311,7 +304,6 @@ Begin VB.Form frmEditor_Quest
          Width           =   2055
       End
       Begin VB.CheckBox chkRes 
-         BackColor       =   &H00E0E0E0&
          Caption         =   "This is the response if the last task is not done."
          Height          =   255
          Left            =   120
@@ -361,7 +353,6 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame fmeReq 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Quest Requirements"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
@@ -643,7 +634,6 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame fmeObtainSKill 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Select a skill and skill level for the player to obtain."
       Height          =   1935
       Left            =   16200
@@ -740,7 +730,6 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame fmeTask 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Add a new action/task to complete for this Greeter"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
@@ -923,7 +912,6 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame fmeModify 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Adjust Player Stats"
       Height          =   2295
       Left            =   15000
@@ -970,7 +958,6 @@ Begin VB.Form frmEditor_Quest
          Width           =   2775
       End
       Begin VB.CheckBox chkSet 
-         BackColor       =   &H00E0E0E0&
          Caption         =   "Set the value instead of adding/subtracting"
          Height          =   255
          Left            =   240
@@ -989,7 +976,6 @@ Begin VB.Form frmEditor_Quest
          Width           =   4335
       End
       Begin VB.OptionButton opLvl 
-         BackColor       =   &H00E0E0E0&
          Caption         =   "Level"
          Height          =   255
          Left            =   240
@@ -999,7 +985,6 @@ Begin VB.Form frmEditor_Quest
          Width           =   4095
       End
       Begin VB.OptionButton opEXP 
-         BackColor       =   &H00E0E0E0&
          Caption         =   "EXP"
          Height          =   255
          Left            =   240
@@ -1020,7 +1005,6 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame fmeMoveItem 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Move List Items"
       Height          =   1335
       Left            =   1560
@@ -1128,7 +1112,6 @@ Begin VB.Form frmEditor_Quest
       Width           =   5775
    End
    Begin VB.Frame fraNPC 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Quest List"
       Height          =   8655
       Left            =   0
@@ -1172,7 +1155,6 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame Frame1 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Quest Details"
       Height          =   2415
       Left            =   3240
@@ -1241,7 +1223,6 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame Frame3 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Quest Editing"
       Height          =   5775
       Left            =   3240
@@ -1272,7 +1253,6 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame Frame2 
-      BackColor       =   &H00E0E0E0&
       Caption         =   "Editing Features"
       Height          =   2415
       Left            =   7800
@@ -1280,7 +1260,6 @@ Begin VB.Form frmEditor_Quest
       Top             =   0
       Width           =   6975
       Begin VB.CheckBox chkRetake 
-         BackColor       =   &H00E0E0E0&
          Caption         =   "Can this quest be retaken?"
          Height          =   255
          Left            =   120
