@@ -112,7 +112,7 @@ Private Type SpellAnim
 End Type
 
 Public Type BuffRec
-    ID As Long
+    id As Long
     Behavior As Long
     Vital As Long
     Timer As Long
@@ -553,6 +553,7 @@ Private Type NPCRec
     SwitchVal As Byte
     VariableVal As Long
     AddToVariable As Byte
+    ShowQuestCompleteIcon As Long
 End Type
 
 Private Type MapNPCRec

@@ -151,7 +151,7 @@ Public Sub CheckInputKeys()
         ShiftDown = False
     End If
     
-    If GetKeyState(vbKeyReturn) < 0 Then
+    If GetKeyState(vbKeySpace) < 0 Then
         CheckMapGetItem
     End If
     

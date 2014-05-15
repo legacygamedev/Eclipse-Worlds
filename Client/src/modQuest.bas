@@ -19,10 +19,13 @@ Public Const ACTION_ADJUST_EXP As Byte = 9
 Public Const Quest_Icon_Start As Byte = 1
 Public Const Quest_Icon_Finished As Byte = 2
 Public Const Quest_Icon_Progress As Byte = 3
+Public Const Quest_Icon_Completed As Byte = 4
 
 'Constants for list mover
 Public Const LIST_CLI As Byte = 1
 Public Const LIST_TASK As Byte = 2
+
+'Variable for icon drawing - client only
 
 Private Type RequirementsRec
     AccessReq As Long
@@ -377,6 +380,20 @@ Dim I As Long
                     IsNPCInAnotherQuest = True
                     Exit Function
                 End If
+            End If
+        End If
+    Next I
+End Function
+
+Public Function DoesNPCStartQuest(ByVal NPCNum As Long) As Long
+Dim I As Long
+    DoesNPCStartQuest = 0
+    
+    For I = 1 To MAX_QUESTS
+        If Quest(I).Max_CLI > 0 Then
+            If Quest(I).CLI(1).ItemIndex = NPCNum Then
+                DoesNPCStartQuest = I 'return the quest number
+                Exit Function
             End If
         End If
     Next I

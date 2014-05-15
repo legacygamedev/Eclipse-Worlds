@@ -75,6 +75,9 @@ End Function
 Public Sub MapEditorMode(switch As Boolean)
 
     If switch Then
+        frmMain.picMapEditor.Top = 0
+        frmMain.picMapEditor.Left = 0
+        frmMain.picMapEditor.Visible = True
         frmMain.Width = frmMain.Width - 30
         frmMain.Height = frmMain.Height + 1110
         frmMain.picForm.Top = frmMain.picForm.Top + 24 + 50
@@ -104,6 +107,7 @@ Public Sub MapEditorMode(switch As Boolean)
         getCurrentMapLayerName
         EditorSave = True
     Else
+        frmMain.picMapEditor.Visible = False
         frmMain.Width = frmMain.Width + 30
         frmMain.Height = frmMain.Height - 1110
         frmMain.picForm.Top = frmMain.picForm.Top - 24 - 50

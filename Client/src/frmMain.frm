@@ -27,6 +27,327 @@ Begin VB.Form frmMain
    StartUpPosition =   2  'CenterScreen
    Tag             =   " "
    Visible         =   0   'False
+   Begin VB.PictureBox picMapEditor 
+      Appearance      =   0  'Flat
+      BackColor       =   &H0080C0FF&
+      ForeColor       =   &H80000008&
+      Height          =   1110
+      Left            =   30
+      ScaleHeight     =   72
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   798
+      TabIndex        =   150
+      Top             =   12360
+      Visible         =   0   'False
+      Width           =   12000
+      Begin VB.CheckBox chkLayers 
+         Appearance      =   0  'Flat
+         BackColor       =   &H0080C0FF&
+         ForeColor       =   &H80000008&
+         Height          =   540
+         Left            =   3585
+         Style           =   1  'Graphical
+         TabIndex        =   170
+         ToolTipText     =   "Eye Dropper (Shift + LMouse)"
+         Top             =   210
+         Width           =   540
+      End
+      Begin VB.CheckBox chkTilesets 
+         Appearance      =   0  'Flat
+         BackColor       =   &H0080C0FF&
+         ForeColor       =   &H80000008&
+         Height          =   540
+         Left            =   5190
+         Style           =   1  'Graphical
+         TabIndex        =   165
+         ToolTipText     =   "Eye Dropper (Shift + LMouse)"
+         Top             =   210
+         Width           =   540
+      End
+      Begin VB.CheckBox chkDimLayers 
+         BackColor       =   &H0080C0FF&
+         Caption         =   "Dim Layers"
+         Height          =   225
+         Left            =   10215
+         TabIndex        =   164
+         ToolTipText     =   "Will dim tiles of layers that are below your current layer."
+         Top             =   870
+         Value           =   1  'Checked
+         Width           =   1500
+      End
+      Begin VB.CommandButton cmdDelete 
+         BackColor       =   &H0080C0FF&
+         Height          =   420
+         Left            =   8910
+         Style           =   1  'Graphical
+         TabIndex        =   163
+         ToolTipText     =   "Delete all content of this map. "
+         Top             =   615
+         Width           =   420
+      End
+      Begin VB.CommandButton cmdRevert 
+         BackColor       =   &H0080C0FF&
+         Height          =   420
+         Left            =   8910
+         Style           =   1  'Graphical
+         TabIndex        =   162
+         ToolTipText     =   "Revert/Cancel all changes to this map."
+         Top             =   180
+         Width           =   420
+      End
+      Begin VB.CommandButton cmdProperties 
+         BackColor       =   &H0080C0FF&
+         Height          =   420
+         Left            =   8475
+         Style           =   1  'Graphical
+         TabIndex        =   161
+         ToolTipText     =   "Map Properties"
+         Top             =   615
+         Width           =   420
+      End
+      Begin VB.CommandButton cmdSave 
+         BackColor       =   &H0080C0FF&
+         Height          =   540
+         Left            =   8355
+         Style           =   1  'Graphical
+         TabIndex        =   160
+         ToolTipText     =   "Save Map"
+         Top             =   60
+         Width           =   540
+      End
+      Begin VB.CheckBox chkDrawEvents 
+         BackColor       =   &H0080C0FF&
+         Caption         =   "Draw Events"
+         Height          =   225
+         Left            =   10215
+         TabIndex        =   159
+         ToolTipText     =   "Draw white square around events "
+         Top             =   660
+         Value           =   1  'Checked
+         Width           =   1500
+      End
+      Begin VB.CheckBox chkShowAttributes 
+         BackColor       =   &H0080C0FF&
+         Caption         =   "Show Attributes"
+         Height          =   225
+         Left            =   10215
+         TabIndex        =   158
+         ToolTipText     =   "Show attributes like Block, Warp etc. "
+         Top             =   435
+         Width           =   1740
+      End
+      Begin VB.CheckBox chkGrid 
+         BackColor       =   &H0080C0FF&
+         Caption         =   "Show Grid"
+         Height          =   225
+         Left            =   10215
+         TabIndex        =   157
+         Top             =   210
+         Width           =   1395
+      End
+      Begin VB.CheckBox chkTilePreview 
+         BackColor       =   &H0080C0FF&
+         Caption         =   "Tile Preview"
+         Height          =   225
+         Left            =   10215
+         TabIndex        =   156
+         Top             =   0
+         Value           =   1  'Checked
+         Width           =   1395
+      End
+      Begin VB.CheckBox chkEyeDropper 
+         Appearance      =   0  'Flat
+         BackColor       =   &H0080C0FF&
+         ForeColor       =   &H80000008&
+         Height          =   540
+         Left            =   2070
+         Style           =   1  'Graphical
+         TabIndex        =   154
+         ToolTipText     =   "Eye Dropper (Shift + LMouse)"
+         Top             =   210
+         Width           =   540
+      End
+      Begin VB.CheckBox mapPreviewSwitch 
+         Appearance      =   0  'Flat
+         BackColor       =   &H0080C0FF&
+         ForeColor       =   &H80000008&
+         Height          =   540
+         Left            =   255
+         Style           =   1  'Graphical
+         TabIndex        =   152
+         ToolTipText     =   "Map Preview - Docked"
+         Top             =   210
+         Width           =   540
+      End
+      Begin VB.Label Label2 
+         BackStyle       =   0  'Transparent
+         Caption         =   "(MWheel Scroll)"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000011&
+         Height          =   180
+         Left            =   3330
+         TabIndex        =   172
+         Top             =   885
+         Width           =   1140
+      End
+      Begin VB.Label lblLayers 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Layers"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   240
+         Left            =   3615
+         TabIndex        =   171
+         Top             =   705
+         Width           =   480
+      End
+      Begin VB.Label lblHotMapPreview 
+         BackStyle       =   0  'Transparent
+         Caption         =   "(Ctrl+M)"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000011&
+         Height          =   180
+         Left            =   240
+         TabIndex        =   169
+         Top             =   885
+         Width           =   570
+      End
+      Begin VB.Label lblHotEye 
+         BackStyle       =   0  'Transparent
+         Caption         =   "(Shift+LMouse)"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000011&
+         Height          =   180
+         Left            =   1770
+         TabIndex        =   168
+         Top             =   885
+         Width           =   1140
+      End
+      Begin VB.Label lblHotTilesets 
+         BackStyle       =   0  'Transparent
+         Caption         =   "(Middle MBtn)"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000011&
+         Height          =   180
+         Left            =   4965
+         TabIndex        =   167
+         Top             =   900
+         Width           =   1095
+      End
+      Begin VB.Label lblTilesets 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Pick Tileset"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   240
+         Left            =   5055
+         TabIndex        =   166
+         Top             =   720
+         Width           =   870
+      End
+      Begin VB.Label lblTilePreview 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Eye Dropper"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   240
+         Left            =   1920
+         TabIndex        =   155
+         Top             =   705
+         Width           =   870
+      End
+      Begin VB.Label lblMapPreview 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Map Preview"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   240
+         Left            =   60
+         TabIndex        =   153
+         Top             =   705
+         Width           =   930
+      End
+      Begin VB.Label lblTitle 
+         BackColor       =   &H0080C0FF&
+         BackStyle       =   0  'Transparent
+         Caption         =   "UBER Map Editor"
+         BeginProperty Font 
+            Name            =   "Arial Black"
+            Size            =   9
+            Charset         =   0
+            Weight          =   900
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   225
+         Left            =   15
+         TabIndex        =   151
+         Top             =   -30
+         Width           =   4650
+      End
+   End
    Begin VB.PictureBox picQuestAccept 
       BackColor       =   &H00000000&
       ForeColor       =   &H00C0FFFF&
@@ -163,6 +484,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H0080FFFF&
          Height          =   1815
          Left            =   120
+         Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
          TabIndex        =   224
@@ -1069,327 +1391,6 @@ Begin VB.Form frmMain
          TabIndex        =   64
          Top             =   1440
          Width           =   345
-      End
-   End
-   Begin VB.PictureBox picMapEditor 
-      Appearance      =   0  'Flat
-      BackColor       =   &H0080C0FF&
-      ForeColor       =   &H80000008&
-      Height          =   1110
-      Left            =   30
-      ScaleHeight     =   72
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   798
-      TabIndex        =   150
-      Top             =   12360
-      Visible         =   0   'False
-      Width           =   12000
-      Begin VB.CheckBox chkLayers 
-         Appearance      =   0  'Flat
-         BackColor       =   &H0080C0FF&
-         ForeColor       =   &H80000008&
-         Height          =   540
-         Left            =   3585
-         Style           =   1  'Graphical
-         TabIndex        =   170
-         ToolTipText     =   "Eye Dropper (Shift + LMouse)"
-         Top             =   210
-         Width           =   540
-      End
-      Begin VB.CheckBox chkTilesets 
-         Appearance      =   0  'Flat
-         BackColor       =   &H0080C0FF&
-         ForeColor       =   &H80000008&
-         Height          =   540
-         Left            =   5190
-         Style           =   1  'Graphical
-         TabIndex        =   165
-         ToolTipText     =   "Eye Dropper (Shift + LMouse)"
-         Top             =   210
-         Width           =   540
-      End
-      Begin VB.CheckBox chkDimLayers 
-         BackColor       =   &H0080C0FF&
-         Caption         =   "Dim Layers"
-         Height          =   225
-         Left            =   10215
-         TabIndex        =   164
-         ToolTipText     =   "Will dim tiles of layers that are below your current layer."
-         Top             =   870
-         Value           =   1  'Checked
-         Width           =   1500
-      End
-      Begin VB.CommandButton cmdDelete 
-         BackColor       =   &H0080C0FF&
-         Height          =   420
-         Left            =   8910
-         Style           =   1  'Graphical
-         TabIndex        =   163
-         ToolTipText     =   "Delete all content of this map. "
-         Top             =   615
-         Width           =   420
-      End
-      Begin VB.CommandButton cmdRevert 
-         BackColor       =   &H0080C0FF&
-         Height          =   420
-         Left            =   8910
-         Style           =   1  'Graphical
-         TabIndex        =   162
-         ToolTipText     =   "Revert/Cancel all changes to this map."
-         Top             =   180
-         Width           =   420
-      End
-      Begin VB.CommandButton cmdProperties 
-         BackColor       =   &H0080C0FF&
-         Height          =   420
-         Left            =   8475
-         Style           =   1  'Graphical
-         TabIndex        =   161
-         ToolTipText     =   "Map Properties"
-         Top             =   615
-         Width           =   420
-      End
-      Begin VB.CommandButton cmdSave 
-         BackColor       =   &H0080C0FF&
-         Height          =   540
-         Left            =   8355
-         Style           =   1  'Graphical
-         TabIndex        =   160
-         ToolTipText     =   "Save Map"
-         Top             =   60
-         Width           =   540
-      End
-      Begin VB.CheckBox chkDrawEvents 
-         BackColor       =   &H0080C0FF&
-         Caption         =   "Draw Events"
-         Height          =   225
-         Left            =   10215
-         TabIndex        =   159
-         ToolTipText     =   "Draw white square around events "
-         Top             =   660
-         Value           =   1  'Checked
-         Width           =   1500
-      End
-      Begin VB.CheckBox chkShowAttributes 
-         BackColor       =   &H0080C0FF&
-         Caption         =   "Show Attributes"
-         Height          =   225
-         Left            =   10215
-         TabIndex        =   158
-         ToolTipText     =   "Show attributes like Block, Warp etc. "
-         Top             =   435
-         Width           =   1740
-      End
-      Begin VB.CheckBox chkGrid 
-         BackColor       =   &H0080C0FF&
-         Caption         =   "Show Grid"
-         Height          =   225
-         Left            =   10215
-         TabIndex        =   157
-         Top             =   210
-         Width           =   1395
-      End
-      Begin VB.CheckBox chkTilePreview 
-         BackColor       =   &H0080C0FF&
-         Caption         =   "Tile Preview"
-         Height          =   225
-         Left            =   10215
-         TabIndex        =   156
-         Top             =   0
-         Value           =   1  'Checked
-         Width           =   1395
-      End
-      Begin VB.CheckBox chkEyeDropper 
-         Appearance      =   0  'Flat
-         BackColor       =   &H0080C0FF&
-         ForeColor       =   &H80000008&
-         Height          =   540
-         Left            =   2070
-         Style           =   1  'Graphical
-         TabIndex        =   154
-         ToolTipText     =   "Eye Dropper (Shift + LMouse)"
-         Top             =   210
-         Width           =   540
-      End
-      Begin VB.CheckBox mapPreviewSwitch 
-         Appearance      =   0  'Flat
-         BackColor       =   &H0080C0FF&
-         ForeColor       =   &H80000008&
-         Height          =   540
-         Left            =   255
-         Style           =   1  'Graphical
-         TabIndex        =   152
-         ToolTipText     =   "Map Preview - Docked"
-         Top             =   210
-         Width           =   540
-      End
-      Begin VB.Label Label2 
-         BackStyle       =   0  'Transparent
-         Caption         =   "(MWheel Scroll)"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000011&
-         Height          =   180
-         Left            =   3330
-         TabIndex        =   172
-         Top             =   885
-         Width           =   1140
-      End
-      Begin VB.Label lblLayers 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Layers"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   9
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   240
-         Left            =   3615
-         TabIndex        =   171
-         Top             =   705
-         Width           =   480
-      End
-      Begin VB.Label lblHotMapPreview 
-         BackStyle       =   0  'Transparent
-         Caption         =   "(Ctrl+M)"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000011&
-         Height          =   180
-         Left            =   240
-         TabIndex        =   169
-         Top             =   885
-         Width           =   570
-      End
-      Begin VB.Label lblHotEye 
-         BackStyle       =   0  'Transparent
-         Caption         =   "(Shift+LMouse)"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000011&
-         Height          =   180
-         Left            =   1770
-         TabIndex        =   168
-         Top             =   885
-         Width           =   1140
-      End
-      Begin VB.Label lblHotTilesets 
-         BackStyle       =   0  'Transparent
-         Caption         =   "(Middle MBtn)"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000011&
-         Height          =   180
-         Left            =   4965
-         TabIndex        =   167
-         Top             =   900
-         Width           =   1095
-      End
-      Begin VB.Label lblTilesets 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Pick Tileset"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   9
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   240
-         Left            =   5055
-         TabIndex        =   166
-         Top             =   720
-         Width           =   870
-      End
-      Begin VB.Label lblTilePreview 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Eye Dropper"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   9
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   240
-         Left            =   1920
-         TabIndex        =   155
-         Top             =   705
-         Width           =   870
-      End
-      Begin VB.Label lblMapPreview 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Map Preview"
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   9
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   240
-         Left            =   60
-         TabIndex        =   153
-         Top             =   705
-         Width           =   930
-      End
-      Begin VB.Label lblTitle 
-         BackColor       =   &H0080C0FF&
-         BackStyle       =   0  'Transparent
-         Caption         =   "UBER Map Editor"
-         BeginProperty Font 
-            Name            =   "Arial Black"
-            Size            =   9
-            Charset         =   0
-            Weight          =   900
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00000000&
-         Height          =   225
-         Left            =   15
-         TabIndex        =   151
-         Top             =   -30
-         Width           =   4650
       End
    End
    Begin VB.PictureBox picSkills 
@@ -5111,6 +5112,10 @@ Dim I As Long, II As Long, tmpStr As String
             End Select
         End With
     Next I
+    
+    If NPC(Quest(Index).CLI(CID).ItemIndex).ShowQuestCompleteIcon = 1 Then
+        txtQuestTask.text = "Task(s) complete. Go back and speak with " & Trim$(NPC(Quest(Index).CLI(CID).ItemIndex).Name)
+    End If
 End Sub
 
 Private Sub lstTitles_Click()

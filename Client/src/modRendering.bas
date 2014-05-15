@@ -67,6 +67,8 @@ Public Quest_Finished As DX8TextureRec
 Public Quest_Finished_U As DX8TextureRec
 Public Quest_Progress As DX8TextureRec
 Public Quest_Progress_U As DX8TextureRec
+Public Quest_Completed As DX8TextureRec
+Public Quest_Completed_U As DX8TextureRec
 
 ' Caching
 Public lowerTilesCache As Direct3DTexture8
@@ -430,9 +432,16 @@ Private Sub LoadTextures()
     Call CheckPanoramas
     Call CheckEmoticons
     
-    NumTextures = NumTextures + 18
+    NumTextures = NumTextures + 20
     
     ReDim Preserve gTexture(NumTextures)
+    Quest_Completed.filepath = App.Path & "\data files\graphics\gui\main\quest_completed.png"
+    Quest_Completed.Texture = NumTextures - 19
+    LoadTexture Quest_Completed
+    Quest_Completed_U.filepath = App.Path & "\data files\graphics\gui\main\quest_completed_u.png"
+    Quest_Completed_U.Texture = NumTextures - 18
+    LoadTexture Quest_Completed_U
+    
     Quest_Start.filepath = App.Path & "\data files\graphics\gui\main\quest_start.png"
     Quest_Start.Texture = NumTextures - 17
     LoadTexture Quest_Start
@@ -1702,7 +1711,7 @@ Public Sub DrawNPC(ByVal MapNPCNum As Long)
     Dim tIcon As Long
     Dim rec As RECT
     Dim AttackSpeed As Long
-    Dim NPCNum As Long
+    Dim NPCNum As Long, QuestNum As Long
     Static tmrCount As Long
     Static setIt As Boolean
     
@@ -1817,6 +1826,17 @@ Public Sub DrawNPC(ByVal MapNPCNum As Long)
     
 PastQuestDataRetrieval:
     'display it above the NPC's name
+    If NPC(NPCNum).ShowQuestCompleteIcon = 1 Then tIcon = Quest_Icon_Finished
+    
+    QuestNum = DoesNPCStartQuest(NPCNum)
+    If QuestNum > 0 Then
+        If Quest(QuestNum).CanBeRetaken = vbUnchecked Then
+            If Player(MyIndex).QuestCompleted(QuestNum) = True Then
+                tIcon = Quest_Icon_Completed
+            End If
+        End If
+    End If
+    
     If tIcon > 0 Then
         If timeGetTime >= tmrCount Then
             Call DrawQuestIcon(CLng(tIcon), MapNPCNum, True)
@@ -2400,6 +2420,8 @@ Sub DrawQuestIcon(Image As Long, NPCNum As Long, Optional ByVal Up As Boolean = 
             If Up Then tmpDX = Quest_Finished_U Else tmpDX = Quest_Finished
         Case Quest_Icon_Progress
             If Up Then tmpDX = Quest_Progress_U Else tmpDX = Quest_Progress
+        Case Quest_Icon_Completed
+            If Up Then tmpDX = Quest_Completed_U Else tmpDX = Quest_Completed
     End Select
     
     ' Calculate the X
