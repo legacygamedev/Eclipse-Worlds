@@ -637,6 +637,11 @@ Function PlayerData(ByVal Index As Long) As Byte()
     ' Send player status
     Buffer.WriteString Account(Index).Chars(GetPlayerChar(Index)).Status
     
+    For I = 1 To Skills.Skill_Count - 1
+        Buffer.WriteByte GetPlayerSkill(Index, I)
+        Buffer.WriteLong GetPlayerSkillExp(Index, I)
+    Next
+    
     For I = 1 To MAX_QUESTS
         Buffer.WriteLong GetPlayerQuestCLIID(Index, I)
         Buffer.WriteLong GetPlayerQuestTaskID(Index, I)

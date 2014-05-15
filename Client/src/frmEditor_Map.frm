@@ -53,6 +53,265 @@ Begin VB.Form frmEditor_Map
          Top             =   2835
          Width           =   1215
       End
+      Begin VB.Frame fraSlide 
+         Caption         =   "Slide"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   2655
+         Left            =   15
+         TabIndex        =   60
+         Top             =   1.11810e5
+         Visible         =   0   'False
+         Width           =   3000
+         Begin VB.CommandButton cmdSlide 
+            Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   375
+            Left            =   240
+            TabIndex        =   61
+            Top             =   2040
+            Width           =   1215
+         End
+         Begin VB.ComboBox cmbSlide 
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   315
+            ItemData        =   "frmEditor_Map.frx":038A
+            Left            =   240
+            List            =   "frmEditor_Map.frx":039A
+            Style           =   2  'Dropdown List
+            TabIndex        =   62
+            Top             =   360
+            Width           =   2895
+         End
+      End
+      Begin VB.Frame fraSoundEffect 
+         Caption         =   "Sound Effect"
+         Height          =   2655
+         Left            =   15
+         TabIndex        =   91
+         Top             =   810
+         Visible         =   0   'False
+         Width           =   3000
+         Begin VB.CommandButton cmdSoundEffect 
+            Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   375
+            Left            =   240
+            TabIndex        =   93
+            Top             =   2040
+            Width           =   1215
+         End
+         Begin VB.ComboBox cmbSoundEffect 
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   315
+            ItemData        =   "frmEditor_Map.frx":03B5
+            Left            =   240
+            List            =   "frmEditor_Map.frx":03B7
+            Style           =   2  'Dropdown List
+            TabIndex        =   92
+            Top             =   360
+            Width           =   2565
+         End
+      End
+      Begin VB.Frame fraTrap 
+         Caption         =   "Trap"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   2655
+         Left            =   15
+         TabIndex        =   56
+         Top             =   810
+         Visible         =   0   'False
+         Width           =   3000
+         Begin VB.ComboBox cmbTrap 
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   315
+            ItemData        =   "frmEditor_Map.frx":03B9
+            Left            =   240
+            List            =   "frmEditor_Map.frx":03C3
+            Style           =   2  'Dropdown List
+            TabIndex        =   64
+            Top             =   360
+            Width           =   2565
+         End
+         Begin VB.HScrollBar scrlDamage 
+            Height          =   255
+            Left            =   240
+            Min             =   1
+            TabIndex        =   58
+            Top             =   960
+            Value           =   1
+            Width           =   2550
+         End
+         Begin VB.CommandButton cmdTrap 
+            Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   375
+            Left            =   240
+            TabIndex        =   57
+            Top             =   2040
+            Width           =   1215
+         End
+         Begin VB.Label lblDamage 
+            Caption         =   "Amount: 1"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Left            =   240
+            TabIndex        =   59
+            Top             =   720
+            Width           =   2535
+         End
+      End
+      Begin VB.Frame fraHeal 
+         Caption         =   "Heal"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   2655
+         Left            =   15
+         TabIndex        =   51
+         Top             =   810
+         Visible         =   0   'False
+         Width           =   3000
+         Begin VB.ComboBox cmbHeal 
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   315
+            ItemData        =   "frmEditor_Map.frx":03D5
+            Left            =   240
+            List            =   "frmEditor_Map.frx":03DF
+            Style           =   2  'Dropdown List
+            TabIndex        =   55
+            Top             =   360
+            Width           =   2535
+         End
+         Begin VB.CommandButton cmdHeal 
+            Caption         =   "Accept"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   375
+            Left            =   240
+            TabIndex        =   53
+            Top             =   2040
+            Width           =   1215
+         End
+         Begin VB.HScrollBar scrlHeal 
+            Height          =   255
+            Left            =   240
+            Min             =   1
+            TabIndex        =   52
+            Top             =   960
+            Value           =   1
+            Width           =   2490
+         End
+         Begin VB.Label lblHeal 
+            Caption         =   "Amount: 1"
+            BeginProperty Font 
+               Name            =   "Verdana"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   400
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            Height          =   255
+            Left            =   240
+            TabIndex        =   54
+            Top             =   720
+            Width           =   2535
+         End
+      End
       Begin VB.Frame fraMapItem 
          Caption         =   "Item"
          BeginProperty Font 
@@ -485,272 +744,13 @@ Begin VB.Form frmEditor_Map
                Strikethrough   =   0   'False
             EndProperty
             Height          =   315
-            ItemData        =   "frmEditor_Map.frx":038A
+            ItemData        =   "frmEditor_Map.frx":03F1
             Left            =   240
-            List            =   "frmEditor_Map.frx":038C
+            List            =   "frmEditor_Map.frx":03F3
             Style           =   2  'Dropdown List
             TabIndex        =   49
             Top             =   360
             Width           =   2550
-         End
-      End
-      Begin VB.Frame fraSlide 
-         Caption         =   "Slide"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   2655
-         Left            =   15
-         TabIndex        =   60
-         Top             =   1.11810e5
-         Visible         =   0   'False
-         Width           =   3000
-         Begin VB.CommandButton cmdSlide 
-            Caption         =   "Accept"
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   375
-            Left            =   240
-            TabIndex        =   61
-            Top             =   2040
-            Width           =   1215
-         End
-         Begin VB.ComboBox cmbSlide 
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   315
-            ItemData        =   "frmEditor_Map.frx":038E
-            Left            =   240
-            List            =   "frmEditor_Map.frx":039E
-            Style           =   2  'Dropdown List
-            TabIndex        =   62
-            Top             =   360
-            Width           =   2895
-         End
-      End
-      Begin VB.Frame fraSoundEffect 
-         Caption         =   "Sound Effect"
-         Height          =   2655
-         Left            =   15
-         TabIndex        =   91
-         Top             =   810
-         Visible         =   0   'False
-         Width           =   3000
-         Begin VB.CommandButton cmdSoundEffect 
-            Caption         =   "Accept"
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   375
-            Left            =   240
-            TabIndex        =   93
-            Top             =   2040
-            Width           =   1215
-         End
-         Begin VB.ComboBox cmbSoundEffect 
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   315
-            ItemData        =   "frmEditor_Map.frx":03B9
-            Left            =   240
-            List            =   "frmEditor_Map.frx":03BB
-            Style           =   2  'Dropdown List
-            TabIndex        =   92
-            Top             =   360
-            Width           =   2565
-         End
-      End
-      Begin VB.Frame fraTrap 
-         Caption         =   "Trap"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   2655
-         Left            =   15
-         TabIndex        =   56
-         Top             =   810
-         Visible         =   0   'False
-         Width           =   3000
-         Begin VB.ComboBox cmbTrap 
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   315
-            ItemData        =   "frmEditor_Map.frx":03BD
-            Left            =   240
-            List            =   "frmEditor_Map.frx":03C7
-            Style           =   2  'Dropdown List
-            TabIndex        =   64
-            Top             =   360
-            Width           =   2565
-         End
-         Begin VB.HScrollBar scrlDamage 
-            Height          =   255
-            Left            =   240
-            Min             =   1
-            TabIndex        =   58
-            Top             =   960
-            Value           =   1
-            Width           =   2550
-         End
-         Begin VB.CommandButton cmdTrap 
-            Caption         =   "Accept"
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   375
-            Left            =   240
-            TabIndex        =   57
-            Top             =   2040
-            Width           =   1215
-         End
-         Begin VB.Label lblDamage 
-            Caption         =   "Amount: 1"
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   240
-            TabIndex        =   59
-            Top             =   720
-            Width           =   2535
-         End
-      End
-      Begin VB.Frame fraHeal 
-         Caption         =   "Heal"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   2655
-         Left            =   15
-         TabIndex        =   51
-         Top             =   810
-         Visible         =   0   'False
-         Width           =   3000
-         Begin VB.ComboBox cmbHeal 
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   315
-            ItemData        =   "frmEditor_Map.frx":03D9
-            Left            =   240
-            List            =   "frmEditor_Map.frx":03E3
-            Style           =   2  'Dropdown List
-            TabIndex        =   55
-            Top             =   360
-            Width           =   2535
-         End
-         Begin VB.CommandButton cmdHeal 
-            Caption         =   "Accept"
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   375
-            Left            =   240
-            TabIndex        =   53
-            Top             =   2040
-            Width           =   1215
-         End
-         Begin VB.HScrollBar scrlHeal 
-            Height          =   255
-            Left            =   240
-            Min             =   1
-            TabIndex        =   52
-            Top             =   960
-            Value           =   1
-            Width           =   2490
-         End
-         Begin VB.Label lblHeal 
-            Caption         =   "Amount: 1"
-            BeginProperty Font 
-               Name            =   "Verdana"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            Height          =   255
-            Left            =   240
-            TabIndex        =   54
-            Top             =   720
-            Width           =   2535
          End
       End
    End
@@ -1474,6 +1474,11 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+
+Private Sub cmbSoundEffect_Change()
+    If cmbSoundEffect.ListIndex < 0 Then Exit Sub
+    Audio.PlaySound cmbSoundEffect.List(cmbSoundEffect.ListIndex)
+End Sub
 
 Private Sub cmdSoundEffect_Click()
    ' If debug mode, handle error then exit out

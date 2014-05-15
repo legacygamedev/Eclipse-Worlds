@@ -649,7 +649,7 @@ Private Sub HandlePlayerPoints(ByVal Index As Long, ByRef data() As Byte, ByVal 
         frmMain.lblPoints.Caption = GetPlayerPOINTS(Index)
         If GetPlayerPOINTS(Index) > 0 Then
             For I = 1 To Stats.Stat_Count - 1
-                If GetPlayerRawStat(Index, I) < MAX_STAT Then
+                If GetPlayerStat(Index, I) < MAX_STAT Then
                     frmMain.lblTrainStat(I).Visible = True
                 Else
                     frmMain.lblTrainStat(I).Visible = False
@@ -743,6 +743,11 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
     ' Status
     Player(I).Status = buffer.ReadString
     
+    For X = 1 To Skills.Skill_Count - 1
+        Player(I).Skills(X).Level = buffer.ReadByte
+        Player(I).Skills(X).exp = buffer.ReadLong
+    Next
+    
     ' Quest info
     For X = 1 To MAX_QUESTS
         Player(I).QuestCLIID(X) = buffer.ReadLong
@@ -786,7 +791,7 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
         ' Set training label visiblity depending on points
         If GetPlayerPOINTS(MyIndex) > 0 Then
             For X = 1 To Stats.Stat_Count - 1
-                If GetPlayerRawStat(MyIndex, X) < MAX_STAT Then
+                If GetPlayerStat(MyIndex, X) < MAX_STAT Then
                     frmMain.lblTrainStat(X).Visible = True
                 Else
                     frmMain.lblTrainStat(X).Visible = False
@@ -795,6 +800,14 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
         Else
             For X = 1 To Stats.Stat_Count - 1
                 frmMain.lblTrainStat(X).Visible = False
+            Next
+        End If
+        
+        If frmMain.picSkills.Visible Then
+            For I = 1 To Skills.Skill_Count - 1
+                frmMain.lblSkill.Item(I - 1).Caption = GetSkillName(I)
+                frmMain.lblLevel.Item(I - 1).Caption = Player(MyIndex).Skills(I).Level
+                frmMain.lblSkillExp.Item(I - 1).Caption = Player(MyIndex).Skills(I).exp & "/" & GetPlayerNextSkillLevel(MyIndex, I)
             Next
         End If
         
@@ -2291,12 +2304,12 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
             
             OldEXPBarWidth = frmMain.imgEXPBar.Width
             NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
-            frmMain.lblEXP.Visible = True
-            frmMain.lblEXP.Caption = GetPlayerExp(Index) & "/" & TNL
+            frmMain.lblExp.Visible = True
+            frmMain.lblExp.Caption = GetPlayerExp(Index) & "/" & TNL
         Else
             frmMain.imgEXPBar.Width = EXPBar_Width
-            frmMain.lblEXP.Visible = False
-            frmMain.lblEXP.Caption = ""
+            frmMain.lblExp.Visible = False
+            frmMain.lblExp.Caption = ""
         End If
     End If
 End Sub
