@@ -1,1 +1,5 @@
 *.iss
+*.dat
+/COMCTL32.OCX
+/msvbvm60e.dll
+*.ini

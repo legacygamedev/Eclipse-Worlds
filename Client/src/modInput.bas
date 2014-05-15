@@ -87,19 +87,21 @@ Public Sub FindNearestTarget()
             End If
         End If
     ElseIf GetKeyState(96) < 0 And ChatLocked Then
-        ' Set the Player distance for all the Players on the map
+      ' Set the Player distance for all the Players on the map
         For I = 1 To Player_HighIndex
             If IsPlaying(I) Then
-                If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
-                    If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
-                        ' Skip
-                    Else
-                        PlayerDistanceX(I) = Player(I).X - GetPlayerX(MyIndex)
-                        PlayerDistanceY(I) = Player(I).Y - GetPlayerY(MyIndex)
-                
-                        ' Make sure we get a positive Value
-                        If PlayerDistanceX(I) < 0 Then PlayerDistanceX(I) = PlayerDistanceX(I) * -1
-                        If PlayerDistanceY(I) < 0 Then PlayerDistanceY(I) = PlayerDistanceY(I) * -1
+                If I <> MyIndex Then
+                    If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
+                        If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
+                            ' Skip
+                        Else
+                            PlayerDistanceX(I) = Player(I).X - GetPlayerX(MyIndex)
+                            PlayerDistanceY(I) = Player(I).Y - GetPlayerY(MyIndex)
+                    
+                            ' Make sure we get a positive Value
+                            If PlayerDistanceX(I) < 0 Then PlayerDistanceX(I) = PlayerDistanceX(I) * -1
+                            If PlayerDistanceY(I) < 0 Then PlayerDistanceY(I) = PlayerDistanceY(I) * -1
+                        End If
                     End If
                 End If
             End If
@@ -108,16 +110,20 @@ Public Sub FindNearestTarget()
         ' Find the closest player target
         For I = 1 To Player_HighIndex
             If IsPlaying(I) Then
-                If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
-                    ' Skip
-                Else
-                    If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
-                        If PlayerTarget = 0 Then
-                            LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
-                            PlayerTarget = I
-                        ElseIf PlayerDistanceX(I) + PlayerDistanceY(I) < LowestDistance Then
-                            LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
-                            PlayerTarget = I
+                If I <> MyIndex Then
+                    If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
+                        ' Skip
+                    Else
+                        If Player(I).Hiding = 0 Then
+                            If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
+                                If PlayerTarget = 0 Then
+                                    LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
+                                    PlayerTarget = I
+                                ElseIf PlayerDistanceX(I) + PlayerDistanceY(I) < LowestDistance Then
+                                    LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
+                                    PlayerTarget = I
+                                End If
+                            End If
                         End If
                     End If
                 End If
