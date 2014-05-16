@@ -1120,34 +1120,34 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
                 
         If MyTargetType = TARGET_TYPE_NPC Then
             ' Check if they have a target if spell is not self cast
-            If Spell(SpellSlot).Range > 0 Then
+            If Spell(PlayerSpells(SpellSlot)).Range > 0 Then
                 ' Set the X and Y used for function below
                 X = MapNPC(MyTarget).X
                 Y = MapNPC(MyTarget).Y
                     
                 ' Check if there in range
-                If Not IsInRange(Spell(SpellSlot).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), X, Y) Then
+                If Not IsInRange(Spell(PlayerSpells(SpellSlot)).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), X, Y) And Spell(PlayerSpells(SpellSlot)).CastTime = 0 Then
                     AddText "Target is not in range!", BrightRed
                     Exit Sub
                 End If
             End If
         ElseIf MyTargetType = TARGET_TYPE_PLAYER Then
             ' Check if they have a target if spell is not self cast
-            If Spell(SpellSlot).Range > 0 Then
+            If Spell(PlayerSpells(SpellSlot)).Range > 0 Then
                 ' Set the X and Y used for function below
                 X = GetPlayerX(MyTarget)
                 Y = GetPlayerY(MyTarget)
  
                 ' Make sure we can only cast specific spells on ourselves
-                If MyTargetType = TARGET_TYPE_PLAYER Then
-                    If Spell(SpellSlot).Type = SPELL_TYPE_DAMAGEHP Or Spell(SpellSlot).Type = SPELL_TYPE_DAMAGEMP Or Spell(SpellSlot).Type = SPELL_TYPE_WARPTOTARGET Then
+                If MyTargetType = TARGET_TYPE_PLAYER And MyTarget = MyIndex Then
+                    If Spell(PlayerSpells(SpellSlot)).Type = SPELL_TYPE_DAMAGEHP Or Spell(PlayerSpells(SpellSlot)).Type = SPELL_TYPE_DAMAGEMP Or Spell(PlayerSpells(SpellSlot)).Type = SPELL_TYPE_WARPTOTARGET Then
                         AddText "You can't use this type of spell on yourself!", BrightRed
                         Exit Sub
                     End If
                 End If
                 
                 ' Check if there in range
-                If Not IsInRange(Spell(SpellSlot).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), X, Y) Then
+                If Not IsInRange(Spell(PlayerSpells(SpellSlot)).Range, GetPlayerX(MyIndex), GetPlayerY(MyIndex), X, Y) And Spell(PlayerSpells(SpellSlot)).CastTime = 0 Then
                     AddText "Target is not in range!", BrightRed
                     Exit Sub
                 End If
@@ -1161,7 +1161,7 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
         End If
             
         If TempPlayer(MyIndex).Moving = 0 Then
-            Call SendCastSpell(SpellSlot)
+            Call SendCastSpell(PlayerSpells(SpellSlot))
         Else
             Call AddText("Cannot cast while moving!", BrightRed)
         End If
