@@ -2379,6 +2379,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -6502,50 +6503,6 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     End If
                 Else
                     InitAdminPanel
-                End If
-            End If
-        
-        Case vbKeyUp
-            If ChatLocked Then
-                If TempPlayer(MyIndex).Moving = NO And Options.WASD = 1 Then
-                    Call SetPlayerDir(MyIndex, DIR_UP)
-                    Call SendPlayerDir
-                    MouseX = -1
-                    MouseY = -1
-                    Exit Sub
-                End If
-            End If
-
-        Case vbKeyDown
-            If ChatLocked Then
-                If TempPlayer(MyIndex).Moving = NO And Options.WASD = 1 Then
-                    Call SetPlayerDir(MyIndex, DIR_DOWN)
-                    Call SendPlayerDir
-                    MouseX = -1
-                    MouseY = -1
-                    Exit Sub
-                End If
-            End If
-
-        Case vbKeyLeft
-            If ChatLocked Then
-                If TempPlayer(MyIndex).Moving = NO And Options.WASD = 1 Then
-                    Call SetPlayerDir(MyIndex, DIR_LEFT)
-                    Call SendPlayerDir
-                    MouseX = -1
-                    MouseY = -1
-                    Exit Sub
-                End If
-            End If
-
-        Case vbKeyRight
-            If ChatLocked Then
-                If TempPlayer(MyIndex).Moving = NO And Options.WASD = 1 Then
-                    Call SetPlayerDir(MyIndex, DIR_RIGHT)
-                    Call SendPlayerDir
-                    MouseX = -1
-                    MouseY = -1
-                    Exit Sub
                 End If
             End If
         
