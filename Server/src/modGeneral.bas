@@ -17,7 +17,7 @@ Sub Main()
 End Sub
 
 Sub InitServer()
-    Dim i As Long
+    Dim I As Long
     Dim F As Long
     Dim Time1 As Long
     Dim Time2 As Long
@@ -69,9 +69,9 @@ Sub InitServer()
         ' Init all the player sockets
         Call SetStatus("Initializing player array...")
     
-        For i = 1 To MAX_PLAYERS
-            Call ClearAccount(i)
-            Load .Socket(i)
+        For I = 1 To MAX_PLAYERS
+            Call ClearAccount(I)
+            Load .Socket(I)
         Next
     
         ' Serves as a constructor
@@ -108,6 +108,7 @@ Sub InitServer()
         .cmdReloadEmoticons.Enabled = True
         .cmdReloadShops.Enabled = True
         .CmdReloadSpells.Enabled = True
+        .cmdReloadQuests.Enabled = True
         .chkServerLog.Enabled = True
         .cmdShutDown.Enabled = True
         .cmdReloadOptions.Enabled = True
@@ -143,7 +144,7 @@ Sub InitServer()
 End Sub
 
 Sub DestroyServer()
-    Dim i As Long
+    Dim I As Long
     
     ServerOnline = False
     
@@ -154,9 +155,9 @@ Sub DestroyServer()
     Call ClearGameData
     Call SetStatus("Unloading sockets...")
 
-    For i = 1 To Player_HighIndex
-        Call CloseSocket(i, True)
-        Unload frmServer.Socket(i)
+    For I = 1 To Player_HighIndex
+        Call CloseSocket(I, True)
+        Unload frmServer.Socket(I)
     Next
     End
 End Sub

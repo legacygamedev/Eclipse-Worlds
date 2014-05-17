@@ -230,7 +230,7 @@ Public Sub GameLoop()
         GettingMap = True
         
         Call Audio.StopMusic
-        Call Audio.PlayMusic(Trim$(Options.MenuMusic))
+        Call Audio.PlayMusic(Options.MenuMusic)
         Call Audio.StopMapSounds
     Else
         ' Shutdown the game

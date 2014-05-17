@@ -178,6 +178,8 @@ Public Sub CheckInputKeys()
             DirUpRight = False
             DirDownLeft = False
             DirDownRight = False
+            MouseX = -1
+            MouseY = -1
             Exit Sub
         Else
             DirUpLeft = False
@@ -193,6 +195,8 @@ Public Sub CheckInputKeys()
             DirUpRight = True
             DirDownLeft = False
             DirDownRight = False
+            MouseX = -1
+            MouseY = -1
             Exit Sub
         Else
             DirUpRight = False
@@ -208,6 +212,8 @@ Public Sub CheckInputKeys()
             DirUpRight = False
             DirDownLeft = True
             DirDownRight = False
+            MouseX = -1
+            MouseY = -1
             Exit Sub
         Else
             DirDownLeft = False
@@ -223,6 +229,8 @@ Public Sub CheckInputKeys()
             DirUpRight = False
             DirDownLeft = False
             DirDownRight = True
+            MouseX = -1
+            MouseY = -1
             Exit Sub
         Else
             DirDownRight = False
@@ -238,6 +246,8 @@ Public Sub CheckInputKeys()
             DirUpRight = False
             DirDownLeft = False
             DirDownRight = False
+            MouseX = -1
+            MouseY = -1
             Exit Sub
         Else
             DirUp = False
@@ -253,6 +263,8 @@ Public Sub CheckInputKeys()
             DirUpRight = False
             DirDownLeft = False
             DirDownRight = False
+            MouseX = -1
+            MouseY = -1
             Exit Sub
         Else
             DirRight = False
@@ -268,6 +280,8 @@ Public Sub CheckInputKeys()
             DirUpRight = False
             DirDownLeft = False
             DirDownRight = False
+            MouseX = -1
+            MouseY = -1
             Exit Sub
         Else
             DirDown = False
@@ -283,6 +297,8 @@ Public Sub CheckInputKeys()
             DirUpRight = False
             DirDownLeft = False
             DirDownRight = False
+            MouseX = -1
+            MouseY = -1
             Exit Sub
         Else
             DirLeft = False

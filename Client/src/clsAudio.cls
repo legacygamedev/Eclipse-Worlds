@@ -49,20 +49,20 @@ End Sub
 Public Sub PlayMusic(FileName As String)
     Dim SplitMusic() As String
     
-    If Options.Music = 0 Or FileName = vbNullString Or CurrentMusic = FileName Then Exit Sub
+    If Options.Music = 0 Or Trim$(FileName) = vbNullString Or CurrentMusic = Trim$(FileName) Then Exit Sub
     
     Call StopMusic
     
     ' File doesn't exist
-    If Not FileExist(App.Path & MUSIC_PATH & FileName, True) Then
+    If Not FileExist(App.Path & MUSIC_PATH & Trim$(FileName), True) Then
         If FormVisible("frmMain") Then
-            Call AddText(FileName & " does not exist!", BrightRed)
+            Call AddText(Trim$(FileName) & " does not exist!", BrightRed)
         End If
         Exit Sub
     End If
     
-    If Right$(FileName, 4) = ".mid" Then
-        SplitMusic = Split(FileName, ".", , vbTextCompare)
+    If Right$(Trim$(FileName), 4) = ".mid" Then
+        SplitMusic = Split(Trim$(FileName), ".", , vbTextCompare)
         
         If Performance Is Nothing Then Exit Sub
         If LenB(Trim$(FileName)) < 1 Then Exit Sub
@@ -70,7 +70,7 @@ Public Sub PlayMusic(FileName As String)
         If SplitMusic(1) <> "mid" Then Exit Sub
         
         Set Segment = Nothing
-        Set Segment = Loader.LoadSegment(App.Path & MUSIC_PATH & FileName)
+        Set Segment = Loader.LoadSegment(App.Path & MUSIC_PATH & Trim$(FileName))
         
         ' Repeat midi file
         Segment.SetLoopPoints 0, 0
@@ -79,26 +79,26 @@ Public Sub PlayMusic(FileName As String)
         
         Performance.PlaySegment Segment, 0, 0
         
-        CurrentMusic = FileName
+        CurrentMusic = Trim$(FileName)
     Else
-        If Left$(FileName, 7) = "http://" Then
-            Music = BASS_StreamCreateURL(FileName, 0, BASS_SAMPLE_LOOP, 0, 0)
+        If Left$(Trim$(FileName), 7) = "http://" Then
+            Music = BASS_StreamCreateURL(Trim$(FileName), 0, BASS_SAMPLE_LOOP, 0, 0)
         Else
-            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & FileName), 0, 0, BASS_SAMPLE_LOOP)
+            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & Trim$(FileName)), 0, 0, BASS_SAMPLE_LOOP)
         End If
         
         Call BASS_ChannelSetAttribute(Music, BASS_ATTRIB_VOL, Options.MusicVolume)
         Call BASS_ChannelPlay(Music, BASSFALSE)
-        CurrentMusic = FileName
+        CurrentMusic = Trim$(FileName)
     End If
 End Sub
 
 Public Sub PlaySound(FileName As String, Optional ByVal X As Long, Optional ByVal Y As Long)
     Dim I As Long
     
-    If Options.Sound = 0 Or FileName = vbNullString Then Exit Sub
+    If Options.Sound = 0 Or Trim$(FileName) = vbNullString Then Exit Sub
     
-    If FileExist(App.Path & SOUND_PATH & FileName, True) Then
+    If FileExist(App.Path & SOUND_PATH & Trim$(FileName), True) Then
         ' Find the index
         For I = 1 To MAX_SOUNDS
             If Sounds(I) = 0 Then
@@ -117,7 +117,7 @@ Public Sub PlaySound(FileName As String, Optional ByVal X As Long, Optional ByVa
         Next
         
         ' Create the sound
-        Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & FileName), 0, 0, 0)
+        Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & Trim$(FileName)), 0, 0, 0)
         
         Call BASS_ChannelSetAttribute(Sounds(SoundIndex), BASS_ATTRIB_VOL, Options.SoundVolume)
         
@@ -125,7 +125,7 @@ Public Sub PlaySound(FileName As String, Optional ByVal X As Long, Optional ByVa
         Call BASS_ChannelPlay(Sounds(SoundIndex), BASSFALSE)
     Else
         If FormVisible("frmMain") Then
-            Call AddText(FileName & " does not exist!", BrightRed)
+            Call AddText(Trim$(FileName) & " does not exist!", BrightRed)
         End If
     End If
 End Sub
@@ -154,11 +154,9 @@ Public Sub StopSounds()
     Next
 End Sub
 
-Public Sub StopMapSound(ByVal Index As Byte)
-    If Not MapSounds(Index).handle = 0 Then
-        Call BASS_ChannelStop(MapSounds(Index).handle)
-        Call ZeroMemory(ByVal VarPtr(MapSounds(Index)), LenB(MapSounds(Index).handle))
-    End If
+Public Sub StopSound(ByVal Index As Byte, Optional ByVal Clear As Boolean = True)
+    Call BASS_ChannelStop(Sounds(Index))
+    If Clear Then Call ZeroMemory(ByVal VarPtr(Sounds(Index)), LenB(Sounds(Index)))
 End Sub
 
 Sub StopMapSounds()
