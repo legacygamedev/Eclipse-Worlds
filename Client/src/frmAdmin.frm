@@ -48,9 +48,9 @@ Begin VB.Form frmAdmin
          Index           =   13
          Left            =   1560
          Style           =   1  'Graphical
-         TabIndex        =   73
+         TabIndex        =   72
          Top             =   6720
-         Width           =   1065
+         Width           =   1050
       End
       Begin VB.PictureBox picEye 
          Appearance      =   0  'Flat
@@ -58,10 +58,10 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000008&
          Height          =   240
          Index           =   13
-         Left            =   2640
+         Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   72
+         TabIndex        =   71
          Top             =   6720
          Width           =   240
       End
@@ -71,7 +71,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   71
+         TabIndex        =   70
          ToolTipText     =   "Change sprites via dbl click."
          Top             =   6090
          Width           =   420
@@ -113,7 +113,7 @@ Begin VB.Form frmAdmin
          TabIndex        =   67
          Top             =   6960
          Visible         =   0   'False
-         Width           =   1065
+         Width           =   1050
       End
       Begin VB.PictureBox picEye 
          Appearance      =   0  'Flat
@@ -121,7 +121,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000008&
          Height          =   240
          Index           =   12
-         Left            =   2640
+         Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   66
@@ -628,7 +628,9 @@ Begin VB.Form frmAdmin
          BackColor       =   &H80000001&
          ForeColor       =   &H80000002&
          Height          =   315
+         ItemData        =   "frmAdmin.frx":03CE
          Left            =   240
+         List            =   "frmAdmin.frx":03D0
          TabIndex        =   20
          Text            =   "Choose Player"
          Top             =   390
@@ -878,15 +880,6 @@ Begin VB.Form frmAdmin
          SyncBuddy       =   -1  'True
          BuddyProperty   =   65547
          Enabled         =   -1  'True
-      End
-      Begin VB.CommandButton cmdShowGame 
-         Caption         =   "Show Game"
-         Height          =   255
-         Left            =   180
-         TabIndex        =   70
-         Top             =   3975
-         Visible         =   0   'False
-         Width           =   1185
       End
       Begin VB.Line Line5 
          BorderColor     =   &H00800080&
@@ -1708,10 +1701,6 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub cmdShowGame_Click()
-    BringWindowToTop (frmMain.hWnd)
-End Sub
-
 Private Sub cmdSpawnRecent_Click()
     Dim Item As Byte
     Dim I    As Byte
@@ -1730,7 +1719,6 @@ Private Sub cmdSpawnRecent_Click()
     For I = 0 To UBound(lastSpawnedItems) - 1
         If lastSpawnedItems(I) = Item Then
             found = I
-
             Exit For
         End If
     Next

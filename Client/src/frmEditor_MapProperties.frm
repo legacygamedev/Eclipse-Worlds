@@ -825,8 +825,10 @@ Public Sub cmdSave_Click()
         End If
         
         ' Save BGS
-        If cmbSound.ListIndex > 0 Then
+        If cmbSound.ListIndex >= 0 Then
+            Audio.StopSounds
             .BGS = cmbSound.List(cmbSound.ListIndex)
+            Audio.PlaySound cmbSound.List(cmbSound.ListIndex)
         Else
             .BGS = vbNullString
         End If

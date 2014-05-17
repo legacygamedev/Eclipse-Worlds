@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -88,7 +88,7 @@ Begin VB.Form frmMain
          Index           =   3
          Left            =   2280
          TabIndex        =   209
-         Top             =   1440
+         Top             =   1680
          Width           =   450
       End
       Begin VB.Label lblLevel 
@@ -100,7 +100,7 @@ Begin VB.Form frmMain
          Index           =   0
          Left            =   240
          TabIndex        =   208
-         Top             =   840
+         Top             =   1080
          Width           =   465
       End
       Begin VB.Label lblLevel 
@@ -112,7 +112,7 @@ Begin VB.Form frmMain
          Index           =   1
          Left            =   2280
          TabIndex        =   207
-         Top             =   840
+         Top             =   1080
          Width           =   465
       End
       Begin VB.Label lblLevel 
@@ -124,7 +124,7 @@ Begin VB.Form frmMain
          Index           =   2
          Left            =   240
          TabIndex        =   206
-         Top             =   1680
+         Top             =   1920
          Width           =   465
       End
       Begin VB.Label lblLevel 
@@ -136,7 +136,7 @@ Begin VB.Form frmMain
          Index           =   3
          Left            =   2280
          TabIndex        =   205
-         Top             =   1680
+         Top             =   1920
          Width           =   465
       End
       Begin VB.Label lblSkillExp 
@@ -148,7 +148,7 @@ Begin VB.Form frmMain
          Index           =   0
          Left            =   240
          TabIndex        =   204
-         Top             =   1080
+         Top             =   1320
          Width           =   345
       End
       Begin VB.Label lblSkillExp 
@@ -160,7 +160,7 @@ Begin VB.Form frmMain
          Index           =   1
          Left            =   2280
          TabIndex        =   203
-         Top             =   1080
+         Top             =   1320
          Width           =   345
       End
       Begin VB.Label lblSkillExp 
@@ -172,7 +172,7 @@ Begin VB.Form frmMain
          Index           =   2
          Left            =   240
          TabIndex        =   202
-         Top             =   1920
+         Top             =   2160
          Width           =   345
       End
       Begin VB.Label lblSkillExp 
@@ -184,7 +184,7 @@ Begin VB.Form frmMain
          Index           =   3
          Left            =   2280
          TabIndex        =   201
-         Top             =   1920
+         Top             =   2160
          Width           =   345
       End
       Begin VB.Label lblSkillExp 
@@ -196,7 +196,7 @@ Begin VB.Form frmMain
          Index           =   4
          Left            =   240
          TabIndex        =   200
-         Top             =   2760
+         Top             =   3000
          Width           =   345
       End
       Begin VB.Label lblLevel 
@@ -208,7 +208,7 @@ Begin VB.Form frmMain
          Index           =   4
          Left            =   240
          TabIndex        =   199
-         Top             =   2520
+         Top             =   2760
          Width           =   465
       End
       Begin VB.Label lblSkill 
@@ -229,7 +229,7 @@ Begin VB.Form frmMain
          Index           =   4
          Left            =   240
          TabIndex        =   198
-         Top             =   2280
+         Top             =   2520
          Width           =   450
       End
       Begin VB.Label lblSkillExp 
@@ -241,7 +241,7 @@ Begin VB.Form frmMain
          Index           =   5
          Left            =   2280
          TabIndex        =   197
-         Top             =   2760
+         Top             =   3000
          Width           =   345
       End
       Begin VB.Label lblLevel 
@@ -253,7 +253,7 @@ Begin VB.Form frmMain
          Index           =   5
          Left            =   2280
          TabIndex        =   196
-         Top             =   2520
+         Top             =   2760
          Width           =   465
       End
       Begin VB.Label lblSkill 
@@ -274,7 +274,7 @@ Begin VB.Form frmMain
          Index           =   5
          Left            =   2280
          TabIndex        =   195
-         Top             =   2280
+         Top             =   2520
          Width           =   450
       End
       Begin VB.Label lblSkillExp 
@@ -286,7 +286,7 @@ Begin VB.Form frmMain
          Index           =   6
          Left            =   240
          TabIndex        =   194
-         Top             =   3600
+         Top             =   3840
          Width           =   345
       End
       Begin VB.Label lblLevel 
@@ -298,7 +298,7 @@ Begin VB.Form frmMain
          Index           =   6
          Left            =   240
          TabIndex        =   193
-         Top             =   3360
+         Top             =   3600
          Width           =   465
       End
       Begin VB.Label lblSkill 
@@ -319,7 +319,7 @@ Begin VB.Form frmMain
          Index           =   6
          Left            =   240
          TabIndex        =   192
-         Top             =   3120
+         Top             =   3360
          Width           =   450
       End
       Begin VB.Label lblSkillExp 
@@ -331,7 +331,7 @@ Begin VB.Form frmMain
          Index           =   7
          Left            =   2280
          TabIndex        =   191
-         Top             =   3600
+         Top             =   3840
          Width           =   345
       End
       Begin VB.Label lblLevel 
@@ -343,7 +343,7 @@ Begin VB.Form frmMain
          Index           =   7
          Left            =   2280
          TabIndex        =   190
-         Top             =   3360
+         Top             =   3600
          Width           =   465
       End
       Begin VB.Label lblSkill 
@@ -364,7 +364,7 @@ Begin VB.Form frmMain
          Index           =   7
          Left            =   2280
          TabIndex        =   189
-         Top             =   3120
+         Top             =   3360
          Width           =   450
       End
       Begin VB.Label lblSkillExp 
@@ -376,7 +376,7 @@ Begin VB.Form frmMain
          Index           =   8
          Left            =   240
          TabIndex        =   188
-         Top             =   4440
+         Top             =   4680
          Width           =   345
       End
       Begin VB.Label lblLevel 
@@ -388,7 +388,7 @@ Begin VB.Form frmMain
          Index           =   8
          Left            =   240
          TabIndex        =   187
-         Top             =   4200
+         Top             =   4440
          Width           =   465
       End
       Begin VB.Label lblSkill 
@@ -409,7 +409,7 @@ Begin VB.Form frmMain
          Index           =   8
          Left            =   240
          TabIndex        =   186
-         Top             =   3960
+         Top             =   4200
          Width           =   450
       End
       Begin VB.Label lblSkillExp 
@@ -421,7 +421,7 @@ Begin VB.Form frmMain
          Index           =   9
          Left            =   2280
          TabIndex        =   185
-         Top             =   4440
+         Top             =   4680
          Width           =   345
       End
       Begin VB.Label lblLevel 
@@ -433,7 +433,7 @@ Begin VB.Form frmMain
          Index           =   9
          Left            =   2280
          TabIndex        =   184
-         Top             =   4200
+         Top             =   4440
          Width           =   465
       End
       Begin VB.Label lblSkill 
@@ -454,7 +454,7 @@ Begin VB.Form frmMain
          Index           =   9
          Left            =   2280
          TabIndex        =   183
-         Top             =   3960
+         Top             =   4200
          Width           =   450
       End
       Begin VB.Label lblSkillExp 
@@ -466,7 +466,7 @@ Begin VB.Form frmMain
          Index           =   10
          Left            =   240
          TabIndex        =   182
-         Top             =   5280
+         Top             =   5520
          Width           =   345
       End
       Begin VB.Label lblLevel 
@@ -478,7 +478,7 @@ Begin VB.Form frmMain
          Index           =   10
          Left            =   240
          TabIndex        =   181
-         Top             =   5040
+         Top             =   5280
          Width           =   465
       End
       Begin VB.Label lblSkill 
@@ -499,7 +499,7 @@ Begin VB.Form frmMain
          Index           =   10
          Left            =   240
          TabIndex        =   180
-         Top             =   4800
+         Top             =   5040
          Width           =   450
       End
       Begin VB.Label lblSkillExp 
@@ -511,7 +511,7 @@ Begin VB.Form frmMain
          Index           =   11
          Left            =   2280
          TabIndex        =   179
-         Top             =   5280
+         Top             =   5520
          Width           =   345
       End
       Begin VB.Label lblLevel 
@@ -523,7 +523,7 @@ Begin VB.Form frmMain
          Index           =   11
          Left            =   2280
          TabIndex        =   178
-         Top             =   5040
+         Top             =   5280
          Width           =   465
       End
       Begin VB.Label lblSkill 
@@ -544,7 +544,7 @@ Begin VB.Form frmMain
          Index           =   11
          Left            =   2280
          TabIndex        =   177
-         Top             =   4800
+         Top             =   5040
          Width           =   450
       End
       Begin VB.Label lblSkill 
@@ -565,7 +565,7 @@ Begin VB.Form frmMain
          Index           =   0
          Left            =   240
          TabIndex        =   176
-         Top             =   600
+         Top             =   840
          Width           =   450
       End
       Begin VB.Label lblSkill 
@@ -586,7 +586,7 @@ Begin VB.Form frmMain
          Index           =   1
          Left            =   2280
          TabIndex        =   175
-         Top             =   600
+         Top             =   840
          Width           =   450
       End
       Begin VB.Label lblSkill 
@@ -607,7 +607,7 @@ Begin VB.Form frmMain
          Index           =   2
          Left            =   240
          TabIndex        =   174
-         Top             =   1440
+         Top             =   1680
          Width           =   450
       End
    End
@@ -2379,7 +2379,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
