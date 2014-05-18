@@ -66,6 +66,7 @@ Begin VB.Form frmAdmin
          Width           =   240
       End
       Begin VB.OptionButton optCat 
+         Enabled         =   0   'False
          Height          =   420
          Index           =   10
          Left            =   540

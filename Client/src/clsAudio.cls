@@ -49,7 +49,7 @@ End Sub
 Public Sub PlayMusic(FileName As String)
     Dim SplitMusic() As String
     
-    If Options.Music = 0 Or Trim$(FileName) = vbNullString Or CurrentMusic = Trim$(FileName) Then Exit Sub
+    If Options.Music = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None" Or CurrentMusic = Trim$(FileName) Then Exit Sub
     
     Call StopMusic
     
@@ -95,8 +95,8 @@ End Sub
 
 Public Sub PlaySound(FileName As String, Optional ByVal X As Long, Optional ByVal Y As Long)
     Dim I As Long
-    
-    If Options.Sound = 0 Or Trim$(FileName) = vbNullString Then Exit Sub
+    '
+    If Options.Sound = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None" Then Exit Sub
     
     If FileExist(App.Path & SOUND_PATH & Trim$(FileName), True) Then
         ' Find the index
