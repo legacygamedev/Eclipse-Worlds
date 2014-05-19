@@ -1474,9 +1474,9 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-
-Private Sub cmbSoundEffect_Change()
+Private Sub cmbSoundEffect_Click()
     If cmbSoundEffect.ListIndex < 0 Then Exit Sub
+    Audio.StopSounds
     Audio.PlaySound cmbSoundEffect.List(cmbSoundEffect.ListIndex)
 End Sub
 

@@ -1060,6 +1060,14 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendRequestEditItem
                     
+                Case "/editquest"
+                    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                        AddText "You have insufficent access to do this!", BrightRed
+                        GoTo Continue
+                    End If
+
+                    SendRequestEditQuests
+                    
                     ' Editing animation request
                 Case "/editanimation"
 

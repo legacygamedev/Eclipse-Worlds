@@ -2261,6 +2261,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -5494,6 +5495,7 @@ Public Sub ToggleChatLock(Optional ByVal ForceLock As Boolean, Optional ByVal So
     Else
         If SoundEffect Then Call Audio.PlaySound(ButtonClick)
         frmMain.txtMyChat.Enabled = True
+         frmMain.txtMyChat.SetFocus
     End If
     
     Call SetGameFocus
