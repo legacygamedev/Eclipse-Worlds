@@ -222,9 +222,9 @@ Public Sub GameLoop()
         End If
     Loop
 
-    'frmMain.Visible = False
+    frmMain.Visible = False
     
-    If IsLogging Then
+    'If IsLogging Then
         IsLogging = False
         frmMenu.Visible = True
         GettingMap = True
@@ -232,12 +232,7 @@ Public Sub GameLoop()
         Call Audio.StopMusic
         Call Audio.PlayMusic(Options.MenuMusic)
         Call Audio.StopMapSounds
-    Else
-        ' Shutdown the game
-        frmLoad.Visible = True
-        Call SetStatus("Destroying game data...")
-        Call DestroyGame
-    End If
+    'End If
     Exit Sub
     
 ' Error handler

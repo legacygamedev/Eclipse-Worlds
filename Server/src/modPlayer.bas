@@ -1087,6 +1087,7 @@ Sub PlayerMapGetItem(ByVal Index As Long, ByVal I As Long)
                     Value = MapItem(MapNum, I).Value
                     Dur = MapItem(MapNum, I).Durability
                     Bind = Item(ItemNum).BindType
+                    Msg = Trim$(Item(ItemNum).Name)
                     
                     'sure made this a lot simpler than it was, removing roughly 30 lines of code in exchange for 5.  It could be done in 1 line
                     'but I chose to make it pretty and easy to debug had something went wrong.

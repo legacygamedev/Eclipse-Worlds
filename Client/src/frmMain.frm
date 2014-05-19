@@ -7388,7 +7388,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
             If InMapEditor Then
                 Dim Up As Boolean, curTil As Long
                 Up = IIf(HiWord(wParam) = 120, False, True)
-                If displayTilesets Or chkLayers.Value = 1 Then
+                If displayTilesets And chkLayers.Value = 0 Then
                     curTil = frmEditor_Map.scrlTileSet.Value
                     frmEditor_Map.scrlTileSet.Value = (IIf((curTil = 1 And Not Up) Or (curTil = NumTileSets And Up), curTil, IIf(Up, 1, -1) + curTil))
                     lblTitle = "UBER Map Editor - " & "Tileset: " & frmEditor_Map.scrlTileSet.Value
@@ -7396,6 +7396,8 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
                     getCurrentMapLayerName
                     frmEditor_Map.optLayer(IIf((currentMapLayerNum = 1 And Not Up) Or (currentMapLayerNum = Layer_Count - 1 And Up), currentMapLayerNum, IIf(Up, 1, -1) + currentMapLayerNum)).Value = 1
                     getCurrentMapLayerName
+                    displayTilesets = False
+                    chkLayers.Value = 0
                 End If
 
             End If
