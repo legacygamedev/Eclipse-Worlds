@@ -262,22 +262,22 @@ Sub ProcessPlayerMovement(ByVal Index As Long)
         Case DIR_RIGHT
             TempPlayer(Index).xOffset = TempPlayer(Index).xOffset + MovementSpeed
             If TempPlayer(Index).xOffset > 0 Then TempPlayer(Index).xOffset = 0
-        Case DIR_UP_LEFT
+        Case DIR_UPLEFT
             TempPlayer(Index).yOffset = TempPlayer(Index).yOffset - MovementSpeed
             If TempPlayer(Index).yOffset < 0 Then TempPlayer(Index).yOffset = 0
             TempPlayer(Index).xOffset = TempPlayer(Index).xOffset - MovementSpeed
             If TempPlayer(Index).xOffset < 0 Then TempPlayer(Index).xOffset = 0
-        Case DIR_UP_RIGHT
+        Case DIR_UPRIGHT
             TempPlayer(Index).yOffset = TempPlayer(Index).yOffset - MovementSpeed
             If TempPlayer(Index).yOffset < 0 Then TempPlayer(Index).yOffset = 0
             TempPlayer(Index).xOffset = TempPlayer(Index).xOffset + MovementSpeed
             If TempPlayer(Index).xOffset > 0 Then TempPlayer(Index).xOffset = 0
-        Case DIR_DOWN_LEFT
+        Case DIR_DOWNLEFT
             TempPlayer(Index).yOffset = TempPlayer(Index).yOffset + MovementSpeed
             If TempPlayer(Index).yOffset > 0 Then TempPlayer(Index).yOffset = 0
             TempPlayer(Index).xOffset = TempPlayer(Index).xOffset - MovementSpeed
             If TempPlayer(Index).xOffset < 0 Then TempPlayer(Index).xOffset = 0
-        Case DIR_DOWN_RIGHT
+        Case DIR_DOWNRIGHT
             TempPlayer(Index).yOffset = TempPlayer(Index).yOffset + MovementSpeed
             If TempPlayer(Index).yOffset > 0 Then TempPlayer(Index).yOffset = 0
             TempPlayer(Index).xOffset = TempPlayer(Index).xOffset + MovementSpeed
@@ -310,11 +310,11 @@ Sub ProcessNPCMovement(ByVal MapNPCNum As Long)
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ' Check if NPC is walking, and if so process moving them over
-    If MapNPC(MapNPCNum).Target = 0 Then
-        MovementSpeed = MOVEMENT_SPEED / 2
-    Else
-        MovementSpeed = MOVEMENT_SPEED
-    End If
+    Select Case MapNPC(MapNPCNum).Moving
+        Case MOVING_WALKING: MovementSpeed = MOVEMENT_SPEED / 2
+        Case MOVING_RUNNING: MovementSpeed = MOVEMENT_SPEED
+        Case Else: Exit Sub
+    End Select
     
     Select Case MapNPC(MapNPCNum).Dir
         Case DIR_UP
@@ -332,27 +332,40 @@ Sub ProcessNPCMovement(ByVal MapNPCNum As Long)
         Case DIR_RIGHT
             MapNPC(MapNPCNum).xOffset = MapNPC(MapNPCNum).xOffset + ((ElapsedTime / 1000) * (MovementSpeed * SIZE_X))
             If MapNPC(MapNPCNum).xOffset > 0 Then MapNPC(MapNPCNum).xOffset = 0
+        
+        Case DIR_UPLEFT
+            MapNPC(MapNPCNum).yOffset = MapNPC(MapNPCNum).yOffset - ((ElapsedTime / 1000) * (MovementSpeed * SIZE_Y))
+            If MapNPC(MapNPCNum).yOffset < 0 Then MapNPC(MapNPCNum).yOffset = 0
+            MapNPC(MapNPCNum).xOffset = MapNPC(MapNPCNum).xOffset - ((ElapsedTime / 1000) * (MovementSpeed * SIZE_X))
+            If MapNPC(MapNPCNum).xOffset < 0 Then MapNPC(MapNPCNum).xOffset = 0
+            
+        Case DIR_UPRIGHT
+            MapNPC(MapNPCNum).yOffset = MapNPC(MapNPCNum).yOffset - ((ElapsedTime / 1000) * (MovementSpeed * SIZE_Y))
+            If MapNPC(MapNPCNum).yOffset < 0 Then MapNPC(MapNPCNum).yOffset = 0
+            MapNPC(MapNPCNum).xOffset = MapNPC(MapNPCNum).xOffset + ((ElapsedTime / 1000) * (MovementSpeed * SIZE_X))
+            If MapNPC(MapNPCNum).xOffset > 0 Then MapNPC(MapNPCNum).xOffset = 0
+            
+        Case DIR_DOWNLEFT
+            MapNPC(MapNPCNum).xOffset = MapNPC(MapNPCNum).xOffset - ((ElapsedTime / 1000) * (MovementSpeed * SIZE_X))
+            If MapNPC(MapNPCNum).xOffset < 0 Then MapNPC(MapNPCNum).xOffset = 0
+            MapNPC(MapNPCNum).yOffset = MapNPC(MapNPCNum).yOffset + ((ElapsedTime / 1000) * (MovementSpeed * SIZE_Y))
+            If MapNPC(MapNPCNum).yOffset > 0 Then MapNPC(MapNPCNum).yOffset = 0
+            
+        Case DIR_DOWNRIGHT
+            MapNPC(MapNPCNum).xOffset = MapNPC(MapNPCNum).xOffset + ((ElapsedTime / 1000) * (MovementSpeed * SIZE_X))
+            If MapNPC(MapNPCNum).xOffset > 0 Then MapNPC(MapNPCNum).xOffset = 0
+            MapNPC(MapNPCNum).yOffset = MapNPC(MapNPCNum).yOffset + ((ElapsedTime / 1000) * (MovementSpeed * SIZE_Y))
+            If MapNPC(MapNPCNum).yOffset > 0 Then MapNPC(MapNPCNum).yOffset = 0
     End Select
 
     ' Check if completed walking over to the next tile
     If MapNPC(MapNPCNum).Moving > 0 Then
-        If MapNPC(MapNPCNum).Dir = DIR_RIGHT Or MapNPC(MapNPCNum).Dir = DIR_DOWN Then
-            If (MapNPC(MapNPCNum).xOffset >= 0) And (MapNPC(MapNPCNum).yOffset >= 0) Then
-                MapNPC(MapNPCNum).Moving = 0
-                If MapNPC(MapNPCNum).Step = 1 Then
-                    MapNPC(MapNPCNum).Step = 3
-                Else
-                    MapNPC(MapNPCNum).Step = 1
-                End If
-            End If
-        Else
-            If (MapNPC(MapNPCNum).xOffset <= 0) And (MapNPC(MapNPCNum).yOffset <= 0) Then
-                MapNPC(MapNPCNum).Moving = 0
-                If MapNPC(MapNPCNum).Step = 1 Then
-                    MapNPC(MapNPCNum).Step = 3
-                Else
-                    MapNPC(MapNPCNum).Step = 1
-                End If
+        If (MapNPC(MapNPCNum).xOffset = 0) And (MapNPC(MapNPCNum).yOffset = 0) Then
+            MapNPC(MapNPCNum).Moving = 0
+            If MapNPC(MapNPCNum).Step = 1 Then
+                MapNPC(MapNPCNum).Step = 3
+            Else
+                MapNPC(MapNPCNum).Step = 1
             End If
         End If
     End If
@@ -534,15 +547,15 @@ Function CanMove() As Boolean
     d = GetPlayerDir(MyIndex)
     
     If DirUpLeft Then
-        Call SetPlayerDir(MyIndex, DIR_UP_LEFT)
+        Call SetPlayerDir(MyIndex, DIR_UPLEFT)
         
         ' Check to see if they are trying to go out of bounds
         If GetPlayerY(MyIndex) > 0 And GetPlayerX(MyIndex) > 0 Then
-            If CheckDirection(DIR_UP_LEFT) Then
+            If CheckDirection(DIR_UPLEFT) Then
                 CanMove = False
         
                 ' Set the new direction if they weren't facing that direction
-                If d <> DIR_UP_LEFT Then
+                If d <> DIR_UPLEFT Then
                     Call SendPlayerDir
                 End If
         
@@ -565,15 +578,15 @@ Function CanMove() As Boolean
     End If
         
     If DirUpRight Then
-        Call SetPlayerDir(MyIndex, DIR_UP_RIGHT)
+        Call SetPlayerDir(MyIndex, DIR_UPRIGHT)
         
         ' Check to see if they are trying to go out of bounds
         If GetPlayerY(MyIndex) > 0 And GetPlayerX(MyIndex) < Map.MaxX Then
-            If CheckDirection(DIR_UP_RIGHT) Then
+            If CheckDirection(DIR_UPRIGHT) Then
                 CanMove = False
             
                 ' Set the new direction if they weren't facing that direction
-                If d <> DIR_UP_RIGHT Then
+                If d <> DIR_UPRIGHT Then
                     Call SendPlayerDir
                 End If
             
@@ -596,15 +609,15 @@ Function CanMove() As Boolean
     End If
         
     If DirDownLeft Then
-        Call SetPlayerDir(MyIndex, DIR_DOWN_LEFT)
+        Call SetPlayerDir(MyIndex, DIR_DOWNLEFT)
         
         ' Check to see if they are trying to go out of bounds
         If GetPlayerY(MyIndex) < Map.MaxY And GetPlayerX(MyIndex) > 0 Then
-            If CheckDirection(DIR_DOWN_LEFT) Then
+            If CheckDirection(DIR_DOWNLEFT) Then
                 CanMove = False
             
                 ' Set the new direction if they weren't facing that direction
-                If d <> DIR_DOWN_LEFT Then
+                If d <> DIR_DOWNLEFT Then
                     Call SendPlayerDir
                 End If
                 
@@ -627,15 +640,15 @@ Function CanMove() As Boolean
     End If
         
     If DirDownRight Then
-        Call SetPlayerDir(MyIndex, DIR_DOWN_RIGHT)
+        Call SetPlayerDir(MyIndex, DIR_DOWNRIGHT)
         
         ' Check to see if they are trying to go out of bounds
         If GetPlayerY(MyIndex) < Map.MaxY And GetPlayerX(MyIndex) < Map.MaxX Then
-            If CheckDirection(DIR_DOWN_RIGHT) Then
+            If CheckDirection(DIR_DOWNRIGHT) Then
                 CanMove = False
             
                 ' Set the new direction if they weren't facing that direction
-                If d <> DIR_DOWN_RIGHT Then
+                If d <> DIR_DOWNRIGHT Then
                     Call SendPlayerDir
                 End If
                 
@@ -812,16 +825,16 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
         Case DIR_RIGHT
             X = GetPlayerX(MyIndex) + 1
             Y = GetPlayerY(MyIndex)
-        Case DIR_UP_LEFT
+        Case DIR_UPLEFT
             X = GetPlayerX(MyIndex) - 1
             Y = GetPlayerY(MyIndex) - 1
-        Case DIR_UP_RIGHT
+        Case DIR_UPRIGHT
             X = GetPlayerX(MyIndex) + 1
             Y = GetPlayerY(MyIndex) - 1
-        Case DIR_DOWN_LEFT
+        Case DIR_DOWNLEFT
             X = GetPlayerX(MyIndex) - 1
             Y = GetPlayerY(MyIndex) + 1
-        Case DIR_DOWN_RIGHT
+        Case DIR_DOWNRIGHT
             X = GetPlayerX(MyIndex) + 1
             Y = GetPlayerY(MyIndex) + 1
     End Select
@@ -907,41 +920,7 @@ Sub CheckMovement()
     
     If IsTryingToMove Then
         If CanMove Then
-            Select Case GetPlayerDir(MyIndex)
-                Case DIR_UP
-                    Call SendPlayerMove
-                Case DIR_DOWN
-                    Call SendPlayerMove
-                Case DIR_LEFT
-                    Call SendPlayerMove
-                Case DIR_RIGHT
-                    Call SendPlayerMove
-                Case DIR_UP_LEFT
-                    Call SendPlayerMove
-                    'TempPlayer(MyIndex).yOffset = PIC_Y
-                    'Call SetPlayerY(MyIndex, GetPlayerY(MyIndex) - 1)
-                    'TempPlayer(MyIndex).xOffset = PIC_X
-                    'Call SetPlayerX(MyIndex, GetPlayerX(MyIndex) - 1)
-                Case DIR_UP_RIGHT
-                    Call SendPlayerMove
-                    'TempPlayer(MyIndex).yOffset = PIC_Y
-                    'Call SetPlayerY(MyIndex, GetPlayerY(MyIndex) - 1)
-                    'TempPlayer(MyIndex).xOffset = PIC_X * -1
-                    'Call SetPlayerX(MyIndex, GetPlayerX(MyIndex) + 1)
-                Case DIR_DOWN_LEFT
-                    Call SendPlayerMove
-                    'TempPlayer(MyIndex).yOffset = PIC_Y * -1
-                    'Call SetPlayerY(MyIndex, GetPlayerY(MyIndex) + 1)
-                    'TempPlayer(MyIndex).xOffset = PIC_X
-                    'Call SetPlayerX(MyIndex, GetPlayerX(MyIndex) - 1)
-                Case DIR_DOWN_RIGHT
-                    Call SendPlayerMove
-                    'TempPlayer(MyIndex).yOffset = PIC_Y * -1
-                    'Call SetPlayerY(MyIndex, GetPlayerY(MyIndex) + 1)
-                    'TempPlayer(MyIndex).xOffset = PIC_X * -1
-                    'Call SetPlayerX(MyIndex, GetPlayerX(MyIndex) + 1)
-            End Select
-
+            SendPlayerMove
             If TempPlayer(MyIndex).xOffset = 0 Then
                 If TempPlayer(MyIndex).yOffset = 0 Then
                     If Map.Tile(GetPlayerX(MyIndex), GetPlayerY(MyIndex)).Type = TILE_TYPE_WARP Then
@@ -2427,25 +2406,12 @@ Sub ProcessEventMovement(ByVal id As Long)
         End Select
     
         ' Check if completed walking over to the next tile
-        If Map.MapEvents(id).Moving > 0 Then
-            If Map.MapEvents(id).Dir = DIR_RIGHT Or Map.MapEvents(id).Dir = DIR_DOWN Then
-                If (Map.MapEvents(id).xOffset >= 0) And (Map.MapEvents(id).yOffset >= 0) Then
-                    Map.MapEvents(id).Moving = 0
-                    If Map.MapEvents(id).Step = 1 Then
-                        Map.MapEvents(id).Step = 3
-                    Else
-                        Map.MapEvents(id).Step = 1
-                    End If
-                End If
+        If (Map.MapEvents(id).xOffset = 0) And (Map.MapEvents(id).yOffset = 0) Then
+            Map.MapEvents(id).Moving = 0
+            If Map.MapEvents(id).Step = 1 Then
+                Map.MapEvents(id).Step = 3
             Else
-                If (Map.MapEvents(id).xOffset <= 0) And (Map.MapEvents(id).yOffset <= 0) Then
-                    Map.MapEvents(id).Moving = 0
-                    If Map.MapEvents(id).Step = 1 Then
-                        Map.MapEvents(id).Step = 3
-                    Else
-                        Map.MapEvents(id).Step = 1
-                    End If
-                End If
+                Map.MapEvents(id).Step = 1
             End If
         End If
     End If

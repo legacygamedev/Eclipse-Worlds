@@ -507,6 +507,18 @@ Public Function CanPlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Lo
                     If Not ((MapNPC(MapNum).NPC(MapNPCNum).Y = GetPlayerY(Attacker)) And (MapNPC(MapNum).NPC(MapNPCNum).X + 1 = GetPlayerX(Attacker))) Then Exit Function
                 Case DIR_RIGHT
                     If Not ((MapNPC(MapNum).NPC(MapNPCNum).Y = GetPlayerY(Attacker)) And (MapNPC(MapNum).NPC(MapNPCNum).X - 1 = GetPlayerX(Attacker))) Then Exit Function
+                Case DIR_UPLEFT
+                    If Not ((MapNPC(MapNum).NPC(MapNPCNum).Y + 1 = GetPlayerY(Attacker)) And (MapNPC(MapNum).NPC(MapNPCNum).X = GetPlayerX(Attacker))) Then Exit Function
+                    If Not ((MapNPC(MapNum).NPC(MapNPCNum).Y = GetPlayerY(Attacker)) And (MapNPC(MapNum).NPC(MapNPCNum).X + 1 = GetPlayerX(Attacker))) Then Exit Function
+                Case DIR_UPRIGHT
+                    If Not ((MapNPC(MapNum).NPC(MapNPCNum).Y + 1 = GetPlayerY(Attacker)) And (MapNPC(MapNum).NPC(MapNPCNum).X = GetPlayerX(Attacker))) Then Exit Function
+                    If Not ((MapNPC(MapNum).NPC(MapNPCNum).Y = GetPlayerY(Attacker)) And (MapNPC(MapNum).NPC(MapNPCNum).X - 1 = GetPlayerX(Attacker))) Then Exit Function
+                Case DIR_DOWNLEFT
+                    If Not ((MapNPC(MapNum).NPC(MapNPCNum).Y = GetPlayerY(Attacker)) And (MapNPC(MapNum).NPC(MapNPCNum).X + 1 = GetPlayerX(Attacker))) Then Exit Function
+                    If Not ((MapNPC(MapNum).NPC(MapNPCNum).Y - 1 = GetPlayerY(Attacker)) And (MapNPC(MapNum).NPC(MapNPCNum).X = GetPlayerX(Attacker))) Then Exit Function
+                Case DIR_DOWNRIGHT
+                    If Not ((MapNPC(MapNum).NPC(MapNPCNum).Y = GetPlayerY(Attacker)) And (MapNPC(MapNum).NPC(MapNPCNum).X - 1 = GetPlayerX(Attacker))) Then Exit Function
+                    If Not ((MapNPC(MapNum).NPC(MapNPCNum).Y - 1 = GetPlayerY(Attacker)) And (MapNPC(MapNum).NPC(MapNPCNum).X = GetPlayerX(Attacker))) Then Exit Function
                 Case Else
                     Exit Function
             End Select
@@ -1809,16 +1821,28 @@ Function CanPlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, Opt
     If Not IsSpell And Not UsingBow Then ' Melee attack
         ' Check if at same coordinates
         Select Case GetPlayerDir(Attacker)
-            Case DIR_UP, DIR_UP_LEFT, DIR_UP_RIGHT
+            Case DIR_UP
                 If Not ((GetPlayerY(Victim) + 1 = GetPlayerY(Attacker)) And (GetPlayerX(Victim) = GetPlayerX(Attacker))) Then Exit Function
-            Case DIR_DOWN, DIR_DOWN_LEFT, DIR_DOWN_RIGHT
+            Case DIR_DOWN
                 If Not ((GetPlayerY(Victim) - 1 = GetPlayerY(Attacker)) And (GetPlayerX(Victim) = GetPlayerX(Attacker))) Then Exit Function
             Case DIR_LEFT
                 If Not ((GetPlayerY(Victim) = GetPlayerY(Attacker)) And (GetPlayerX(Victim) + 1 = GetPlayerX(Attacker))) Then Exit Function
             Case DIR_RIGHT
                 If Not ((GetPlayerY(Victim) = GetPlayerY(Attacker)) And (GetPlayerX(Victim) - 1 = GetPlayerX(Attacker))) Then Exit Function
+            Case DIR_UPLEFT
+                If Not ((GetPlayerY(Victim) + 1 = GetPlayerY(Attacker)) And (GetPlayerX(Victim) = GetPlayerX(Attacker))) Then Exit Function
+                If Not ((GetPlayerY(Victim) = GetPlayerY(Attacker)) And (GetPlayerX(Victim) + 1 = GetPlayerX(Attacker))) Then Exit Function
+            Case DIR_UPRIGHT
+                If Not ((GetPlayerY(Victim) + 1 = GetPlayerY(Attacker)) And (GetPlayerX(Victim) = GetPlayerX(Attacker))) Then Exit Function
+                If Not ((GetPlayerY(Victim) = GetPlayerY(Attacker)) And (GetPlayerX(Victim) - 1 = GetPlayerX(Attacker))) Then Exit Function
+            Case DIR_DOWNLEFT
+                If Not ((GetPlayerY(Victim) = GetPlayerY(Attacker)) And (GetPlayerX(Victim) + 1 = GetPlayerX(Attacker))) Then Exit Function
+                If Not ((GetPlayerY(Victim) - 1 = GetPlayerY(Attacker)) And (GetPlayerX(Victim) = GetPlayerX(Attacker))) Then Exit Function
+            Case DIR_DOWNRIGHT
+                If Not ((GetPlayerY(Victim) = GetPlayerY(Attacker)) And (GetPlayerX(Victim) - 1 = GetPlayerX(Attacker))) Then Exit Function
+                If Not ((GetPlayerY(Victim) - 1 = GetPlayerY(Attacker)) And (GetPlayerX(Victim) = GetPlayerX(Attacker))) Then Exit Function
             Case Else
-            Exit Function
+                Exit Function
         End Select
     End If
         

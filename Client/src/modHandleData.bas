@@ -1077,6 +1077,18 @@ Private Sub HandleNPCMove(ByVal Index As Long, ByRef data() As Byte, ByVal Start
                 .xOffset = PIC_X
             Case DIR_RIGHT
                 .xOffset = PIC_X * -1
+            Case DIR_UPLEFT
+                .yOffset = PIC_Y
+                .xOffset = PIC_X
+            Case DIR_UPRIGHT
+                .yOffset = PIC_Y
+                .xOffset = PIC_X * -1
+            Case DIR_DOWNLEFT
+                .yOffset = PIC_Y * -1
+                .xOffset = PIC_X
+            Case DIR_DOWNRIGHT
+                .yOffset = PIC_Y * -1
+                .xOffset = PIC_X * -1
         End Select
     End With
     Exit Sub
@@ -2304,12 +2316,12 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
             
             OldEXPBarWidth = frmMain.imgEXPBar.Width
             NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
-            frmMain.lblExp.Visible = True
-            frmMain.lblExp.Caption = GetPlayerExp(Index) & "/" & TNL
+            frmMain.lblEXP.Visible = True
+            frmMain.lblEXP.Caption = GetPlayerExp(Index) & "/" & TNL
         Else
             frmMain.imgEXPBar.Width = EXPBar_Width
-            frmMain.lblExp.Visible = False
-            frmMain.lblExp.Caption = ""
+            frmMain.lblEXP.Visible = False
+            frmMain.lblEXP.Caption = ""
         End If
     End If
 End Sub

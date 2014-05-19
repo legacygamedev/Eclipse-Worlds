@@ -1946,7 +1946,7 @@ Sub SendPlayerPosition(ByVal Index As Long, Optional ByVal SendToSelf As Boolean
     Set Buffer = Nothing
 End Sub
 
-Sub SendNPCMove(ByVal MapNPCNum As Long, ByVal movement As Byte, MapNum As Integer)
+Sub SendNPCMove(ByVal MapNPCNum As Long, ByVal movement As Byte, ByVal MapNum As Integer)
     Dim Buffer As clsBuffer
     
     Set Buffer = New clsBuffer
