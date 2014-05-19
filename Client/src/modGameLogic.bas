@@ -12,8 +12,7 @@ Public Sub GameLoop()
     Dim X As Long, Y As Long
     Dim tmr500, Fadetmr As Long
     Dim Fogtmr As Long
-    Dim RenderSpeed As Long
-    
+
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
@@ -196,21 +195,16 @@ Public Sub GameLoop()
         ' *********************
         ' ** Render Graphics **
         ' *********************
-        If RenderSpeed < tick Or GameFPS < 64 Then
-            Call Render_Graphics
-            RenderSpeed = timeGetTime + 15
-        End If
+        Call Render_Graphics
         
         Call Audio.UpdateMapSounds
         DoEvents
 
         ' Lock fps
-        If Not FPS_Lock Or GameFPS > 64 Then
-            Do While timeGetTime < tick + 10
-                DoEvents
-                Sleep 1
-            Loop
-        End If
+        Do While timeGetTime < tick + 15
+            DoEvents
+            Sleep 1
+        Loop
         
         ' Calculate FPS
         If TickFPS < tick Then
@@ -1156,7 +1150,7 @@ Public Sub CastSpell(ByVal SpellSlot As Byte)
         End If
             
         If TempPlayer(MyIndex).Moving = 0 Then
-            Call SendCastSpell(PlayerSpells(SpellSlot))
+            Call SendCastSpell(SpellSlot)
         Else
             Call AddText("Cannot cast while moving!", BrightRed)
         End If

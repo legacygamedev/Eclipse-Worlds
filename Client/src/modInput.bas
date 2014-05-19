@@ -735,10 +735,6 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Case "/fps"
                     BFPS = Not BFPS
                     
-                    ' Toggle fps lock
-                Case "/fpslock"
-                    FPS_Lock = Not FPS_Lock
-                    
                 Case "/ping"
                     BPing = Not BPing
                     
@@ -756,7 +752,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     End If
                     
                     ' Send regular help commands
-                    Call AddText("Available Commands: /trade, /gui, /clearchat, /createguild, /gmotd, /pquit, /gquit, /fps, /fpslock, /ping, /afk, /emotes", HelpColor)
+                    Call AddText("Available Commands: /trade, /gui, /clearchat, /createguild, /gmotd, /pquit, /gquit, /fps, /ping, /afk, /emotes", HelpColor)
                     
                     ' Send the admin help commands
                     If GetPlayerAccess(MyIndex) > 0 Then

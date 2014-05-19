@@ -266,9 +266,6 @@ Public BloodIndex As Byte
 Public ChatBubbleIndex As Byte
 Public AnimationIndex As Byte
 
-' FPS values
-Public FPS_Lock As Boolean
-
 ' Editor edited items array
 Public Item_Changed(1 To MAX_ITEMS) As Boolean
 Public Quest_Changed(1 To MAX_QUESTS) As Boolean

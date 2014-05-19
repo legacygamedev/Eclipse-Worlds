@@ -882,77 +882,6 @@ Begin VB.Form frmMain
          Width           =   345
       End
    End
-   Begin VB.PictureBox picQuest 
-      BackColor       =   &H00000000&
-      Height          =   4935
-      Left            =   8565
-      ScaleHeight     =   4875
-      ScaleWidth      =   3315
-      TabIndex        =   216
-      Top             =   2040
-      Visible         =   0   'False
-      Width           =   3375
-      Begin VB.CommandButton btnCloseQuestLog 
-         BackColor       =   &H00E0E0E0&
-         Caption         =   "X"
-         Height          =   255
-         Left            =   3060
-         MaskColor       =   &H00FFFFFF&
-         Style           =   1  'Graphical
-         TabIndex        =   226
-         Top             =   0
-         Width           =   255
-      End
-      Begin VB.ListBox lstQuests 
-         BackColor       =   &H00000000&
-         ForeColor       =   &H00FFFFFF&
-         Height          =   4050
-         Left            =   120
-         TabIndex        =   217
-         Top             =   480
-         Width           =   3135
-      End
-      Begin VB.Label lblClick 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Select one to view details."
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   219
-         Top             =   4560
-         Width           =   3135
-      End
-      Begin VB.Label Label3 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Quest Log"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   480
-         TabIndex        =   218
-         Top             =   120
-         Width           =   2415
-      End
-   End
    Begin VB.PictureBox picQuestDesc 
       BackColor       =   &H00000000&
       ForeColor       =   &H0080FFFF&
@@ -1274,6 +1203,195 @@ Begin VB.Form frmMain
       Top             =   2760
       Visible         =   0   'False
       Width           =   7200
+   End
+   Begin VB.PictureBox picTrade 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H00E0E0E0&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H80000008&
+      Height          =   5760
+      Left            =   2400
+      ScaleHeight     =   384
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   480
+      TabIndex        =   13
+      TabStop         =   0   'False
+      Top             =   1440
+      Visible         =   0   'False
+      Width           =   7200
+      Begin VB.PictureBox picYourTrade 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   238
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   3705
+         Left            =   435
+         ScaleHeight     =   247
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   193
+         TabIndex        =   15
+         TabStop         =   0   'False
+         Top             =   480
+         Width           =   2895
+      End
+      Begin VB.PictureBox picTheirTrade 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   238
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   3705
+         Left            =   3840
+         ScaleHeight     =   247
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   193
+         TabIndex        =   14
+         TabStop         =   0   'False
+         Top             =   480
+         Width           =   2895
+      End
+      Begin VB.Label lblYourWorth 
+         BackStyle       =   0  'Transparent
+         Caption         =   "1234567890"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   1680
+         TabIndex        =   18
+         Top             =   4500
+         Width           =   1815
+      End
+      Begin VB.Label lblTheirWorth 
+         BackStyle       =   0  'Transparent
+         Caption         =   "1234567890"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   5160
+         TabIndex        =   17
+         Top             =   4500
+         Width           =   1815
+      End
+      Begin VB.Label lblTradeStatus 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H000000C0&
+         Height          =   255
+         Left            =   600
+         TabIndex        =   16
+         Top             =   5520
+         Width           =   5895
+      End
+      Begin VB.Image imgAcceptTrade 
+         Height          =   435
+         Left            =   2475
+         Top             =   5040
+         Width           =   1035
+      End
+      Begin VB.Image imgDeclineTrade 
+         Height          =   435
+         Left            =   3675
+         Top             =   5040
+         Width           =   1035
+      End
+   End
+   Begin VB.PictureBox picQuest 
+      BackColor       =   &H00000000&
+      Height          =   4935
+      Left            =   8565
+      ScaleHeight     =   4875
+      ScaleWidth      =   3315
+      TabIndex        =   216
+      Top             =   2040
+      Visible         =   0   'False
+      Width           =   3375
+      Begin VB.CommandButton btnCloseQuestLog 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "X"
+         Height          =   255
+         Left            =   3060
+         MaskColor       =   &H00FFFFFF&
+         Style           =   1  'Graphical
+         TabIndex        =   226
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.ListBox lstQuests 
+         BackColor       =   &H00000000&
+         ForeColor       =   &H00FFFFFF&
+         Height          =   4050
+         Left            =   120
+         TabIndex        =   217
+         Top             =   480
+         Width           =   3135
+      End
+      Begin VB.Label lblClick 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Select one to view details."
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   219
+         Top             =   4560
+         Width           =   3135
+      End
+      Begin VB.Label Label3 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Quest Log"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   480
+         TabIndex        =   218
+         Top             =   120
+         Width           =   2415
+      End
    End
    Begin VB.PictureBox picSkills 
       Appearance      =   0  'Flat
@@ -3982,124 +4100,6 @@ Begin VB.Form frmMain
          TabStop         =   0   'False
          Top             =   0
          Width           =   7680
-      End
-   End
-   Begin VB.PictureBox picTrade 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      BackColor       =   &H00E0E0E0&
-      BorderStyle     =   0  'None
-      ForeColor       =   &H80000008&
-      Height          =   5760
-      Left            =   2400
-      ScaleHeight     =   384
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   480
-      TabIndex        =   13
-      TabStop         =   0   'False
-      Top             =   1440
-      Visible         =   0   'False
-      Width           =   7200
-      Begin VB.PictureBox picYourTrade 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   3705
-         Left            =   435
-         ScaleHeight     =   247
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   193
-         TabIndex        =   15
-         TabStop         =   0   'False
-         Top             =   480
-         Width           =   2895
-      End
-      Begin VB.PictureBox picTheirTrade 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   3705
-         Left            =   3840
-         ScaleHeight     =   247
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   193
-         TabIndex        =   14
-         TabStop         =   0   'False
-         Top             =   480
-         Width           =   2895
-      End
-      Begin VB.Label lblYourWorth 
-         BackStyle       =   0  'Transparent
-         Caption         =   "1234567890"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   1680
-         TabIndex        =   18
-         Top             =   4500
-         Width           =   1815
-      End
-      Begin VB.Label lblTheirWorth 
-         BackStyle       =   0  'Transparent
-         Caption         =   "1234567890"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   5160
-         TabIndex        =   17
-         Top             =   4500
-         Width           =   1815
-      End
-      Begin VB.Label lblTradeStatus 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H000000C0&
-         Height          =   255
-         Left            =   600
-         TabIndex        =   16
-         Top             =   5520
-         Width           =   5895
-      End
-      Begin VB.Image imgAcceptTrade 
-         Height          =   435
-         Left            =   2475
-         Top             =   5040
-         Width           =   1035
-      End
-      Begin VB.Image imgDeclineTrade 
-         Height          =   435
-         Left            =   3675
-         Top             =   5040
-         Width           =   1035
       End
    End
    Begin VB.Label lblSwearFilter 

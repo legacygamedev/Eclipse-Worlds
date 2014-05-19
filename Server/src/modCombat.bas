@@ -2216,11 +2216,6 @@ Public Sub BufferPlayerSpell(ByVal Index As Long, ByVal SpellSlot As Byte)
     
     If HasBuffered Then
         SendAnimation MapNum, Spell(SpellNum).CastAnim, 0, 0, TARGET_TYPE_PLAYER, Index
-        
-        If Spell(SpellNum).CastTime > 0 Then
-            SendActionMsg MapNum, "Casting " & Trim$(Spell(SpellNum).Name), BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(Index) * 32, GetPlayerY(Index) * 32
-        End If
-        
         TempPlayer(Index).SpellBuffer.Spell = SpellSlot
         TempPlayer(Index).SpellBuffer.Timer = timeGetTime
         TempPlayer(Index).SpellBuffer.target = TempPlayer(Index).target
