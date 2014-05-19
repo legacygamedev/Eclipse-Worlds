@@ -371,6 +371,7 @@ Public Function ListView_SetIconSpacing(hWndLV As Long, cX As Long, cY As Long) 
     LVM_SETICONSPACING = 4149
     ListView_SetIconSpacing = SendMessage(hWndLV, LVM_SETICONSPACING, 0, ByVal MakeLong(cX, cY))
 End Function
+
 Public Sub updateFreeSlots()
 
     If Me.Visible Then
@@ -389,6 +390,7 @@ Public Sub updateFreeSlots()
     End If
     
 End Sub
+
 Private Sub updateMaxLimit()
     If Me.Visible = True And listItems.listItems.count > 0 Then
         Dim stackable As Boolean
@@ -407,7 +409,8 @@ Private Sub updateMaxLimit()
             lblMax.Caption = "/NaN"
     End If
 End Sub
-Private Sub styleListwView(sType As Status, Optional msg As String)
+
+Private Sub styleListwView(sType As Status, Optional Msg As String)
     Select Case sType
         Case Status.Correct
             listItems.BackColor = &H8000000E
@@ -419,7 +422,7 @@ Private Sub styleListwView(sType As Status, Optional msg As String)
             listItems.BorderStyle = ccNone
             picInfo.Visible = True
             picInfo.ZOrder 0
-            lblInfo.Caption = msg
+            lblInfo.Caption = Msg
     End Select
 End Sub
 
@@ -455,7 +458,7 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
         Set listItems.Icons = itemsImageList
                 
         For I = 0 To UBound(tempItems)
-            listItems.listItems.Add , , Trim$(tempItems(I).name), itemsImageList.ListImages(I + 1).Index
+            listItems.listItems.Add , , Trim$(tempItems(I).Name), itemsImageList.ListImages(I + 1).Index
         Next
         currentItemIndex = 0
         generateItemsForTab = True
@@ -474,7 +477,7 @@ Dim I As Byte
         Set listItems.Icons = itemsImageList
                 
         For I = 0 To UBound(lastSpawnedItems) - 1
-            listItems.listItems.Add , , Trim$(Item(lastSpawnedItems(I)).name), itemsImageList.ListImages(I + 1).Index
+            listItems.listItems.Add , , Trim$(Item(lastSpawnedItems(I)).Name), itemsImageList.ListImages(I + 1).Index
         Next
         cmdSpawn.Enabled = True
         currentItemIndex = 0
@@ -486,7 +489,7 @@ Private Sub cmdSpawn_Click()
     Dim I As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -542,7 +545,7 @@ Private Sub cmdSpawn_Click()
     End If
     
     ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdSpawn_Click", "frmAdmin", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -589,7 +592,7 @@ Private Sub listItems_MouseMove(Button As Integer, Shift As Integer, X As Single
             Else
                 num = currentlyListedIndexes(indexx - 1)
             End If
-            frmItemDesc.lblName = Trim$(Item(num).name)
+            frmItemDesc.lblName = Trim$(Item(num).Name)
             frmItemDesc.lblStack = "Stackable: " & IIf(Item(num).stackable > 0, "yes", "no")
             frmItemDesc.lblLevel = "LVL: " & Item(num).LevelReq
             frmItemDesc.lblType = "Type: " & getItemType(Item(num).Type)
@@ -635,11 +638,14 @@ Public Sub tabItems_Click()
             picked = False
         End If
     End If
+    
     updateMaxLimit
+    
     If updatingItem Then
         updatingItem = False
         Exit Sub
     End If
+    
     If frmAdmin.ignoreChange Then
         frmAdmin.ignoreChange = False
     Else
@@ -648,7 +654,6 @@ Public Sub tabItems_Click()
         frmAdmin.optCat_MouseUp tabItems.SelectedItem.Index - 1, 0, 0, 0, 0
     End If
 
-    
     Me.Caption = "Item Spawner - " & tabItems.SelectedItem.Caption & " -> " & listItems.listItems.count & " item" & IIf(listItems.listItems.count > 1, "s", "") & " available"
     
     lastTab = tabItems.SelectedItem.Index
@@ -733,7 +738,7 @@ Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long) As Byte
-    Dim msg As String
+    Dim Msg As String
     
     If (CDec(txtBox.text) >= min And CDec(txtBox.text) <= max) Then
         verifyValue = 1

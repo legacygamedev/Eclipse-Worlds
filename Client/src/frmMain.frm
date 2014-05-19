@@ -2261,7 +2261,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -7389,7 +7388,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
             If InMapEditor Then
                 Dim Up As Boolean, curTil As Long
                 Up = IIf(HiWord(wParam) = 120, False, True)
-                If displayTilesets Then
+                If displayTilesets Or chkLayers.Value = 1 Then
                     curTil = frmEditor_Map.scrlTileSet.Value
                     frmEditor_Map.scrlTileSet.Value = (IIf((curTil = 1 And Not Up) Or (curTil = NumTileSets And Up), curTil, IIf(Up, 1, -1) + curTil))
                     lblTitle = "UBER Map Editor - " & "Tileset: " & frmEditor_Map.scrlTileSet.Value

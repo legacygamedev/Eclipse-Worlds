@@ -1759,7 +1759,6 @@ End Sub
 
 Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Select Case Index
-    
         Case 0
             lblCat.Caption = "Recent"
         Case 1
@@ -1788,19 +1787,20 @@ End Sub
 
 Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim test As Boolean
+    
     If ignoreChange Then
         ignoreChange = False
         Exit Sub
     End If
+    
     If optCat(Index).Value = False Then
         optCat(Index).Picture = LoadResPicture(100 + Index, vbResBitmap)
-    Else
+    ElseIf Index <> 10 Then
         optCat(Index).Picture = LoadResPicture(110 + Index, vbResBitmap)
     If lastIndex = Index And optCat(Index).Value = True Then
         frmAdmin.currentCategory = "Categories"
     Else
         Select Case Index
-        
             Case 0
                 currentCategory = "Recent"
             Case 1
@@ -1826,7 +1826,7 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
         End Select
         lblCat.Caption = currentCategory
     End If
-        If lastIndex <> -1 Then
+        If lastIndex <> -1 And Index <> 10 Then
             If optCat(lastIndex).Value = False Then
                 optCat(lastIndex).Picture = LoadResPicture(100 + lastIndex, vbResBitmap)
             End If

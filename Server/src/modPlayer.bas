@@ -1941,6 +1941,8 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                         ' Check for skill level up
                         Call CheckPlayerSkillLevelUp(Index, Skill)
                     End If
+                    
+                    Call SendPlayerData(Index)
                 Else
                     Call PlayerMsg(Index, "You do not have all of the ingredients.", BrightRed)
                     Exit Sub
