@@ -286,7 +286,7 @@ Sub ProcessPlayerMovement(ByVal Index As Long)
 
     ' Check if completed walking over to the next tile
     If TempPlayer(Index).Moving > 0 Then
-        If (TempPlayer(Index).xOffset = 0) And (TempPlayer(Index).yOffset = 0) Then
+        If (TempPlayer(Index).xOffset <= 0) And (TempPlayer(Index).yOffset <= 0) Then
             TempPlayer(Index).Moving = 0
             If TempPlayer(Index).Step = 1 Then
                 TempPlayer(Index).Step = 3
@@ -360,7 +360,7 @@ Sub ProcessNPCMovement(ByVal MapNPCNum As Long)
 
     ' Check if completed walking over to the next tile
     If MapNPC(MapNPCNum).Moving > 0 Then
-        If (MapNPC(MapNPCNum).xOffset = 0) And (MapNPC(MapNPCNum).yOffset = 0) Then
+        If (MapNPC(MapNPCNum).xOffset <= 0) And (MapNPC(MapNPCNum).yOffset <= 0) Then
             MapNPC(MapNPCNum).Moving = 0
             If MapNPC(MapNPCNum).Step = 1 Then
                 MapNPC(MapNPCNum).Step = 3
@@ -2385,7 +2385,7 @@ Sub ProcessEventMovement(ByVal id As Long)
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ' Check if NPC is walking, and if so process moving them over
-    If Map.MapEvents(id).Moving = 1 Then
+    If Map.MapEvents(id).Moving = MOVING_WALKING Then
         Select Case Map.MapEvents(id).Dir
             Case DIR_UP
                 Map.MapEvents(id).yOffset = Map.MapEvents(id).yOffset - ((ElapsedTime / 1000) * (Map.MapEvents(id).MovementSpeed * SIZE_X))
@@ -2406,7 +2406,7 @@ Sub ProcessEventMovement(ByVal id As Long)
         End Select
     
         ' Check if completed walking over to the next tile
-        If (Map.MapEvents(id).xOffset = 0) And (Map.MapEvents(id).yOffset = 0) Then
+        If (Map.MapEvents(id).xOffset <= 0) And (Map.MapEvents(id).yOffset <= 0) Then
             Map.MapEvents(id).Moving = 0
             If Map.MapEvents(id).Step = 1 Then
                 Map.MapEvents(id).Step = 3
@@ -2419,7 +2419,7 @@ Sub ProcessEventMovement(ByVal id As Long)
     
 ' Error handler
 ErrorHandler:
-    HandleError "ProcessNPCMovement", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "ProcessEventMovement", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
