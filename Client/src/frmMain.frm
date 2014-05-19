@@ -27,6 +27,661 @@ Begin VB.Form frmMain
    StartUpPosition =   2  'CenterScreen
    Tag             =   " "
    Visible         =   0   'False
+   Begin VB.PictureBox picSkills 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000017&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   238
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   5850
+      Left            =   7845
+      ScaleHeight     =   390
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   273
+      TabIndex        =   173
+      TabStop         =   0   'False
+      Top             =   1125
+      Visible         =   0   'False
+      Width           =   4095
+      Begin VB.Label lblSkills 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skills"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H0080C0FF&
+         Height          =   240
+         Left            =   480
+         TabIndex        =   210
+         Top             =   360
+         Width           =   855
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   3
+         Left            =   2640
+         TabIndex        =   209
+         Top             =   1560
+         Width           =   450
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   0
+         Left            =   480
+         TabIndex        =   208
+         Top             =   960
+         Width           =   465
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   1
+         Left            =   2640
+         TabIndex        =   207
+         Top             =   960
+         Width           =   465
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   2
+         Left            =   480
+         TabIndex        =   206
+         Top             =   1800
+         Width           =   465
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   3
+         Left            =   2640
+         TabIndex        =   205
+         Top             =   1800
+         Width           =   465
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   0
+         Left            =   480
+         TabIndex        =   204
+         Top             =   1200
+         Width           =   345
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   1
+         Left            =   2640
+         TabIndex        =   203
+         Top             =   1200
+         Width           =   345
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   2
+         Left            =   480
+         TabIndex        =   202
+         Top             =   2040
+         Width           =   345
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   3
+         Left            =   2640
+         TabIndex        =   201
+         Top             =   2040
+         Width           =   345
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   4
+         Left            =   480
+         TabIndex        =   200
+         Top             =   2880
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   4
+         Left            =   480
+         TabIndex        =   199
+         Top             =   2640
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   4
+         Left            =   480
+         TabIndex        =   198
+         Top             =   2400
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   5
+         Left            =   2640
+         TabIndex        =   197
+         Top             =   2880
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   5
+         Left            =   2640
+         TabIndex        =   196
+         Top             =   2640
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   5
+         Left            =   2640
+         TabIndex        =   195
+         Top             =   2400
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   6
+         Left            =   480
+         TabIndex        =   194
+         Top             =   3720
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   6
+         Left            =   480
+         TabIndex        =   193
+         Top             =   3480
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   6
+         Left            =   480
+         TabIndex        =   192
+         Top             =   3240
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   7
+         Left            =   2640
+         TabIndex        =   191
+         Top             =   3720
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   7
+         Left            =   2640
+         TabIndex        =   190
+         Top             =   3480
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   7
+         Left            =   2640
+         TabIndex        =   189
+         Top             =   3240
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   8
+         Left            =   480
+         TabIndex        =   188
+         Top             =   4560
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   8
+         Left            =   480
+         TabIndex        =   187
+         Top             =   4320
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   8
+         Left            =   480
+         TabIndex        =   186
+         Top             =   4080
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   9
+         Left            =   2640
+         TabIndex        =   185
+         Top             =   4560
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   9
+         Left            =   2640
+         TabIndex        =   184
+         Top             =   4320
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   9
+         Left            =   2640
+         TabIndex        =   183
+         Top             =   4080
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   10
+         Left            =   480
+         TabIndex        =   182
+         Top             =   5400
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   10
+         Left            =   480
+         TabIndex        =   181
+         Top             =   5160
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   10
+         Left            =   480
+         TabIndex        =   180
+         Top             =   4920
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   11
+         Left            =   2640
+         TabIndex        =   179
+         Top             =   5400
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   11
+         Left            =   2640
+         TabIndex        =   178
+         Top             =   5160
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   11
+         Left            =   2640
+         TabIndex        =   177
+         Top             =   4920
+         Width           =   450
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   0
+         Left            =   480
+         TabIndex        =   176
+         Top             =   720
+         Width           =   450
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   1
+         Left            =   2640
+         TabIndex        =   175
+         Top             =   720
+         Width           =   450
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   2
+         Left            =   480
+         TabIndex        =   174
+         Top             =   1560
+         Width           =   450
+      End
+   End
+   Begin VB.PictureBox picQuest 
+      BackColor       =   &H00000000&
+      Height          =   4935
+      Left            =   8565
+      ScaleHeight     =   4875
+      ScaleWidth      =   3315
+      TabIndex        =   216
+      Top             =   2040
+      Visible         =   0   'False
+      Width           =   3375
+      Begin VB.CommandButton btnCloseQuestLog 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "X"
+         Height          =   255
+         Left            =   3060
+         MaskColor       =   &H00FFFFFF&
+         Style           =   1  'Graphical
+         TabIndex        =   226
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.ListBox lstQuests 
+         BackColor       =   &H00000000&
+         ForeColor       =   &H00FFFFFF&
+         Height          =   4050
+         Left            =   120
+         TabIndex        =   217
+         Top             =   480
+         Width           =   3135
+      End
+      Begin VB.Label lblClick 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Select one to view details."
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   219
+         Top             =   4560
+         Width           =   3135
+      End
+      Begin VB.Label Label3 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Quest Log"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   480
+         TabIndex        =   218
+         Top             =   120
+         Width           =   2415
+      End
+   End
    Begin VB.PictureBox picMapEditor 
       Appearance      =   0  'Flat
       BackColor       =   &H0080C0FF&
@@ -886,11 +1541,11 @@ Begin VB.Form frmMain
       BackColor       =   &H00000000&
       ForeColor       =   &H0080FFFF&
       Height          =   5295
-      Left            =   5933
+      Left            =   5040
       ScaleHeight     =   5235
       ScaleWidth      =   3435
       TabIndex        =   220
-      Top             =   1440
+      Top             =   2040
       Visible         =   0   'False
       Width           =   3495
       Begin VB.Timer tmrRUSure 
@@ -1322,661 +1977,6 @@ Begin VB.Form frmMain
          Width           =   1035
       End
    End
-   Begin VB.PictureBox picQuest 
-      BackColor       =   &H00000000&
-      Height          =   4935
-      Left            =   8565
-      ScaleHeight     =   4875
-      ScaleWidth      =   3315
-      TabIndex        =   216
-      Top             =   2040
-      Visible         =   0   'False
-      Width           =   3375
-      Begin VB.CommandButton btnCloseQuestLog 
-         BackColor       =   &H00E0E0E0&
-         Caption         =   "X"
-         Height          =   255
-         Left            =   3060
-         MaskColor       =   &H00FFFFFF&
-         Style           =   1  'Graphical
-         TabIndex        =   226
-         Top             =   0
-         Width           =   255
-      End
-      Begin VB.ListBox lstQuests 
-         BackColor       =   &H00000000&
-         ForeColor       =   &H00FFFFFF&
-         Height          =   4050
-         Left            =   120
-         TabIndex        =   217
-         Top             =   480
-         Width           =   3135
-      End
-      Begin VB.Label lblClick 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Select one to view details."
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   219
-         Top             =   4560
-         Width           =   3135
-      End
-      Begin VB.Label Label3 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Quest Log"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   480
-         TabIndex        =   218
-         Top             =   120
-         Width           =   2415
-      End
-   End
-   Begin VB.PictureBox picSkills 
-      Appearance      =   0  'Flat
-      BackColor       =   &H80000017&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   9.75
-         Charset         =   238
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   6570
-      Left            =   7845
-      ScaleHeight     =   438
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   273
-      TabIndex        =   173
-      TabStop         =   0   'False
-      Top             =   405
-      Visible         =   0   'False
-      Width           =   4095
-      Begin VB.Label lblSkills 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skills"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H0080C0FF&
-         Height          =   240
-         Left            =   240
-         TabIndex        =   210
-         Top             =   240
-         Width           =   855
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   3
-         Left            =   2280
-         TabIndex        =   209
-         Top             =   1680
-         Width           =   450
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   0
-         Left            =   240
-         TabIndex        =   208
-         Top             =   1080
-         Width           =   465
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   1
-         Left            =   2280
-         TabIndex        =   207
-         Top             =   1080
-         Width           =   465
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   2
-         Left            =   240
-         TabIndex        =   206
-         Top             =   1920
-         Width           =   465
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   3
-         Left            =   2280
-         TabIndex        =   205
-         Top             =   1920
-         Width           =   465
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   0
-         Left            =   240
-         TabIndex        =   204
-         Top             =   1320
-         Width           =   345
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   1
-         Left            =   2280
-         TabIndex        =   203
-         Top             =   1320
-         Width           =   345
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   2
-         Left            =   240
-         TabIndex        =   202
-         Top             =   2160
-         Width           =   345
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   3
-         Left            =   2280
-         TabIndex        =   201
-         Top             =   2160
-         Width           =   345
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   4
-         Left            =   240
-         TabIndex        =   200
-         Top             =   3000
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   4
-         Left            =   240
-         TabIndex        =   199
-         Top             =   2760
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   4
-         Left            =   240
-         TabIndex        =   198
-         Top             =   2520
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   5
-         Left            =   2280
-         TabIndex        =   197
-         Top             =   3000
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   5
-         Left            =   2280
-         TabIndex        =   196
-         Top             =   2760
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   5
-         Left            =   2280
-         TabIndex        =   195
-         Top             =   2520
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   6
-         Left            =   240
-         TabIndex        =   194
-         Top             =   3840
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   6
-         Left            =   240
-         TabIndex        =   193
-         Top             =   3600
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   6
-         Left            =   240
-         TabIndex        =   192
-         Top             =   3360
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   7
-         Left            =   2280
-         TabIndex        =   191
-         Top             =   3840
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   7
-         Left            =   2280
-         TabIndex        =   190
-         Top             =   3600
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   7
-         Left            =   2280
-         TabIndex        =   189
-         Top             =   3360
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   8
-         Left            =   240
-         TabIndex        =   188
-         Top             =   4680
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   8
-         Left            =   240
-         TabIndex        =   187
-         Top             =   4440
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   8
-         Left            =   240
-         TabIndex        =   186
-         Top             =   4200
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   9
-         Left            =   2280
-         TabIndex        =   185
-         Top             =   4680
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   9
-         Left            =   2280
-         TabIndex        =   184
-         Top             =   4440
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   9
-         Left            =   2280
-         TabIndex        =   183
-         Top             =   4200
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   10
-         Left            =   240
-         TabIndex        =   182
-         Top             =   5520
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   10
-         Left            =   240
-         TabIndex        =   181
-         Top             =   5280
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   10
-         Left            =   240
-         TabIndex        =   180
-         Top             =   5040
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   11
-         Left            =   2280
-         TabIndex        =   179
-         Top             =   5520
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   11
-         Left            =   2280
-         TabIndex        =   178
-         Top             =   5280
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   11
-         Left            =   2280
-         TabIndex        =   177
-         Top             =   5040
-         Width           =   450
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   0
-         Left            =   240
-         TabIndex        =   176
-         Top             =   840
-         Width           =   450
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   1
-         Left            =   2280
-         TabIndex        =   175
-         Top             =   840
-         Width           =   450
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   2
-         Left            =   240
-         TabIndex        =   174
-         Top             =   1680
-         Width           =   450
-      End
-   End
    Begin VB.PictureBox picForm 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
@@ -2379,6 +2379,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0

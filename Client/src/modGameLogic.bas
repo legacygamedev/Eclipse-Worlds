@@ -984,9 +984,10 @@ Public Sub UpdateDrawMapName()
     ' If debug mode, handle error then exit out
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    DrawMapNameX = (MIN_MAPX * PIC_X / 2) - (GetFontWidth(Trim$(Map.Name)) / 2)
+    DrawMapNameX = 12
+    
     If GUIVisible Then
-        DrawMapNameY = 48
+        DrawMapNameY = 88
     Else
         DrawMapNameY = 8
     End If

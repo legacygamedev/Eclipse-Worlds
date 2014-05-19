@@ -3273,7 +3273,7 @@ Public Sub Render_Graphics()
     Dim Y As Long
     Dim I As Long
     Dim rec As RECT
-    Dim rec_pos As RECT, srcRect As D3DRECT
+    Dim rec_pos As RECT, srcRect As D3DRECT, LocY As Long
     
     ' If debug mode, handle error then exit out
     On Error GoTo ErrorHandler
@@ -3566,25 +3566,26 @@ Public Sub Render_Graphics()
     If FadeAmount > 0 Then RenderTexture Tex_Fade, 0, 0, 0, 0, frmMain.picScreen.ScaleWidth, frmMain.picScreen.ScaleHeight, 32, 32, D3DColorRGBA(255, 255, 255, FadeAmount)
     If FlashTimer > timeGetTime Then RenderTexture Tex_White, 0, 0, 0, 0, frmMain.picScreen.ScaleWidth, frmMain.picScreen.ScaleHeight, 32, 32, -1
     
-    ' Draw loc
-    If BLoc Then
+    ' Draw fps
+    If BFPS Then
+        LocY = 12
         If GUIVisible Then
-            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 8, 85, Yellow
-            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 8, 100, Yellow
-            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 8, 115, Yellow
+            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 12, 104, White
         Else
-            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 8, 5, Yellow
-            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 8, 20, Yellow
-            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 8, 35, Yellow
+            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 12, 24, White
         End If
     End If
     
-    ' Draw fps
-    If BFPS Then
+    ' Draw loc
+    If BLoc Then
         If GUIVisible Then
-            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 100, 68, White
+            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 12, 104 + LocY, Yellow
+            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 12, 116 + LocY, Yellow
+            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 12, 128 + LocY, Yellow
         Else
-            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 100, 8, White
+            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 12, 8 + LocY, Yellow
+            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 12, 20 + LocY, Yellow
+            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 12, 32 + LocY, Yellow
         End If
     End If
     
