@@ -217,16 +217,17 @@ Public Sub GameLoop()
     Loop
 
     frmMain.Visible = False
-    
-    'If IsLogging Then
+    frmMenu.Visible = True
+    If IsLogging Then
         IsLogging = False
-        frmMenu.Visible = True
-        GettingMap = True
-        
-        Call Audio.StopMusic
-        Call Audio.PlayMusic(Options.MenuMusic)
-        Call Audio.StopMapSounds
-    'End If
+    Else
+        AlertMsg "Connection to server lost.", True
+    End If
+    GettingMap = True
+    
+    Call Audio.StopMusic
+    Call Audio.PlayMusic(Options.MenuMusic)
+    Call Audio.StopMapSounds
     Exit Sub
     
 ' Error handler

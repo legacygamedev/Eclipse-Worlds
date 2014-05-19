@@ -3582,11 +3582,12 @@ Public Sub Render_Graphics()
     ' Draw fps
     If BFPS Then
         If GUIVisible Then
-            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 300, 48, White
+            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 100, 68, White
         Else
-            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 300, 8, White
+            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 100, 8, White
         End If
     End If
+    
     If FormVisible("frmEditor_Map") And displayTilesets Then
         EditorMap_DrawTileset
         ' Tiles preview
