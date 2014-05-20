@@ -16,10 +16,9 @@ Public Const ACTION_ADJUST_LVL As Byte = 8
 Public Const ACTION_ADJUST_EXP As Byte = 9
 Public Const ACTION_WARP As Byte = 10
 Public Const ACTION_ADJUST_STAT_LVL As Byte = 11
-Public Const ACTION_ADJUST_STAT_EXP As Byte = 12
-Public Const ACTION_ADJUST_SKILL_LVL As Byte = 13
-Public Const ACTION_ADJUST_SKILL_EXP As Byte = 14
-Public Const ACTION_ADJUST_STAT_POINTS As Byte = 15
+Public Const ACTION_ADJUST_SKILL_LVL As Byte = 12
+Public Const ACTION_ADJUST_SKILL_EXP As Byte = 13
+Public Const ACTION_ADJUST_STAT_POINTS As Byte = 14
 
 Private Type RequirementsRec
     AccessReq As Long
@@ -105,17 +104,17 @@ Sub SetPlayerQuestAmount(ByVal index As Long, ByVal QuestID As Long, Value As Lo
 End Sub
 
 Public Function IsQuestCLI(ByVal index As Long, ByVal NPCIndex As Long) As FindQuestRec
-Dim i As Long, II As Long, III As Long
+Dim I As Long, II As Long, III As Long
 Dim temp As FindQuestRec
 
     'Dynamically find the correct quest item
-    For i = 1 To MAX_QUESTS
-        With Quest(i)
+    For I = 1 To MAX_QUESTS
+        With Quest(I)
             For II = 1 To .Max_CLI
                 'See if this npc is within a started quest first.
                 If .CLI(II).ItemIndex = NPCIndex Then 'found a matching quest cli item, this npc is part of a quest
-                    If IsInQuest(index, i) Then
-                        temp.QuestIndex = i
+                    If IsInQuest(index, I) Then
+                        temp.QuestIndex = I
                         temp.CLIIndex = II
                         IsQuestCLI = temp
                         Exit Function
@@ -123,15 +122,15 @@ Dim temp As FindQuestRec
                 End If
             Next II
         End With
-    Next i
+    Next I
     
-    For i = 1 To MAX_QUESTS
-        With Quest(i)
+    For I = 1 To MAX_QUESTS
+        With Quest(I)
             For II = 1 To .Max_CLI
                 'It's not within a started quest, so see if it's a start to a new quest
                 If .CLI(II).ItemIndex = NPCIndex Then 'found a matching quest cli item, this npc is part of a quest
                     If II = 1 Then
-                        temp.QuestIndex = i
+                        temp.QuestIndex = I
                         temp.CLIIndex = II
                         IsQuestCLI = temp
                         Exit Function
@@ -139,11 +138,11 @@ Dim temp As FindQuestRec
                 End If
             Next II
         End With
-    Next i
+    Next I
 End Function
 
 Public Sub CheckQuest(ByVal index As Long, QuestIndex As Long, CLIIndex As Long, TaskIndex As Long)
-Dim i As Long
+Dim I As Long
     'Is the player on this quest?  If not, cancel out.
     If IsInQuest(index, QuestIndex) Then
         'Is the player currently on this Chronological list item?
@@ -152,8 +151,8 @@ Dim i As Long
         Else
             'Dynamically show message from last known cli
             If GetPlayerQuestCLIID(index, QuestIndex) - 1 > 0 Then
-                For i = Quest(QuestIndex).CLI(GetPlayerQuestCLIID(index, QuestIndex) - 1).Max_Actions To 1 Step -1
-                    With Quest(QuestIndex).CLI(GetPlayerQuestCLIID(index, QuestIndex) - 1).Action(i)
+                For I = Quest(QuestIndex).CLI(GetPlayerQuestCLIID(index, QuestIndex) - 1).Max_Actions To 1 Step -1
+                    With Quest(QuestIndex).CLI(GetPlayerQuestCLIID(index, QuestIndex) - 1).Action(I)
                         'quit early if we run into a task.  Means we don't have a msg to display
                         If .ActionID > 0 And .ActionID < 4 Then Exit For
                         
@@ -162,7 +161,7 @@ Dim i As Long
                             Exit For
                         End If
                     End With
-                Next i
+                Next I
             End If
         End If
     Else
@@ -212,12 +211,12 @@ Dim i As Long
                     End If
                 End If
                 'check stats
-                For i = 1 To Stats.Stat_count - 1
-                    If Not GetPlayerStat(index, i) >= .Stat_Req(i) Then
+                For I = 1 To Stats.Stat_count - 1
+                    If Not GetPlayerStat(index, I) >= .Stat_Req(I) Then
                         Call PlayerMsg(index, "Your stats do not meet the requirements to start this quest.", BrightRed, True, QuestIndex)
                         Exit Sub
                     End If
-                Next i
+                Next I
             End With
             
             'send the request to the player
@@ -227,7 +226,7 @@ Dim i As Long
 End Sub
 
 Public Sub HandleQuestTask(ByVal index As Long, ByVal QuestID As Long, ByVal CLIID As Long, ByVal TaskID As Long, Optional ByVal ShowRebuttal As Boolean = True)
-Dim i As Long, tmp As Long
+Dim I As Long, tmp As Long
 Dim NPCNum As Long
     'Manage the current task the player is on and move player forward through the quest.
     If QuestID < 1 Or QuestID > MAX_QUESTS Then Exit Sub
@@ -279,9 +278,9 @@ Dim NPCNum As Long
                 If Item(.Action(TaskID).MainData).Stackable > 0 Then
                     tmp = GiveInvItem(index, .Action(TaskID).MainData, .Action(TaskID).Amount, , , True)
                 Else
-                    For i = 1 To .Action(TaskID).Amount
+                    For I = 1 To .Action(TaskID).Amount
                         tmp = GiveInvItem(index, .Action(TaskID).MainData, 1, , , True)
-                    Next i
+                    Next I
                 End If
                 
                 If tmp < 1 Or tmp > MAX_INV Then
@@ -304,20 +303,39 @@ Dim NPCNum As Long
                 Call SendShowTaskCompleteOnNPC(index, NPCNum, False)
                 
             Case ACTION_ADJUST_LVL
-                Call SetPlayerLevel(index, .Action(TaskID).Amount, True)
+                Call SetPlayerLevel(index, .Action(TaskID).Amount, .Action(TaskID).MainData)
                 Call SendPlayerLevel(index)
                 Call CheckNextTask(index, QuestID, CLIID, TaskID)
                 Call SendShowTaskCompleteOnNPC(index, NPCNum, False)
             
             Case ACTION_ADJUST_EXP
-                Call SetPlayerExp(index, .Action(TaskID).Amount, True)
+                Call SetPlayerExp(index, .Action(TaskID).Amount, .Action(TaskID).MainData)
                 Call SendPlayerExp(index)
+                Call CheckNextTask(index, QuestID, CLIID, TaskID)
+                Call SendShowTaskCompleteOnNPC(index, NPCNum, False)
+            
+            Case ACTION_ADJUST_STAT_LVL
+                Call SetPlayerStat(index, .Action(TaskID).SecondaryData, .Action(TaskID).Amount, .Action(TaskID).MainData)
+                Call SendPlayerStats(index)
+                Call CheckNextTask(index, QuestID, CLIID, TaskID)
+                Call SendShowTaskCompleteOnNPC(index, NPCNum, False)
+                
+            Case ACTION_ADJUST_SKILL_LVL
+                Call SetPlayerSkill(index, .Action(TaskID).Amount, .Action(TaskID).SecondaryData, .Action(TaskID).MainData)
+                Call SendPlayerData(index)
+                Call CheckNextTask(index, QuestID, CLIID, TaskID)
+                Call SendShowTaskCompleteOnNPC(index, NPCNum, False)
+                
+            Case ACTION_ADJUST_STAT_POINTS
+                Call SetPlayerPoints(index, .Action(TaskID).Amount, .Action(TaskID).MainData)
+                Call SendPlayerPoints(index)
                 Call CheckNextTask(index, QuestID, CLIID, TaskID)
                 Call SendShowTaskCompleteOnNPC(index, NPCNum, False)
             
             Case ACTION_WARP
                 Call PlayerWarp(index, .Action(TaskID).Amount, .Action(TaskID).MainData, .Action(TaskID).SecondaryData, , DIR_DOWN)
                 Call CheckNextTask(index, QuestID, CLIID, TaskID)
+                Call SendShowTaskCompleteOnNPC(index, NPCNum, False)
             Case Else
                 Exit Sub
                 
@@ -370,17 +388,17 @@ NextCLI:
 End Sub
 
 Public Sub CheckRebuttal(ByVal index As Long, QuestID As Long, CLIID As Long, TaskID As Long)
-Dim i As Long
+Dim I As Long
     With Quest(QuestID).CLI(CLIID)
-        For i = TaskID To .Max_Actions
-            If .Action(i).ActionID = ACTION_SHOWMSG Then
-                If .Action(i).SecondaryData = vbChecked Then
+        For I = TaskID To .Max_Actions
+            If .Action(I).ActionID = ACTION_SHOWMSG Then
+                If .Action(I).SecondaryData = vbChecked Then
                     'send the msg
-                    Call PlayerMsg(index, ModifyTxt(index, QuestID, Trim$(.Action(i).TextHolder)), .Action(i).TertiaryData, True, QuestID)
+                    Call PlayerMsg(index, ModifyTxt(index, QuestID, Trim$(.Action(I).TextHolder)), .Action(I).TertiaryData, True, QuestID)
                     Exit Sub
                 End If
             End If
-        Next i
+        Next I
     End With
 End Sub
 
@@ -391,40 +409,40 @@ Dim nMsg As String
 End Function
 
 Public Sub CheckIfQuestKill(ByVal index As Long, ByVal NPCNum As Long)
-Dim i As Long, II As Long, III As Long
+Dim I As Long, II As Long, III As Long
 Dim Kills As Long, Needed As Long
     'Cycle through all the quests the player could be in
-    For i = 1 To MAX_QUESTS
-        II = GetPlayerQuestCLIID(index, i)
-        III = GetPlayerQuestTaskID(index, i)
+    For I = 1 To MAX_QUESTS
+        II = GetPlayerQuestCLIID(index, I)
+        III = GetPlayerQuestTaskID(index, I)
         If II > 0 Then
             If III > 0 Then
                 'Make sure the player's current task for this quest is to kill enemies
-                If Quest(i).CLI(II).Action(III).ActionID = TASK_KILL Then
+                If Quest(I).CLI(II).Action(III).ActionID = TASK_KILL Then
                     'Make sure this is the NPC we're supposed to kill for this quest
-                    If Quest(i).CLI(II).Action(III).MainData = NPCNum Then
+                    If Quest(I).CLI(II).Action(III).MainData = NPCNum Then
                 
-                        Call SetPlayerQuestAmount(index, i, 1, True)
-                        Kills = GetPlayerQuestAmount(index, i)
-                        Needed = Quest(i).CLI(II).Action(III).Amount
+                        Call SetPlayerQuestAmount(index, I, 1, True)
+                        Kills = GetPlayerQuestAmount(index, I)
+                        Needed = Quest(I).CLI(II).Action(III).Amount
                         
                         If Not Kills >= Needed Then
                             Call PlayerMsg(index, "Quest Kills: " & Kills & " / " & Needed, White)
                             Call SendActionMsg(GetPlayerMap(index), Kills & "/" & Needed & " kills", Green, 1, (GetPlayerX(index) * 32), (GetPlayerY(index) * 37))
                         Else
-                            Call PlayerMsg(index, "Quest Task Completed!  Kills: " & GetPlayerQuestAmount(index, i) & " / " & Quest(i).CLI(II).Action(III).Amount & _
-                            "  Go back and speak with " & Trim$(NPC(Quest(i).CLI(II).ItemIndex).Name) & " to continue.", BrightGreen, True, i)
-                            Call SendShowTaskCompleteOnNPC(index, Quest(i).CLI(II).ItemIndex, True)
+                            Call PlayerMsg(index, "Quest Task Completed!  Kills: " & GetPlayerQuestAmount(index, I) & " / " & Quest(I).CLI(II).Action(III).Amount & _
+                            "  Go back and speak with " & Trim$(NPC(Quest(I).CLI(II).ItemIndex).Name) & " to continue.", BrightGreen, True, I)
+                            Call SendShowTaskCompleteOnNPC(index, Quest(I).CLI(II).ItemIndex, True)
                         End If
                     End If
                 End If
             End If
         End If
-    Next i
+    Next I
 End Sub
 
 Public Function IsQuestCompleted(ByVal index As Long, ByVal QuestID As Long) As Boolean
-Dim i As Long
+Dim I As Long
     IsQuestCompleted = False
     If Not QuestID > 0 Then Exit Function
     
@@ -434,7 +452,7 @@ Dim i As Long
 End Function
 
 Public Sub MarkQuestCompleted(ByVal index As Long, ByVal QuestID As Long)
-Dim i As Long
+Dim I As Long
     If Not QuestID > 0 Then Exit Sub
     
     Account(index).Chars(GetPlayerChar(index)).QuestCompleted(QuestID) = True
@@ -460,7 +478,7 @@ Dim Buffer As clsBuffer
 End Sub
 
 Public Function HasQuestItems(ByVal index As Long, QuestID As Long, Optional ByVal ReturnIfNot As Boolean = False) As String
-Dim i As Long, CLIIndex As Long, TaskIndex As Long
+Dim I As Long, CLIIndex As Long, TaskIndex As Long
     CLIIndex = GetPlayerQuestCLIID(index, QuestID)
     TaskIndex = GetPlayerQuestTaskID(index, QuestID)
     
@@ -468,9 +486,9 @@ Dim i As Long, CLIIndex As Long, TaskIndex As Long
     
     If CLIIndex > 0 Then
         If TaskIndex > 0 Then
-            For i = TaskIndex To 1 Step -1
-                If Quest(QuestID).CLI(CLIIndex).Action(i).ActionID = TASK_GATHER Then
-                    If HasItem(index, Quest(QuestID).CLI(CLIIndex).Action(i).MainData) >= Quest(QuestID).CLI(CLIIndex).Action(i).Amount Then
+            For I = TaskIndex To 1 Step -1
+                If Quest(QuestID).CLI(CLIIndex).Action(I).ActionID = TASK_GATHER Then
+                    If HasItem(index, Quest(QuestID).CLI(CLIIndex).Action(I).MainData) >= Quest(QuestID).CLI(CLIIndex).Action(I).Amount Then
                         HasQuestItems = Quest(QuestID).CLI(CLIIndex).ItemIndex 'return the npc number
                         Exit Function
                     Else
@@ -481,13 +499,13 @@ Dim i As Long, CLIIndex As Long, TaskIndex As Long
                         End If
                     End If
                 End If
-            Next i
+            Next I
         End If
     End If
 End Function
 
 Public Function HasQuestSkill(ByVal index As Long, QuestID As Long, Optional ByVal ReturnIfNot As Boolean = False) As Long
-Dim i As Long, CLIIndex As Long, TaskIndex As Long
+Dim I As Long, CLIIndex As Long, TaskIndex As Long
     CLIIndex = GetPlayerQuestCLIID(index, QuestID)
     TaskIndex = GetPlayerQuestTaskID(index, QuestID)
     
@@ -495,9 +513,9 @@ Dim i As Long, CLIIndex As Long, TaskIndex As Long
     
     If CLIIndex > 0 Then
         If TaskIndex > 0 Then
-            For i = TaskIndex To 1 Step -1
-                If Quest(QuestID).CLI(CLIIndex).Action(i).ActionID = TASK_GETSKILL Then
-                    If GetPlayerSkill(index, Quest(QuestID).CLI(CLIIndex).Action(i).MainData) >= Quest(QuestID).CLI(CLIIndex).Action(i).Amount Then
+            For I = TaskIndex To 1 Step -1
+                If Quest(QuestID).CLI(CLIIndex).Action(I).ActionID = TASK_GETSKILL Then
+                    If GetPlayerSkill(index, Quest(QuestID).CLI(CLIIndex).Action(I).MainData) >= Quest(QuestID).CLI(CLIIndex).Action(I).Amount Then
                         HasQuestSkill = Quest(QuestID).CLI(CLIIndex).ItemIndex 'return the npc number
                         Exit Function
                     Else
@@ -508,7 +526,7 @@ Dim i As Long, CLIIndex As Long, TaskIndex As Long
                         End If
                     End If
                 End If
-            Next i
+            Next I
         End If
     End If
 End Function

@@ -1856,8 +1856,6 @@ Dim Index As Long, id As Long
                 .Action(id).ActionID = ACTION_ADJUST_LVL
             ElseIf opStat.Value = True Then
                 .Action(id).ActionID = ACTION_ADJUST_STAT_LVL
-            ElseIf opStatEXP.Value = True Then
-                .Action(id).ActionID = ACTION_ADJUST_STAT_EXP
             ElseIf opSkill.Value = True Then
                 .Action(id).ActionID = ACTION_ADJUST_SKILL_LVL
             ElseIf opSkillEXP.Value = True Then
@@ -2791,24 +2789,9 @@ Dim I As Long
 End Sub
 
 Private Sub opStatP_Click()
-Dim I As Long
-    cboItem.Enabled = True
+    cboItem.Enabled = False
     cboItem.Clear
     cboItem.AddItem "None"
-    For I = 1 To Stats.Stat_Count - 1
-        Select Case I
-            Case Stats.Agility
-                cboItem.AddItem "Agility"
-            Case Stats.Endurance
-                cboItem.AddItem "Endurance"
-            Case Stats.Intelligence
-                cboItem.AddItem "Intelligence"
-            Case Stats.Spirit
-                cboItem.AddItem "Spirit"
-            Case Stats.Strength
-                cboItem.AddItem "Strength"
-        End Select
-    Next I
     cboItem.ListIndex = 0
 End Sub
 

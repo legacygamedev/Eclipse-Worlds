@@ -17,10 +17,9 @@ Public Const ACTION_ADJUST_LVL As Byte = 8
 Public Const ACTION_ADJUST_EXP As Byte = 9
 Public Const ACTION_WARP As Byte = 10
 Public Const ACTION_ADJUST_STAT_LVL As Byte = 11
-Public Const ACTION_ADJUST_STAT_EXP As Byte = 12
-Public Const ACTION_ADJUST_SKILL_LVL As Byte = 13
-Public Const ACTION_ADJUST_SKILL_EXP As Byte = 14
-Public Const ACTION_ADJUST_STAT_POINTS As Byte = 15
+Public Const ACTION_ADJUST_SKILL_LVL As Byte = 12
+Public Const ACTION_ADJUST_SKILL_EXP As Byte = 13
+Public Const ACTION_ADJUST_STAT_POINTS As Byte = 14
 
 Public Const Quest_Icon_Start As Byte = 1
 Public Const Quest_Icon_Finished As Byte = 2
