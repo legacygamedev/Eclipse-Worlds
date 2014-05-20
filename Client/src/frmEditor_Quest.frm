@@ -207,10 +207,10 @@ Begin VB.Form frmEditor_Quest
    End
    Begin VB.Frame fmeModify 
       Caption         =   "Adjust Player Stats"
-      Height          =   3855
-      Left            =   4560
+      Height          =   3615
+      Left            =   840
       TabIndex        =   69
-      Top             =   6600
+      Top             =   5400
       Visible         =   0   'False
       Width           =   4575
       Begin VB.ComboBox cboItem 
@@ -220,21 +220,12 @@ Begin VB.Form frmEditor_Quest
          Left            =   240
          List            =   "frmEditor_Quest.frx":008B
          Style           =   2  'Dropdown List
-         TabIndex        =   115
-         Top             =   2160
+         TabIndex        =   114
+         Top             =   1920
          Width           =   4215
       End
       Begin VB.OptionButton opSkillEXP 
          Caption         =   "Skill EXP"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   114
-         ToolTipText     =   "Select to modify the player's Level"
-         Top             =   1800
-         Width           =   4095
-      End
-      Begin VB.OptionButton opSkill 
-         Caption         =   "Skill Level"
          Height          =   255
          Left            =   240
          TabIndex        =   113
@@ -242,8 +233,8 @@ Begin VB.Form frmEditor_Quest
          Top             =   1560
          Width           =   4095
       End
-      Begin VB.OptionButton opStatP 
-         Caption         =   "Stat Points"
+      Begin VB.OptionButton opSkill 
+         Caption         =   "Skill Level"
          Height          =   255
          Left            =   240
          TabIndex        =   112
@@ -251,8 +242,8 @@ Begin VB.Form frmEditor_Quest
          Top             =   1320
          Width           =   4095
       End
-      Begin VB.OptionButton opStatEXP 
-         Caption         =   "Stat EXP"
+      Begin VB.OptionButton opStatP 
+         Caption         =   "Stat Points"
          Height          =   255
          Left            =   240
          TabIndex        =   111
@@ -285,7 +276,7 @@ Begin VB.Form frmEditor_Quest
          Left            =   3000
          Style           =   1  'Graphical
          TabIndex        =   76
-         Top             =   3360
+         Top             =   3120
          Width           =   1455
       End
       Begin VB.CommandButton btnModAccept 
@@ -304,7 +295,7 @@ Begin VB.Form frmEditor_Quest
          Left            =   120
          Style           =   1  'Graphical
          TabIndex        =   75
-         Top             =   3360
+         Top             =   3120
          Width           =   2775
       End
       Begin VB.CheckBox chkSet 
@@ -313,7 +304,7 @@ Begin VB.Form frmEditor_Quest
          Left            =   240
          TabIndex        =   74
          ToolTipText     =   "This option will decide whether we set the amount or add/subtract to the current amount."
-         Top             =   2520
+         Top             =   2280
          Width           =   4215
       End
       Begin VB.HScrollBar scrlModify 
@@ -322,7 +313,7 @@ Begin VB.Form frmEditor_Quest
          Left            =   120
          Min             =   -32767
          TabIndex        =   73
-         Top             =   3000
+         Top             =   2760
          Width           =   4335
       End
       Begin VB.OptionButton opLvl 
@@ -350,7 +341,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   255
          Left            =   240
          TabIndex        =   72
-         Top             =   2760
+         Top             =   2400
          Width           =   4095
       End
    End
@@ -1186,7 +1177,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   375
          Left            =   120
          Style           =   1  'Graphical
-         TabIndex        =   117
+         TabIndex        =   116
          ToolTipText     =   "Move the currently selected list item down."
          Top             =   1920
          Width           =   1575
@@ -1197,7 +1188,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   375
          Left            =   120
          Style           =   1  'Graphical
-         TabIndex        =   116
+         TabIndex        =   115
          ToolTipText     =   "Move the currently selected list item down."
          Top             =   1440
          Width           =   1575
@@ -2783,28 +2774,6 @@ Dim I As Long
 End Sub
 
 Private Sub opStat_Click()
-Dim I As Long
-    cboItem.Enabled = True
-    cboItem.Clear
-    cboItem.AddItem "None"
-    For I = 1 To Stats.Stat_Count - 1
-        Select Case I
-            Case Stats.Agility
-                cboItem.AddItem "Agility"
-            Case Stats.Endurance
-                cboItem.AddItem "Endurance"
-            Case Stats.Intelligence
-                cboItem.AddItem "Intelligence"
-            Case Stats.Spirit
-                cboItem.AddItem "Spirit"
-            Case Stats.Strength
-                cboItem.AddItem "Strength"
-        End Select
-    Next I
-    cboItem.ListIndex = 0
-End Sub
-
-Private Sub opStatEXP_Click()
 Dim I As Long
     cboItem.Enabled = True
     cboItem.Clear
