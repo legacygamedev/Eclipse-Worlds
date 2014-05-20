@@ -208,9 +208,9 @@ Begin VB.Form frmEditor_Quest
    Begin VB.Frame fmeModify 
       Caption         =   "Adjust Player Stats"
       Height          =   3855
-      Left            =   1200
+      Left            =   4560
       TabIndex        =   69
-      Top             =   3720
+      Top             =   6600
       Visible         =   0   'False
       Width           =   4575
       Begin VB.ComboBox cboItem 
@@ -1174,12 +1174,34 @@ Begin VB.Form frmEditor_Quest
    End
    Begin VB.Frame fmeMoveItem 
       Caption         =   "Move List Items"
-      Height          =   1335
+      Height          =   2415
       Left            =   1560
       TabIndex        =   47
       Top             =   4320
       Visible         =   0   'False
       Width           =   1815
+      Begin VB.CommandButton btnDeleteAction 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Delete"
+         Height          =   375
+         Left            =   120
+         Style           =   1  'Graphical
+         TabIndex        =   117
+         ToolTipText     =   "Move the currently selected list item down."
+         Top             =   1920
+         Width           =   1575
+      End
+      Begin VB.CommandButton btnEditAction 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Edit"
+         Height          =   375
+         Left            =   120
+         Style           =   1  'Graphical
+         TabIndex        =   116
+         ToolTipText     =   "Move the currently selected list item down."
+         Top             =   1440
+         Width           =   1575
+      End
       Begin VB.CommandButton btnHide 
          BackColor       =   &H00FFFFFF&
          Caption         =   "-"
@@ -1220,6 +1242,12 @@ Begin VB.Form frmEditor_Quest
          ToolTipText     =   "Move the currently selected list item up."
          Top             =   360
          Width           =   1575
+      End
+      Begin VB.Line Line1 
+         X1              =   120
+         X2              =   1680
+         Y1              =   1320
+         Y2              =   1320
       End
    End
    Begin VB.CommandButton btnDelete 
@@ -1776,6 +1804,11 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Private Sub btnDeleteAction_Click()
+    Call mnuRTask_Click
+    fmeMoveItem.Visible = False
+End Sub
+
 Private Sub btnDown_Click()
 Dim tempSel As Long, tempSel2 As Long
     If CLIHasFocus Then
@@ -1805,6 +1838,11 @@ Dim tempSel As Long, tempSel2 As Long
         CLI.ListIndex = tempSel2
         lstTasks.ListIndex = tempSel + 1
     End If
+End Sub
+
+Private Sub btnEditAction_Click()
+    Call mnuEdit_Click
+    fmeMoveItem.Visible = False
 End Sub
 
 Private Sub btnGiveItem_Click()
@@ -1873,8 +1911,8 @@ Dim Index As Long, id As Long
         
         chkSet.Value = vbUnchecked
         scrlModify.Value = 0
+        opEXP.Value = True
         opEXP.Value = False
-        opLvl.Value = False
         Call QuestEditorInitCLI
         CLI.ListIndex = Index - 1
         fmeModify.Visible = False

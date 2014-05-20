@@ -2061,6 +2061,16 @@ Public Function GetSkillName(ByVal SkillNum As Byte) As String
     End Select
 End Function
 
+Public Function GetStatName(ByVal StatNum As Stats) As String
+    Select Case StatNum
+        Case Stats.Agility: GetStatName = "Agility"
+        Case Stats.Endurance: GetStatName = "Endurance"
+        Case Stats.Intelligence: GetStatName = "Intelligence"
+        Case Stats.Strength: GetStatName = "Strength"
+        Case Stats.Spirit: GetStatName = "Spirit"
+    End Select
+End Function
+
 Public Function GetProficiencyName(ByVal ProficiencyNum As Byte) As String
     Select Case ProficiencyNum
         Case Proficiency.Medium: GetProficiencyName = "Medium"

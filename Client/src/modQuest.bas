@@ -256,6 +256,38 @@ Public Sub QuestEditorInitCLI()
                         Else
                             frmEditor_Quest.lstTasks.AddItem "---- Set Player Level to " & .Action(I).Amount
                         End If
+                    
+                    Case ACTION_ADJUST_STAT_LVL 'adjust the player's stat level
+                        If .Action(I).MainData = 0 Then
+                            If .Action(I).Amount > 0 Then Tmp = "+"
+                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's " & GetStatName(.Action(I).SecondaryData) & " Level by " & Tmp & .Action(I).Amount
+                        Else
+                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's " & GetStatName(.Action(I).SecondaryData) & " Level to " & .Action(I).Amount
+                        End If
+                        
+                    Case ACTION_ADJUST_SKILL_LVL 'adjust the player's skill level
+                        If .Action(I).MainData = 0 Then
+                            If .Action(I).Amount > 0 Then Tmp = "+"
+                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's " & GetSkillName(.Action(I).SecondaryData) & " level by " & Tmp & .Action(I).Amount
+                        Else
+                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's " & GetSkillName(.Action(I).SecondaryData) & " level to " & .Action(I).Amount
+                        End If
+                        
+                    Case ACTION_ADJUST_SKILL_EXP 'adjust the player's skill exp
+                        If .Action(I).MainData = 0 Then
+                            If .Action(I).Amount > 0 Then Tmp = "+"
+                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's " & GetSkillName(.Action(I).SecondaryData) & " EXP by " & Tmp & .Action(I).Amount
+                        Else
+                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's " & GetSkillName(.Action(I).SecondaryData) & " EXP to " & .Action(I).Amount
+                        End If
+                        
+                    Case ACTION_ADJUST_STAT_POINTS 'adjust the player's stat points
+                        If .Action(I).MainData = 0 Then
+                            If .Action(I).Amount > 0 Then Tmp = "+"
+                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's stat points by " & Tmp & .Action(I).Amount
+                        Else
+                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's stat points to " & .Action(I).Amount
+                        End If
                         
                     Case ACTION_WARP
                         frmEditor_Quest.lstTasks.AddItem "---- Warp player to Map: " & .Action(I).Amount & " (X" & .Action(I).MainData & ", Y" & .Action(I).SecondaryData & ")"
