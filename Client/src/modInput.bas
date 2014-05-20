@@ -167,124 +167,278 @@ Public Sub CheckInputKeys()
         ControlDown = False
     End If
     
-    'Move Up Left
-    If Options.WASD = 1 And GetAsyncKeyState(VK_W) < 0 And GetAsyncKeyState(VK_A) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_UP) < 0 And GetAsyncKeyState(VK_LEFT) Then
-        DirUp = False
-        DirDown = False
-        DirLeft = False
-        DirRight = False
-        DirUpLeft = True
-        DirUpRight = False
-        DirDownLeft = False
-        DirDownRight = False
-        Exit Sub
-    Else
-        DirUpLeft = False
-    End If
+    If Options.WASD = 1 And frmMain.txtMyChat.Enabled = False Then
+        'Move Up Left
+        If GetAsyncKeyState(VK_W) < 0 And GetAsyncKeyState(VK_A) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_UP) < 0 And GetAsyncKeyState(VK_LEFT) Then
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = True
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirUpLeft = False
+        End If
+        
+        'Move Up Right
+        If GetAsyncKeyState(VK_W) < 0 And GetAsyncKeyState(VK_D) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_UP) < 0 And GetAsyncKeyState(VK_RIGHT) Then
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = True
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirUpRight = False
+        End If
     
-    'Move Up Right
-    If Options.WASD = 1 And GetAsyncKeyState(VK_W) < 0 And GetAsyncKeyState(VK_D) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_UP) < 0 And GetAsyncKeyState(VK_RIGHT) Then
-        DirUp = False
-        DirDown = False
-        DirLeft = False
-        DirRight = False
-        DirUpLeft = False
-        DirUpRight = True
-        DirDownLeft = False
-        DirDownRight = False
-        Exit Sub
-    Else
-        DirUpRight = False
-    End If
-
-    'Move Down Left
-    If Options.WASD = 1 And GetAsyncKeyState(VK_S) < 0 And GetAsyncKeyState(VK_A) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_DOWN) < 0 And GetAsyncKeyState(VK_LEFT) Then
-        DirUp = False
-        DirDown = False
-        DirLeft = False
-        DirRight = False
-        DirUpLeft = False
-        DirUpRight = False
-        DirDownLeft = True
-        DirDownRight = False
-        Exit Sub
-    Else
-        DirDownLeft = False
-    End If
-
-    'Move Down Right
-    If Options.WASD = 1 And GetAsyncKeyState(VK_S) < 0 And GetAsyncKeyState(VK_D) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_DOWN) < 0 And GetAsyncKeyState(VK_RIGHT) Then
-        DirUp = False
-        DirDown = False
-        DirLeft = False
-        DirRight = False
-        DirUpLeft = False
-        DirUpRight = False
-        DirDownLeft = False
-        DirDownRight = True
-        Exit Sub
-    Else
-        DirDownRight = False
-    End If
-
-    'Move Up
-    If Options.WASD = 1 And GetAsyncKeyState(VK_W) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_UP) < 0 Then
-        DirUp = True
-        DirDown = False
-        DirLeft = False
-        DirRight = False
-        DirUpLeft = False
-        DirUpRight = False
-        DirDownLeft = False
-        DirDownRight = False
-        Exit Sub
-    Else
-        DirUp = False
-    End If
-
-    'Move Right
-    If Options.WASD = 1 And GetAsyncKeyState(VK_D) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_RIGHT) < 0 Then
-        DirUp = False
-        DirDown = False
-        DirLeft = False
-        DirRight = True
-        DirUpLeft = False
-        DirUpRight = False
-        DirDownLeft = False
-        DirDownRight = False
-        Exit Sub
-    Else
-        DirRight = False
-    End If
-
-    'Move down
-    If Options.WASD = 1 And GetAsyncKeyState(VK_S) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_DOWN) < 0 Then
-        DirUp = False
-        DirDown = True
-        DirLeft = False
-        DirRight = False
-        DirUpLeft = False
-        DirUpRight = False
-        DirDownLeft = False
-        DirDownRight = False
-        Exit Sub
-    Else
-        DirDown = False
-    End If
-
-    'Move left
-    If Options.WASD = 1 And GetAsyncKeyState(VK_A) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_LEFT) < 0 Then
-        DirUp = False
-        DirDown = False
-        DirLeft = True
-        DirRight = False
-        DirUpLeft = False
-        DirUpRight = False
-        DirDownLeft = False
-        DirDownRight = False
-        Exit Sub
-    Else
-        DirLeft = False
+        'Move Down Left
+        If GetAsyncKeyState(VK_S) < 0 And GetAsyncKeyState(VK_A) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_DOWN) < 0 And GetAsyncKeyState(VK_LEFT) Then
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = True
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirDownLeft = False
+        End If
+    
+        'Move Down Right
+        If GetAsyncKeyState(VK_S) < 0 And GetAsyncKeyState(VK_D) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_DOWN) < 0 And GetAsyncKeyState(VK_RIGHT) Then
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = True
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirDownRight = False
+        End If
+    
+        'Move Up
+        If GetAsyncKeyState(VK_W) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_UP) < 0 Then
+            DirUp = True
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirUp = False
+        End If
+    
+        'Move Right
+        If GetAsyncKeyState(VK_D) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_RIGHT) < 0 Then
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = True
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirRight = False
+        End If
+    
+        'Move down
+        If GetAsyncKeyState(VK_S) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_DOWN) < 0 Then
+            DirUp = False
+            DirDown = True
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirDown = False
+        End If
+    
+        'Move left
+        If GetAsyncKeyState(VK_A) < 0 Or Options.WASD = 0 And GetAsyncKeyState(VK_LEFT) < 0 Then
+            DirUp = False
+            DirDown = False
+            DirLeft = True
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirLeft = False
+        End If
+    ElseIf frmMain.txtMyChat.Enabled = False Then
+        ' Move Up and Left
+        If GetKeyState(vbKeyUp) < 0 And GetKeyState(vbKeyLeft) < 0 Then
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = True
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirUpLeft = False
+        End If
+        
+         ' Move Up and Right
+        If GetKeyState(vbKeyUp) < 0 And GetKeyState(vbKeyRight) < 0 Then
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = True
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirUpRight = False
+        End If
+        
+        ' Move down and Left
+        If GetKeyState(vbKeyDown) < 0 And GetKeyState(vbKeyLeft) < 0 Then
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = True
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirDownLeft = False
+        End If
+        
+        ' Move down and Right
+        If GetKeyState(vbKeyDown) < 0 And GetKeyState(vbKeyRight) < 0 Then
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = True
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirDownRight = False
+        End If
+        
+        ' Move Up
+        If GetKeyState(vbKeyUp) < 0 Then
+            DirUp = True
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirUp = False
+        End If
+    
+        ' Move Right
+        If GetKeyState(vbKeyRight) < 0 Then
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = True
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirRight = False
+        End If
+    
+        ' Move down
+        If GetKeyState(vbKeyDown) < 0 Then
+            DirUp = False
+            DirDown = True
+            DirLeft = False
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirDown = False
+        End If
+    
+        ' Move left
+        If GetKeyState(vbKeyLeft) < 0 Then
+            DirUp = False
+            DirDown = False
+            DirLeft = True
+            DirRight = False
+            DirUpLeft = False
+            DirUpRight = False
+            DirDownLeft = False
+            DirDownRight = False
+            MouseX = -1
+            MouseY = -1
+            Exit Sub
+        Else
+            DirLeft = False
+        End If
     End If
     
     ' Mouse movement
@@ -370,16 +524,19 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
     ' Handle when the player presses the return key
     If KeyAscii = vbKeyReturn Then
+        frmMain.ToggleChatLock
+        MyText = vbNullString
+        
         ' Party message
-        If Left$(ChatText, 1) = "~" Or Left$(MyText, 7) = "/party " Then
+        If Left$(ChatText, 1) = "~" Or Left$(ChatText, 7) = "/party " Then
             ' Make sure they are actually sending something
-            If Left$(MyText, 7) = "/party " And Len(MyText) > 7 Then
+            If Left$(ChatText, 7) = "/party " And Len(ChatText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
-            ElseIf Left$(MyText, 1) = "~" And Len(MyText) > 2 Then
+            ElseIf Left$(ChatText, 1) = "~" And Len(ChatText) > 2 Then
                 ChatText = Mid$(ChatText, 2, Len(ChatText) - 1)
             Else
                 Call AddText("Usage: ~message or /party message", BrightRed)
-                MyText = vbNullString
+                ChatText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
                 Exit Sub
             End If
@@ -391,21 +548,21 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 AddText "You are not in a party!", BrightRed
             End If
 
-            MyText = vbNullString
+            ChatText = vbNullString
             frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
         
         ' Guild message
-        If Left$(ChatText, 1) = "@" Or Left$(MyText, 7) = "/guild " Then
+        If Left$(ChatText, 1) = "@" Or Left$(ChatText, 7) = "/guild " Then
             ' Make sure they are actually sending something
-            If Left$(MyText, 7) = "/guild " And Len(MyText) > 7 Then
+            If Left$(ChatText, 7) = "/guild " And Len(ChatText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
-            ElseIf Left$(MyText, 1) = "@" And Len(MyText) > 2 Then
+            ElseIf Left$(ChatText, 1) = "@" And Len(ChatText) > 2 Then
                 ChatText = Mid$(ChatText, 2, Len(ChatText) - 1)
             Else
                 Call AddText("Usage: @message or /guild message", BrightRed)
-                MyText = vbNullString
+                ChatText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
 
                 Exit Sub
@@ -418,21 +575,21 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 AddText "You are not in a guild!", BrightRed
             End If
 
-            MyText = vbNullString
+            ChatText = vbNullString
             frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
 
         ' Global message
-        If Left$(ChatText, 1) = "'" Or Left$(MyText, 8) = "/global " Then
+        If Left$(ChatText, 1) = "'" Or Left$(ChatText, 8) = "/global " Then
             ' Make sure they are actually sending something
-            If Left$(MyText, 8) = "/global " And Len(MyText) > 8 Then
+            If Left$(ChatText, 8) = "/global " And Len(ChatText) > 8 Then
                 ChatText = Mid$(ChatText, 9, Len(ChatText) - 1)
-            ElseIf Left$(MyText, 1) = "'" And Len(MyText) > 2 Then
+            ElseIf Left$(ChatText, 1) = "'" And Len(ChatText) > 2 Then
                 ChatText = Mid$(ChatText, 2, Len(ChatText) - 1)
             Else
                 Call AddText("Usage: 'message or /global message", BrightRed)
-                MyText = vbNullString
+                ChatText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
 
                 Exit Sub
@@ -440,21 +597,21 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
             ' Send the message to the player
             Call GlobalMsg(ChatText)
-            MyText = vbNullString
+            ChatText = vbNullString
             frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
             
         ' Admin message
-        If Left$(ChatText, 1) = "`" Or Left$(MyText, 7) = "/Staff " Then
+        If Left$(ChatText, 1) = "`" Or Left$(ChatText, 7) = "/Staff " Then
             ' Make sure they are actually sending something
-            If Left$(MyText, 7) = "/Staff " And Len(MyText) > 7 Then
+            If Left$(ChatText, 7) = "/Staff " And Len(ChatText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
-            ElseIf Left$(MyText, 1) = "`" And Len(MyText) > 2 Then
+            ElseIf Left$(ChatText, 1) = "`" And Len(ChatText) > 2 Then
                 ChatText = Mid$(ChatText, 2, Len(ChatText) - 1)
             Else
                 Call AddText("Usage: `message or /Staff message", BrightRed)
-                MyText = vbNullString
+                ChatText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
                 Exit Sub
             End If
@@ -464,21 +621,21 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AdminMsg(GetPlayerName(MyIndex) & ": " & ChatText)
             End If
 
-            MyText = vbNullString
+            ChatText = vbNullString
             frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
         
         ' Emote message
-        If Left$(ChatText, 1) = "-" Or Left$(MyText, 7) = "/emote " Then
+        If Left$(ChatText, 1) = "-" Or Left$(ChatText, 7) = "/emote " Then
             ' Make sure they are actually sending something
-            If Left$(MyText, 7) = "/emote " And Len(MyText) > 7 Then
+            If Left$(ChatText, 7) = "/emote " And Len(ChatText) > 7 Then
                 ChatText = Mid$(ChatText, 8, Len(ChatText) - 1)
-            ElseIf Left$(MyText, 1) = "-" And Len(MyText) > 2 Then
+            ElseIf Left$(ChatText, 1) = "-" And Len(ChatText) > 2 Then
                 ChatText = Mid$(ChatText, 2, Len(ChatText) - 1)
             Else
                 Call AddText("Usage: -message or /emote message", BrightRed)
-                MyText = vbNullString
+                ChatText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
 
                 Exit Sub
@@ -487,21 +644,21 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
             ' Send the message to the player
             Call EmoteMsg(ChatText)
-            MyText = vbNullString
+            ChatText = vbNullString
             frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
         
         ' Private message
-        If Left$(ChatText, 1) = "!" Or Left$(MyText, 9) = "/whisper " Then
+        If Left$(ChatText, 1) = "!" Or Left$(ChatText, 9) = "/whisper " Then
             ' Make sure they are actually sending something
-            If Left$(MyText, 9) = "/whisper " And Len(MyText) > 9 Then
+            If Left$(ChatText, 9) = "/whisper " And Len(ChatText) > 9 Then
                 ChatText = Mid$(ChatText, 10, Len(ChatText) - 1)
-            ElseIf Left$(MyText, 1) = "!" And Len(MyText) > 2 Then
+            ElseIf Left$(ChatText, 1) = "!" And Len(ChatText) > 2 Then
                 ChatText = Mid$(ChatText, 2, Len(ChatText) - 1)
             Else
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
-                MyText = vbNullString
+                ChatText = vbNullString
                 frmMain.txtMyChat.text = vbNullString
                 Exit Sub
             End If
@@ -530,14 +687,14 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Call AddText("Usage: !name message or /whisper name message", BrightRed)
             End If
             
-            MyText = vbNullString
+            ChatText = vbNullString
             frmMain.txtMyChat.text = vbNullString
             Exit Sub
         End If
 
         ' Commands
-        If Left$(MyText, 1) = "/" Then
-            Command = Split(MyText, Space$(1))
+        If Left$(ChatText, 1) = "/" Then
+            Command = Split(ChatText, Space$(1))
 
             Select Case LCase$(Command(0))
                 Case "/pquit"
@@ -581,10 +738,6 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Case "/fps"
                     BFPS = Not BFPS
                     
-                    ' Toggle fps lock
-                Case "/fpslock"
-                    FPS_Lock = Not FPS_Lock
-                    
                 Case "/ping"
                     BPing = Not BPing
                     
@@ -602,7 +755,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     End If
                     
                     ' Send regular help commands
-                    Call AddText("Available Commands: /trade, /gui, /clearchat, /createguild, /gmotd, /pquit, /gquit, /fps, /fpslock, /ping, /afk, /emotes", HelpColor)
+                    Call AddText("Available Commands: /trade, /gui, /clearchat, /createguild, /gmotd, /pquit, /gquit, /fps, /ping, /afk, /emotes", HelpColor)
                     
                     ' Send the admin help commands
                     If GetPlayerAccess(MyIndex) > 0 Then
@@ -906,6 +1059,14 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
                     SendRequestEditItem
                     
+                Case "/editquest"
+                    If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
+                        AddText "You have insufficent access to do this!", BrightRed
+                        GoTo Continue
+                    End If
+
+                    SendRequestEditQuests
+                    
                     ' Editing animation request
                 Case "/editanimation"
 
@@ -1075,7 +1236,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
 
             ' Continue label where we go instead of exiting the sub
 Continue:
-            MyText = vbNullString
+            ChatText = vbNullString
             frmMain.txtMyChat.text = vbNullString
 
             Exit Sub
@@ -1118,7 +1279,7 @@ Continue:
             
         End If
 
-        MyText = vbNullString
+        ChatText = vbNullString
         frmMain.txtMyChat.text = vbNullString
 
         Exit Sub
@@ -1127,13 +1288,13 @@ Continue:
 
     ' Handle when the user presses the backspace key
     If (KeyAscii = vbKeyBack) Then
-        If Len(MyText) > 0 Then MyText = Mid$(MyText, 1, Len(MyText) - 1)
+        If Len(ChatText) > 0 Then ChatText = Mid$(ChatText, 1, Len(ChatText) - 1)
     End If
 
     ' And if neither, then add the character to the user's text Buffer
     If (Not KeyAscii = vbKeyReturn) Then
         If (Not KeyAscii = vbKeyBack) Then
-            MyText = MyText & ChrW$(KeyAscii)
+            ChatText = ChatText & ChrW$(KeyAscii)
         End If
     End If
 

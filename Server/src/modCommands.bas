@@ -134,22 +134,22 @@ End Sub
 Sub SetPlayerSkill(ByVal Index As Long, ByVal Level As Byte, ByVal SkillNum As Byte)
 Dim I As Long, NPCNum As Long, Parse() As String
 
-	If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
-	
-	For I = 1 To MAX_QUESTS
-		Parse() = Split(HasQuestSkill(Index, I, True), "|")
-		If UBound(Parse()) > 0 Then
-			NPCNum = Parse(0)
-			If NPCNum > 0 Then
-				Call SendShowTaskCompleteOnNPC(Index, NPCNum, False)
-        	End If
-		Else
-			NPCNum = HasQuestSkill(Index, I)
-			If NPCNum > 0 Then
-				Call SendShowTaskCompleteOnNPC(Index, NPCNum, True)
-			End If
-		End If
-	Next I
+        If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+        
+        For I = 1 To MAX_QUESTS
+                Parse() = Split(HasQuestSkill(Index, I, True), "|")
+                If UBound(Parse()) > 0 Then
+                        NPCNum = Parse(0)
+                        If NPCNum > 0 Then
+                                Call SendShowTaskCompleteOnNPC(Index, NPCNum, False)
+                End If
+                Else
+                        NPCNum = HasQuestSkill(Index, I)
+                        If NPCNum > 0 Then
+                                Call SendShowTaskCompleteOnNPC(Index, NPCNum, True)
+                        End If
+                End If
+        Next I
         
     Account(Index).Chars(GetPlayerChar(Index)).Skills(SkillNum).Level = Level
 End Sub
@@ -303,7 +303,7 @@ Function GetPlayerDir(ByVal Index As Long) As Long
 End Function
 
 Sub SetPlayerDir(ByVal Index As Long, ByVal Dir As Byte)
-    If Dir < DIR_UP Or Dir > DIR_DOWN_RIGHT Then Exit Sub
+    If Dir < DIR_UP Or Dir > DIR_DOWNRIGHT Then Exit Sub
     Account(Index).Chars(GetPlayerChar(Index)).Dir = Dir
 End Sub
 

@@ -355,7 +355,7 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal movement As Long, O
     Dim NewMapY As Long, NewMapX As Long
 
     ' Check for subscript out of range
-    If IsPlaying(Index) = False Or Dir < DIR_UP Or Dir > DIR_DOWN_RIGHT Or movement < 1 Or movement > 2 Then Exit Sub
+    If IsPlaying(Index) = False Or Dir < DIR_UP Or Dir > DIR_DOWNRIGHT Or movement < 1 Or movement > 2 Then Exit Sub
     
     ' Don't allow them to move if they are transfering to a new map
     If TempPlayer(Index).GettingMap = YES Then Exit Sub
@@ -382,7 +382,7 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal movement As Long, O
     MapNum = GetPlayerMap(Index)
     
     Select Case Dir
-        Case DIR_UP_LEFT
+        Case DIR_UPLEFT
             ' Check to make sure not outside of boundries
             If GetPlayerY(Index) > 0 Or GetPlayerX(Index) > 0 Then
             
@@ -412,7 +412,7 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 End If
             End If
             
-        Case DIR_UP_RIGHT
+        Case DIR_UPRIGHT
             ' Check to make sure not outside of boundries
             If GetPlayerY(Index) > 0 Or GetPlayerX(Index) < Map(MapNum).MaxX Then
             
@@ -442,7 +442,7 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 End If
             End If
             
-        Case DIR_DOWN_LEFT
+        Case DIR_DOWNLEFT
             ' Check to make sure not outside of boundries
             If GetPlayerY(Index) < Map(MapNum).MaxY Or GetPlayerX(Index) > 0 Then
             
@@ -471,7 +471,7 @@ Sub PlayerMove(ByVal Index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 End If
             End If
             
-        Case DIR_DOWN_RIGHT
+        Case DIR_DOWNRIGHT
             ' Check to make sure not outside of boundries
             If GetPlayerY(Index) < Map(MapNum).MaxY Or GetPlayerX(Index) < Map(MapNum).MaxX Then
             
@@ -769,7 +769,7 @@ Sub EventTouch(ByVal Index As Long, ByVal X As Long, ByVal Y As Long)
 End Sub
 
 Sub ForcePlayerMove(ByVal Index As Long, ByVal movement As Long, ByVal Direction As Long)
-    If Direction < DIR_UP Or Direction > DIR_DOWN_RIGHT Then Exit Sub
+    If Direction < DIR_UP Or Direction > DIR_DOWNRIGHT Then Exit Sub
     If movement < 1 Or movement > 2 Then Exit Sub
 
     Select Case Direction
@@ -781,13 +781,13 @@ Sub ForcePlayerMove(ByVal Index As Long, ByVal movement As Long, ByVal Direction
             If GetPlayerY(Index) = Map(GetPlayerMap(Index)).MaxY Then Exit Sub
         Case DIR_RIGHT
             If GetPlayerX(Index) = Map(GetPlayerMap(Index)).MaxX Then Exit Sub
-        Case DIR_UP_LEFT
+        Case DIR_UPLEFT
             If GetPlayerY(Index) = 0 And GetPlayerX(Index) = 0 Then Exit Sub
-        Case DIR_UP_RIGHT
+        Case DIR_UPRIGHT
             If GetPlayerY(Index) = 0 And GetPlayerX(Index) = Map(GetPlayerMap(Index)).MaxX Then Exit Sub
-        Case DIR_DOWN_LEFT
+        Case DIR_DOWNLEFT
             If GetPlayerY(Index) = Map(GetPlayerMap(Index)).MaxY And GetPlayerX(Index) = 0 Then Exit Sub
-        Case DIR_DOWN_RIGHT
+        Case DIR_DOWNRIGHT
             If GetPlayerY(Index) = Map(GetPlayerMap(Index)).MaxY And GetPlayerX(Index) = Map(GetPlayerMap(Index)).MaxX Then Exit Sub
     End Select
 
@@ -1087,6 +1087,7 @@ Sub PlayerMapGetItem(ByVal Index As Long, ByVal I As Long)
                     Value = MapItem(MapNum, I).Value
                     Dur = MapItem(MapNum, I).Durability
                     Bind = Item(ItemNum).BindType
+                    Msg = Trim$(Item(ItemNum).Name)
                     
                     'sure made this a lot simpler than it was, removing roughly 30 lines of code in exchange for 5.  It could be done in 1 line
                     'but I chose to make it pretty and easy to debug had something went wrong.
@@ -1941,6 +1942,8 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                         ' Check for skill level up
                         Call CheckPlayerSkillLevelUp(Index, Skill)
                     End If
+                    
+                    Call SendPlayerData(Index)
                 Else
                     Call PlayerMsg(Index, "You do not have all of the ingredients.", BrightRed)
                     Exit Sub

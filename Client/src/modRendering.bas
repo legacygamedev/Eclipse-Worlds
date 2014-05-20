@@ -1619,13 +1619,13 @@ Public Sub DrawPlayer(ByVal Index As Long)
                     If (TempPlayer(Index).xOffset > 8) Then Anim = TempPlayer(Index).Step
                 Case DIR_RIGHT
                     If (TempPlayer(Index).xOffset < -8) Then Anim = TempPlayer(Index).Step
-                Case DIR_UP_LEFT
+                Case DIR_UPLEFT
                     If (TempPlayer(Index).yOffset > 8) And (TempPlayer(Index).xOffset > 8) Then Anim = TempPlayer(Index).Step
-                Case DIR_UP_RIGHT
+                Case DIR_UPRIGHT
                     If (TempPlayer(Index).yOffset > 8) And (TempPlayer(Index).xOffset < -8) Then Anim = TempPlayer(Index).Step
-                Case DIR_DOWN_LEFT
+                Case DIR_DOWNLEFT
                     If (TempPlayer(Index).yOffset < -8) And (TempPlayer(Index).xOffset > 8) Then Anim = TempPlayer(Index).Step
-                Case DIR_DOWN_RIGHT
+                Case DIR_DOWNRIGHT
                     If (TempPlayer(Index).yOffset < -8) And (TempPlayer(Index).xOffset < -8) Then Anim = TempPlayer(Index).Step
             End Select
         End If
@@ -1656,13 +1656,13 @@ Public Sub DrawPlayer(ByVal Index As Long)
             spritetop = 0
         Case DIR_LEFT
             spritetop = 1
-        Case DIR_UP_LEFT
+        Case DIR_UPLEFT
             spritetop = 3
-        Case DIR_UP_RIGHT
+        Case DIR_UPRIGHT
             spritetop = 3
-        Case DIR_DOWN_LEFT
+        Case DIR_DOWNLEFT
             spritetop = 0
-        Case DIR_DOWN_RIGHT
+        Case DIR_DOWNRIGHT
             spritetop = 0
     End Select
 
@@ -1748,6 +1748,14 @@ Public Sub DrawNPC(ByVal MapNPCNum As Long)
                     If (MapNPC(MapNPCNum).xOffset > 8) Then Anim = MapNPC(MapNPCNum).Step
                 Case DIR_RIGHT
                     If (MapNPC(MapNPCNum).xOffset < -8) Then Anim = MapNPC(MapNPCNum).Step
+                Case DIR_UPLEFT
+                    If (MapNPC(MapNPCNum).yOffset > 8) And (MapNPC(MapNPCNum).xOffset > 8) Then Anim = MapNPC(MapNPCNum).Step
+                Case DIR_UPRIGHT
+                    If (MapNPC(MapNPCNum).yOffset > 8) And (MapNPC(MapNPCNum).xOffset < -8) Then Anim = MapNPC(MapNPCNum).Step
+                Case DIR_DOWNLEFT
+                    If (MapNPC(MapNPCNum).yOffset < -8) And (MapNPC(MapNPCNum).xOffset > 8) Then Anim = MapNPC(MapNPCNum).Step
+                Case DIR_DOWNRIGHT
+                    If (MapNPC(MapNPCNum).yOffset < -8) And (MapNPC(MapNPCNum).xOffset < -8) Then Anim = MapNPC(MapNPCNum).Step
             End Select
         End If
     Else
@@ -1779,6 +1787,14 @@ Public Sub DrawNPC(ByVal MapNPCNum As Long)
             spritetop = 0
         Case DIR_LEFT
             spritetop = 1
+        Case DIR_UPLEFT
+            spritetop = 3
+        Case DIR_UPRIGHT
+            spritetop = 3
+        Case DIR_DOWNLEFT
+            spritetop = 0
+        Case DIR_DOWNRIGHT
+            spritetop = 0
     End Select
 
     With rec
@@ -3273,7 +3289,7 @@ Public Sub Render_Graphics()
     Dim Y As Long
     Dim I As Long
     Dim rec As RECT
-    Dim rec_pos As RECT, srcRect As D3DRECT
+    Dim rec_pos As RECT, srcRect As D3DRECT, LocY As Long
     
     ' If debug mode, handle error then exit out
     On Error GoTo ErrorHandler
@@ -3566,27 +3582,29 @@ Public Sub Render_Graphics()
     If FadeAmount > 0 Then RenderTexture Tex_Fade, 0, 0, 0, 0, frmMain.picScreen.ScaleWidth, frmMain.picScreen.ScaleHeight, 32, 32, D3DColorRGBA(255, 255, 255, FadeAmount)
     If FlashTimer > timeGetTime Then RenderTexture Tex_White, 0, 0, 0, 0, frmMain.picScreen.ScaleWidth, frmMain.picScreen.ScaleHeight, 32, 32, -1
     
-    ' Draw loc
-    If BLoc Then
+    ' Draw fps
+    If BFPS Then
+        LocY = 12
         If GUIVisible Then
-            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 8, 85, Yellow
-            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 8, 100, Yellow
-            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 8, 115, Yellow
+            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 12, 100, White
         Else
-            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 8, 5, Yellow
-            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 8, 20, Yellow
-            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 8, 35, Yellow
+            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 12, 20, White
         End If
     End If
     
-    ' Draw fps
-    If BFPS Then
+    ' Draw loc
+    If BLoc Then
         If GUIVisible Then
-            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 300, 48, White
+            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 12, 100 + LocY, Yellow
+            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 12, 112 + LocY, Yellow
+            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 12, 124 + LocY, Yellow
         Else
-            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 300, 8, White
+            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 12, 20 + LocY, Yellow
+            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 12, 32 + LocY, Yellow
+            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 12, 44 + LocY, Yellow
         End If
     End If
+    
     If FormVisible("frmEditor_Map") And displayTilesets Then
         EditorMap_DrawTileset
         ' Tiles preview

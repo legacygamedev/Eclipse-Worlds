@@ -771,7 +771,7 @@ Sub HandlePlayerDir(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     Set Buffer = Nothing
 
     ' Prevent hacking
-    If Dir < DIR_UP Or Dir > DIR_RIGHT Then Exit Sub
+    If Dir < DIR_UP Or Dir > DIR_DOWNRIGHT Then Exit Sub
 
     Call SetPlayerDir(Index, Dir)
     Set Buffer = New clsBuffer
@@ -845,21 +845,54 @@ Sub HandleAttack(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As L
 
     Select Case GetPlayerDir(Index)
         Case DIR_UP
+
             If GetPlayerY(Index) = 0 Then Exit Sub
             X = GetPlayerX(Index)
             Y = GetPlayerY(Index) - 1
         Case DIR_DOWN
-            If GetPlayerY(Index) = Map(MapNum).MaxY Then Exit Sub
+
+            If GetPlayerY(Index) = Map(GetPlayerMap(Index)).MaxY Then Exit Sub
             X = GetPlayerX(Index)
             Y = GetPlayerY(Index) + 1
         Case DIR_LEFT
+
             If GetPlayerX(Index) = 0 Then Exit Sub
             X = GetPlayerX(Index) - 1
             Y = GetPlayerY(Index)
         Case DIR_RIGHT
-            If GetPlayerX(Index) = Map(MapNum).MaxX Then Exit Sub
+
+            If GetPlayerX(Index) = Map(GetPlayerMap(Index)).MaxX Then Exit Sub
             X = GetPlayerX(Index) + 1
             Y = GetPlayerY(Index)
+            
+        Case DIR_UPLEFT
+        
+            If GetPlayerX(Index) = 0 Then Exit Sub
+            If GetPlayerY(Index) = 0 Then Exit Sub
+            
+            X = GetPlayerX(Index) - 1
+            Y = GetPlayerY(Index) - 1
+        Case DIR_UPRIGHT
+        
+            If GetPlayerX(Index) = Map(GetPlayerMap(Index)).MaxX Then Exit Sub
+            If GetPlayerY(Index) = 0 Then Exit Sub
+            
+            X = GetPlayerX(Index) + 1
+            Y = GetPlayerY(Index) - 1
+        Case DIR_DOWNLEFT
+        
+            If GetPlayerX(Index) = 0 Then Exit Sub
+            If GetPlayerY(Index) = Map(GetPlayerMap(Index)).MaxY Then Exit Sub
+            
+            X = GetPlayerX(Index) - 1
+            Y = GetPlayerY(Index) + 1
+        Case DIR_DOWNRIGHT
+        
+            If GetPlayerX(Index) = Map(GetPlayerMap(Index)).MaxX Then Exit Sub
+            If GetPlayerY(Index) = Map(GetPlayerMap(Index)).MaxY Then Exit Sub
+            
+            X = GetPlayerX(Index) + 1
+            Y = GetPlayerY(Index) + 1
     End Select
     
     ' Check trade skills
@@ -4183,6 +4216,35 @@ Sub HandleEvent(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Lo
             If GetPlayerX(Index) = Map(GetPlayerMap(Index)).MaxX Then Exit Sub
             X = GetPlayerX(Index) + 1
             Y = GetPlayerY(Index)
+            
+        Case DIR_UPLEFT
+        
+            If GetPlayerX(Index) = 0 Then Exit Sub
+            If GetPlayerY(Index) = 0 Then Exit Sub
+            
+            X = GetPlayerX(Index) - 1
+            Y = GetPlayerY(Index) - 1
+        Case DIR_UPRIGHT
+        
+            If GetPlayerX(Index) = Map(GetPlayerMap(Index)).MaxX Then Exit Sub
+            If GetPlayerY(Index) = 0 Then Exit Sub
+            
+            X = GetPlayerX(Index) + 1
+            Y = GetPlayerY(Index) - 1
+        Case DIR_DOWNLEFT
+        
+            If GetPlayerX(Index) = 0 Then Exit Sub
+            If GetPlayerY(Index) = Map(GetPlayerMap(Index)).MaxY Then Exit Sub
+            
+            X = GetPlayerX(Index) - 1
+            Y = GetPlayerY(Index) + 1
+        Case DIR_DOWNRIGHT
+        
+            If GetPlayerX(Index) = Map(GetPlayerMap(Index)).MaxX Then Exit Sub
+            If GetPlayerY(Index) = Map(GetPlayerMap(Index)).MaxY Then Exit Sub
+            
+            X = GetPlayerX(Index) + 1
+            Y = GetPlayerY(Index) + 1
     End Select
     
     Set Buffer = New clsBuffer

@@ -737,7 +737,11 @@ Public Sub ItemEditorInit()
         frmEditor_Item.scrlPic.Value = .Pic
         frmEditor_Item.cmbType.ListIndex = .Type
         frmEditor_Item.scrlAnim.Value = .Animation
-        frmEditor_Item.cmbTool.ListIndex = .Data3
+        If .Data3 > frmEditor_Item.cmbTool.ListCount - 1 Then
+            frmEditor_Item.cmbTool.ListIndex = frmEditor_Item.cmbTool.ListCount - 1
+        Else
+            frmEditor_Item.cmbTool.ListIndex = .Data3
+        End If
         frmEditor_Item.scrlPaperdoll = .Paperdoll
         frmEditor_Item.scrlDurability = .Data1
         frmEditor_Item.txtDesc.text = Trim$(.Desc)
@@ -821,7 +825,6 @@ Public Sub ItemEditorInit()
         Next
         
         frmEditor_Item.scrlDamage.Value = .Data2
-        frmEditor_Item.cmbTool.ListIndex = .Data3
         
         If .WeaponSpeed < 100 Then .WeaponSpeed = 100
         frmEditor_Item.scrlSpeed.Value = .WeaponSpeed

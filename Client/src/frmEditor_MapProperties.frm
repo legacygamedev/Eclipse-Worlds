@@ -618,6 +618,7 @@ End Sub
 
 Private Sub cmbSound_Change()
     If cmbSound.ListIndex < 0 Then Exit Sub
+    Audio.StopSounds
     Audio.PlaySound Map.BGS
 End Sub
 
@@ -825,8 +826,10 @@ Public Sub cmdSave_Click()
         End If
         
         ' Save BGS
-        If cmbSound.ListIndex > 0 Then
+        If cmbSound.ListIndex >= 0 Then
+            Audio.StopSounds
             .BGS = cmbSound.List(cmbSound.ListIndex)
+            Audio.PlaySound cmbSound.List(cmbSound.ListIndex)
         Else
             .BGS = vbNullString
         End If
@@ -838,7 +841,7 @@ Public Sub cmdSave_Click()
         .Right = Val(txtRight.text)
         .Moral = cmbMoral.ListIndex + 1
 
-        .Weather = cmbWeather.ListIndex
+        .Weather = CmbWeather.ListIndex
         .WeatherIntensity = scrlWeatherIntensity.Value
         
         .Fog = ScrlFog.Value

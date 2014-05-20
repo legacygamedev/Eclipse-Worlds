@@ -48,9 +48,9 @@ Begin VB.Form frmAdmin
          Index           =   13
          Left            =   1560
          Style           =   1  'Graphical
-         TabIndex        =   73
+         TabIndex        =   72
          Top             =   6720
-         Width           =   1065
+         Width           =   1050
       End
       Begin VB.PictureBox picEye 
          Appearance      =   0  'Flat
@@ -58,20 +58,21 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000008&
          Height          =   240
          Index           =   13
-         Left            =   2640
+         Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   72
+         TabIndex        =   71
          Top             =   6720
          Width           =   240
       End
       Begin VB.OptionButton optCat 
+         Enabled         =   0   'False
          Height          =   420
          Index           =   10
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   71
+         TabIndex        =   70
          ToolTipText     =   "Change sprites via dbl click."
          Top             =   6090
          Width           =   420
@@ -113,7 +114,7 @@ Begin VB.Form frmAdmin
          TabIndex        =   67
          Top             =   6960
          Visible         =   0   'False
-         Width           =   1065
+         Width           =   1050
       End
       Begin VB.PictureBox picEye 
          Appearance      =   0  'Flat
@@ -121,7 +122,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H80000008&
          Height          =   240
          Index           =   12
-         Left            =   2640
+         Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
          TabIndex        =   66
@@ -628,7 +629,9 @@ Begin VB.Form frmAdmin
          BackColor       =   &H80000001&
          ForeColor       =   &H80000002&
          Height          =   315
+         ItemData        =   "frmAdmin.frx":03CE
          Left            =   240
+         List            =   "frmAdmin.frx":03D0
          TabIndex        =   20
          Text            =   "Choose Player"
          Top             =   390
@@ -878,15 +881,6 @@ Begin VB.Form frmAdmin
          SyncBuddy       =   -1  'True
          BuddyProperty   =   65547
          Enabled         =   -1  'True
-      End
-      Begin VB.CommandButton cmdShowGame 
-         Caption         =   "Show Game"
-         Height          =   255
-         Left            =   180
-         TabIndex        =   70
-         Top             =   3975
-         Visible         =   0   'False
-         Width           =   1185
       End
       Begin VB.Line Line5 
          BorderColor     =   &H00800080&
@@ -1708,10 +1702,6 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub cmdShowGame_Click()
-    BringWindowToTop (frmMain.hWnd)
-End Sub
-
 Private Sub cmdSpawnRecent_Click()
     Dim Item As Byte
     Dim I    As Byte
@@ -1730,7 +1720,6 @@ Private Sub cmdSpawnRecent_Click()
     For I = 0 To UBound(lastSpawnedItems) - 1
         If lastSpawnedItems(I) = Item Then
             found = I
-
             Exit For
         End If
     Next
@@ -1770,7 +1759,6 @@ End Sub
 
 Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Select Case Index
-    
         Case 0
             lblCat.Caption = "Recent"
         Case 1
@@ -1799,19 +1787,20 @@ End Sub
 
 Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim test As Boolean
+    
     If ignoreChange Then
         ignoreChange = False
         Exit Sub
     End If
+    
     If optCat(Index).Value = False Then
         optCat(Index).Picture = LoadResPicture(100 + Index, vbResBitmap)
-    Else
+    ElseIf Index <> 10 Then
         optCat(Index).Picture = LoadResPicture(110 + Index, vbResBitmap)
     If lastIndex = Index And optCat(Index).Value = True Then
         frmAdmin.currentCategory = "Categories"
     Else
         Select Case Index
-        
             Case 0
                 currentCategory = "Recent"
             Case 1
@@ -1837,7 +1826,7 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
         End Select
         lblCat.Caption = currentCategory
     End If
-        If lastIndex <> -1 Then
+        If lastIndex <> -1 And Index <> 10 Then
             If optCat(lastIndex).Value = False Then
                 optCat(lastIndex).Picture = LoadResPicture(100 + lastIndex, vbResBitmap)
             End If
