@@ -1154,10 +1154,10 @@ Begin VB.Form frmEditor_Map
    End
    Begin VB.Frame fraAttribs 
       Caption         =   "Attributes"
-      Height          =   4470
+      Height          =   4455
       Left            =   120
       TabIndex        =   23
-      Top             =   -30
+      Top             =   0
       Visible         =   0   'False
       Width           =   1455
       Begin VB.OptionButton optSound 
@@ -1171,9 +1171,9 @@ Begin VB.Form frmEditor_Map
       Begin VB.CommandButton cmdAttributeFill 
          Caption         =   "Fill"
          Height          =   375
-         Left            =   195
+         Left            =   240
          TabIndex        =   13
-         Top             =   3495
+         Top             =   3480
          Width           =   975
       End
       Begin VB.OptionButton optCheckpoint 
@@ -1260,9 +1260,9 @@ Begin VB.Form frmEditor_Map
       Begin VB.CommandButton cmdAttributeClear 
          Caption         =   "Clear"
          Height          =   375
-         Left            =   195
+         Left            =   240
          TabIndex        =   19
-         Top             =   3975
+         Top             =   3960
          Width           =   975
       End
       Begin VB.OptionButton optItem 
