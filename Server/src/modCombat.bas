@@ -477,13 +477,11 @@ Public Function CanPlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Lo
     NPCNum = MapNPC(MapNum).NPC(MapNPCNum).Num
     
     ' Make sure the npc isn't already dead
-    If MapNPC(MapNum).NPC(MapNPCNum).Vital(Vitals.HP) < 1 Then
-        If NPC(NPCNum).Behavior = NPC_BEHAVIOR_QUEST Then
+    If MapNPC(MapNum).NPC(MapNPCNum).Vital(Vitals.HP) < 1 Or NPC(NPCNum).Behavior = NPC_BEHAVIOR_QUEST Then
             FindQuest = IsQuestCLI(Attacker, NPCNum)
             If Not FindQuest.QuestIndex > 0 Then Exit Function
-        Else
-            Exit Function
-        End If
+    Else
+        Exit Function
     End If
 
     ' Make sure they are a player killer or else they can't attack a guard

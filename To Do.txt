@@ -9,3 +9,10 @@
 - Add instanced map support.
 - Add name for rarity/access in editors.
 - Add chat channels (enter with prefix will change chat channel or toggling manually via drop down box).
+
+
+
+- For quest skill adjustment feature
+      - Adjust stat points.
+      - Adjust skill levels
+      - Adjust skill exp

@@ -12,8 +12,8 @@ Begin VB.Form frmEditor_Quest
    ScaleHeight     =   10170
    ScaleWidth      =   18975
    StartUpPosition =   2  'CenterScreen
-   Begin VB.Frame fmeCLI 
-      Caption         =   "Add a new NPC/Event the player will need to meet with"
+   Begin VB.Frame fmeTask 
+      Caption         =   "Add a new action/task to complete for this Greeter"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   9.75
@@ -23,29 +23,253 @@ Begin VB.Form frmEditor_Quest
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   3735
-      Left            =   15600
-      TabIndex        =   14
-      Top             =   2760
+      Height          =   4335
+      Left            =   6480
+      TabIndex        =   18
+      Top             =   2640
       Visible         =   0   'False
-      Width           =   5055
-      Begin VB.ComboBox cmbNPC 
-         Height          =   315
-         Left            =   120
-         Style           =   2  'Dropdown List
-         TabIndex        =   95
-         Top             =   1440
-         Width           =   4815
+      Width           =   7215
+      Begin VB.CommandButton btnWarp 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Warp the player"
+         Height          =   375
+         Left            =   4080
+         Style           =   1  'Graphical
+         TabIndex        =   100
+         ToolTipText     =   "Show a message to the player."
+         Top             =   2880
+         Width           =   2775
       End
-      Begin VB.HScrollBar scrlKillAmnt 
-         Height          =   255
-         LargeChange     =   10
-         Left            =   120
-         TabIndex        =   79
+      Begin VB.CommandButton btnMsgPlayer 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Show message."
+         Height          =   375
+         Left            =   4080
+         Style           =   1  'Graphical
+         TabIndex        =   84
+         ToolTipText     =   "Show a message to the player."
+         Top             =   2400
+         Width           =   2775
+      End
+      Begin VB.CommandButton btnAdjustStat 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Adjust Player Stat"
+         Height          =   375
+         Left            =   4080
+         Style           =   1  'Graphical
+         TabIndex        =   81
+         ToolTipText     =   "Give or take stat values from the player such as Str/End/Exp/ect."
+         Top             =   1920
+         Width           =   2775
+      End
+      Begin VB.CommandButton btnProtect 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Spawn and protect ally."
+         Enabled         =   0   'False
+         Height          =   495
+         Left            =   360
+         Style           =   1  'Graphical
+         TabIndex        =   68
+         ToolTipText     =   "Spawn an NPC to follow the player for so long, making all NPC's want to attack it, but the player must protect it for the quest."
          Top             =   2760
-         Width           =   4815
+         Width           =   3015
       End
-      Begin VB.CommandButton btnCLICancel 
+      Begin VB.CommandButton btnSkillLvl 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Obtain a skill level."
+         Height          =   495
+         Left            =   360
+         Style           =   1  'Graphical
+         TabIndex        =   67
+         ToolTipText     =   "Require that the player obtain a skill level between the progress of this quest"
+         Top             =   2160
+         Width           =   3015
+      End
+      Begin VB.CommandButton btnTaskCancel 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Close"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   12
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   240
+         Style           =   1  'Graphical
+         TabIndex        =   21
+         Top             =   3600
+         Width           =   6735
+      End
+      Begin VB.CommandButton btnTask_Kill 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Kill enemie(s)"
+         Height          =   495
+         Left            =   360
+         Style           =   1  'Graphical
+         TabIndex        =   20
+         ToolTipText     =   "Select an NPC the player needs to kill and an amount of times to kill it"
+         Top             =   1560
+         Width           =   3015
+      End
+      Begin VB.CommandButton btnTask_Gather 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Gather items"
+         Height          =   495
+         Left            =   360
+         Style           =   1  'Graphical
+         TabIndex        =   19
+         ToolTipText     =   "Select an item for the player to gather for the quest"
+         Top             =   960
+         Width           =   3015
+      End
+      Begin VB.CommandButton btnTakeItem 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Take an item."
+         Height          =   375
+         Left            =   4080
+         Style           =   1  'Graphical
+         TabIndex        =   82
+         ToolTipText     =   "Take an item from the player"
+         Top             =   1320
+         Width           =   2775
+      End
+      Begin VB.CommandButton btnGiveItem 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Give an item."
+         Height          =   375
+         Left            =   4080
+         Style           =   1  'Graphical
+         TabIndex        =   83
+         ToolTipText     =   "Give the player an item"
+         Top             =   960
+         Width           =   2775
+      End
+      Begin VB.Line Line9 
+         X1              =   240
+         X2              =   6960
+         Y1              =   3480
+         Y2              =   3480
+      End
+      Begin VB.Line Line8 
+         X1              =   3720
+         X2              =   3720
+         Y1              =   240
+         Y2              =   3480
+      End
+      Begin VB.Label Label4 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Actions"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   13.5
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   4080
+         TabIndex        =   86
+         Top             =   480
+         Width           =   2775
+      End
+      Begin VB.Label Label3 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Tasks"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   13.5
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   480
+         TabIndex        =   85
+         Top             =   480
+         Width           =   2775
+      End
+      Begin VB.Line Line5 
+         X1              =   120
+         X2              =   6960
+         Y1              =   240
+         Y2              =   240
+      End
+   End
+   Begin VB.Frame fmeModify 
+      Caption         =   "Adjust Player Stats"
+      Height          =   3855
+      Left            =   1200
+      TabIndex        =   69
+      Top             =   3720
+      Visible         =   0   'False
+      Width           =   4575
+      Begin VB.ComboBox cboItem 
+         Enabled         =   0   'False
+         Height          =   315
+         ItemData        =   "frmEditor_Quest.frx":0089
+         Left            =   240
+         List            =   "frmEditor_Quest.frx":008B
+         Style           =   2  'Dropdown List
+         TabIndex        =   115
+         Top             =   2160
+         Width           =   4215
+      End
+      Begin VB.OptionButton opSkillEXP 
+         Caption         =   "Skill EXP"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   114
+         ToolTipText     =   "Select to modify the player's Level"
+         Top             =   1800
+         Width           =   4095
+      End
+      Begin VB.OptionButton opSkill 
+         Caption         =   "Skill Level"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   113
+         ToolTipText     =   "Select to modify the player's Level"
+         Top             =   1560
+         Width           =   4095
+      End
+      Begin VB.OptionButton opStatP 
+         Caption         =   "Stat Points"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   112
+         ToolTipText     =   "Select to modify the player's Level"
+         Top             =   1320
+         Width           =   4095
+      End
+      Begin VB.OptionButton opStatEXP 
+         Caption         =   "Stat EXP"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   111
+         ToolTipText     =   "Select to modify the player's Level"
+         Top             =   1080
+         Width           =   4095
+      End
+      Begin VB.OptionButton opStat 
+         Caption         =   "Stat"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   110
+         ToolTipText     =   "Select to modify the player's Level"
+         Top             =   840
+         Width           =   4095
+      End
+      Begin VB.CommandButton btnModCancel 
          BackColor       =   &H00FFFFFF&
          Caption         =   "Cancel"
          BeginProperty Font 
@@ -57,32 +281,14 @@ Begin VB.Form frmEditor_Quest
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   495
-         Left            =   2760
+         Height          =   375
+         Left            =   3000
          Style           =   1  'Graphical
-         TabIndex        =   45
-         Top             =   3120
-         Width           =   2175
+         TabIndex        =   76
+         Top             =   3360
+         Width           =   1455
       End
-      Begin VB.OptionButton opEvent 
-         Caption         =   "Events"
-         Enabled         =   0   'False
-         Height          =   255
-         Left            =   240
-         TabIndex        =   17
-         Top             =   2280
-         Width           =   4455
-      End
-      Begin VB.OptionButton opNPC 
-         Caption         =   "NPC's"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   16
-         Top             =   1920
-         Value           =   -1  'True
-         Width           =   4455
-      End
-      Begin VB.CommandButton btnAddCLI 
+      Begin VB.CommandButton btnModAccept 
          BackColor       =   &H00FFFFFF&
          Caption         =   "Accept"
          BeginProperty Font 
@@ -94,47 +300,159 @@ Begin VB.Form frmEditor_Quest
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   495
+         Height          =   375
          Left            =   120
          Style           =   1  'Graphical
-         TabIndex        =   15
-         Top             =   3120
-         Width           =   2175
+         TabIndex        =   75
+         Top             =   3360
+         Width           =   2775
       End
-      Begin VB.Label Label8 
-         BackStyle       =   0  'Transparent
-         Caption         =   $"frmEditor_Quest.frx":0089
-         Height          =   855
+      Begin VB.CheckBox chkSet 
+         Caption         =   "Set the value instead of adding/subtracting"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   74
+         ToolTipText     =   "This option will decide whether we set the amount or add/subtract to the current amount."
+         Top             =   2520
+         Width           =   4215
+      End
+      Begin VB.HScrollBar scrlModify 
+         Height          =   255
+         LargeChange     =   25
          Left            =   120
-         TabIndex        =   96
-         Top             =   480
-         Width           =   4815
+         Min             =   -32767
+         TabIndex        =   73
+         Top             =   3000
+         Width           =   4335
       End
-      Begin VB.Label lblKillAmnt 
+      Begin VB.OptionButton opLvl 
+         Caption         =   "Level"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   71
+         ToolTipText     =   "Select to modify the player's Level"
+         Top             =   600
+         Width           =   4095
+      End
+      Begin VB.OptionButton opEXP 
+         Caption         =   "EXP"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   70
+         ToolTipText     =   "Select to modify the player's EXP"
+         Top             =   360
+         Width           =   4095
+      End
+      Begin VB.Label lblModify 
          Alignment       =   2  'Center
-         AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Amount: 0"
+         Caption         =   "Amount to modify: 0"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   72
+         Top             =   2760
+         Width           =   4095
+      End
+   End
+   Begin VB.Frame fmeWarp 
+      Caption         =   "Select map and location to warp to"
+      Height          =   3015
+      Left            =   15000
+      TabIndex        =   101
+      Top             =   120
+      Visible         =   0   'False
+      Width           =   3735
+      Begin VB.CommandButton btnCloseWarp 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Cancel"
          BeginProperty Font 
-            Name            =   "Times New Roman"
+            Name            =   "MS Sans Serif"
             Size            =   9.75
             Charset         =   0
-            Weight          =   400
+            Weight          =   700
             Underline       =   0   'False
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         Height          =   375
+         Left            =   2280
+         Style           =   1  'Graphical
+         TabIndex        =   109
+         Top             =   2520
+         Width           =   1335
+      End
+      Begin VB.CommandButton btnAddWarp 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Accept"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   240
+         Style           =   1  'Graphical
+         TabIndex        =   108
+         Top             =   2520
+         Width           =   1335
+      End
+      Begin VB.HScrollBar scrlMapY 
+         Height          =   255
+         LargeChange     =   10
+         Left            =   120
+         Max             =   255
+         TabIndex        =   107
+         Top             =   2040
+         Width           =   3495
+      End
+      Begin VB.HScrollBar scrlMapX 
+         Height          =   255
+         LargeChange     =   10
+         Left            =   120
+         Max             =   255
+         TabIndex        =   105
+         Top             =   1440
+         Width           =   3495
+      End
+      Begin VB.HScrollBar scrlMap 
+         Height          =   255
+         LargeChange     =   10
+         Left            =   120
+         Max             =   255
+         Min             =   1
+         TabIndex        =   103
+         Top             =   600
+         Value           =   1
+         Width           =   3495
+      End
+      Begin VB.Label lblMapY 
+         Caption         =   "Y: 0"
          Height          =   255
          Left            =   120
-         TabIndex        =   80
-         Top             =   2520
-         Width           =   4800
+         TabIndex        =   106
+         Top             =   1800
+         Width           =   3495
       End
-      Begin VB.Line Line3 
-         X1              =   120
-         X2              =   4920
-         Y1              =   240
-         Y2              =   240
+      Begin VB.Label lblMapX 
+         Caption         =   "X: 0"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   104
+         Top             =   1200
+         Width           =   3495
+      End
+      Begin VB.Label lblMap 
+         Alignment       =   2  'Center
+         Caption         =   "Map: 1"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   102
+         Top             =   360
+         Width           =   3495
       End
    End
    Begin VB.Frame fmeSelectItem 
@@ -247,6 +565,131 @@ Begin VB.Form frmEditor_Quest
          Width           =   3360
       End
    End
+   Begin VB.Frame fmeCLI 
+      Caption         =   "Add a new NPC/Event the player will need to meet with"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   3735
+      Left            =   15600
+      TabIndex        =   14
+      Top             =   2760
+      Visible         =   0   'False
+      Width           =   5055
+      Begin VB.ComboBox cmbNPC 
+         Height          =   315
+         Left            =   120
+         Style           =   2  'Dropdown List
+         TabIndex        =   95
+         Top             =   1440
+         Width           =   4815
+      End
+      Begin VB.HScrollBar scrlKillAmnt 
+         Height          =   255
+         LargeChange     =   10
+         Left            =   120
+         TabIndex        =   79
+         Top             =   2760
+         Width           =   4815
+      End
+      Begin VB.CommandButton btnCLICancel 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Cancel"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   2760
+         Style           =   1  'Graphical
+         TabIndex        =   45
+         Top             =   3120
+         Width           =   2175
+      End
+      Begin VB.OptionButton opEvent 
+         Caption         =   "Events"
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   240
+         TabIndex        =   17
+         Top             =   2280
+         Width           =   4455
+      End
+      Begin VB.OptionButton opNPC 
+         Caption         =   "NPC's"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   16
+         Top             =   1920
+         Value           =   -1  'True
+         Width           =   4455
+      End
+      Begin VB.CommandButton btnAddCLI 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Accept"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   120
+         Style           =   1  'Graphical
+         TabIndex        =   15
+         Top             =   3120
+         Width           =   2175
+      End
+      Begin VB.Label Label8 
+         BackStyle       =   0  'Transparent
+         Caption         =   $"frmEditor_Quest.frx":008D
+         Height          =   855
+         Left            =   120
+         TabIndex        =   96
+         Top             =   480
+         Width           =   4815
+      End
+      Begin VB.Label lblKillAmnt 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Amount: 0"
+         BeginProperty Font 
+            Name            =   "Times New Roman"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   120
+         TabIndex        =   80
+         Top             =   2520
+         Width           =   4800
+      End
+      Begin VB.Line Line3 
+         X1              =   120
+         X2              =   4920
+         Y1              =   240
+         Y2              =   240
+      End
+   End
    Begin VB.Frame fmeShowMsg 
       Caption         =   "Show player a message"
       Height          =   2775
@@ -257,9 +700,9 @@ Begin VB.Form frmEditor_Quest
       Width           =   4455
       Begin VB.ComboBox cmbColor 
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":017B
+         ItemData        =   "frmEditor_Quest.frx":017F
          Left            =   720
-         List            =   "frmEditor_Quest.frx":01B5
+         List            =   "frmEditor_Quest.frx":01B9
          Style           =   2  'Dropdown List
          TabIndex        =   97
          Top             =   1800
@@ -366,7 +809,7 @@ Begin VB.Form frmEditor_Quest
       Height          =   3495
       Left            =   6480
       TabIndex        =   23
-      Top             =   6240
+      Top             =   4200
       Visible         =   0   'False
       Width           =   8295
       Begin VB.HScrollBar scrlSkill 
@@ -424,9 +867,9 @@ Begin VB.Form frmEditor_Quest
       End
       Begin VB.ComboBox cmbClassReq 
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":0256
+         ItemData        =   "frmEditor_Quest.frx":025A
          Left            =   6360
-         List            =   "frmEditor_Quest.frx":0258
+         List            =   "frmEditor_Quest.frx":025C
          Style           =   2  'Dropdown List
          TabIndex        =   29
          Top             =   1200
@@ -451,9 +894,9 @@ Begin VB.Form frmEditor_Quest
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":025A
+         ItemData        =   "frmEditor_Quest.frx":025E
          Left            =   3720
-         List            =   "frmEditor_Quest.frx":0267
+         List            =   "frmEditor_Quest.frx":026B
          Style           =   2  'Dropdown List
          TabIndex        =   27
          Top             =   1200
@@ -479,9 +922,9 @@ Begin VB.Form frmEditor_Quest
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":027F
+         ItemData        =   "frmEditor_Quest.frx":0283
          Left            =   1200
-         List            =   "frmEditor_Quest.frx":0281
+         List            =   "frmEditor_Quest.frx":0285
          Style           =   2  'Dropdown List
          TabIndex        =   25
          Top             =   600
@@ -699,9 +1142,9 @@ Begin VB.Form frmEditor_Quest
             Strikethrough   =   0   'False
          EndProperty
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":0283
+         ItemData        =   "frmEditor_Quest.frx":0287
          Left            =   1200
-         List            =   "frmEditor_Quest.frx":0285
+         List            =   "frmEditor_Quest.frx":0289
          Style           =   2  'Dropdown List
          TabIndex        =   88
          ToolTipText     =   "Select the specific skill the player will need to reach a level for."
@@ -727,281 +1170,6 @@ Begin VB.Form frmEditor_Quest
          TabIndex        =   89
          Top             =   360
          Width           =   330
-      End
-   End
-   Begin VB.Frame fmeTask 
-      Caption         =   "Add a new action/task to complete for this Greeter"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   4335
-      Left            =   6480
-      TabIndex        =   18
-      Top             =   2640
-      Visible         =   0   'False
-      Width           =   7215
-      Begin VB.CommandButton btnMsgPlayer 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Show message."
-         Height          =   495
-         Left            =   4080
-         Style           =   1  'Graphical
-         TabIndex        =   84
-         ToolTipText     =   "Show a message to the player."
-         Top             =   2760
-         Width           =   2775
-      End
-      Begin VB.CommandButton btnGiveItem 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Give an item."
-         Height          =   495
-         Left            =   4080
-         Style           =   1  'Graphical
-         TabIndex        =   83
-         ToolTipText     =   "Give the player an item"
-         Top             =   960
-         Width           =   2775
-      End
-      Begin VB.CommandButton btnTakeItem 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Take an item."
-         Height          =   495
-         Left            =   4080
-         Style           =   1  'Graphical
-         TabIndex        =   82
-         ToolTipText     =   "Take an item from the player"
-         Top             =   1560
-         Width           =   2775
-      End
-      Begin VB.CommandButton btnAdjustStat 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Adjust Player Stat"
-         Height          =   495
-         Left            =   4080
-         Style           =   1  'Graphical
-         TabIndex        =   81
-         ToolTipText     =   "Give or take stat values from the player such as Str/End/Exp/ect."
-         Top             =   2160
-         Width           =   2775
-      End
-      Begin VB.CommandButton btnProtect 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Spawn and protect ally."
-         Enabled         =   0   'False
-         Height          =   495
-         Left            =   360
-         Style           =   1  'Graphical
-         TabIndex        =   68
-         ToolTipText     =   "Spawn an NPC to follow the player for so long, making all NPC's want to attack it, but the player must protect it for the quest."
-         Top             =   2760
-         Width           =   3015
-      End
-      Begin VB.CommandButton btnSkillLvl 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Obtain a skill level."
-         Height          =   495
-         Left            =   360
-         Style           =   1  'Graphical
-         TabIndex        =   67
-         ToolTipText     =   "Require that the player obtain a skill level between the progress of this quest"
-         Top             =   2160
-         Width           =   3015
-      End
-      Begin VB.CommandButton btnTaskCancel 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Close"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   12
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   240
-         Style           =   1  'Graphical
-         TabIndex        =   21
-         Top             =   3600
-         Width           =   6735
-      End
-      Begin VB.CommandButton btnTask_Kill 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Kill enemie(s)"
-         Height          =   495
-         Left            =   360
-         Style           =   1  'Graphical
-         TabIndex        =   20
-         ToolTipText     =   "Select an NPC the player needs to kill and an amount of times to kill it"
-         Top             =   1560
-         Width           =   3015
-      End
-      Begin VB.CommandButton btnTask_Gather 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Gather items"
-         Height          =   495
-         Left            =   360
-         Style           =   1  'Graphical
-         TabIndex        =   19
-         ToolTipText     =   "Select an item for the player to gather for the quest"
-         Top             =   960
-         Width           =   3015
-      End
-      Begin VB.Line Line9 
-         X1              =   240
-         X2              =   6960
-         Y1              =   3480
-         Y2              =   3480
-      End
-      Begin VB.Line Line8 
-         X1              =   3720
-         X2              =   3720
-         Y1              =   240
-         Y2              =   3480
-      End
-      Begin VB.Label Label4 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Actions"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   13.5
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   4080
-         TabIndex        =   86
-         Top             =   480
-         Width           =   2775
-      End
-      Begin VB.Label Label3 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Tasks"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   13.5
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   480
-         TabIndex        =   85
-         Top             =   480
-         Width           =   2775
-      End
-      Begin VB.Line Line5 
-         X1              =   120
-         X2              =   6960
-         Y1              =   240
-         Y2              =   240
-      End
-   End
-   Begin VB.Frame fmeModify 
-      Caption         =   "Adjust Player Stats"
-      Height          =   2295
-      Left            =   15000
-      TabIndex        =   69
-      Top             =   480
-      Visible         =   0   'False
-      Width           =   4575
-      Begin VB.CommandButton btnModCancel 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Cancel"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   3000
-         Style           =   1  'Graphical
-         TabIndex        =   76
-         Top             =   1800
-         Width           =   1455
-      End
-      Begin VB.CommandButton btnModAccept 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Accept"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   120
-         Style           =   1  'Graphical
-         TabIndex        =   75
-         Top             =   1800
-         Width           =   2775
-      End
-      Begin VB.CheckBox chkSet 
-         Caption         =   "Set the value instead of adding/subtracting"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   74
-         ToolTipText     =   "This option will decide whether we set the amount or add/subtract to the current amount."
-         Top             =   840
-         Width           =   4215
-      End
-      Begin VB.HScrollBar scrlModify 
-         Height          =   255
-         LargeChange     =   10
-         Left            =   120
-         Min             =   -32767
-         TabIndex        =   73
-         Top             =   1440
-         Width           =   4335
-      End
-      Begin VB.OptionButton opLvl 
-         Caption         =   "Level"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   71
-         ToolTipText     =   "Select to modify the player's Level"
-         Top             =   600
-         Width           =   4095
-      End
-      Begin VB.OptionButton opEXP 
-         Caption         =   "EXP"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   70
-         ToolTipText     =   "Select to modify the player's EXP"
-         Top             =   360
-         Width           =   4095
-      End
-      Begin VB.Label lblModify 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Amount to modify: 0"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   72
-         Top             =   1200
-         Width           =   4095
       End
    End
    Begin VB.Frame fmeMoveItem 
@@ -1421,6 +1589,7 @@ Dim Index As Long, I As Long, tmpID As Long, TempStr As String, NPCIndex As Long
     ResetEditButtons
     Editing_CLI_Index = 0
     Editing_CLI = False
+    Call ResetEditButtons
     Exit Sub
     
 ' Error handler
@@ -1473,11 +1642,54 @@ Dim Index As Long, Amnt As Long, Itm As Long, id As Long, I As Long
         GiveItem = False
         CLI.ListIndex = Index - 1
         fmeSelectItem.Visible = False
+        Call ResetEditButtons
     End With
     
 ' Error handler
 ErrorHandler:
     HandleError "btnAddItem_Click", "frmEditor_Quest", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub btnAddWarp_Click()
+Dim Index As Long, X As Long, Y As Long, MapNum As Long, I As Long
+    ' If debug mode, handle error then exit out
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    Index = CLI.ListIndex + 1
+    MapNum = scrlMap.Value
+    X = scrlMapX.Value
+    Y = scrlMapY.Value
+    If Index < 1 Then Exit Sub
+    If MapNum < 1 Then Exit Sub
+    
+    'add the item to the list
+    
+    With Quest(EditorIndex).CLI(Index)
+        If Editing_Task Then
+            I = Editing_Task_Index
+        Else
+            .Max_Actions = .Max_Actions + 1
+            ReDim Preserve .Action(1 To .Max_Actions)
+            I = .Max_Actions
+        End If
+        
+        .Action(I).ActionID = ACTION_WARP
+        .Action(I).Amount = MapNum
+        .Action(I).MainData = X
+        .Action(I).SecondaryData = Y
+        Editing_Task_Index = 0
+        Editing_Task = False
+        
+        Call QuestEditorInitCLI
+        CLI.ListIndex = Index - 1
+        fmeWarp.Visible = False
+        Call ResetEditButtons
+    End With
+    
+' Error handler
+ErrorHandler:
+    HandleError "btnAddWarp_Click", "frmEditor_Quest", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1489,6 +1701,9 @@ Dim Index As Long
     'open the panel to give an item.
     fmeModify.Visible = True
     Call BTF(fmeModify)
+    cboItem.Clear
+    cboItem.AddItem "None"
+    cboItem.ListIndex = 0
 End Sub
 
 Private Sub btnAItemCancel_Click()
@@ -1498,6 +1713,7 @@ Private Sub btnAItemCancel_Click()
     fmeSelectItem.Visible = False
     Editing_Task = False
     Editing_Task_Index = 0
+    Call ResetEditButtons
 End Sub
 
 Private Sub btnCancel_Click()
@@ -1524,7 +1740,17 @@ Private Sub btnCLICancel_Click()
     Editing_CLI_Index = 0
     Editing_Task = False
     Editing_Task_Index = 0
-    ResetEditButtons
+    Call ResetEditButtons
+End Sub
+
+Private Sub btnCloseWarp_Click()
+    scrlMap.Value = 1
+    scrlMapX.Value = 1
+    scrlMapY.Value = 1
+    fmeWarp.Visible = False
+    Editing_Task = False
+    Editing_Task_Index = 0
+    Call ResetEditButtons
 End Sub
 
 Private Sub btnDelete_Click()
@@ -1608,8 +1834,12 @@ Dim Index As Long, id As Long
     If Options.Debug = 1 Then On Error GoTo ErrorHandler
         
         Index = CLI.ListIndex + 1
-        If Index < 1 Then Exit Sub
+        If Index < 1 Then
+            QMsg ("Please be sure a greeter is selected.")
+            Exit Sub
+        End If
         If chkSet.Value = vbChecked And scrlModify.Value < 1 Then Exit Sub
+        If cboItem.ListIndex < 0 Then Exit Sub
         
         With Quest(EditorIndex).CLI(Index)
             If Editing_Task Then
@@ -1624,10 +1854,21 @@ Dim Index As Long, id As Long
                 .Action(id).ActionID = ACTION_ADJUST_EXP
             ElseIf opLvl.Value = True Then
                 .Action(id).ActionID = ACTION_ADJUST_LVL
+            ElseIf opStat.Value = True Then
+                .Action(id).ActionID = ACTION_ADJUST_STAT_LVL
+            ElseIf opStatEXP.Value = True Then
+                .Action(id).ActionID = ACTION_ADJUST_STAT_EXP
+            ElseIf opSkill.Value = True Then
+                .Action(id).ActionID = ACTION_ADJUST_SKILL_LVL
+            ElseIf opSkillEXP.Value = True Then
+                .Action(id).ActionID = ACTION_ADJUST_SKILL_EXP
+            ElseIf opStatP.Value = True Then
+                .Action(id).ActionID = ACTION_ADJUST_STAT_POINTS
             End If
             
             .Action(id).Amount = scrlModify.Value
             .Action(id).MainData = chkSet.Value
+            .Action(id).SecondaryData = cboItem.ListIndex
             Editing_Task_Index = 0
             Editing_Task = False
         End With
@@ -1639,6 +1880,7 @@ Dim Index As Long, id As Long
         Call QuestEditorInitCLI
         CLI.ListIndex = Index - 1
         fmeModify.Visible = False
+        Call ResetEditButtons
     Exit Sub
     
 ' Error handler
@@ -1655,6 +1897,7 @@ Private Sub btnModCancel_Click()
     fmeModify.Visible = False
     Editing_Task = False
     Editing_Task_Index = 0
+    Call ResetEditButtons
 End Sub
 
 Private Sub btnMsgAccept_Click()
@@ -1699,6 +1942,7 @@ Dim I As Long, II As Long, III As Long, id As Long
         chkStart.Value = vbUnchecked
         chkRes.Value = vbUnchecked
         Call QuestEditorInitCLI
+        Call ResetEditButtons
     End With
     
 ' Error handler
@@ -1714,6 +1958,7 @@ Private Sub btnMsgCancel_Click()
     fmeShowMsg.Visible = False
     Editing_Task = False
     Editing_Task_Index = 0
+    Call ResetEditButtons
 End Sub
 
 Private Sub btnMsgPlayer_Click()
@@ -1759,6 +2004,7 @@ Dim Index As Long, Amnt As Long, id As Long, SkillID As Long
         Call QuestEditorInitCLI
         CLI.ListIndex = Index - 1
         fmeObtainSKill.Visible = False
+        Call ResetEditButtons
     End With
     
 ' Error handler
@@ -1773,6 +2019,7 @@ Private Sub btnObCancel_Click()
     fmeObtainSKill.Visible = False
     Editing_Task = False
     Editing_Task_Index = 0
+    Call ResetEditButtons
 End Sub
 
 Private Sub btnReq_Click()
@@ -1886,6 +2133,16 @@ Dim tempSel As Long, tempSel2 As Long
     End If
 End Sub
 
+Private Sub btnWarp_Click()
+Dim Index As Long
+    Index = CLI.ListIndex + 1
+    If Index < 1 Then Exit Sub
+    
+    'open the panel to warp the player.
+    fmeWarp.Visible = True
+    Call BTF(fmeWarp)
+End Sub
+
 Private Sub chkRetake_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
@@ -1944,7 +2201,10 @@ Dim Index As Long, I As Long
     'we're gonna edit this list item instead of creating one.
     CLIHasFocus = True
     Index = CLI.ListIndex + 1
-    If Index < 1 Then Exit Sub
+    If Index < 1 Then
+        Call QMsg("Please select a greeter to edit first.")
+        Exit Sub
+    End If
     Editing_CLI = True
     fmeCLI.Visible = True
     Editing_CLI_Index = Index
@@ -2178,11 +2438,19 @@ Dim Index As Long, I As Long, II As Long
     'edit the selected list item instead of creating a new one
     Index = CLI.ListIndex + 1
     I = lstTasks.ListIndex + 1
-    If Index < 1 Then Exit Sub
-    If I < 1 Then Exit Sub
+    If Index < 1 Then
+        Call QMsg("Please select a greeter first.")
+        Exit Sub
+    End If
+    If I < 1 Then
+        Call QMsg("Please select a task to edit first.")
+        Exit Sub
+    End If
     
     Editing_Task = True
     Editing_Task_Index = I
+    
+    Call DisableEditButtons
     
     With Quest(EditorIndex).CLI(Index).Action(I)
         Select Case .ActionID
@@ -2236,6 +2504,41 @@ Dim Index As Long, I As Long, II As Long
                 opLvl.Value = True
                 chkSet.Value = .MainData
                 scrlModify.Value = .Amount
+            Case ACTION_ADJUST_STAT_LVL
+                fmeModify.Visible = True
+                Call BTF(fmeModify)
+                opStat.Value = True
+                chkSet.Value = .MainData
+                scrlModify.Value = .Amount
+                cboItem.ListIndex = .SecondaryData
+            Case ACTION_ADJUST_STAT_EXP
+                fmeModify.Visible = True
+                Call BTF(fmeModify)
+                opStatEXP.Value = True
+                chkSet.Value = .MainData
+                scrlModify.Value = .Amount
+                cboItem.ListIndex = .SecondaryData
+            Case ACTION_ADJUST_STAT_POINTS
+                fmeModify.Visible = True
+                Call BTF(fmeModify)
+                opStatP.Value = True
+                chkSet.Value = .MainData
+                scrlModify.Value = .Amount
+                cboItem.ListIndex = .SecondaryData
+            Case ACTION_ADJUST_SKILL_LVL
+                fmeModify.Visible = True
+                Call BTF(fmeModify)
+                opSkill.Value = True
+                chkSet.Value = .MainData
+                scrlModify.Value = .Amount
+                cboItem.ListIndex = .SecondaryData
+            Case ACTION_ADJUST_SKILL_EXP
+                fmeModify.Visible = True
+                Call BTF(fmeModify)
+                opSkillEXP.Value = True
+                chkSet.Value = .MainData
+                scrlModify.Value = .Amount
+                cboItem.ListIndex = .SecondaryData
             Case ACTION_GIVE_ITEM
                 Gather = False
                 GiveItem = True
@@ -2252,6 +2555,12 @@ Dim Index As Long, I As Long, II As Long
                 Call BTF(fmeSelectItem)
                 scrlItem.Value = .MainData
                 scrlItemAmount.Value = .Amount
+            Case ACTION_WARP
+                fmeWarp.Visible = True
+                Call BTF(fmeWarp)
+                scrlMap.Value = .Amount
+                scrlMapX.Value = .MainData
+                scrlMapY.Value = .SecondaryData
             Case Else
                 Exit Sub
         End Select
@@ -2380,6 +2689,20 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Private Sub opEXP_Click()
+    cboItem.Enabled = False
+    cboItem.Clear
+    cboItem.AddItem "None"
+    cboItem.ListIndex = 0
+End Sub
+
+Private Sub opLvl_Click()
+    cboItem.Enabled = False
+    cboItem.Clear
+    cboItem.AddItem "None"
+    cboItem.ListIndex = 0
+End Sub
+
 Private Sub opNPC_Click()
 Dim I As Long
     ' If debug mode, handle error then exit out
@@ -2399,6 +2722,94 @@ Dim I As Long
 ErrorHandler:
     HandleError "opNPC_Click", "frmEditor_Quest", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+End Sub
+
+Private Sub opSkill_Click()
+Dim I As Long
+    cboItem.Enabled = True
+    cboItem.Clear
+    cboItem.AddItem "None"
+    For I = 1 To Skills.Skill_Count - 1
+        cboItem.AddItem GetSkillName(I)
+    Next I
+    cboItem.ListIndex = 0
+End Sub
+
+Private Sub opSkillEXP_Click()
+Dim I As Long
+    cboItem.Enabled = True
+    cboItem.Clear
+    cboItem.AddItem "None"
+    For I = 1 To Skills.Skill_Count - 1
+        cboItem.AddItem GetSkillName(I)
+    Next I
+    cboItem.ListIndex = 0
+End Sub
+
+Private Sub opStat_Click()
+Dim I As Long
+    cboItem.Enabled = True
+    cboItem.Clear
+    cboItem.AddItem "None"
+    For I = 1 To Stats.Stat_Count - 1
+        Select Case I
+            Case Stats.Agility
+                cboItem.AddItem "Agility"
+            Case Stats.Endurance
+                cboItem.AddItem "Endurance"
+            Case Stats.Intelligence
+                cboItem.AddItem "Intelligence"
+            Case Stats.Spirit
+                cboItem.AddItem "Spirit"
+            Case Stats.Strength
+                cboItem.AddItem "Strength"
+        End Select
+    Next I
+    cboItem.ListIndex = 0
+End Sub
+
+Private Sub opStatEXP_Click()
+Dim I As Long
+    cboItem.Enabled = True
+    cboItem.Clear
+    cboItem.AddItem "None"
+    For I = 1 To Stats.Stat_Count - 1
+        Select Case I
+            Case Stats.Agility
+                cboItem.AddItem "Agility"
+            Case Stats.Endurance
+                cboItem.AddItem "Endurance"
+            Case Stats.Intelligence
+                cboItem.AddItem "Intelligence"
+            Case Stats.Spirit
+                cboItem.AddItem "Spirit"
+            Case Stats.Strength
+                cboItem.AddItem "Strength"
+        End Select
+    Next I
+    cboItem.ListIndex = 0
+End Sub
+
+Private Sub opStatP_Click()
+Dim I As Long
+    cboItem.Enabled = True
+    cboItem.Clear
+    cboItem.AddItem "None"
+    For I = 1 To Stats.Stat_Count - 1
+        Select Case I
+            Case Stats.Agility
+                cboItem.AddItem "Agility"
+            Case Stats.Endurance
+                cboItem.AddItem "Endurance"
+            Case Stats.Intelligence
+                cboItem.AddItem "Intelligence"
+            Case Stats.Spirit
+                cboItem.AddItem "Spirit"
+            Case Stats.Strength
+                cboItem.AddItem "Strength"
+        End Select
+    Next I
+    cboItem.ListIndex = 0
 End Sub
 
 Private Sub scrlAccessReq_Change()
@@ -2457,6 +2868,18 @@ Private Sub scrlLevelReq_Change()
 ErrorHandler:
     HandleError "scrlLevelReq_Change", "frmEditor_Quest", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
+End Sub
+
+Private Sub scrlMap_Change()
+    lblMap.Caption = "Map: " & scrlMap.Value
+End Sub
+
+Private Sub scrlMapX_Change()
+    lblMapX.Caption = "X: " & scrlMapX.Value
+End Sub
+
+Private Sub scrlMapY_Change()
+    lblMapY.Caption = "Y: " & scrlMapY.Value
 End Sub
 
 Private Sub scrlModify_Change()

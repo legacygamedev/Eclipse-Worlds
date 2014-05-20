@@ -15,6 +15,12 @@ Public Const ACTION_TAKE_ITEM As Byte = 6
 Public Const ACTION_SHOWMSG As Byte = 7
 Public Const ACTION_ADJUST_LVL As Byte = 8
 Public Const ACTION_ADJUST_EXP As Byte = 9
+Public Const ACTION_WARP As Byte = 10
+Public Const ACTION_ADJUST_STAT_LVL As Byte = 11
+Public Const ACTION_ADJUST_STAT_EXP As Byte = 12
+Public Const ACTION_ADJUST_SKILL_LVL As Byte = 13
+Public Const ACTION_ADJUST_SKILL_EXP As Byte = 14
+Public Const ACTION_ADJUST_STAT_POINTS As Byte = 15
 
 Public Const Quest_Icon_Start As Byte = 1
 Public Const Quest_Icon_Finished As Byte = 2
@@ -247,10 +253,13 @@ Public Sub QuestEditorInitCLI()
                     Case ACTION_ADJUST_LVL 'adjust the player's level
                         If .Action(I).MainData = 0 Then
                             If .Action(I).Amount > 0 Then Tmp = "+"
-                            frmEditor_Quest.lstTasks.AddItem "--ACTION: Modify Player Level by " & Tmp & .Action(I).Amount
+                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player Level by " & Tmp & .Action(I).Amount
                         Else
-                            frmEditor_Quest.lstTasks.AddItem "--ACTION: Set Player Level to " & .Action(I).Amount
+                            frmEditor_Quest.lstTasks.AddItem "---- Set Player Level to " & .Action(I).Amount
                         End If
+                        
+                    Case ACTION_WARP
+                        frmEditor_Quest.lstTasks.AddItem "---- Warp player to Map: " & .Action(I).Amount & " (X" & .Action(I).MainData & ", Y" & .Action(I).SecondaryData & ")"
                     
                     Case Else
                         Exit Sub
