@@ -470,7 +470,7 @@ Function CanNPCMove(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVal Dir 
             
         Case DIR_UPLEFT
             ' Check to make sure not outside of boundries
-            If X < Map(MapNum).MaxX Then
+            If X > 0 And Y > 0 Then
                 n = Map(MapNum).Tile(X - 1, Y - 1).Type
 
                 ' Check to make sure that the tile is walkable
@@ -514,7 +514,7 @@ Function CanNPCMove(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVal Dir 
             
         Case DIR_UPRIGHT
             ' Check to make sure not outside of boundries
-            If X < Map(MapNum).MaxX Then
+            If X < Map(MapNum).MaxX And Y > 0 Then
                 n = Map(MapNum).Tile(X + 1, Y - 1).Type
 
                 ' Check to make sure that the tile is walkable
@@ -558,7 +558,7 @@ Function CanNPCMove(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVal Dir 
             
         Case DIR_DOWNLEFT
             ' Check to make sure not outside of boundries
-            If X < Map(MapNum).MaxX Then
+            If X > 0 And Y < Map(MapNum).MaxY Then
                 n = Map(MapNum).Tile(X - 1, Y + 1).Type
 
                 ' Check to make sure that the tile is walkable
@@ -602,8 +602,8 @@ Function CanNPCMove(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVal Dir 
         
         Case DIR_DOWNRIGHT
             ' Check to make sure not outside of boundries
-            If X < Map(MapNum).MaxX Then
-                n = Map(MapNum).Tile(X - 1, Y - 1).Type
+            If X < Map(MapNum).MaxX And Y < Map(MapNum).MaxY Then
+                n = Map(MapNum).Tile(X + 1, Y + 1).Type
 
                 ' Check to make sure that the tile is walkable
                 If n <> TILE_TYPE_WALKABLE And n <> TILE_TYPE_ITEM And n <> TILE_TYPE_NPCSPAWN Then
@@ -614,7 +614,7 @@ Function CanNPCMove(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVal Dir 
                 ' Check to make sure that there is not a player in the way
                 For I = 1 To Player_HighIndex
                     If IsPlaying(I) Then
-                        If (GetPlayerMap(I) = MapNum) And (GetPlayerX(I) = MapNPC(MapNum).NPC(MapNPCNum).X - 1) And (GetPlayerY(I) = MapNPC(MapNum).NPC(MapNPCNum).Y - 1) Then
+                        If (GetPlayerMap(I) = MapNum) And (GetPlayerX(I) = MapNPC(MapNum).NPC(MapNPCNum).X + 1) And (GetPlayerY(I) = MapNPC(MapNum).NPC(MapNPCNum).Y + 1) Then
                             CanNPCMove = False
                             Exit Function
                         End If
@@ -623,20 +623,20 @@ Function CanNPCMove(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVal Dir 
 
                 ' Check to make sure that there is not another npc in the way
                 For I = 1 To Map(MapNum).NPC_HighIndex
-                    If (I <> MapNPCNum) And (MapNPC(MapNum).NPC(I).Num > 0) And (MapNPC(MapNum).NPC(I).X = MapNPC(MapNum).NPC(MapNPCNum).X - 1) And (MapNPC(MapNum).NPC(I).Y = MapNPC(MapNum).NPC(MapNPCNum).Y - 1) Then
+                    If (I <> MapNPCNum) And (MapNPC(MapNum).NPC(I).Num > 0) And (MapNPC(MapNum).NPC(I).X = MapNPC(MapNum).NPC(MapNPCNum).X + 1) And (MapNPC(MapNum).NPC(I).Y = MapNPC(MapNum).NPC(MapNPCNum).Y + 1) Then
                         CanNPCMove = False
                         Exit Function
                     End If
                 Next
                 
                 ' Directional blocking
-                'If IsDirBlocked(Map(MapNum).Tile(MapNPC(MapNum).NPC(MapNPCNum).X - 1, MapNPC(MapNum).NPC(MapNPCNum).Y - 1).DirBlock, DIR_DOWNRIGHT + 1) Then
+                'If IsDirBlocked(Map(MapNum).Tile(MapNPC(MapNum).NPC(MapNPCNum).X + 1, MapNPC(MapNum).NPC(MapNPCNum).Y + 1).DirBlock, DIR_DOWNRIGHT + 1) Then
                 '    CanNPCMove = False
                 '    Exit Function
                 'End If
                 
                 ' Event blocking
-                If IsEventBlocked(MapNPCNum, -1, -1, MapNum) Then
+                If IsEventBlocked(MapNPCNum, 1, 1, MapNum) Then
                     CanNPCMove = False
                     Exit Function
                 End If
@@ -728,7 +728,7 @@ Public Sub CacheResources(ByVal MapNum As Integer)
     ResourceCache(MapNum).Resource_Count = Resource_Count
 End Sub
 
-Sub PlayerSwapBankSlots(ByVal Index As Long, ByVal OldSlot As Byte, ByVal NewSlot As Byte)
+Sub PlayerSwapBankSlots(ByVal index As Long, ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Dim OldNum As Long
     Dim OldValue As Long
     Dim NewNum As Long
@@ -738,57 +738,57 @@ Sub PlayerSwapBankSlots(ByVal Index As Long, ByVal OldSlot As Byte, ByVal NewSlo
     Dim OldDur As Integer
     Dim NewDur As Integer
     
-    OldNum = GetPlayerBankItemNum(Index, OldSlot)
-    OldValue = GetPlayerBankItemValue(Index, OldSlot)
-    NewNum = GetPlayerBankItemNum(Index, NewSlot)
-    NewValue = GetPlayerBankItemValue(Index, NewSlot)
+    OldNum = GetPlayerBankItemNum(index, OldSlot)
+    OldValue = GetPlayerBankItemValue(index, OldSlot)
+    NewNum = GetPlayerBankItemNum(index, NewSlot)
+    NewValue = GetPlayerBankItemValue(index, NewSlot)
     
-    SetPlayerBankItemNum Index, NewSlot, OldNum
-    SetPlayerBankItemValue Index, NewSlot, OldValue
+    SetPlayerBankItemNum index, NewSlot, OldNum
+    SetPlayerBankItemValue index, NewSlot, OldValue
     
-    SetPlayerBankItemNum Index, OldSlot, NewNum
-    SetPlayerBankItemValue Index, OldSlot, NewValue
+    SetPlayerBankItemNum index, OldSlot, NewNum
+    SetPlayerBankItemValue index, OldSlot, NewValue
     
-    SetPlayerBankItemBind Index, OldSlot, NewBind
-    SetPlayerBankItemBind Index, NewSlot, OldBind
+    SetPlayerBankItemBind index, OldSlot, NewBind
+    SetPlayerBankItemBind index, NewSlot, OldBind
     
-    SetPlayerBankItemDur Index, OldSlot, NewDur
-    SetPlayerBankItemDur Index, NewSlot, OldDur
+    SetPlayerBankItemDur index, OldSlot, NewDur
+    SetPlayerBankItemDur index, NewSlot, OldDur
         
-    SendBank Index
+    SendBank index
 End Sub
 
-Sub PlayerSwitchSpellSlots(ByVal Index As Long, ByVal OldSlot As Byte, ByVal NewSlot As Byte)
+Sub PlayerSwitchSpellSlots(ByVal index As Long, ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Dim OldNum As Long, NewNum As Long
     Dim OldSpellCD As Long, NewSpellCD As Long
     Dim OldSpellCasts As Integer, NewSpellCasts As Integer
     
     ' Switch the actual spells
-    OldNum = GetPlayerSpell(Index, OldSlot)
-    NewNum = GetPlayerSpell(Index, NewSlot)
-    SetPlayerSpell Index, OldSlot, NewNum
-    SetPlayerSpell Index, NewSlot, OldNum
+    OldNum = GetPlayerSpell(index, OldSlot)
+    NewNum = GetPlayerSpell(index, NewSlot)
+    SetPlayerSpell index, OldSlot, NewNum
+    SetPlayerSpell index, NewSlot, OldNum
     
     ' Switch the spell cooldowns
-    OldSpellCD = GetPlayerSpellCD(Index, OldSlot)
-    NewSpellCD = GetPlayerSpellCD(Index, NewSlot)
-    Call SetPlayerSpellCD(Index, OldSlot, NewSpellCD)
-    Call SetPlayerSpellCD(Index, NewSlot, OldSpellCD)
+    OldSpellCD = GetPlayerSpellCD(index, OldSlot)
+    NewSpellCD = GetPlayerSpellCD(index, NewSlot)
+    Call SetPlayerSpellCD(index, OldSlot, NewSpellCD)
+    Call SetPlayerSpellCD(index, NewSlot, OldSpellCD)
     
     ' Switch the spell casts
-    OldSpellCasts = Account(Index).Chars(GetPlayerChar(Index)).AmountOfCasts(OldSlot)
-    NewSpellCasts = Account(Index).Chars(GetPlayerChar(Index)).AmountOfCasts(NewSlot)
-    Account(Index).Chars(GetPlayerChar(Index)).AmountOfCasts(OldSlot) = Account(Index).Chars(GetPlayerChar(Index)).AmountOfCasts(NewSlot)
-    Account(Index).Chars(GetPlayerChar(Index)).AmountOfCasts(NewSlot) = Account(Index).Chars(GetPlayerChar(Index)).AmountOfCasts(OldSlot)
+    OldSpellCasts = Account(index).Chars(GetPlayerChar(index)).AmountOfCasts(OldSlot)
+    NewSpellCasts = Account(index).Chars(GetPlayerChar(index)).AmountOfCasts(NewSlot)
+    Account(index).Chars(GetPlayerChar(index)).AmountOfCasts(OldSlot) = Account(index).Chars(GetPlayerChar(index)).AmountOfCasts(NewSlot)
+    Account(index).Chars(GetPlayerChar(index)).AmountOfCasts(NewSlot) = Account(index).Chars(GetPlayerChar(index)).AmountOfCasts(OldSlot)
     
     ' Update the spells
-    Call SendPlayerSpell(Index, OldSlot)
-    Call SendPlayerSpell(Index, NewSlot)
-    Call SendSpellCooldown(Index, OldSlot)
-    Call SendSpellCooldown(Index, NewSlot)
+    Call SendPlayerSpell(index, OldSlot)
+    Call SendPlayerSpell(index, NewSlot)
+    Call SendSpellCooldown(index, OldSlot)
+    Call SendSpellCooldown(index, NewSlot)
 End Sub
 
-Sub PlayerSwitchInvSlots(ByVal Index As Long, ByVal OldSlot As Byte, ByVal NewSlot As Byte)
+Sub PlayerSwitchInvSlots(ByVal index As Long, ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Dim OldNum As Long
     Dim OldValue As Long
     Dim OldDur As Integer
@@ -799,60 +799,60 @@ Sub PlayerSwitchInvSlots(ByVal Index As Long, ByVal OldSlot As Byte, ByVal NewSl
     Dim NewBind As Byte
 
     ' Set the item
-    OldNum = GetPlayerInvItemNum(Index, OldSlot)
-    NewNum = GetPlayerInvItemNum(Index, NewSlot)
-    SetPlayerInvItemNum Index, OldSlot, NewNum
-    SetPlayerInvItemNum Index, NewSlot, OldNum
+    OldNum = GetPlayerInvItemNum(index, OldSlot)
+    NewNum = GetPlayerInvItemNum(index, NewSlot)
+    SetPlayerInvItemNum index, OldSlot, NewNum
+    SetPlayerInvItemNum index, NewSlot, OldNum
     
     ' Set the item's value
-    OldValue = GetPlayerInvItemValue(Index, OldSlot)
-    NewValue = GetPlayerInvItemValue(Index, NewSlot)
-    SetPlayerInvItemValue Index, OldSlot, NewValue
-    SetPlayerInvItemValue Index, NewSlot, OldValue
+    OldValue = GetPlayerInvItemValue(index, OldSlot)
+    NewValue = GetPlayerInvItemValue(index, NewSlot)
+    SetPlayerInvItemValue index, OldSlot, NewValue
+    SetPlayerInvItemValue index, NewSlot, OldValue
     
     ' Set the item's durability
-    OldDur = GetPlayerInvItemDur(Index, OldSlot)
-    NewDur = GetPlayerInvItemDur(Index, NewSlot)
-    SetPlayerInvItemDur Index, OldSlot, NewDur
-    SetPlayerInvItemDur Index, NewSlot, OldDur
+    OldDur = GetPlayerInvItemDur(index, OldSlot)
+    NewDur = GetPlayerInvItemDur(index, NewSlot)
+    SetPlayerInvItemDur index, OldSlot, NewDur
+    SetPlayerInvItemDur index, NewSlot, OldDur
     
     ' Set the item's bind
-    OldBind = GetPlayerInvItemBind(Index, OldSlot)
-    NewBind = GetPlayerInvItemBind(Index, NewSlot)
-    SetPlayerInvItemBind Index, OldSlot, NewBind
-    SetPlayerInvItemBind Index, NewSlot, OldBind
+    OldBind = GetPlayerInvItemBind(index, OldSlot)
+    NewBind = GetPlayerInvItemBind(index, NewSlot)
+    SetPlayerInvItemBind index, OldSlot, NewBind
+    SetPlayerInvItemBind index, NewSlot, OldBind
     
-    SendInventory Index
+    SendInventory index
 End Sub
 
-Sub PlayerSwitchHotbarSlots(ByVal Index As Long, ByVal OldSlot As Byte, ByVal NewSlot As Byte)
+Sub PlayerSwitchHotbarSlots(ByVal index As Long, ByVal OldSlot As Byte, ByVal NewSlot As Byte)
     Dim OldNum As Long
     Dim NewNum As Long
     Dim OldSType As Long
     Dim NewSType As Long
 
     ' Set the number
-    OldNum = Account(Index).Chars(GetPlayerChar(Index)).Hotbar(OldSlot).Slot
-    NewNum = Account(Index).Chars(GetPlayerChar(Index)).Hotbar(NewSlot).Slot
-    Account(Index).Chars(GetPlayerChar(Index)).Hotbar(OldSlot).Slot = NewNum
-    Account(Index).Chars(GetPlayerChar(Index)).Hotbar(NewSlot).Slot = OldNum
+    OldNum = Account(index).Chars(GetPlayerChar(index)).Hotbar(OldSlot).Slot
+    NewNum = Account(index).Chars(GetPlayerChar(index)).Hotbar(NewSlot).Slot
+    Account(index).Chars(GetPlayerChar(index)).Hotbar(OldSlot).Slot = NewNum
+    Account(index).Chars(GetPlayerChar(index)).Hotbar(NewSlot).Slot = OldNum
     
     ' Set the type
-    OldSType = Account(Index).Chars(GetPlayerChar(Index)).Hotbar(OldSlot).SType
-    NewSType = Account(Index).Chars(GetPlayerChar(Index)).Hotbar(NewSlot).SType
-    Account(Index).Chars(GetPlayerChar(Index)).Hotbar(OldSlot).SType = NewSType
-    Account(Index).Chars(GetPlayerChar(Index)).Hotbar(NewSlot).SType = OldSType
+    OldSType = Account(index).Chars(GetPlayerChar(index)).Hotbar(OldSlot).SType
+    NewSType = Account(index).Chars(GetPlayerChar(index)).Hotbar(NewSlot).SType
+    Account(index).Chars(GetPlayerChar(index)).Hotbar(OldSlot).SType = NewSType
+    Account(index).Chars(GetPlayerChar(index)).Hotbar(NewSlot).SType = OldSType
     
-    SendHotbar Index
+    SendHotbar index
 End Sub
 
-Sub PlayerUnequipItem(ByVal Index As Long, ByVal EqSlot As Long, Optional ByVal SendUpdate As Boolean = True, Optional ByVal SendSound As Boolean = True)
+Sub PlayerUnequipItem(ByVal index As Long, ByVal EqSlot As Long, Optional ByVal SendUpdate As Boolean = True, Optional ByVal SendSound As Boolean = True)
     Dim I As Long
     
     ' Check for subscript out of range
     If EqSlot < 1 Or EqSlot > Equipment.Equipment_Count - 1 Then Exit Sub
     
-    If GetPlayerEquipment(Index, EqSlot) < 1 Then Exit Sub
+    If GetPlayerEquipment(index, EqSlot) < 1 Then Exit Sub
     
     ' Don't allow a player killer to unequip their equipment
     'If GetPlayerPK(Index) = PLAYER_KILLER Then
@@ -860,103 +860,103 @@ Sub PlayerUnequipItem(ByVal Index As Long, ByVal EqSlot As Long, Optional ByVal 
     '    Exit Sub
     'End If
     
-    If FindOpenInvSlot(Index, GetPlayerEquipment(Index, EqSlot)) > 0 Then
-        I = GiveInvItem(Index, GetPlayerEquipment(Index, EqSlot), 0, GetPlayerEquipmentDur(Index, EqSlot), GetPlayerEquipmentBind(Index, EqSlot), False)
+    If FindOpenInvSlot(index, GetPlayerEquipment(index, EqSlot)) > 0 Then
+        I = GiveInvItem(index, GetPlayerEquipment(index, EqSlot), 0, GetPlayerEquipmentDur(index, EqSlot), GetPlayerEquipmentBind(index, EqSlot), False)
 
         ' Prevent subscript out of range
         If I < 1 Or I > MAX_ITEMS Then Exit Sub
         
-        PlayerMsg Index, "You unequip " & CheckGrammar(Trim$(Item(GetPlayerEquipment(Index, EqSlot)).Name)) & ".", Yellow
+        PlayerMsg index, "You unequip " & CheckGrammar(Trim$(Item(GetPlayerEquipment(index, EqSlot)).Name)) & ".", Yellow
         
         ' Send the sound
         If SendSound Then
-            SendPlayerSound Index, GetPlayerX(Index), GetPlayerY(Index), SoundEntity.seItem, GetPlayerEquipment(Index, EqSlot)
+            SendPlayerSound index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seItem, GetPlayerEquipment(index, EqSlot)
         End If
         
         ' Remove equipment
-        SetPlayerEquipment Index, 0, EqSlot
-        SetPlayerEquipmentDur Index, 0, EqSlot
-        SetPlayerEquipmentBind Index, 0, EqSlot
+        SetPlayerEquipment index, 0, EqSlot
+        SetPlayerEquipmentDur index, 0, EqSlot
+        SetPlayerEquipmentBind index, 0, EqSlot
         
-        SendInventoryUpdate Index, I
+        SendInventoryUpdate index, I
         
         If SendUpdate Then
-            Call SendWornEquipment(Index)
-            Call SendMapEquipment(Index)
-            SendPlayerStats Index
+            Call SendWornEquipment(index)
+            Call SendMapEquipment(index)
+            SendPlayerStats index
             
             ' Send vitals
             For I = 1 To Vitals.Vital_Count - 1
-                Call SendVital(Index, I)
+                Call SendVital(index, I)
             Next
             
             ' Send vitals to party if in one
-            If TempPlayer(Index).InParty > 0 Then SendPartyVitals TempPlayer(Index).InParty, Index
+            If TempPlayer(index).InParty > 0 Then SendPartyVitals TempPlayer(index).InParty, index
         End If
     Else
-        PlayerMsg Index, "Your inventory is full.", BrightRed
+        PlayerMsg index, "Your inventory is full.", BrightRed
     End If
 End Sub
 
-Public Sub CheckSpellRankUp(ByVal Index As Long, ByVal SpellNum As Long, ByVal SpellSlot As Byte)
+Public Sub CheckSpellRankUp(ByVal index As Long, ByVal SpellNum As Long, ByVal SpellSlot As Byte)
     Dim I As Long
     
     ' Check if they have enough to rank up their spell
-    If Spell(Spell(SpellNum).NewSpell).CastRequired <= Account(Index).Chars(GetPlayerChar(Index)).AmountOfCasts(SpellSlot) Then
+    If Spell(Spell(SpellNum).NewSpell).CastRequired <= Account(index).Chars(GetPlayerChar(index)).AmountOfCasts(SpellSlot) Then
         ' Check if they meet the level to learn the spell
-        If Spell(Spell(SpellNum).NewSpell).LevelReq <= GetPlayerLevel(Index) Then
+        If Spell(Spell(SpellNum).NewSpell).LevelReq <= GetPlayerLevel(index) Then
             ' Send the message update
-            Call PlayerMsg(Index, "You have ranked up the spell " & Trim$(Spell(SpellNum).Name) & "!", BrightGreen)
+            Call PlayerMsg(index, "You have ranked up the spell " & Trim$(Spell(SpellNum).Name) & "!", BrightGreen)
             
             ' Set the hotbar to the new spell
             For I = 1 To MAX_HOTBAR
-                If Account(Index).Chars(GetPlayerChar(Index)).Hotbar(I).Slot = SpellNum And Account(Index).Chars(GetPlayerChar(Index)).Hotbar(I).SType = 2 Then
-                    Account(Index).Chars(GetPlayerChar(Index)).Hotbar(I).Slot = Spell(SpellNum).NewSpell
-                    SendHotbar Index
+                If Account(index).Chars(GetPlayerChar(index)).Hotbar(I).Slot = SpellNum And Account(index).Chars(GetPlayerChar(index)).Hotbar(I).SType = 2 Then
+                    Account(index).Chars(GetPlayerChar(index)).Hotbar(I).Slot = Spell(SpellNum).NewSpell
+                    SendHotbar index
                 End If
             Next
             
             ' Set it to the new spell
-            Call SetPlayerSpell(Index, SpellSlot, Spell(SpellNum).NewSpell)
+            Call SetPlayerSpell(index, SpellSlot, Spell(SpellNum).NewSpell)
             
             ' Reset the cooldown
-            Call SetPlayerSpellCD(Index, SpellSlot, 0)
+            Call SetPlayerSpellCD(index, SpellSlot, 0)
             
             ' Reset the amount of casts
-            Account(Index).Chars(GetPlayerChar(Index)).AmountOfCasts(SpellSlot) = 0
+            Account(index).Chars(GetPlayerChar(index)).AmountOfCasts(SpellSlot) = 0
             
             ' Update the cooldown
-            Call SendSpellCooldown(Index, SpellSlot)
+            Call SendSpellCooldown(index, SpellSlot)
             
             ' Update the spell
-            Call SendPlayerSpell(Index, SpellSlot)
+            Call SendPlayerSpell(index, SpellSlot)
         End If
     End If
 End Sub
 
-Public Sub CheckPlayerNewTitle(ByVal Index As Long, Optional ByVal Message As Boolean = True)
+Public Sub CheckPlayerNewTitle(ByVal index As Long, Optional ByVal Message As Boolean = True)
     Dim I As Byte, X As Byte
     
     For I = 1 To MAX_TITLES
         For X = 1 To MAX_TITLES
-            If CanAddTitle(Index, I) Then
+            If CanAddTitle(index, I) Then
                 ' Find an empty slot
-                If GetPlayerTitle(Index, X) = 0 Then
+                If GetPlayerTitle(index, X) = 0 Then
                     ' Set the title
-                    Account(Index).Chars(GetPlayerChar(Index)).Title(X) = I
-                    Account(Index).Chars(GetPlayerChar(Index)).AmountOfTitles = Account(Index).Chars(GetPlayerChar(Index)).AmountOfTitles + 1
+                    Account(index).Chars(GetPlayerChar(index)).Title(X) = I
+                    Account(index).Chars(GetPlayerChar(index)).AmountOfTitles = Account(index).Chars(GetPlayerChar(index)).AmountOfTitles + 1
 
                     If Message Then
-                        Call PlayerMsg(Index, "You have unlocked the " & Trim$(Title(I).Name) & " title!", BrightGreen)
+                        Call PlayerMsg(index, "You have unlocked the " & Trim$(Title(I).Name) & " title!", BrightGreen)
                     End If
                     
                     ' Set the current title
-                    If Account(Index).Chars(GetPlayerChar(Index)).CurrentTitle = 0 Then
-                        Account(Index).Chars(GetPlayerChar(Index)).CurrentTitle = I
+                    If Account(index).Chars(GetPlayerChar(index)).CurrentTitle = 0 Then
+                        Account(index).Chars(GetPlayerChar(index)).CurrentTitle = I
                     End If
                     
                     ' Send updated title
-                    Call SendPlayerTitles(Index)
+                    Call SendPlayerTitles(index)
                     Exit For
                 End If
             End If
@@ -964,32 +964,32 @@ Public Sub CheckPlayerNewTitle(ByVal Index As Long, Optional ByVal Message As Bo
     Next
 End Sub
 
-Public Sub AddPlayerNewTitle(ByVal Index As Long, ByVal TitleNum As Long, Optional ByVal InvNum As Byte, Optional ByVal Message As Boolean = True)
+Public Sub AddPlayerNewTitle(ByVal index As Long, ByVal TitleNum As Long, Optional ByVal InvNum As Byte, Optional ByVal Message As Boolean = True)
     Dim I As Byte, X As Byte
     
-    If CanAddTitle(Index, TitleNum, False, True) Then
+    If CanAddTitle(index, TitleNum, False, True) Then
         For I = 1 To MAX_TITLES
             ' Find an empty slot
-            If GetPlayerTitle(Index, I) = 0 Then
+            If GetPlayerTitle(index, I) = 0 Then
                 ' Set the title
-                Call SetPlayerTitle(Index, I, TitleNum)
-                Account(Index).Chars(GetPlayerChar(Index)).AmountOfTitles = Account(Index).Chars(GetPlayerChar(Index)).AmountOfTitles + 1
+                Call SetPlayerTitle(index, I, TitleNum)
+                Account(index).Chars(GetPlayerChar(index)).AmountOfTitles = Account(index).Chars(GetPlayerChar(index)).AmountOfTitles + 1
 
                 If Message Then
-                    Call PlayerMsg(Index, "You have unlocked the " & Trim$(Title(TitleNum).Name) & " title!", BrightGreen)
+                    Call PlayerMsg(index, "You have unlocked the " & Trim$(Title(TitleNum).Name) & " title!", BrightGreen)
                 End If
                 
                 ' Set the current title
-                If Account(Index).Chars(GetPlayerChar(Index)).CurrentTitle = 0 Then
-                    Account(Index).Chars(GetPlayerChar(Index)).CurrentTitle = I
+                If Account(index).Chars(GetPlayerChar(index)).CurrentTitle = 0 Then
+                    Account(index).Chars(GetPlayerChar(index)).CurrentTitle = I
                 End If
                 
                 ' Send updated title
-                Call SendPlayerTitles(Index)
+                Call SendPlayerTitles(index)
                 
                 ' Is it reusable, if not take item away
-                If Item(GetPlayerInvItemNum(Index, InvNum)).IsReusable = False Then
-                    Call TakeInvItem(Index, GetPlayerInvItemNum(Index, InvNum), 1)
+                If Item(GetPlayerInvItemNum(index, InvNum)).IsReusable = False Then
+                    Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 1)
                 End If
                 Exit For
             End If
@@ -997,18 +997,18 @@ Public Sub AddPlayerNewTitle(ByVal Index As Long, ByVal TitleNum As Long, Option
     End If
 End Sub
 
-Private Function CanAddTitle(ByVal Index As Long, ByVal TitleNum As Byte, Optional ByVal NoRequirement As Boolean = True, Optional ByVal Message As Byte = False) As Boolean
+Private Function CanAddTitle(ByVal index As Long, ByVal TitleNum As Byte, Optional ByVal NoRequirement As Boolean = True, Optional ByVal Message As Byte = False) As Boolean
     Dim I As Byte
     
     ' Don't add a title if it has no requirements
     If Title(TitleNum).LevelReq = 0 And Title(TitleNum).PKReq = 0 And NoRequirement Then Exit Function
 
     ' Check if we don't have one of the possible titles
-    If GetPlayerLevel(Index) >= Title(TitleNum).LevelReq And Account(Index).Chars(GetPlayerChar(Index)).PlayerKills >= Title(TitleNum).PKReq Then
+    If GetPlayerLevel(index) >= Title(TitleNum).LevelReq And Account(index).Chars(GetPlayerChar(index)).PlayerKills >= Title(TitleNum).PKReq Then
         If Len(Trim$(Title(TitleNum).Name)) > 0 Then
-            For I = 1 To Account(Index).Chars(GetPlayerChar(Index)).AmountOfTitles
-                If Account(Index).Chars(GetPlayerChar(Index)).Title(I) = TitleNum Then
-                    If Message Then Call PlayerMsg(Index, "You already have this title!", 12)
+            For I = 1 To Account(index).Chars(GetPlayerChar(index)).AmountOfTitles
+                If Account(index).Chars(GetPlayerChar(index)).Title(I) = TitleNum Then
+                    If Message Then Call PlayerMsg(index, "You already have this title!", 12)
                     Exit Function
                 End If
             Next
@@ -1016,7 +1016,7 @@ Private Function CanAddTitle(ByVal Index As Long, ByVal TitleNum As Byte, Option
             Exit Function
         End If
     Else
-        If Message Then Call PlayerMsg(Index, "You do not meet the requirements to earn this title!", 12)
+        If Message Then Call PlayerMsg(index, "You do not meet the requirements to earn this title!", 12)
         Exit Function
     End If
     
@@ -1068,10 +1068,10 @@ End Function
 ' #####################
 ' ## Party Functions ##
 ' #####################
-Public Sub Party_PlayerLeave(ByVal Index As Long)
+Public Sub Party_PlayerLeave(ByVal index As Long)
     Dim PartyNum As Long, I As Long
 
-    PartyNum = TempPlayer(Index).InParty
+    PartyNum = TempPlayer(index).InParty
     
     If PartyNum > 0 Then
         ' Find out how many members we have
@@ -1079,10 +1079,10 @@ Public Sub Party_PlayerLeave(ByVal Index As Long)
         ' Make sure there's more than 2 people
         If Party(PartyNum).MemberCount > 2 Then
             ' Check if leader
-            If Party(PartyNum).Leader = Index Then
+            If Party(PartyNum).Leader = index Then
                 ' Set next person down as leader
                 For I = 1 To MAX_PARTY_MEMBERS
-                    If Party(PartyNum).Member(I) > 0 And Party(PartyNum).Member(I) <> Index Then
+                    If Party(PartyNum).Member(I) > 0 And Party(PartyNum).Member(I) <> index Then
                         Party(PartyNum).Leader = Party(PartyNum).Member(I)
                         PartyMsg PartyNum, GetPlayerName(I) & " is now the party leader.", BrightBlue
                         Exit For
@@ -1090,14 +1090,14 @@ Public Sub Party_PlayerLeave(ByVal Index As Long)
                 Next
                 
                 ' Leave party
-                PartyMsg PartyNum, GetPlayerName(Index) & " has left the party.", BrightRed
+                PartyMsg PartyNum, GetPlayerName(index) & " has left the party.", BrightRed
                 
                 ' Clear the PartyNum
-                TempPlayer(Index).InParty = 0
+                TempPlayer(index).InParty = 0
                 
                 ' Remove from array
                 For I = 1 To MAX_PARTY_MEMBERS
-                    If Party(PartyNum).Member(I) = Index Then
+                    If Party(PartyNum).Member(I) = index Then
                         Party(PartyNum).Member(I) = 0
                         Exit For
                     End If
@@ -1110,21 +1110,21 @@ Public Sub Party_PlayerLeave(ByVal Index As Long)
                 SendPartyUpdate PartyNum
                 
                 ' Send clear to player
-                SendPartyUpdateTo Index
+                SendPartyUpdateTo index
             Else
                 ' Not the leader, just leave
-                PartyMsg PartyNum, GetPlayerName(Index) & " has left the party.", BrightRed
+                PartyMsg PartyNum, GetPlayerName(index) & " has left the party.", BrightRed
                 
                 ' Remove from array
                 For I = 1 To MAX_PARTY_MEMBERS
-                    If Party(PartyNum).Member(I) = Index Then
+                    If Party(PartyNum).Member(I) = index Then
                         Party(PartyNum).Member(I) = 0
                         Exit For
                     End If
                 Next
                 
                 ' Clear the PartyNum
-                TempPlayer(Index).InParty = 0
+                TempPlayer(index).InParty = 0
                 
                 ' Recount party
                 Party_CountMembers PartyNum
@@ -1133,7 +1133,7 @@ Public Sub Party_PlayerLeave(ByVal Index As Long)
                 SendPartyUpdate PartyNum
                 
                 ' Send clear to player
-                SendPartyUpdateTo Index
+                SendPartyUpdateTo index
             End If
         Else
             ' Find out how many members we have
@@ -1144,9 +1144,9 @@ Public Sub Party_PlayerLeave(ByVal Index As Long)
                 
             ' Clear out everyone's party
             For I = 1 To MAX_PARTY_MEMBERS
-                Index = Party(PartyNum).Member(I)
+                index = Party(PartyNum).Member(I)
                 ' Player exist?
-                If Index > 0 Then
+                If index > 0 Then
                     ' Remove them
                     TempPlayer(I).InParty = 0
                     Party(PartyNum).Member(I) = 0
@@ -1162,67 +1162,67 @@ Public Sub Party_PlayerLeave(ByVal Index As Long)
     End If
 End Sub
 
-Public Sub Party_Invite(ByVal Index As Long, ByVal OtherPlayer As Long)
+Public Sub Party_Invite(ByVal index As Long, ByVal OtherPlayer As Long)
     Dim PartyNum As Long, I As Long
     
     ' Make sure they're not in a party
     If TempPlayer(OtherPlayer).InParty > 0 Then
         ' They're already in a party
-        PlayerMsg Index, "This player is already in a party!", BrightRed
+        PlayerMsg index, "This player is already in a party!", BrightRed
         Exit Sub
     End If
     
     ' Check if there doing another action
-    If IsPlayerBusy(Index, OtherPlayer) Then Exit Sub
+    If IsPlayerBusy(index, OtherPlayer) Then Exit Sub
     
     ' Check if we're in a party
-    If TempPlayer(Index).InParty > 0 Then
-        PartyNum = TempPlayer(Index).InParty
+    If TempPlayer(index).InParty > 0 Then
+        PartyNum = TempPlayer(index).InParty
         ' Make sure we're the leader
-        If Party(PartyNum).Leader = Index Then
+        If Party(PartyNum).Leader = index Then
             ' Got a blank slot?
             For I = 1 To MAX_PARTY_MEMBERS
                 If Party(PartyNum).Member(I) = 0 Then
                     ' Send the invitation
-                    SendPartyInvite OtherPlayer, Index
+                    SendPartyInvite OtherPlayer, index
                     
                     ' Set the invite target
-                    TempPlayer(OtherPlayer).PartyInvite = Index
+                    TempPlayer(OtherPlayer).PartyInvite = index
                     
                     ' Let them know
-                    PlayerMsg Index, "Party invitation sent.", Pink
+                    PlayerMsg index, "Party invitation sent.", Pink
                     Exit Sub
                 End If
             Next
             
             ' No room
-            PlayerMsg Index, "Party is full!", BrightRed
+            PlayerMsg index, "Party is full!", BrightRed
             Exit Sub
         Else
             ' Not the leader
-            PlayerMsg Index, "You are not the party leader!", BrightRed
+            PlayerMsg index, "You are not the party leader!", BrightRed
             Exit Sub
         End If
     Else
         ' Not in a party - doesn't matter
-        SendPartyInvite OtherPlayer, Index
+        SendPartyInvite OtherPlayer, index
         
         ' Set the invite target
-        TempPlayer(OtherPlayer).PartyInvite = Index
+        TempPlayer(OtherPlayer).PartyInvite = index
         
         ' Let them know
-        PlayerMsg Index, "Party invitation sent.", Pink
+        PlayerMsg index, "Party invitation sent.", Pink
         Exit Sub
     End If
 End Sub
 
-Public Sub Party_InviteAccept(ByVal Index As Long, ByVal OtherPlayer As Long)
+Public Sub Party_InviteAccept(ByVal index As Long, ByVal OtherPlayer As Long)
     Dim PartyNum As Byte, I As Long
 
     ' Check if already in a party
-    If TempPlayer(Index).InParty > 0 Then
+    If TempPlayer(index).InParty > 0 Then
         ' Get the PartyNumber
-        PartyNum = TempPlayer(Index).InParty
+        PartyNum = TempPlayer(index).InParty
         ' Got a blank slot?
         For I = 1 To MAX_PARTY_MEMBERS
             If Party(PartyNum).Member(I) = 0 Then
@@ -1249,7 +1249,7 @@ Public Sub Party_InviteAccept(ByVal Index As Long, ByVal OtherPlayer As Long)
         Next
         
         ' No empty slots - let them know
-        PlayerMsg Index, "Party is full!", BrightRed
+        PlayerMsg index, "Party is full!", BrightRed
         PlayerMsg OtherPlayer, "Party is full!", BrightRed
         Exit Sub
     Else
@@ -1264,11 +1264,11 @@ Public Sub Party_InviteAccept(ByVal Index As Long, ByVal OtherPlayer As Long)
         
         ' Create the party
         Party(PartyNum).MemberCount = 2
-        Party(PartyNum).Leader = Index
-        Party(PartyNum).Member(1) = Index
+        Party(PartyNum).Leader = index
+        Party(PartyNum).Member(1) = index
         Party(PartyNum).Member(2) = OtherPlayer
         SendPartyUpdate PartyNum
-        SendPartyVitals PartyNum, Index
+        SendPartyVitals PartyNum, index
         SendPartyVitals PartyNum, OtherPlayer
         
         ' Let them know it's created
@@ -1279,13 +1279,13 @@ Public Sub Party_InviteAccept(ByVal Index As Long, ByVal OtherPlayer As Long)
        
        ' Add them to the party
         TempPlayer(OtherPlayer).InParty = PartyNum
-        TempPlayer(Index).InParty = PartyNum
+        TempPlayer(index).InParty = PartyNum
     End If
 End Sub
 
-Public Sub Party_InviteDecline(ByVal Index As Long, ByVal OtherPlayer As Long)
-    If IsPlaying(Index) Then
-        PlayerMsg Index, GetPlayerName(OtherPlayer) & " has declined to join the party!", BrightRed
+Public Sub Party_InviteDecline(ByVal index As Long, ByVal OtherPlayer As Long)
+    If IsPlaying(index) Then
+        PlayerMsg index, GetPlayerName(OtherPlayer) & " has declined to join the party!", BrightRed
     End If
     
     PlayerMsg OtherPlayer, "You declined to join the party!", BrightRed
@@ -1336,13 +1336,13 @@ Public Sub Party_CountMembers(ByVal PartyNum As Long)
     Party_CountMembers PartyNum
 End Sub
 
-Public Sub Party_ShareExp(ByVal PartyNum As Long, ByVal Exp As Long, ByVal Index As Long)
+Public Sub Party_ShareExp(ByVal PartyNum As Long, ByVal Exp As Long, ByVal index As Long)
     Dim ExpShare As Long, LeftOver As Long, I As Long, tmpIndex As Long
 
     ' Check if it's worth sharing
     If Not Exp >= Party(PartyNum).MemberCount Then
         ' No party - keep exp for self
-        GivePlayerEXP Index, Exp
+        GivePlayerEXP index, Exp
         Exit Sub
     End If
     
@@ -1371,17 +1371,17 @@ Public Sub Party_ShareExp(ByVal PartyNum As Long, ByVal Exp As Long, ByVal Index
     GivePlayerEXP tmpIndex, LeftOver
 End Sub
 
-Public Sub GivePlayerEXP(ByVal Index As Long, ByVal Exp As Long)
-    If GetPlayerLevel(Index) = MAX_LEVEL Then Exit Sub
+Public Sub GivePlayerEXP(ByVal index As Long, ByVal Exp As Long)
+    If GetPlayerLevel(index) = MAX_LEVEL Then Exit Sub
     
     ' Give the exp
-    Call SetPlayerExp(Index, GetPlayerExp(Index) + Exp)
+    Call SetPlayerExp(index, GetPlayerExp(index) + Exp)
     
-    SendPlayerExp Index
-    SendActionMsg GetPlayerMap(Index), "+" & Exp & " Exp", White, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
+    SendPlayerExp index
+    SendActionMsg GetPlayerMap(index), "+" & Exp & " Exp", White, 1, (GetPlayerX(index) * 32), (GetPlayerY(index) * 32)
     
     ' Check if we've leveled
-    CheckPlayerLevelUp Index
+    CheckPlayerLevelUp index
 End Sub
 
 Public Function Clamp(ByVal Value As Long, ByVal Min As Long, ByVal Max As Long) As Long
@@ -1424,42 +1424,42 @@ Public Function GetProficiencyName(ByVal ProficiencyNum As Byte) As String
     End Select
 End Function
 
-Public Sub DeclineTradeRequest(ByVal Index As Long)
-    If IsPlaying(TempPlayer(Index).TradeRequest) Then
-        PlayerMsg TempPlayer(Index).TradeRequest, GetPlayerName(Index) & " has declined your trade request!", BrightRed
+Public Sub DeclineTradeRequest(ByVal index As Long)
+    If IsPlaying(TempPlayer(index).TradeRequest) Then
+        PlayerMsg TempPlayer(index).TradeRequest, GetPlayerName(index) & " has declined your trade request!", BrightRed
     End If
-    PlayerMsg Index, "You decline the trade request.", BrightRed
+    PlayerMsg index, "You decline the trade request.", BrightRed
     
     ' Clear the tradeRequest server-side
-    TempPlayer(Index).TradeRequest = 0
+    TempPlayer(index).TradeRequest = 0
 End Sub
 
-Public Sub DeclineGuildInvite(ByVal Index As Long)
-    If IsPlaying(TempPlayer(Index).GuildInvite) Then
-        Call PlayerMsg(TempPlayer(Index).GuildInvite, GetPlayerName(Index) & " has declined the guild invitation!", BrightRed)
+Public Sub DeclineGuildInvite(ByVal index As Long)
+    If IsPlaying(TempPlayer(index).GuildInvite) Then
+        Call PlayerMsg(TempPlayer(index).GuildInvite, GetPlayerName(index) & " has declined the guild invitation!", BrightRed)
     End If
     
-    PlayerMsg Index, "You declined to join the guild.", BrightRed
+    PlayerMsg index, "You declined to join the guild.", BrightRed
     
     ' Clear the guild invite server-side
-    TempPlayer(Index).GuildInvite = 0
+    TempPlayer(index).GuildInvite = 0
 End Sub
 
-Sub Guild_Disband(ByVal Index As Long)
+Sub Guild_Disband(ByVal index As Long)
     Dim I As Long, tmpIndex As Long, tmpGuild As Long
     
     ' Subscript out of range
-    If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
+    If index < 1 Or index > MAX_PLAYERS Then Exit Sub
     
     ' Make sure they are actually in a guild
-    If GetPlayerGuild(Index) = 0 Then Exit Sub
+    If GetPlayerGuild(index) = 0 Then Exit Sub
     
     ' Make sure they are the guild leader
-    If GetPlayerGuildAccess(Index) < MAX_GUILDACCESS Then Exit Sub
+    If GetPlayerGuildAccess(index) < MAX_GUILDACCESS Then Exit Sub
 
-    tmpGuild = GetPlayerGuild(Index)
+    tmpGuild = GetPlayerGuild(index)
     
-    Call GlobalMsg(GetPlayerName(Index) & " has disbanded the guild " & GetPlayerGuildName(Index) & "!", BrightRed)
+    Call GlobalMsg(GetPlayerName(index) & " has disbanded the guild " & GetPlayerGuildName(index) & "!", BrightRed)
     Guild(tmpGuild).Name = vbNullString
     Guild(tmpGuild).MOTD = vbNullString
     
@@ -1469,7 +1469,7 @@ Sub Guild_Disband(ByVal Index As Long)
             tmpIndex = FindPlayer(Guild(tmpGuild).Members(I))
             
             Call LoadTempGuildMember(I, Guild(tmpGuild).Members(I))
-            TempGuildMember(I).Guild.Index = 0
+            TempGuildMember(I).Guild.index = 0
             TempGuildMember(I).Guild.Access = 0
             Call SaveTempGuildMember(I, Guild(tmpGuild).Members(I))
             Guild(tmpGuild).Members(I) = vbNullString
@@ -1488,12 +1488,12 @@ Sub Guild_Disband(ByVal Index As Long)
     Call SaveGuild(tmpGuild)
 End Sub
 
-Public Sub SpawnMapEventsFor(Index As Long, MapNum As Long)
+Public Sub SpawnMapEventsFor(index As Long, MapNum As Long)
     Dim I As Long, X As Long, Y As Long, z As Long, spawncurrentevent As Boolean, p As Long
     Dim Buffer As clsBuffer
     
-    TempPlayer(Index).EventMap.CurrentEvents = 0
-    ReDim TempPlayer(Index).EventMap.EventPages(0)
+    TempPlayer(index).EventMap.CurrentEvents = 0
+    ReDim TempPlayer(index).EventMap.EventPages(0)
     
     If Map(MapNum).EventCount <= 0 Then Exit Sub
     For I = 1 To Map(MapNum).EventCount
@@ -1503,19 +1503,19 @@ Public Sub SpawnMapEventsFor(Index As Long, MapNum As Long)
                     spawncurrentevent = True
                     
                     If .chkVariable = 1 Then
-                        If Account(Index).Chars(GetPlayerChar(Index)).Variables(.VariableIndex) < .VariableCondition Then
+                        If Account(index).Chars(GetPlayerChar(index)).Variables(.VariableIndex) < .VariableCondition Then
                             spawncurrentevent = False
                         End If
                     End If
                     
                     If .chkSwitch = 1 Then
-                        If Account(Index).Chars(GetPlayerChar(Index)).Switches(.SwitchIndex) = 0 Then
+                        If Account(index).Chars(GetPlayerChar(index)).Switches(.SwitchIndex) = 0 Then
                             spawncurrentevent = False
                         End If
                     End If
                     
                     If .chkHasItem = 1 Then
-                        If HasItem(Index, .HasItemIndex) = 0 Then
+                        If HasItem(index, .HasItemIndex) = 0 Then
                             spawncurrentevent = False
                         End If
                     End If
@@ -1528,11 +1528,11 @@ Public Sub SpawnMapEventsFor(Index As Long, MapNum As Long)
                     
                     If spawncurrentevent = True Or (spawncurrentevent = False And z = 1) Then
                         ' Spawn the event and send data to player
-                        TempPlayer(Index).EventMap.CurrentEvents = TempPlayer(Index).EventMap.CurrentEvents + 1
+                        TempPlayer(index).EventMap.CurrentEvents = TempPlayer(index).EventMap.CurrentEvents + 1
                         
-                        ReDim Preserve TempPlayer(Index).EventMap.EventPages(TempPlayer(Index).EventMap.CurrentEvents)
+                        ReDim Preserve TempPlayer(index).EventMap.EventPages(TempPlayer(index).EventMap.CurrentEvents)
                         
-                        With TempPlayer(Index).EventMap.EventPages(TempPlayer(Index).EventMap.CurrentEvents)
+                        With TempPlayer(index).EventMap.EventPages(TempPlayer(index).EventMap.CurrentEvents)
                             If Map(MapNum).Events(I).Pages(z).GraphicType = 1 Then
                                 Select Case Map(MapNum).Events(I).Pages(z).GraphicY
                                     Case 0
@@ -1623,15 +1623,15 @@ Public Sub SpawnMapEventsFor(Index As Long, MapNum As Long)
 nextevent:
     Next
     
-    If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
-        For I = 1 To TempPlayer(Index).EventMap.CurrentEvents
+    If TempPlayer(index).EventMap.CurrentEvents > 0 Then
+        For I = 1 To TempPlayer(index).EventMap.CurrentEvents
             Set Buffer = New clsBuffer
             
             Buffer.WriteLong SSpawnEvent
             Buffer.WriteLong I
             
-            With TempPlayer(Index).EventMap.EventPages(I)
-                Buffer.WriteString Map(GetPlayerMap(Index)).Events(I).Name
+            With TempPlayer(index).EventMap.EventPages(I)
+                Buffer.WriteString Map(GetPlayerMap(index)).Events(I).Name
                 Buffer.WriteLong .Dir
                 Buffer.WriteLong .GraphicNum
                 Buffer.WriteLong .GraphicType
@@ -1651,7 +1651,7 @@ nextevent:
                 Buffer.WriteByte Map(MapNum).Events(.eventID).Pages(.PageID).Trigger
             End With
             
-            SendDataTo Index, Buffer.ToArray
+            SendDataTo index, Buffer.ToArray
             Set Buffer = Nothing
         Next
     End If
@@ -1721,7 +1721,7 @@ Sub SpawnGlobalEvents(ByVal MapNum As Long)
     End If
 End Sub
 
-Function CanEventMove(Index As Long, ByVal MapNum As Long, X As Long, Y As Long, eventID As Long, WalkThrough As Long, ByVal Dir As Byte, Optional GlobalEvent As Boolean = False) As Boolean
+Function CanEventMove(index As Long, ByVal MapNum As Long, X As Long, Y As Long, eventID As Long, WalkThrough As Long, ByVal Dir As Byte, Optional GlobalEvent As Boolean = False) As Boolean
     Dim I As Long
     Dim n As Long, z As Long
 
@@ -1775,9 +1775,9 @@ Function CanEventMove(Index As Long, ByVal MapNum As Long, X As Long, Y As Long,
                         Next
                     End If
                 Else
-                    If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
-                        For z = 1 To TempPlayer(Index).EventMap.CurrentEvents
-                            If (TempPlayer(Index).EventMap.EventPages(z).eventID <> eventID) And (eventID > 0) And (TempPlayer(Index).EventMap.EventPages(z).X = TempPlayer(Index).EventMap.EventPages(eventID).X) And (TempPlayer(Index).EventMap.EventPages(z).Y = TempPlayer(Index).EventMap.EventPages(eventID).Y - 1) Then
+                    If TempPlayer(index).EventMap.CurrentEvents > 0 Then
+                        For z = 1 To TempPlayer(index).EventMap.CurrentEvents
+                            If (TempPlayer(index).EventMap.EventPages(z).eventID <> eventID) And (eventID > 0) And (TempPlayer(index).EventMap.EventPages(z).X = TempPlayer(index).EventMap.EventPages(eventID).X) And (TempPlayer(index).EventMap.EventPages(z).Y = TempPlayer(index).EventMap.EventPages(eventID).Y - 1) Then
                                 CanEventMove = False
                                 Exit Function
                             End If
@@ -1838,9 +1838,9 @@ Function CanEventMove(Index As Long, ByVal MapNum As Long, X As Long, Y As Long,
                         Next
                     End If
                 Else
-                    If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
-                        For z = 1 To TempPlayer(Index).EventMap.CurrentEvents
-                            If (TempPlayer(Index).EventMap.EventPages(z).eventID <> eventID) And (eventID > 0) And (TempPlayer(Index).EventMap.EventPages(z).X = TempPlayer(Index).EventMap.EventPages(eventID).X) And (TempPlayer(Index).EventMap.EventPages(z).Y = TempPlayer(Index).EventMap.EventPages(eventID).Y + 1) Then
+                    If TempPlayer(index).EventMap.CurrentEvents > 0 Then
+                        For z = 1 To TempPlayer(index).EventMap.CurrentEvents
+                            If (TempPlayer(index).EventMap.EventPages(z).eventID <> eventID) And (eventID > 0) And (TempPlayer(index).EventMap.EventPages(z).X = TempPlayer(index).EventMap.EventPages(eventID).X) And (TempPlayer(index).EventMap.EventPages(z).Y = TempPlayer(index).EventMap.EventPages(eventID).Y + 1) Then
                                 CanEventMove = False
                                 Exit Function
                             End If
@@ -1901,9 +1901,9 @@ Function CanEventMove(Index As Long, ByVal MapNum As Long, X As Long, Y As Long,
                         Next
                     End If
                 Else
-                    If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
-                        For z = 1 To TempPlayer(Index).EventMap.CurrentEvents
-                            If (TempPlayer(Index).EventMap.EventPages(z).eventID <> eventID) And (eventID > 0) And (TempPlayer(Index).EventMap.EventPages(z).X = TempPlayer(Index).EventMap.EventPages(eventID).X - 1) And (TempPlayer(Index).EventMap.EventPages(z).Y = TempPlayer(Index).EventMap.EventPages(eventID).Y) Then
+                    If TempPlayer(index).EventMap.CurrentEvents > 0 Then
+                        For z = 1 To TempPlayer(index).EventMap.CurrentEvents
+                            If (TempPlayer(index).EventMap.EventPages(z).eventID <> eventID) And (eventID > 0) And (TempPlayer(index).EventMap.EventPages(z).X = TempPlayer(index).EventMap.EventPages(eventID).X - 1) And (TempPlayer(index).EventMap.EventPages(z).Y = TempPlayer(index).EventMap.EventPages(eventID).Y) Then
                                 CanEventMove = False
                                 Exit Function
                             End If
@@ -1964,9 +1964,9 @@ Function CanEventMove(Index As Long, ByVal MapNum As Long, X As Long, Y As Long,
                         Next
                     End If
                 Else
-                    If TempPlayer(Index).EventMap.CurrentEvents > 0 Then
-                        For z = 1 To TempPlayer(Index).EventMap.CurrentEvents
-                            If (TempPlayer(Index).EventMap.EventPages(z).eventID <> eventID) And (eventID > 0) And (TempPlayer(Index).EventMap.EventPages(z).X = TempPlayer(Index).EventMap.EventPages(eventID).X + 1) And (TempPlayer(Index).EventMap.EventPages(z).Y = TempPlayer(Index).EventMap.EventPages(eventID).Y) Then
+                    If TempPlayer(index).EventMap.CurrentEvents > 0 Then
+                        For z = 1 To TempPlayer(index).EventMap.CurrentEvents
+                            If (TempPlayer(index).EventMap.EventPages(z).eventID <> eventID) And (eventID > 0) And (TempPlayer(index).EventMap.EventPages(z).X = TempPlayer(index).EventMap.EventPages(eventID).X + 1) And (TempPlayer(index).EventMap.EventPages(z).Y = TempPlayer(index).EventMap.EventPages(eventID).Y) Then
                                 CanEventMove = False
                                 Exit Function
                             End If
@@ -2011,7 +2011,7 @@ Sub EventDir(playerindex As Long, ByVal MapNum As Long, ByVal eventID As Long, B
     Set Buffer = Nothing
 End Sub
 
-Sub EventMove(Index As Long, MapNum As Long, ByVal eventID As Long, ByVal Dir As Long, MovementSpeed As Long, Optional GlobalEvent As Boolean = False)
+Sub EventMove(index As Long, MapNum As Long, ByVal eventID As Long, ByVal Dir As Long, MovementSpeed As Long, Optional GlobalEvent As Boolean = False)
     Dim packet As String
     Dim Buffer As clsBuffer
 
@@ -2022,7 +2022,7 @@ Sub EventMove(Index As Long, MapNum As Long, ByVal eventID As Long, ByVal Dir As
         If Map(MapNum).Events(eventID).Pages(1).DirFix = 0 Then TempEventMap(MapNum).Events(eventID).Dir = Dir
         UpdateMapBlock MapNum, TempEventMap(MapNum).Events(eventID).X, TempEventMap(MapNum).Events(eventID).Y, False
     Else
-        If Map(MapNum).Events(eventID).Pages(TempPlayer(Index).EventMap.EventPages(eventID).PageID).DirFix = 0 Then TempPlayer(Index).EventMap.EventPages(eventID).Dir = Dir
+        If Map(MapNum).Events(eventID).Pages(TempPlayer(index).EventMap.EventPages(eventID).PageID).DirFix = 0 Then TempPlayer(index).EventMap.EventPages(eventID).Dir = Dir
     End If
 
     Select Case Dir
@@ -2042,25 +2042,25 @@ Sub EventMove(Index As Long, MapNum As Long, ByVal eventID As Long, ByVal Dir As
                 If GlobalEvent Then
                     SendDataToMap MapNum, Buffer.ToArray()
                 Else
-                    SendDataTo Index, Buffer.ToArray
+                    SendDataTo index, Buffer.ToArray
                 End If
                 
                 Set Buffer = Nothing
             Else
-                TempPlayer(Index).EventMap.EventPages(eventID).Y = TempPlayer(Index).EventMap.EventPages(eventID).Y - 1
+                TempPlayer(index).EventMap.EventPages(eventID).Y = TempPlayer(index).EventMap.EventPages(eventID).Y - 1
                 Set Buffer = New clsBuffer
                 Buffer.WriteLong SEventMove
                 Buffer.WriteLong eventID
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).X
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).Y
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).X
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).Y
                 Buffer.WriteLong Dir
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).Dir
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).Dir
                 Buffer.WriteLong MovementSpeed
                 
                 If GlobalEvent Then
                     SendDataToMap MapNum, Buffer.ToArray()
                 Else
-                    SendDataTo Index, Buffer.ToArray
+                    SendDataTo index, Buffer.ToArray
                 End If
                 
                 Set Buffer = Nothing
@@ -2081,24 +2081,24 @@ Sub EventMove(Index As Long, MapNum As Long, ByVal eventID As Long, ByVal Dir As
                 If GlobalEvent Then
                     SendDataToMap MapNum, Buffer.ToArray()
                 Else
-                    SendDataTo Index, Buffer.ToArray
+                    SendDataTo index, Buffer.ToArray
                 End If
                 Set Buffer = Nothing
             Else
-                TempPlayer(Index).EventMap.EventPages(eventID).Y = TempPlayer(Index).EventMap.EventPages(eventID).Y + 1
+                TempPlayer(index).EventMap.EventPages(eventID).Y = TempPlayer(index).EventMap.EventPages(eventID).Y + 1
                 Set Buffer = New clsBuffer
                 Buffer.WriteLong SEventMove
                 Buffer.WriteLong eventID
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).X
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).Y
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).X
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).Y
                 Buffer.WriteLong Dir
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).Dir
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).Dir
                 Buffer.WriteLong MovementSpeed
                 
                 If GlobalEvent Then
                     SendDataToMap MapNum, Buffer.ToArray()
                 Else
-                    SendDataTo Index, Buffer.ToArray
+                    SendDataTo index, Buffer.ToArray
                 End If
                 
                 Set Buffer = Nothing
@@ -2119,25 +2119,25 @@ Sub EventMove(Index As Long, MapNum As Long, ByVal eventID As Long, ByVal Dir As
                 If GlobalEvent Then
                     SendDataToMap MapNum, Buffer.ToArray()
                 Else
-                    SendDataTo Index, Buffer.ToArray
+                    SendDataTo index, Buffer.ToArray
                 End If
                 
                 Set Buffer = Nothing
             Else
-                TempPlayer(Index).EventMap.EventPages(eventID).X = TempPlayer(Index).EventMap.EventPages(eventID).X - 1
+                TempPlayer(index).EventMap.EventPages(eventID).X = TempPlayer(index).EventMap.EventPages(eventID).X - 1
                 Set Buffer = New clsBuffer
                 Buffer.WriteLong SEventMove
                 Buffer.WriteLong eventID
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).X
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).Y
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).X
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).Y
                 Buffer.WriteLong Dir
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).Dir
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).Dir
                 Buffer.WriteLong MovementSpeed
                 
                 If GlobalEvent Then
                     SendDataToMap MapNum, Buffer.ToArray()
                 Else
-                    SendDataTo Index, Buffer.ToArray
+                    SendDataTo index, Buffer.ToArray
                 End If
                 
                 Set Buffer = Nothing
@@ -2158,25 +2158,25 @@ Sub EventMove(Index As Long, MapNum As Long, ByVal eventID As Long, ByVal Dir As
                 If GlobalEvent Then
                     SendDataToMap MapNum, Buffer.ToArray()
                 Else
-                    SendDataTo Index, Buffer.ToArray
+                    SendDataTo index, Buffer.ToArray
                 End If
                 
                 Set Buffer = Nothing
             Else
-                TempPlayer(Index).EventMap.EventPages(eventID).X = TempPlayer(Index).EventMap.EventPages(eventID).X + 1
+                TempPlayer(index).EventMap.EventPages(eventID).X = TempPlayer(index).EventMap.EventPages(eventID).X + 1
                 Set Buffer = New clsBuffer
                 Buffer.WriteLong SEventMove
                 Buffer.WriteLong eventID
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).X
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).Y
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).X
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).Y
                 Buffer.WriteLong Dir
-                Buffer.WriteLong TempPlayer(Index).EventMap.EventPages(eventID).Dir
+                Buffer.WriteLong TempPlayer(index).EventMap.EventPages(eventID).Dir
                 Buffer.WriteLong MovementSpeed
                 
                 If GlobalEvent Then
                     SendDataToMap MapNum, Buffer.ToArray()
                 Else
-                    SendDataTo Index, Buffer.ToArray
+                    SendDataTo index, Buffer.ToArray
                 End If
                 
                 Set Buffer = Nothing
@@ -2206,18 +2206,18 @@ Public Sub Party_GetLoot(ByVal PartyNum As Long, ByVal ItemNum As Long, ByVal It
     End If
 End Sub
 
-Public Function IsPlayerBlocked(Index As Long, ByVal X As Long, ByVal Y As Long)
+Public Function IsPlayerBlocked(index As Long, ByVal X As Long, ByVal Y As Long)
     Dim I As Long
     
     ' Does the map block players?
-    If Moral(Map(GetPlayerMap(Index)).Moral).PlayerBlocked = 1 Then
+    If Moral(Map(GetPlayerMap(index)).Moral).PlayerBlocked = 1 Then
         For I = 1 To Player_HighIndex
-            If IsPlaying(I) And Not I = Index Then
-                If GetPlayerMap(I) = GetPlayerMap(Index) Then
-                    If (X > 0 And GetPlayerX(I) = GetPlayerX(Index) + X) And GetPlayerY(Index) = GetPlayerY(I) Then
+            If IsPlaying(I) And Not I = index Then
+                If GetPlayerMap(I) = GetPlayerMap(index) Then
+                    If (X > 0 And GetPlayerX(I) = GetPlayerX(index) + X) And GetPlayerY(index) = GetPlayerY(I) Then
                         IsPlayerBlocked = True
                         Exit For
-                    ElseIf (Y > 0 And GetPlayerY(I) = GetPlayerX(Index) + Y) And GetPlayerX(Index) = GetPlayerX(I) Then
+                    ElseIf (Y > 0 And GetPlayerY(I) = GetPlayerX(index) + Y) And GetPlayerX(index) = GetPlayerX(I) Then
                         IsPlayerBlocked = True
                         Exit For
                     End If
@@ -2227,19 +2227,19 @@ Public Function IsPlayerBlocked(Index As Long, ByVal X As Long, ByVal Y As Long)
     End If
 End Function
 
-Public Function IsEventBlocked(Index As Long, ByVal X As Long, ByVal Y As Long, Optional ByVal MapNum As Integer)
+Public Function IsEventBlocked(index As Long, ByVal X As Long, ByVal Y As Long, Optional ByVal MapNum As Integer)
     Dim I As Long
     
     If MapNum = 0 Then
-        MapNum = GetPlayerMap(Index)
-        X = X + GetPlayerX(Index)
-        Y = Y + GetPlayerY(Index)
+        MapNum = GetPlayerMap(index)
+        X = X + GetPlayerX(index)
+        Y = Y + GetPlayerY(index)
         
         ' Check to see if a player event is already on that tile
         For I = 1 To TempEventMap(MapNum).EventCount
-            If TempPlayer(Index).EventMap.EventPages(I).X = X Then
-                If TempPlayer(Index).EventMap.EventPages(I).Y = Y Then
-                    If TempPlayer(Index).EventMap.EventPages(I).WalkThrough = 0 Then
+            If TempPlayer(index).EventMap.EventPages(I).X = X Then
+                If TempPlayer(index).EventMap.EventPages(I).Y = Y Then
+                    If TempPlayer(index).EventMap.EventPages(I).WalkThrough = 0 Then
                         IsEventBlocked = True
                         Exit Function
                     End If
@@ -2247,8 +2247,8 @@ Public Function IsEventBlocked(Index As Long, ByVal X As Long, ByVal Y As Long, 
             End If
         Next
     Else
-        X = X + MapNPC(MapNum).NPC(Index).X
-        Y = Y + MapNPC(MapNum).NPC(Index).Y
+        X = X + MapNPC(MapNum).NPC(index).X
+        Y = Y + MapNPC(MapNum).NPC(index).Y
     End If
     
     ' Check to see if a global event is already on that tile
