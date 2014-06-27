@@ -266,6 +266,101 @@ Begin VB.Form frmEditor_NPC
          Top             =   3480
          Width           =   1815
       End
+      Begin VB.CheckBox chkSwapVisibility 
+         Caption         =   "Show Spells"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   66
+         TabStop         =   0   'False
+         Top             =   4560
+         Width           =   1455
+      End
+      Begin VB.Frame fraDrop 
+         Caption         =   "Drop: 1"
+         Height          =   1935
+         Left            =   120
+         TabIndex        =   49
+         Top             =   6360
+         Width           =   4815
+         Begin VB.TextBox txtChance 
+            Height          =   285
+            Left            =   2880
+            TabIndex        =   26
+            Text            =   "0"
+            ToolTipText     =   "Use 0, 1, number%, 1/number, or decimal values."
+            Top             =   720
+            Width           =   1815
+         End
+         Begin VB.HScrollBar scrlNum 
+            Height          =   255
+            Left            =   1200
+            Max             =   255
+            TabIndex        =   27
+            Top             =   1080
+            Width           =   3495
+         End
+         Begin VB.HScrollBar scrlValue 
+            Height          =   255
+            Left            =   1200
+            TabIndex        =   28
+            Top             =   1440
+            Width           =   3495
+         End
+         Begin VB.HScrollBar scrlDrop 
+            Height          =   255
+            Left            =   120
+            Min             =   1
+            TabIndex        =   25
+            Top             =   240
+            Value           =   1
+            Width           =   4575
+         End
+         Begin VB.Label Label3 
+            AutoSize        =   -1  'True
+            Caption         =   "Chance:"
+            Height          =   180
+            Left            =   2160
+            TabIndex        =   53
+            Top             =   720
+            UseMnemonic     =   0   'False
+            Width           =   630
+         End
+         Begin VB.Label lblNum 
+            AutoSize        =   -1  'True
+            Caption         =   "Number: 0"
+            Height          =   180
+            Left            =   120
+            TabIndex        =   52
+            Top             =   1080
+            Width           =   795
+         End
+         Begin VB.Label lblItemName 
+            AutoSize        =   -1  'True
+            Caption         =   "Item: None"
+            Height          =   180
+            Left            =   120
+            TabIndex        =   51
+            Top             =   720
+            Width           =   855
+         End
+         Begin VB.Label lblValue 
+            AutoSize        =   -1  'True
+            Caption         =   "Value: 0"
+            Height          =   180
+            Left            =   120
+            TabIndex        =   50
+            Top             =   1440
+            UseMnemonic     =   0   'False
+            Width           =   645
+         End
+         Begin VB.Line Line1 
+            BorderColor     =   &H00C0C0C0&
+            X1              =   0
+            X2              =   4800
+            Y1              =   600
+            Y2              =   600
+         End
+      End
       Begin VB.Frame fraStats 
          Caption         =   "Stats"
          Height          =   1455
@@ -363,15 +458,6 @@ Begin VB.Form frmEditor_NPC
             Top             =   840
             Width           =   450
          End
-      End
-      Begin VB.CheckBox chkSwapVisibility 
-         Caption         =   "Show Spells"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   66
-         TabStop         =   0   'False
-         Top             =   4560
-         Width           =   1455
       End
       Begin VB.Frame fraSpell 
          Caption         =   "Spell: 1"
@@ -508,92 +594,6 @@ Begin VB.Form frmEditor_NPC
             TabIndex        =   76
             Top             =   1440
             Width           =   975
-         End
-      End
-      Begin VB.Frame fraDrop 
-         Caption         =   "Drop: 1"
-         Height          =   1935
-         Left            =   120
-         TabIndex        =   49
-         Top             =   6360
-         Width           =   4815
-         Begin VB.TextBox txtChance 
-            Height          =   285
-            Left            =   2880
-            TabIndex        =   26
-            Text            =   "0"
-            ToolTipText     =   "Use 0, 1, number%, 1/number, or decimal values."
-            Top             =   720
-            Width           =   1815
-         End
-         Begin VB.HScrollBar scrlNum 
-            Height          =   255
-            Left            =   1200
-            Max             =   255
-            TabIndex        =   27
-            Top             =   1080
-            Width           =   3495
-         End
-         Begin VB.HScrollBar scrlValue 
-            Height          =   255
-            Left            =   1200
-            TabIndex        =   28
-            Top             =   1440
-            Width           =   3495
-         End
-         Begin VB.HScrollBar scrlDrop 
-            Height          =   255
-            Left            =   120
-            Min             =   1
-            TabIndex        =   25
-            Top             =   240
-            Value           =   1
-            Width           =   4575
-         End
-         Begin VB.Label Label3 
-            AutoSize        =   -1  'True
-            Caption         =   "Chance:"
-            Height          =   180
-            Left            =   2160
-            TabIndex        =   53
-            Top             =   720
-            UseMnemonic     =   0   'False
-            Width           =   630
-         End
-         Begin VB.Label lblNum 
-            AutoSize        =   -1  'True
-            Caption         =   "Number: 0"
-            Height          =   180
-            Left            =   120
-            TabIndex        =   52
-            Top             =   1080
-            Width           =   795
-         End
-         Begin VB.Label lblItemName 
-            AutoSize        =   -1  'True
-            Caption         =   "Item: None"
-            Height          =   180
-            Left            =   120
-            TabIndex        =   51
-            Top             =   720
-            Width           =   855
-         End
-         Begin VB.Label lblValue 
-            AutoSize        =   -1  'True
-            Caption         =   "Value: 0"
-            Height          =   180
-            Left            =   120
-            TabIndex        =   50
-            Top             =   1440
-            UseMnemonic     =   0   'False
-            Width           =   645
-         End
-         Begin VB.Line Line1 
-            BorderColor     =   &H00C0C0C0&
-            X1              =   0
-            X2              =   4800
-            Y1              =   600
-            Y2              =   600
          End
       End
       Begin VB.Label Label7 
