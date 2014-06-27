@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmItemSpawner 
    Appearance      =   0  'Flat
    BorderStyle     =   4  'Fixed ToolWindow
@@ -648,7 +648,7 @@ Public Sub tabItems_Click()
     
     If frmAdmin.ignoreChange Then
         frmAdmin.ignoreChange = False
-    Else
+    ElseIf tabItems.SelectedItem.Index - 1 <> 10 Then
         frmAdmin.lastIndex = lastTab - 1
         frmAdmin.optCat(tabItems.SelectedItem.Index - 1).Value = True
         frmAdmin.optCat_MouseUp tabItems.SelectedItem.Index - 1, 0, 0, 0, 0

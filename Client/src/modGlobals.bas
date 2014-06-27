@@ -289,9 +289,6 @@ Public Action_HighIndex As Byte
 Public Blood_HighIndex As Byte
 Public ChatBubble_HighIndex As Byte
 
-' automation problems
-Public ReInitSurfaces As Boolean
-
 ' Temp event storage
 Public tmpEvent As EventRec
 Public isEdit As Boolean

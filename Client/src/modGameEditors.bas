@@ -746,7 +746,9 @@ Public Sub ItemEditorInit()
         frmEditor_Item.scrlDurability = .Data1
         frmEditor_Item.txtDesc.text = Trim$(.Desc)
         frmEditor_Item.cmbEquipSlot.ListIndex = .EquipSlot
-        frmEditor_Item.scrlSpell.Value = .Data1
+        If .Type = ITEM_TYPE_SPELL Then
+            frmEditor_Item.scrlSpell.Value = .Data1
+        End If
         frmEditor_Item.chkHoT.Value = .HoT
         frmEditor_Item.cmbProficiencyReq.ListIndex = .ProficiencyReq
         frmEditor_Item.chkTwoHanded.Value = .TwoHanded
@@ -1172,7 +1174,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtExp.text = NPC(EditorIndex).exp
+        .txtEXP.text = NPC(EditorIndex).exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -1815,7 +1817,7 @@ Public Sub MapPropertiesInit()
             .cmbNpcs.AddItem I & ": " & Trim$(NPC(I).Name)
         Next
         
-        .CmbWeather.ListIndex = Map.Weather
+        .cmbWeather.ListIndex = Map.Weather
         .scrlWeatherIntensity.Value = Map.WeatherIntensity
         
         .ScrlFog.Value = Map.Fog
@@ -3578,7 +3580,7 @@ Sub AddCommand(Index As Long)
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
@@ -4064,7 +4066,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.fraCommands.Visible = False
         Case EventType.evSetWeather
             isEdit = True
-            frmEditor_Events.CmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
+            frmEditor_Events.cmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
             frmEditor_Events.scrlWeatherIntensity.Value = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(23).Visible = True
@@ -4357,7 +4359,7 @@ Public Sub EditCommand()
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.ScrlFogData(1).Value
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlMapTintData(0).Value

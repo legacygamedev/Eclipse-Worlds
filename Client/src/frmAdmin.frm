@@ -48,7 +48,7 @@ Begin VB.Form frmAdmin
          Index           =   13
          Left            =   1560
          Style           =   1  'Graphical
-         TabIndex        =   72
+         TabIndex        =   71
          Top             =   6720
          Width           =   1050
       End
@@ -61,21 +61,9 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   71
+         TabIndex        =   70
          Top             =   6720
          Width           =   240
-      End
-      Begin VB.OptionButton optCat 
-         Enabled         =   0   'False
-         Height          =   420
-         Index           =   10
-         Left            =   540
-         MaskColor       =   &H80000001&
-         Style           =   1  'Graphical
-         TabIndex        =   70
-         ToolTipText     =   "Change sprites via dbl click."
-         Top             =   6090
-         Width           =   420
       End
       Begin VB.PictureBox picSizer 
          Appearance      =   0  'Flat
@@ -1396,20 +1384,20 @@ Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String
     cmbPlayersOnline.Enabled = True
 End Sub
 
-Public Sub DisplayStatus(ByVal Msg As String, msgType As Status)
+Public Sub DisplayStatus(ByVal msg As String, msgType As Status)
     Select Case msgType
         Case Status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Msg
+            lblStatus.Caption = msg
         Case Status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Msg
+            lblStatus.Caption = msg
         Case Status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Msg
+            lblStatus.Caption = msg
         Case Status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Msg
+            lblStatus.Caption = msg
     End Select
     lblStatus.Visible = True
 End Sub
@@ -1795,7 +1783,7 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
     
     If optCat(Index).Value = False Then
         optCat(Index).Picture = LoadResPicture(100 + Index, vbResBitmap)
-    ElseIf Index <> 10 Then
+    Else
         optCat(Index).Picture = LoadResPicture(110 + Index, vbResBitmap)
     If lastIndex = Index And optCat(Index).Value = True Then
         frmAdmin.currentCategory = "Categories"
@@ -1826,7 +1814,7 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
         End Select
         lblCat.Caption = currentCategory
     End If
-        If lastIndex <> -1 And Index <> 10 Then
+        If lastIndex <> -1 Then
             If optCat(lastIndex).Value = False Then
                 optCat(lastIndex).Picture = LoadResPicture(100 + lastIndex, vbResBitmap)
             End If
@@ -2339,33 +2327,33 @@ Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
-    Dim Msg As String
+    Dim msg As String
     
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
     Else
-        Msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
-        displayFieldStatus txtBox, Msg, Status.Error
+        msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
+        displayFieldStatus txtBox, msg, Status.Error
         verifyValue = False
     End If
 End Function
 
-Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal Msg As String, msgType As Status)
+Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
     lblStatus.Visible = True
     Select Case msgType
 
         Case Status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & msg
         Case Status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & msg
         Case Status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & msg
         Case Status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & msg
     End Select
 End Sub
 
@@ -2425,3 +2413,4 @@ End Sub
 Private Sub txtSprite_LostFocus()
     reviseValue txtSprite, currentSprite
 End Sub
+
