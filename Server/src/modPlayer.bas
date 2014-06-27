@@ -1487,80 +1487,75 @@ Sub CheckResource(ByVal index As Long, ByVal X As Long, ByVal Y As Long)
                 End If
             End If
                 
-            If Not GetPlayerEquipmentDur(index, Weapon) = 0 Or Item(GetPlayerEquipment(index, Weapon)).Indestructable = 1 Then
-                ' Enough space in inventory?
-                If Resource(Resource_Index).ItemReward > 0 Then
-                    If FindOpenInvSlot(index, Resource(Resource_Index).ItemReward) = 0 Then
-                        PlayerMsg index, "You do not have enough inventory space!", BrightRed
-                        Exit Sub
+            ' Enough space in inventory?
+            If Resource(Resource_Index).ItemReward > 0 Then
+                If FindOpenInvSlot(index, Resource(Resource_Index).ItemReward) = 0 Then
+                    PlayerMsg index, "You do not have enough inventory space!", BrightRed
+                    Exit Sub
+                End If
+            End If
+
+            ' Check if the resource has already been deplenished
+            If ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).ResourceState = 0 Then
+                rX = ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).X
+                rY = ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).Y
+            
+                ' Reduce weapon's durability
+                Call DamagePlayerEquipment(index, Equipment.Weapon)
+                
+                ' Give the reward random when they deal damage
+                RndNum = Random(Resource(Resource_Index).LowChance, Resource(Resource_Index).HighChance)
+                  
+                If Not RndNum = Resource(Resource_Index).LowChance Then
+                    ' Subtract the RndNum by the random value of the weapon's chance modifier
+                    RndNum = RndNum - Round(Random((Item(GetPlayerEquipment(index, Weapon)).ChanceModifier / 2), Item(GetPlayerEquipment(index, Weapon)).ChanceModifier))
+                    
+                    ' If value is less than the resource low chance then set it to it
+                    If RndNum < Resource(Resource_Index).LowChance Then
+                        RndNum = Resource(Resource_Index).LowChance
                     End If
                 End If
-
-                ' Check if the resource has already been deplenished
-                If ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).ResourceState = 0 Then
-                    rX = ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).X
-                    rY = ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).Y
                 
-                    ' Reduce weapon's durability
-                    Call DamagePlayerEquipment(index, Equipment.Weapon)
+                If RndNum = Resource(Resource_Index).LowChance Then
+                    ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).Cur_Reward = ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).Cur_Reward - 1
+                    GiveInvItem index, Resource(Resource_Index).ItemReward, 1
                     
-                    ' Give the reward random when they deal damage
-                    RndNum = Random(Resource(Resource_Index).LowChance, Resource(Resource_Index).HighChance)
-                      
-                    If Not RndNum = Resource(Resource_Index).LowChance Then
-                        ' Subtract the RndNum by the random value of the weapon's chance modifier
-                        RndNum = RndNum - Round(Random((Item(GetPlayerEquipment(index, Weapon)).ChanceModifier / 2), Item(GetPlayerEquipment(index, Weapon)).ChanceModifier))
+                    If GetPlayerSkill(index, Resource(Resource_Index).Skill) < MAX_LEVEL Then
+                        ' Add the experience to the skill
+                        Call SetPlayerSkillExp(index, GetPlayerSkillExp(index, Resource(Resource_Index).Skill) + Resource(Resource_Index).Exp * EXP_RATE, Resource(Resource_Index).Skill)
                         
-                        ' If value is less than the resource low chance then set it to it
-                        If RndNum < Resource(Resource_Index).LowChance Then
-                            RndNum = Resource(Resource_Index).LowChance
-                        End If
+                        ' Check for skill level up
+                        Call CheckPlayerSkillLevelUp(index, Resource(Resource_Index).Skill)
                     End If
                     
-                    If RndNum = Resource(Resource_Index).LowChance Then
-                        ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).Cur_Reward = ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).Cur_Reward - 1
-                        GiveInvItem index, Resource(Resource_Index).ItemReward, 1
-                        
-                        If GetPlayerSkill(index, Resource(Resource_Index).Skill) < MAX_LEVEL Then
-                            ' Add the experience to the skill
-                            Call SetPlayerSkillExp(index, GetPlayerSkillExp(index, Resource(Resource_Index).Skill) + Resource(Resource_Index).Exp * EXP_RATE, Resource(Resource_Index).Skill)
-                            
-                            ' Check for skill level up
-                            Call CheckPlayerSkillLevelUp(index, Resource(Resource_Index).Skill)
-                        End If
-                        
-                        ' Send message if it exists
-                        If Len(Trim$(Resource(Resource_Index).SuccessMessage)) > 0 Then
-                            SendActionMsg GetPlayerMap(index), Trim$(Resource(Resource_Index).SuccessMessage), BrightGreen, 1, (GetPlayerX(index) * 32), (GetPlayerY(index) * 32)
-                        End If
-                        
-                        ' If the resource is empty then clear it
-                        If ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).Cur_Reward = 0 Then
-                            ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).ResourceState = 1
-                            ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).ResourceTimer = timeGetTime
-                            SendResourceCacheToMap GetPlayerMap(index), Resource_Num
-                        End If
-                    Else
-                        ' Send message if it exists
-                        If Len(Trim$(Resource(Resource_Index).FailMessage)) > 0 Then
-                            SendActionMsg GetPlayerMap(index), Trim$(Resource(Resource_Index).FailMessage), BrightRed, 1, (GetPlayerX(index) * 32), (GetPlayerY(index) * 32)
-                        End If
+                    ' Send message if it exists
+                    If Len(Trim$(Resource(Resource_Index).SuccessMessage)) > 0 Then
+                        SendActionMsg GetPlayerMap(index), Trim$(Resource(Resource_Index).SuccessMessage), BrightGreen, 1, (GetPlayerX(index) * 32), (GetPlayerY(index) * 32)
                     End If
                     
-                    SendAnimation GetPlayerMap(index), Resource(Resource_Index).Animation, rX, rY
-                    
-                    ' Send the sound
-                    SendMapSound GetPlayerMap(index), index, rX, rY, SoundEntity.seResource, Resource_Index
+                    ' If the resource is empty then clear it
+                    If ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).Cur_Reward = 0 Then
+                        ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).ResourceState = 1
+                        ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).ResourceTimer = timeGetTime
+                        SendResourceCacheToMap GetPlayerMap(index), Resource_Num
+                    End If
                 Else
                     ' Send message if it exists
-                    If Len(Trim$(Resource(Resource_Index).EmptyMessage)) > 0 Then
-                        SendActionMsg GetPlayerMap(index), Trim$(Resource(Resource_Index).EmptyMessage), BrightRed, 1, (GetPlayerX(index) * 32), (GetPlayerY(index) * 32)
-                        Exit Sub
+                    If Len(Trim$(Resource(Resource_Index).FailMessage)) > 0 Then
+                        SendActionMsg GetPlayerMap(index), Trim$(Resource(Resource_Index).FailMessage), BrightRed, 1, (GetPlayerX(index) * 32), (GetPlayerY(index) * 32)
                     End If
                 End If
+                
+                SendAnimation GetPlayerMap(index), Resource(Resource_Index).Animation, rX, rY
+                
+                ' Send the sound
+                SendMapSound GetPlayerMap(index), index, rX, rY, SoundEntity.seResource, Resource_Index
             Else
-                PlayerMsg index, "The tool you are using is broken!", BrightRed
-                Exit Sub
+                ' Send message if it exists
+                If Len(Trim$(Resource(Resource_Index).EmptyMessage)) > 0 Then
+                    SendActionMsg GetPlayerMap(index), Trim$(Resource(Resource_Index).EmptyMessage), BrightRed, 1, (GetPlayerX(index) * 32), (GetPlayerY(index) * 32)
+                    Exit Sub
+                End If
             End If
         End If
     End If
@@ -1698,30 +1693,34 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
             EquipSlot = Item(GetPlayerInvItemNum(index, InvNum)).EquipSlot
             
             If EquipSlot >= 1 And EquipSlot <= Equipment_Count - 1 Then
-                Call PlayerUnequipItem(index, EquipSlot, False, False)
-                
-                PlayerMsg index, "You equip " & CheckGrammar(Trim$(Item(GetPlayerInvItemNum(index, InvNum)).Name)) & ".", BrightGreen
-                SetPlayerEquipment index, GetPlayerInvItemNum(index, InvNum), EquipSlot
-                SetPlayerEquipmentDur index, GetPlayerInvItemDur(index, InvNum), EquipSlot
-                SetPlayerEquipmentBind index, GetPlayerInvItemBind(index, InvNum), EquipSlot
-                TakeInvSlot index, InvNum, 0, True
-                
-                ' Send update
-                SendInventoryUpdate index, InvNum
-                Call SendWornEquipment(index)
-                Call SendMapEquipment(index)
-                SendPlayerStats index
-                
-                ' Send vitals
-                For i = 1 To Vitals.Vital_Count - 1
-                    Call SendVital(index, i)
-                Next
-                
-                ' Send vitals to party if in one
-                If TempPlayer(index).InParty > 0 Then SendPartyVitals TempPlayer(index).InParty, index
-                
-                 ' Send the sound
-                SendPlayerSound index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seItem, GetPlayerInvItemNum(index, InvNum)
+                If GetPlayerInvItemDur(index, InvNum) > 0 Or Item(GetPlayerInvItemNum(index, InvNum)).Indestructable = 1 Then
+                    Call PlayerUnequipItem(index, EquipSlot, False, False, True)
+                    
+                    PlayerMsg index, "You equip " & CheckGrammar(Trim$(Item(GetPlayerInvItemNum(index, InvNum)).Name)) & ".", BrightGreen
+                    SetPlayerEquipment index, GetPlayerInvItemNum(index, InvNum), EquipSlot
+                    SetPlayerEquipmentDur index, GetPlayerInvItemDur(index, InvNum), EquipSlot
+                    SetPlayerEquipmentBind index, GetPlayerInvItemBind(index, InvNum), EquipSlot
+                    TakeInvSlot index, InvNum, 0, True
+                    
+                    ' Send update
+                    SendInventoryUpdate index, InvNum
+                    Call SendWornEquipment(index)
+                    Call SendMapEquipment(index)
+                    SendPlayerStats index
+                    
+                    ' Send vitals
+                    For i = 1 To Vitals.Vital_Count - 1
+                        Call SendVital(index, i)
+                    Next
+                    
+                    ' Send vitals to party if in one
+                    If TempPlayer(index).InParty > 0 Then SendPartyVitals TempPlayer(index).InParty, index
+                    
+                     ' Send the sound
+                    SendPlayerSound index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seItem, GetPlayerInvItemNum(index, InvNum)
+                End If
+            Else
+                Call PlayerMsg(index, "The item you are trying to equip is broken!", 12)
             End If
         
         Case ITEM_TYPE_CONSUME
@@ -1962,14 +1961,14 @@ Public Sub UpdatePlayerEquipmentItems(ByVal index As Long)
     
     If GetPlayerEquipment(index, Shield) > 0 And GetPlayerEquipment(index, Weapon) > 0 Then
         If Item(GetPlayerEquipment(index, Weapon)).TwoHanded = 1 Then
-            Call PlayerUnequipItem(index, Weapon)
+            Call PlayerUnequipItem(index, Weapon, True, True, True)
         End If
     End If
     
     For i = 1 To Equipment_Count - 1
         If GetPlayerEquipment(index, i) > 0 Then
             If Item(GetPlayerEquipment(index, i)).EquipSlot <> i Then
-                Call PlayerUnequipItem(index, i)
+                Call PlayerUnequipItem(index, i, True, True, True)
             End If
         End If
     Next
@@ -1982,14 +1981,14 @@ Public Sub UpdateAllPlayerEquipmentItems()
         If IsPlaying(n) Then
             If GetPlayerEquipment(n, Shield) > 0 And GetPlayerEquipment(n, Weapon) > 0 Then
                 If Item(GetPlayerEquipment(n, Weapon)).TwoHanded = 1 Then
-                    Call PlayerUnequipItem(n, Weapon)
+                    Call PlayerUnequipItem(n, Weapon, True, True, True)
                 End If
             End If
             
             For i = 1 To Equipment_Count - 1
                 If GetPlayerEquipment(n, i) > 0 Then
                     If Item(GetPlayerEquipment(n, i)).EquipSlot <> i Then
-                        Call PlayerUnequipItem(n, i)
+                        Call PlayerUnequipItem(n, i, True, True, True)
                     End If
                 End If
             Next
@@ -2403,6 +2402,7 @@ Public Sub DamagePlayerEquipment(ByVal index As Long, ByVal EquipmentSlot As Byt
                 
             If GetPlayerEquipmentDur(index, EquipmentSlot) < 1 Then
                 Call PlayerMsg(index, "Your " & Trim$(Item(ItemNum).Name) & " has broken.", BrightRed)
+                Call PlayerUnequipItem(index, EquipmentSlot, True, True, True)
             ElseIf GetPlayerEquipmentDur(index, EquipmentSlot) = 10 Then
                 Call PlayerMsg(index, "Your " & Trim$(Item(ItemNum).Name) & " is about to break!", BrightRed)
             End If

@@ -68,12 +68,8 @@ Function GetPlayerDamage(ByVal index As Long) As Long
     If IsPlaying(index) = False Or index < 1 Or index > Player_HighIndex Then Exit Function
     
     If GetPlayerEquipment(index, Equipment.Weapon) > 0 Then
-        If Not GetPlayerEquipmentDur(index, GetPlayerEquipment(index, Equipment.Weapon)) = 0 Or Item(GetPlayerEquipment(index, Equipment.Weapon)).Indestructable = 1 Then
-            WeaponNum = GetPlayerEquipment(index, Equipment.Weapon)
-            GetPlayerDamage = 0.085 * 5 * GetPlayerStat(index, Strength) * Item(WeaponNum).Data2 + (GetPlayerLevel(index) * 0.2)
-        Else
-            GetPlayerDamage = 0.085 * 5 * GetPlayerStat(index, Strength) + (GetPlayerLevel(index) * 0.2)
-        End If
+        WeaponNum = GetPlayerEquipment(index, Equipment.Weapon)
+        GetPlayerDamage = 0.085 * 5 * GetPlayerStat(index, Strength) * Item(WeaponNum).Data2 + (GetPlayerLevel(index) * 0.2)
     Else
         GetPlayerDamage = 0.085 * 5 * GetPlayerStat(index, Strength) + (GetPlayerLevel(index) * 0.2)
     End If
