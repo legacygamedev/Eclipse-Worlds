@@ -977,7 +977,7 @@ Function CanNPCAttackNPC(ByVal MapNum As Integer, ByVal Attacker As Long, ByVal 
         Exit Function
     End If
     
-    Select Case GetPlayerDir(Attacker)
+    Select Case MapNPC(MapNum).NPC(Attacker).Dir
         Case DIR_UP
             If Not ((AttackerY + 1 = VictimY) And (AttackerX = VictimX)) Then Exit Function
         Case DIR_DOWN
