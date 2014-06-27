@@ -1718,9 +1718,9 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
                     
                      ' Send the sound
                     SendPlayerSound index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seItem, GetPlayerInvItemNum(index, InvNum)
+                Else
+                    Call PlayerMsg(index, "The item you are trying to equip is broken!", 12)
                 End If
-            Else
-                Call PlayerMsg(index, "The item you are trying to equip is broken!", 12)
             End If
         
         Case ITEM_TYPE_CONSUME
