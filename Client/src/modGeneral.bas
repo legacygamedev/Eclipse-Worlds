@@ -177,7 +177,7 @@ End Sub
 
 Public Sub MenuLoop()
     ' If debug mode, handle error then exit out
-    On Error GoTo errorhandler
+    On Error GoTo ErrorHandler
     
 restartmenuloop:
     ' *** Start GameLoop ***
@@ -191,7 +191,7 @@ restartmenuloop:
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     If Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICELOST Or Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then
         HandleDeviceLost
         GoTo restartmenuloop
@@ -205,7 +205,7 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     Dim I As Long
 
     ' If we can't find the interface
-    On Error GoTo errorhandler
+    On Error GoTo ErrorHandler
     
     ' loading screen
     If LoadingScreen Then
@@ -296,14 +296,14 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     Exit Sub
     
 ' Let them know we can't load the GUI
-errorhandler:
+ErrorHandler:
     AlertMsg "Cannot find one or more images used in the user interface."
     DestroyGame
 End Sub
 
 Public Sub MenuState(ByVal State As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmLoad.Visible = True
     frmLoad.ZOrder (0)
@@ -346,14 +346,14 @@ Public Sub MenuState(ByVal State As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "MenuState", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Sub GameInit()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     EnteringGame = True
     
@@ -398,14 +398,14 @@ Sub GameInit()
     Exit Sub
 
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "GameInit", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub DestroyGame()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     gameDestroyed = True
     ' Turn off the timer
     StopTimer = True
@@ -425,7 +425,7 @@ Public Sub DestroyGame()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "DestroyGame", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -434,7 +434,7 @@ Public Sub UnloadAllForms()
     Dim frm As Form
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For Each frm In VB.Forms
         Unload frm
@@ -442,41 +442,41 @@ Public Sub UnloadAllForms()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "UnloadAllForms", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub SetStatus(ByVal Caption As String)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmLoad.lblStatus.Caption = Caption
     DoEvents
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "SetStatus", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 ' Used for adding text to packet debugger
-Public Sub TextAdd(ByVal txt As textBox, msg As String, NewLine As Boolean)
+Public Sub TextAdd(ByVal txt As textBox, Msg As String, NewLine As Boolean)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If NewLine Then
-        txt.text = txt.text + msg + vbCrLf
+        txt.text = txt.text + Msg + vbCrLf
     Else
-        txt.text = txt.text + msg
+        txt.text = txt.text + Msg
     End If
 
     txt.SelStart = Len(txt.text) - 1
     Exit Sub
         
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "TextAdd", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -492,6 +492,7 @@ Public Sub SetGameFocus()
 
     ' Ignore focus if in editor
     If Editor > 0 Then Exit Sub
+    If frmMain.txtCurrency.Visible Then Exit Sub
     
     If ChatLocked Or Not GUIVisible Then
         SetFocusOnScreen
@@ -508,7 +509,7 @@ End Sub
 
 Public Function Random(ByVal Low As Long, ByVal High As Long) As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Randomize rnd's seed
     Randomize
@@ -517,7 +518,7 @@ Public Function Random(ByVal Low As Long, ByVal High As Long) As Long
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Random", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -527,7 +528,7 @@ Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, X 
     Dim GlobalY As Integer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     GlobalX = PB.Left
     GlobalY = PB.Top
@@ -539,14 +540,14 @@ Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, X 
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "MovePicture", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Function IsLoginLegal(ByVal UserName As String, ByVal Password As String) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Len(Trim$(UserName)) >= 3 Then
         If Len(Trim$(UserName)) > NAME_LENGTH Then
@@ -570,14 +571,14 @@ Public Function IsLoginLegal(ByVal UserName As String, ByVal Password As String)
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsLoginLegal", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function IsNewCharLegal(ByVal UserName As String) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Len(Trim$(UserName)) >= 3 Then
         If Len(Trim$(UserName)) <= NAME_LENGTH Then
@@ -591,7 +592,7 @@ Public Function IsNewCharLegal(ByVal UserName As String) As Boolean
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsLoginLegal", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -600,7 +601,7 @@ Public Function IsStringLegal(ByVal sInput As String) As Boolean
     Dim I As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Prevent high ascii chars
     Dim inputLen As Long
@@ -616,7 +617,7 @@ Public Function IsStringLegal(ByVal sInput As String) As Boolean
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsStringLegal", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -626,7 +627,7 @@ End Function
 ' #############
 Public Sub CacheButtons()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Menu - login
     With MenuButton(1)
@@ -750,7 +751,7 @@ Public Sub CacheButtons()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "CacheButtons", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -759,7 +760,7 @@ Public Sub ResetMenuButtons()
     Dim I As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_MENUBUTTONS
         If Not CurButton_Menu = I Then
@@ -769,7 +770,7 @@ Public Sub ResetMenuButtons()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ResetMenuButtons", "frmMenu", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -778,7 +779,7 @@ Public Sub RenderButton_Menu(ByVal ButtonNum As Long)
     Dim bSuffix As String
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If ButtonNum > MAX_MENUBUTTONS Then Exit Sub
     
@@ -797,14 +798,14 @@ Public Sub RenderButton_Menu(ByVal ButtonNum As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "RenderButton_Menu", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub ChangeButtonState_Menu(ByVal ButtonNum As Long, ByVal bState As Byte)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If ButtonNum > MAX_MENUBUTTONS Then Exit Sub
     
@@ -819,7 +820,7 @@ Public Sub ChangeButtonState_Menu(ByVal ButtonNum As Long, ByVal bState As Byte)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ChangeButtonState_Menu", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -828,7 +829,7 @@ Public Sub PopulateLists()
     Dim StrLoad As String, I As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Cache music list
     StrLoad = Dir$(App.Path & MUSIC_PATH & "*")
@@ -864,14 +865,14 @@ Public Sub PopulateLists()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "PopulateLists", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Function IsNameLegal(ByVal sInput As Integer) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If (sInput >= 65 And sInput <= 90) Or (sInput >= 97 And sInput <= 122) Or (sInput = 95) Or (sInput = 32) Or (sInput >= 48 And sInput <= 57) Then
         IsNameLegal = True
@@ -881,14 +882,14 @@ Function IsNameLegal(ByVal sInput As Integer) As Boolean
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "IsNameLegal", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Private Sub NotConnected()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMenu.Visible = True
     frmLoad.Visible = False
@@ -901,18 +902,18 @@ Private Sub NotConnected()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "NotConnected", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Public Function CheckMessage(ByVal msg As String) As String
+Public Function CheckMessage(ByVal Msg As String) As String
     Dim I As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    CheckMessage = msg
+    CheckMessage = Msg
     
     ' Do nothing if the filter is turned off
     If Options.SwearFilter = 0 Then Exit Function
@@ -924,7 +925,7 @@ Public Function CheckMessage(ByVal msg As String) As String
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "CheckMessage", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -984,7 +985,7 @@ Public Sub LogoutGame()
     ' Close out all the editors
     Dim tmpForm As Form
     For Each tmpForm In Forms
-        If tmpForm.name <> "frmMenu" And tmpForm.name <> "frmMain" Then
+        If tmpForm.Name <> "frmMenu" And tmpForm.Name <> "frmMain" Then
             Unload tmpForm
             Set tmpForm = Nothing
         End If
@@ -1068,7 +1069,7 @@ Function FormCount(ByVal frmName As String) As Long
     Dim frm As Form, counter As Long
     FormCount = -1
     For Each frm In Forms
-        If StrComp(frm.name, frmName, vbTextCompare) = 0 Then
+        If StrComp(frm.Name, frmName, vbTextCompare) = 0 Then
             FormCount = counter
             Exit For
         End If
