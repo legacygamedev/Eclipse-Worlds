@@ -1158,7 +1158,7 @@ Sub PlayerMapDropItem(ByVal index As Long, ByVal InvNum As Byte, ByVal Amount As
                 Else
                     MapItem(GetPlayerMap(index), i).Value = Amount
                     Msg = Amount & " " & Trim$(Item(GetPlayerInvItemNum(index, InvNum)).Name)
-                    Call TakeInvSlot(index, GetPlayerInvItemNum(index, InvNum), GetPlayerInvItemValue(index, InvNum) - Amount, True)
+                    Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), GetPlayerInvItemValue(index, InvNum) - Amount, True)
                 End If
             Else
                 ' It's not a currency object so this is easy
