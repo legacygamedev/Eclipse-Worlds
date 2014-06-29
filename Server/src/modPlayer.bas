@@ -862,7 +862,6 @@ End Function
 
 Function HasItem(ByVal index As Long, ByVal ItemNum As Integer) As Long
     Dim i As Long
-    Dim Cnt As Long
 
     ' Check for subscript out of range
     If IsPlaying(index) = False Or ItemNum < 1 Or ItemNum > MAX_ITEMS Then Exit Function
@@ -873,19 +872,14 @@ Function HasItem(ByVal index As Long, ByVal ItemNum As Integer) As Long
             If Item(ItemNum).Stackable = 1 Then
                 HasItem = GetPlayerInvItemValue(index, i)
                 Exit Function
-            Else
-                Cnt = Cnt + 1
             End If
         End If
     Next
-    
-    HasItem = Cnt
 End Function
 
 Function TakeInvItem(ByVal index As Long, ByVal ItemNum As Integer, ByVal ItemVal As Long, Optional Update As Boolean = True) As Boolean
     Dim i As Long, II As Long, NPCNum As Long
     Dim n As Long
-    Dim Cnt As Long
     Dim Parse() As String
 
     ' Check for subscript out of range
@@ -921,13 +915,10 @@ Function TakeInvItem(ByVal index As Long, ByVal ItemNum As Integer, ByVal ItemVa
             End If
 
             If TakeInvItem Then
-                Cnt = Cnt + 1
-                If Not Cnt > ItemVal Then
-                    Call SetPlayerInvItemNum(index, i, 0)
-                    Call SetPlayerInvItemValue(index, i, 0)
-                    Call SetPlayerInvItemDur(index, i, 0)
-                    Call SetPlayerInvItemBind(index, i, 0)
-                End If
+                Call SetPlayerInvItemNum(index, i, 0)
+                Call SetPlayerInvItemValue(index, i, 0)
+                Call SetPlayerInvItemDur(index, i, 0)
+                Call SetPlayerInvItemBind(index, i, 0)
             End If
         End If
     Next
@@ -1087,7 +1078,11 @@ Sub PlayerMapGetItem(ByVal index As Long, ByVal i As Long)
                     Value = MapItem(MapNum, i).Value
                     Dur = MapItem(MapNum, i).Durability
                     Bind = Item(ItemNum).BindType
-                    Msg = Value & " " & Trim$(Item(ItemNum).Name)
+                    If Value > 0 Then
+                        Msg = Value & " " & Trim$(Item(ItemNum).Name)
+                    Else
+                        Msg = Trim$(Item(ItemNum).Name)
+                    End If
                     
                     'sure made this a lot simpler than it was, removing roughly 30 lines of code in exchange for 5.  It could be done in 1 line
                     'but I chose to make it pretty and easy to debug had something went wrong.
@@ -1158,13 +1153,13 @@ Sub PlayerMapDropItem(ByVal index As Long, ByVal InvNum As Byte, ByVal Amount As
                 Else
                     MapItem(GetPlayerMap(index), i).Value = Amount
                     Msg = Amount & " " & Trim$(Item(GetPlayerInvItemNum(index, InvNum)).Name)
-                    Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), GetPlayerInvItemValue(index, InvNum) - Amount, True)
+                    Call TakeInvSlot(index, InvNum, Amount, True)
                 End If
             Else
                 ' It's not a currency object so this is easy
                 Msg = Trim$(Item(GetPlayerInvItemNum(index, InvNum)).Name)
                 MapItem(GetPlayerMap(index), i).Value = 0
-                Call TakeInvSlot(index, InvNum, GetPlayerInvItemValue(index, InvNum), True)
+                Call TakeInvSlot(index, InvNum, Amount, True)
             End If
             
             ' Send message
