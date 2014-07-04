@@ -969,7 +969,7 @@ Public Sub CheckPlayerNewTitle(ByVal index As Long, Optional ByVal Message As Bo
     Next
 End Sub
 
-Public Sub AddPlayerNewTitle(ByVal index As Long, ByVal TitleNum As Long, Optional ByVal InvNum As Byte, Optional ByVal Message As Boolean = True)
+Public Sub AddPlayerTitle(ByVal index As Long, ByVal TitleNum As Long, Optional ByVal InvNum As Byte, Optional ByVal Message As Boolean = True)
     Dim i As Byte, X As Byte
     
     If CanAddTitle(index, TitleNum, False, True) Then
@@ -980,10 +980,8 @@ Public Sub AddPlayerNewTitle(ByVal index As Long, ByVal TitleNum As Long, Option
                 Call SetPlayerTitle(index, i, TitleNum)
                 Account(index).Chars(GetPlayerChar(index)).AmountOfTitles = Account(index).Chars(GetPlayerChar(index)).AmountOfTitles + 1
 
-                If Message Then
-                    Call PlayerMsg(index, "You have unlocked the " & Trim$(Title(TitleNum).Name) & " title!", BrightGreen)
-                End If
-                
+                If Message Then Call PlayerMsg(index, "You have unlocked the " & Trim$(Title(TitleNum).Name) & " title!", BrightGreen)
+
                 ' Set the current title
                 If Account(index).Chars(GetPlayerChar(index)).CurrentTitle = 0 Then
                     Account(index).Chars(GetPlayerChar(index)).CurrentTitle = i
@@ -993,13 +991,48 @@ Public Sub AddPlayerNewTitle(ByVal index As Long, ByVal TitleNum As Long, Option
                 Call SendPlayerTitles(index)
                 
                 ' Is it reusable, if not take item away
-                If Item(GetPlayerInvItemNum(index, InvNum)).IsReusable = False Then
-                    Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 1)
+                If InvNum > 0 Then
+                    If Item(GetPlayerInvItemNum(index, InvNum)).IsReusable = False Then
+                        Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 1)
+                    End If
                 End If
                 Exit For
             End If
         Next
     End If
+End Sub
+
+Public Sub RemovePlayerTitle(ByVal index As Long, ByVal TitleNum As Long, Optional ByVal InvNum As Byte, Optional ByVal Message As Boolean = True)
+    Dim i As Byte, X As Byte
+    
+    For i = 1 To MAX_TITLES
+        ' Find an empty slot
+        If GetPlayerTitle(index, i) > 0 Then
+            ' Set the title
+            Call SetPlayerTitle(index, i, 0)
+            Account(index).Chars(GetPlayerChar(index)).AmountOfTitles = Account(index).Chars(GetPlayerChar(index)).AmountOfTitles - 1
+
+            If Message Then Call PlayerMsg(index, "You have lost the " & Trim$(Title(TitleNum).Name) & " title!", BrightGreen)
+
+            ' Set the current title
+            If Account(index).Chars(GetPlayerChar(index)).CurrentTitle = i Then
+                Account(index).Chars(GetPlayerChar(index)).CurrentTitle = 0
+                
+                For X = MAX_TITLES To 1 Step -1
+                    If Account(index).Chars(GetPlayerChar(index)).Title(X) > 0 Then
+                        Account(index).Chars(GetPlayerChar(index)).CurrentTitle = X
+                        Exit For
+                    End If
+                Next
+            End If
+            
+            ' Send updated title
+            Call SendPlayerTitles(index)
+            
+            If InvNum > 0 Then Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 1)
+            Exit For
+        End If
+    Next
 End Sub
 
 Private Function CanAddTitle(ByVal index As Long, ByVal TitleNum As Byte, Optional ByVal NoRequirement As Boolean = True, Optional ByVal Message As Byte = False) As Boolean

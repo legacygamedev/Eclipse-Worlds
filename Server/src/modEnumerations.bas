@@ -447,6 +447,8 @@ Public Enum EventType
     evSetweather
     evSetTint
     evWait
+    evAddTitle
+    evRemoveTitle
 End Enum
 
 
