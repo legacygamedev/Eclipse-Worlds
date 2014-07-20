@@ -16,6 +16,7 @@ Option Explicit
 ' Music and Sound Constants
 Private Music As Long
 Private SoundIndex As Byte
+Public IsMuted As Boolean
 
 ' Music engine for MIDI
 Public Performance As DirectMusicPerformance
@@ -90,6 +91,7 @@ Public Sub PlayMusic(FileName As String)
         Call BASS_ChannelSetAttribute(Music, BASS_ATTRIB_VOL, Options.MusicVolume)
         Call BASS_ChannelPlay(Music, BASSFALSE)
         CurrentMusic = Trim$(FileName)
+        CurrentMusicIndex = Music
     End If
 End Sub
 
@@ -136,6 +138,7 @@ Public Sub StopMusic()
         Call BASS_ChannelStop(Music)
         Call ZeroMemory(ByVal VarPtr(Music), LenB(Music))
         CurrentMusic = vbNullString
+        CurrentMusicIndex = 0
     End If
 End Sub
 
@@ -239,6 +242,59 @@ Sub CacheNewMapSounds()
             End If
         Next
     Next
+End Sub
+
+Public Sub MuteVolume()
+
+    Dim I As Long
+
+    ' Adjust volume
+    If CurrentMusicIndex <> 0 Then
+        Call BASS_ChannelSetAttribute(CurrentMusicIndex, BASS_ATTRIB_VOL, 0)
+    End If
+
+    Call BASS_ChannelPlay(CurrentMusicIndex, BASSFALSE)
+
+    StopSounds
+    StopMapSounds
+
+    IsMuted = True
+End Sub
+
+Public Sub UpdateVolume()
+
+    Dim I As Long
+
+    ' Adjust volume
+    If CurrentMusicIndex <> 0 Then
+        Call BASS_ChannelSetAttribute(CurrentMusicIndex, BASS_ATTRIB_VOL, Options.MusicVolume)
+    End If
+
+    Call BASS_ChannelPlay(CurrentMusicIndex, BASSFALSE)
+
+    ' Adjust sound volume
+    For I = 1 To MAX_SOUNDS
+
+        If Not Sounds(I) = 0 Then
+            Call BASS_ChannelSetAttribute(Sounds(I), BASS_ATTRIB_VOL, Options.SoundVolume)
+            Call BASS_ChannelPlay(Sounds(I), BASSFALSE)
+        End If
+
+    Next
+
+    If MapSoundCount > 0 Then
+
+        For I = 1 To MapSoundCount
+
+            If Not MapSounds(I).handle = 0 Then
+                Call BASS_ChannelSetAttribute(MapSounds(I).handle, BASS_ATTRIB_VOL, Options.SoundVolume)
+            End If
+
+        Next
+
+    End If
+
+    IsMuted = False
 End Sub
 
 Public Sub Error_(ByVal es As String)

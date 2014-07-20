@@ -46,6 +46,13 @@ Public Sub GameLoop()
             InGame = IsConnected
             Call CheckKeys ' Check to make sure they aren't trying to auto do anything
 
+            ' Mute everything but still keep everything playing
+            If frmMain.WindowState = vbMinimized Then
+                If Not Audio.IsMuted Then Audio.MuteVolume
+            Else
+                If Audio.IsMuted Then Audio.UpdateVolume
+            End If
+         
             If GetForegroundWindow() = frmMain.hWnd Then
                 Call CheckInputKeys ' Check which keys were pressed
             End If

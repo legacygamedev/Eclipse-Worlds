@@ -6,6 +6,7 @@ Public Audio As New clsAudio
 
 ' The current song playing
 Public CurrentMusic As String
+Public CurrentMusicIndex As Long
 
 ' Paperdoll rendering order
 Public PaperdollOrder() As Long

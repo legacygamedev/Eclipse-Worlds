@@ -182,12 +182,19 @@ Public Sub MenuLoop()
 restartmenuloop:
     ' *** Start GameLoop ***
     Do While (Not InGame And Not readyToExit)
-        ' *********************
-        ' ** Render Graphics **
-        ' *********************
-        Call DrawGDI
-        DoEvents
-    Loop
+         ' *********************
+         ' ** Render Graphics **
+         ' *********************
+         Call DrawGDI
+        
+         ' Mute everything but still keep everything playing
+         If frmMenu.WindowState = vbMinimized Then
+            If Not Audio.IsMuted Then Audio.MuteVolume
+         Else
+            If Audio.IsMuted Then Audio.UpdateVolume
+         End If
+         DoEvents
+   Loop
     Exit Sub
     
 ' Error handler
