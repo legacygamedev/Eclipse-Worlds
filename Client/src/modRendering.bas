@@ -3628,14 +3628,17 @@ Public Sub Render_Graphics()
 ErrorHandler:
     If Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICELOST Or Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then
         HandleDeviceLost
+
         Exit Sub
+
     Else
+
         If Options.Debug = 1 Then
             HandleError "Render_Graphics", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
             Err.Clear
         End If
-        MsgBox "Unrecoverable DX8 error."
-        DestroyGame
+
+        MsgBox "Unrecoverable DirectX8 error."
     End If
 End Sub
 
