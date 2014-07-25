@@ -1829,7 +1829,7 @@ ErrorHandler:
     Err.Clear
 End Function
 
-Public Sub PlaySoundEntity(ByVal X As Long, ByVal Y As Long, ByVal EntityType As Long, ByVal EntityNum As Long)
+Public Sub PlaySoundEntity(ByVal X As Long, ByVal Y As Long, ByVal EntityType As Long, ByVal EntityNum As Long, Optional ByVal LockIndex As Long, Optional ByVal LockType As Byte)
     Dim SoundName As String
 
     ' If debug mode, handle error then exit out
@@ -1873,7 +1873,17 @@ Public Sub PlaySoundEntity(ByVal X As Long, ByVal Y As Long, ByVal EntityType As
     If Trim$(SoundName) = vbNullString Then Exit Sub
 
     ' Play the sound
-    Audio.PlaySound SoundName, X, Y
+    If LockType > 0 And LockIndex > 0 Then
+      If LockType = TARGET_TYPE_PLAYER Then
+         Audio.PlaySound SoundName, Player(LockIndex).X, Player(LockIndex).Y
+      ElseIf LockType = TARGET_TYPE_NPC Then
+         Audio.PlaySound SoundName, MapNPC(LockIndex).X, MapNPC(LockIndex).Y
+      Else
+         ' BUG
+      End If
+    Else
+      Audio.PlaySound SoundName, X, Y
+    End If
     Exit Sub
     
 ' Error handler

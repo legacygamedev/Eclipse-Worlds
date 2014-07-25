@@ -69,6 +69,7 @@ Public Sub PlayMusic(FileName As String)
         If LenB(Trim$(FileName)) < 1 Then Exit Sub
         If UBound(SplitMusic) <> 1 Then Exit Sub
         If SplitMusic(1) <> "mid" Then Exit Sub
+        If IsMuted Then Exit Sub
         
         Set Segment = Nothing
         Set Segment = Loader.LoadSegment(App.Path & MUSIC_PATH & Trim$(FileName))
@@ -87,49 +88,65 @@ Public Sub PlayMusic(FileName As String)
         Else
             Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & Trim$(FileName)), 0, 0, BASS_SAMPLE_LOOP)
         End If
-        
-        Call BASS_ChannelSetAttribute(Music, BASS_ATTRIB_VOL, Options.MusicVolume)
-        Call BASS_ChannelPlay(Music, BASSFALSE)
+
+        If Not IsMuted Then
+        	Call BASS_ChannelSetAttribute(Music, BASS_ATTRIB_VOL, Options.MusicVolume)
+        	Call BASS_ChannelPlay(Music, BASSFALSE)
+        End If
         CurrentMusic = Trim$(FileName)
         CurrentMusicIndex = Music
     End If
 End Sub
 
-Public Sub PlaySound(FileName As String, Optional ByVal X As Long, Optional ByVal Y As Long)
-    Dim I As Long
-    '
-    If Options.Sound = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None" Then Exit Sub
+Public Sub PlaySound(FileName As String, _
+                     Optional ByVal X As Long, _
+                     Optional ByVal Y As Long)
+   Dim I As Long
+
+   '
+   If Options.Sound = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None" Then Exit Sub
     
-    If FileExist(App.Path & SOUND_PATH & Trim$(FileName), True) Then
-        ' Find the index
-        For I = 1 To MAX_SOUNDS
-            If Sounds(I) = 0 Then
-                 SoundIndex = I
-                 Exit For
-            ElseIf BASS_ChannelIsActive(Sounds(I)) Then
-                SoundIndex = I
-                Exit For
-            End If
+   If FileExist(App.Path & SOUND_PATH & Trim$(FileName), True) Then
+
+      ' Find the index
+      For I = 1 To MAX_SOUNDS
+
+         If Sounds(I) = 0 Then
+            SoundIndex = I
+            Exit For
+         ElseIf BASS_ChannelIsActive(Sounds(I)) Then
+            SoundIndex = I
+            Exit For
+         End If
             
-            ' Set it to the beginning and stop the sound if all sounds are being used
-            If I = MAX_SOUNDS Then
-                StopSound 1
-                SoundIndex = 1
-            End If
-        Next
+         ' Set it to the beginning and stop the sound if all sounds are being used
+         If I = MAX_SOUNDS Then
+            StopSound 1
+            SoundIndex = 1
+         End If
+
+      Next
         
-        ' Create the sound
-        Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & Trim$(FileName)), 0, 0, 0)
-        
-        Call BASS_ChannelSetAttribute(Sounds(SoundIndex), BASS_ATTRIB_VOL, Options.SoundVolume)
-        
-        ' Play the sound
-        Call BASS_ChannelPlay(Sounds(SoundIndex), BASSFALSE)
-    Else
-        If FormVisible("frmMain") Then
-            Call AddText(Trim$(FileName) & " does not exist!", BrightRed)
-        End If
-    End If
+      ' Create the sound
+      Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & Trim$(FileName)), 0, 0, 0)
+      
+      If Not IsMuted Then
+         If X > 0 Or Y > 0 Then
+            Call BASS_ChannelSetAttribute(Sounds(SoundIndex), BASS_ATTRIB_VOL, CalculateSoundVolume(X, Y))
+         Else
+            Call BASS_ChannelSetAttribute(Sounds(SoundIndex), BASS_ATTRIB_VOL, Options.SoundVolume)
+         End If
+           
+         ' Play the sound
+         Call BASS_ChannelPlay(Sounds(SoundIndex), BASSFALSE)
+      End If
+   Else
+
+      If FormVisible("frmMain") Then
+         Call AddText(Trim$(FileName) & " does not exist!", BrightRed)
+      End If
+   End If
+
 End Sub
 
 Public Sub StopMusic()
@@ -190,13 +207,16 @@ Function CalculateSoundVolume(X As Long, Y As Long) As Double
             Distance = Sqr(((X1 - X2) ^ 2) + ((Y1 - Y2) ^ 2))
         End If
         
-        If Distance >= 512 Then
+        If Distance >= 768 Then
             CalculateSoundVolume = 0
         Else
-            CalculateSoundVolume = 1 - Distance / 512
+            CalculateSoundVolume = Options.SoundVolume - (Distance / 768)
+
+            If CalculateSoundVolume < 0 Then CalculateSoundVolume = CalculateSoundVolume * -1
         End If
     Else
         CalculateSoundVolume = Options.SoundVolume
+        Exit Function
     End If
 End Function
 
