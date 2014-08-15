@@ -1746,6 +1746,8 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
 End Sub
 
 Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If Index = 10 Then Exit Sub
+    
     Select Case Index
         Case 0
             lblCat.Caption = "Recent"
@@ -1767,14 +1769,16 @@ Private Sub optCat_MouseMove(Index As Integer, Button As Integer, Shift As Integ
             lblCat.Caption = "Auto Life"
         Case 9
             lblCat.Caption = "Change Sprite"
-        Case 10
-            lblCat.Caption = "Recipe"
+        'Case 10
+        '    lblCat.Caption = "Recipe"
         
     End Select
 End Sub
 
 Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
     Dim test As Boolean
+    
+    If Index = 10 Then Exit Sub
     
     If ignoreChange Then
         ignoreChange = False
@@ -1809,8 +1813,8 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
                 currentCategory = "Auto Life"
             Case 9
                 currentCategory = "Change Sprite"
-            Case 10
-                currencycategory = "Recipe"
+            'Case 10
+            '    currencycategory = "Recipe"
         End Select
         lblCat.Caption = currentCategory
     End If
