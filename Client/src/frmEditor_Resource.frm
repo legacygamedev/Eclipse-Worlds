@@ -471,7 +471,7 @@ Private Sub cmbSound_Click()
     If cmbSound.ListIndex >= 0 Then
         Audio.StopSounds
         Resource(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
-        Audio.PlaySound Resource(EditorIndex).Sound - 1, -1, True
+        Audio.PlaySound Resource(EditorIndex).Sound, -1, -1, True
     Else
         Resource(EditorIndex).Sound = vbNullString
     End If

@@ -669,7 +669,7 @@ Private Sub cmbSound_Click()
     If cmbSound.ListIndex >= 0 Then
         Audio.StopSounds
         Spell(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
-        Audio.PlaySound Spell(EditorIndex).Sound - 1, -1, True
+        Audio.PlaySound Spell(EditorIndex).Sound, -1, -1, True
     Else
         Spell(EditorIndex).Sound = vbNullString
     End If
