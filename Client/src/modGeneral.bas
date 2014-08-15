@@ -202,14 +202,14 @@ ErrorHandler:
     If Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICELOST Or Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then
         HandleDeviceLost
         GoTo restartmenuloop
-    ElseIf Options.Debug = 1 Then
+    ElseIf App.LogMode = 1 And Options.Debug = 1 Then
         HandleError "MenuLoop", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
         Err.Clear
     End If
 End Sub
 
 Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
-    Dim I As Long
+    Dim i As Long
 
     ' If we can't find the interface
     On Error GoTo ErrorHandler
@@ -220,8 +220,8 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
         Exit Sub
     End If
     
-    For I = 1 To MAX_MENUBUTTONS
-        Call RenderButton_Menu(I)
+    For i = 1 To MAX_MENUBUTTONS
+        Call RenderButton_Menu(i)
     Next
 
     ' Menu
@@ -264,8 +264,8 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     frmMain.imgEXPBar.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\experience.jpg")
     
     ' Gui Buttons
-    For I = 1 To MAX_MAINBUTTONS
-        frmMain.picButton(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\buttons\" & MainButton(I).FileName & "_norm.jpg")
+    For i = 1 To MAX_MAINBUTTONS
+        frmMain.picButton(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\buttons\" & MainButton(i).FileName & "_norm.jpg")
     Next
     
     ' Equipment Slots
@@ -292,9 +292,9 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     EXPBar_Width = frmMain.imgEXPBar.Width
         
     ' Main - Party Bars
-    For I = 1 To MAX_PARTY_MEMBERS
-        frmMain.imgPartyHealth(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_health.jpg")
-        frmMain.imgPartySpirit(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_spirit.jpg")
+    For i = 1 To MAX_PARTY_MEMBERS
+        frmMain.imgPartyHealth(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_health.jpg")
+        frmMain.imgPartySpirit(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_spirit.jpg")
     Next
     
     ' Party
@@ -310,7 +310,7 @@ End Sub
 
 Public Sub MenuState(ByVal State As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmLoad.Visible = True
     frmLoad.ZOrder (0)
@@ -360,7 +360,7 @@ End Sub
 
 Sub GameInit()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     EnteringGame = True
     
@@ -412,7 +412,7 @@ End Sub
 
 Public Sub DestroyGame()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     gameDestroyed = True
     ' Turn off the timer
     StopTimer = True
@@ -441,7 +441,7 @@ Public Sub UnloadAllForms()
     Dim frm As Form
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For Each frm In VB.Forms
         Unload frm
@@ -456,7 +456,7 @@ End Sub
 
 Public Sub SetStatus(ByVal Caption As String)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmLoad.lblStatus.Caption = Caption
     DoEvents
@@ -471,7 +471,7 @@ End Sub
 ' Used for adding text to packet debugger
 Public Sub TextAdd(ByVal txt As textBox, Msg As String, NewLine As Boolean)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If NewLine Then
         txt.text = txt.text + Msg + vbCrLf
@@ -516,7 +516,7 @@ End Sub
 
 Public Function Random(ByVal Low As Long, ByVal High As Long) As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Randomize rnd's seed
     Randomize
@@ -535,7 +535,7 @@ Public Sub MovePicture(PB As PictureBox, Button As Integer, Shift As Integer, X 
     Dim GlobalY As Integer
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     GlobalX = PB.Left
     GlobalY = PB.Top
@@ -554,7 +554,7 @@ End Sub
 
 Public Function IsLoginLegal(ByVal UserName As String, ByVal Password As String) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Len(Trim$(UserName)) >= 3 Then
         If Len(Trim$(UserName)) > NAME_LENGTH Then
@@ -585,7 +585,7 @@ End Function
 
 Public Function IsNewCharLegal(ByVal UserName As String) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Len(Trim$(UserName)) >= 3 Then
         If Len(Trim$(UserName)) <= NAME_LENGTH Then
@@ -605,16 +605,16 @@ ErrorHandler:
 End Function
 
 Public Function IsStringLegal(ByVal sInput As String) As Boolean
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Prevent high ascii chars
     Dim inputLen As Long
     inputLen = Len(sInput)
-    For I = 1 To inputLen
-        If Asc(Mid$(sInput, I, 1)) < vbKeySpace Or Asc(Mid$(sInput, I, 1)) > vbKeyF15 Then
+    For i = 1 To inputLen
+        If Asc(Mid$(sInput, i, 1)) < vbKeySpace Or Asc(Mid$(sInput, i, 1)) > vbKeyF15 Then
             Call AlertMsg("You cannot use high ASCII characters in your Name, please re-enter.")
             Exit Function
         End If
@@ -634,7 +634,7 @@ End Function
 ' #############
 Public Sub CacheButtons()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Menu - login
     With MenuButton(1)
@@ -764,14 +764,14 @@ ErrorHandler:
 End Sub
 
 Public Sub ResetMenuButtons()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_MENUBUTTONS
-        If Not CurButton_Menu = I Then
-            frmMenu.ImgButton(I).Picture = LoadPicture(App.Path & GFX_PATH & "gui\menu\buttons\" & MenuButton(I).FileName & "_norm.jpg")
+    For i = 1 To MAX_MENUBUTTONS
+        If Not CurButton_Menu = i Then
+            frmMenu.ImgButton(i).Picture = LoadPicture(App.Path & GFX_PATH & "gui\menu\buttons\" & MenuButton(i).FileName & "_norm.jpg")
         End If
     Next
     Exit Sub
@@ -786,7 +786,7 @@ Public Sub RenderButton_Menu(ByVal ButtonNum As Long)
     Dim bSuffix As String
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If ButtonNum > MAX_MENUBUTTONS Then Exit Sub
     
@@ -812,7 +812,7 @@ End Sub
 
 Public Sub ChangeButtonState_Menu(ByVal ButtonNum As Long, ByVal bState As Byte)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If ButtonNum > MAX_MENUBUTTONS Then Exit Sub
     
@@ -833,21 +833,21 @@ ErrorHandler:
 End Sub
 
 Public Sub PopulateLists()
-    Dim StrLoad As String, I As Long
+    Dim StrLoad As String, i As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Cache music list
     StrLoad = Dir$(App.Path & MUSIC_PATH & "*")
-    I = 1
+    i = 1
     
     If Not StrLoad = vbNullString Then
         Do While StrLoad > vbNullString
-            ReDim Preserve MusicCache(1 To I) As String
-            MusicCache(I) = StrLoad
+            ReDim Preserve MusicCache(1 To i) As String
+            MusicCache(i) = StrLoad
             StrLoad = Dir
-            I = I + 1
+            i = i + 1
         Loop
     Else
         ReDim Preserve MusicCache(1) As String
@@ -856,18 +856,18 @@ Public Sub PopulateLists()
     
     ' Cache sound list
     StrLoad = Dir$(App.Path & SOUND_PATH & "*")
-    I = 1
+    i = 1
     
     If Not StrLoad = vbNullString Then
         Do While StrLoad > vbNullString
-            ReDim Preserve SoundCache(1 To I) As String
-            SoundCache(I) = StrLoad
+            ReDim Preserve SoundCache(1 To i) As String
+            SoundCache(i) = StrLoad
             StrLoad = Dir
-            I = I + 1
+            i = i + 1
         Loop
     Else
         ReDim Preserve SoundCache(1) As String
-        SoundCache(I) = vbNullString
+        SoundCache(i) = vbNullString
     End If
     Exit Sub
     
@@ -879,7 +879,7 @@ End Sub
 
 Function IsNameLegal(ByVal sInput As Integer) As Boolean
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If (sInput >= 65 And sInput <= 90) Or (sInput >= 97 And sInput <= 122) Or (sInput = 95) Or (sInput = 32) Or (sInput >= 48 And sInput <= 57) Then
         IsNameLegal = True
@@ -896,7 +896,7 @@ End Function
 
 Private Sub NotConnected()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMenu.Visible = True
     frmLoad.Visible = False
@@ -915,19 +915,22 @@ ErrorHandler:
 End Sub
 
 Public Function CheckMessage(ByVal Msg As String) As String
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     CheckMessage = Msg
     
     ' Do nothing if the filter is turned off
     If Options.SwearFilter = 0 Then Exit Function
+    
     Dim Size As Long
+    
     Size = UBound(SwearArray)
-    For I = 0 To Size
-        CheckMessage = Replace$(CheckMessage, SwearArray(I), ReplaceSwearArray(I), , , vbTextCompare)
+    
+    For i = 0 To Size
+        CheckMessage = Replace$(CheckMessage, SwearArray(i), ReplaceSwearArray(i), , , vbTextCompare)
     Next
     Exit Function
     

@@ -28,6 +28,7 @@ Public Autotile() As AutotileRec
 Public MapSounds() As SoundsRec
 Public MapSoundCount As Long
 Public Sounds(1 To MAX_SOUNDS) As Long
+Public SoundsXY(1 To MAX_SOUNDS) As XYRec
 
 ' Battle Music
 Public CacheNPCTargets(1 To MAX_MAP_NPCS) As Byte
@@ -57,6 +58,11 @@ Public Type SoundsRec
     handle As Long
     InUse As Boolean
     channel As Long
+End Type
+
+Private Type XYRec
+    X As Double
+    Y As Double
 End Type
 
 ' Type recs

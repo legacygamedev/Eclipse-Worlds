@@ -427,7 +427,7 @@ Private Sub styleListwView(sType As Status, Optional Msg As String)
 End Sub
 
 Private Function generateItemsForTab(tabNum As Byte) As Boolean
-    Dim I As Long, Z As Long, tempItems() As ItemRec, ret As Boolean
+    Dim i As Long, Z As Long, tempItems() As ItemRec, ret As Boolean
     
     tabNum = tabNum - 2
     
@@ -457,8 +457,8 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
     If ret Then
         Set listItems.Icons = itemsImageList
                 
-        For I = 0 To UBound(tempItems)
-            listItems.listItems.Add , , Trim$(tempItems(I).Name), itemsImageList.ListImages(I + 1).Index
+        For i = 0 To UBound(tempItems)
+            listItems.listItems.Add , , Trim$(tempItems(i).Name), itemsImageList.ListImages(i + 1).Index
         Next
         currentItemIndex = 0
         generateItemsForTab = True
@@ -466,18 +466,18 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
 End Function
 
 Private Sub generateRecentItems()
-Dim I As Byte
+Dim i As Byte
     If ArrayIsInitialized(lastSpawnedItems) = 0 Then
         styleListwView Status.Error, "You haven't spawned any items yet!"
     Else
         styleListwView Status.Correct
-        For I = 0 To UBound(lastSpawnedItems) - 1
-            itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & Item(lastSpawnedItems(I)).Pic & GFX_EXT, False, 32, 32, 16777215)
-        Next I
+        For i = 0 To UBound(lastSpawnedItems) - 1
+            itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & Item(lastSpawnedItems(i)).Pic & GFX_EXT, False, 32, 32, 16777215)
+        Next i
         Set listItems.Icons = itemsImageList
                 
-        For I = 0 To UBound(lastSpawnedItems) - 1
-            listItems.listItems.Add , , Trim$(Item(lastSpawnedItems(I)).Name), itemsImageList.ListImages(I + 1).Index
+        For i = 0 To UBound(lastSpawnedItems) - 1
+            listItems.listItems.Add , , Trim$(Item(lastSpawnedItems(i)).Name), itemsImageList.ListImages(i + 1).Index
         Next
         cmdSpawn.Enabled = True
         currentItemIndex = 0
@@ -486,10 +486,10 @@ End Sub
 
 Private Sub cmdSpawn_Click()
     Dim Item As Byte
-    Dim I As Byte
+    Dim i As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -509,9 +509,9 @@ Private Sub cmdSpawn_Click()
     found = -1
     If ArrayIsInitialized(lastSpawnedItems) Then
      If UBound(lastSpawnedItems) > 0 Then
-        For I = 0 To UBound(lastSpawnedItems) - 1
-            If lastSpawnedItems(I) = Item Then
-                found = I
+        For i = 0 To UBound(lastSpawnedItems) - 1
+            If lastSpawnedItems(i) = Item Then
+                found = i
                 Exit For
             End If
         Next

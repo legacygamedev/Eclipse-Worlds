@@ -20,20 +20,20 @@ Private ReadHead As Long
 
 Private Sub Class_Initialize()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Flush
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Class_Initialize", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub PreAllocate(ByVal nLength As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     WriteHead = 0
     ReadHead = 0
@@ -42,14 +42,14 @@ Public Sub PreAllocate(ByVal nLength As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "PreAllocate", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub Allocate(ByVal nLength As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If BufferSize = 0 And nLength > 1 Then nLength = nLength - 1
     BufferSize = BufferSize + nLength
@@ -57,14 +57,14 @@ Public Sub Allocate(ByVal nLength As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Allocate", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub Flush()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     WriteHead = 0
     ReadHead = 0
@@ -73,14 +73,14 @@ Public Sub Flush()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Flush", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub Trim()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' If the readhead is past the buffersize, this means everything has been read in the array, flush it
     If ReadHead >= count Then
@@ -89,14 +89,14 @@ Public Sub Trim()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Trim", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub WriteByte(ByVal nByte As Byte)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If WriteHead > BufferSize Then Allocate 1
  
@@ -105,7 +105,7 @@ Public Sub WriteByte(ByVal nByte As Byte)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "WriteByte", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -114,7 +114,7 @@ Public Sub WriteBytes(ByRef nByte() As Byte)
     Dim nLength As Long
         
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     nLength = (UBound(nByte) - LBound(nByte)) + 1
     
@@ -125,14 +125,14 @@ Public Sub WriteBytes(ByRef nByte() As Byte)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "WriteBytes", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub WriteInteger(ByVal nInteger As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If WriteHead + 1 > BufferSize Then Allocate 2
         
@@ -141,14 +141,14 @@ Public Sub WriteInteger(ByVal nInteger As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "WriteInteger", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Sub WriteLong(ByVal nLong As Long)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If WriteHead + 3 > BufferSize Then Allocate 4
     
@@ -157,7 +157,7 @@ Public Sub WriteLong(ByVal nLong As Long)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "WriteLong", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -167,7 +167,7 @@ Public Sub WriteString(ByRef nString As String)
         Dim sLength As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     sLength = Len(nString)
     sBytes = StrConv(nString, vbFromUnicode)
@@ -183,14 +183,14 @@ Public Sub WriteString(ByRef nString As String)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "WriteString", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Public Function ReadByte(Optional MoveReadHead As Boolean = True) As Byte
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If ReadHead > BufferSize Then Exit Function
     
@@ -199,7 +199,7 @@ Public Function ReadByte(Optional MoveReadHead As Boolean = True) As Byte
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ReadByte", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -208,7 +208,7 @@ Public Function ReadBytes(ByVal nLength As Long, Optional MoveReadHead As Boolea
     Dim data() As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If nLength = 0 Then Exit Function
     If ReadHead + nLength - 1 > BufferSize Then Exit Function
@@ -222,14 +222,14 @@ Public Function ReadBytes(ByVal nLength As Long, Optional MoveReadHead As Boolea
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ReadBytes", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function ReadInteger(Optional MoveReadHead As Boolean = True) As Integer
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If ReadHead + 1 > BufferSize Then Exit Function
     
@@ -238,14 +238,14 @@ Public Function ReadInteger(Optional MoveReadHead As Boolean = True) As Integer
     Exit Function
 
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ReadInteger", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function ReadLong(Optional MoveReadHead As Boolean = True) As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If ReadHead + 3 > BufferSize Then Exit Function
     
@@ -254,7 +254,7 @@ Public Function ReadLong(Optional MoveReadHead As Boolean = True) As Long
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ReadLong", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
@@ -264,7 +264,7 @@ Public Function ReadString(Optional MoveReadHead As Boolean = True) As String
     Dim sBytes() As Byte
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     sLength = ReadLong(False)
 
@@ -282,59 +282,59 @@ Public Function ReadString(Optional MoveReadHead As Boolean = True) As String
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ReadString", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function count() As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     count = (UBound(buffer) - LBound(buffer)) + 1
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Count", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function Length() As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Length = count - ReadHead
     Exit Function
         
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Length", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function ToArray() As Byte()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ToArray = buffer()
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ToArray", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
 
 Public Function ToString() As String
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ToString = StrConv(buffer, vbUnicode)
     Exit Function
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "ToString", "clsBuffer", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function

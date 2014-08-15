@@ -80,14 +80,14 @@ End Type
 '////////QUEST SUBS AND FUNCTIONS////////
 '////////////////////////////////////////
 Public Sub MoveListItem(ByVal ListID As Byte, ByVal Index As Long, ByVal CLIIndex As Long, ByVal ArrayID As Long, ByVal Dir As Integer)
-Dim I As Long
+Dim i As Long
 Dim TempQuest As TempQuestRec
 
     'If the dir is -1, it means we're backtracking a slot to move the item up
     'If the dir is 1, it means we're moving ahead a slot to move the item down
     
 ' If debug mode, handle error then exit out
-If Options.Debug = 1 Then On Error GoTo ErrorHandler
+If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Select Case ListID
         Case LIST_CLI
@@ -130,11 +130,11 @@ End Sub
 ' // Quest Editor //
 ' //////////////////
 Public Sub QuestEditorInit()
-    Dim I As Long
+    Dim i As Long
     Dim SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     EditorIndex = frmEditor_Quest.lstIndex.ListIndex + 1
     Quest_Changed(EditorIndex) = True
@@ -161,22 +161,22 @@ Public Sub QuestEditorInit()
         frmEditor_Quest.cmbClassReq.ListIndex = .Requirements.ClassReq
         
         ' Loop for stats
-        For I = 1 To Stats.Stat_Count - 1
-            frmEditor_Quest.scrlStatReq(I).Value = .Requirements.Stat_Req(I)
+        For i = 1 To Stats.Stat_Count - 1
+            frmEditor_Quest.scrlStatReq(i).Value = .Requirements.Stat_Req(i)
         Next
         
         'Loop for CLI's
         frmEditor_Quest.lstTasks.Clear
         frmEditor_Quest.CLI.Clear
-        For I = 1 To .Max_CLI
-            If .CLI(I).ItemIndex > 0 Then
-                If .CLI(I).isNPC Then
-                    frmEditor_Quest.CLI.AddItem "Meet with: " & Trim$(NPC(.CLI(I).ItemIndex).Name)
+        For i = 1 To .Max_CLI
+            If .CLI(i).ItemIndex > 0 Then
+                If .CLI(i).isNPC Then
+                    frmEditor_Quest.CLI.AddItem "Meet with: " & Trim$(NPC(.CLI(i).ItemIndex).Name)
                 Else
                     'frmEditor_Quest.CLI.AddItem I & ": " & Trim$(tmpEvent(.CLI(I).ItemIndex).Name)
                 End If
             End If
-        Next I
+        Next i
     End With
     
     Call CheckStartMsg
@@ -192,13 +192,13 @@ End Sub
 ' // Quest Editor CLI List //
 ' ///////////////////////////
 Public Sub QuestEditorInitCLI()
-    Dim I As Long
+    Dim i As Long
     Dim Index As Long
     Dim Tmp As String
     Dim Indent As String
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     Index = frmEditor_Quest.CLI.ListIndex + 1
     If Index < 1 Then Exit Sub
     With Quest(EditorIndex).CLI(Index)
@@ -206,91 +206,91 @@ Public Sub QuestEditorInitCLI()
         'Loop for Actions
         frmEditor_Quest.lstTasks.Clear
         
-        For I = 1 To .Max_Actions
-            If .Action(I).ActionID > 0 Then
+        For i = 1 To .Max_Actions
+            If .Action(i).ActionID > 0 Then
                 'Little more in depth because it turns code into a description easily readable by the user
-                Select Case .Action(I).ActionID
+                Select Case .Action(i).ActionID
                     
                     Case TASK_KILL 'gather items
-                        frmEditor_Quest.lstTasks.AddItem "Kill " & .Action(I).Amount & " " & Trim$(NPC(.Action(I).MainData).Name) & "('s)."
+                        frmEditor_Quest.lstTasks.AddItem "Kill " & .Action(i).Amount & " " & Trim$(NPC(.Action(i).MainData).Name) & "('s)."
                     
                     Case TASK_GATHER 'gather items
-                        If .Action(I).SecondaryData = 1 Then
-                            frmEditor_Quest.lstTasks.AddItem "Gather and handover " & .Action(I).Amount & " " & Trim$(Item(.Action(I).MainData).Name) & "('s)."
+                        If .Action(i).SecondaryData = 1 Then
+                            frmEditor_Quest.lstTasks.AddItem "Gather and handover " & .Action(i).Amount & " " & Trim$(Item(.Action(i).MainData).Name) & "('s)."
                         Else
-                            frmEditor_Quest.lstTasks.AddItem "Gather " & .Action(I).Amount & " " & Trim$(Item(.Action(I).MainData).Name) & "('s)."
+                            frmEditor_Quest.lstTasks.AddItem "Gather " & .Action(i).Amount & " " & Trim$(Item(.Action(i).MainData).Name) & "('s)."
                         End If
                         
                     Case TASK_GETSKILL
-                        frmEditor_Quest.lstTasks.AddItem "Obtain level " & .Action(I).Amount & " for the " & GetSkillName(.Action(I).MainData) & " skill."
+                        frmEditor_Quest.lstTasks.AddItem "Obtain level " & .Action(i).Amount & " for the " & GetSkillName(.Action(i).MainData) & " skill."
                     
                     Case ACTION_GIVE_ITEM 'give player item(s)
-                        frmEditor_Quest.lstTasks.AddItem "----Give " & .Action(I).Amount & " " & Trim$(Item(.Action(I).MainData).Name) & "('s) to player."
+                        frmEditor_Quest.lstTasks.AddItem "----Give " & .Action(i).Amount & " " & Trim$(Item(.Action(i).MainData).Name) & "('s) to player."
                     
                     Case ACTION_TAKE_ITEM 'take player item(s)
-                        frmEditor_Quest.lstTasks.AddItem "----Take " & .Action(I).Amount & " " & Trim$(Item(.Action(I).MainData).Name) & "('s) from player."
+                        frmEditor_Quest.lstTasks.AddItem "----Take " & .Action(i).Amount & " " & Trim$(Item(.Action(i).MainData).Name) & "('s) from player."
                     
                     Case ACTION_SHOWMSG 'show the player a message
-                        If .Action(I).MainData = vbChecked Then
-                            frmEditor_Quest.lstTasks.AddItem "START: (" & GetColorName(.Action(I).TertiaryData) & ") Show start msg: " & """" & Trim$(.Action(I).TextHolder) & """"
+                        If .Action(i).MainData = vbChecked Then
+                            frmEditor_Quest.lstTasks.AddItem "START: (" & GetColorName(.Action(i).TertiaryData) & ") Show start msg: " & """" & Trim$(.Action(i).TextHolder) & """"
                         Else
-                            If .Action(I).SecondaryData = vbChecked Then
-                                frmEditor_Quest.lstTasks.AddItem "---- (" & GetColorName(.Action(I).TertiaryData) & ") Show msg if last task is incomplete: " & """" & Trim$(.Action(I).TextHolder) & """"
+                            If .Action(i).SecondaryData = vbChecked Then
+                                frmEditor_Quest.lstTasks.AddItem "---- (" & GetColorName(.Action(i).TertiaryData) & ") Show msg if last task is incomplete: " & """" & Trim$(.Action(i).TextHolder) & """"
                             Else
-                                frmEditor_Quest.lstTasks.AddItem "---- (" & GetColorName(.Action(I).TertiaryData) & ") Show msg: " & """" & Trim$(.Action(I).TextHolder) & """"
+                                frmEditor_Quest.lstTasks.AddItem "---- (" & GetColorName(.Action(i).TertiaryData) & ") Show msg: " & """" & Trim$(.Action(i).TextHolder) & """"
                             End If
                         End If
                     
                     Case ACTION_ADJUST_EXP 'adjust the player's experience
-                        If .Action(I).MainData = 0 Then
-                            If .Action(I).Amount > 0 Then Tmp = "+"
-                            frmEditor_Quest.lstTasks.AddItem "----Modify Player EXP by " & Tmp & .Action(I).Amount
+                        If .Action(i).MainData = 0 Then
+                            If .Action(i).Amount > 0 Then Tmp = "+"
+                            frmEditor_Quest.lstTasks.AddItem "----Modify Player EXP by " & Tmp & .Action(i).Amount
                         Else
-                            frmEditor_Quest.lstTasks.AddItem "----Set Player EXP to " & .Action(I).Amount
+                            frmEditor_Quest.lstTasks.AddItem "----Set Player EXP to " & .Action(i).Amount
                         End If
                     
                     Case ACTION_ADJUST_LVL 'adjust the player's level
-                        If .Action(I).MainData = 0 Then
-                            If .Action(I).Amount > 0 Then Tmp = "+"
-                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player Level by " & Tmp & .Action(I).Amount
+                        If .Action(i).MainData = 0 Then
+                            If .Action(i).Amount > 0 Then Tmp = "+"
+                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player Level by " & Tmp & .Action(i).Amount
                         Else
-                            frmEditor_Quest.lstTasks.AddItem "---- Set Player Level to " & .Action(I).Amount
+                            frmEditor_Quest.lstTasks.AddItem "---- Set Player Level to " & .Action(i).Amount
                         End If
                     
                     Case ACTION_ADJUST_STAT_LVL 'adjust the player's stat level
-                        If .Action(I).MainData = 0 Then
-                            If .Action(I).Amount > 0 Then Tmp = "+"
-                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's " & GetStatName(.Action(I).SecondaryData) & " Level by " & Tmp & .Action(I).Amount
+                        If .Action(i).MainData = 0 Then
+                            If .Action(i).Amount > 0 Then Tmp = "+"
+                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's " & GetStatName(.Action(i).SecondaryData) & " Level by " & Tmp & .Action(i).Amount
                         Else
-                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's " & GetStatName(.Action(I).SecondaryData) & " Level to " & .Action(I).Amount
+                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's " & GetStatName(.Action(i).SecondaryData) & " Level to " & .Action(i).Amount
                         End If
                         
                     Case ACTION_ADJUST_SKILL_LVL 'adjust the player's skill level
-                        If .Action(I).MainData = 0 Then
-                            If .Action(I).Amount > 0 Then Tmp = "+"
-                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's " & GetSkillName(.Action(I).SecondaryData) & " level by " & Tmp & .Action(I).Amount
+                        If .Action(i).MainData = 0 Then
+                            If .Action(i).Amount > 0 Then Tmp = "+"
+                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's " & GetSkillName(.Action(i).SecondaryData) & " level by " & Tmp & .Action(i).Amount
                         Else
-                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's " & GetSkillName(.Action(I).SecondaryData) & " level to " & .Action(I).Amount
+                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's " & GetSkillName(.Action(i).SecondaryData) & " level to " & .Action(i).Amount
                         End If
                         
                     Case ACTION_ADJUST_SKILL_EXP 'adjust the player's skill exp
-                        If .Action(I).MainData = 0 Then
-                            If .Action(I).Amount > 0 Then Tmp = "+"
-                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's " & GetSkillName(.Action(I).SecondaryData) & " EXP by " & Tmp & .Action(I).Amount
+                        If .Action(i).MainData = 0 Then
+                            If .Action(i).Amount > 0 Then Tmp = "+"
+                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's " & GetSkillName(.Action(i).SecondaryData) & " EXP by " & Tmp & .Action(i).Amount
                         Else
-                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's " & GetSkillName(.Action(I).SecondaryData) & " EXP to " & .Action(I).Amount
+                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's " & GetSkillName(.Action(i).SecondaryData) & " EXP to " & .Action(i).Amount
                         End If
                         
                     Case ACTION_ADJUST_STAT_POINTS 'adjust the player's stat points
-                        If .Action(I).MainData = 0 Then
-                            If .Action(I).Amount > 0 Then Tmp = "+"
-                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's stat points by " & Tmp & .Action(I).Amount
+                        If .Action(i).MainData = 0 Then
+                            If .Action(i).Amount > 0 Then Tmp = "+"
+                            frmEditor_Quest.lstTasks.AddItem "---- Modify Player's stat points by " & Tmp & .Action(i).Amount
                         Else
-                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's stat points to " & .Action(I).Amount
+                            frmEditor_Quest.lstTasks.AddItem "---- Set Player's stat points to " & .Action(i).Amount
                         End If
                         
                     Case ACTION_WARP
-                        frmEditor_Quest.lstTasks.AddItem "---- Warp player to Map: " & .Action(I).Amount & " (X" & .Action(I).MainData & ", Y" & .Action(I).SecondaryData & ")"
+                        frmEditor_Quest.lstTasks.AddItem "---- Warp player to Map: " & .Action(i).Amount & " (X" & .Action(i).MainData & ", Y" & .Action(i).SecondaryData & ")"
                     
                     Case Else
                         Exit Sub
@@ -299,7 +299,7 @@ Public Sub QuestEditorInitCLI()
             End If
             
             Tmp = vbNullString
-        Next I
+        Next i
     End With
     
     Call CheckStartMsg
@@ -312,20 +312,20 @@ ErrorHandler:
 End Sub
 
 Public Sub DeleteAction(ByVal QuestID As Long, ByVal Index As Long, ByVal ActionID As Long)
-Dim I As Long
+Dim i As Long
 ' If debug mode, handle error then exit out
-If Options.Debug = 1 Then On Error GoTo ErrorHandler
+If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     With Quest(QuestID).CLI(Index)
-        For I = 1 To .Max_Actions
-            If I >= ActionID Then
-                Call ZeroMemory(ByVal VarPtr(.Action(I)), LenB(.Action(I)))
+        For i = 1 To .Max_Actions
+            If i >= ActionID Then
+                Call ZeroMemory(ByVal VarPtr(.Action(i)), LenB(.Action(i)))
                 
                 'start swaping the following slots
-                If I + 1 <= .Max_Actions Then
-                    .Action(I) = .Action(I + 1)
+                If i + 1 <= .Max_Actions Then
+                    .Action(i) = .Action(i + 1)
                 End If
             End If
-        Next I
+        Next i
         
         Call ZeroMemory(ByVal VarPtr(.Action(.Max_Actions)), LenB(.Action(.Max_Actions)))
         .Max_Actions = .Max_Actions - 1
@@ -344,20 +344,20 @@ ErrorHandler:
 End Sub
 
 Public Sub DeleteCLI(ByVal QuestID As Long, ByVal Index As Long)
-Dim I As Long
+Dim i As Long
 ' If debug mode, handle error then exit out
-If Options.Debug = 1 Then On Error GoTo ErrorHandler
+If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     With Quest(QuestID)
-        For I = 1 To .Max_CLI
-            If I >= Index Then
-                Call ZeroMemory(ByVal VarPtr(.CLI(I)), LenB(.CLI(I)))
+        For i = 1 To .Max_CLI
+            If i >= Index Then
+                Call ZeroMemory(ByVal VarPtr(.CLI(i)), LenB(.CLI(i)))
                 
                 'start swaping the following slots
-                If I + 1 <= .Max_CLI Then
-                    .CLI(I) = .CLI(I + 1)
+                If i + 1 <= .Max_CLI Then
+                    .CLI(i) = .CLI(i + 1)
                 End If
             End If
-        Next I
+        Next i
         
         Call ZeroMemory(ByVal VarPtr(.CLI(.Max_CLI)), LenB(.CLI(.Max_CLI)))
         .Max_CLI = .Max_CLI - 1
@@ -378,64 +378,64 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckStartMsg()
-Dim I As Long, II As Long, III As Long
+Dim i As Long, II As Long, III As Long
 
-For I = 1 To MAX_QUESTS
-    For II = 1 To Quest(I).Max_CLI
-        For III = 1 To Quest(I).CLI(II).Max_Actions
-            If Quest(I).CLI(II).Action(III).ActionID = ACTION_SHOWMSG Then
-                If Quest(I).CLI(II).Action(III).MainData = vbChecked Then
+For i = 1 To MAX_QUESTS
+    For II = 1 To Quest(i).Max_CLI
+        For III = 1 To Quest(i).CLI(II).Max_Actions
+            If Quest(i).CLI(II).Action(III).ActionID = ACTION_SHOWMSG Then
+                If Quest(i).CLI(II).Action(III).MainData = vbChecked Then
                     frmEditor_Quest.chkStart.Value = vbUnchecked
                     Exit Sub
                 End If
             End If
         Next III
     Next II
-Next I
+Next i
 End Sub
 
 Public Sub CheckResponseMsg(ByVal QuestID As Long, ByVal CLIIndex As Long, ByVal SearchStopIndex As Long)
-Dim I As Long
+Dim i As Long
 
 frmEditor_Quest.chkRes.Enabled = False
 If QuestID < 1 Or QuestID > MAX_QUESTS Then Exit Sub
 If CLIIndex < 1 Then Exit Sub
     
-    For I = 1 To SearchStopIndex
-        If Quest(QuestID).CLI(CLIIndex).Action(I).ActionID > 0 And Quest(QuestID).CLI(CLIIndex).Action(I).ActionID < 5 Then 'find a task
+    For i = 1 To SearchStopIndex
+        If Quest(QuestID).CLI(CLIIndex).Action(i).ActionID > 0 And Quest(QuestID).CLI(CLIIndex).Action(i).ActionID < 5 Then 'find a task
             frmEditor_Quest.chkRes.Enabled = True 'found a task, allow access to the checkbox
             Exit Sub
         End If
-    Next I
+    Next i
 End Sub
 
 Public Function IsNPCInAnotherQuest(ByVal NPCIndex As Long, CurQuest As Long) As Boolean
-Dim I As Long
+Dim i As Long
     IsNPCInAnotherQuest = False
     
-    For I = 1 To MAX_QUESTS
-        If I <> CurQuest Then
-            If Quest(I).Max_CLI > 0 Then 'prevent subscript out of range within the following prcedure
-                If Quest(I).CLI(1).ItemIndex = NPCIndex Then
+    For i = 1 To MAX_QUESTS
+        If i <> CurQuest Then
+            If Quest(i).Max_CLI > 0 Then 'prevent subscript out of range within the following prcedure
+                If Quest(i).CLI(1).ItemIndex = NPCIndex Then
                     IsNPCInAnotherQuest = True
                     Exit Function
                 End If
             End If
         End If
-    Next I
+    Next i
 End Function
 
 Public Function DoesNPCStartQuest(ByVal NPCNum As Long) As Long
-Dim I As Long
+Dim i As Long
     DoesNPCStartQuest = 0
     
-    For I = 1 To MAX_QUESTS
-        If Quest(I).Max_CLI > 0 Then
-            If Quest(I).CLI(1).ItemIndex = NPCNum Then
-                DoesNPCStartQuest = I 'return the quest number
+    For i = 1 To MAX_QUESTS
+        If Quest(i).Max_CLI > 0 Then
+            If Quest(i).CLI(1).ItemIndex = NPCNum Then
+                DoesNPCStartQuest = i 'return the quest number
                 Exit Function
             End If
         End If
-    Next I
+    Next i
 End Function
 

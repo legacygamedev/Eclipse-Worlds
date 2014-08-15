@@ -221,7 +221,7 @@ Private Sub cmdCancel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Unload frmEditor_Emoticon
     Exit Sub
@@ -238,7 +238,7 @@ Private Sub cmdDelete_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearEmoticon EditorIndex
     
@@ -257,20 +257,20 @@ ErrorHandler:
 End Sub
 
 Private Sub cmdSave_Click()
-    Dim I As Long, n As Long
+    Dim i As Long, n As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_EMOTICONS
+    For i = 1 To MAX_EMOTICONS
         ' Loop through a second time to compare if any match
         For n = 1 To MAX_EMOTICONS
-            If Not Trim$(Emoticon(I).Command) = "/" And Not Trim$(Emoticon(n).Command) = "/" Then
+            If Not Trim$(Emoticon(i).Command) = "/" And Not Trim$(Emoticon(n).Command) = "/" Then
                 ' Make sure they are not the same one
-                If Not I = n Then
-                    If Trim$(Emoticon(I).Command) = Trim$(Emoticon(n).Command) Then
+                If Not i = n Then
+                    If Trim$(Emoticon(i).Command) = Trim$(Emoticon(n).Command) Then
                         AlertMsg "There is more than one command that uses " & Trim$(txtCommand.text) & "!", True
                         Exit Sub
                     End If
@@ -294,7 +294,7 @@ Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     EmoticonEditorInit
     Exit Sub
@@ -309,7 +309,7 @@ Private Sub scrlEmoticon_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblEmoticon.Caption = "Emoticon: " & scrlEmoticon.Value
     Emoticon(EditorIndex).Pic = scrlEmoticon.Value
@@ -322,12 +322,12 @@ ErrorHandler:
 End Sub
 
 Private Sub txtCommand_Validate(Cancel As Boolean)
-    Dim I As Long, TmpIndex As Long
+    Dim i As Long, TmpIndex As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Make sure we have a slash
     If Not Left$(txtCommand.text, 1) = "/" Then
@@ -356,7 +356,7 @@ Private Sub Form_Unload(Cancel As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.UnsubDaFocus Me.hWnd
     
@@ -378,7 +378,7 @@ End Sub
 
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.SubDaFocus Me.hWnd
     
@@ -396,7 +396,7 @@ End Sub
 
 Private Sub txtCommand_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtCommand.SelStart = Len(txtCommand)
     Exit Sub
@@ -408,18 +408,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, I As Long
+    Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 0 To lstIndex.ListCount - 1
-        Find = Trim$(I + 1 & ": " & txtSearch.text)
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(I)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = I
+        If Len(lstIndex.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
                 Exit For
             End If
         End If
@@ -434,7 +434,7 @@ End Sub
 
 Private Sub txtSearch_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtSearch.SelStart = Len(txtSearch)
     Exit Sub
@@ -449,7 +449,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If KeyAscii = vbKeyReturn Then
         cmdSave_Click
@@ -468,7 +468,7 @@ End Sub
 
 Private Sub cmdCopy_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
     Exit Sub
@@ -481,7 +481,7 @@ End Sub
 
 Private Sub cmdPaste_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Emoticon(EditorIndex)), ByVal VarPtr(Emoticon(TmpIndex + 1)), LenB(Emoticon(TmpIndex + 1)))

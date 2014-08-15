@@ -353,6 +353,7 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
     Dim Moved As Byte, MovedSoFar As Boolean
     Dim TileType As Long, VitalType As Long, Color As Long, Amount As Long
     Dim NewMapY As Long, NewMapX As Long
+    Dim NewMapNum As Long
 
     ' Check for subscript out of range
     If IsPlaying(index) = False Or Dir < DIR_UP Or Dir > DIR_DOWNRIGHT Or movement < 1 Or movement > 2 Then Exit Sub
@@ -384,7 +385,7 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
     Select Case Dir
         Case DIR_UPLEFT
             ' Check to make sure not outside of boundries
-            If GetPlayerY(index) > 0 Or GetPlayerX(index) > 0 Then
+            If GetPlayerY(index) > 0 And GetPlayerX(index) > 0 Then
             
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_UP + 1) And Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_LEFT + 1) Then
@@ -399,22 +400,32 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 End If
             
             Else
-            
+
+                If Map(GetPlayerMap(index)).Up > 0 Then
+                    NewMapNum = Map(GetPlayerMap(index)).Up
+                    NewMapX = GetPlayerX(index)
+                    NewMapY = Map(NewMapNum).MaxY
+                ElseIf Map(GetPlayerMap(index)).Left > 0 Then
+                    NewMapNum = Map(GetPlayerMap(index)).Left
+                    NewMapX = 0
+                    NewMapY = GetPlayerY(index)
+                End If
+                
                 ' Check to see if we can move them to the another map
-                If Map(GetPlayerMap(index)).Up > 0 And Map(GetPlayerMap(index)).Left > 0 Then
-                    NewMapY = Map(Map(GetPlayerMap(index)).Up).MaxY
-                    Call PlayerWarp(index, Map(GetPlayerMap(index)).Up, GetPlayerX(index), NewMapY)
+                If NewMapNum > 0 Then
+                    Call PlayerWarp(index, NewMapNum, NewMapX, NewMapY)
                     Moved = YES
                     ' clear their target
                     TempPlayer(index).target = 0
                     TempPlayer(index).targetType = TARGET_TYPE_NONE
                     SendPlayerTarget index
                 End If
+                
             End If
             
         Case DIR_UPRIGHT
             ' Check to make sure not outside of boundries
-            If GetPlayerY(index) > 0 Or GetPlayerX(index) < Map(MapNum).MaxX Then
+            If GetPlayerY(index) > 0 And GetPlayerX(index) < Map(MapNum).MaxX Then
             
             ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_UP + 1) And Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_RIGHT + 1) Then
@@ -429,11 +440,20 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 End If
             
             Else
-            
+
+                If Map(GetPlayerMap(index)).Up > 0 Then
+                    NewMapNum = Map(GetPlayerMap(index)).Up
+                    NewMapX = GetPlayerX(index)
+                    NewMapY = Map(NewMapNum).MaxY
+                ElseIf Map(GetPlayerMap(index)).Right > 0 Then
+                    NewMapNum = Map(GetPlayerMap(index)).Right
+                    NewMapX = 0
+                    NewMapY = GetPlayerY(index)
+                End If
+                
                 ' Check to see if we can move them to the another map
-                If Map(GetPlayerMap(index)).Up > 0 And Map(GetPlayerMap(index)).Right > 0 Then
-                    NewMapY = Map(Map(GetPlayerMap(index)).Up).MaxY
-                    Call PlayerWarp(index, Map(GetPlayerMap(index)).Up, GetPlayerX(index), NewMapY)
+                If NewMapNum > 0 Then
+                    Call PlayerWarp(index, NewMapNum, NewMapX, NewMapY)
                     Moved = YES
                     ' clear their target
                     TempPlayer(index).target = 0
@@ -444,7 +464,7 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
             
         Case DIR_DOWNLEFT
             ' Check to make sure not outside of boundries
-            If GetPlayerY(index) < Map(MapNum).MaxY Or GetPlayerX(index) > 0 Then
+            If GetPlayerY(index) < Map(MapNum).MaxY And GetPlayerX(index) > 0 Then
             
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_DOWN + 1) And Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_LEFT + 1) Then
@@ -459,21 +479,32 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 End If
             
             Else
-            
+
+                If Map(GetPlayerMap(index)).Down > 0 Then
+                    NewMapNum = Map(GetPlayerMap(index)).Down
+                    NewMapX = GetPlayerX(index)
+                    NewMapY = 0
+                ElseIf Map(GetPlayerMap(index)).Left > 0 Then
+                    NewMapNum = Map(GetPlayerMap(index)).Left
+                    NewMapX = 0
+                    NewMapY = GetPlayerY(index)
+                End If
+                
                 ' Check to see if we can move them to the another map
-                If Map(GetPlayerMap(index)).Down > 0 And Map(GetPlayerMap(index)).Left > 0 Then
-                    Call PlayerWarp(index, Map(GetPlayerMap(index)).Down, GetPlayerX(index), 0)
+                If NewMapNum > 0 Then
+                    Call PlayerWarp(index, NewMapNum, NewMapX, NewMapY)
                     Moved = YES
                     ' clear their target
                     TempPlayer(index).target = 0
                     TempPlayer(index).targetType = TARGET_TYPE_NONE
                     SendPlayerTarget index
                 End If
+                
             End If
             
         Case DIR_DOWNRIGHT
             ' Check to make sure not outside of boundries
-            If GetPlayerY(index) < Map(MapNum).MaxY Or GetPlayerX(index) < Map(MapNum).MaxX Then
+            If GetPlayerY(index) < Map(MapNum).MaxY And GetPlayerX(index) < Map(MapNum).MaxX Then
             
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_DOWN + 1) And Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_RIGHT + 1) Then
@@ -488,16 +519,27 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 End If
             
             Else
-            
+                
+                If Map(GetPlayerMap(index)).Down > 0 Then
+                    NewMapNum = Map(GetPlayerMap(index)).Down
+                    NewMapX = GetPlayerX(index)
+                    NewMapY = 0
+                ElseIf Map(GetPlayerMap(index)).Right > 0 Then
+                    NewMapNum = Map(GetPlayerMap(index)).Right
+                    NewMapX = 0
+                    NewMapY = GetPlayerY(index)
+                End If
+                
                 ' Check to see if we can move them to the another map
-                If Map(GetPlayerMap(index)).Down > 0 And Map(GetPlayerMap(index)).Right > 0 Then
-                    Call PlayerWarp(index, Map(GetPlayerMap(index)).Down, GetPlayerX(index), 0)
+                If NewMapNum > 0 Then
+                    Call PlayerWarp(index, NewMapNum, NewMapX, NewMapY)
                     Moved = YES
                     ' clear their target
                     TempPlayer(index).target = 0
                     TempPlayer(index).targetType = TARGET_TYPE_NONE
                     SendPlayerTarget index
                 End If
+
             End If
         Case DIR_UP
             ' Check to make sure not outside of boundries
@@ -519,7 +561,7 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
             Else
                 ' Check to see if we can move them to the another map
                 If Map(GetPlayerMap(index)).Up > 0 Then
-                    Call PlayerWarp(index, Map(GetPlayerMap(index)).Up, GetPlayerX(index), Map(MapNum).MaxY)
+                    Call PlayerWarp(index, NewMapNum, GetPlayerX(index), Map(MapNum).MaxY)
                     Moved = YES
                     
                     ' Clear their target

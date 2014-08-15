@@ -466,12 +466,12 @@ Private TmpIndex As Long
 
 Private Sub cmbSound_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If cmbSound.ListIndex >= 0 Then
         Audio.StopSounds
         Resource(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
-        Audio.PlaySound Resource(EditorIndex).Sound
+        Audio.PlaySound Resource(EditorIndex).Sound - 1, -1, True
     Else
         Resource(EditorIndex).Sound = vbNullString
     End If
@@ -489,7 +489,7 @@ Private Sub cmdDelete_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearResource EditorIndex
     
@@ -511,7 +511,7 @@ Private Sub cmdSave_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If frmEditor_Resource.scrlLowChance.Value >= frmEditor_Resource.scrlHighChance.Value Then
         AlertMsg "The high chance must be greater than the low chance!"
@@ -542,7 +542,7 @@ End Sub
 
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.SubDaFocus Me.hWnd
     scrlReward.max = MAX_ITEMS
@@ -567,7 +567,7 @@ Private Sub cmdCancel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Unload frmEditor_Resource
     Exit Sub
@@ -580,7 +580,7 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     frmMain.UnsubDaFocus Me.hWnd
     If EditorSave = False Then
         ResourceEditorCancel
@@ -601,7 +601,7 @@ Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ResourceEditorInit
     Exit Sub
@@ -618,7 +618,7 @@ Private Sub scrlAnimation_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).Name)
     lblAnim.Caption = "Animation: " & sString
@@ -635,7 +635,7 @@ Private Sub scrlExhaustedPic_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblExhaustedPic.Caption = "Exhausted Image: " & scrlExhaustedPic.Value
     Resource(EditorIndex).ExhaustedImage = scrlExhaustedPic.Value
@@ -651,9 +651,9 @@ Private Sub scrlExp_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    lblExp.Caption = "Exp: " & scrlExp.Value
+    lblEXP.Caption = "Exp: " & scrlExp.Value
     Resource(EditorIndex).exp = scrlExp.Value
     Exit Sub
     
@@ -667,7 +667,7 @@ Private Sub scrlLevelReq_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblLevelReq.Caption = "Skill Level Req: " & scrlLevelReq.Value
     Resource(EditorIndex).LevelReq = scrlLevelReq.Value
@@ -683,7 +683,7 @@ Private Sub scrlRewardMax_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblRewardMax.Caption = "Maximum Reward: " & scrlRewardMax.Value
     Resource(EditorIndex).Reward_Max = scrlRewardMax.Value
@@ -699,7 +699,7 @@ Private Sub scrlRewardMin_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblRewardMin.Caption = "Minimum Reward: " & scrlRewardMin.Value
     Resource(EditorIndex).Reward_Min = scrlRewardMin.Value
@@ -715,7 +715,7 @@ Private Sub scrlHighChance_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblHighChance.Caption = "High Chance: " & scrlHighChance.Value
     Resource(EditorIndex).HighChance = scrlHighChance.Value
@@ -731,7 +731,7 @@ Private Sub scrlLowChance_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblLowChance.Caption = "Low Chance: " & scrlLowChance.Value
     Resource(EditorIndex).LowChance = scrlLowChance.Value
@@ -747,7 +747,7 @@ Private Sub scrlNormalPic_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblNormalPic.Caption = "Normal Image: " & scrlNormalPic.Value
     Resource(EditorIndex).ResourceImage = scrlNormalPic.Value
@@ -763,7 +763,7 @@ Private Sub scrlRespawn_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblRespawn.Caption = "Respawn Time: " & scrlRespawn.Value & " s"
     Resource(EditorIndex).RespawnTime = scrlRespawn.Value
@@ -779,7 +779,7 @@ Private Sub scrlReward_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If scrlReward.Value > 0 Then
         lblReward.Caption = "Reward: " & Trim$(Item(scrlReward.Value).Name)
@@ -800,7 +800,7 @@ Private Sub scrlSkill_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblSkill.Caption = "Skill: " & GetSkillName(scrlSkill.Value)
     Resource(EditorIndex).Skill = scrlSkill.Value
@@ -818,7 +818,7 @@ Private Sub scrlTool_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Select Case scrlTool.Value
         Case 0
@@ -845,7 +845,7 @@ Private Sub txtFail_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Resource(EditorIndex).FailMessage = Trim$(txtFail.text)
     Exit Sub
@@ -860,7 +860,7 @@ Private Sub txtSuccess_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Resource(EditorIndex).SuccessMessage = Trim$(txtSuccess.text)
     Exit Sub
@@ -875,7 +875,7 @@ Private Sub txtEmpty_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Resource(EditorIndex).EmptyMessage = Trim$(txtEmpty.text)
     Exit Sub
@@ -892,7 +892,7 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
     Resource(EditorIndex).Name = Trim$(txtName.text)
@@ -909,7 +909,7 @@ End Sub
 
 Private Sub txtName_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtName.SelStart = Len(txtName)
     Exit Sub
@@ -922,7 +922,7 @@ End Sub
 
 Private Sub txtSuccess_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtSuccess.SelStart = Len(txtSuccess)
     Exit Sub
@@ -935,7 +935,7 @@ End Sub
 
 Private Sub txtFail_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtFail.SelStart = Len(txtFail)
     Exit Sub
@@ -948,7 +948,7 @@ End Sub
 
 Private Sub txtEmpty_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtEmpty.SelStart = Len(txtEmpty)
     Exit Sub
@@ -960,18 +960,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, I As Long
+    Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 0 To lstIndex.ListCount - 1
-        Find = Trim$(I + 1 & ": " & txtSearch.text)
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(I)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = I
+        If Len(lstIndex.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
                 Exit For
             End If
         End If
@@ -986,7 +986,7 @@ End Sub
 
 Private Sub txtSearch_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtSearch.SelStart = Len(txtSearch)
     Exit Sub
@@ -1001,7 +1001,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If KeyAscii = vbKeyReturn Then
         cmdSave_Click
@@ -1020,7 +1020,7 @@ End Sub
 
 Private Sub cmdCopy_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
     Exit Sub
@@ -1033,7 +1033,7 @@ End Sub
 
 Private Sub cmdPaste_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Resource(EditorIndex)), ByVal VarPtr(Resource(TmpIndex + 1)), LenB(Resource(TmpIndex + 1)))

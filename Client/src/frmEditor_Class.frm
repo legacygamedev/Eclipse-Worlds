@@ -612,13 +612,13 @@ Private Sub chkLocked_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Class(EditorIndex).Locked = chkLocked.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkLocked_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -627,7 +627,7 @@ Private Sub chkSwapGender_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Sprites
     scrlMSprite.Visible = Not scrlMSprite.Visible
@@ -643,7 +643,7 @@ Private Sub chkSwapGender_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkSwap_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -652,14 +652,14 @@ Private Sub chkSwapStart_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmEditor_Class.fraStartItem.Visible = Not frmEditor_Class.fraStartItem.Visible
     frmEditor_Class.fraStartSpell.Visible = Not frmEditor_Class.fraStartSpell.Visible
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkSwap_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -668,7 +668,7 @@ Private Sub cmbColor_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If cmbColor.Visible = False Then Exit Sub
     
@@ -676,7 +676,7 @@ Private Sub cmbColor_Click()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmbColor_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -687,20 +687,20 @@ Private Sub cmdDelete_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearClass EditorIndex
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     ClassEditorInit
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdDelete_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -709,14 +709,14 @@ Private Sub cmdSave_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     EditorSave = True
     ClassEditorSave
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdSave_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -725,20 +725,20 @@ Private Sub cmdCancel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Unload frmEditor_Class
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdCancel_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.UnsubDaFocus Me.hWnd
     
@@ -753,7 +753,7 @@ Private Sub Form_Unload(Cancel As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_Unload", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -762,20 +762,20 @@ Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClassEditorInit
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "1stIndex_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.SubDaFocus Me.hWnd
     txtName.MaxLength = NAME_LENGTH
@@ -806,7 +806,7 @@ Private Sub Form_Load()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_Load", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -815,14 +815,14 @@ Private Sub scrlCombatTree_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblCombatTree.Caption = "Combat Tree : " & GetCombatTreeName(scrlCombatTree.Value)
     Class(EditorIndex).CombatTree = scrlCombatTree.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlCombatTree_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -833,7 +833,7 @@ Private Sub scrlDir_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Select Case scrlDir.Value
         Case 0
@@ -851,7 +851,7 @@ Private Sub scrlDir_Change()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlDir_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -860,14 +860,14 @@ Private Sub scrlMap_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblMap.Caption = "Map : " & scrlMap.Value
     Class(EditorIndex).Map = scrlMap.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlMap_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -876,7 +876,7 @@ Private Sub scrlMFace_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If scrlMFace.Visible = False Then Exit Sub
     
@@ -885,7 +885,7 @@ Private Sub scrlMFace_Change()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlMFace_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -894,7 +894,7 @@ Private Sub scrlFFace_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If scrlFFace.Visible = False Then Exit Sub
     
@@ -903,7 +903,7 @@ Private Sub scrlFFace_Change()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlFFace_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -912,12 +912,12 @@ Private Sub scrlItemNum_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblItemNum.Caption = "Number: " & scrlItemNum.Value
 
     If scrlItemNum.Value > 0 Then
-        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.Value).name)
+        lblItemName.Caption = "Item: " & Trim$(Item(scrlItemNum.Value).Name)
     Else
         lblItemName.Caption = "Item: None"
     End If
@@ -926,7 +926,7 @@ Private Sub scrlItemNum_Change()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlItemNum_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -935,14 +935,14 @@ Private Sub scrlItemValue_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblItemValue.Caption = "Value: " & scrlItemValue.Value
     Class(EditorIndex).StartItemValue(ItemIndex) = scrlItemValue.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlItemValue_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -951,12 +951,12 @@ Private Sub scrlSpellNum_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblSpellNum.Caption = "Number: " & scrlSpellNum.Value
 
     If scrlSpellNum.Value > 0 Then
-        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).name)
+        lblSpellName.Caption = "Spell: " & Trim$(Spell(scrlSpellNum.Value).Name)
     Else
         lblSpellName.Caption = "Spell: None"
     End If
@@ -964,7 +964,7 @@ Private Sub scrlSpellNum_Change()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlSpellNum_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -973,14 +973,14 @@ Private Sub scrlMSprite_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblMSprite.Caption = "Male Sprite: " & scrlMSprite.Value
     Class(EditorIndex).MaleSprite = scrlMSprite.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlMSprite_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -989,14 +989,14 @@ Private Sub scrlFSprite_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblFSprite.Caption = "Female Sprite: " & scrlFSprite.Value
     Class(EditorIndex).FemaleSprite = scrlFSprite.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlFSprite_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1005,7 +1005,7 @@ Private Sub scrlStartItem_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ItemIndex = scrlStartItem.Value
     fraStartItem.Caption = "Start Item: " & ItemIndex
@@ -1014,7 +1014,7 @@ Private Sub scrlStartItem_Change()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlStartItem_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1023,7 +1023,7 @@ Private Sub scrlStartSpell_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     SpellIndex = scrlStartSpell.Value
     fraStartSpell.Caption = "Start Spell: " & SpellIndex
@@ -1031,7 +1031,7 @@ Private Sub scrlStartSpell_Change()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlStartspell_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1042,7 +1042,7 @@ Private Sub scrlStat_Change(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Select Case Index
         Case 1
@@ -1062,7 +1062,7 @@ Private Sub scrlStat_Change(Index As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlStat_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1071,14 +1071,14 @@ Private Sub scrlX_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblX.Caption = "X : " & scrlX.Value
     Class(EditorIndex).X = scrlX.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlX_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1087,14 +1087,14 @@ Private Sub scrlY_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblY.Caption = "Y : " & scrlY.Value
     Class(EditorIndex).Y = scrlY.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlY_Change", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1105,47 +1105,47 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
-    Class(EditorIndex).name = Trim$(txtName.text)
+    Class(EditorIndex).Name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Class(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtName_Validate", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtName_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtName.SelStart = Len(txtName)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtName_GotFocus", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, I As Long
+    Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 0 To lstIndex.ListCount - 1
-        Find = Trim$(I + 1 & ": " & txtSearch.text)
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(I)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = I
+        If Len(lstIndex.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
                 Exit For
             End If
         End If
@@ -1153,20 +1153,20 @@ Private Sub txtSearch_Change()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "frmEditor_Class", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtSearch_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtSearch.SelStart = Len(txtSearch)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtSearch_GotFocus", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -1175,7 +1175,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If KeyAscii = vbKeyReturn Then
         cmdSave_Click
@@ -1187,36 +1187,36 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_KeyPress", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdCopy_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdCopy_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdPaste_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
      
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Class(EditorIndex)), ByVal VarPtr(Class(TmpIndex + 1)), LenB(Class(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Class(EditorIndex).name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Class(EditorIndex).Name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdPaste_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

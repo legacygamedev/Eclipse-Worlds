@@ -47,7 +47,7 @@ Option Explicit
 
 Private Sub Form_KeyPress(KeyAscii As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If KeyAscii = vbKeyEscape Then
         If GameLoaded Then
@@ -58,7 +58,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_KeyPress", "frmLoad", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -67,7 +67,7 @@ End Sub
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If UnloadMode = vbFormControlMenu Then
         Cancel = True
@@ -77,7 +77,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_QueryUnload", "frmLoad", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

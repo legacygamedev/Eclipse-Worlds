@@ -1478,7 +1478,7 @@ Private Sub chkHoT_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).HoT = chkHoT.Value
     
@@ -1501,7 +1501,7 @@ Private Sub chkIndestructable_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).Indestructable = chkIndestructable.Value
     Exit Sub
@@ -1516,7 +1516,7 @@ Private Sub chkInstaCast_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).InstaCast = chkInstaCast.Value
     Exit Sub
@@ -1531,7 +1531,7 @@ Private Sub chkReusable_Click(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If frmEditor_Item.chkReusable(Index) = 1 Then
         Item(EditorIndex).IsReusable = True
@@ -1550,7 +1550,7 @@ Private Sub chkStackable_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).stackable = chkStackable.Value
     Exit Sub
@@ -1565,7 +1565,7 @@ Private Sub chkTwoHanded_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).TwoHanded = chkTwoHanded.Value
     Exit Sub
@@ -1580,7 +1580,7 @@ Private Sub chkWarpAway_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraAutoLife.Visible = False Then Exit Sub
     
@@ -1597,7 +1597,7 @@ Private Sub cmbBind_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).BindType = cmbBind.ListIndex
     Exit Sub
@@ -1612,7 +1612,7 @@ Private Sub cmbEquipSlot_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).EquipSlot = cmbEquipSlot.ListIndex
     
@@ -1649,7 +1649,7 @@ Private Sub cmbProficiencyReq_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).ProficiencyReq = cmbProficiencyReq.ListIndex
     Exit Sub
@@ -1664,7 +1664,7 @@ Private Sub cmbClassReq_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).ClassReq = cmbClassReq.ListIndex
     Exit Sub
@@ -1679,7 +1679,7 @@ Private Sub cmbGenderReq_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).GenderReq = cmbGenderReq.ListIndex
     Exit Sub
@@ -1692,12 +1692,12 @@ End Sub
 
 Private Sub cmbSound_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If cmbSound.ListIndex >= 0 Then
         Audio.StopSounds
         Item(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
-        Audio.PlaySound Item(EditorIndex).Sound
+        Audio.PlaySound Item(EditorIndex).Sound, -1, -1, True
     Else
         Item(EditorIndex).Sound = vbNullString
     End If
@@ -1713,7 +1713,7 @@ Private Sub cmbTool_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).Tool = cmbTool.ListIndex
     
@@ -1743,7 +1743,7 @@ Private Sub cmdDelete_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearItem EditorIndex
     
@@ -1763,10 +1763,10 @@ End Sub
 
 
 Public Sub Form_Load()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     frmMain.SubDaFocus Me.hWnd
     scrlPic.max = NumItems
     scrlAnim.max = MAX_ANIMATIONS
@@ -1780,15 +1780,15 @@ Public Sub Form_Load()
     cmbProficiencyReq.Clear
     cmbProficiencyReq.AddItem "None"
     
-    For I = 1 To Proficiency_Count - 1
-        cmbProficiencyReq.AddItem GetProficiencyName(I)
+    For i = 1 To Proficiency_Count - 1
+        cmbProficiencyReq.AddItem GetProficiencyName(i)
     Next
     
     cmbSkillReq.Clear
     cmbSkillReq.AddItem "None"
     
-    For I = 1 To Skill_Count - 1
-        cmbSkillReq.AddItem GetSkillName(I)
+    For i = 1 To Skill_Count - 1
+        cmbSkillReq.AddItem GetSkillName(i)
     Next
     
     scrlItem1.max = MAX_ITEMS
@@ -1810,7 +1810,7 @@ Private Sub cmdSave_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     EditorSave = True
     Call ItemEditorSave
@@ -1826,7 +1826,7 @@ Private Sub cmdCancel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Unload frmEditor_Item
     Exit Sub
@@ -1841,7 +1841,7 @@ Private Sub cmbType_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If (cmbType.ListIndex = ITEM_TYPE_EQUIPMENT) Then
         fraEquipment.Visible = True
@@ -1925,7 +1925,7 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.UnsubDaFocus Me.hWnd
     If EditorSave = False Then
@@ -1947,7 +1947,7 @@ Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ItemEditorInit
     Exit Sub
@@ -1962,7 +1962,7 @@ Private Sub scrlAccessReq_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblAccessReq.Caption = "Access: " & scrlAccessReq.Value
     Item(EditorIndex).AccessReq = scrlAccessReq.Value
@@ -1978,7 +1978,7 @@ Private Sub scrlAddEXP_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblAddEXP.Caption = "Add Exp: " & scrlAddEXP.Value
     Item(EditorIndex).AddEXP = scrlAddEXP.Value
@@ -1994,7 +1994,7 @@ Private Sub scrlAddHP_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblAddHP.Caption = "Add HP: " & scrlAddHP.Value
     Item(EditorIndex).AddHP = scrlAddHP.Value
@@ -2010,7 +2010,7 @@ Private Sub scrlAddMP_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblAddMP.Caption = "Add MP: " & scrlAddMP.Value
     Item(EditorIndex).AddMP = scrlAddMP.Value
@@ -2026,7 +2026,7 @@ Private Sub scrlAnim_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If scrlAnim.Value = 0 Then
         lblAnim.Caption = "Animation: None"
@@ -2046,7 +2046,7 @@ Private Sub scrlCastSpell_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If scrlCastSpell.Value > 0 Then
         lblCastSpell.Caption = "Cast Spell: " & Trim$(Spell(scrlCastSpell.Value).Name)
@@ -2066,7 +2066,7 @@ Private Sub scrlDamage_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraEquipment.Visible = False Then Exit Sub
     
@@ -2088,7 +2088,7 @@ Private Sub scrlDurability_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraEquipment.Visible = False Then Exit Sub
     
@@ -2113,7 +2113,7 @@ Private Sub scrlDuration_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraConsume.Visible = False Then Exit Sub
     
@@ -2131,7 +2131,7 @@ Private Sub scrlHP_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraAutoLife.Visible = False Then Exit Sub
     
@@ -2149,7 +2149,7 @@ Private Sub scrlMP_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblMP.Caption = "MP: " & scrlMP.Value
     Item(EditorIndex).AddMP = scrlMP.Value
@@ -2165,7 +2165,7 @@ Private Sub scrlLevelReq_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblLevelReq.Caption = "Level: " & scrlLevelReq
     Item(EditorIndex).LevelReq = scrlLevelReq.Value
@@ -2181,7 +2181,7 @@ Private Sub scrlMap_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraTeleport.Visible Then Exit Sub
     
@@ -2199,7 +2199,7 @@ Private Sub scrlChanceModifier_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblChance.Caption = "Chance: " & scrlChanceModifier.Value
     Item(EditorIndex).ChanceModifier = scrlChanceModifier.Value
@@ -2213,7 +2213,7 @@ End Sub
 
 Private Sub scrlPaperdoll_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
     
@@ -2232,7 +2232,7 @@ Private Sub scrlPic_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblPic.Caption = "Icon: " & scrlPic.Value
     Item(EditorIndex).Pic = scrlPic.Value
@@ -2248,7 +2248,7 @@ Private Sub scrlRarity_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblRarity.Caption = "Rarity: " & scrlRarity.Value
     Item(EditorIndex).Rarity = scrlRarity.Value
@@ -2264,7 +2264,7 @@ Private Sub scrlSpeed_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblSpeed.Caption = "Speed: " & scrlSpeed.Value / 1000 & " s"
     Item(EditorIndex).WeaponSpeed = scrlSpeed.Value
@@ -2280,7 +2280,7 @@ Private Sub scrlSprite_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraSprite.Visible = False Then Exit Sub
     
@@ -2300,7 +2300,7 @@ Private Sub scrlStatBonus_Change(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Select Case Index
         Case 1
@@ -2331,7 +2331,7 @@ Private Sub scrlStatReq_Change(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Select Case Index
         Case 1
@@ -2360,7 +2360,7 @@ Private Sub scrlSpell_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraSpell.Visible = False Then Exit Sub
     
@@ -2377,7 +2377,7 @@ Private Sub scrlTitle_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraTitle.Visible = False Then Exit Sub
     
@@ -2395,7 +2395,7 @@ Private Sub ScrlToolRequired_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraRecipe.Visible = False Then Exit Sub
     
@@ -2418,7 +2418,7 @@ Private Sub scrlResult_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraRecipe.Visible = False Then Exit Sub
     
@@ -2441,7 +2441,7 @@ Private Sub scrlSkill_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraRecipe.Visible = False Then Exit Sub
     
@@ -2464,7 +2464,7 @@ Private Sub ScrlSkillExp_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraRecipe.Visible = False Then Exit Sub
     
@@ -2487,7 +2487,7 @@ Private Sub ScrlSkillLevelReq_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraRecipe.Visible = False Then Exit Sub
     
@@ -2510,7 +2510,7 @@ Private Sub scrlItem1_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraRecipe.Visible = False Then Exit Sub
     
@@ -2533,7 +2533,7 @@ Private Sub scrlItem2_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraRecipe.Visible = False Then Exit Sub
     
@@ -2556,7 +2556,7 @@ Private Sub scrlX_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If fraTeleport.Visible = False Then Exit Sub
     
@@ -2574,7 +2574,7 @@ Private Sub scrlY_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblY.Caption = "Y: " & scrlY.Value
     Item(EditorIndex).Data3 = scrlY.Value
@@ -2590,7 +2590,7 @@ Private Sub txtDesc_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
@@ -2609,7 +2609,7 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
     Item(EditorIndex).Name = Trim$(txtName.text)
@@ -2628,7 +2628,7 @@ Private Sub txtPrice_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtPrice.text) Then txtPrice.text = 0
     If txtPrice.text > MAX_LONG Then txtPrice.text = MAX_LONG
@@ -2644,7 +2644,7 @@ End Sub
 
 Private Sub txtName_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtName.SelStart = Len(txtName)
     Exit Sub
@@ -2657,7 +2657,7 @@ End Sub
 
 Private Sub txtPrice_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtPrice.SelStart = Len(txtPrice)
     Exit Sub
@@ -2670,7 +2670,7 @@ End Sub
 
 Private Sub txtDesc_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtDesc.SelStart = Len(txtDesc)
     Exit Sub
@@ -2682,18 +2682,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, I As Long
+    Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 0 To lstIndex.ListCount - 1
-        Find = Trim$(I + 1 & ": " & txtSearch.text)
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(I)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = I
+        If Len(lstIndex.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
                 Exit For
             End If
         End If
@@ -2708,7 +2708,7 @@ End Sub
 
 Private Sub txtSearch_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtSearch.SelStart = Len(txtSearch)
     Exit Sub
@@ -2723,7 +2723,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If KeyAscii = vbKeyReturn Then
         cmdSave_Click
@@ -2742,7 +2742,7 @@ End Sub
 
 Private Sub cmdCopy_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
     Exit Sub
@@ -2755,7 +2755,7 @@ End Sub
 
 Private Sub cmdPaste_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
          
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Item(EditorIndex)), ByVal VarPtr(Item(TmpIndex + 1)), LenB(Item(TmpIndex + 1)))

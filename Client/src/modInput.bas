@@ -7,7 +7,7 @@ Public Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Int
 
 Public Sub CheckKeys()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If GetAsyncKeyState(VK_W) >= 0 Then DirUp = False
     If GetAsyncKeyState(VK_S) >= 0 Then DirDown = False
@@ -38,7 +38,7 @@ ErrorHandler:
 End Sub
 
 Public Sub FindNearestTarget()
-    Dim I As Long
+    Dim i As Long
     Dim NPCDistanceX(1 To MAX_MAP_NPCS) As Long
     Dim NPCDistanceY(1 To MAX_MAP_NPCS) As Long
     Dim PlayerDistanceX(1 To MAX_PLAYERS) As Long
@@ -48,29 +48,29 @@ Public Sub FindNearestTarget()
     
     If GetKeyState(vbKeyTab) < 0 And ChatLocked Then
         ' Set the NPC distance for all the NPCs on the map
-        For I = 1 To Map.NPC_HighIndex
-            If Map.NPC(I) > 0 Then
-                NPCDistanceX(I) = MapNPC(I).X - GetPlayerX(MyIndex)
-                NPCDistanceY(I) = MapNPC(I).Y - GetPlayerY(MyIndex)
+        For i = 1 To Map.NPC_HighIndex
+            If Map.NPC(i) > 0 Then
+                NPCDistanceX(i) = MapNPC(i).X - GetPlayerX(MyIndex)
+                NPCDistanceY(i) = MapNPC(i).Y - GetPlayerY(MyIndex)
         
                 ' Make sure we get a positive Value
-                If NPCDistanceX(I) < 0 Then NPCDistanceX(I) = NPCDistanceX(I) * -1
-                If NPCDistanceY(I) < 0 Then NPCDistanceY(I) = NPCDistanceY(I) * -1
+                If NPCDistanceX(i) < 0 Then NPCDistanceX(i) = NPCDistanceX(i) * -1
+                If NPCDistanceY(i) < 0 Then NPCDistanceY(i) = NPCDistanceY(i) * -1
             End If
         Next
         
         ' Find the closest NPC target
-        For I = 1 To Map.NPC_HighIndex
-            If Map.NPC(I) > 0 Then
-                If MyTarget = I And MyTargetType = TARGET_TYPE_NPC Then
+        For i = 1 To Map.NPC_HighIndex
+            If Map.NPC(i) > 0 Then
+                If MyTarget = i And MyTargetType = TARGET_TYPE_NPC Then
                     ' Skip
                 Else
                     If PlayerTarget = 0 Then
-                        LowestDistance = NPCDistanceX(I) + NPCDistanceY(I)
-                        PlayerTarget = I
-                    ElseIf NPCDistanceX(I) + NPCDistanceY(I) < LowestDistance Then
-                        LowestDistance = NPCDistanceX(I) + NPCDistanceY(I)
-                        PlayerTarget = I
+                        LowestDistance = NPCDistanceX(i) + NPCDistanceY(i)
+                        PlayerTarget = i
+                    ElseIf NPCDistanceX(i) + NPCDistanceY(i) < LowestDistance Then
+                        LowestDistance = NPCDistanceX(i) + NPCDistanceY(i)
+                        PlayerTarget = i
                     End If
                 End If
             End If
@@ -88,19 +88,19 @@ Public Sub FindNearestTarget()
         End If
     ElseIf GetKeyState(96) < 0 And ChatLocked Then
       ' Set the Player distance for all the Players on the map
-        For I = 1 To Player_HighIndex
-            If IsPlaying(I) Then
-                If I <> MyIndex Then
-                    If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
-                        If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
+        For i = 1 To Player_HighIndex
+            If IsPlaying(i) Then
+                If i <> MyIndex Then
+                    If GetPlayerMap(i) = GetPlayerMap(MyIndex) Then
+                        If MyTarget = i And MyTargetType = TARGET_TYPE_PLAYER Then
                             ' Skip
                         Else
-                            PlayerDistanceX(I) = Player(I).X - GetPlayerX(MyIndex)
-                            PlayerDistanceY(I) = Player(I).Y - GetPlayerY(MyIndex)
+                            PlayerDistanceX(i) = Player(i).X - GetPlayerX(MyIndex)
+                            PlayerDistanceY(i) = Player(i).Y - GetPlayerY(MyIndex)
                     
                             ' Make sure we get a positive Value
-                            If PlayerDistanceX(I) < 0 Then PlayerDistanceX(I) = PlayerDistanceX(I) * -1
-                            If PlayerDistanceY(I) < 0 Then PlayerDistanceY(I) = PlayerDistanceY(I) * -1
+                            If PlayerDistanceX(i) < 0 Then PlayerDistanceX(i) = PlayerDistanceX(i) * -1
+                            If PlayerDistanceY(i) < 0 Then PlayerDistanceY(i) = PlayerDistanceY(i) * -1
                         End If
                     End If
                 End If
@@ -108,20 +108,20 @@ Public Sub FindNearestTarget()
         Next
         
         ' Find the closest player target
-        For I = 1 To Player_HighIndex
-            If IsPlaying(I) Then
-                If I <> MyIndex Then
-                    If MyTarget = I And MyTargetType = TARGET_TYPE_PLAYER Then
+        For i = 1 To Player_HighIndex
+            If IsPlaying(i) Then
+                If i <> MyIndex Then
+                    If MyTarget = i And MyTargetType = TARGET_TYPE_PLAYER Then
                         ' Skip
                     Else
                         'If Player(I).Hiding = 0 Then 'LEFTOFF
-                            If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
+                            If GetPlayerMap(i) = GetPlayerMap(MyIndex) Then
                                 If PlayerTarget = 0 Then
-                                    LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
-                                    PlayerTarget = I
-                                ElseIf PlayerDistanceX(I) + PlayerDistanceY(I) < LowestDistance Then
-                                    LowestDistance = PlayerDistanceX(I) + PlayerDistanceY(I)
-                                    PlayerTarget = I
+                                    LowestDistance = PlayerDistanceX(i) + PlayerDistanceY(i)
+                                    PlayerTarget = i
+                                ElseIf PlayerDistanceX(i) + PlayerDistanceY(i) < LowestDistance Then
+                                    LowestDistance = PlayerDistanceX(i) + PlayerDistanceY(i)
+                                    PlayerTarget = i
                                 End If
                             End If
                         'End If
@@ -146,10 +146,10 @@ End Sub
 Public Sub CheckInputKeys()
     Dim distanceX As Long
     Dim distanceY As Long
-    Dim I As Long
+    Dim i As Long
         
         ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If GetKeyState(vbKeyShift) < 0 Then
         ShiftDown = True
@@ -444,10 +444,10 @@ Public Sub CheckInputKeys()
     ' Mouse movement
     If Not MouseX = -1 And Not MouseY = -1 Then
         ' Don't move if a target is there
-        For I = 1 To Player_HighIndex
-            If IsPlaying(I) Then
-                If Player(I).Map = Player(MyIndex).Map Then
-                    If CurX = Player(I).X And CurY = Player(I).Y Then
+        For i = 1 To Player_HighIndex
+            If IsPlaying(i) Then
+                If Player(i).Map = Player(MyIndex).Map Then
+                    If CurX = Player(i).X And CurY = Player(i).Y Then
                         MouseX = -1
                         MouseY = -1
                         Exit Sub
@@ -457,9 +457,9 @@ Public Sub CheckInputKeys()
         Next
         
         ' Don't move if a target is there
-        For I = 1 To Map.NPC_HighIndex
-            If MapNPC(I).num > 0 Then
-                If CurX = MapNPC(I).X And CurY = MapNPC(I).Y Then
+        For i = 1 To Map.NPC_HighIndex
+            If MapNPC(i).num > 0 Then
+                If CurX = MapNPC(i).X And CurY = MapNPC(i).Y Then
                     MouseX = -1
                     MouseY = -1
                     Exit Sub
@@ -508,14 +508,14 @@ End Sub
 Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
     Dim ChatText  As String
     Dim Name      As String
-    Dim I         As Long
+    Dim i         As Long
     Dim n         As Long
     Dim Command() As String
     Dim buffer    As clsBuffer
     Dim StrInput  As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ChatText = Trim$(MyText)
 
@@ -668,9 +668,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             ' Get the desired player from the user text
             Dim Size As Long
             Size = Len(ChatText)
-            For I = 1 To Size
-                If Not Mid$(ChatText, I, 1) = " " Then
-                    Name = Name & Mid$(ChatText, I, 1)
+            For i = 1 To Size
+                If Not Mid$(ChatText, i, 1) = " " Then
+                    Name = Name & Mid$(ChatText, i, 1)
                 Else
 
                     Exit For
@@ -678,8 +678,8 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
             Next
             
             ' Make sure they are actually sending something
-            If Len(ChatText) - I > 0 Then
-                ChatText = Mid$(ChatText, I + 1, Len(ChatText) - I)
+            If Len(ChatText) - i > 0 Then
+                ChatText = Mid$(ChatText, i + 1, Len(ChatText) - i)
 
                 ' Send the message to the player
                 Call PrivateMsg(Name, ChatText)
@@ -766,14 +766,14 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     ' Empty out text
                     ChatText = vbNullString
 
-                    For I = 1 To MAX_EMOTICONS
+                    For i = 1 To MAX_EMOTICONS
 
-                        If Not Trim$(Emoticon(I).Command) = "/" Then
+                        If Not Trim$(Emoticon(i).Command) = "/" Then
                             If Not ChatText = vbNullString Then
                                 ChatText = ChatText & ", "
                             End If
 
-                            ChatText = ChatText & Trim$(Emoticon(I).Command)
+                            ChatText = ChatText & Trim$(Emoticon(i).Command)
                         End If
 
                     Next
@@ -1220,10 +1220,10 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                 Case Else
 
                     ' Check for Emoticons
-                    For I = 1 To MAX_EMOTICONS
-                        If Not Trim$(Emoticon(I).Command) = "/" Then
-                            If Trim$(Emoticon(I).Command) = Command(0) Then
-                                SendCheckEmoticon I
+                    For i = 1 To MAX_EMOTICONS
+                        If Not Trim$(Emoticon(i).Command) = "/" Then
+                            If Trim$(Emoticon(i).Command) = Command(0) Then
+                                SendCheckEmoticon i
                                 n = 1
                                 Exit For
                             End If
@@ -1308,7 +1308,7 @@ End Sub
 
 Public Sub MouseMoveX()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Left movement
     If GetPlayerX(MyIndex) > MouseX Or (GetPlayerDir(MyIndex) = DIR_LEFT And GetPlayerX(MyIndex) = 0) Then
@@ -1339,7 +1339,7 @@ End Sub
 
 Public Sub MouseMoveY()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Up movement
     If GetPlayerY(MyIndex) > MouseY Or (GetPlayerDir(MyIndex) = DIR_UP And GetPlayerY(MyIndex) = 0) Then

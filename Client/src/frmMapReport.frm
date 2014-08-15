@@ -115,72 +115,72 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub cmdClose_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Unload frmMapReport
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdClose_Click", "frmMapReport", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdOpenMaps_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then Exit Sub
     SendOpenMaps
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdOpenMaps_Click", "frmMapReport", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdWarp_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then Exit Sub
     Call WarpTo(lstMaps.ListIndex + 1)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdWarp_Click", "frmMapReport", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub lstMaps_DblClick()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then Exit Sub
     Call WarpTo(lstMaps.ListIndex + 1)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "lstMaps_DblClick", "frmMapReport", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, I As Long
+    Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 0 To lstMaps.ListCount - 1
-        Find = Trim$(I + 1 & ": " & txtSearch.text)
+    For i = 0 To lstMaps.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstMaps.List(I)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstMaps.List(I)), 1, Len(Find))) = UCase$(Find) Then
-                lstMaps.ListIndex = I
+        If Len(lstMaps.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstMaps.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstMaps.ListIndex = i
                 Exit For
             End If
         End If
@@ -188,20 +188,20 @@ Private Sub txtSearch_Change()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtSearch_Change", "frmMapReport", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtSearch_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtSearch.SelStart = Len(txtSearch)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtSearch_GotFocus", "frmMapReport", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

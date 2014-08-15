@@ -758,7 +758,7 @@ Private Sub chkFactionThreat_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If chkFactionThreat.Value = 1 Then
         NPC(EditorIndex).FactionThreat = True
@@ -777,7 +777,7 @@ Private Sub chkShowOnDeath_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     fraDrop.Visible = Not fraDrop.Visible
     fraOnDeath.Visible = Not fraOnDeath.Visible
@@ -793,7 +793,7 @@ Private Sub chkSwapVisibility_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     fraSpell.Visible = Not fraSpell.Visible
     fraStats.Visible = Not fraStats.Visible
@@ -809,7 +809,7 @@ Private Sub cmbBehavior_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     NPC(EditorIndex).Behavior = cmbBehavior.ListIndex
     
@@ -832,7 +832,7 @@ Private Sub cmbFaction_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     NPC(EditorIndex).Faction = cmbFaction.ListIndex
     Exit Sub
@@ -845,7 +845,7 @@ End Sub
 
 Private Sub cmbMusic_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If cmbMusic.ListIndex > 0 Then
         NPC(EditorIndex).Music = cmbMusic.List(cmbMusic.ListIndex)
@@ -862,7 +862,7 @@ End Sub
 
 Private Sub cmbPlayerSwitch_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     NPC(EditorIndex).SwitchNum = cmbPlayerSwitch.ListIndex
     Exit Sub
@@ -875,7 +875,7 @@ End Sub
 
 Private Sub cmbPlayerVar_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     NPC(EditorIndex).VariableNum = cmbPlayerVar.ListIndex
     Exit Sub
@@ -888,12 +888,12 @@ End Sub
 
 Private Sub cmbSound_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If cmbSound.ListIndex >= 0 Then
         Audio.StopSounds
         NPC(EditorIndex).Sound = cmbSound.List(cmbSound.ListIndex)
-        Audio.PlaySound NPC(EditorIndex).Sound
+        Audio.PlaySound NPC(EditorIndex).Sound - 1, -1, True
     Else
         NPC(EditorIndex).Sound = vbNullString
     End If
@@ -911,7 +911,7 @@ Private Sub cmdDelete_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearNPC EditorIndex
     
@@ -930,7 +930,7 @@ End Sub
 
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     frmMain.SubDaFocus Me.hWnd
     scrlSprite.max = NumCharacters
     scrlAnimation.max = MAX_ANIMATIONS
@@ -960,7 +960,7 @@ Private Sub cmdSave_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     EditorSave = True
     Call NPCEditorSave
@@ -976,7 +976,7 @@ Private Sub cmdCancel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Unload frmEditor_NPC
     Exit Sub
@@ -989,7 +989,7 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     frmMain.UnsubDaFocus Me.hWnd
     If EditorSave = False Then
         Call NPCEditorCancel
@@ -1010,7 +1010,7 @@ Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     NPCEditorInit
     Exit Sub
@@ -1027,7 +1027,7 @@ Private Sub scrlAnimation_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If scrlAnimation.Value = 0 Then sString = "None" Else sString = Trim$(Animation(scrlAnimation.Value).Name)
     lblAnimation.Caption = "Animation: " & sString
@@ -1044,7 +1044,7 @@ Private Sub scrlDamage_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblDamage.Caption = "Damage: " & scrlDamage.Value
     NPC(EditorIndex).Damage = scrlDamage.Value
@@ -1060,7 +1060,7 @@ Private Sub scrlLevel_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblLevel.Caption = "Level: " & scrlLevel.Value
     NPC(EditorIndex).Level = scrlLevel.Value
@@ -1074,7 +1074,7 @@ End Sub
 
 Private Sub scrlPlayerSwitch_Change()
      ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If scrlPlayerSwitch.Value = 0 Then
         lblPlayerSwitch.Caption = "To: False"
@@ -1094,7 +1094,7 @@ End Sub
 
 Private Sub scrlPlayerVar_Change()
      ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     lblPlayerVar.Caption = "To: " & scrlPlayerVar.Value
     NPC(EditorIndex).VariableVal = scrlPlayerVar.Value
@@ -1111,7 +1111,7 @@ Private Sub scrlSpell_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     SpellIndex = scrlSpell.Value
     fraSpell.Caption = "Spell: " & SpellIndex
@@ -1128,7 +1128,7 @@ Private Sub scrlSpellNum_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblSpellNum.Caption = "Number: " & scrlSpellNum.Value
 
@@ -1150,7 +1150,7 @@ Private Sub scrlSprite_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblSprite.Caption = "Sprite: " & scrlSprite.Value
     NPC(EditorIndex).Sprite = scrlSprite.Value
@@ -1166,7 +1166,7 @@ Private Sub scrlDrop_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     DropIndex = scrlDrop.Value
     fraDrop.Caption = "Drop: " & DropIndex
@@ -1185,7 +1185,7 @@ Private Sub scrlRange_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblRange.Caption = "Range: " & scrlRange.Value
     NPC(EditorIndex).Range = scrlRange.Value
@@ -1201,7 +1201,7 @@ Private Sub scrlNum_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblNum.Caption = "Number: " & scrlNum.Value
 
@@ -1225,7 +1225,7 @@ Private Sub scrlStat_Change(Index As Integer)
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Select Case Index
         Case 1
@@ -1253,7 +1253,7 @@ Private Sub scrlValue_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblValue.Caption = "Value: " & scrlValue.Value
     NPC(EditorIndex).DropValue(DropIndex) = scrlValue.Value
@@ -1269,7 +1269,7 @@ Private Sub txtAttackSay_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     NPC(EditorIndex).AttackSay = txtAttackSay.text
     Exit Sub
@@ -1284,12 +1284,12 @@ Private Sub txtExp_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If Not IsNumeric(txtEXP.text) Then txtEXP.text = 0
-    If txtEXP.text > MAX_LONG Then txtEXP.text = MAX_LONG
-    If txtEXP.text < 0 Then txtEXP.text = 0
-    NPC(EditorIndex).exp = txtEXP.text
+    If Not IsNumeric(txtExp.text) Then txtExp.text = 0
+    If txtExp.text > MAX_LONG Then txtExp.text = MAX_LONG
+    If txtExp.text < 0 Then txtExp.text = 0
+    NPC(EditorIndex).exp = txtExp.text
     Exit Sub
     
 ' Error handler
@@ -1302,7 +1302,7 @@ Private Sub txtHP_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtHP.text) Then txtHP.text = 0
     If txtHP.text > MAX_LONG Then txtHP.text = MAX_LONG
@@ -1320,7 +1320,7 @@ Private Sub txtMP_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtMP.text) Then txtMP.text = 0
     If txtMP.text > MAX_LONG Then txtMP.text = MAX_LONG
@@ -1340,7 +1340,7 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
     NPC(EditorIndex).Name = Trim$(txtName.text)
@@ -1359,7 +1359,7 @@ Private Sub txtSpawnSecs_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtSpawnSecs.text) Then txtSpawnSecs.text = 0
     If txtSpawnSecs.text > MAX_LONG Then txtSpawnSecs.text = MAX_LONG
@@ -1374,12 +1374,12 @@ ErrorHandler:
 End Sub
 
 Private Sub txtChance_Validate(Cancel As Boolean)
-    Dim I() As String
+    Dim i() As String
     
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Not IsNumeric(txtChance.text) And Not Right$(txtChance.text, 1) = "%" And Not InStr(1, txtChance.text, "/") > 0 And Not InStr(1, txtChance.text, ".") Then
         txtChance.text = "0"
@@ -1390,8 +1390,8 @@ Private Sub txtChance_Validate(Cancel As Boolean)
     If Right$(txtChance.text, 1) = "%" Then
         txtChance.text = Left$(txtChance.text, Len(txtChance.text) - 1) / 100
     ElseIf InStr(1, txtChance.text, "/") > 0 Then
-        I = Split(txtChance.text, "/")
-        txtChance.text = Int(I(0) / I(1) * 1000) / 1000
+        i = Split(txtChance.text, "/")
+        txtChance.text = Int(i(0) / i(1) * 1000) / 1000
     End If
     
     If txtChance.text > 1 Then
@@ -1413,7 +1413,7 @@ Private Sub txtTitle_Validate(Cancel As Boolean)
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     NPC(EditorIndex).title = Trim$(txtTitle.text)
     Exit Sub
@@ -1426,7 +1426,7 @@ End Sub
 
 Private Sub txtName_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtName.SelStart = Len(txtName)
     Exit Sub
@@ -1439,7 +1439,7 @@ End Sub
 
 Private Sub txtTitle_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtTitle.SelStart = Len(txtTitle)
     Exit Sub
@@ -1452,7 +1452,7 @@ End Sub
 
 Private Sub txtAttackSay_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtAttackSay.SelStart = Len(txtAttackSay)
     Exit Sub
@@ -1465,7 +1465,7 @@ End Sub
 
 Private Sub txtHP_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtHP.SelStart = Len(txtHP)
     Exit Sub
@@ -1478,7 +1478,7 @@ End Sub
 
 Private Sub txtMP_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtMP.SelStart = Len(txtMP)
     Exit Sub
@@ -1491,7 +1491,7 @@ End Sub
 
 Private Sub txtSpawnSecs_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtSpawnSecs.SelStart = Len(txtSpawnSecs)
     Exit Sub
@@ -1504,9 +1504,9 @@ End Sub
 
 Private Sub txtEXP_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    txtEXP.SelStart = Len(txtEXP)
+    txtExp.SelStart = Len(txtExp)
     Exit Sub
     
 ' Error handler
@@ -1517,7 +1517,7 @@ End Sub
 
 Private Sub txtChance_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtChance.SelStart = Len(txtChance)
     Exit Sub
@@ -1529,18 +1529,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, I As Long
+    Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 0 To lstIndex.ListCount - 1
-        Find = Trim$(I + 1 & ": " & txtSearch.text)
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(I)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = I
+        If Len(lstIndex.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
                 Exit For
             End If
         End If
@@ -1555,7 +1555,7 @@ End Sub
 
 Private Sub txtSearch_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtSearch.SelStart = Len(txtSearch)
     Exit Sub
@@ -1570,7 +1570,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If KeyAscii = vbKeyReturn Then
         cmdSave_Click
@@ -1589,7 +1589,7 @@ End Sub
 
 Private Sub cmdCopy_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
     Exit Sub
@@ -1602,7 +1602,7 @@ End Sub
 
 Private Sub cmdPaste_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(NPC(EditorIndex)), ByVal VarPtr(NPC(TmpIndex + 1)), LenB(NPC(TmpIndex + 1)))

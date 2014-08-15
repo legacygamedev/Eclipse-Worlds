@@ -1107,7 +1107,7 @@ Public Sub chkEditor_Click(Index As Integer)
 
     ' If debug mode, handle error then exit out
     
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     If ignoreChange Then
         ignoreChange = False
         Exit Sub
@@ -1363,19 +1363,19 @@ Private Sub cmbAccess_Click()
 End Sub
 
 Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String, CurrentAccess As Byte)
-    Dim I As Long
+    Dim i As Long
     If PlayerName = cmbPlayersOnline.text Then
         If Success = 0 Then
-            For I = 0 To UBound(g_playersOnline)
-                If InStr(1, g_playersOnline(I), PlayerName) Then
-                    Mid$(g_playersOnline(I), InStr(1, g_playersOnline(I), ":"), 2) = ":" & CurrentAccess
+            For i = 0 To UBound(g_playersOnline)
+                If InStr(1, g_playersOnline(i), PlayerName) Then
+                    Mid$(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
                     setAdminAccessLevel
                     
                     DisplayStatus Message, Status.Error
                 End If
-            Next I
+            Next i
         ElseIf Success = 1 Then
-            Mid$(g_playersOnline(I), InStr(1, g_playersOnline(I), ":"), 2) = ":" & CurrentAccess
+            Mid$(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
             setAdminAccessLevel
             
             DisplayStatus Message, Status.Correct
@@ -1384,42 +1384,42 @@ Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String
     cmbPlayersOnline.Enabled = True
 End Sub
 
-Public Sub DisplayStatus(ByVal msg As String, msgType As Status)
+Public Sub DisplayStatus(ByVal Msg As String, msgType As Status)
     Select Case msgType
         Case Status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = msg
+            lblStatus.Caption = Msg
         Case Status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = msg
+            lblStatus.Caption = Msg
         Case Status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = msg
+            lblStatus.Caption = Msg
         Case Status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = msg
+            lblStatus.Caption = Msg
     End Select
     lblStatus.Visible = True
 End Sub
 
 Private Sub cmbPlayersOnline_Click()
-    Dim I As Long, Length As Long
+    Dim i As Long, Length As Long
     
     Length = UBound(ignoreIndexes)
-    For I = 0 To Length
-        If cmbPlayersOnline.ListIndex = ignoreIndexes(I) Then
-            cmbPlayersOnline.ListIndex = ignoreIndexes(I) + 1
+    For i = 0 To Length
+        If cmbPlayersOnline.ListIndex = ignoreIndexes(i) Then
+            cmbPlayersOnline.ListIndex = ignoreIndexes(i) + 1
             cmbPlayersOnline.text = cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)
             Exit Sub
         End If
     Next
     autoAccess = True
     autoSprite = True
-    For I = 0 To UBound(g_playersOnline)
-            If InStr(1, g_playersOnline(I), cmbPlayersOnline.text) Then
-                txtSprite.text = Split(g_playersOnline(I), ":")(2)
+    For i = 0 To UBound(g_playersOnline)
+            If InStr(1, g_playersOnline(i), cmbPlayersOnline.text) Then
+                txtSprite.text = Split(g_playersOnline(i), ":")(2)
             End If
-    Next I
+    Next i
     If Player(MyIndex).Access < 4 Then
         txtSprite.Enabled = False
         upSprite.Enabled = False
@@ -1433,13 +1433,13 @@ Private Sub cmbPlayersOnline_Click()
 End Sub
 
 Private Sub setAdminAccessLevel()
-    Dim accessLvl As String, tempTxt As String, I As Long
+    Dim accessLvl As String, tempTxt As String, i As Long
     
     ' Set Access Level
-    For I = 0 To UBound(g_playersOnline)
-        If InStr(1, g_playersOnline(I), cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)) Then
-            accessLvl = Split(g_playersOnline(I), ":")(1)
-            txtSprite.text = Split(g_playersOnline(I), ":")(2)
+    For i = 0 To UBound(g_playersOnline)
+        If InStr(1, g_playersOnline(i), cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)) Then
+            accessLvl = Split(g_playersOnline(i), ":")(1)
+            txtSprite.text = Split(g_playersOnline(i), ":")(2)
             
             If accessLvl = "5" Then
                 accessLvl = "4"
@@ -1465,7 +1465,7 @@ Private Sub setAdminAccessLevel()
             cmbAccess.ListIndex = accessLvl
             cmbAccess.text = tempTxt
         End If
-    Next I
+    Next i
 End Sub
 
 
@@ -1480,7 +1480,7 @@ End Sub
 
 Private Sub cmdLevelUp_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1498,7 +1498,7 @@ End Sub
 
 Private Sub cmdALoc_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1518,7 +1518,7 @@ End Sub
 
 Private Sub cmdAWarpToMe_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1539,7 +1539,7 @@ End Sub
 
 Private Sub cmdAWarpMeTo_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1563,7 +1563,7 @@ Private Sub cmdAWarp_Click()
     Dim n As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1592,7 +1592,7 @@ End Sub
 
 Private Sub cmdAMapReport_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1610,7 +1610,7 @@ End Sub
 
 Private Sub cmdARespawn_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MAPPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1628,7 +1628,7 @@ End Sub
 
 Private Sub cmdAKick_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1650,7 +1650,7 @@ Private Sub cmdABan_Click()
     Dim StrInput As String
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_ADMIN Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1672,7 +1672,7 @@ End Sub
 
 Private Sub cmdAMute_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If GetPlayerAccess(MyIndex) < STAFF_MODERATOR Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1692,7 +1692,7 @@ End Sub
 
 Private Sub cmdSpawnRecent_Click()
     Dim Item As Byte
-    Dim I    As Byte
+    Dim i    As Byte
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1705,9 +1705,9 @@ Private Sub cmdSpawnRecent_Click()
 
     Dim found As Integer, limit As Integer
 
-    For I = 0 To UBound(lastSpawnedItems) - 1
-        If lastSpawnedItems(I) = Item Then
-            found = I
+    For i = 0 To UBound(lastSpawnedItems) - 1
+        If lastSpawnedItems(i) = Item Then
+            found = i
             Exit For
         End If
     Next
@@ -1946,9 +1946,9 @@ Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, X As Single,
 End Sub
 
 Public Sub selectMyself()
-    For I = 0 To cmbPlayersOnline.ListCount
-        If Trim$(cmbPlayersOnline.List(I)) = Trim$(Player(MyIndex).Name) Then
-            cmbPlayersOnline.ListIndex = I
+    For i = 0 To cmbPlayersOnline.ListCount
+        If Trim$(cmbPlayersOnline.List(i)) = Trim$(Player(MyIndex).Name) Then
+            cmbPlayersOnline.ListIndex = i
             cmbPlayersOnline_Click
             Exit Sub
         End If
@@ -1956,7 +1956,7 @@ Public Sub selectMyself()
 End Sub
 
 Public Sub UpdatePlayersOnline()
-    Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, I As Long, currentIgnore As Long
+    Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
     Dim stuffCounter As Long, playersCounter As Long, overallCounter As Long, foundStuff As Boolean, foundPlayer As Boolean
     
     tempTxt = cmbPlayersOnline.text
@@ -1964,21 +1964,21 @@ Public Sub UpdatePlayersOnline()
     cmbPlayersOnline.text = tempTxt
     
     ' Get Stuff
-    For I = 0 To UBound(g_playersOnline)
-        If CByte(Split(g_playersOnline(I), ":")(1)) > 0 Then
+    For i = 0 To UBound(g_playersOnline)
+        If CByte(Split(g_playersOnline(i), ":")(1)) > 0 Then
             foundStuff = True
             ReDim Preserve Staff(stuffCounter)
-            Staff(stuffCounter) = Split(g_playersOnline(I), ":")(0)
+            Staff(stuffCounter) = Split(g_playersOnline(i), ":")(0)
             stuffCounter = stuffCounter + 1
         End If
     Next
     
     'Get Players
-    For I = 0 To UBound(g_playersOnline)
-        If CByte(Split(g_playersOnline(I), ":")(1)) = 0 Then
+    For i = 0 To UBound(g_playersOnline)
+        If CByte(Split(g_playersOnline(i), ":")(1)) = 0 Then
             foundPlayer = True
             ReDim Preserve players(playersCounter)
-            players(playersCounter) = Split(g_playersOnline(I), ":")(0)
+            players(playersCounter) = Split(g_playersOnline(i), ":")(0)
             playersCounter = playersCounter + 1
         End If
     Next
@@ -1990,8 +1990,8 @@ Public Sub UpdatePlayersOnline()
             ignoreIndexes(0) = currentIgnore
             currentIgnore = currentIgnore + 1
             
-        For I = 0 To UBound(Staff)
-            cmbPlayersOnline.AddItem (Trim$(Staff(I)))
+        For i = 0 To UBound(Staff)
+            cmbPlayersOnline.AddItem (Trim$(Staff(i)))
             currentIgnore = currentIgnore + 1
         Next
         overallCounter = overallCounter + stuffCounter
@@ -2003,8 +2003,8 @@ Public Sub UpdatePlayersOnline()
             ReDim Preserve ignoreIndexes(1)
             ignoreIndexes(1) = currentIgnore
             currentIgnore = currentIgnore + 1
-        For I = 0 To UBound(players)
-            cmbPlayersOnline.AddItem (Trim$(players(I)))
+        For i = 0 To UBound(players)
+            cmbPlayersOnline.AddItem (Trim$(players(i)))
             currentIgnore = currentIgnore + 1
         Next
         overallCounter = overallCounter + playersCounter
@@ -2014,27 +2014,27 @@ Public Sub UpdatePlayersOnline()
 End Sub
 
 Public Sub styleButtons()
-    Dim I As Long, temp1 As Long, temp2 As Long
+    Dim i As Long, temp1 As Long, temp2 As Long
     
-    For I = 0 To optCat.UBound
-        optCat(I).Value = False
-        optCat(I).Picture = LoadResPicture(100 + I, vbResBitmap)
+    For i = 0 To optCat.UBound
+        optCat(i).Value = False
+        optCat(i).Picture = LoadResPicture(100 + i, vbResBitmap)
     Next
     
-    For I = 0 To picEye.UBound
-        picEye(I).Visible = False
-        picEye(I).Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
+    For i = 0 To picEye.UBound
+        picEye(i).Visible = False
+        picEye(i).Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
     Next
     
     temp1 = getWndProcAddr
     
     If GetWindowLong(optCat(0).hWnd, -4) <> temp1 Then
-        For I = 0 To optCat.UBound
-            SubClassHwnd optCat(I).hWnd
+        For i = 0 To optCat.UBound
+            SubClassHwnd optCat(i).hWnd
         Next
-        For I = 0 To chkEditor.UBound
-            picEye(I).BorderStyle = 0
-            SubClassHwnd chkEditor(I).hWnd
+        For i = 0 To chkEditor.UBound
+            picEye(i).BorderStyle = 0
+            SubClassHwnd chkEditor(i).hWnd
         Next
         catSub = True
         picSpawner.Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
@@ -2043,7 +2043,7 @@ Public Sub styleButtons()
 End Sub
 
 Public Sub findVisibleEditors()
-    Dim I As Long, tempCtl As Control
+    Dim i As Long, tempCtl As Control
     
     For Each frm In Forms
         If frm.Visible = True Then
@@ -2137,7 +2137,7 @@ End Sub
 
 Public Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ignoreChange = False
     frmAdmin.picRefresh.BorderStyle = 0
@@ -2252,7 +2252,7 @@ End Sub
 
 Private Sub txtAMap_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtAMap.SelStart = Len(txtAMap)
     Exit Sub
@@ -2327,33 +2327,33 @@ Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
-    Dim msg As String
+    Dim Msg As String
     
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
     Else
-        msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
-        displayFieldStatus txtBox, msg, Status.Error
+        Msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
+        displayFieldStatus txtBox, Msg, Status.Error
         verifyValue = False
     End If
 End Function
 
-Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
+Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal Msg As String, msgType As Status)
     lblStatus.Visible = True
     Select Case msgType
 
         Case Status.Error:
             lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
         Case Status.Correct:
             lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
         Case Status.Neutral:
             lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
         Case Status.Info_:
             lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & msg
+            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
     End Select
 End Sub
 
@@ -2379,7 +2379,7 @@ Private Sub txtRecentAmount_LostFocus()
 End Sub
 
 Private Sub txtSprite_Change()
-    Dim I As Long
+    Dim i As Long
     If autoSprite Then
         autoSprite = False
         Exit Sub
@@ -2391,11 +2391,11 @@ Private Sub txtSprite_Change()
             AddText "You have insufficent access to do this!", BrightRed
             Exit Sub
         ElseIf txtSprite.text > 0 Then
-            For I = 0 To UBound(g_playersOnline)
-                If InStr(1, g_playersOnline(I), cmbPlayersOnline.text) Then
-                    Mid$(g_playersOnline(I), InStr(InStr(1, g_playersOnline(I), ":") + 1, g_playersOnline(I), ":"), Len(txtSprite.text) + 1) = ":" & txtSprite.text
+            For i = 0 To UBound(g_playersOnline)
+                If InStr(1, g_playersOnline(i), cmbPlayersOnline.text) Then
+                    Mid$(g_playersOnline(i), InStr(InStr(1, g_playersOnline(i), ":") + 1, g_playersOnline(i), ":"), Len(txtSprite.text) + 1) = ":" & txtSprite.text
                 End If
-            Next I
+            Next i
 
             SendSetPlayerSprite Trim$(cmbPlayersOnline.text), currentSprite
         End If

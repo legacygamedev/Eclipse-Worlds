@@ -1539,20 +1539,20 @@ Private KillNPC As Boolean
 Private TmpIndex As Long
 
 Private Sub btnAddCLI_Click()
-Dim Index As Long, I As Long, tmpID As Long, TempStr As String, NPCIndex As Long
+Dim Index As Long, i As Long, tmpID As Long, TempStr As String, NPCIndex As Long
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     tmpStr = cmbNPC.List(cmbNPC.ListIndex)
     NPCIndex = 0
-    For I = 1 To MAX_NPCS
-        If Trim$(NPC(I).Name) = tmpStr Then
-            NPCIndex = I
+    For i = 1 To MAX_NPCS
+        If Trim$(NPC(i).Name) = tmpStr Then
+            NPCIndex = i
             Exit For
         End If
-    Next I
+    Next i
     If Not NPCIndex > 0 Then Exit Sub
     
     With Quest(EditorIndex)
@@ -1570,11 +1570,11 @@ Dim Index As Long, I As Long, tmpID As Long, TempStr As String, NPCIndex As Long
                 'add in a start message automatically for the first CLI element created.
                 If Index = 1 Then
                     .CLI(Index).Max_Actions = .CLI(Index).Max_Actions + 1
-                    I = .CLI(Index).Max_Actions
-                    ReDim Preserve .CLI(Index).Action(1 To I)
-                    .CLI(Index).Action(I).ActionID = ACTION_SHOWMSG
-                    .CLI(Index).Action(I).MainData = vbChecked
-                    .CLI(Index).Action(I).TextHolder = "Double click to edit the start message."
+                    i = .CLI(Index).Max_Actions
+                    ReDim Preserve .CLI(Index).Action(1 To i)
+                    .CLI(Index).Action(i).ActionID = ACTION_SHOWMSG
+                    .CLI(Index).Action(i).MainData = vbChecked
+                    .CLI(Index).Action(i).TextHolder = "Double click to edit the start message."
                 End If
             Else
                 .CLI(Editing_CLI_Index).ItemIndex = NPCIndex
@@ -1618,9 +1618,9 @@ ErrorHandler:
 End Sub
 
 Private Sub btnAddItem_Click()
-Dim Index As Long, Amnt As Long, Itm As Long, id As Long, I As Long
+Dim Index As Long, Amnt As Long, Itm As Long, id As Long, i As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Index = CLI.ListIndex + 1
     Itm = scrlItem.Value
@@ -1641,17 +1641,17 @@ Dim Index As Long, Amnt As Long, Itm As Long, id As Long, I As Long
     
     With Quest(EditorIndex).CLI(Index)
         If Editing_Task Then
-            I = Editing_Task_Index
+            i = Editing_Task_Index
         Else
             .Max_Actions = .Max_Actions + 1
             ReDim Preserve .Action(1 To .Max_Actions)
-            I = .Max_Actions
+            i = .Max_Actions
         End If
         
-        .Action(I).ActionID = id
-        .Action(I).MainData = Itm
-        .Action(I).Amount = Amnt
-        .Action(I).SecondaryData = chkTake.Value
+        .Action(i).ActionID = id
+        .Action(i).MainData = Itm
+        .Action(i).Amount = Amnt
+        .Action(i).SecondaryData = chkTake.Value
         Editing_Task_Index = 0
         Editing_Task = False
         
@@ -1671,9 +1671,9 @@ ErrorHandler:
 End Sub
 
 Private Sub btnAddWarp_Click()
-Dim Index As Long, X As Long, Y As Long, MapNum As Long, I As Long
+Dim Index As Long, X As Long, Y As Long, MapNum As Long, i As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Index = CLI.ListIndex + 1
     MapNum = scrlMap.Value
@@ -1686,17 +1686,17 @@ Dim Index As Long, X As Long, Y As Long, MapNum As Long, I As Long
     
     With Quest(EditorIndex).CLI(Index)
         If Editing_Task Then
-            I = Editing_Task_Index
+            i = Editing_Task_Index
         Else
             .Max_Actions = .Max_Actions + 1
             ReDim Preserve .Action(1 To .Max_Actions)
-            I = .Max_Actions
+            i = .Max_Actions
         End If
         
-        .Action(I).ActionID = ACTION_WARP
-        .Action(I).Amount = MapNum
-        .Action(I).MainData = X
-        .Action(I).SecondaryData = Y
+        .Action(i).ActionID = ACTION_WARP
+        .Action(i).Amount = MapNum
+        .Action(i).MainData = X
+        .Action(i).SecondaryData = Y
         Editing_Task_Index = 0
         Editing_Task = False
         
@@ -1739,7 +1739,7 @@ Private Sub btnCancel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Unload frmEditor_Quest
     Exit Sub
@@ -1778,7 +1778,7 @@ Dim TmpIndex As Long
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     ClearQuest EditorIndex
     
     TmpIndex = lstIndex.ListIndex
@@ -1860,7 +1860,7 @@ Dim Index As Long, id As Long
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
         
         Index = CLI.ListIndex + 1
         If Index < 1 Then
@@ -1929,9 +1929,9 @@ End Sub
 
 Private Sub btnMsgAccept_Click()
 Dim Index As Long, Msg As String
-Dim I As Long, II As Long, III As Long, id As Long
+Dim i As Long, II As Long, III As Long, id As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Index = CLI.ListIndex + 1
     Msg = txtMsg.text
@@ -2002,7 +2002,7 @@ End Sub
 Private Sub btnObAccept_Click()
 Dim Index As Long, Amnt As Long, id As Long, SkillID As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Index = CLI.ListIndex + 1
     SkillID = cmbObSKill.ListIndex + 1
@@ -2065,7 +2065,7 @@ Private Sub btnSave_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     EditorSave = True
     Call QuestEditorSave
@@ -2174,7 +2174,7 @@ Private Sub chkRetake_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     fmeMoveItem.Visible = False
     Quest(EditorIndex).CanBeRetaken = chkRetake.Value
@@ -2200,7 +2200,7 @@ Private Sub CLI_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     CLIHasFocus = True
     QuestEditorInitCLI
@@ -2221,9 +2221,9 @@ ErrorHandler:
 End Sub
 
 Private Sub CLI_DblClick()
-Dim Index As Long, I As Long
+Dim Index As Long, i As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     'we're gonna edit this list item instead of creating one.
     CLIHasFocus = True
@@ -2237,12 +2237,12 @@ Dim Index As Long, I As Long
     Editing_CLI_Index = Index
     Call SetNPCBox(False, Index)
     
-    For I = 0 To cmbNPC.ListCount - 1
-        If cmbNPC.List(I) = Trim$(NPC(Quest(EditorIndex).CLI(Index).ItemIndex).Name) Then
-            cmbNPC.ListIndex = I
+    For i = 0 To cmbNPC.ListCount - 1
+        If cmbNPC.List(i) = Trim$(NPC(Quest(EditorIndex).CLI(Index).ItemIndex).Name) Then
+            cmbNPC.ListIndex = i
             Exit Sub
         End If
-    Next I
+    Next i
     Exit Sub
     
 ' Error handler
@@ -2253,7 +2253,7 @@ End Sub
 
 Private Sub CLI_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Button = vbRightButton Then
         CLIHasFocus = True
@@ -2272,7 +2272,7 @@ End Sub
 
 Private Sub cmbClassReq_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Quest(EditorIndex).Requirements.ClassReq = cmbClassReq.ListIndex
     Exit Sub
@@ -2284,7 +2284,7 @@ End Sub
 
 Private Sub cmbGenderReq_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Quest(EditorIndex).Requirements.GenderReq = cmbGenderReq.ListIndex
     Exit Sub
@@ -2296,7 +2296,7 @@ End Sub
 
 Private Sub cmbSkillReq_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Quest(EditorIndex).Requirements.SkillReq = cmbSkillReq.ListIndex
     Exit Sub
@@ -2308,7 +2308,7 @@ End Sub
 
 Private Sub cmdCopy_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
     Exit Sub
@@ -2321,7 +2321,7 @@ End Sub
 
 Private Sub cmdPaste_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Quest(EditorIndex)), ByVal VarPtr(Quest(TmpIndex + 1)), LenB(Quest(TmpIndex + 1)))
@@ -2336,10 +2336,10 @@ ErrorHandler:
 End Sub
 
 Private Sub Form_Load()
-Dim I As Long
+Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmEditor_Quest.Width = 14895
     frmEditor_Quest.Height = 9195
@@ -2355,16 +2355,16 @@ Dim I As Long
     cmbSkillReq.AddItem "None"
     cmbClassReq.AddItem "None"
     
-    For I = 1 To Skill_Count - 1
-        cmbSkillReq.AddItem GetSkillName(I)
-        cmbObSKill.AddItem GetSkillName(I)
-    Next I
+    For i = 1 To Skill_Count - 1
+        cmbSkillReq.AddItem GetSkillName(i)
+        cmbObSKill.AddItem GetSkillName(i)
+    Next i
     
-    For I = 1 To MAX_CLASSES
-        If Len(Trim$(Class(I).Name)) > 0 Then
-            cmbClassReq.AddItem Trim$(Class(I).Name)
+    For i = 1 To MAX_CLASSES
+        If Len(Trim$(Class(i).Name)) > 0 Then
+            cmbClassReq.AddItem Trim$(Class(i).Name)
         End If
-    Next I
+    Next i
     
     Call PositionFrames
     Exit Sub
@@ -2377,7 +2377,7 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.UnsubDaFocus Me.hWnd
     If EditorSave = False Then
@@ -2403,7 +2403,7 @@ Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     fmeMoveItem.Visible = False
     QuestEditorInit
@@ -2419,7 +2419,7 @@ Private Sub lstTasks_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     CLIHasFocus = False
     
@@ -2455,31 +2455,31 @@ ErrorHandler:
 End Sub
 
 Private Sub lstTasks_DblClick()
-Dim Index As Long, I As Long, II As Long
+Dim Index As Long, i As Long, II As Long
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     CLIHasFocus = False
     'edit the selected list item instead of creating a new one
     Index = CLI.ListIndex + 1
-    I = lstTasks.ListIndex + 1
+    i = lstTasks.ListIndex + 1
     If Index < 1 Then
         Call QMsg("Please select a greeter first.")
         Exit Sub
     End If
-    If I < 1 Then
+    If i < 1 Then
         Call QMsg("Please select a task to edit first.")
         Exit Sub
     End If
     
     Editing_Task = True
-    Editing_Task_Index = I
+    Editing_Task_Index = i
     
     Call DisableEditButtons
     
-    With Quest(EditorIndex).CLI(Index).Action(I)
+    With Quest(EditorIndex).CLI(Index).Action(i)
         Select Case .ActionID
             Case TASK_GATHER
                 Gather = True
@@ -2498,12 +2498,12 @@ Dim Index As Long, I As Long, II As Long
                 lblKillAmnt.Visible = True
                 scrlKillAmnt.Visible = True
                 Call SetNPCBox(True, CLI.ListIndex + 1)
-                For I = 0 To cmbNPC.ListCount - 1
-                    If cmbNPC.List(I) = Trim$(NPC(.MainData).Name) Then
-                        cmbNPC.ListIndex = I
+                For i = 0 To cmbNPC.ListCount - 1
+                    If cmbNPC.List(i) = Trim$(NPC(.MainData).Name) Then
+                        cmbNPC.ListIndex = i
                         Exit For
                     End If
-                Next I
+                Next i
                 scrlKillAmnt.Value = .Amount
             Case TASK_GETSKILL
                 fmeObtainSKill.Visible = True
@@ -2511,7 +2511,7 @@ Dim Index As Long, I As Long, II As Long
                 cmbObSKill.ListIndex = .MainData - 1
                 scrlObSkill.Value = .Amount
             Case ACTION_SHOWMSG
-                Call CheckResponseMsg(EditorIndex, Index, I - 1)
+                Call CheckResponseMsg(EditorIndex, Index, i - 1)
                 fmeShowMsg.Visible = True
                 Call BTF(fmeShowMsg)
                 txtMsg.text = Trim$(.TextHolder)
@@ -2643,7 +2643,7 @@ Dim Res As VbMsgBoxResult
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Index = CLI.ListIndex + 1
     If Index < 1 Then
@@ -2669,7 +2669,7 @@ Dim Res As VbMsgBoxResult
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Index = CLI.ListIndex + 1
     TaskID = lstTasks.ListIndex + 1
@@ -2697,18 +2697,18 @@ ErrorHandler:
 End Sub
 
 Private Sub opEvent_Click()
-Dim I As Long
+Dim i As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     cmbNPC.Clear
-    For I = 1 To MAX_NPCS
-        If Len(Trim$(NPC(I).Name)) > 0 Then
-            If NPC(I).Behavior = NPC_BEHAVIOR_QUEST Then
-                cmbNPC.AddItem Trim$(NPC(I).Name)
+    For i = 1 To MAX_NPCS
+        If Len(Trim$(NPC(i).Name)) > 0 Then
+            If NPC(i).Behavior = NPC_BEHAVIOR_QUEST Then
+                cmbNPC.AddItem Trim$(NPC(i).Name)
             End If
         End If
-    Next I
+    Next i
     
 ' Error handler
 ErrorHandler:
@@ -2731,19 +2731,19 @@ Private Sub opLvl_Click()
 End Sub
 
 Private Sub opNPC_Click()
-Dim I As Long
+Dim i As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     cmbNPC.Clear
     cmbNPC.AddItem "Select An NPC"
-    For I = 1 To MAX_NPCS
-        If Len(Trim$(NPC(I).Name)) > 0 Then
-            If NPC(I).Behavior = NPC_BEHAVIOR_QUEST Then
-                cmbNPC.AddItem Trim$(NPC(I).Name)
+    For i = 1 To MAX_NPCS
+        If Len(Trim$(NPC(i).Name)) > 0 Then
+            If NPC(i).Behavior = NPC_BEHAVIOR_QUEST Then
+                cmbNPC.AddItem Trim$(NPC(i).Name)
             End If
         End If
-    Next I
+    Next i
     
 ' Error handler
 ErrorHandler:
@@ -2752,34 +2752,34 @@ ErrorHandler:
 End Sub
 
 Private Sub opSkill_Click()
-Dim I As Long
+Dim i As Long
     cboItem.Enabled = True
     cboItem.Clear
     cboItem.AddItem "None"
-    For I = 1 To Skills.Skill_Count - 1
-        cboItem.AddItem GetSkillName(I)
-    Next I
+    For i = 1 To Skills.Skill_Count - 1
+        cboItem.AddItem GetSkillName(i)
+    Next i
     cboItem.ListIndex = 0
 End Sub
 
 Private Sub opSkillEXP_Click()
-Dim I As Long
+Dim i As Long
     cboItem.Enabled = True
     cboItem.Clear
     cboItem.AddItem "None"
-    For I = 1 To Skills.Skill_Count - 1
-        cboItem.AddItem GetSkillName(I)
-    Next I
+    For i = 1 To Skills.Skill_Count - 1
+        cboItem.AddItem GetSkillName(i)
+    Next i
     cboItem.ListIndex = 0
 End Sub
 
 Private Sub opStat_Click()
-Dim I As Long
+Dim i As Long
     cboItem.Enabled = True
     cboItem.Clear
     cboItem.AddItem "None"
-    For I = 1 To Stats.Stat_Count - 1
-        Select Case I
+    For i = 1 To Stats.Stat_Count - 1
+        Select Case i
             Case Stats.Agility
                 cboItem.AddItem "Agility"
             Case Stats.Endurance
@@ -2791,7 +2791,7 @@ Dim I As Long
             Case Stats.Strength
                 cboItem.AddItem "Strength"
         End Select
-    Next I
+    Next i
     cboItem.ListIndex = 0
 End Sub
 
@@ -2806,7 +2806,7 @@ Private Sub scrlAccessReq_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     lblAccessReq.Caption = "Access: " & scrlAccessReq.Value
     Quest(EditorIndex).Requirements.AccessReq = scrlAccessReq.Value
@@ -2848,7 +2848,7 @@ Private Sub scrlLevelReq_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     lblLevelReq.Caption = "Level: " & scrlLevelReq.Value
     Quest(EditorIndex).Requirements.LevelReq = scrlLevelReq.Value
@@ -2876,7 +2876,7 @@ Private Sub scrlModify_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     lblModify.Caption = "Amount to modify: " & scrlModify.Value
     Exit Sub
@@ -2915,7 +2915,7 @@ Private Sub scrlSkill_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     lblSkill.Caption = "Skill Level: " & scrlSkill.Value
     Quest(EditorIndex).Requirements.SkillLevelReq = scrlSkill.Value
@@ -2932,7 +2932,7 @@ Dim tmpStr As String
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     Select Case Index
         Case 1
             tmpStr = "Str: "
@@ -2966,7 +2966,7 @@ Private Sub txtDesc_Change()
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Quest(EditorIndex).Description = Trim$(txtDesc.text)
     Exit Sub
@@ -2983,7 +2983,7 @@ End Sub
 
 Private Sub txtName_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     fmeMoveItem.Visible = False
     txtName.SelStart = Len(txtName)
@@ -2996,19 +2996,19 @@ ErrorHandler:
 End Sub
 
 Private Sub txtName_Validate(Cancel As Boolean)
-Dim I As Long
+Dim i As Long
 Dim TmpIndex As Long
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     'be sure we don't use the same name twice.
-    For I = 1 To MAX_QUESTS
-        If LCase(Trim(txtName.text)) = LCase(Trim(Quest(I).Name)) Then
+    For i = 1 To MAX_QUESTS
+        If LCase(Trim(txtName.text)) = LCase(Trim(Quest(i).Name)) Then
             txtName.text = vbNullString
             Call MsgBox("Duplicate quest name found.  Quest names must be unique.  Please change it.", vbOKOnly, "Duplicate Quest Name")
             Exit Sub
         End If
-    Next I
+    Next i
     
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
     
@@ -3057,42 +3057,42 @@ Private Sub BTF(ByVal FrameID As Frame)
 End Sub
 
 Private Sub SetNPCBox(ByVal All As Boolean, Optional ByVal CurCLI As Long = 0, Optional ByVal Adding As Boolean = False)
-Dim I As Long, ShowItem As Boolean
+Dim i As Long, ShowItem As Boolean
     cmbNPC.Clear
     cmbNPC.AddItem "Select An NPC"
     
-    For I = 1 To MAX_NPCS
-        If Len(Trim$(NPC(I).Name)) > 0 Then
+    For i = 1 To MAX_NPCS
+        If Len(Trim$(NPC(i).Name)) > 0 Then
             If All Then
-                If Not NPC(I).Behavior = NPC_BEHAVIOR_QUEST Then
-                    cmbNPC.AddItem Trim$(NPC(I).Name)
+                If Not NPC(i).Behavior = NPC_BEHAVIOR_QUEST Then
+                    cmbNPC.AddItem Trim$(NPC(i).Name)
                 End If
             Else
-                If NPC(I).Behavior = NPC_BEHAVIOR_QUEST Then
+                If NPC(i).Behavior = NPC_BEHAVIOR_QUEST Then
                     ShowItem = True
                     
                     If Quest(EditorIndex).Max_CLI = 0 Then
                         'Don't allow the same NPC to be used for the beginning of more than one quest
-                        If IsNPCInAnotherQuest(I, EditorIndex) Then ShowItem = False
+                        If IsNPCInAnotherQuest(i, EditorIndex) Then ShowItem = False
                     Else
                         'Don't show the NPC if it used in the previous slot
                         If Adding Then
-                            If Quest(EditorIndex).CLI(Quest(EditorIndex).Max_CLI).ItemIndex = I Then ShowItem = False
+                            If Quest(EditorIndex).CLI(Quest(EditorIndex).Max_CLI).ItemIndex = i Then ShowItem = False
                         Else
                             If CurCLI > 1 Then
-                                If Quest(EditorIndex).CLI(CurCLI - 1).ItemIndex = I Then ShowItem = False
+                                If Quest(EditorIndex).CLI(CurCLI - 1).ItemIndex = i Then ShowItem = False
                             ElseIf CurCLI = 1 Then
                                 'Don't allow the same NPC to be used for the beginning of more than one quest
-                                If IsNPCInAnotherQuest(I, EditorIndex) Then ShowItem = False
+                                If IsNPCInAnotherQuest(i, EditorIndex) Then ShowItem = False
                             End If
                         End If
                     End If
                     
-                    If ShowItem Then cmbNPC.AddItem Trim$(NPC(I).Name)
+                    If ShowItem Then cmbNPC.AddItem Trim$(NPC(i).Name)
                 End If
             End If
         End If
-    Next I
+    Next i
     
     cmbNPC.ListIndex = 0
 End Sub

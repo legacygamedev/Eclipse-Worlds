@@ -603,7 +603,7 @@ End Sub
 
 Private Sub chkAutoSpawn_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If lstNpcs.ListIndex > -1 Then
         Map.NPCSpawnType(lstNpcs.ListIndex + 1) = chkAutoSpawn.Value
@@ -619,12 +619,12 @@ End Sub
 Private Sub cmbSound_Change()
     If cmbSound.ListIndex < 0 Then Exit Sub
     Audio.StopSounds
-    Audio.PlaySound Map.BGS
+    Audio.PlaySound Map.BGS - 1, -1, True
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.cmdSave.Enabled = True
     frmMain.cmdRevert.Enabled = True
@@ -637,18 +637,18 @@ ErrorHandler:
 End Sub
 
 Private Sub cmbClear_Click()
-    Dim I As Long
+    Dim i As Long
     Dim TmpIndex As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Exit if the list Index is subscript out of range
     If lstNpcs.ListIndex + 1 < 1 Or lstNpcs.ListIndex + 1 > MAX_MAP_NPCS Then Exit Sub
     
     ' Clear the NPCs from the list
-    For I = 1 To MAX_MAP_NPCS
-        Map.NPC(I) = 0
+    For i = 1 To MAX_MAP_NPCS
+        Map.NPC(i) = 0
     Next
     
     TmpIndex = lstNpcs.ListIndex
@@ -673,7 +673,7 @@ Private Sub cmbUpdate_Click()
     Dim TmpIndex As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Exit if the list index is subscript out of range
     If lstNpcs.ListIndex < 0 Or lstNpcs.ListIndex > MAX_MAP_NPCS - 1 Then Exit Sub
@@ -723,10 +723,10 @@ End Sub
 
 Private Sub cmdPlay_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call Audio.StopMusic
-    Call Audio.PlayMusic(lstMusic.List(lstMusic.ListIndex))
+    Call Audio.PlayMusic(lstMusic.List(lstMusic.ListIndex), True)
     Exit Sub
     
 ' Error handler
@@ -737,7 +737,7 @@ End Sub
 
 Private Sub cmdStop_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call Audio.StopMusic
     Exit Sub
@@ -750,7 +750,7 @@ End Sub
 
 Private Sub lstMusic_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If chkAutoPlay.Value = 1 Then
         Call Audio.StopMusic
@@ -758,7 +758,7 @@ Private Sub lstMusic_Click()
         ' Don't play none
         If lstMusic.List(lstMusic.ListIndex) = vbNullString Then Exit Sub
         
-        Call Audio.PlayMusic(lstMusic.List(lstMusic.ListIndex))
+        Call Audio.PlayMusic(lstMusic.List(lstMusic.ListIndex), True)
     End If
     Exit Sub
 
@@ -770,10 +770,10 @@ End Sub
 
 Private Sub lstMusic_DblClick()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call Audio.StopMusic
-    Call Audio.PlayMusic(lstMusic.List(lstMusic.ListIndex))
+    Call Audio.PlayMusic(lstMusic.List(lstMusic.ListIndex), True)
     Exit Sub
     
 ' Error handler
@@ -784,7 +784,7 @@ End Sub
 
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Set max values
     txtName.MaxLength = NAME_LENGTH
@@ -798,14 +798,14 @@ ErrorHandler:
 End Sub
 
 Public Sub cmdSave_Click()
-    Dim I As Long
+    Dim i As Long
     Dim sTemp As Long
     Dim X As Long, X2 As Long
     Dim Y As Long, Y2 As Long
     Dim TempArr() As TileRec
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Not IsNumeric(txtMaxX.text) Then txtMaxX.text = Map.MaxX
     If Val(txtMaxX.text) < MIN_MAPX Then txtMaxX.text = MIN_MAPX
@@ -829,7 +829,7 @@ Public Sub cmdSave_Click()
         If cmbSound.ListIndex >= 0 Then
             Audio.StopSounds
             .BGS = cmbSound.List(cmbSound.ListIndex)
-            Audio.PlaySound cmbSound.List(cmbSound.ListIndex)
+            Audio.PlaySound cmbSound.List(cmbSound.ListIndex), -1, -1, True
         Else
             .BGS = vbNullString
         End If
@@ -900,7 +900,7 @@ End Sub
 
 Private Sub cmdCancel_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Stop music if they have it turned off
     If Options.Music = 0 Then
@@ -916,22 +916,22 @@ ErrorHandler:
 End Sub
 
 Private Sub lstNPCs_dblClick()
-    Dim I As Long
+    Dim i As Long
     Dim Index As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Index = frmEditor_MapProperties.lstNpcs.ListIndex + 1
     
     If Index < 1 Or Index > MAX_NPCS Then Exit Sub
     
-    For I = 1 To MAX_NPCS
+    For i = 1 To MAX_NPCS
         If frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": None" Then
             cmbNpcs.ListIndex = 0
             Exit For
-        ElseIf frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": " & Trim$(NPC(I).Name) Then
-            cmbNpcs.ListIndex = I
+        ElseIf frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": " & Trim$(NPC(i).Name) Then
+            cmbNpcs.ListIndex = i
             Exit For
         End If
     Next
@@ -945,7 +945,7 @@ End Sub
 
 Private Sub lstNPCs_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     chkAutoSpawn.Value = Map.NPCSpawnType(lstNpcs.ListIndex + 1)
     Exit Sub
@@ -958,7 +958,7 @@ End Sub
 
 Private Sub scrlA_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblA.Caption = "Alpha: " & scrlA.Value
     Exit Sub
@@ -971,7 +971,7 @@ End Sub
 
 Private Sub ScrlB_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblB.Caption = "Blue: " & ScrlB.Value
     Exit Sub
@@ -984,7 +984,7 @@ End Sub
 
 Private Sub ScrlFog_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblFog.Caption = "Fog: " & ScrlFog.Value
     Exit Sub
@@ -997,7 +997,7 @@ End Sub
 
 Private Sub scrlFogOpacity_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblFogOpacity.Caption = "Fog Opacity: " & scrlFogOpacity.Value
     Exit Sub
@@ -1010,7 +1010,7 @@ End Sub
 
 Private Sub ScrlFogSpeed_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblFogSpeed.Caption = "Fog Speed: " & ScrlFogSpeed.Value
     Exit Sub
@@ -1023,7 +1023,7 @@ End Sub
 
 Private Sub ScrlG_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblG.Caption = "Green: " & ScrlG.Value
     Exit Sub
@@ -1040,7 +1040,7 @@ End Sub
 
 Private Sub ScrlR_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblR.Caption = "Red: " & ScrlR.Value
     Exit Sub
@@ -1053,7 +1053,7 @@ End Sub
 
 Private Sub scrlWeatherIntensity_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblWeatherIntensity.Caption = "Intensity: " & scrlWeatherIntensity.Value
     Exit Sub
@@ -1066,7 +1066,7 @@ End Sub
 
 Private Sub txtBootMap_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtBootMap.text) Then txtBootMap = 0
     If frmEditor_MapProperties.txtBootMap.text < 0 Then frmEditor_MapProperties.txtBootMap.text = 0
@@ -1081,7 +1081,7 @@ End Sub
 
 Private Sub txtBootX_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtBootX.text) Then txtBootX = 0
     If frmEditor_MapProperties.txtBootX.text < 0 Then frmEditor_MapProperties.txtBootX.text = 0
@@ -1096,7 +1096,7 @@ End Sub
 
 Private Sub txtBootY_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtBootY.text) Then txtBootY = 0
     If frmEditor_MapProperties.txtBootY.text < 0 Then frmEditor_MapProperties.txtBootY.text = 0
@@ -1111,7 +1111,7 @@ End Sub
 
 Private Sub txtDown_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtDown.text) Then txtDown = 0
     If frmEditor_MapProperties.txtDown.text < 0 Then frmEditor_MapProperties.txtDown.text = 0
@@ -1126,7 +1126,7 @@ End Sub
 
 Private Sub txtLeft_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtLeft.text) Then txtLeft = 0
     If frmEditor_MapProperties.txtLeft.text < 0 Then frmEditor_MapProperties.txtLeft.text = 0
@@ -1141,7 +1141,7 @@ End Sub
 
 Private Sub txtName_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtName.SelStart = Len(txtName)
     Exit Sub
@@ -1154,7 +1154,7 @@ End Sub
 
 Private Sub txtRight_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtRight.text) Then txtRight = 0
     If frmEditor_MapProperties.txtRight.text < 0 Then frmEditor_MapProperties.txtRight.text = 0
@@ -1169,7 +1169,7 @@ End Sub
 
 Private Sub txtUp_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not IsNumeric(txtUp.text) Then txtUp = 0
     If frmEditor_MapProperties.txtUp.text < 0 Then frmEditor_MapProperties.txtUp.text = 0
@@ -1184,7 +1184,7 @@ End Sub
 
 Private Sub txtUp_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtUp.SelStart = Len(txtUp)
     Exit Sub
@@ -1197,7 +1197,7 @@ End Sub
 
 Private Sub txtDown_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtDown.SelStart = Len(txtDown)
     Exit Sub
@@ -1210,7 +1210,7 @@ End Sub
 
 Private Sub txtLeft_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtLeft.SelStart = Len(txtLeft)
     Exit Sub
@@ -1223,7 +1223,7 @@ End Sub
 
 Private Sub txtRight_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtRight.SelStart = Len(txtRight)
     Exit Sub

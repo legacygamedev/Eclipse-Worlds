@@ -3254,6 +3254,12 @@ Sub HandlePartyMsg(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As
     
     If Msg = vbNullString Then Exit Sub
     
+    If TempPlayer(index).InParty < 1 Then
+    
+        Exit Sub
+        
+    End If
+    
     If Trim$(Account(index).Chars(GetPlayerChar(index)).Status) = "Muted" Then
         Call PlayerMsg(index, "You are muted!", BrightRed)
         Exit Sub

@@ -263,13 +263,13 @@ Private Sub chkCanPickupItem_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Moral(EditorIndex).CanPickupItem = chkCanPickupItem.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkCanPickupItem_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -278,13 +278,13 @@ Private Sub chkCanCast_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Moral(EditorIndex).CanCast = chkCanCast.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkCanCast_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -293,13 +293,13 @@ Private Sub chkCanDropItem_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Moral(EditorIndex).CanDropItem = chkCanDropItem.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkCanDropItem_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -308,13 +308,13 @@ Private Sub chkCanPK_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Moral(EditorIndex).CanPK = chkCanPK.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkCanPK_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -323,13 +323,13 @@ Private Sub chkCanUseItem_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Moral(EditorIndex).CanUseItem = chkCanUseItem.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkCanUseItem_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -338,13 +338,13 @@ Private Sub chkDropItems_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Moral(EditorIndex).DropItems = chkDropItems.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkDropItems_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -353,13 +353,13 @@ Private Sub chkLoseExp_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Moral(EditorIndex).LoseExp = chkLoseExp.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkLoseExp_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -368,13 +368,13 @@ Private Sub chkPlayerBlocked_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Moral(EditorIndex).PlayerBlocked = chkPlayerBlocked.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "chkPlayerBlocked_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -385,20 +385,20 @@ Private Sub cmdDelete_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearMoral EditorIndex
     
     TmpIndex = lstIndex.ListIndex
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Moral(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Moral(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     
     MoralEditorInit
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdDelete_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -407,14 +407,14 @@ Private Sub cmdSave_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     EditorSave = True
     MoralEditorSave
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdSave_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -423,20 +423,20 @@ Private Sub cmdCancel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Unload frmEditor_Moral
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdCancel_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.UnsubDaFocus Me.hWnd
     
@@ -451,7 +451,7 @@ Private Sub Form_Unload(Cancel As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_Unload", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -460,20 +460,20 @@ Private Sub lstIndex_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     MoralEditorInit
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "1stIndex_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub Form_Load()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.SubDaFocus Me.hWnd
     txtName.MaxLength = NAME_LENGTH
@@ -481,21 +481,21 @@ Private Sub Form_Load()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_Load", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub scrlColor_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblColor.Caption = "Color: " & GetColorName(scrlColor.Value)
     Moral(EditorIndex).Color = scrlColor.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlColor_Change", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -506,47 +506,47 @@ Private Sub txtName_Validate(Cancel As Boolean)
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
-    Moral(EditorIndex).name = Trim$(txtName.text)
+    Moral(EditorIndex).Name = Trim$(txtName.text)
     lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Moral(EditorIndex).name, EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Moral(EditorIndex).Name, EditorIndex - 1
     lstIndex.ListIndex = TmpIndex
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtName_Validate", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtName_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtName.SelStart = Len(txtName)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtName_GotFocus", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, I As Long
+    Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 0 To lstIndex.ListCount - 1
-        Find = Trim$(I + 1 & ": " & txtSearch.text)
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(I)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = I
+        If Len(lstIndex.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
                 Exit For
             End If
         End If
@@ -554,20 +554,20 @@ Private Sub txtSearch_Change()
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtSearch_Change", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub txtSearch_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtSearch.SelStart = Len(txtSearch)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtSearch_GotFocus", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -576,7 +576,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If KeyAscii = vbKeyReturn Then
         cmdSave_Click
@@ -588,36 +588,36 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_KeyPress", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdCopy_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     TmpIndex = lstIndex.ListIndex
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdCopy_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub cmdPaste_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
         
     lstIndex.RemoveItem EditorIndex - 1
     Call CopyMemory(ByVal VarPtr(Moral(EditorIndex)), ByVal VarPtr(Moral(TmpIndex + 1)), LenB(Moral(TmpIndex + 1)))
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Moral(EditorIndex).name), EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Moral(EditorIndex).Name), EditorIndex - 1
     lstIndex.ListIndex = EditorIndex - 1
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "cmdPaste_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

@@ -62,6 +62,8 @@ On Error Resume Next
     
     nLength = (UBound(nByte) - LBound(nByte)) + 1
     
+    If nLength < 1 Then Exit Sub
+    
     If WriteHead + nLength - 1 > BufferSize Then Allocate nLength
     
     CopyMemory Buffer(WriteHead), nByte(0), nLength
@@ -110,7 +112,7 @@ End Function
 Public Function ReadBytes(ByVal nLength As Long, Optional MoveReadHead As Boolean = True) As Byte()
     Dim Data() As Byte
 
-    If nLength = 0 Then Exit Function
+    If nLength < 1 Then Exit Function
     If ReadHead + nLength - 1 > BufferSize Then Exit Function
         
     ReDim Data(nLength - 1)

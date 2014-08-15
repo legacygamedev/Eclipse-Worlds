@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmEditor_Events 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Event Editor"
@@ -4435,7 +4435,7 @@ Private Sub cmdClearPage_Click()
 End Sub
 
 Private Sub cmdCommands_Click(Index As Integer)
-    Dim I As Long, X As Long
+    Dim i As Long, X As Long
     
     Select Case Index
         Case 0
@@ -4469,8 +4469,8 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraCommand(3).Visible = True
             fraCommands.Visible = False
       Case 4
-            For I = 0 To 4
-                txtVariableData(I).text = 0
+            For i = 0 To 4
+                txtVariableData(i).text = 0
             Next
             cmbVariable.ListIndex = 0
             optVariableAction(0).Value = True
@@ -4546,8 +4546,8 @@ Private Sub cmdCommands_Click(Index As Integer)
             If MAX_CLASSES > 0 Then
                 If cmbChangeClass.ListCount = 0 Then
                 cmbChangeClass.Clear
-                For I = 1 To MAX_CLASSES
-                    cmbChangeClass.AddItem Trim$(Class(I).name)
+                For i = 1 To MAX_CLASSES
+                    cmbChangeClass.AddItem Trim$(Class(i).Name)
                 Next
                 cmbChangeClass.ListIndex = 0
                 End If
@@ -4594,11 +4594,11 @@ Private Sub cmdCommands_Click(Index As Integer)
             cmbEvent.AddItem "This Event"
             cmbEvent.ListIndex = 0
             cmbEvent.Enabled = True
-            For I = 1 To Map.EventCount
-                If I <> EditorEvent Then
-                    cmbEvent.AddItem Trim$(Map.events(I).name)
+            For i = 1 To Map.EventCount
+                If i <> EditorEvent Then
+                    cmbEvent.AddItem Trim$(Map.events(i).Name)
                     X = X + 1
-                    ListOfEvents(X) = I
+                    ListOfEvents(X) = i
                 End If
             Next
             IsMoveRouteCommand = True
@@ -4617,8 +4617,8 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraCommands.Visible = False
         Case 25
             cmbPlayAnimEvent.Clear
-            For I = 1 To Map.EventCount
-                cmbPlayAnimEvent.AddItem I & ". " & Trim$(Map.events(I).name)
+            For i = 1 To Map.EventCount
+                cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).Name)
             Next
             cmbPlayAnimEvent.ListIndex = 0
             optPlayAnimPlayer.Value = True
@@ -4793,14 +4793,14 @@ Private Sub cmdDeleteCommand_Click()
 End Sub
 
 Private Sub cmdDeletePage_Click()
-    Dim I As Long
+    Dim i As Long
     
     ZeroMemory ByVal VarPtr(tmpEvent.Pages(curPageNum)), LenB(tmpEvent.Pages(curPageNum))
     
     ' Move everything else down a notch
     If curPageNum < tmpEvent.PageCount Then
-        For I = curPageNum To tmpEvent.PageCount - 1
-            CopyMemory ByVal VarPtr(tmpEvent.Pages(I)), ByVal VarPtr(tmpEvent.Pages(I + 1)), LenB(tmpEvent.Pages(I + 1))
+        For i = curPageNum To tmpEvent.PageCount - 1
+            CopyMemory ByVal VarPtr(tmpEvent.Pages(i)), ByVal VarPtr(tmpEvent.Pages(i + 1)), LenB(tmpEvent.Pages(i + 1))
         Next
     End If
     
@@ -4808,8 +4808,8 @@ Private Sub cmdDeletePage_Click()
     
     ' Set the tabs
     tabPages.Tabs.Clear
-    For I = 1 To tmpEvent.PageCount
-        tabPages.Tabs.Add , , str$(I)
+    For i = 1 To tmpEvent.PageCount
+        tabPages.Tabs.Add , , str$(i)
     Next
     
     ' Set the tab back
@@ -4826,7 +4826,7 @@ Private Sub cmdDeletePage_Click()
 End Sub
 
 Private Sub cmdEditCommand_Click()
-    Dim I As Long
+    Dim i As Long
     
     If lstCommands.ListIndex > -1 Then
         EditEventCommand
@@ -4903,22 +4903,22 @@ Private Sub cmdLabel_Cancel_Click()
 End Sub
 
 Private Sub cmdLabel_Click()
-    Dim I As Long
+    Dim i As Long
 
     fraLabeling.Visible = True
     fraLabeling.Width = 849
     fraLabeling.Height = 593
     lstSwitches.Clear
     
-    For I = 1 To MAX_SWITCHES
-        lstSwitches.AddItem CStr(I) & ". " & Trim$(Switches(I))
+    For i = 1 To MAX_SWITCHES
+        lstSwitches.AddItem CStr(i) & ". " & Trim$(Switches(i))
     Next
     
     lstSwitches.ListIndex = 0
     lstVariables.Clear
     
-    For I = 1 To MAX_VARIABLES
-        lstVariables.AddItem CStr(I) & ". " & Trim$(Variables(I))
+    For i = 1 To MAX_VARIABLES
+        lstVariables.AddItem CStr(i) & ". " & Trim$(Variables(i))
     Next
     
     lstVariables.ListIndex = 0
@@ -4947,7 +4947,7 @@ Private Sub cmdMapTint_Ok_Click()
 End Sub
 
 Private Sub cmdMoveRoute_Click()
-    Dim I As Long
+    Dim i As Long
 
     fraMoveRoute.Visible = True
     lstMoveRoute.Clear
@@ -4963,8 +4963,8 @@ Private Sub cmdMoveRoute_Click()
     TempMoveRouteCount = tmpEvent.Pages(curPageNum).MoveRouteCount
     TempMoveRoute = tmpEvent.Pages(curPageNum).MoveRoute
     
-    For I = 1 To TempMoveRouteCount
-        Select Case TempMoveRoute(I).Index
+    For i = 1 To TempMoveRouteCount
+        Select Case TempMoveRoute(i).Index
             Case 1
                 lstMoveRoute.AddItem "Move Up"
             Case 2
@@ -5060,12 +5060,12 @@ Private Sub cmdMoveRoute_Click()
 End Sub
 
 Sub PopulateMoveRouteList()
-    Dim I As Long
+    Dim i As Long
 
     lstMoveRoute.Clear
     
-    For I = 1 To TempMoveRouteCount
-        Select Case TempMoveRoute(I).Index
+    For i = 1 To TempMoveRouteCount
+        Select Case TempMoveRoute(i).Index
             Case 1
                 lstMoveRoute.AddItem "Move Up"
             Case 2
@@ -5182,7 +5182,7 @@ Private Sub cmdMoveRouteOk_Click()
 End Sub
 
 Private Sub cmdNewPage_Click()
-    Dim PageCount As Long, I As Long
+    Dim PageCount As Long, i As Long
     
     PageCount = tmpEvent.PageCount + 1
     
@@ -5193,8 +5193,8 @@ Private Sub cmdNewPage_Click()
     ' Set the tabs
     tabPages.Tabs.Clear
     
-    For I = 1 To tmpEvent.PageCount
-        tabPages.Tabs.Add , , str$(I)
+    For i = 1 To tmpEvent.PageCount
+        tabPages.Tabs.Add , , str$(i)
     Next
     
     cmdDeletePage.Enabled = True
@@ -5307,29 +5307,29 @@ Private Sub cmdPlaySound_Ok_Click()
 End Sub
 
 Private Sub cmdRename_Cancel_Click()
-    Dim I As Long
+    Dim i As Long
 
     fraRenaming.Visible = False
     RenameType = 0
     RenameIndex = 0
     lstSwitches.Clear
     
-    For I = 1 To MAX_SWITCHES
-        lstSwitches.AddItem CStr(I) & ". " & Trim$(Switches(I))
+    For i = 1 To MAX_SWITCHES
+        lstSwitches.AddItem CStr(i) & ". " & Trim$(Switches(i))
     Next
     
     lstSwitches.ListIndex = 0
     lstVariables.Clear
     
-    For I = 1 To MAX_VARIABLES
-        lstVariables.AddItem CStr(I) & ". " & Trim$(Variables(I))
+    For i = 1 To MAX_VARIABLES
+        lstVariables.AddItem CStr(i) & ". " & Trim$(Variables(i))
     Next
     
     lstVariables.ListIndex = 0
 End Sub
 
 Private Sub cmdRename_Ok_Click()
-    Dim I As Long
+    Dim i As Long
     
     Select Case RenameType
         Case 1
@@ -5352,15 +5352,15 @@ Private Sub cmdRename_Ok_Click()
     
     lstSwitches.Clear
     
-    For I = 1 To MAX_SWITCHES
-        lstSwitches.AddItem CStr(I) & ". " & Trim$(Switches(I))
+    For i = 1 To MAX_SWITCHES
+        lstSwitches.AddItem CStr(i) & ". " & Trim$(Switches(i))
     Next
     
     lstSwitches.ListIndex = 0
     lstVariables.Clear
     
-    For I = 1 To MAX_VARIABLES
-        lstVariables.AddItem CStr(I) & ". " & Trim$(Variables(I))
+    For i = 1 To MAX_VARIABLES
+        lstVariables.AddItem CStr(i) & ". " & Trim$(Variables(i))
     Next
     
     lstVariables.ListIndex = 0
@@ -5607,7 +5607,7 @@ Private Sub cmdWPOkay_Click()
 End Sub
 
 Public Sub InitEventEditorForm()
-    Dim I As Long
+    Dim i As Long
 
     If frmAdmin.Visible Then
         frmEditor_Events.Move frmAdmin.Left - frmEditor_Events.Width, frmAdmin.Top
@@ -5623,83 +5623,83 @@ Public Sub InitEventEditorForm()
     ' Switches
     cmbSwitch.Clear
     
-    For I = 1 To MAX_SWITCHES
-        cmbSwitch.AddItem I & ". " & Switches(I)
+    For i = 1 To MAX_SWITCHES
+        cmbSwitch.AddItem i & ". " & Switches(i)
     Next
     cmbSwitch.ListIndex = 0
     
     ' Variables
     cmbVariable.Clear
     
-    For I = 1 To MAX_VARIABLES
-        cmbVariable.AddItem I & ". " & Variables(I)
+    For i = 1 To MAX_VARIABLES
+        cmbVariable.AddItem i & ". " & Variables(i)
     Next
     cmbVariable.ListIndex = 0
     
     ' Items
     cmbChangeItemIndex.Clear
     
-    For I = 1 To MAX_ITEMS
-        cmbChangeItemIndex.AddItem Trim$(Item(I).name)
+    For i = 1 To MAX_ITEMS
+        cmbChangeItemIndex.AddItem Trim$(Item(i).Name)
     Next
     cmbChangeItemIndex.ListIndex = 0
     
     ' Spells
     cmbChangeSkills.Clear
     
-    For I = 1 To MAX_SPELLS
-        cmbChangeSkills.AddItem Trim$(Spell(I).name)
+    For i = 1 To MAX_SPELLS
+        cmbChangeSkills.AddItem Trim$(Spell(i).Name)
     Next
     cmbChangeSkills.ListIndex = 0
     
     ' Classes
     cmbChangeClass.Clear
     
-    For I = 1 To MAX_CLASSES
-        cmbChangeClass.AddItem I & ": " & Trim$(Class(I).name)
+    For i = 1 To MAX_CLASSES
+        cmbChangeClass.AddItem i & ": " & Trim$(Class(i).Name)
     Next
     cmbChangeClass.ListIndex = 0
     
     ' Animations
     cmbPlayAnim.Clear
     
-    For I = 1 To MAX_ANIMATIONS
-        cmbPlayAnim.AddItem I & ": " & Trim$(Animation(I).name)
+    For i = 1 To MAX_ANIMATIONS
+        cmbPlayAnim.AddItem i & ": " & Trim$(Animation(i).Name)
     Next
     cmbPlayAnim.ListIndex = 0
     
     ' BGM
     cmbPlayBGM.Clear
     
-    For I = 1 To UBound(MusicCache)
-        cmbPlayBGM.AddItem (MusicCache(I))
+    For i = 1 To UBound(MusicCache)
+        cmbPlayBGM.AddItem (MusicCache(i))
     Next
     cmbPlayBGM.ListIndex = 0
     
     ' Sounds
     frmEditor_Events.cmbPlaySound.Clear
 
-    For I = 1 To UBound(SoundCache)
-        frmEditor_Events.cmbPlaySound.AddItem SoundCache(I)
+    For i = 1 To UBound(SoundCache)
+        frmEditor_Events.cmbPlaySound.AddItem SoundCache(i)
     Next
     frmEditor_Events.cmbPlaySound.ListIndex = 0
     
     ' Shops
     cmbOpenShop.Clear
     
-    For I = 1 To MAX_SHOPS
-        cmbOpenShop.AddItem I & ". " & Trim$(Shop(I).name)
+    For i = 1 To MAX_SHOPS
+        cmbOpenShop.AddItem i & ". " & Trim$(Shop(i).Name)
     Next
     cmbOpenShop.ListIndex = 0
     
     ' NPCs
     cmbSpawnNPC.Clear
     
-    For I = 1 To MAX_MAP_NPCS
-        If Map.NPC(I) > 0 Then
-            cmbSpawnNPC.AddItem I & ". " & Trim$(NPC(Map.NPC(I)).name)
+    For i = 1 To MAX_MAP_NPCS
+        If Map.NPC(i) > 0 Then
+            cmbSpawnNPC.AddItem i & ". " & Trim$(NPC(Map.NPC(i)).Name)
         Else
-            cmbSpawnNPC.AddItem I & ". "
+            cmbSpawnNPC.AddItem i & ". "
         End If
     Next
     cmbSpawnNPC.ListIndex = 0
@@ -5730,29 +5730,29 @@ Private Sub lstCommands_Click()
 End Sub
 
 Sub AddMoveRouteCommand(Index As Integer)
-    Dim I As Long, X As Long, Z As Long
+    Dim i As Long, X As Long, Z As Long
     
     Index = Index + 1
     
     If lstMoveRoute.ListIndex > -1 Then
-        I = lstMoveRoute.ListIndex + 1
+        i = lstMoveRoute.ListIndex + 1
         TempMoveRouteCount = TempMoveRouteCount + 1
         ReDim Preserve TempMoveRoute(TempMoveRouteCount)
         
-        For X = TempMoveRouteCount - 1 To I Step -1
+        For X = TempMoveRouteCount - 1 To i Step -1
             TempMoveRoute(X + 1) = TempMoveRoute(X)
         Next
         
-        TempMoveRoute(I).Index = Index
+        TempMoveRoute(i).Index = Index
         
         ' If set graphic then
         If Index = 43 Then
-            TempMoveRoute(I).Data1 = cmbGraphic.ListIndex
-            TempMoveRoute(I).Data2 = scrlGraphic.Value
-            TempMoveRoute(I).Data3 = GraphicSelX
-            TempMoveRoute(I).Data4 = GraphicSelX2
-            TempMoveRoute(I).Data5 = GraphicSelY
-            TempMoveRoute(I).Data6 = GraphicSelY2
+            TempMoveRoute(i).Data1 = cmbGraphic.ListIndex
+            TempMoveRoute(i).Data2 = scrlGraphic.Value
+            TempMoveRoute(i).Data3 = GraphicSelX
+            TempMoveRoute(i).Data4 = GraphicSelX2
+            TempMoveRoute(i).Data5 = GraphicSelY
+            TempMoveRoute(i).Data6 = GraphicSelY2
         End If
         PopulateMoveRouteList
     Else
@@ -5774,13 +5774,13 @@ Sub AddMoveRouteCommand(Index As Integer)
 End Sub
 
 Sub RemoveMoveRouteCommand(Index As Long)
-    Dim I As Long
+    Dim i As Long
     
     Index = Index + 1
     
     If Index > 0 And Index <= TempMoveRouteCount Then
-        For I = Index + 1 To TempMoveRouteCount
-            TempMoveRoute(I - 1) = TempMoveRoute(I)
+        For i = Index + 1 To TempMoveRouteCount
+            TempMoveRoute(i - 1) = TempMoveRoute(i)
         Next
         
         TempMoveRouteCount = TempMoveRouteCount - 1
@@ -5840,35 +5840,35 @@ Private Sub lstVariables_DblClick()
 End Sub
 
 Private Sub optChatBubbleTarget_Click(Index As Integer)
-    Dim I As Long
+    Dim i As Long
 
     If Index = 0 Then
         cmbChatBubbleTarget.Visible = False
     ElseIf Index = 1 Then
         cmbChatBubbleTarget.Visible = True
         cmbChatBubbleTarget.Clear
-        For I = 1 To MAX_MAP_NPCS
-            If Map.NPC(I) <= 0 Then
-                cmbChatBubbleTarget.AddItem CStr(I) & ". "
+        For i = 1 To MAX_MAP_NPCS
+            If Map.NPC(i) <= 0 Then
+                cmbChatBubbleTarget.AddItem CStr(i) & ". "
             Else
-                cmbChatBubbleTarget.AddItem CStr(I) & ". " & Trim$(NPC(Map.NPC(I)).name)
+                cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(NPC(Map.NPC(i)).Name)
             End If
         Next
         cmbChatBubbleTarget.ListIndex = 0
     ElseIf Index = 2 Then
         cmbChatBubbleTarget.Visible = True
         cmbChatBubbleTarget.Clear
-        For I = 1 To Map.EventCount
-            cmbChatBubbleTarget.AddItem CStr(I) & ". " & Trim$(Map.events(I).name)
+        For i = 1 To Map.EventCount
+            cmbChatBubbleTarget.AddItem CStr(i) & ". " & Trim$(Map.events(i).Name)
         Next
         cmbChatBubbleTarget.ListIndex = 0
     End If
 End Sub
 
 Private Sub optCondition_Index_Click(Index As Integer)
-Dim I As Long, X As Long
-    For I = 0 To 6
-        If optCondition_Index(I).Value = True Then X = I
+Dim i As Long, X As Long
+    For i = 0 To 6
+        If optCondition_Index(i).Value = True Then X = i
     Next
     ClearConditionFrame
     Select Case X
@@ -5894,11 +5894,11 @@ Dim I As Long, X As Long
     End Select
 End Sub
 Sub ClearConditionFrame()
-Dim I As Long
+Dim i As Long
     cmbCondition_PlayerVarIndex.Enabled = False
     cmbCondition_PlayerVarIndex.Clear
-    For I = 1 To MAX_VARIABLES
-        cmbCondition_PlayerVarIndex.AddItem I & ". " & Variables(I)
+    For i = 1 To MAX_VARIABLES
+        cmbCondition_PlayerVarIndex.AddItem i & ". " & Variables(i)
     Next
     cmbCondition_PlayerVarIndex.ListIndex = 0
     
@@ -5910,8 +5910,8 @@ Dim I As Long
     
     cmbCondition_PlayerSwitch.Enabled = False
     cmbCondition_PlayerSwitch.Clear
-    For I = 1 To MAX_SWITCHES
-        cmbCondition_PlayerSwitch.AddItem I & ". " & Switches(I)
+    For i = 1 To MAX_SWITCHES
+        cmbCondition_PlayerSwitch.AddItem i & ". " & Switches(i)
     Next
     cmbCondition_PlayerSwitch.ListIndex = 0
     
@@ -5920,22 +5920,22 @@ Dim I As Long
     
     cmbCondition_HasItem.Enabled = False
     cmbCondition_HasItem.Clear
-    For I = 1 To MAX_ITEMS
-        cmbCondition_HasItem.AddItem I & ". " & Trim$(Item(I).name)
+    For i = 1 To MAX_ITEMS
+        cmbCondition_HasItem.AddItem i & ". " & Trim$(Item(i).Name)
     Next
     cmbCondition_HasItem.ListIndex = 0
     
     cmbCondition_ClassIs.Enabled = False
     cmbCondition_ClassIs.Clear
-    For I = 1 To MAX_CLASSES
-        cmbCondition_ClassIs.AddItem I & ". " & CStr(Class(I).name)
+    For i = 1 To MAX_CLASSES
+        cmbCondition_ClassIs.AddItem i & ". " & CStr(Class(i).Name)
     Next
     cmbCondition_ClassIs.ListIndex = 0
     
     cmbCondition_LearntSkill.Enabled = False
     cmbCondition_LearntSkill.Clear
-    For I = 1 To MAX_SPELLS
-        cmbCondition_LearntSkill.AddItem I & ". " & Trim$(Spell(I).name)
+    For i = 1 To MAX_SPELLS
+        cmbCondition_LearntSkill.AddItem i & ". " & Trim$(Spell(i).Name)
     Next
     cmbCondition_LearntSkill.ListIndex = 0
     cmbCondition_LevelCompare.Enabled = False
@@ -5974,9 +5974,9 @@ Private Sub optPlayAnimTile_Click()
 End Sub
 
 Private Sub optVariableAction_Click(Index As Integer)
-    Dim I As Long
-    For I = 0 To 3
-        If optVariableAction(I).Value = True Then
+    Dim i As Long
+    For i = 0 To 3
+        If optVariableAction(i).Value = True Then
             Exit For
         End If
     Next
@@ -5990,7 +5990,7 @@ Private Sub optVariableAction_Click(Index As Integer)
     txtVariableData(3).text = "0"
     txtVariableData(4).Enabled = False
     txtVariableData(4).text = "0"
-    Select Case I
+    Select Case i
         Case 0
             txtVariableData(0).Enabled = True
         Case 1
@@ -6011,7 +6011,7 @@ Private Sub picGraphic_Click()
 End Sub
 
 Private Sub picGraphicSel_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
-Dim I As Long
+Dim i As Long
     If frmEditor_Events.cmbGraphic.ListIndex = 2 Then
         'Tileset... hard one....
         If ShiftDown Then
@@ -6036,15 +6036,15 @@ Dim I As Long
         If frmEditor_Events.scrlGraphic.Value <= 0 Or frmEditor_Events.scrlGraphic.Value > NumCharacters Then Exit Sub
         
         
-        For I = 0 To 3
-            If GraphicSelX >= ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Width / 4) * I) And GraphicSelX < ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Width / 4) * (I + 1)) Then
-                GraphicSelX = I
+        For i = 0 To 3
+            If GraphicSelX >= ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Width / 4) * i) And GraphicSelX < ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Width / 4) * (i + 1)) Then
+                GraphicSelX = i
             End If
         Next
         
-        For I = 0 To 3
-            If GraphicSelY >= ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Height / 4) * I) And GraphicSelY < ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Height / 4) * (I + 1)) Then
-                GraphicSelY = I
+        For i = 0 To 3
+            If GraphicSelY >= ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Height / 4) * i) And GraphicSelY < ((Tex_Character(frmEditor_Events.scrlGraphic.Value).Height / 4) * (i + 1)) Then
+                GraphicSelY = i
             End If
         Next
         
@@ -6121,33 +6121,33 @@ End Sub
 
 Private Sub scrlFace_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblFace.Caption = "Face: " & scrlFace.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlFace_Change", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub scrlFace2_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblFace2.Caption = "Face: " & scrlFace2.Value
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "scrlFace2_Change", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
 Private Sub ScrlFogData_Change(Index As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Select Case Index
         Case 0
@@ -6164,7 +6164,7 @@ Private Sub ScrlFogData_Change(Index As Integer)
     
     ' Error handler
     Exit Sub
-errorhandler:
+ErrorHandler:
     HandleError "ScrlFogData_Change(" & CStr(Index) & ")", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
     Exit Sub
@@ -6185,7 +6185,7 @@ End Sub
 
 Private Sub scrlMapTintData_Change(Index As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Select Case Index
         Case 0
@@ -6200,7 +6200,7 @@ Private Sub scrlMapTintData_Change(Index As Integer)
     
     ' Error handler
     Exit Sub
-errorhandler:
+ErrorHandler:
     HandleError "ScrlMapTintData_Change(" & CStr(Index) & ")", "frmEditor_MapProperties", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
     Exit Sub
@@ -6235,10 +6235,10 @@ Private Sub scrlWPY_Change()
 End Sub
 
 Private Sub tabCommands_Click()
-    Dim I As Long
+    Dim i As Long
 
-    For I = 1 To 2
-        picCommands(I).Visible = False
+    For i = 1 To 2
+        picCommands(i).Visible = False
     Next
     picCommands(tabCommands.SelectedItem.Index).Visible = True
 End Sub
@@ -6251,7 +6251,7 @@ Private Sub tabPages_Click()
 End Sub
 
 Private Sub txtName_Validate(Cancel As Boolean)
-    tmpEvent.name = Trim$(txtName.text)
+    tmpEvent.Name = Trim$(txtName.text)
 End Sub
 
 Private Sub txtPlayerVariable_Validate(Cancel As Boolean)
@@ -6259,15 +6259,15 @@ Private Sub txtPlayerVariable_Validate(Cancel As Boolean)
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim I As Long, Find As String
+    Dim i As Long, Find As String
     
-    For I = 0 To lstIndex.ListCount - 1
-        Find = Trim$(I + 1 & ": " & txtSearch.text)
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(I)) = Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = I
+        If Len(lstIndex.List(i)) = Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
                 Exit For
             End If
         End If
@@ -6276,13 +6276,13 @@ End Sub
 
 Private Sub txtSearch_GotFocus()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     txtSearch.SelStart = Len(txtSearch)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "txtSearch_GotFocus", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
@@ -6291,7 +6291,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Dim buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo errorhandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If KeyAscii = vbKeyReturn Then
         cmdSave_Click
@@ -6303,7 +6303,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     Exit Sub
     
 ' Error handler
-errorhandler:
+ErrorHandler:
     HandleError "Form_KeyPress", "frmEditor_Events", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub

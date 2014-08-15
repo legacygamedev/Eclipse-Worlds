@@ -1463,7 +1463,7 @@ Public UnloadStarted As Boolean
 
 Private Sub cmbHeal_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     MapEditorVitalType = cmbHeal.ListIndex + 1
     Exit Sub
@@ -1477,12 +1477,12 @@ End Sub
 Private Sub cmbSoundEffect_Click()
     If cmbSoundEffect.ListIndex < 0 Then Exit Sub
     Audio.StopSounds
-    Audio.PlaySound cmbSoundEffect.List(cmbSoundEffect.ListIndex)
+    Audio.PlaySound cmbSoundEffect.List(cmbSoundEffect.ListIndex) - 1, -1, True
 End Sub
 
 Private Sub cmdSoundEffect_Click()
    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If cmbSoundEffect.ListIndex = 0 Then Exit Sub
     
@@ -1506,7 +1506,7 @@ End Sub
 
 Private Sub OptEvents_Click()
    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.chkGrid.Enabled = True
     Exit Sub
@@ -1519,7 +1519,7 @@ End Sub
 
 Private Sub optSound_Click()
    ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearAttributeFrames
     picAttributes.Visible = True
@@ -1553,7 +1553,7 @@ End Sub
 
 Private Sub cmbShop_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
         
     EditorShop = cmbShop.ListIndex
     Exit Sub
@@ -1566,7 +1566,7 @@ End Sub
 
 Private Sub cmbTrap_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     MapEditorVitalType = cmbTrap.ListIndex + 1
     Exit Sub
@@ -1579,7 +1579,7 @@ End Sub
 
 Private Sub cmdCancel2_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearAttributeFrames
     picAttributes.Visible = False
@@ -1593,7 +1593,7 @@ End Sub
 
 Private Sub cmdHeal_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     MapEditorVitalType = cmbHeal.ListIndex + 1
     MapEditorVitalAmount = scrlHeal.Value
@@ -1609,7 +1609,7 @@ End Sub
 
 Private Sub cmdMapItem_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ItemEditorNum = scrlMapItem.Value
     ItemEditorValue = scrlMapItemValue.Value
@@ -1625,7 +1625,7 @@ End Sub
 
 Private Sub cmdMapWarp_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     EditorWarpMap = scrlMapWarp.Value
     EditorWarpX = scrlMapWarpX.Value
@@ -1642,7 +1642,7 @@ End Sub
 
 Private Sub cmdNPCSpawn_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     SpawnNPCNum = lstNpc.ListIndex + 1
     SpawnNPCDir = scrlNpcDir.Value
@@ -1658,7 +1658,7 @@ End Sub
 
 Private Sub cmdResourceOk_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ResourceEditorNum = scrlResource.Value
     picAttributes.Visible = False
@@ -1673,7 +1673,7 @@ End Sub
 
 Private Sub cmdShop_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     EditorShop = cmbShop.ListIndex
     picAttributes.Visible = False
@@ -1688,7 +1688,7 @@ End Sub
 
 Private Sub cmdSlide_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     MapEditorSlideDir = cmbSlide.ListIndex
     picAttributes.Visible = False
@@ -1703,7 +1703,7 @@ End Sub
 
 Private Sub cmdTrap_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     MapEditorVitalType = cmbTrap.ListIndex + 1
     MapEditorVitalAmount = scrlDamage.Value
@@ -1721,7 +1721,7 @@ Private Sub cmdAttributeFill_Click()
     Dim Button As Integer
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call MapEditorFillAttributes(Button)
     redrawMapCache = True
@@ -1734,10 +1734,10 @@ ErrorHandler:
 End Sub
 
 Private Sub Form_Load()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmEditor_Map.UnloadStarted = False
     
@@ -1763,8 +1763,8 @@ Private Sub Form_Load()
     frmEditor_Map.cmbSoundEffect.Clear
     frmEditor_Map.cmbSoundEffect.AddItem "None"
 
-    For I = 1 To UBound(SoundCache)
-        frmEditor_Map.cmbSoundEffect.AddItem SoundCache(I)
+    For i = 1 To UBound(SoundCache)
+        frmEditor_Map.cmbSoundEffect.AddItem SoundCache(i)
     Next
     
     frmEditor_Map.cmbSoundEffect.ListIndex = 0
@@ -1778,7 +1778,7 @@ End Sub
 
 Private Sub optBlock_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmMain.chkGrid.Enabled = False
     frmMain.chkEyeDropper.Enabled = True
@@ -1793,7 +1793,7 @@ End Sub
 
 Private Sub optHeal_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     cmbHeal.ListIndex = 0
     ClearAttributeFrames
@@ -1808,10 +1808,10 @@ ErrorHandler:
 End Sub
 
 Private Sub optLayer_Click(Index As Integer)
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Set which layer we're on
     CurrentLayer = Index
@@ -1835,7 +1835,7 @@ End Sub
 
 Private Sub optLayers_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If OptLayers.Value Then
         fraLayers.Visible = True
@@ -1854,7 +1854,7 @@ End Sub
 
 Private Sub optAttributes_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If OptAttributes.Value Then
         fraLayers.Visible = False
@@ -1876,7 +1876,7 @@ Private Sub optNPCSpawn_Click()
     Dim n As Long
 
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lstNpc.Clear
     
@@ -1903,10 +1903,10 @@ ErrorHandler:
 End Sub
 
 Private Sub chkRandom_Click()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     frmEditor_Map.fraRandom.Visible = Not frmEditor_Map.fraRandom.Visible
     frmEditor_Map.fraType.Visible = Not frmEditor_Map.fraType.Visible
@@ -1929,7 +1929,7 @@ End Sub
 
 Private Sub optResource_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearAttributeFrames
     If Not Trim$(Resource(scrlResource.Value).Name) = vbNullString Then
@@ -1947,7 +1947,7 @@ End Sub
 
 Private Sub optShop_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearAttributeFrames
     picAttributes.Visible = True
@@ -1962,7 +1962,7 @@ End Sub
 
 Private Sub optSlide_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     cmbSlide.ListIndex = 0
     ClearAttributeFrames
@@ -1978,7 +1978,7 @@ End Sub
 
 Private Sub optSprite_Click()
   ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
    
     ClearAttributeFrames
     picAttributes.Visible = True
@@ -1992,7 +1992,7 @@ End Sub
 
 Private Sub optTrap_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     cmbTrap.ListIndex = 0
     ClearAttributeFrames
@@ -2008,7 +2008,7 @@ End Sub
 
 Public Sub MapEditorDrag(Button As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Button = vbLeftButton Then
         ' Convert the pixel number to tile number
@@ -2043,7 +2043,7 @@ End Sub
 
 Private Sub optWarp_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearAttributeFrames
     picAttributes.Visible = True
@@ -2058,7 +2058,7 @@ End Sub
 
 Private Sub optItem_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ClearAttributeFrames
     picAttributes.Visible = True
@@ -2077,7 +2077,7 @@ End Sub
 
 Private Sub cmdFill_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     MapEditorFillLayer
     redrawMapCache = True
@@ -2091,7 +2091,7 @@ End Sub
 
 Private Sub cmdClear_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call MapEditorClearLayer
     redrawMapCache = True
@@ -2105,7 +2105,7 @@ End Sub
 
 Private Sub cmdAttributeClear_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call MapEditorClearAttributes
     Exit Sub
@@ -2118,7 +2118,7 @@ End Sub
 
 Private Sub picRandomTile_Click(Index As Integer)
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     RandomTileSelected = Index
     Exit Sub
@@ -2131,7 +2131,7 @@ End Sub
 
 Private Sub scrlHeal_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     MapEditorVitalAmount = scrlHeal.Value
     lblHeal.Caption = "Amount: " & scrlHeal.Value
@@ -2145,7 +2145,7 @@ End Sub
 
 Private Sub scrlDamage_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     MapEditorVitalAmount = scrlDamage.Value
     lblDamage.Caption = "Amount: " & scrlDamage.Value
@@ -2159,7 +2159,7 @@ End Sub
 
 Private Sub scrlMapItem_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Item(scrlMapItem.Value).stackable = 1 Then
         scrlMapItemValue.Enabled = True
@@ -2184,7 +2184,7 @@ End Sub
 
 Private Sub scrlMapItem_Scroll()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     scrlMapItem_Change
     Exit Sub
@@ -2197,7 +2197,7 @@ End Sub
 
 Private Sub scrlMapItemValue_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblMapItem.Caption = Trim$(Item(scrlMapItem.Value).Name) & " x" & scrlMapItemValue.Value
     Exit Sub
@@ -2210,7 +2210,7 @@ End Sub
 
 Private Sub scrlMapItemValue_Scroll()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     scrlMapItemValue_Change
     Exit Sub
@@ -2223,7 +2223,7 @@ End Sub
 
 Private Sub scrlMapWarp_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblMapWarp.Caption = "Map: " & scrlMapWarp.Value
     Exit Sub
@@ -2236,7 +2236,7 @@ End Sub
 
 Private Sub scrlMapWarp_Scroll()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     scrlMapWarp_Change
     Exit Sub
@@ -2249,7 +2249,7 @@ End Sub
 
 Private Sub scrlMapWarpX_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblMapWarpX.Caption = "X: " & scrlMapWarpX.Value
     Exit Sub
@@ -2262,7 +2262,7 @@ End Sub
 
 Private Sub scrlMapWarpX_Scroll()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     scrlMapWarpX_Change
     Exit Sub
@@ -2275,7 +2275,7 @@ End Sub
 
 Private Sub scrlMapWarpY_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     lblMapWarpY.Caption = "Y: " & scrlMapWarpY.Value
     Exit Sub
@@ -2288,7 +2288,7 @@ End Sub
 
 Private Sub scrlMapWarpY_Scroll()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     scrlMapWarpY_Change
     Exit Sub
@@ -2301,7 +2301,7 @@ End Sub
 
 Private Sub scrlNPCDir_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Select Case scrlNpcDir.Value
         Case DIR_UP
@@ -2323,7 +2323,7 @@ End Sub
 
 Private Sub scrlNPCDir_Scroll()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     scrlNPCDir_Change
     Exit Sub
@@ -2336,7 +2336,7 @@ End Sub
 
 Private Sub scrlResource_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If Not Trim$(Resource(scrlResource.Value).Name) = vbNullString Then
         lblResource.Caption = Resource(scrlResource.Value).Name
@@ -2353,7 +2353,7 @@ End Sub
 
 Private Sub scrlResource_Scroll()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     scrlResource_Change
     Exit Sub
@@ -2366,7 +2366,7 @@ End Sub
 
 Private Sub scrlTileSet_Change()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     fraTileSet.Caption = "Tileset: " & scrlTileSet.Value
     
@@ -2384,7 +2384,7 @@ End Sub
 
 Private Sub scrlTileSet_Scroll()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     scrlTileSet_Change
     Exit Sub
@@ -2397,7 +2397,7 @@ End Sub
 
 Private Sub cmdCopy_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Call CopyMemory(ByVal VarPtr(TempMap), ByVal VarPtr(Map), LenB(Map))
     Exit Sub
@@ -2410,7 +2410,7 @@ End Sub
 
 Private Sub cmdPaste_Click()
     ' If debug mode, handle error then exit out
-    If Options.Debug = 1 Then On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Don't paste if nothing has been copied
     If TempMap.MaxX = 0 Or TempMap.MaxY = 0 Then Exit Sub
