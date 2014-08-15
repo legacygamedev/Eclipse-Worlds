@@ -47,32 +47,32 @@ Private Sub Class_Initialize()
     Performance.SetMasterAutoDownload True
 End Sub
 
-Public Sub PlayMusic(filename As String, Optional ByVal Ignore As Boolean = False)
+Public Sub PlayMusic(FileName As String, Optional ByVal Ignore As Boolean = False)
     Dim SplitMusic() As String
     
-    If Ignore = False And (Options.Music = 0 Or Trim$(filename) = vbNullString Or Trim$(filename) = "None" Or CurrentMusic = Trim$(filename)) Then Exit Sub
+    If Ignore = False And (Options.Music = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None" Or CurrentMusic = Trim$(FileName)) Then Exit Sub
     
     Call StopMusic
     
     ' File doesn't exist
-    If Not FileExist(App.Path & MUSIC_PATH & Trim$(filename), True) Then
+    If Not FileExist(App.Path & MUSIC_PATH & Trim$(FileName), True) Then
         If FormVisible("frmMain") Then
-            Call AddText(Trim$(filename) & " does not exist!", BrightRed)
+            Call AddText(Trim$(FileName) & " does not exist!", BrightRed)
         End If
         Exit Sub
     End If
     
-    If Right$(Trim$(filename), 4) = ".mid" Then
-        SplitMusic = Split(Trim$(filename), ".", , vbTextCompare)
+    If Right$(Trim$(FileName), 4) = ".mid" Then
+        SplitMusic = Split(Trim$(FileName), ".", , vbTextCompare)
         
         If Performance Is Nothing Then Exit Sub
-        If LenB(Trim$(filename)) < 1 Then Exit Sub
+        If LenB(Trim$(FileName)) < 1 Then Exit Sub
         If UBound(SplitMusic) <> 1 Then Exit Sub
         If SplitMusic(1) <> "mid" Then Exit Sub
         If IsMuted Then Exit Sub
         
         Set Segment = Nothing
-        Set Segment = Loader.LoadSegment(App.Path & MUSIC_PATH & Trim$(filename))
+        Set Segment = Loader.LoadSegment(App.Path & MUSIC_PATH & Trim$(FileName))
         
         ' Repeat midi file
         Segment.SetLoopPoints 0, 0
@@ -81,47 +81,47 @@ Public Sub PlayMusic(filename As String, Optional ByVal Ignore As Boolean = Fals
         
         Performance.PlaySegment Segment, 0, 0
         
-        CurrentMusic = Trim$(filename)
+        CurrentMusic = Trim$(FileName)
     Else
-        If Left$(Trim$(filename), 7) = "http://" Then
-            Music = BASS_StreamCreateURL(Trim$(filename), 0, BASS_SAMPLE_LOOP, 0, 0)
+        If Left$(Trim$(FileName), 7) = "http://" Then
+            Music = BASS_StreamCreateURL(Trim$(FileName), 0, BASS_SAMPLE_LOOP, 0, 0)
         Else
-            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & Trim$(filename)), 0, 0, BASS_SAMPLE_LOOP)
+            Music = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & MUSIC_PATH & Trim$(FileName)), 0, 0, BASS_SAMPLE_LOOP)
         End If
 
         If Not IsMuted Then
                 Call BASS_ChannelSetAttribute(Music, BASS_ATTRIB_VOL, Options.MusicVolume)
                 Call BASS_ChannelPlay(Music, BASSFALSE)
         End If
-        CurrentMusic = Trim$(filename)
+        CurrentMusic = Trim$(FileName)
         CurrentMusicIndex = Music
     End If
 End Sub
 
-Public Sub PlaySound(filename As String, _
+Public Sub PlaySound(FileName As String, _
                      Optional ByVal X As Long, _
                      Optional ByVal Y As Long, _
                      Optional ByVal Ignore As Boolean = False)
-   Dim I As Long
+   Dim i As Long
 
    '
-   If Ignore = False And (Options.Sound = 0 Or Trim$(filename) = vbNullString Or Trim$(filename) = "None") Then Exit Sub
+   If Ignore = False And (Options.Sound = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None") Then Exit Sub
     
-   If FileExist(App.Path & SOUND_PATH & Trim$(filename), True) Then
+   If FileExist(App.Path & SOUND_PATH & Trim$(FileName), True) Then
 
       ' Find the index
-      For I = 1 To MAX_SOUNDS
+      For i = 1 To MAX_SOUNDS
 
-         If Sounds(I) = 0 Then
-            SoundIndex = I
+         If Sounds(i) = 0 Then
+            SoundIndex = i
             Exit For
-         ElseIf BASS_ChannelIsActive(Sounds(I)) Then
-            SoundIndex = I
+         ElseIf BASS_ChannelIsActive(Sounds(i)) Then
+            SoundIndex = i
             Exit For
          End If
             
          ' Set it to the beginning and stop the sound if all sounds are being used
-         If I = MAX_SOUNDS Then
+         If i = MAX_SOUNDS Then
             StopSound 1
             SoundIndex = 1
          End If
@@ -129,7 +129,7 @@ Public Sub PlaySound(filename As String, _
       Next
         
       ' Create the sound
-      Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & Trim$(filename)), 0, 0, 0)
+      Sounds(SoundIndex) = BASS_StreamCreateFile(BASSFALSE, StrPtr(App.Path & SOUND_PATH & Trim$(FileName)), 0, 0, 0)
       
       If Not IsMuted Then
          If X > 0 Or Y > 0 Then
@@ -140,11 +140,6 @@ Public Sub PlaySound(filename As String, _
            
          ' Play the sound
          Call BASS_ChannelPlay(Sounds(SoundIndex), BASSFALSE)
-      End If
-   Else
-
-      If FormVisible("frmMain") Then
-         Call AddText(Trim$(filename) & " does not exist!", BrightRed)
       End If
    End If
 
@@ -171,19 +166,19 @@ Public Sub StopMapSound(ByVal Index As Byte, Optional ByVal Clear As Boolean = T
 End Sub
 
 Public Sub StopSounds()
-    Dim I As Long
+    Dim i As Long
     
-    For I = 1 To MAX_SOUNDS
-        Call StopSound(I)
+    For i = 1 To MAX_SOUNDS
+        Call StopSound(i)
     Next
 End Sub
 
 Sub StopMapSounds()
-    Dim I As Long
+    Dim i As Long
     
     If MapSoundCount > 0 Then
-        For I = 1 To MapSoundCount
-            Call StopMapSound(I)
+        For i = 1 To MapSoundCount
+            Call StopMapSound(i)
         Next
         
         MapSoundCount = 0
@@ -232,35 +227,35 @@ Function CalculateSoundVolume(X As Long, Y As Long) As Double
 End Function
 
 Sub UpdateSounds()
-    Dim I As Long, X As Long
+    Dim i As Long, X As Long
 
     If MapSoundCount > 0 Then
-        For I = 1 To MapSoundCount
-            If BASS_ChannelIsActive(MapSounds(I).handle) Then
-                BASS_ChannelSetAttribute MapSounds(I).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(I).X, MapSounds(MapSoundCount).Y)
+        For i = 1 To MapSoundCount
+            If BASS_ChannelIsActive(MapSounds(i).handle) Then
+                BASS_ChannelSetAttribute MapSounds(i).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(i).X, MapSounds(MapSoundCount).Y)
             Else
-                Call StopMapSound(I)
+                Call StopMapSound(i)
             End If
         Next
     End If
 End Sub
 
 Sub UpdateMapSounds()
-    Dim I As Long, X As Long
+    Dim i As Long, X As Long
     
     If MapSoundCount > 0 Then
-        For I = 1 To MapSoundCount
-            If BASS_ChannelIsActive(MapSounds(I).handle) Then
-                BASS_ChannelSetAttribute MapSounds(I).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(I).X, MapSounds(MapSoundCount).Y)
+        For i = 1 To MapSoundCount
+            If BASS_ChannelIsActive(MapSounds(i).handle) Then
+                BASS_ChannelSetAttribute MapSounds(i).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(i).X, MapSounds(MapSoundCount).Y)
             Else
-                Call StopMapSound(I)
+                Call StopMapSound(i)
             End If
         Next
     End If
 End Sub
 
 Sub CacheNewMapSounds()
-    Dim I As Long, X As Long, Y As Long
+    Dim i As Long, X As Long, Y As Long
     
     StopMapSounds
     
@@ -295,7 +290,7 @@ End Sub
 
 Public Sub MuteVolume()
 
-    Dim I As Long
+    Dim i As Long
 
     ' Adjust volume
     If CurrentMusicIndex <> 0 Then
@@ -312,7 +307,7 @@ End Sub
 
 Public Sub UpdateVolume()
 
-    Dim I As Long
+    Dim i As Long
 
     If CurrentMusicIndex <> 0 Then
         Call BASS_ChannelSetAttribute(CurrentMusicIndex, BASS_ATTRIB_VOL, Options.Music)
@@ -321,25 +316,25 @@ Public Sub UpdateVolume()
     Call BASS_ChannelPlay(CurrentMusicIndex, BASSFALSE)
     
     ' Adjust sound volume
-    For I = 1 To MAX_SOUNDS
+    For i = 1 To MAX_SOUNDS
 
-        If BASS_ChannelIsActive(Sounds(I)) Then
-            Call BASS_ChannelSetAttribute(Sounds(I), BASS_ATTRIB_VOL, Options.Sound)
-            Call BASS_ChannelPlay(Sounds(I), BASSFALSE)
+        If BASS_ChannelIsActive(Sounds(i)) Then
+            Call BASS_ChannelSetAttribute(Sounds(i), BASS_ATTRIB_VOL, Options.Sound)
+            Call BASS_ChannelPlay(Sounds(i), BASSFALSE)
         Else
-            Call StopSound(I)
+            Call StopSound(i)
         End If
 
     Next
 
     If MapSoundCount > 0 Then
 
-        For I = 1 To MapSoundCount
+        For i = 1 To MapSoundCount
             
-            If BASS_ChannelIsActive(MapSounds(I).handle) Then
-                Call BASS_ChannelSetAttribute(MapSounds(I).handle, BASS_ATTRIB_VOL, Options.Sound)
+            If BASS_ChannelIsActive(MapSounds(i).handle) Then
+                Call BASS_ChannelSetAttribute(MapSounds(i).handle, BASS_ATTRIB_VOL, Options.Sound)
             Else
-                Call StopMapSound(I)
+                Call StopMapSound(i)
             End If
 
         Next
