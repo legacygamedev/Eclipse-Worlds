@@ -619,7 +619,7 @@ End Sub
 Private Sub cmbSound_Change()
     If cmbSound.ListIndex < 0 Then Exit Sub
     Audio.StopSounds
-    Audio.PlaySound Map.BGS - 1, -1, True
+    Audio.PlaySound Map.BGS, -1, -1, True
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -841,7 +841,7 @@ Public Sub cmdSave_Click()
         .Right = Val(txtRight.text)
         .Moral = cmbMoral.ListIndex + 1
 
-        .Weather = CmbWeather.ListIndex
+        .Weather = cmbWeather.ListIndex
         .WeatherIntensity = scrlWeatherIntensity.Value
         
         .Fog = ScrlFog.Value
