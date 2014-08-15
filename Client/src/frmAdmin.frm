@@ -2201,7 +2201,6 @@ Public Sub picSizer_Click()
         frmAdmin.Left = frmMain.Left + frmMain.Width + TwipsToPixels(frmAdmin.Width, 0)
         frmAdmin.Top = frmMain.Top
         lblStatus.Visible = False
-        cmdShowGame.Visible = False
     Else
         For Each ctrl In Controls
             Select Case ctrl.Name
@@ -2228,7 +2227,6 @@ Public Sub picSizer_Click()
         adminMin = True
         picSizer.Picture = LoadResPicture("MAX", vbResBitmap)
         frmAdmin.centerMiniVert frmMain.Width, frmMain.Height, frmMain.Left, frmMain.Top
-        cmdShowGame.Visible = True
     End If
     reverse = True
 End Sub

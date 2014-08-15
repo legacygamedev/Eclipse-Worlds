@@ -5529,6 +5529,8 @@ Public Sub DrawEvent(id As Long)
 End Sub
 
 Sub HandleDeviceLost()
+    On Error Resume Next
+    
     ' Do a loop while device is lost
     Do While Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICELOST
         Exit Sub
