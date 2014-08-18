@@ -525,6 +525,8 @@ Function IsTryingToMove() As Boolean
                 End If
 
             Else
+                MouseX = -1
+                MouseY = -1
                 DirUp = False
                 DirDown = False
                 DirLeft = False
@@ -532,6 +534,8 @@ Function IsTryingToMove() As Boolean
             End If
 
         Else
+            MouseX = -1
+            MouseY = -1
             DirUp = False
             DirDown = False
             DirLeft = False
