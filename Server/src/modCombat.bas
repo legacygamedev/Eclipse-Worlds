@@ -683,8 +683,11 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
             If NPC(NPCNum).DropItem(n) = 0 Then Exit For
             
             Value = NPC(NPCNum).DropValue(n)
-            Value = Random(Value * 0.25, Value * 1.5)
-            Round Value
+            
+            If NPC(NPCNum).DropRandom(n) = 1 Then
+                Value = Random(Value * 0.75, Value * 1.25)
+                Round Value
+            End If
             
             If Value < 1 Then Value = 1
             

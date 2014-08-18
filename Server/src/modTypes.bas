@@ -730,6 +730,7 @@ Private Type NPCRec
     VariableVal As Long
     AddToVariable As Byte
     ShowQuestCompleteIcon As Long
+    DropRandom(1 To MAX_NPC_DROPS) As Byte
 End Type
 
 Private Type MapNPCRec

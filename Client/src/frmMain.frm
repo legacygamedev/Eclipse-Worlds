@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -1724,6 +1724,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   527632
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -6505,27 +6506,56 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
                     InitAdminPanel
                 End If
             End If
-        
-        Case vbKeyEnd
-            If ChatLocked Then
-                If TempPlayer(MyIndex).Moving = NO Then
-                    If GetPlayerDir(MyIndex) = 0 Then
-                        Call SetPlayerDir(MyIndex, GetPlayerDir(MyIndex) + 3)
-                    ElseIf GetPlayerDir(MyIndex) = 1 Then
-                        Call SetPlayerDir(MyIndex, GetPlayerDir(MyIndex) + 1)
-                    ElseIf GetPlayerDir(MyIndex) = 2 Then
-                        Call SetPlayerDir(MyIndex, GetPlayerDir(MyIndex) - 2)
-                    ElseIf GetPlayerDir(MyIndex) = 3 Then
-                        Call SetPlayerDir(MyIndex, GetPlayerDir(MyIndex) - 2)
+            
+    End Select
+    
+    If ChatLocked Then
+        If TempPlayer(MyIndex).Moving = NO Then
+            If KeyCode = vbKeyHome Then
+                If Player(MyIndex).Dir <> DIR_UP Then
+                    Call SetPlayerDir(MyIndex, DIR_UP)
+    
+                    If Last_Dir <> GetPlayerDir(MyIndex) Then
+                        Call SendPlayerDir
+                        Last_Dir = GetPlayerDir(MyIndex)
                     End If
-                    Call SendPlayerDir
-                    MouseX = -1
-                    MouseY = -1
-                    Exit Sub
                 End If
             End If
-
-    End Select
+    
+            If KeyCode = vbKeyEnd Then
+                If Player(MyIndex).Dir <> DIR_DOWN Then
+                    Call SetPlayerDir(MyIndex, DIR_DOWN)
+    
+                    If Last_Dir <> GetPlayerDir(MyIndex) Then
+                        Call SendPlayerDir
+                        Last_Dir = GetPlayerDir(MyIndex)
+                    End If
+                End If
+            End If
+    
+            If KeyCode = vbKeyDelete And Not InMapEditor Then
+                If Player(MyIndex).Dir <> DIR_LEFT Then
+                    Call SetPlayerDir(MyIndex, DIR_LEFT)
+    
+                    If Last_Dir <> GetPlayerDir(MyIndex) Then
+                        Call SendPlayerDir
+                        Last_Dir = GetPlayerDir(MyIndex)
+                    End If
+                End If
+            End If
+    
+            If KeyCode = vbKeyPageDown Then
+                If Player(MyIndex).Dir <> DIR_RIGHT Then
+                    Call SetPlayerDir(MyIndex, DIR_RIGHT)
+    
+                    If Last_Dir <> GetPlayerDir(MyIndex) Then
+                        Call SendPlayerDir
+                        Last_Dir = GetPlayerDir(MyIndex)
+                    End If
+                End If
+            End If
+        End If
+    End If
     
     ' Handles delete events
     If KeyCode = vbKeyDelete Then

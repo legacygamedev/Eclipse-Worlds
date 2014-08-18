@@ -498,9 +498,50 @@ Function IsTryingToMove() As Boolean
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If DirUp Or DirDown Or DirLeft Or DirRight Or DirUpLeft Or DirUpRight Or DirDownLeft Or DirDownRight Then
+    If MouseX = -1 And MouseY = -1 Then
+        DirUp = False
+        DirDown = False
+        DirLeft = False
+        DirRight = False
+    End If
+    
+    If MyIndex > 0 Then
+        If TempPlayer(MyIndex).Moving = 0 Then
+            If ChatLocked Then
+                If GetAsyncKeyState(VK_W) < 0 Or GetAsyncKeyState(VK_UP) < 0 Then
+                    DirUp = True
+                End If
+                
+                If GetAsyncKeyState(VK_S) < 0 Or GetAsyncKeyState(VK_DOWN) < 0 Then
+                    DirDown = True
+                End If
+                
+                If GetAsyncKeyState(VK_A) < 0 Or GetAsyncKeyState(VK_LEFT) < 0 Then
+                    DirLeft = True
+                End If
+                
+                If GetAsyncKeyState(VK_D) < 0 Or GetAsyncKeyState(VK_RIGHT) < 0 Then
+                    DirRight = True
+                End If
+
+            Else
+                DirUp = False
+                DirDown = False
+                DirLeft = False
+                DirRight = False
+            End If
+
+        Else
+            DirUp = False
+            DirDown = False
+            DirLeft = False
+            DirRight = False
+        End If
+    End If
+    
+    If DirUp Or DirDown Or DirLeft Or DirRight Then
         IsTryingToMove = True
-        
+
         If SpellBuffer > 0 Then
             SpellBuffer = 0
             SpellBufferTimer = 0
@@ -554,245 +595,271 @@ Function CanMove() As Boolean
 
     d = GetPlayerDir(MyIndex)
     
-    If DirUpLeft Then
+   '*********************
+    '****MOVE UP LEFT*****
+    '*********************
+    If DirUp And DirLeft Then
         Call SetPlayerDir(MyIndex, DIR_UPLEFT)
-        
+        CheckForNewMap
+
+        If Last_Dir <> GetPlayerDir(MyIndex) Then
+            Call SendPlayerDir
+            Last_Dir = GetPlayerDir(MyIndex)
+        End If
+
         ' Check to see if they are trying to go out of bounds
         If GetPlayerY(MyIndex) > 0 And GetPlayerX(MyIndex) > 0 Then
             If CheckDirection(DIR_UPLEFT) Then
                 CanMove = False
-        
-                ' Set the new direction if they weren't facing that direction
-                If d <> DIR_UPLEFT Then
-                    Call SendPlayerDir
-                End If
-        
+
                 Exit Function
+                
+            Else
+                
+                Exit Function
+
             End If
-        
+
         Else
-        
-            ' Check if they can warp to a new map
-            If Map.Up > 0 And Map.Left > 0 Then
-                Call MapEditorLeaveMap
-                Call SendPlayerRequestNewMap
-                GettingMap = True
-                CanMoveNow = False
-            End If
-            
             CanMove = False
+
             Exit Function
+
         End If
     End If
-        
-    If DirUpRight Then
+
+    '*********************
+    '****MOVE UP RIGHT****
+    '*********************
+    If DirUp And DirRight Then
         Call SetPlayerDir(MyIndex, DIR_UPRIGHT)
-        
+        CheckForNewMap
+
+        If Last_Dir <> GetPlayerDir(MyIndex) Then
+            Call SendPlayerDir
+            Last_Dir = GetPlayerDir(MyIndex)
+        End If
+
         ' Check to see if they are trying to go out of bounds
         If GetPlayerY(MyIndex) > 0 And GetPlayerX(MyIndex) < Map.MaxX Then
             If CheckDirection(DIR_UPRIGHT) Then
                 CanMove = False
-            
-                ' Set the new direction if they weren't facing that direction
-                If d <> DIR_UPRIGHT Then
-                    Call SendPlayerDir
-                End If
-            
+
                 Exit Function
+                
+            Else
+                
+                Exit Function
+                
             End If
-            
+
         Else
-            
-            ' Check if they can warp to a new map
-            If Map.Up > 0 And Map.Right > 0 Then
-                Call MapEditorLeaveMap
-                Call SendPlayerRequestNewMap
-                GettingMap = True
-                CanMoveNow = False
-            End If
-            
             CanMove = False
+
             Exit Function
+
         End If
+
     End If
-        
-    If DirDownLeft Then
+
+    '*********************
+    '***MOVE DOWN LEFT****
+    '*********************
+    If DirDown And DirLeft Then
         Call SetPlayerDir(MyIndex, DIR_DOWNLEFT)
+        CheckForNewMap
+
+        If Last_Dir <> GetPlayerDir(MyIndex) Then
+            Call SendPlayerDir
+            Last_Dir = GetPlayerDir(MyIndex)
+        End If
         
         ' Check to see if they are trying to go out of bounds
         If GetPlayerY(MyIndex) < Map.MaxY And GetPlayerX(MyIndex) > 0 Then
             If CheckDirection(DIR_DOWNLEFT) Then
                 CanMove = False
-            
-                ' Set the new direction if they weren't facing that direction
-                If d <> DIR_DOWNLEFT Then
-                    Call SendPlayerDir
-                End If
+
+                Exit Function
+
+            Else
                 
                 Exit Function
+                
             End If
-            
+
         Else
-            
-            ' Check if they can warp to a new map
-            If Map.Down > 0 And Map.Left > 0 Then
-                Call MapEditorLeaveMap
-                Call SendPlayerRequestNewMap
-                GettingMap = True
-                CanMoveNow = False
-            End If
-            
             CanMove = False
+
             Exit Function
+
         End If
     End If
-        
-    If DirDownRight Then
+
+    '*********************
+    '***MOVE DOWN RIGHT***
+    '*********************
+    If DirDown And DirRight Then
         Call SetPlayerDir(MyIndex, DIR_DOWNRIGHT)
-        
+        CheckForNewMap
+
+        If Last_Dir <> GetPlayerDir(MyIndex) Then
+            Call SendPlayerDir
+            Last_Dir = GetPlayerDir(MyIndex)
+        End If
+
         ' Check to see if they are trying to go out of bounds
         If GetPlayerY(MyIndex) < Map.MaxY And GetPlayerX(MyIndex) < Map.MaxX Then
             If CheckDirection(DIR_DOWNRIGHT) Then
                 CanMove = False
-            
-                ' Set the new direction if they weren't facing that direction
-                If d <> DIR_DOWNRIGHT Then
-                    Call SendPlayerDir
-                End If
                 
                 Exit Function
+
+            Else
+                
+                Exit Function
+                
             End If
-            
+
         Else
-            
-            ' Check if they can warp to a new map
-            If Map.Down > 0 And Map.Right > 0 Then
-                Call MapEditorLeaveMap
-                Call SendPlayerRequestNewMap
-                GettingMap = True
-                CanMoveNow = False
-            End If
-            
             CanMove = False
+
             Exit Function
+
         End If
     End If
 
+    '*********************
+    '******MOVE UP*******
+    '*********************
     If DirUp Then
         Call SetPlayerDir(MyIndex, DIR_UP)
+        CheckForNewMap
+        
+        If Last_Dir <> GetPlayerDir(MyIndex) Then
+            Call SendPlayerDir
+            Last_Dir = GetPlayerDir(MyIndex)
+        End If
 
         ' Check to see if they are trying to go out of bounds
         If GetPlayerY(MyIndex) > 0 Then
             If CheckDirection(DIR_UP) Then
                 CanMove = False
 
-                ' Set the new direction if they weren't facing that direction
-                If d <> DIR_UP Then
-                    Call SendPlayerDir
-                End If
-
                 Exit Function
-            End If
-        Else
-            ' Check if they can warp to a new map
-            If Map.Up > 0 Then
-                Call MapEditorLeaveMap
-                Call SendPlayerRequestNewMap
-                GettingMap = True
-                CanMoveNow = False
+
+            Else
+                
+                Exit Function
+                
             End If
 
+        Else
             CanMove = False
+
             Exit Function
+
         End If
     End If
 
+    '*********************
+    '******MOVE DOWN******
+    '*********************
     If DirDown Then
         Call SetPlayerDir(MyIndex, DIR_DOWN)
+        CheckForNewMap
 
+        If Last_Dir <> GetPlayerDir(MyIndex) Then
+            Call SendPlayerDir
+            Last_Dir = GetPlayerDir(MyIndex)
+        End If
+        
         ' Check to see if they are trying to go out of bounds
         If GetPlayerY(MyIndex) < Map.MaxY Then
             If CheckDirection(DIR_DOWN) Then
                 CanMove = False
-
-                ' Set the new direction if they weren't facing that direction
-                If d <> DIR_DOWN Then
-                    Call SendPlayerDir
-                End If
-
+                
                 Exit Function
+
+            Else
+                
+                Exit Function
+                
             End If
+
         Else
-            ' Check if they can warp to a new map
-            If Map.Down > 0 Then
-                Call MapEditorLeaveMap
-                Call SendPlayerRequestNewMap
-                GettingMap = True
-                CanMoveNow = False
-            End If
-            
             CanMove = False
+
             Exit Function
+
         End If
     End If
 
+    '*********************
+    '******MOVE LEFT******
+    '*********************
     If DirLeft Then
         Call SetPlayerDir(MyIndex, DIR_LEFT)
+        CheckForNewMap
 
+        If Last_Dir <> GetPlayerDir(MyIndex) Then
+            Call SendPlayerDir
+            Last_Dir = GetPlayerDir(MyIndex)
+        End If
+        
         ' Check to see if they are trying to go out of bounds
         If GetPlayerX(MyIndex) > 0 Then
             If CheckDirection(DIR_LEFT) Then
                 CanMove = False
-
-                ' Set the new direction if they weren't facing that direction
-                If d <> DIR_LEFT Then
-                    Call SendPlayerDir
-                End If
                 
                 Exit Function
-            End If
-        Else
-            ' Check if they can warp to a new map
-            If Map.Left > 0 Then
-                Call MapEditorLeaveMap
-                Call SendPlayerRequestNewMap
-                GettingMap = True
-                CanMoveNow = False
+
+            Else
+                
+                Exit Function
+                
             End If
 
+        Else
             CanMove = False
+
             Exit Function
+
         End If
     End If
 
+    '*********************
+    '*****MOVE RIGHT******
+    '*********************
     If DirRight Then
         Call SetPlayerDir(MyIndex, DIR_RIGHT)
+        CheckForNewMap
+
+        If Last_Dir <> GetPlayerDir(MyIndex) Then
+            Call SendPlayerDir
+            Last_Dir = GetPlayerDir(MyIndex)
+        End If
 
         ' Check to see if they are trying to go out of bounds
         If GetPlayerX(MyIndex) < Map.MaxX Then
             If CheckDirection(DIR_RIGHT) Then
                 CanMove = False
-
-                ' Set the new direction if they weren't facing that direction
-                If d <> DIR_RIGHT Then
-                    Call SendPlayerDir
-                End If
                 
                 Exit Function
-            End If
-        Else
-            ' Check if they can warp to a new map
-            If Map.Right > 0 Then
-                Call MapEditorLeaveMap
-                Call SendPlayerRequestNewMap
-                GettingMap = True
-                CanMoveNow = False
+
+            Else
+                
+                Exit Function
+                
             End If
 
+        Else
             CanMove = False
+
             Exit Function
+
         End If
     End If
+   
     Exit Function
     
 ' Error handler
@@ -800,6 +867,26 @@ ErrorHandler:
     HandleError "CanMove", "modGameLogic", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Function
+
+Public Sub CheckForNewMap()
+    
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    If ((GetPlayerDir(MyIndex) = DIR_UP Or GetPlayerDir(MyIndex) = DIR_UPLEFT Or GetPlayerDir(MyIndex) = DIR_UPRIGHT) And GetPlayerY(MyIndex) = 0) Or ((GetPlayerDir(MyIndex) = DIR_DOWN Or GetPlayerDir(MyIndex) = DIR_DOWNLEFT Or GetPlayerDir(MyIndex) = DIR_DOWNRIGHT) And GetPlayerY(MyIndex) = Map.MaxY) Or ((GetPlayerDir(MyIndex) = DIR_LEFT Or GetPlayerDir(MyIndex) = DIR_DOWNLEFT Or GetPlayerDir(MyIndex) = DIR_UPLEFT) And GetPlayerX(MyIndex) = 0) Or ((GetPlayerDir(MyIndex) = DIR_RIGHT Or GetPlayerDir(MyIndex) = DIR_DOWNRIGHT Or GetPlayerDir(MyIndex) = DIR_UPRIGHT) And GetPlayerX(MyIndex) = Map.MaxX) Then
+        Call SendPlayerRequestNewMap
+    End If
+   
+    ' Error Handler
+    Exit Sub
+
+ErrorHandler:
+    HandleError "CheckForNewMap", "modGameLogic", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+
+    Exit Sub
+
+End Sub
 
 Function CheckDirection(ByVal Direction As Byte) As Boolean
     Dim X As Long

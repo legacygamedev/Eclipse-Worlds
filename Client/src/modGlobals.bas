@@ -16,6 +16,8 @@ Public MusicCache() As String
 Public SoundCache() As String
 Public HasPopulated As Boolean
 
+Public Last_Dir As Long
+
 ' Animation
 Public Const AnimColumns As Long = 5
 
@@ -155,10 +157,6 @@ Public DirUp As Boolean
 Public DirDown As Boolean
 Public DirLeft As Boolean
 Public DirRight As Boolean
-Public DirUpLeft As Boolean
-Public DirUpRight As Boolean
-Public DirDownLeft As Boolean
-Public DirDownRight As Boolean
 Public ShiftDown As Boolean
 Public ControlDown As Boolean
 

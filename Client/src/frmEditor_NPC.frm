@@ -282,6 +282,14 @@ Begin VB.Form frmEditor_NPC
          TabIndex        =   49
          Top             =   6360
          Width           =   4815
+         Begin VB.CheckBox chkDrop 
+            Caption         =   "Random"
+            Height          =   255
+            Left            =   3780
+            TabIndex        =   80
+            Top             =   240
+            Width           =   975
+         End
          Begin VB.TextBox txtChance 
             Height          =   285
             Left            =   2880
@@ -313,7 +321,7 @@ Begin VB.Form frmEditor_NPC
             TabIndex        =   25
             Top             =   240
             Value           =   1
-            Width           =   4575
+            Width           =   3555
          End
          Begin VB.Label Label3 
             AutoSize        =   -1  'True
@@ -754,6 +762,20 @@ Private DropIndex As Long
 Private SpellIndex As Long
 Private TmpIndex As Long
 
+Private Sub chkDrop_Click()
+    
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    NPC(EditorIndex).DropRandom(DropIndex) = chkDrop.Value
+    Exit Sub
+    
+' Error Handler
+ErrorHandler:
+    HandleError "chkDrop_Click", "frmEditor_NPC", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub chkFactionThreat_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
@@ -1173,6 +1195,7 @@ Private Sub scrlDrop_Change()
     txtChance.text = NPC(EditorIndex).DropChance(DropIndex)
     scrlNum.Value = NPC(EditorIndex).DropItem(DropIndex)
     scrlValue.Value = NPC(EditorIndex).DropValue(DropIndex)
+    chkDrop.Value = NPC(EditorIndex).DropRandom(DropIndex)
     Exit Sub
     
 ' Error handler
@@ -1286,10 +1309,10 @@ Private Sub txtExp_Change()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If Not IsNumeric(txtExp.text) Then txtExp.text = 0
-    If txtExp.text > MAX_LONG Then txtExp.text = MAX_LONG
-    If txtExp.text < 0 Then txtExp.text = 0
-    NPC(EditorIndex).exp = txtExp.text
+    If Not IsNumeric(txtEXP.text) Then txtEXP.text = 0
+    If txtEXP.text > MAX_LONG Then txtEXP.text = MAX_LONG
+    If txtEXP.text < 0 Then txtEXP.text = 0
+    NPC(EditorIndex).exp = txtEXP.text
     Exit Sub
     
 ' Error handler
@@ -1506,7 +1529,7 @@ Private Sub txtEXP_GotFocus()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    txtExp.SelStart = Len(txtExp)
+    txtEXP.SelStart = Len(txtEXP)
     Exit Sub
     
 ' Error handler

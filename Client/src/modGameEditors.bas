@@ -1174,7 +1174,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtExp.text = NPC(EditorIndex).exp
+        .txtEXP.text = NPC(EditorIndex).exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -1185,6 +1185,7 @@ Public Sub NPCEditorInit()
         .txtChance.text = NPC(EditorIndex).DropChance(1)
         .scrlNum.Value = NPC(EditorIndex).DropItem(1)
         .scrlValue.Value = NPC(EditorIndex).DropValue(1)
+        .chkDrop.Value = NPC(EditorIndex).DropRandom(1)
         
         ' Spells
         .scrlSpell.Value = 1
