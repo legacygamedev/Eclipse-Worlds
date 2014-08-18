@@ -568,7 +568,7 @@ Sub DrawActionMsg(ByVal Index As Long)
         End If
         
         ' Check if we should be seeing it
-        If .Timer + 100 < timeGetTime Then
+        If .Timer + 5000 < timeGetTime Then
             .Alpha = .Alpha - 2.5
         End If
     End With
