@@ -393,7 +393,7 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 NewMapNum = Map(GetPlayerMap(index)).Left
                 NewMapX = Map(Map(GetPlayerMap(index)).Left).MaxX
                 NewMapY = GetPlayerY(index)
-            ElseIf GetPlayerX(index) > 0 And GetPlayerY(index) > 0 Then
+            ElseIf GetPlayerX(index) - 1 > 0 And GetPlayerY(index) - 1 > 0 Then
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_UP + 1) And Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_LEFT + 1) Then
                     If Map(GetPlayerMap(index)).Tile(GetPlayerX(index) - 1, GetPlayerY(index) - 1).Type <> TILE_TYPE_BLOCKED Then
@@ -429,7 +429,7 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 NewMapNum = Map(GetPlayerMap(index)).Right
                 NewMapX = 0
                 NewMapY = GetPlayerY(index)
-            ElseIf GetPlayerX(index) <= Map(GetPlayerMap(index)).MaxX And GetPlayerY(index) > 0 Then
+            ElseIf GetPlayerX(index) + 1 <= Map(GetPlayerMap(index)).MaxX And GetPlayerY(index) - 1 > 0 Then
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_UP + 1) And Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_RIGHT + 1) Then
                     If Map(GetPlayerMap(index)).Tile(GetPlayerX(index) + 1, GetPlayerY(index) - 1).Type <> TILE_TYPE_BLOCKED Then
@@ -465,7 +465,7 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 NewMapNum = Map(GetPlayerMap(index)).Left
                 NewMapX = Map(NewMapNum).MaxX
                 NewMapY = GetPlayerY(index)
-            ElseIf GetPlayerX(index) > 0 And GetPlayerY(index) <= Map(GetPlayerMap(index)).MaxY Then
+            ElseIf GetPlayerX(index) - 1 > 0 And GetPlayerY(index) + 1 <= Map(GetPlayerMap(index)).MaxY Then
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_DOWN + 1) And Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_LEFT + 1) Then
                     If Map(GetPlayerMap(index)).Tile(GetPlayerX(index) - 1, GetPlayerY(index) + 1).Type <> TILE_TYPE_BLOCKED Then
@@ -501,7 +501,7 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
                 NewMapNum = Map(GetPlayerMap(index)).Right
                 NewMapX = 0
                 NewMapY = GetPlayerY(index)
-            ElseIf GetPlayerX(index) <= Map(GetPlayerMap(index)).MaxX And GetPlayerY(index) <= Map(GetPlayerMap(index)).MaxY Then
+            ElseIf GetPlayerX(index) + 1 <= Map(GetPlayerMap(index)).MaxX And GetPlayerY(index) + 1 <= Map(GetPlayerMap(index)).MaxY Then
                 ' Check to make sure that the tile is walkable
                 If Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_DOWN + 1) And Not IsDirBlocked(Map(GetPlayerMap(index)).Tile(GetPlayerX(index), GetPlayerY(index)).DirBlock, DIR_RIGHT + 1) Then
                     If Map(GetPlayerMap(index)).Tile(GetPlayerX(index) + 1, GetPlayerY(index) + 1).Type <> TILE_TYPE_BLOCKED Then

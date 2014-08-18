@@ -820,7 +820,7 @@ Public Sub DrawChatBubble(ByVal Index As Long)
         Next
         
         ' Check if it's timed out - close it if so
-        If .Timer + 5000 < timeGetTime Then
+        If .Timer + 8000 < timeGetTime Then
             .active = False
         End If
     End With
