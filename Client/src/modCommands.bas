@@ -495,7 +495,6 @@ Sub SetPlayerX(ByVal Index As Long, ByVal X As Long)
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
     If X < 0 Or X > Map.MaxX Then Exit Sub
     Player(Index).X = X
-    MiniMapPlayer(Index).X = X * 4
     Exit Sub
     
 ' Error handler
@@ -525,7 +524,6 @@ Sub SetPlayerY(ByVal Index As Long, ByVal Y As Long)
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Sub
     If Y < 0 Or Y > Map.MaxY Then Exit Sub
     Player(Index).Y = Y
-    MiniMapPlayer(Index).Y = Y * 4
     Exit Sub
     
 ' Error handler

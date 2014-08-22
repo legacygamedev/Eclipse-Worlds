@@ -847,17 +847,3 @@ Public Type EventWrapperRec
     Animated As Byte
     Graphic(0 To 2) As Long
 End Type
-
-' Mini Map Data
-Public MiniMapPlayer(1 To MAX_PLAYERS) As MiniMapPlayerRec
-Public MiniMapNPC(1 To MAX_MAP_NPCS) As MiniMapNPCRec
-
-Public Type MiniMapPlayerRec
-    X As Byte
-    Y As Byte
-End Type
-
-Public Type MiniMapNPCRec
-    X As Byte
-    Y As Byte
-End Type

@@ -1057,8 +1057,6 @@ Private Sub HandleNPCMove(ByVal Index As Long, ByRef data() As Byte, ByVal Start
     With MapNPC(MapNPCNum)
         .X = X
         .Y = Y
-        MiniMapNPC(MapNPCNum).X = X * 4
-        MiniMapNPC(MapNPCNum).Y = Y * 4
         .Dir = Dir
         .xOffset = 0
         .yOffset = 0
