@@ -139,7 +139,7 @@ Public Sub CheckInputKeys()
     Dim distanceY As Long
     Dim i As Long
         
-        ' If debug mode, handle error then exit out
+    ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If GetKeyState(vbKeyShift) < 0 Then
@@ -157,6 +157,8 @@ Public Sub CheckInputKeys()
     Else
         ControlDown = False
     End If
+    
+    If Not InGame Then Exit Sub
 
     ' Mouse movement
     If Not MouseX = -1 And Not MouseY = -1 Then

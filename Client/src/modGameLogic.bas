@@ -53,7 +53,7 @@ Public Sub GameLoop()
                 If Audio.IsMuted Then Audio.UpdateVolume
             End If
          
-            If GetForegroundWindow() = frmMain.hWnd Then
+            If GetForegroundWindow() = frmMain.hWnd Or GetForegroundWindow() = frmEditor_Events.hWnd Then
                 Call CheckInputKeys ' Check which keys were pressed
             End If
             
@@ -80,7 +80,7 @@ Public Sub GameLoop()
                 End If
             End If
             
-            If CanMoveNow Then
+            If CanMoveNow And GetForegroundWindow() = frmMain.hWnd Then
                 Call CheckMovement ' Check if player is trying to move
                 Call CheckAttack ' Check to see if player is trying to attack
             End If
