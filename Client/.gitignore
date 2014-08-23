@@ -3,3 +3,6 @@
 /COMCTL32.OCX
 /msvbvm60e.dll
 *.ini
+/MSCOMCTL.OCX
+/kernel32.dll
+/suilibs.dll
