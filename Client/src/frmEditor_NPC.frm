@@ -285,10 +285,10 @@ Begin VB.Form frmEditor_NPC
          Begin VB.CheckBox chkDrop 
             Caption         =   "Random"
             Height          =   255
-            Left            =   3780
+            Left            =   3720
             TabIndex        =   80
             Top             =   240
-            Width           =   975
+            Width           =   1035
          End
          Begin VB.TextBox txtChance 
             Height          =   285
@@ -1309,10 +1309,10 @@ Private Sub txtExp_Change()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If Not IsNumeric(txtEXP.text) Then txtEXP.text = 0
-    If txtEXP.text > MAX_LONG Then txtEXP.text = MAX_LONG
-    If txtEXP.text < 0 Then txtEXP.text = 0
-    NPC(EditorIndex).exp = txtEXP.text
+    If Not IsNumeric(txtExp.text) Then txtExp.text = 0
+    If txtExp.text > MAX_LONG Then txtExp.text = MAX_LONG
+    If txtExp.text < 0 Then txtExp.text = 0
+    NPC(EditorIndex).exp = txtExp.text
     Exit Sub
     
 ' Error handler
@@ -1529,7 +1529,7 @@ Private Sub txtEXP_GotFocus()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    txtEXP.SelStart = Len(txtEXP)
+    txtExp.SelStart = Len(txtExp)
     Exit Sub
     
 ' Error handler
