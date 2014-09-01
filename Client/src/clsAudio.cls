@@ -156,11 +156,15 @@ Public Sub StopMusic()
 End Sub
 
 Public Sub StopSound(ByVal Index As Byte, Optional ByVal Clear As Boolean = True)
+    If Sounds(Index) = 0 Then Exit Sub
+    
     Call BASS_ChannelStop(Sounds(Index))
     If Clear Then Call ZeroMemory(ByVal VarPtr(Sounds(Index)), LenB(Sounds(Index)))
 End Sub
 
 Public Sub StopMapSound(ByVal Index As Byte, Optional ByVal Clear As Boolean = True)
+    If MapSounds(Index) = 0 Then Exit Sub
+    
     Call BASS_ChannelStop(MapSounds(Index).handle)
     If Clear Then Call ZeroMemory(ByVal VarPtr(MapSounds(Index)), LenB(MapSounds(Index).handle))
 End Sub
