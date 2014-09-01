@@ -876,11 +876,19 @@ Public Sub CheckForNewMap()
     
     ' If debug mode then handle error
     If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
-
-    If ((GetPlayerDir(MyIndex) = DIR_UP Or GetPlayerDir(MyIndex) = DIR_UPLEFT Or GetPlayerDir(MyIndex) = DIR_UPRIGHT) And GetPlayerY(MyIndex) = 0) Or ((GetPlayerDir(MyIndex) = DIR_DOWN Or GetPlayerDir(MyIndex) = DIR_DOWNLEFT Or GetPlayerDir(MyIndex) = DIR_DOWNRIGHT) And GetPlayerY(MyIndex) = Map.MaxY) Or ((GetPlayerDir(MyIndex) = DIR_LEFT Or GetPlayerDir(MyIndex) = DIR_DOWNLEFT Or GetPlayerDir(MyIndex) = DIR_UPLEFT) And GetPlayerX(MyIndex) = 0) Or ((GetPlayerDir(MyIndex) = DIR_RIGHT Or GetPlayerDir(MyIndex) = DIR_DOWNRIGHT Or GetPlayerDir(MyIndex) = DIR_UPRIGHT) And GetPlayerX(MyIndex) = Map.MaxX) Then
-        Call SendPlayerRequestNewMap
+    
+    If ((GetPlayerDir(MyIndex) = DIR_UP Or GetPlayerDir(MyIndex) = DIR_UPLEFT Or GetPlayerDir(MyIndex) = DIR_UPRIGHT) And GetPlayerY(MyIndex) = 0) Then
+        If Map.Up = 0 Or Map.Up = GetPlayerMap(MyIndex) Then Exit Sub
+    ElseIf ((GetPlayerDir(MyIndex) = DIR_DOWN Or GetPlayerDir(MyIndex) = DIR_DOWNLEFT Or GetPlayerDir(MyIndex) = DIR_DOWNRIGHT) And GetPlayerY(MyIndex) = Map.MaxY) Then
+        If Map.Down = 0 Or Map.Down = GetPlayerMap(MyIndex) Then Exit Sub
+    ElseIf ((GetPlayerDir(MyIndex) = DIR_LEFT Or GetPlayerDir(MyIndex) = DIR_DOWNLEFT Or GetPlayerDir(MyIndex) = DIR_UPLEFT) And GetPlayerX(MyIndex) = 0) Then
+        If Map.Left = 0 Or Map.Left = GetPlayerMap(MyIndex) Then Exit Sub
+    ElseIf ((GetPlayerDir(MyIndex) = DIR_RIGHT Or GetPlayerDir(MyIndex) = DIR_DOWNRIGHT Or GetPlayerDir(MyIndex) = DIR_UPRIGHT) And GetPlayerX(MyIndex) = Map.MaxX) Then
+        If Map.Right = 0 Or Map.Right = GetPlayerMap(MyIndex) Then Exit Sub
+    Else
+        Exit Sub
     End If
-   
+    
     ' Error Handler
     Exit Sub
 

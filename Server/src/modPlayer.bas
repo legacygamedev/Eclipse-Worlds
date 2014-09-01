@@ -410,12 +410,14 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
             If Moved = NO Then
                 ' Check to see if we can move them to the another map
                 If NewMapNum > 0 Then
-                    Call PlayerWarp(index, NewMapNum, NewMapX, NewMapY)
-                    Moved = YES
-                    ' clear their target
-                    TempPlayer(index).target = 0
-                    TempPlayer(index).targetType = TARGET_TYPE_NONE
-                    SendPlayerTarget index
+                    If GetPlayerMap(index) <> NewMapNum Then
+                        Call PlayerWarp(index, NewMapNum, NewMapX, NewMapY)
+                        Moved = YES
+                        ' clear their target
+                        TempPlayer(index).target = 0
+                        TempPlayer(index).targetType = TARGET_TYPE_NONE
+                        SendPlayerTarget index
+                    End If
                 End If
             End If
             
@@ -482,12 +484,14 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
             ' Check to see if we can move them to the another map
             If Moved = NO Then
                 If NewMapNum > 0 Then
-                    Call PlayerWarp(index, NewMapNum, NewMapX, NewMapY)
-                    Moved = YES
-                    ' clear their target
-                    TempPlayer(index).target = 0
-                    TempPlayer(index).targetType = TARGET_TYPE_NONE
-                    SendPlayerTarget index
+                    If GetPlayerMap(index) <> NewMapNum Then
+                        Call PlayerWarp(index, NewMapNum, NewMapX, NewMapY)
+                        Moved = YES
+                        ' clear their target
+                        TempPlayer(index).target = 0
+                        TempPlayer(index).targetType = TARGET_TYPE_NONE
+                        SendPlayerTarget index
+                    End If
                 End If
             End If
             
@@ -518,12 +522,14 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
             ' Check to see if we can move them to the another map
             If Moved = NO Then
                 If NewMapNum > 0 Then
-                    Call PlayerWarp(index, NewMapNum, NewMapX, NewMapY)
-                    Moved = YES
-                    ' clear their target
-                    TempPlayer(index).target = 0
-                    TempPlayer(index).targetType = TARGET_TYPE_NONE
-                    SendPlayerTarget index
+                    If GetPlayerMap(index) <> NewMapNum Then
+                        Call PlayerWarp(index, NewMapNum, NewMapX, NewMapY)
+                        Moved = YES
+                        ' clear their target
+                        TempPlayer(index).target = 0
+                        TempPlayer(index).targetType = TARGET_TYPE_NONE
+                        SendPlayerTarget index
+                    End If
                 End If
             End If
             
@@ -547,13 +553,15 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
             Else
                 ' Check to see if we can move them to the another map
                 If Map(GetPlayerMap(index)).Up > 0 Then
-                    Call PlayerWarp(index, NewMapNum, GetPlayerX(index), Map(MapNum).MaxY)
-                    Moved = YES
-                    
-                    ' Clear their target
-                    TempPlayer(index).target = 0
-                    TempPlayer(index).targetType = TARGET_TYPE_NONE
-                    SendPlayerTarget index
+                    If GetPlayerMap(index) <> Map(GetPlayerMap(index)).Up Then
+                        Call PlayerWarp(index, NewMapNum, GetPlayerX(index), Map(MapNum).MaxY)
+                        Moved = YES
+                        
+                        ' Clear their target
+                        TempPlayer(index).target = 0
+                        TempPlayer(index).targetType = TARGET_TYPE_NONE
+                        SendPlayerTarget index
+                    End If
                 End If
             End If
 
@@ -577,13 +585,15 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
             Else
                 ' Check to see if we can move them to the another map
                 If Map(GetPlayerMap(index)).Down > 0 Then
-                    Call PlayerWarp(index, Map(GetPlayerMap(index)).Down, GetPlayerX(index), 0)
-                    Moved = YES
-                    
-                    ' Clear their target
-                    TempPlayer(index).target = 0
-                    TempPlayer(index).targetType = TARGET_TYPE_NONE
-                    SendPlayerTarget index
+                    If GetPlayerMap(index) <> Map(GetPlayerMap(index)).Down Then
+                        Call PlayerWarp(index, Map(GetPlayerMap(index)).Down, GetPlayerX(index), 0)
+                        Moved = YES
+                        
+                        ' Clear their target
+                        TempPlayer(index).target = 0
+                        TempPlayer(index).targetType = TARGET_TYPE_NONE
+                        SendPlayerTarget index
+                    End If
                 End If
             End If
 
@@ -607,6 +617,7 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
             Else
                 ' Check to see if we can move them to the another map
                 If Map(GetPlayerMap(index)).Left > 0 Then
+                    If GetPlayerMap(index) <> Map(GetPlayerMap(index)).Left Then
                     Call PlayerWarp(index, Map(GetPlayerMap(index)).Left, Map(MapNum).MaxX, GetPlayerY(index))
                     Moved = YES
                     
@@ -614,6 +625,7 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
                     TempPlayer(index).target = 0
                     TempPlayer(index).targetType = TARGET_TYPE_NONE
                     SendPlayerTarget index
+                    End If
                 End If
             End If
 
@@ -637,13 +649,15 @@ Sub PlayerMove(ByVal index As Long, ByVal Dir As Long, ByVal movement As Long, O
             Else
                 ' Check to see if we can move them to the another map
                 If Map(GetPlayerMap(index)).Right > 0 Then
-                    Call PlayerWarp(index, Map(GetPlayerMap(index)).Right, 0, GetPlayerY(index))
-                    Moved = YES
-                    
-                    ' Clear their target
-                    TempPlayer(index).target = 0
-                    TempPlayer(index).targetType = TARGET_TYPE_NONE
-                    SendPlayerTarget index
+                    If GetPlayerMap(index) <> Map(GetPlayerMap(index)).Right Then
+                        Call PlayerWarp(index, Map(GetPlayerMap(index)).Right, 0, GetPlayerY(index))
+                        Moved = YES
+                        
+                        ' Clear their target
+                        TempPlayer(index).target = 0
+                        TempPlayer(index).targetType = TARGET_TYPE_NONE
+                        SendPlayerTarget index
+                    End If
                 End If
             End If
     End Select
