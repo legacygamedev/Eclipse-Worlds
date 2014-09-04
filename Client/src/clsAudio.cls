@@ -52,8 +52,6 @@ Public Sub PlayMusic(FileName As String, Optional ByVal Ignore As Boolean = Fals
     
     If Ignore = False And (Options.Music = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None" Or CurrentMusic = Trim$(FileName)) Then Exit Sub
     
-    Call StopMusic
-    
     ' File doesn't exist
     If Not FileExist(App.Path & MUSIC_PATH & Trim$(FileName), True) Then
         If FormVisible("frmMain") Then
@@ -163,7 +161,7 @@ Public Sub StopSound(ByVal Index As Byte, Optional ByVal Clear As Boolean = True
 End Sub
 
 Public Sub StopMapSound(ByVal Index As Byte, Optional ByVal Clear As Boolean = True)
-    If MapSounds(Index) = 0 Then Exit Sub
+    If MapSounds(Index).handle = 0 Then Exit Sub
     
     Call BASS_ChannelStop(MapSounds(Index).handle)
     If Clear Then Call ZeroMemory(ByVal VarPtr(MapSounds(Index)), LenB(MapSounds(Index).handle))

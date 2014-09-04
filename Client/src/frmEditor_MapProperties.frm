@@ -880,16 +880,9 @@ Public Sub cmdSave_Click()
         .BootY = Val(txtBootY.text)
     End With
     
-    ' Stop music if they have it turned off
-    If Options.Music = 0 Then
-        Call Audio.StopMusic
-    End If
-    
     ' Update the map Name
     Call UpdateDrawMapName
     InitAutotiles
-    
-    Unload frmEditor_MapProperties
     Exit Sub
     
 ' Error handler
@@ -902,10 +895,6 @@ Private Sub cmdCancel_Click()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    ' Stop music if they have it turned off
-    If Options.Music = 0 Then
-        Call Audio.StopMusic
-    End If
     Unload frmEditor_MapProperties
     Exit Sub
     

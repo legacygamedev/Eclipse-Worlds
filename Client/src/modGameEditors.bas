@@ -453,7 +453,9 @@ End Sub
 Public Sub MapEditorSave()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
     Call SendSaveMap
+    Unload frmEditor_MapProperties
     EditorSave = True
     Exit Sub
 
@@ -1174,7 +1176,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtEXP.text = NPC(EditorIndex).exp
+        .txtExp.text = NPC(EditorIndex).exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         

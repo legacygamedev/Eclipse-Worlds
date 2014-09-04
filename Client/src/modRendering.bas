@@ -9,7 +9,7 @@ Public Direct3D_Device As Direct3DDevice8 ' Represents the hardware rendering.
 Private Direct3DX As D3DX8
 
 ' The 2D (Transformed and Lit) vertex format.
-Private Const FVF_TLVERTEX As Long = D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE
+Public Const FVF As Long = D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE
 
 Public Type GeomRec
     Top As Long
@@ -110,6 +110,10 @@ Public Type GlobalTextureRec
     Texture As Direct3DTexture8
     TexWidth As Long
     TexHeight As Long
+    Timer As Long
+    Loaded As Boolean
+
+    Static As Boolean
 End Type
 
 Public Type RECT
@@ -154,8 +158,8 @@ Public Function InitDX8() As Boolean
     End If
 
     With Direct3D_Device
-        .SetVertexShader D3DFVF_XYZRHW Or D3DFVF_TEX1 Or D3DFVF_DIFFUSE
-    
+        .SetVertexShader FVF
+
         .SetRenderState D3DRS_LIGHTING, False
         .SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
         .SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
@@ -164,12 +168,12 @@ Public Function InitDX8() As Boolean
         .SetRenderState D3DRS_CULLMODE, D3DCULL_NONE
         .SetRenderState D3DRS_ZENABLE, False
         .SetRenderState D3DRS_ZWRITEENABLE, False
-        
+
         .SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
-    
+
         .SetRenderState D3DRS_POINTSPRITE_ENABLE, 1
         .SetRenderState D3DRS_POINTSCALE_ENABLE, 0
-    
+
         .SetTextureStageState 0, D3DTSS_MAGFILTER, D3DTEXF_POINT
         .SetTextureStageState 0, D3DTSS_MINFILTER, D3DTEXF_POINT
     End With
@@ -354,6 +358,56 @@ Function GetNearestPOT(Value As Long) As Long
     GetNearestPOT = 2 ^ i
 End Function
 
+Public Sub SetTexture(ByRef TextureRec As DX8TextureRec)
+    
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    If TextureRec.HasData = False Then LoadTexture TextureRec
+    Set gTexture(TextureRec.Texture).Texture = Direct3DX.CreateTextureFromFileInMemoryEx(Direct3D_Device, TextureRec.ImageData(0), UBound(TextureRec.ImageData) + 1, GetNearestPOT(TextureRec.Width), GetNearestPOT(TextureRec.Height), D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_NONE, ByVal (0), ByVal 0, ByVal 0)
+    gTexture(TextureRec.Texture).TexWidth = GetNearestPOT(TextureRec.Width)
+    gTexture(TextureRec.Texture).TexHeight = GetNearestPOT(TextureRec.Height)
+    gTexture(TextureRec.Texture).Loaded = True
+    gTexture(TextureRec.Texture).Timer = timeGetTime + 150000
+    Exit Sub
+   
+    ' Error Handler
+ErrorHandler:
+    HandleError "SetTexture", "modGraphics", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Public Sub UnsetTexture(ByRef textureNum As Long, Optional ByVal Ignore As Boolean)
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    If Ignore = True Then
+        Set gTexture(textureNum).Texture = Nothing
+        ZeroMemory ByVal VarPtr(gTexture(textureNum)), LenB(gTexture(textureNum))
+        gTexture(textureNum).Timer = 0
+        gTexture(textureNum).Loaded = False
+    End If
+    
+    If gTexture(textureNum).Static = True Then
+    
+        Exit Sub    ' Don't unset static textures
+    
+    End If
+    
+    If gTexture(textureNum).Timer < timeGetTime And gTexture(textureNum).Timer <> 0 Then
+        Set gTexture(textureNum).Texture = Nothing
+        ZeroMemory ByVal VarPtr(gTexture(textureNum)), LenB(gTexture(textureNum))
+        gTexture(textureNum).Timer = 0
+        gTexture(textureNum).Loaded = False
+    End If
+    Exit Sub
+   
+' Error Handler
+ErrorHandler:
+    HandleError "UnsetTexture", "modGraphics", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Public Sub LoadTexture(ByRef TextureRec As DX8TextureRec)
     Dim SourceBitmap As cGDIpImage, ConvertedBitmap As cGDIpImage, GDIGraphics As cGDIpRenderer, GDIToken As cGDIpToken, i As Long
     Dim newWidth As Long, newHeight As Long, ImageData() As Byte, fn As Long
@@ -387,34 +441,29 @@ Public Sub LoadTexture(ByRef TextureRec As DX8TextureRec)
             Call ConvertedBitmap.SaveAsPNG(ImageData)
             GDIGraphics.DestroyHGraphics (i)
             TextureRec.ImageData = ImageData
+            TextureRec.HasData = True
             Set ConvertedBitmap = Nothing
             Set GDIGraphics = Nothing
             Set SourceBitmap = Nothing
         Else
             Call SourceBitmap.SaveAsPNG(ImageData)
             TextureRec.ImageData = ImageData
+            TextureRec.HasData = True
             Set SourceBitmap = Nothing
         End If
     Else
         ImageData = TextureRec.ImageData
+        TextureRec.HasData = True
     End If
-    
-    Set gTexture(TextureRec.Texture).Texture = Direct3DX.CreateTextureFromFileInMemoryEx(Direct3D_Device, _
-        ImageData(0), _
-        UBound(ImageData) + 1, _
-        newWidth, _
-        newHeight, _
-        D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, D3DX_FILTER_POINT, D3DX_FILTER_NONE, ByVal (0), ByVal 0, ByVal 0)
-    gTexture(TextureRec.Texture).TexWidth = newWidth
-    gTexture(TextureRec.Texture).TexHeight = newHeight
     Exit Sub
+    
 ' Error handler
 ErrorHandler:
     HandleError "LoadTexture", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
-Private Sub LoadTextures()
+Public Sub LoadTextures()
     Dim i As Long
 
     ' If debug mode, handle error then exit out
@@ -432,7 +481,7 @@ Private Sub LoadTextures()
     Call CheckPanoramas
     Call CheckEmoticons
     
-    NumTextures = NumTextures + 20
+    NumTextures = NumTextures + 19
     
     ReDim Preserve gTexture(NumTextures)
     Quest_Completed.filepath = App.Path & "\data files\graphics\gui\main\quest_completed.png"
@@ -634,7 +683,14 @@ Public Sub RenderTexture(ByRef TextureRec As DX8TextureRec, ByVal dX As Single, 
 
     Dim textureNum As Long
     Dim textureWidth As Long, textureHeight As Long, sourceX As Single, sourceY As Single, sourceWidth As Single, sourceHeight As Single
+    
     textureNum = TextureRec.Texture
+    
+    If gTexture(textureNum).Loaded = False Then
+        SetTexture TextureRec
+    Else
+        gTexture(textureNum).Timer = timeGetTime + 150000
+    End If
     
     textureWidth = gTexture(textureNum).TexWidth
     textureHeight = gTexture(textureNum).TexHeight
@@ -3299,6 +3355,15 @@ Public Sub Render_Graphics()
     
     ' Don't render
     If frmMain.WindowState = vbMinimized Then Exit Sub
+    
+    For i = 1 To NumTextures
+
+        If gTexture(i).Timer < timeGetTime And gTexture(i).Timer <> 0 Then
+            UnsetTexture i
+        End If
+
+    Next
+    
     If GettingMap Then Exit Sub
     
     ' Update the viewpoint

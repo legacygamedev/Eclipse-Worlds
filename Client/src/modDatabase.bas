@@ -475,11 +475,11 @@ Public Sub CheckTilesets()
     
     NumTileSets = NumTileSets - 1
     
-    If NumTileSets < 1 Then Exit Sub
+    'If NumTileSets < 1 Then Exit Sub
     
-    For i = 1 To NumTileSets
-        LoadTexture Tex_Tileset(i)
-    Next
+    'For i = 1 To NumTileSets
+    '    LoadTexture Tex_Tileset(i)
+    'Next
     Exit Sub
 
 ' Error handler
@@ -513,11 +513,11 @@ Public Sub CheckCharacters()
     
     NumCharacters = NumCharacters - 1
     
-    If NumCharacters < 1 Then Exit Sub
+    'If NumCharacters < 1 Then Exit Sub
     
-    For i = 1 To NumCharacters
-        LoadTexture Tex_Character(i)
-    Next
+    'For i = 1 To NumCharacters
+    '    LoadTexture Tex_Character(i)
+    'Next
     
     ' Load the animated sprite numbers used in animating sprites
     Call LoadAnimatedSprites
@@ -552,11 +552,11 @@ Public Sub CheckPaperdolls()
     
     NumPaperdolls = NumPaperdolls - 1
     
-    If NumPaperdolls < 1 Then Exit Sub
+    'If NumPaperdolls < 1 Then Exit Sub
     
-    For i = 1 To NumPaperdolls
-        LoadTexture Tex_Paperdoll(i)
-    Next
+    'For i = 1 To NumPaperdolls
+    '    LoadTexture Tex_Paperdoll(i)
+    'Next
     Exit Sub
     
 ' Error handler
@@ -588,11 +588,11 @@ Public Sub CheckAnimations()
     
     NumAnimations = NumAnimations - 1
     
-    If NumAnimations < 1 Then Exit Sub
+    'If NumAnimations < 1 Then Exit Sub
 
-    For i = 1 To NumAnimations
-        LoadTexture Tex_Animation(i)
-    Next
+    'For i = 1 To NumAnimations
+    '    LoadTexture Tex_Animation(i)
+    'Next
     Exit Sub
     
 ' Error handler
@@ -624,11 +624,11 @@ Public Sub CheckItems()
     
     NumItems = NumItems - 1
     
-    If NumItems < 1 Then Exit Sub
+    'If NumItems < 1 Then Exit Sub
     
-    For i = 1 To NumItems
-        LoadTexture Tex_Item(i)
-    Next
+    'For i = 1 To NumItems
+    '    LoadTexture Tex_Item(i)
+    'Next
     Exit Sub
     
 ' Error handler
@@ -660,11 +660,11 @@ Public Sub CheckResources()
     
     NumResources = NumResources - 1
     
-    If NumResources < 1 Then Exit Sub
+    'If NumResources < 1 Then Exit Sub
     
-    For i = 1 To NumResources
-        LoadTexture Tex_Resource(i)
-    Next
+    'For i = 1 To NumResources
+    '    LoadTexture Tex_Resource(i)
+    'Next
     Exit Sub
     
 ' Error handler
@@ -696,11 +696,11 @@ Public Sub CheckSpellIcons()
 
     NumSpellIcons = NumSpellIcons - 1
     
-    If NumSpellIcons < 1 Then Exit Sub
+    'If NumSpellIcons < 1 Then Exit Sub
     
-    For i = 1 To NumSpellIcons
-        LoadTexture Tex_SpellIcon(i)
-    Next
+    'For i = 1 To NumSpellIcons
+    '    LoadTexture Tex_SpellIcon(i)
+    'Next
     Exit Sub
     
 ' Error handler
@@ -732,11 +732,11 @@ Public Sub CheckFaces()
     
     NumFaces = NumFaces - 1
      
-    If NumFaces < 1 Then Exit Sub
+    'If NumFaces < 1 Then Exit Sub
     
-    For i = 1 To NumFaces
-        LoadTexture Tex_Face(i)
-    Next
+    'For i = 1 To NumFaces
+    '    LoadTexture Tex_Face(i)
+    'Next
     Exit Sub
     
 ' Error handler
@@ -768,11 +768,11 @@ Public Sub CheckFogs()
     
     NumFogs = NumFogs - 1
     
-    If NumFogs < 1 Then Exit Sub
+    'If NumFogs < 1 Then Exit Sub
     
-    For i = 1 To NumFogs
-        LoadTexture Tex_Fog(i)
-    Next
+    'For i = 1 To NumFogs
+    '    LoadTexture Tex_Fog(i)
+    'Next
     Exit Sub
     
 ' Error handler
@@ -803,11 +803,11 @@ Public Sub CheckPanoramas()
     
     NumPanoramas = NumPanoramas - 1
     
-    If NumPanoramas < 1 Then Exit Sub
+    'If NumPanoramas < 1 Then Exit Sub
     
-    For i = 1 To NumPanoramas
-        LoadTexture Tex_Panorama(i)
-    Next
+    'For i = 1 To NumPanoramas
+    '    LoadTexture Tex_Panorama(i)
+    'Next
     Exit Sub
     
 ' Error handler
@@ -839,11 +839,11 @@ Public Sub CheckEmoticons()
     
     NumEmoticons = NumEmoticons - 1
     
-    If NumEmoticons < 1 Then Exit Sub
+    'If NumEmoticons < 1 Then Exit Sub
     
-    For i = 1 To NumEmoticons
-        LoadTexture Tex_Emoticon(i)
-    Next
+    'For i = 1 To NumEmoticons
+    '    LoadTexture Tex_Emoticon(i)
+    'Next
     Exit Sub
     
 ' Error handler
@@ -865,9 +865,9 @@ Sub ClearPlayer(ByVal Index As Long)
     Player(Index).Status = vbNullString
     Player(Index).Class = 1
     
-    For i = 1 To Skills.Skill_Count - 1
-        Player(Index).Skills(i).Level = 1
-    Next
+    'For i = 1 To Skills.Skill_Count - 1
+    '    Player(Index).Skills(i).Level = 1
+    'Next
     Exit Sub
     
 ' Error handler

@@ -65,6 +65,12 @@ Public Sub RenderText(ByRef UseFont As CustomFont, ByVal text As String, ByVal X
     ' Set the temp color (or else the first character has no color)
     TempColor = Color
     
+    If gTexture(UseFont.Texture.Texture).Loaded = False Then
+        SetTexture UseFont.Texture
+    Else
+        gTexture(UseFont.Texture.Texture).Timer = timeGetTime + 150000
+    End If
+    
     ' Set the texture
     Direct3D_Device.SetTexture 0, gTexture(UseFont.Texture.Texture).Texture
     

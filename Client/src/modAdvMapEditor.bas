@@ -117,14 +117,15 @@ Public Sub MapEditorMode(switch As Boolean)
 End Sub
 
 Public Sub LeaveMapEditorMode(Cancel As Boolean)
-
     If EditorSave = False And Cancel Then
          MapEditorCancel
     ElseIf EditorSave = False And Not Cancel Then
         MapEditorLeaveMap
     End If
-        EditorSave = False
+    
+    EditorSave = False
     Call ToggleGUI(True)
+    
     ' Make sure the properties form is closed
     If FormVisible("frmEditor_MapProperties") Then
         Unload frmEditor_MapProperties
@@ -152,6 +153,11 @@ Public Sub LeaveMapEditorMode(Cancel As Boolean)
     End If
     
     InMapEditor = False
+    
+    If Trim$(CurrentMusic) <> Trim$(Map.Music) Then
+        Call Audio.StopMusic
+        PlayMapMusic
+    End If
 End Sub
 Private Function FlipBit(ByVal Bit As Long, ByVal Value As Boolean) As Boolean
    Dim nStyle As Long

@@ -40,6 +40,14 @@ Begin VB.Form frmAdmin
       TabStop         =   0   'False
       Top             =   15
       Width           =   3075
+      Begin VB.CommandButton cmdLoadTextures 
+         Caption         =   "Load Textures"
+         Height          =   255
+         Left            =   1560
+         TabIndex        =   72
+         Top             =   7380
+         Width           =   1335
+      End
       Begin VB.CheckBox chkEditor 
          Alignment       =   1  'Right Justify
          Caption         =   "Quests"
@@ -1363,19 +1371,19 @@ Private Sub cmbAccess_Click()
 End Sub
 
 Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String, CurrentAccess As Byte)
-    Dim i As Long
+    Dim I As Long
     If PlayerName = cmbPlayersOnline.text Then
         If Success = 0 Then
-            For i = 0 To UBound(g_playersOnline)
-                If InStr(1, g_playersOnline(i), PlayerName) Then
-                    Mid$(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
+            For I = 0 To UBound(g_playersOnline)
+                If InStr(1, g_playersOnline(I), PlayerName) Then
+                    Mid$(g_playersOnline(I), InStr(1, g_playersOnline(I), ":"), 2) = ":" & CurrentAccess
                     setAdminAccessLevel
                     
                     DisplayStatus Message, Status.Error
                 End If
-            Next i
+            Next I
         ElseIf Success = 1 Then
-            Mid$(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
+            Mid$(g_playersOnline(I), InStr(1, g_playersOnline(I), ":"), 2) = ":" & CurrentAccess
             setAdminAccessLevel
             
             DisplayStatus Message, Status.Correct
@@ -1403,23 +1411,23 @@ Public Sub DisplayStatus(ByVal Msg As String, msgType As Status)
 End Sub
 
 Private Sub cmbPlayersOnline_Click()
-    Dim i As Long, Length As Long
+    Dim I As Long, Length As Long
     
     Length = UBound(ignoreIndexes)
-    For i = 0 To Length
-        If cmbPlayersOnline.ListIndex = ignoreIndexes(i) Then
-            cmbPlayersOnline.ListIndex = ignoreIndexes(i) + 1
+    For I = 0 To Length
+        If cmbPlayersOnline.ListIndex = ignoreIndexes(I) Then
+            cmbPlayersOnline.ListIndex = ignoreIndexes(I) + 1
             cmbPlayersOnline.text = cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)
             Exit Sub
         End If
     Next
     autoAccess = True
     autoSprite = True
-    For i = 0 To UBound(g_playersOnline)
-            If InStr(1, g_playersOnline(i), cmbPlayersOnline.text) Then
-                txtSprite.text = Split(g_playersOnline(i), ":")(2)
+    For I = 0 To UBound(g_playersOnline)
+            If InStr(1, g_playersOnline(I), cmbPlayersOnline.text) Then
+                txtSprite.text = Split(g_playersOnline(I), ":")(2)
             End If
-    Next i
+    Next I
     If Player(MyIndex).Access < 4 Then
         txtSprite.Enabled = False
         upSprite.Enabled = False
@@ -1433,13 +1441,13 @@ Private Sub cmbPlayersOnline_Click()
 End Sub
 
 Private Sub setAdminAccessLevel()
-    Dim accessLvl As String, tempTxt As String, i As Long
+    Dim accessLvl As String, tempTxt As String, I As Long
     
     ' Set Access Level
-    For i = 0 To UBound(g_playersOnline)
-        If InStr(1, g_playersOnline(i), cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)) Then
-            accessLvl = Split(g_playersOnline(i), ":")(1)
-            txtSprite.text = Split(g_playersOnline(i), ":")(2)
+    For I = 0 To UBound(g_playersOnline)
+        If InStr(1, g_playersOnline(I), cmbPlayersOnline.List(cmbPlayersOnline.ListIndex)) Then
+            accessLvl = Split(g_playersOnline(I), ":")(1)
+            txtSprite.text = Split(g_playersOnline(I), ":")(2)
             
             If accessLvl = "5" Then
                 accessLvl = "4"
@@ -1465,7 +1473,7 @@ Private Sub setAdminAccessLevel()
             cmbAccess.ListIndex = accessLvl
             cmbAccess.text = tempTxt
         End If
-    Next i
+    Next I
 End Sub
 
 
@@ -1690,9 +1698,31 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Private Sub cmdLoadTextures_Click()
+    Dim I As Long
+    
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    For I = 1 To NumTextures
+        If gTexture(I).Timer < timeGetTime And gTexture(I).Timer <> 0 Then
+            UnsetTexture I
+            DoEvents
+        End If
+    Next
+
+    LoadTextures
+    Exit Sub
+    
+' Error Handler
+ErrorHandler:
+    HandleError "cmdLoadTextures_Click", "frmAdmin", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub cmdSpawnRecent_Click()
     Dim Item As Byte
-    Dim i    As Byte
+    Dim I    As Byte
 
     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
         AddText "You have insufficent access to do this!", BrightRed
@@ -1705,9 +1735,9 @@ Private Sub cmdSpawnRecent_Click()
 
     Dim found As Integer, limit As Integer
 
-    For i = 0 To UBound(lastSpawnedItems) - 1
-        If lastSpawnedItems(i) = Item Then
-            found = i
+    For I = 0 To UBound(lastSpawnedItems) - 1
+        If lastSpawnedItems(I) = Item Then
+            found = I
             Exit For
         End If
     Next
@@ -1950,9 +1980,9 @@ Private Sub picRefresh_MouseUp(Button As Integer, Shift As Integer, X As Single,
 End Sub
 
 Public Sub selectMyself()
-    For i = 0 To cmbPlayersOnline.ListCount
-        If Trim$(cmbPlayersOnline.List(i)) = Trim$(Player(MyIndex).Name) Then
-            cmbPlayersOnline.ListIndex = i
+    For I = 0 To cmbPlayersOnline.ListCount
+        If Trim$(cmbPlayersOnline.List(I)) = Trim$(Player(MyIndex).Name) Then
+            cmbPlayersOnline.ListIndex = I
             cmbPlayersOnline_Click
             Exit Sub
         End If
@@ -1960,7 +1990,7 @@ Public Sub selectMyself()
 End Sub
 
 Public Sub UpdatePlayersOnline()
-    Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, i As Long, currentIgnore As Long
+    Dim players() As String, Staff() As String, tempTxt As String, temp() As String, Length As Long, I As Long, currentIgnore As Long
     Dim stuffCounter As Long, playersCounter As Long, overallCounter As Long, foundStuff As Boolean, foundPlayer As Boolean
     
     tempTxt = cmbPlayersOnline.text
@@ -1968,21 +1998,21 @@ Public Sub UpdatePlayersOnline()
     cmbPlayersOnline.text = tempTxt
     
     ' Get Stuff
-    For i = 0 To UBound(g_playersOnline)
-        If CByte(Split(g_playersOnline(i), ":")(1)) > 0 Then
+    For I = 0 To UBound(g_playersOnline)
+        If CByte(Split(g_playersOnline(I), ":")(1)) > 0 Then
             foundStuff = True
             ReDim Preserve Staff(stuffCounter)
-            Staff(stuffCounter) = Split(g_playersOnline(i), ":")(0)
+            Staff(stuffCounter) = Split(g_playersOnline(I), ":")(0)
             stuffCounter = stuffCounter + 1
         End If
     Next
     
     'Get Players
-    For i = 0 To UBound(g_playersOnline)
-        If CByte(Split(g_playersOnline(i), ":")(1)) = 0 Then
+    For I = 0 To UBound(g_playersOnline)
+        If CByte(Split(g_playersOnline(I), ":")(1)) = 0 Then
             foundPlayer = True
             ReDim Preserve players(playersCounter)
-            players(playersCounter) = Split(g_playersOnline(i), ":")(0)
+            players(playersCounter) = Split(g_playersOnline(I), ":")(0)
             playersCounter = playersCounter + 1
         End If
     Next
@@ -1994,8 +2024,8 @@ Public Sub UpdatePlayersOnline()
             ignoreIndexes(0) = currentIgnore
             currentIgnore = currentIgnore + 1
             
-        For i = 0 To UBound(Staff)
-            cmbPlayersOnline.AddItem (Trim$(Staff(i)))
+        For I = 0 To UBound(Staff)
+            cmbPlayersOnline.AddItem (Trim$(Staff(I)))
             currentIgnore = currentIgnore + 1
         Next
         overallCounter = overallCounter + stuffCounter
@@ -2007,8 +2037,8 @@ Public Sub UpdatePlayersOnline()
             ReDim Preserve ignoreIndexes(1)
             ignoreIndexes(1) = currentIgnore
             currentIgnore = currentIgnore + 1
-        For i = 0 To UBound(players)
-            cmbPlayersOnline.AddItem (Trim$(players(i)))
+        For I = 0 To UBound(players)
+            cmbPlayersOnline.AddItem (Trim$(players(I)))
             currentIgnore = currentIgnore + 1
         Next
         overallCounter = overallCounter + playersCounter
@@ -2018,27 +2048,27 @@ Public Sub UpdatePlayersOnline()
 End Sub
 
 Public Sub styleButtons()
-    Dim i As Long, temp1 As Long, temp2 As Long
+    Dim I As Long, temp1 As Long, temp2 As Long
     
-    For i = 0 To optCat.UBound
-        optCat(i).Value = False
-        optCat(i).Picture = LoadResPicture(100 + i, vbResBitmap)
+    For I = 0 To optCat.UBound
+        optCat(I).Value = False
+        optCat(I).Picture = LoadResPicture(100 + I, vbResBitmap)
     Next
     
-    For i = 0 To picEye.UBound
-        picEye(i).Visible = False
-        picEye(i).Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
+    For I = 0 To picEye.UBound
+        picEye(I).Visible = False
+        picEye(I).Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
     Next
     
     temp1 = getWndProcAddr
     
     If GetWindowLong(optCat(0).hWnd, -4) <> temp1 Then
-        For i = 0 To optCat.UBound
-            SubClassHwnd optCat(i).hWnd
+        For I = 0 To optCat.UBound
+            SubClassHwnd optCat(I).hWnd
         Next
-        For i = 0 To chkEditor.UBound
-            picEye(i).BorderStyle = 0
-            SubClassHwnd chkEditor(i).hWnd
+        For I = 0 To chkEditor.UBound
+            picEye(I).BorderStyle = 0
+            SubClassHwnd chkEditor(I).hWnd
         Next
         catSub = True
         picSpawner.Picture = LoadResPicture("BRING_FRONT", vbResBitmap)
@@ -2047,7 +2077,7 @@ Public Sub styleButtons()
 End Sub
 
 Public Sub findVisibleEditors()
-    Dim i As Long, tempCtl As Control
+    Dim I As Long, tempCtl As Control
     
     For Each frm In Forms
         If frm.Visible = True Then
@@ -2381,7 +2411,7 @@ Private Sub txtRecentAmount_LostFocus()
 End Sub
 
 Private Sub txtSprite_Change()
-    Dim i As Long
+    Dim I As Long
     If autoSprite Then
         autoSprite = False
         Exit Sub
@@ -2393,11 +2423,11 @@ Private Sub txtSprite_Change()
             AddText "You have insufficent access to do this!", BrightRed
             Exit Sub
         ElseIf txtSprite.text > 0 Then
-            For i = 0 To UBound(g_playersOnline)
-                If InStr(1, g_playersOnline(i), cmbPlayersOnline.text) Then
-                    Mid$(g_playersOnline(i), InStr(InStr(1, g_playersOnline(i), ":") + 1, g_playersOnline(i), ":"), Len(txtSprite.text) + 1) = ":" & txtSprite.text
+            For I = 0 To UBound(g_playersOnline)
+                If InStr(1, g_playersOnline(I), cmbPlayersOnline.text) Then
+                    Mid$(g_playersOnline(I), InStr(InStr(1, g_playersOnline(I), ":") + 1, g_playersOnline(I), ":"), Len(txtSprite.text) + 1) = ":" & txtSprite.text
                 End If
-            Next i
+            Next I
 
             SendSetPlayerSprite Trim$(cmbPlayersOnline.text), currentSprite
         End If
