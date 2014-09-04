@@ -38,15 +38,15 @@ Begin VB.Form frmAdmin
       ScaleWidth      =   205
       TabIndex        =   1
       TabStop         =   0   'False
-      Top             =   15
+      Top             =   0
       Width           =   3075
       Begin VB.CommandButton cmdLoadTextures 
          Caption         =   "Load Textures"
          Height          =   255
-         Left            =   1560
+         Left            =   60
          TabIndex        =   72
-         Top             =   7200
-         Width           =   1335
+         Top             =   8220
+         Width           =   1365
       End
       Begin VB.CheckBox chkEditor 
          Alignment       =   1  'Right Justify
@@ -566,10 +566,10 @@ Begin VB.Form frmAdmin
          Caption         =   "Spawn Recent"
          Enabled         =   0   'False
          Height          =   255
-         Left            =   30
+         Left            =   60
          TabIndex        =   27
          Top             =   7935
-         Width           =   1380
+         Width           =   1365
       End
       Begin VB.TextBox txtRecentAmount 
          Alignment       =   2  'Center
@@ -577,11 +577,11 @@ Begin VB.Form frmAdmin
          Enabled         =   0   'False
          ForeColor       =   &H00800080&
          Height          =   285
-         Left            =   30
+         Left            =   60
          TabIndex        =   26
          Text            =   "Recent Amount"
          Top             =   7620
-         Width           =   1350
+         Width           =   1365
       End
       Begin VB.PictureBox picSprite 
          Appearance      =   0  'Flat
@@ -869,7 +869,7 @@ Begin VB.Form frmAdmin
          _ExtentY        =   979
          _Version        =   393216
          BuddyControl    =   "txtSprite"
-         BuddyDispid     =   196619
+         BuddyDispid     =   196620
          OrigLeft        =   3990
          OrigTop         =   1770
          OrigRight       =   4245
@@ -953,9 +953,9 @@ Begin VB.Form frmAdmin
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   375
-         Left            =   45
+         Left            =   60
          TabIndex        =   18
-         Top             =   8235
+         Top             =   8220
          Visible         =   0   'False
          Width           =   2760
          WordWrap        =   -1  'True

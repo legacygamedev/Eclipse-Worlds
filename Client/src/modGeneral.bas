@@ -994,12 +994,15 @@ Public Sub LogoutGame()
 
     ' Close out all the editors
     Dim tmpForm As Form
+    
     For Each tmpForm In Forms
         If tmpForm.Name <> "frmMenu" And tmpForm.Name <> "frmMain" Then
             Unload tmpForm
             Set tmpForm = Nothing
         End If
     Next
+    
+    Unload frmCharEditor
 
     ' Destroy temp values
     MouseX = -1

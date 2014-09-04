@@ -538,3 +538,13 @@ Dim i As Long, CLIIndex As Long, TaskIndex As Long
         End If
     End If
 End Function
+
+Public Sub SendRefreshCharEditor(ByVal index As Long)
+Dim Buffer As clsBuffer
+
+    Set Buffer = New clsBuffer
+    Buffer.WriteLong SRefreshCharEditor
+    Call SendDataTo(index, Buffer.ToArray())
+    Set Buffer = Nothing
+End Sub
+

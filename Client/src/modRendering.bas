@@ -3331,6 +3331,7 @@ Public Sub Menu_DrawCharacter()
     End With
                     
     Direct3D_Device.EndScene
+    On Error Resume Next
     Direct3D_Device.Present srcRect, destRECT, frmMenu.picSprite.hWnd, ByVal (0)
     Exit Sub
     

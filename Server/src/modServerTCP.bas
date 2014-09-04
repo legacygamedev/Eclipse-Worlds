@@ -665,6 +665,7 @@ Sub SendPlayersOnline(ByVal index As Long)
     SendDataTo index, Buffer.ToArray()
     Set Buffer = Nothing
 End Sub
+
 'Character Editor
 Sub SendAllCharacters(index As Long, Optional everyone As Boolean = False)
     Dim Buffer As clsBuffer, i As Long
@@ -818,6 +819,7 @@ Sub SendExtendedPlayerData(index As Long, playerName As String)
             End If
         Next
     Next
+    
 use_offline_player:
     'Find associated Account Name
     Dim F As Long
@@ -838,9 +840,18 @@ use_offline_player:
     Dim tempAccount As AccountRec
     Dim filename As String
     
-    filename = App.path & "\data\accounts\" & charLogin(1) & "\data.bin"
+    filename = App.path & "\data\accounts\" & charLogin(0) & "\data.bin"
+    Call ChkDir(App.path & "\data\accounts\", charLogin(0))
     
     F = FreeFile
+    
+    If Not FileExist(filename, True) Then
+        ' Erase that char name
+        Call DeleteName(playerName)
+        Call PlayerMsg(index, "This character doesn't exist and has been wiped from charlist.txt.", BrightRed)
+        Call SendRefreshCharEditor(index)
+        Exit Sub
+    End If
     
     Open filename For Binary As #F
         Get #F, , tempAccount

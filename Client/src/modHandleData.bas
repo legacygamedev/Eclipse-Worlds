@@ -157,6 +157,7 @@ Public Sub InitMessages()
     HandleDataSub(SUpdateQuest) = GetAddress(AddressOf HandleUpdateQuest)
     HandleDataSub(SQuestRequest) = GetAddress(AddressOf HandleQuestRequest)
     
+    HandleDataSub(SRefreshCharEditor) = GetAddress(AddressOf HandleRefreshCharEditor)
     Exit Sub
     
 ' Error handler
@@ -327,15 +328,12 @@ Sub HandleAlertMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As
     
     frmLoad.Visible = False
     
-    If InGame Then
+    If frmMain.Visible Then
         frmMain.Visible = False
+        LogoutGame
     End If
     
     Call AlertMsg(Msg)
-    
-    If InGame Then
-        LogoutGame
-    End If
     Exit Sub
     
 ' Error handler
@@ -4330,5 +4328,23 @@ Private Sub HandleCheckEmoticon(ByVal Index As Long, ByRef data() As Byte, ByVal
 ' Error handler
 ErrorHandler:
     HandleError "HandleCheckEmoticon", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Public Sub HandleRefreshCharEditor()
+    Dim buffer As clsBuffer
+    
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    Set buffer = New clsBuffer
+    
+    Tex_CharSprite.Texture = 0
+    SendRequestAllCharacters
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "HandleRefreshCharEditor", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
