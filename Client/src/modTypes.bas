@@ -573,8 +573,8 @@ Private Type MapNPCRec
     Dir As Byte
     
     ' Client use only
-    xOffset As Integer
-    yOffset As Integer
+    xOffset As Long
+    yOffset As Long
     Moving As Byte
     Attacking As Byte
     AttackTimer As Long

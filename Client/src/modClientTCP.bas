@@ -437,6 +437,10 @@ Public Sub SendPlayerRequestNewMap()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
+    GettingMap = True
+    CanMoveNow = False
+    Call MapEditorLeaveMap
+    
     Set buffer = New clsBuffer
     buffer.WriteLong CRequestNewMap
     buffer.WriteLong GetPlayerDir(MyIndex)

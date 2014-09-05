@@ -888,6 +888,8 @@ Public Sub CheckForNewMap()
         Exit Sub
     End If
     
+    SendPlayerRequestNewMap
+    
     ' Error Handler
     Exit Sub
 
