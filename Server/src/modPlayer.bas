@@ -1712,6 +1712,8 @@ Sub GiveBankItem(ByVal index As Long, ByVal InvSlot As Byte, ByVal Amount As Lon
             End If
         End If
     End If
+    
+    SendBank index
 End Sub
 
 Sub TakeBankItem(ByVal index As Long, ByVal BankSlot As Byte, ByVal Amount As Long)
@@ -1753,9 +1755,11 @@ Sub TakeBankItem(ByVal index As Long, ByVal BankSlot As Byte, ByVal Amount As Lo
             End If
         End If
     End If
+    
+    SendBank index
 End Sub
 
-Function TakeBankSlot(ByVal index As Long, ByVal ItemNum As Integer, ByVal ItemVal As Long, Optional Update As Boolean = True) As Boolean
+Function TakeBankSlot(ByVal index As Long, ByVal ItemNum As Integer, ByVal ItemVal As Long) As Boolean
     Dim i As Long
 
     ' Check for subscript out of range
@@ -1786,7 +1790,7 @@ Function TakeBankSlot(ByVal index As Long, ByVal ItemNum As Integer, ByVal ItemV
         End If
     Next
     
-    If Update Then Call SendBank(index)
+    SendBank index
 End Function
 
 Public Sub KillPlayer(ByVal index As Long)

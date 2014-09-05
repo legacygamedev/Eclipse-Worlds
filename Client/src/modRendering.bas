@@ -3832,7 +3832,7 @@ Sub DrawBank()
                         ' If item is a stack - draw the amount you have
                         If GetBankItemValue(i) > 1 Then
                             Y = dRect.Top + 22
-                            X = dRect.Left - 4
+                            X = dRect.Left
                             Amount = GetBankItemValue(i)
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
