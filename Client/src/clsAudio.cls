@@ -52,6 +52,8 @@ Public Sub PlayMusic(FileName As String, Optional ByVal Ignore As Boolean = Fals
     
     If Ignore = False And (Options.Music = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None" Or CurrentMusic = Trim$(FileName)) Then Exit Sub
     
+    StopMusic
+    
     ' File doesn't exist
     If Not FileExist(App.Path & MUSIC_PATH & Trim$(FileName), True) Then
         If FormVisible("frmMain") Then
