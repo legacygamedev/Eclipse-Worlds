@@ -331,6 +331,9 @@ Sub HandleAlertMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As
     If frmMain.Visible Then
         frmMain.Visible = False
         LogoutGame
+        Call Audio.StopMusic
+        Call Audio.PlayMusic(Options.MenuMusic)
+        Call Audio.StopMapSounds
     End If
     
     Call AlertMsg(Msg)
