@@ -1829,7 +1829,11 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
             
             ' Is it reusable, if not take the item away
             If Item(GetPlayerInvItemNum(index, InvNum)).IsReusable = False Then
-                Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 0)
+                If Item(GetPlayerInvItemNum(index, InvNum)).Stackable = 1 Then
+                    Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 1)
+                Else
+                    Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 0)
+                End If
             End If
         
         Case ITEM_TYPE_SPELL

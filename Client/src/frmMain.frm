@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -6759,7 +6759,7 @@ Private Sub picInventory_DblClick()
         End If
         
         ' Don't use an item if it is None or Auto Life
-        If Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Or Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
+        If Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_NONE Or Item(GetPlayerInvItemNum(MyIndex, InvNum)).Type = ITEM_TYPE_AUTOLIFE Then
             AddText "You can't use this type of item!", BrightRed
             Exit Sub
         End If

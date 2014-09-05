@@ -2441,10 +2441,10 @@ Public Sub PlayMapMusic()
     If Options.BattleMusic = 0 Or Map.NPC_HighIndex = 0 Or BattleMusicActive = False Then
         MusicFile = Trim$(Map.Music)
         
-        If MusicFile = vbNullString Then
-            Call Audio.StopMusic
-        ElseIf Not CurrentMusic = MusicFile And Not MusicFile = vbNullString Then
+        If Not CurrentMusic = MusicFile And Not MusicFile = vbNullString Then
             Call Audio.PlayMusic(MusicFile)
+        Else
+            Call Audio.StopMusic
         End If
     End If
 End Sub

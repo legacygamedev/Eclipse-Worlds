@@ -128,7 +128,9 @@ Sub SendDataTo(ByVal index As Long, ByRef Data() As Byte)
         Buffer.WriteBytes TempData()
         
         If IsConnected(index) Then
+            On Error Resume Next
             frmServer.Socket(index).SendData Buffer.ToArray()
+            DoEvents
         End If
     End If
 End Sub

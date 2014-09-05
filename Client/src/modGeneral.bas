@@ -121,9 +121,6 @@ Public Sub Main()
     Call SetStatus("Initializing TCP settings...")
     Call TcpInit
     Call InitMessages
-
-    ' Check if we have main-menu music
-    If Len(Trim$(Options.MenuMusic)) > 0 Then Call Audio.PlayMusic(Trim$(Options.MenuMusic))
     
     ' Reset values
     Ping = -1
@@ -160,18 +157,20 @@ Public Sub Main()
     frmLoad.Visible = False
     
     ' Set the form visible
-    frmMenu.Visible = True
+    frmMenu.Show
+    BringWindowToTop frmMenu.hWnd
     
     ' Hide all pictures
     Call ClearMenuPictures
+    
     frmMenu.picMain.Visible = True
     
+    ' Check if we have main-menu music
+    If Len(Trim$(Options.MenuMusic)) > 0 Then Call Audio.PlayMusic(Trim$(Options.MenuMusic))
+    
     MenuLoop
-    Dim frm As Form
-    For Each frm In Forms
-        Unload frm
-    Next
-    DoEvents
+    
+    UnloadAllForms
     End
 End Sub
 

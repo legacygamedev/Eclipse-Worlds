@@ -36,6 +36,7 @@ Private Sub Class_Initialize()
     ' Initialize output - default device, 44100hz, stereo, 16 bits
     Call BASS_Init(-1, 44100, 0, frmMain.hWnd, 0)
     
+    On Error Resume Next
     Set Loader = DX7.DirectMusicLoaderCreate
     Set Performance = DX7.DirectMusicPerformanceCreate
    
