@@ -1000,8 +1000,6 @@ Public Sub LogoutGame()
             Set tmpForm = Nothing
         End If
     Next
-    
-    Unload frmCharEditor
 
     ' Destroy temp values
     MouseX = -1
