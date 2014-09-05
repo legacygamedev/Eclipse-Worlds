@@ -1079,7 +1079,9 @@ End Sub
 
 Function FormCount(ByVal frmName As String) As Long
     Dim frm As Form, counter As Long
+    
     FormCount = -1
+    
     For Each frm In Forms
         If StrComp(frm.Name, frmName, vbTextCompare) = 0 Then
             FormCount = counter
@@ -1087,11 +1089,11 @@ Function FormCount(ByVal frmName As String) As Long
         End If
         counter = counter + 1
     Next
-    
 End Function
 
 Function FormLoaded(ByVal frmName As String) As Boolean
     Dim formNum As Long
+    
     formNum = FormCount(frmName)
     If formNum >= 0 Then
         FormLoaded = True
@@ -1100,6 +1102,7 @@ End Function
 
 Function FormVisible(ByVal frmName As String) As Boolean
     Dim formNum As Long
+    
     formNum = FormCount(frmName)
     If formNum >= 0 Then
         If Forms(formNum).Visible Then

@@ -961,6 +961,7 @@ Function TakeInvItem(ByVal index As Long, ByVal ItemNum As Integer, ByVal ItemVa
                 Call SetPlayerInvItemValue(index, i, 0)
                 Call SetPlayerInvItemDur(index, i, 0)
                 Call SetPlayerInvItemBind(index, i, 0)
+                Exit For
             End If
         End If
     Next
@@ -1766,7 +1767,7 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
                 Exit Sub
             End If
             
-            ' Add HP
+                    ' Add HP
             If Item(GetPlayerInvItemNum(index, InvNum)).AddHP > 0 Then
                 If Not GetPlayerVital(index, HP) = GetPlayerMaxVital(index, HP) Then
                     If TempPlayer(index).VitalPotionTimer(HP) > timeGetTime Then
@@ -1784,7 +1785,7 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
                             TempPlayer(index).VitalPotionTimer(HP) = timeGetTime + PotionWaitTimer
                         End If
                     End If
-                ElseIf Item(GetPlayerInvItemNum(index, InvNum)).AddMP < 1 Then
+                Else
                     Call PlayerMsg(index, "Using this item will have no effect!", BrightRed)
                     Exit Sub
                 End If
@@ -1808,7 +1809,7 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
                             TempPlayer(index).VitalPotionTimer(MP) = timeGetTime + PotionWaitTimer
                         End If
                     End If
-                ElseIf Item(GetPlayerInvItemNum(index, InvNum)).AddHP < 1 Then
+                Else
                     Call PlayerMsg(index, "Using this item will have no effect!", BrightRed)
                     Exit Sub
                 End If
@@ -1829,11 +1830,7 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
             
             ' Is it reusable, if not take the item away
             If Item(GetPlayerInvItemNum(index, InvNum)).IsReusable = False Then
-                If Item(GetPlayerInvItemNum(index, InvNum)).Stackable = 1 Then
-                    Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 1)
-                Else
-                    Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 0)
-                End If
+                Call TakeInvSlot(index, InvNum, 1)
             End If
         
         Case ITEM_TYPE_SPELL
@@ -1853,7 +1850,7 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
                             SendPlayerSound index, GetPlayerX(index), GetPlayerY(index), SoundEntity.seItem, GetPlayerInvItemNum(index, InvNum)
                             Call SetPlayerSpell(index, i, n)
                             Call SendAnimation(GetPlayerMap(index), Item(GetPlayerInvItemNum(index, InvNum)).Animation, GetPlayerX(index), GetPlayerY(index))
-                            Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 0)
+                            Call TakeInvSlot(index, InvNum, 1)
                             Call PlayerMsg(index, "You have learned a new spell!", BrightGreen)
                             Call SendPlayerSpell(index, i)
                         Else
@@ -1887,7 +1884,7 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
             
             ' Is it reusable, if not take item away
             If Item(GetPlayerInvItemNum(index, InvNum)).IsReusable = False Then
-                Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 1)
+                Call TakeInvSlot(index, InvNum, 1)
             End If
             
         Case ITEM_TYPE_RESETSTATS
@@ -1906,7 +1903,7 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
             Call SendPlayerStats(index)
             Call SendPlayerPoints(index)
             Call PlayerMsg(index, "Your stats have been reset!", Yellow)
-            Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 1)
+            Call TakeInvSlot(index, InvNum, 1)
 
         Case ITEM_TYPE_SPRITE
             Call SendAnimation(GetPlayerMap(index), Item(GetPlayerInvItemNum(index, InvNum)).Animation, GetPlayerX(index), GetPlayerY(index))
@@ -1918,7 +1915,7 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
         
             ' Is it reusable, if not take item away
             If Item(GetPlayerInvItemNum(index, InvNum)).IsReusable = False Then
-                Call TakeInvItem(index, GetPlayerInvItemNum(index, InvNum), 1)
+                Call TakeInvSlot(index, InvNum, 1)
             End If
             
         Case ITEM_TYPE_TITLE
@@ -1957,8 +1954,8 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
             ' Give the resulting item
             If HasItem(index, Item1) Then
                 If HasItem(index, Item2) Then
-                    Call TakeInvItem(index, Item1, 1)
-                    Call TakeInvItem(index, Item2, 1)
+                    Call TakeInvSlot(index, Item1, 1)
+                    Call TakeInvSlot(index, Item2, 1)
                     Call GiveInvItem(index, Result, 1)
                     Call PlayerMsg(index, "You have successfully created " & Trim(Item(Result).Name) & " and earned " & SkillExp & " experience for the skill " & GetSkillName(Skill) & ".", BrightGreen)
                     

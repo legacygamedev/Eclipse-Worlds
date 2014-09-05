@@ -224,13 +224,16 @@ Public Sub GameLoop()
         End If
     Loop
 
-    frmMain.Visible = False
     frmMenu.Visible = True
+    frmMain.Visible = False
+    
     If IsLogging Then
         IsLogging = False
     Else
+        LogoutGame
         AlertMsg "Connection to server lost.", True
     End If
+    
     GettingMap = True
     
     Call Audio.StopMusic
