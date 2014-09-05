@@ -883,6 +883,8 @@ Public Sub cmdSave_Click()
     ' Update the map Name
     Call UpdateDrawMapName
     InitAutotiles
+    Unload frmEditor_MapProperties
+    
     Exit Sub
     
 ' Error handler
