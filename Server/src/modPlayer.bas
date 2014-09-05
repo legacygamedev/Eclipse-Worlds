@@ -1688,7 +1688,7 @@ Sub GiveBankItem(ByVal index As Long, ByVal InvSlot As Byte, ByVal Amount As Lon
     
     BankSlot = FindOpenBankSlot(index, GetPlayerInvItemNum(index, InvSlot))
         
-    If BankSlot > 0 Then
+    If BankSlot > 0 And BankSlot <= MAX_BANK Then
         If Item(GetPlayerInvItemNum(index, InvSlot)).Stackable = 1 Then
             If GetPlayerBankItemNum(index, BankSlot) = GetPlayerInvItemNum(index, InvSlot) Then
                 Call SetPlayerBankItemValue(index, BankSlot, GetPlayerBankItemValue(index, BankSlot) + Amount)
@@ -1718,6 +1718,7 @@ Sub TakeBankItem(ByVal index As Long, ByVal BankSlot As Byte, ByVal Amount As Lo
     Dim InvSlot
 
     If BankSlot < 1 Or BankSlot > MAX_BANK Then Exit Sub
+    If GetPlayerBankItemNum(index, BankSlot) < 1 Or GetPlayerBankItemNum(index, BankSlot) > MAX_ITEMS Then Exit Sub
     
     ' Hack prevention
     If Item(GetPlayerBankItemNum(index, BankSlot)).Stackable = 1 Then
@@ -1729,7 +1730,7 @@ Sub TakeBankItem(ByVal index As Long, ByVal BankSlot As Byte, ByVal Amount As Lo
     
     InvSlot = FindOpenInvSlot(index, GetPlayerBankItemNum(index, BankSlot))
         
-    If InvSlot > 0 Then
+    If InvSlot > 0 And InvSlot <= MAX_ITEMS Then
         If Item(GetPlayerBankItemNum(index, BankSlot)).Stackable = 1 Then
             Call GiveInvItem(index, GetPlayerBankItemNum(index, BankSlot), Amount)
             Call SetPlayerBankItemValue(index, BankSlot, GetPlayerBankItemValue(index, BankSlot) - Amount)
@@ -2175,29 +2176,29 @@ Public Sub UpdatePlayerItems(ByVal index As Long)
     Next
     
     ' Make sure the Bank items are not cached as a currency
-    For i = 1 To MAX_BANK
-        TmpItem = GetPlayerBankItemNum(index, i)
-        BankAmount = CheckBankSlots(index, TmpItem)
+   ' For i = 1 To MAX_BANK
+   '     TmpItem = GetPlayerBankItemNum(index, i)
+   '     BankAmount = CheckBankSlots(index, TmpItem)
         
-        If TmpItem > 0 And TmpItem <= MAX_ITEMS Then
-            If GetPlayerBankItemValue(index, i) > 1 And Item(TmpItem).Stackable = 0 Then
-                TmpAmount = GetPlayerBankItemValue(index, i)
-                Call TakeBankSlot(index, i, GetPlayerBankItemValue(index, i))
+   '     If TmpItem > 0 And TmpItem <= MAX_ITEMS Then
+   '         If GetPlayerBankItemValue(index, i) > 1 And Item(TmpItem).Stackable = 0 Then
+   '             TmpAmount = GetPlayerBankItemValue(index, i)
+   '             Call TakeBankSlot(index, i, GetPlayerBankItemValue(index, i))
                 
-                For X = 1 To TmpAmount
-                    Call GiveBankItem(index, TmpItem, 1)
-                Next
-            End If
+   '             For X = 1 To TmpAmount
+   '                 Call GiveBankItem(index, TmpItem, 1)
+   '             Next
+   '         End If
             
-            If GetPlayerBankItemValue(index, i) = 0 And Item(TmpItem).Type <> ITEM_TYPE_EQUIPMENT Then
-                Call TakeBankSlot(index, i, 0)
-                Call GiveBankItem(index, TmpItem, 1)
-            ElseIf BankAmount > 1 And Item(TmpItem).Stackable = 1 And GetPlayerBankItemValue(index, i) <= 1 Then
-                Call TakeBankSlot(index, i, 1)
-                Call GiveBankItem(index, TmpItem, 1)
-            End If
-        End If
-    Next
+   '         If GetPlayerBankItemValue(index, i) = 0 And Item(TmpItem).Type <> ITEM_TYPE_EQUIPMENT Then
+   '             Call TakeBankSlot(index, i, 0)
+   '             Call GiveBankItem(index, TmpItem, 1)
+   '         ElseIf BankAmount > 1 And Item(TmpItem).Stackable = 1 And GetPlayerBankItemValue(index, i) <= 1 Then
+   '             Call TakeBankSlot(index, i, 1)
+   '             Call GiveBankItem(index, TmpItem, 1)
+   '         End If
+   '     End If
+   ' Next
 End Sub
 
 Public Sub UpdateAllPlayerItems(ByVal ItemNum As Integer)
