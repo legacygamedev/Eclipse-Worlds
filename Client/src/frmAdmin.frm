@@ -1356,36 +1356,14 @@ Public Sub VerifyAccess(PlayerName As String, Success As Byte, Message As String
                 If InStr(1, g_playersOnline(i), PlayerName) Then
                     Mid$(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
                     setAdminAccessLevel
-                    
-                    DisplayStatus Message, Status.Error
                 End If
             Next i
         ElseIf Success = 1 Then
             Mid$(g_playersOnline(i), InStr(1, g_playersOnline(i), ":"), 2) = ":" & CurrentAccess
             setAdminAccessLevel
-            
-            DisplayStatus Message, Status.Correct
         End If
     End If
     cmbPlayersOnline.Enabled = True
-End Sub
-
-Public Sub DisplayStatus(ByVal Msg As String, msgType As Status)
-    Select Case msgType
-        Case Status.Error:
-            lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Msg
-        Case Status.Correct:
-            lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Msg
-        Case Status.Neutral:
-            lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Msg
-        Case Status.Info_:
-            lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Msg
-    End Select
-    lblStatus.Visible = True
 End Sub
 
 Private Sub cmbPlayersOnline_Click()
@@ -2212,7 +2190,6 @@ Public Sub picSizer_Click()
         Height = 9060
         frmAdmin.Left = frmMain.Left + frmMain.Width + TwipsToPixels(frmAdmin.Width, 0)
         frmAdmin.Top = frmMain.Top
-        lblStatus.Visible = False
     Else
         For Each ctrl In Controls
             Select Case ctrl.Name
@@ -2329,10 +2306,8 @@ End Function
 Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
     If Not IsNumeric(textBox.text) Then
         textBox.text = CStr(valueToChange)
-        displayFieldStatus textBox, " field accepts only Numbers!" & vbCrLf & "Reverting to last correct value...", Status.Correct
     Else
         textBox.text = CStr(valueToChange)
-        displayFieldStatus textBox, " field is correct. Saving...", Status.Correct
     End If
 End Sub
 
@@ -2343,29 +2318,9 @@ Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
         verifyValue = True
     Else
         Msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
-        displayFieldStatus txtBox, Msg, Status.Error
         verifyValue = False
     End If
 End Function
-
-Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal Msg As String, msgType As Status)
-    lblStatus.Visible = True
-    Select Case msgType
-
-        Case Status.Error:
-            lblStatus.BackColor = &H8080FF
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
-        Case Status.Correct:
-            lblStatus.BackColor = &H80FF80
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
-        Case Status.Neutral:
-            lblStatus.BackColor = &H80FFFF
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
-        Case Status.Info_:
-            lblStatus.BackColor = &H8000000F
-            lblStatus.Caption = Replace(txtBox.Name, "txt", "") & Msg
-    End Select
-End Sub
 
 Private Sub selectValue(ByRef textBox As textBox)
     textBox.SelStart = 0

@@ -461,6 +461,7 @@ Public Sub SetStatus(ByVal Caption As String)
     DoEvents
     Exit Sub
     
+    
 ' Error handler
 ErrorHandler:
     HandleError "SetStatus", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext

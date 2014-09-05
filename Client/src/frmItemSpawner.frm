@@ -648,7 +648,7 @@ Public Sub tabItems_Click()
     
     If frmAdmin.ignoreChange Then
         frmAdmin.ignoreChange = False
-    ElseIf tabItems.SelectedItem.Index - 1 <> 10 Then
+    ElseIf tabItems.SelectedItem.Index - 1 <> -1 And tabItems.SelectedItem.Index - 1 <> 10 Then
         frmAdmin.lastIndex = lastTab - 1
         frmAdmin.optCat(tabItems.SelectedItem.Index - 1).Value = True
         frmAdmin.optCat_MouseUp tabItems.SelectedItem.Index - 1, 0, 0, 0, 0
