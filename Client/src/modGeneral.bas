@@ -310,9 +310,6 @@ End Sub
 Public Sub MenuState(ByVal State As Long)
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
-    
-    frmLoad.Visible = True
-    frmLoad.ZOrder (0)
             
     If Not IsConnected Then
         ConnectToServer (1)
