@@ -155,7 +155,6 @@ Public Sub LeaveMapEditorMode(Cancel As Boolean)
     InMapEditor = False
     
     If Trim$(CurrentMusic) <> Trim$(Map.Music) Then
-        Call Audio.StopMusic
         PlayMapMusic
     End If
 End Sub

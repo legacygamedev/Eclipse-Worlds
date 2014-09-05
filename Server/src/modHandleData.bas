@@ -216,7 +216,7 @@ End Sub
 ' :::::::::::::::::::::::
 Sub HandleSaveQuest(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
 Dim Buffer As clsBuffer
-Dim i As Long, II As Long
+Dim i As Long, ii As Long
 Dim QuestNum As Long
     Set Buffer = New clsBuffer
         Buffer.WriteBytes Data()
@@ -239,15 +239,15 @@ Dim QuestNum As Long
                     If .CLI(i).Max_Actions > 0 Then
                         ReDim Preserve .CLI(i).Action(1 To .CLI(i).Max_Actions)
                         
-                        For II = 1 To .CLI(i).Max_Actions
-                            .CLI(i).Action(II).TextHolder = Buffer.ReadString
-                            .CLI(i).Action(II).ActionID = Buffer.ReadLong
-                            .CLI(i).Action(II).Amount = Buffer.ReadLong
-                            .CLI(i).Action(II).MainData = Buffer.ReadLong
-                            .CLI(i).Action(II).QuadData = Buffer.ReadLong
-                            .CLI(i).Action(II).SecondaryData = Buffer.ReadLong
-                            .CLI(i).Action(II).TertiaryData = Buffer.ReadLong
-                        Next II
+                        For ii = 1 To .CLI(i).Max_Actions
+                            .CLI(i).Action(ii).TextHolder = Buffer.ReadString
+                            .CLI(i).Action(ii).ActionID = Buffer.ReadLong
+                            .CLI(i).Action(ii).Amount = Buffer.ReadLong
+                            .CLI(i).Action(ii).MainData = Buffer.ReadLong
+                            .CLI(i).Action(ii).QuadData = Buffer.ReadLong
+                            .CLI(i).Action(ii).SecondaryData = Buffer.ReadLong
+                            .CLI(i).Action(ii).TertiaryData = Buffer.ReadLong
+                        Next ii
                     End If
                 Next i
             End If
@@ -2449,12 +2449,14 @@ Sub HandleSpawnItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
     ' Location
     Where = Buffer.ReadInteger
     
-    If Moral(GetPlayerMap(index)).CanDropItem = 1 And Where = 1 Then
+    If Where = 1 And Moral(GetPlayerMap(index)).CanDropItem = 1 Then
         SpawnItem TmpItem, TmpAmount, Item(TmpItem).Data1, GetPlayerMap(index), GetPlayerX(index), GetPlayerY(index), GetPlayerName(index)
         Call PlayerMsg(index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been dropped beneath you.", BrightGreen)
     Else
-        GiveInvItem index, TmpItem, TmpAmount
-        Call PlayerMsg(index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been added to you Inventory.", BrightGreen)
+        If CanPlayerPickupItem(index, TmpItem, TmpAmount) Then
+            GiveInvItem index, TmpItem, TmpAmount
+            Call PlayerMsg(index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been added to you Inventory.", BrightGreen)
+        End If
     End If
     
     Set Buffer = Nothing

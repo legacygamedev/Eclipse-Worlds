@@ -394,7 +394,7 @@ End Sub
 Private Sub updateMaxLimit()
     If Me.Visible = True And listItems.listItems.count > 0 Then
         Dim stackable As Boolean
-        'stackable = Item(currentlyListedIndexes(listItems.SelectedItem.Index - 1)).stackable
+        stackable = Item(currentlyListedIndexes(listItems.SelectedItem.Index - 1)).stackable
         If radioGround.Value And Not stackable Then
             currentMaxLimit = MAX_MAP_ITEMS
         ElseIf Not stackable Then
@@ -625,7 +625,7 @@ Public Sub tabItems_Click()
     Set listItems.Icons = Nothing
     Set listItems.SmallIcons = Nothing
     itemsImageList.ListImages.Clear
-        
+    
     If tabItems.SelectedItem.Index = 1 Then
         generateRecentItems
     Else
@@ -648,7 +648,7 @@ Public Sub tabItems_Click()
     
     If frmAdmin.ignoreChange Then
         frmAdmin.ignoreChange = False
-    ElseIf tabItems.SelectedItem.Index - 1 <> 10 Then
+    Else
         frmAdmin.lastIndex = lastTab - 1
         frmAdmin.optCat(tabItems.SelectedItem.Index - 1).Value = True
         frmAdmin.optCat_MouseUp tabItems.SelectedItem.Index - 1, 0, 0, 0, 0

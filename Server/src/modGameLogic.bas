@@ -59,15 +59,34 @@ Function FindPlayer(ByVal Name As String) As Long
 End Function
 
 Sub SpawnItem(ByVal ItemNum As Integer, ByVal ItemVal As Long, ByVal ItemDur As Integer, ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal playerName As String = vbNullString)
-    Dim i As Long
+    Dim i As Long, ii As Long
 
     ' Check for subscript out of range
     If ItemNum < 1 Or ItemNum > MAX_ITEMS Or MapNum <= 0 Or MapNum > MAX_MAPS Then Exit Sub
-
-    ' Find open map item slot
-    i = FindOpenMapItemSlot(MapNum)
     
-    Call SpawnItemSlot(i, ItemNum, ItemVal, ItemDur, MapNum, X, Y, playerName)
+    If Item(ItemNum).Stackable = 1 Then
+        ' Find open map item slot
+        i = FindOpenMapItemSlot(MapNum)
+        
+        Call SpawnItemSlot(i, ItemNum, ItemVal, ItemDur, MapNum, X, Y, playerName)
+    Else
+        If Item(ItemNum).Type = ITEM_TYPE_EQUIPMENT Then
+            If ItemVal = 0 Then ItemVal = 1
+        End If
+        
+        For ii = 1 To ItemVal
+            ' Find open map item slot
+            i = FindOpenMapItemSlot(MapNum)
+
+            If i <= 0 Or i > MAX_MAP_ITEMS Then Exit For
+            
+            If Item(ItemNum).Type <> ITEM_TYPE_EQUIPMENT Then
+                Call SpawnItemSlot(i, ItemNum, 1, ItemDur, MapNum, X, Y, playerName)
+            Else
+                Call SpawnItemSlot(i, ItemNum, 0, ItemDur, MapNum, X, Y, playerName)
+            End If
+        Next
+    End If
 End Sub
 
 Sub SpawnItemSlot(ByVal MapItemSlot As Long, ByVal ItemNum As Integer, ByVal ItemVal As Long, ByVal ItemDur As Integer, ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal playerName As String = vbNullString, Optional ByVal CanDespawn As Boolean = True)

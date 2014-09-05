@@ -982,6 +982,10 @@ Public Sub LogoutGame()
     ' Send logout packet
     Call SendLeaveGame
 
+    Call Audio.StopMusic
+    Call Audio.PlayMusic(Options.MenuMusic)
+    Call Audio.StopMapSounds
+        
     CloseInterfaces
     GUIVisible = True
     ButtonsVisible = False
@@ -1022,9 +1026,6 @@ Public Sub LogoutGame()
     SpellBuffer = 0
     SpellBufferTimer = 0
     TmpCurrencyItem = 0
-    
-    ' Show the menu
-    frmMenu.Visible = True
     
     ' Hide main form stuffs
     frmMain.txtChat.text = vbNullString

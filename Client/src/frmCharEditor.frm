@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmCharEditor 
    BorderStyle     =   3  'Fixed Dialog
@@ -619,7 +619,7 @@ End Sub
 
 Private Sub Form_Load()
     listCharacters.listItems.Clear
-    listCharacters.ColumnHeaders.item(1).Width = frmCharEditor.listCharacters.Width - 800
+    listCharacters.ColumnHeaders.Item(1).Width = frmCharEditor.listCharacters.Width - 800
     LastCharSpriteTimer = timeGetTime
     frmCharEditor.Width = 2865
     upSprite.max = NumCharacters
@@ -634,15 +634,15 @@ Public Sub ResetCharList()
     Length = UBound(charList)
     For i = 0 To Length
         listCharacters.listItems.Add , , charList(i, 0)
-        listCharacters.listItems.item(i + 1).SubItems(1) = charList(i, 1)
+        listCharacters.listItems.Item(i + 1).SubItems(1) = charList(i, 1)
     Next
-    listCharacters.ColumnHeaders.item(2).Width = 800
+    listCharacters.ColumnHeaders.Item(2).Width = 800
 End Sub
 
 Public Sub fetchPlayerData()
     textureNum = -1
     txtLevel = requestedPlayer.Level
-    txtExp = requestedPlayer.Exp
+    txtExp = requestedPlayer.exp
     txtHP.text = requestedPlayer.Vital(1)
     txtMP.text = requestedPlayer.Vital(2)
     txtStr.text = requestedPlayer.Stat(1)
@@ -654,7 +654,7 @@ Public Sub fetchPlayerData()
     
     txtSprite = requestedPlayer.Sprite
     
-    labName.Caption = requestedPlayer.name
+    labName.Caption = requestedPlayer.Name
     frmCharEditor.Width = 10035
     'Gender
     If requestedPlayer.Gender = 0 Then
@@ -663,7 +663,7 @@ Public Sub fetchPlayerData()
         labGender.Caption = "Female"
     End If
     'Class
-        labClass.Caption = Class(requestedPlayer.Class).name
+        labClass.Caption = Class(requestedPlayer.Class).Name
     'Access
     Select Case requestedPlayer.Access
         Case 0: cmbAccess.ListIndex = 0
@@ -675,6 +675,7 @@ Public Sub fetchPlayerData()
     End Select
     SetSprite
 End Sub
+
 Private Sub SetSprite()
     If requestedPlayer.Sprite > 0 And requestedPlayer.Sprite <= NumCharacters Then
         If textureNum = -1 Then
@@ -752,7 +753,7 @@ Private Sub txtEnd_LostFocus()
 End Sub
 
 Private Sub txtExp_Change()
-     correctValue txtExp, requestedPlayer.Exp, 0, 9999999
+     correctValue txtExp, requestedPlayer.exp, 0, 9999999
 End Sub
 
 Private Sub txtExp_Click()
@@ -764,7 +765,7 @@ Private Sub txtEXP_GotFocus()
 End Sub
 
 Private Sub txtExp_LostFocus()
-    reviseValue txtExp, requestedPlayer.Exp
+    reviseValue txtExp, requestedPlayer.exp
 End Sub
 
 Private Sub txtFilter_Change()
@@ -780,7 +781,7 @@ Private Sub txtFilter_Change()
         For i = 0 To Length
             If InStr(LCase$(charList(i, 0)), LCase$(content)) <> 0 Then
                 listCharacters.listItems.Add , , charList(i, 0)
-                listCharacters.listItems.item(listCharacters.listItems.count).SubItems(1) = charList(i, 1)
+                listCharacters.listItems.Item(listCharacters.listItems.count).SubItems(1) = charList(i, 1)
             End If
         Next
         listCharacters.Sorted = True
@@ -913,59 +914,21 @@ End Function
 Private Sub reviseValue(ByRef textBox As textBox, ByRef valueToChange)
     If Not IsNumeric(textBox.text) Then
         textBox.text = CStr(valueToChange)
-        displayFieldStatus textBox, " field accepts only Numbers!" & vbCrLf & "Reverting to last correct value...", Status.Correct
     Else
         textBox.text = CStr(valueToChange)
-        displayFieldStatus textBox, " field is correct. Saving...", Status.Correct
     End If
 End Sub
 
 Private Function verifyValue(txtBox As textBox, min As Long, max As Long)
-    Dim msg As String
+    Dim Msg As String
     
     If (CLng(txtBox.text) >= min And CLng(txtBox.text) <= max) Then
         verifyValue = True
     Else
-        msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
-        displayFieldStatus txtBox, msg, Status.Error
+        Msg = " field accepts only values: " & CStr(min) & " < value < " & CStr(max) & "." & vbCrLf & "Reverting value..."
         verifyValue = False
     End If
 End Function
-
-Private Sub DisplayStatus(ByVal msg As String, msgType As Byte)
-    Select Case msgType
-        Case Status.Error:
-            lStatus.BackColor = &H8080FF
-            lStatus.Caption = msg
-        Case Status.Correct:
-            lStatus.BackColor = &H80FF80
-            lStatus.Caption = msg
-        Case Status.Neutral:
-            lStatus.BackColor = &H80FFFF
-            lStatus.Caption = msg
-        Case Status.Info_:
-            lStatus.BackColor = &H8000000F
-            lStatus.Caption = msg
-    End Select
-End Sub
-
-Public Sub displayFieldStatus(ByVal txtBox As textBox, ByVal msg As String, msgType As Status)
-    Select Case msgType
-    
-        Case Status.Error:
-            lStatus.BackColor = &H8080FF
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
-        Case Status.Correct:
-            lStatus.BackColor = &H80FF80
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
-        Case Status.Neutral:
-            lStatus.BackColor = &H80FFFF
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
-        Case Status.Info_:
-            lStatus.BackColor = &H8000000F
-            lStatus.Caption = Replace(txtBox.name, "txt", "") & msg
-    End Select
-End Sub
 
 Private Sub txtPoints_Change()
      correctValue txtPoints, requestedPlayer.Points, 0, 65535
@@ -1006,7 +969,6 @@ Private Sub txtSprite_Change()
      
      If OK Then
         SetSprite
-        displayFieldStatus txtSprite, ":" & txtSprite.text & " field is correct. Saving...", Status.Correct
      End If
 End Sub
 

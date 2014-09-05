@@ -44,7 +44,7 @@ Begin VB.Form frmAdmin
          Caption         =   "Load Textures"
          Height          =   255
          Left            =   60
-         TabIndex        =   72
+         TabIndex        =   71
          Top             =   8220
          Width           =   1365
       End
@@ -56,7 +56,7 @@ Begin VB.Form frmAdmin
          Index           =   13
          Left            =   1560
          Style           =   1  'Graphical
-         TabIndex        =   71
+         TabIndex        =   70
          Top             =   6720
          Width           =   1050
       End
@@ -69,7 +69,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   70
+         TabIndex        =   69
          Top             =   6720
          Width           =   240
       End
@@ -81,7 +81,7 @@ Begin VB.Form frmAdmin
          Left            =   2565
          ScaleHeight     =   270
          ScaleWidth      =   270
-         TabIndex        =   69
+         TabIndex        =   68
          Top             =   3105
          Width           =   300
       End
@@ -93,7 +93,7 @@ Begin VB.Form frmAdmin
          Left            =   1155
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   68
+         TabIndex        =   67
          Top             =   4425
          Visible         =   0   'False
          Width           =   240
@@ -107,7 +107,7 @@ Begin VB.Form frmAdmin
          Index           =   12
          Left            =   1560
          Style           =   1  'Graphical
-         TabIndex        =   67
+         TabIndex        =   66
          Top             =   6960
          Visible         =   0   'False
          Width           =   1050
@@ -121,7 +121,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   66
+         TabIndex        =   65
          Top             =   6960
          Visible         =   0   'False
          Width           =   240
@@ -135,7 +135,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   65
+         TabIndex        =   64
          Top             =   4590
          Width           =   240
       End
@@ -148,7 +148,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   64
+         TabIndex        =   63
          Top             =   6465
          Width           =   240
       End
@@ -161,7 +161,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   63
+         TabIndex        =   62
          Top             =   6195
          Width           =   240
       End
@@ -174,7 +174,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   62
+         TabIndex        =   61
          Top             =   5925
          Width           =   240
       End
@@ -187,7 +187,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   61
+         TabIndex        =   60
          Top             =   5670
          Width           =   240
       End
@@ -200,7 +200,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   60
+         TabIndex        =   59
          Top             =   5400
          Width           =   240
       End
@@ -213,7 +213,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   59
+         TabIndex        =   58
          Top             =   5130
          Width           =   240
       End
@@ -226,7 +226,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   58
+         TabIndex        =   57
          Top             =   4860
          Width           =   240
       End
@@ -239,7 +239,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   57
+         TabIndex        =   56
          Top             =   4335
          Width           =   240
       End
@@ -252,7 +252,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   56
+         TabIndex        =   55
          Top             =   4065
          Width           =   240
       End
@@ -265,7 +265,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   55
+         TabIndex        =   54
          Top             =   3795
          Width           =   240
       End
@@ -278,7 +278,7 @@ Begin VB.Form frmAdmin
          Left            =   2625
          ScaleHeight     =   210
          ScaleWidth      =   210
-         TabIndex        =   54
+         TabIndex        =   53
          Top             =   3525
          Width           =   240
       End
@@ -290,7 +290,7 @@ Begin VB.Form frmAdmin
          Index           =   11
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   53
+         TabIndex        =   52
          Top             =   4590
          Width           =   1065
       End
@@ -302,7 +302,7 @@ Begin VB.Form frmAdmin
          Index           =   10
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   52
+         TabIndex        =   51
          Top             =   6465
          Width           =   1065
       End
@@ -314,7 +314,7 @@ Begin VB.Form frmAdmin
          Index           =   9
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   51
+         TabIndex        =   50
          Top             =   6195
          Width           =   1065
       End
@@ -326,7 +326,7 @@ Begin VB.Form frmAdmin
          Index           =   8
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   50
+         TabIndex        =   49
          Top             =   5925
          Width           =   1065
       End
@@ -338,7 +338,7 @@ Begin VB.Form frmAdmin
          Index           =   7
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   49
+         TabIndex        =   48
          Top             =   5655
          Width           =   1065
       End
@@ -350,7 +350,7 @@ Begin VB.Form frmAdmin
          Index           =   6
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   48
+         TabIndex        =   47
          Top             =   5385
          Width           =   1065
       End
@@ -362,7 +362,7 @@ Begin VB.Form frmAdmin
          Index           =   5
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   47
+         TabIndex        =   46
          Top             =   5115
          Width           =   1065
       End
@@ -374,7 +374,7 @@ Begin VB.Form frmAdmin
          Index           =   4
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   46
+         TabIndex        =   45
          Top             =   4845
          Width           =   1065
       End
@@ -386,7 +386,7 @@ Begin VB.Form frmAdmin
          Index           =   3
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   45
+         TabIndex        =   44
          Top             =   4320
          Width           =   1065
       End
@@ -398,7 +398,7 @@ Begin VB.Form frmAdmin
          Index           =   2
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   44
+         TabIndex        =   43
          Top             =   4050
          Width           =   1065
       End
@@ -410,7 +410,7 @@ Begin VB.Form frmAdmin
          Index           =   1
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   43
+         TabIndex        =   42
          Top             =   3780
          Width           =   1065
       End
@@ -422,7 +422,7 @@ Begin VB.Form frmAdmin
          Index           =   0
          Left            =   1545
          Style           =   1  'Graphical
-         TabIndex        =   42
+         TabIndex        =   41
          Top             =   3510
          Width           =   1065
       End
@@ -432,7 +432,7 @@ Begin VB.Form frmAdmin
          Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   41
+         TabIndex        =   40
          ToolTipText     =   "Change sprites via dbl click."
          Top             =   6090
          Width           =   420
@@ -446,7 +446,7 @@ Begin VB.Form frmAdmin
          Left            =   195
          ScaleHeight     =   450
          ScaleWidth      =   450
-         TabIndex        =   40
+         TabIndex        =   39
          Top             =   6870
          Width           =   480
       End
@@ -456,7 +456,7 @@ Begin VB.Form frmAdmin
          Left            =   990
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   38
+         TabIndex        =   37
          ToolTipText     =   "Revive Stones"
          Top             =   5640
          Width           =   420
@@ -467,7 +467,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   37
+         TabIndex        =   36
          ToolTipText     =   "Reset Scrolls"
          Top             =   5640
          Width           =   420
@@ -478,7 +478,7 @@ Begin VB.Form frmAdmin
          Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   36
+         TabIndex        =   35
          ToolTipText     =   "Teleport scrolls"
          Top             =   5640
          Width           =   420
@@ -489,7 +489,7 @@ Begin VB.Form frmAdmin
          Left            =   990
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   35
+         TabIndex        =   34
          ToolTipText     =   "Spells, scrolls, magic."
          Top             =   5205
          Width           =   420
@@ -500,7 +500,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   34
+         TabIndex        =   33
          ToolTipText     =   "Player's titles"
          Top             =   5205
          Width           =   420
@@ -511,7 +511,7 @@ Begin VB.Form frmAdmin
          Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   33
+         TabIndex        =   32
          ToolTipText     =   "Potions, elixirs, food."
          Top             =   5205
          Width           =   420
@@ -522,7 +522,7 @@ Begin VB.Form frmAdmin
          Left            =   990
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   32
+         TabIndex        =   31
          ToolTipText     =   "Things you can wear"
          Top             =   4755
          Width           =   420
@@ -533,7 +533,7 @@ Begin VB.Form frmAdmin
          Left            =   540
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   31
+         TabIndex        =   30
          ToolTipText     =   "Things without a type"
          Top             =   4755
          Width           =   420
@@ -544,7 +544,7 @@ Begin VB.Form frmAdmin
          Left            =   90
          MaskColor       =   &H80000001&
          Style           =   1  'Graphical
-         TabIndex        =   30
+         TabIndex        =   29
          ToolTipText     =   "Recently spawned items"
          Top             =   4755
          Width           =   420
@@ -552,7 +552,7 @@ Begin VB.Form frmAdmin
       Begin MSComCtl2.UpDown rcSwitcher 
          Height          =   255
          Left            =   765
-         TabIndex        =   28
+         TabIndex        =   27
          Top             =   6990
          Width           =   480
          _ExtentX        =   847
@@ -567,7 +567,7 @@ Begin VB.Form frmAdmin
          Enabled         =   0   'False
          Height          =   255
          Left            =   60
-         TabIndex        =   27
+         TabIndex        =   26
          Top             =   7935
          Width           =   1365
       End
@@ -578,7 +578,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   285
          Left            =   60
-         TabIndex        =   26
+         TabIndex        =   25
          Text            =   "Recent Amount"
          Top             =   7620
          Width           =   1365
@@ -592,7 +592,7 @@ Begin VB.Form frmAdmin
          ScaleHeight     =   46
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   23
+         TabIndex        =   22
          Top             =   1995
          Width           =   510
       End
@@ -601,7 +601,7 @@ Begin VB.Form frmAdmin
          Appearance      =   0  'Flat
          Height          =   285
          Left            =   1770
-         TabIndex        =   22
+         TabIndex        =   21
          Text            =   "0"
          Top             =   2760
          Width           =   600
@@ -615,7 +615,7 @@ Begin VB.Form frmAdmin
          ItemData        =   "frmAdmin.frx":038A
          Left            =   585
          List            =   "frmAdmin.frx":039D
-         TabIndex        =   21
+         TabIndex        =   20
          Text            =   "Player's Access"
          Top             =   780
          Width           =   1695
@@ -628,7 +628,7 @@ Begin VB.Form frmAdmin
          ItemData        =   "frmAdmin.frx":03CE
          Left            =   240
          List            =   "frmAdmin.frx":03D0
-         TabIndex        =   20
+         TabIndex        =   19
          Text            =   "Choose Player"
          Top             =   390
          Width           =   2055
@@ -641,7 +641,7 @@ Begin VB.Form frmAdmin
          Left            =   2370
          ScaleHeight     =   285
          ScaleWidth      =   345
-         TabIndex        =   19
+         TabIndex        =   18
          Top             =   390
          Width           =   375
       End
@@ -862,7 +862,7 @@ Begin VB.Form frmAdmin
       Begin MSComCtl2.UpDown upSprite 
          Height          =   555
          Left            =   2430
-         TabIndex        =   24
+         TabIndex        =   23
          Top             =   2070
          Width           =   255
          _ExtentX        =   450
@@ -901,7 +901,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   195
          Left            =   435
-         TabIndex        =   39
+         TabIndex        =   38
          Top             =   6645
          Width           =   555
       End
@@ -913,7 +913,7 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   195
          Left            =   -45
-         TabIndex        =   29
+         TabIndex        =   28
          Top             =   7380
          Width           =   1470
       End
@@ -934,31 +934,9 @@ Begin VB.Form frmAdmin
          ForeColor       =   &H00800080&
          Height          =   255
          Left            =   240
-         TabIndex        =   25
+         TabIndex        =   24
          Top             =   4440
          Width           =   1035
-      End
-      Begin VB.Label lblStatus 
-         Alignment       =   2  'Center
-         Appearance      =   0  'Flat
-         BackColor       =   &H80000002&
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   375
-         Left            =   60
-         TabIndex        =   18
-         Top             =   8220
-         Visible         =   0   'False
-         Width           =   2760
-         WordWrap        =   -1  'True
       End
       Begin VB.Label lblMap 
          Alignment       =   2  'Center
@@ -1848,7 +1826,7 @@ Public Sub optCat_MouseUp(Index As Integer, Button As Integer, Shift As Integer,
         End Select
         lblCat.Caption = currentCategory
     End If
-        If lastIndex <> -1 Then
+        If lastIndex <> -1 And lastIndex <> 10 Then
             If optCat(lastIndex).Value = False Then
                 optCat(lastIndex).Picture = LoadResPicture(100 + lastIndex, vbResBitmap)
             End If
