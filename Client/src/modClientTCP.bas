@@ -1084,7 +1084,8 @@ Public Sub SendDropItem(ByVal InvNum As Byte, ByVal Amount As Long)
     If InvNum < 1 Or InvNum > MAX_INV Then Exit Sub
     If PlayerInv(InvNum).num < 1 Or PlayerInv(InvNum).num > MAX_ITEMS Then Exit Sub
     If Item(GetPlayerInvItemNum(MyIndex, InvNum)).stackable = 1 Then
-        If Amount < 1 Or Amount > PlayerInv(InvNum).Value Then Exit Sub
+        If Amount < 1 Then Exit Sub
+        If Amount > PlayerInv(InvNum).Value Then Amount = PlayerInv(InvNum).Value
     End If
     
     ' Make sure it is not bound

@@ -329,6 +329,7 @@ Sub HandleAlertMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As
     frmLoad.Visible = False
     
     If InGame Then
+        IsLogging = True
         LogoutGame
     End If
     

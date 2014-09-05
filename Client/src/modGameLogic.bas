@@ -2425,7 +2425,7 @@ Public Sub PlayMapMusic()
     Dim i As Long
     Dim MusicFile As String
     
-    If frmMain.Visible = False Then Exit Sub
+    If frmMain.Visible = False Or IsLogging Then Exit Sub
     
     Call Audio.StopMusic
     

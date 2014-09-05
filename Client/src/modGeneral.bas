@@ -978,8 +978,6 @@ Public Sub ClearMenuPictures()
 End Sub
 
 Public Sub LogoutGame()
-    IsLogging = True
-    
     ' Send logout packet
     Call SendLeaveGame
 
@@ -1038,6 +1036,8 @@ Public Sub LogoutGame()
     
     Call ToggleButtons(False)
     Call frmMain.ResetMainButtons
+    frmMain.picBank.Visible = False
+    InBank = False
     InGame = False
 End Sub
 

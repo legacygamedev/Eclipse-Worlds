@@ -1846,6 +1846,8 @@ Private Sub cmbType_Click()
     If (cmbType.ListIndex = ITEM_TYPE_EQUIPMENT) Then
         fraEquipment.Visible = True
         Me.cmbEquipSlot.ListIndex = Item(EditorIndex).EquipSlot
+        Me.chkStackable.Value = 0
+        Me.chkStackable.Enabled = False
     Else
         chkStackable.Enabled = True
         fraEquipment.Visible = False
@@ -2097,9 +2099,6 @@ Private Sub scrlDurability_Change()
     
     If Item(EditorIndex).Data1 > 0 Then
         chkStackable.Value = 0
-        chkStackable.Enabled = False
-    Else
-        chkStackable.Enabled = True
     End If
     Exit Sub
     

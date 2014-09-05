@@ -1415,8 +1415,8 @@ Sub HandleMapDropItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr
     If GetPlayerInvItemNum(index, InvNum) < 1 Or GetPlayerInvItemNum(index, InvNum) > MAX_ITEMS Then Exit Sub
     
     If Item(GetPlayerInvItemNum(index, InvNum)).Stackable = 1 Then
-        If GetPlayerInvItemValue(index, InvNum) < Amount Then Amount = GetPlayerInvItemValue(index, InvNum)
-        If Amount < 1 Or Amount > GetPlayerInvItemValue(index, InvNum) Then Exit Sub
+        If Amount < 1 Then Exit Sub
+        If Amount > GetPlayerInvItemValue(index, InvNum) Then Amount = GetPlayerInvItemValue(index, InvNum)
     Else
         If Not Amount = 0 Then Exit Sub
     End If
@@ -2736,8 +2736,6 @@ Sub HandleCloseBank(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr A
     
     Set Buffer = New clsBuffer
     
-    SaveAccount index
-    
     TempPlayer(index).InBank = False
     
     Set Buffer = Nothing
@@ -3328,7 +3326,6 @@ Sub HandleGuildCreate(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr
                 Call GlobalMsg(GetPlayerName(index) & " has founded the guild " & Name & "!", Yellow)
                 Call SendPlayerGuild(index)
                 Call SaveGuilds
-                Call SaveAccount(index)
                 Exit Sub
             End If
         Next
