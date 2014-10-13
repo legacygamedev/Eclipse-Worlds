@@ -20,9 +20,6 @@ Public DX7 As New DirectX7  ' Master Object, early binding
 Public gameDestroyed As Boolean
 Public readyToExit As Boolean
 
-' Swear filter
-Public SwearString As String
-
 Public Sub Main()
     ' Make sure the application isn't already running
     If App.PrevInstance Then
@@ -32,6 +29,9 @@ Public Sub Main()
     
     ChDrive App.Path
     ChDir App.Path
+    
+     ' Setup screen
+    ResizeScreen 25, 19
 
     ' Set the high-resolution timer
     timeBeginPeriod 1
@@ -49,17 +49,6 @@ Public Sub Main()
     ' Load options
     Call SetStatus("Loading Options...")
     LoadOptions
-    
-    ' Setup screen
-    ResizeScreen 25, 18
-
-    ' Use the swear string to store the original swear words
-    SwearString = SwearWords
-    SwearArray = Split(SwearString, ", ")
-    
-    ' Use the swear string to store the replace swear words
-    SwearString = ReplaceSwearWords
-    ReplaceSwearArray = Split(SwearString, ", ")
     
     ' Load the images used for the menu and main forms
     Call SetStatus("Loading Menu...")
@@ -98,7 +87,7 @@ Public Sub Main()
     vbQuote = ChrW$(34)
     
     ' Update the form with the game's Name before it's loaded
-    frmMain.Caption = GAME_Name
+    frmMain.Caption = GAME_NAME
     
     ' Initialize DirectX
     Call SetStatus("Initializing DirectX...")
@@ -158,7 +147,7 @@ Public Sub Main()
     
     ' Set the form visible
     frmMenu.Show
-    BringWindowToTop frmMenu.hWnd
+    If Not GetForegroundWindow() = frmMenu.hWnd Then BringWindowToTop frmMenu.hWnd
     
     ' Hide all pictures
     Call ClearMenuPictures
@@ -208,7 +197,7 @@ ErrorHandler:
 End Sub
 
 Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
-    Dim i As Long
+    Dim I As Long
 
     ' If we can't find the interface
     On Error GoTo ErrorHandler
@@ -219,8 +208,8 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
         Exit Sub
     End If
     
-    For i = 1 To MAX_MENUBUTTONS
-        Call RenderButton_Menu(i)
+    For I = 1 To MAX_MENUBUTTONS
+        Call RenderButton_Menu(I)
     Next
 
     ' Menu
@@ -263,8 +252,8 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     frmMain.imgEXPBar.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\experience.jpg")
     
     ' Gui Buttons
-    For i = 1 To MAX_MAINBUTTONS
-        frmMain.picButton(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\buttons\" & MainButton(i).FileName & "_norm.jpg")
+    For I = 1 To MAX_MAINBUTTONS
+        frmMain.picButton(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\buttons\" & MainButton(I).FileName & "_norm.jpg")
     Next
     
     ' Equipment Slots
@@ -291,9 +280,9 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     EXPBar_Width = frmMain.imgEXPBar.Width
         
     ' Main - Party Bars
-    For i = 1 To MAX_PARTY_MEMBERS
-        frmMain.imgPartyHealth(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_health.jpg")
-        frmMain.imgPartySpirit(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_spirit.jpg")
+    For I = 1 To MAX_PARTY_MEMBERS
+        frmMain.imgPartyHealth(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_health.jpg")
+        frmMain.imgPartySpirit(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_spirit.jpg")
     Next
     
     ' Party
@@ -312,6 +301,7 @@ Public Sub MenuState(ByVal State As Long)
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
             
     If Not IsConnected Then
+        frmMenu.lblLAccept.Enabled = False
         ConnectToServer (1)
     End If
     
@@ -340,11 +330,11 @@ Public Sub MenuState(ByVal State As Long)
                 Exit Sub
             End If
     End Select
+    
+    frmMenu.lblLAccept.Enabled = True
 
-    If frmLoad.Visible Then
-        If Not IsConnected Then
-            Call NotConnected
-        End If
+    If Not IsConnected Then
+        Call NotConnected
     End If
     Exit Sub
     
@@ -386,7 +376,8 @@ Sub GameInit()
     
     ' Show the main form
     frmMain.Show
-    frmMain.picScreen.Visible = True
+    If Not GetForegroundWindow() = frmMain.hWnd Then BringWindowToTop frmMain.hWnd
+    
     'AdvMapEditor
     
     ' Stop the song from playing
@@ -409,7 +400,9 @@ End Sub
 Public Sub DestroyGame()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
     gameDestroyed = True
+    
     ' Turn off the timer
     StopTimer = True
     
@@ -417,13 +410,18 @@ Public Sub DestroyGame()
     If InGame Then
         LogoutGame
     End If
+    
     ' Destroy connection
     Call DestroyTCP
+    
     ' Destroy DirectX
     DestroyDX8
+    
+    Sleep 1000
+    
     ' Destroy audio engine
     BASS_Free
-    Unload frmMenu
+    
     readyToExit = True
     Exit Sub
     
@@ -602,7 +600,7 @@ ErrorHandler:
 End Function
 
 Public Function IsStringLegal(ByVal sInput As String) As Boolean
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -610,8 +608,8 @@ Public Function IsStringLegal(ByVal sInput As String) As Boolean
     ' Prevent high ascii chars
     Dim inputLen As Long
     inputLen = Len(sInput)
-    For i = 1 To inputLen
-        If Asc(Mid$(sInput, i, 1)) < vbKeySpace Or Asc(Mid$(sInput, i, 1)) > vbKeyF15 Then
+    For I = 1 To inputLen
+        If Asc(Mid$(sInput, I, 1)) < vbKeySpace Or Asc(Mid$(sInput, I, 1)) > vbKeyF15 Then
             Call AlertMsg("You cannot use high ASCII characters in your Name, please re-enter.")
             Exit Function
         End If
@@ -761,14 +759,14 @@ ErrorHandler:
 End Sub
 
 Public Sub ResetMenuButtons()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 1 To MAX_MENUBUTTONS
-        If Not CurButton_Menu = i Then
-            frmMenu.ImgButton(i).Picture = LoadPicture(App.Path & GFX_PATH & "gui\menu\buttons\" & MenuButton(i).FileName & "_norm.jpg")
+    For I = 1 To MAX_MENUBUTTONS
+        If Not CurButton_Menu = I Then
+            frmMenu.ImgButton(I).Picture = LoadPicture(App.Path & GFX_PATH & "gui\menu\buttons\" & MenuButton(I).FileName & "_norm.jpg")
         End If
     Next
     Exit Sub
@@ -830,21 +828,21 @@ ErrorHandler:
 End Sub
 
 Public Sub PopulateLists()
-    Dim StrLoad As String, i As Long
+    Dim StrLoad As String, I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Cache music list
     StrLoad = Dir$(App.Path & MUSIC_PATH & "*")
-    i = 1
+    I = 1
     
     If Not StrLoad = vbNullString Then
         Do While StrLoad > vbNullString
-            ReDim Preserve MusicCache(1 To i) As String
-            MusicCache(i) = StrLoad
+            ReDim Preserve MusicCache(1 To I) As String
+            MusicCache(I) = StrLoad
             StrLoad = Dir
-            i = i + 1
+            I = I + 1
         Loop
     Else
         ReDim Preserve MusicCache(1) As String
@@ -853,18 +851,18 @@ Public Sub PopulateLists()
     
     ' Cache sound list
     StrLoad = Dir$(App.Path & SOUND_PATH & "*")
-    i = 1
+    I = 1
     
     If Not StrLoad = vbNullString Then
         Do While StrLoad > vbNullString
-            ReDim Preserve SoundCache(1 To i) As String
-            SoundCache(i) = StrLoad
+            ReDim Preserve SoundCache(1 To I) As String
+            SoundCache(I) = StrLoad
             StrLoad = Dir
-            i = i + 1
+            I = I + 1
         Loop
     Else
         ReDim Preserve SoundCache(1) As String
-        SoundCache(i) = vbNullString
+        SoundCache(I) = vbNullString
     End If
     Exit Sub
     
@@ -910,32 +908,6 @@ ErrorHandler:
     HandleError "NotConnected", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
-
-Public Function CheckMessage(ByVal Msg As String) As String
-    Dim i As Long
-    
-    ' If debug mode, handle error then exit out
-    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
-    
-    CheckMessage = Msg
-    
-    ' Do nothing if the filter is turned off
-    If Options.SwearFilter = 0 Then Exit Function
-    
-    Dim Size As Long
-    
-    Size = UBound(SwearArray)
-    
-    For i = 0 To Size
-        CheckMessage = Replace$(CheckMessage, SwearArray(i), ReplaceSwearArray(i), , , vbTextCompare)
-    Next
-    Exit Function
-    
-' Error handler
-ErrorHandler:
-    HandleError "CheckMessage", "modGeneral", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Function
 
 Public Sub ResetOptionButtons(Optional ByVal IgnoreMe As Byte = 0)
     If Not IgnoreMe = OptionButtons.Opt_Music Then Call RenderOptionButton(frmMain.picOptionMusic, OptionButtons.Opt_Music, Options.Music)
@@ -990,6 +962,10 @@ Public Sub LogoutGame()
     frmMenu.picMain.Visible = True
     ResetMenuButtons
     CurButton_Menu = 0
+     frmMenu.lblLAccept.Enabled = True
+    HPBarInit = False
+    MPBarInit = False
+    EXPBarInit = False
 
     ' Close out all the editors
     Dim tmpForm As Form

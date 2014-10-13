@@ -69,7 +69,7 @@ Public Function getCurrentMapLayerName() As String
             Exit For
         End If
     Next
-    frmMain.lblTitle = "UBER Map Editor - " & "Layer: " & CurrentLayer
+    'frmMain.lblTitle = "UBER Map Editor - " & "Layer: " & CurrentLayer
 End Function
 
 Public Sub MapEditorMode(switch As Boolean)

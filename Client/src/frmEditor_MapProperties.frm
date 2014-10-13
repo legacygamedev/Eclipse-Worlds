@@ -165,8 +165,8 @@ Begin VB.Form frmEditor_MapProperties
          Width           =   585
       End
    End
-   Begin VB.CommandButton cmdSave 
-      Caption         =   "Save"
+   Begin VB.CommandButton cmdOK 
+      Caption         =   "OK"
       Height          =   375
       Left            =   9480
       TabIndex        =   52
@@ -626,7 +626,7 @@ Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    frmMain.cmdSave.Enabled = True
+    'frmMain.cmdOK.Enabled = True
     frmMain.cmdRevert.Enabled = True
     Exit Sub
     
@@ -797,7 +797,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub cmdSave_Click()
+Public Sub cmdOK_Click()
     Dim i As Long
     Dim sTemp As Long
     Dim X As Long, X2 As Long
@@ -889,7 +889,7 @@ Public Sub cmdSave_Click()
     
 ' Error handler
 ErrorHandler:
-    HandleError "cmdSave_Click", "frmEditor_MapProperties", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "cmdOK_Click", "frmEditor_MapProperties", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

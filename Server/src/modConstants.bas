@@ -5,9 +5,6 @@ Option Explicit
 Public Declare Sub CopyMemory Lib "Kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
 Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lParam As Long) As Long
 
-' Exp Rate
-Public EXP_RATE As Byte
-
 ' Version constants
 Public Const MAX_LINES As Integer = 500 ' Used for frmServer.txtText
 
@@ -15,17 +12,10 @@ Public Const MAX_LINES As Integer = 500 ' Used for frmServer.txtText
 ' * The values below must match with the client's values *
 ' ********************************************************
 ' General constants
-Public Const MAX_MAPS As Byte = 100
 Public Const MAX_PLAYERS As Byte = 70
-Public Const MAX_ITEMS As Byte = 100
-Public Const MAX_NPCS As Byte = 100
-Public Const MAX_ANIMATIONS As Byte = 100
 Public Const MAX_MAP_ITEMS As Byte = 50
 Public Const MAX_MAP_NPCS As Byte = 50
-Public Const MAX_SHOPS As Byte = 50
-Public Const MAX_SPELLS As Byte = 100
 Public Const MAX_TRADES As Byte = 30
-Public Const MAX_RESOURCES As Byte = 100
 Public Const MAX_BANK As Byte = 88
 Public Const MAX_NPC_DROPS As Byte = 25
 Public Const MAX_BUFFS As Byte = 30
@@ -33,17 +23,27 @@ Public Const MAX_PARTYS As Byte = 35
 Public Const MAX_PARTY_MEMBERS As Byte = 4
 Public Const MAX_HOTBAR As Byte = 12
 Public Const MAX_GUILDS As Byte = 100
-Public Const MAX_BANS As Byte = 100
-Public Const MAX_TITLES As Byte = 50
-Public Const MAX_MORALS As Byte = 10
-Public Const MAX_CLASSES As Byte = 10
-Public Const MAX_EMOTICONS As Byte = 50
 Public Const MAX_SWITCHES As Long = 1000
 Public Const MAX_VARIABLES As Long = 1000
 Public Const MAX_COMMON_EVENTS As Long = 100
 Public Const MAX_NPC_SPELLS As Byte = 5
 Public Const MAX_CHARS As Byte = 1
-Public Const MAX_QUESTS As Long = 100
+
+' Game editor constants
+Public Const EDITOR_ANIMATION As Byte = 0
+Public Const EDITOR_BAN As Byte = 1
+Public Const EDITOR_CLASS As Byte = 2
+Public Const EDITOR_EMOTICON As Byte = 3
+Public Const EDITOR_ITEM As Byte = 4
+Public Const EDITOR_MAP As Byte = 5
+Public Const EDITOR_MORAL As Byte = 6
+Public Const EDITOR_NPC As Byte = 7
+Public Const EDITOR_RESOURCE As Byte = 8
+Public Const EDITOR_SHOP As Byte = 9
+Public Const EDITOR_SPELL As Byte = 10
+Public Const EDITOR_TITLE As Byte = 11
+Public Const EDITOR_EVENTS As Byte = 12
+Public Const EDITOR_QUESTS As Byte = 13
 
 ' Gender constants
 Public Const GENDER_MALE As Byte = 0
@@ -54,9 +54,6 @@ Public Const MIN_MAPX As Byte = 25
 Public Const MIN_MAPY As Byte = 20
 
 ' Player constants
-Public Const MAX_LEVEL As Byte = 99
-Public Const STATS_LEVEL As Byte = 5
-Public Const MAX_STAT As Integer = 255
 Public Const MAX_PEOPLE As Byte = 100
 Public Const MAX_GUILD_MEMBERS As Byte = 100
 Public Const MAX_PLAYER_SPELLS As Byte = 35

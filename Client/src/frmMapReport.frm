@@ -15,6 +15,14 @@ Begin VB.Form frmMapReport
    ScaleWidth      =   306
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdChangeDataSize 
+      Caption         =   "Change Data Size"
+      Height          =   375
+      Left            =   2280
+      TabIndex        =   6
+      Top             =   4080
+      Width           =   1455
+   End
    Begin VB.CommandButton cmdOpenMaps 
       Caption         =   "Open Maps"
       BeginProperty Font 
@@ -27,10 +35,10 @@ Begin VB.Form frmMapReport
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   1680
+      Left            =   900
       TabIndex        =   4
       Top             =   4080
-      Width           =   1245
+      Width           =   1185
    End
    Begin VB.CommandButton cmdWarp 
       Caption         =   "Warp"
@@ -47,7 +55,7 @@ Begin VB.Form frmMapReport
       Left            =   120
       TabIndex        =   3
       Top             =   4080
-      Width           =   1245
+      Width           =   705
    End
    Begin VB.CommandButton cmdClose 
       Caption         =   "Close"
@@ -61,10 +69,10 @@ Begin VB.Form frmMapReport
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   3240
+      Left            =   3780
       TabIndex        =   5
       Top             =   4080
-      Width           =   1245
+      Width           =   705
    End
    Begin VB.Frame Frame1 
       Caption         =   "Maps"
@@ -100,7 +108,7 @@ Begin VB.Form frmMapReport
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   2790
+         Height          =   3180
          Left            =   120
          TabIndex        =   2
          Top             =   600
@@ -113,6 +121,51 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Sub cmdChangeDataSize_Click()
+    Dim Res As VbMsgBoxResult, val As String
+    Dim dataModified As Boolean, i As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    For i = 1 To MAX_BANS
+        If Ban_Changed(i) Then
+        
+            dataModified = True
+            Exit For
+        End If
+    Next
+    
+    If dataModified Then
+        Res = MsgBox("Do you want to continue and discard the changes you made to your data?", vbYesNo)
+        
+        If Res = vbNo Then Exit Sub
+    End If
+    
+    val = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_MAPS)
+    
+    If Not IsNumeric(val) Then
+        Exit Sub
+    End If
+    
+    Res = Abs(val)
+    
+    If Res = MAX_MAPS Then Exit Sub
+    If Res < GetPlayerMap(Index) Then Exit Sub
+    
+    Call SendChangeDataSize(Res, EDITOR_MAP)
+    
+    MAX_MAPS = Res
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdChangeDataSize_Click", "frmMapReport", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub cmdClose_Click()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler

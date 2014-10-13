@@ -35,6 +35,8 @@ Function GetPlayerChar(ByVal index As Byte) As Byte
 
     If index < 1 Or index > MAX_PLAYERS Then Exit Function
     GetPlayerChar = Account(index).CurrentChar
+    
+    If GetPlayerChar = 0 Then GetPlayerChar = 1
 End Function
 
 Sub SetPlayerChar(ByVal index As Long, ByVal Char As Byte)
@@ -90,6 +92,7 @@ End Sub
 Function GetPlayerTitle(ByVal index As Long, ByVal TitleNum As Long) As Long
 
     If index < 1 Or index > MAX_PLAYERS Then Exit Function
+    ReDim Account(index).Chars(GetPlayerChar(index)).Title(MAX_TITLES)
     GetPlayerTitle = Account(index).Chars(GetPlayerChar(index)).Title(TitleNum)
 End Function
 
@@ -125,31 +128,31 @@ Sub SetPlayerLevel(ByVal index As Long, ByVal Level As Byte, Optional ByVal Plus
     If Not PlusVal Then
         Account(index).Chars(GetPlayerChar(index)).Level = Level
     Else
-        If Not Account(index).Chars(GetPlayerChar(index)).Level + Level > MAX_LEVEL And Not Account(index).Chars(GetPlayerChar(index)).Level + Level < 1 Then
+        If Not Account(index).Chars(GetPlayerChar(index)).Level + Level > Options.MaxLevel And Not Account(index).Chars(GetPlayerChar(index)).Level + Level < 1 Then
             Account(index).Chars(GetPlayerChar(index)).Level = Account(index).Chars(GetPlayerChar(index)).Level + Level
         End If
     End If
 End Sub
 
 Sub SetPlayerSkill(ByVal index As Long, ByVal Level As Byte, ByVal SkillNum As Byte, Optional ByVal PlusVal As Boolean = False)
-Dim I As Long, NPCNum As Long, Parse() As String
+Dim i As Long, NPCNum As Long, Parse() As String
 
         If index < 1 Or index > MAX_PLAYERS Then Exit Sub
         
-        For I = 1 To MAX_QUESTS
-            Parse() = Split(HasQuestSkill(index, I, True), "|")
+        For i = 1 To MAX_QUESTS
+            Parse() = Split(HasQuestSkill(index, i, True), "|")
             If UBound(Parse()) > 0 Then
                 NPCNum = Parse(0)
                 If NPCNum > 0 Then
-                        Call SendShowTaskCompleteOnNPC(index, NPCNum, False)
+                    Call SendShowTaskCompleteOnNPC(index, NPCNum, False)
                 End If
             Else
-                NPCNum = HasQuestSkill(index, I)
+                NPCNum = HasQuestSkill(index, i)
                 If NPCNum > 0 Then
                         Call SendShowTaskCompleteOnNPC(index, NPCNum, True)
                 End If
             End If
-        Next I
+        Next i
         
     If Not PlusVal Then
         Account(index).Chars(GetPlayerChar(index)).Skills(SkillNum).Level = Level
@@ -233,16 +236,16 @@ Sub SetPlayerVital(ByVal index As Long, ByVal Vital As Vitals, ByVal Value As Lo
 End Sub
 
 Function GetPlayerStat(ByVal index As Long, ByVal Stat As Stats) As Long
-    Dim X As Long, I As Long
+    Dim X As Long, i As Long
     
     If index < 1 Or index > MAX_PLAYERS Then Exit Function
     
     X = Account(index).Chars(GetPlayerChar(index)).Stat(Stat)
     
-    For I = 1 To Equipment.Equipment_Count - 1
-        If Account(index).Chars(GetPlayerChar(index)).Equipment(I).Num > 0 Then
-            If Item(Account(index).Chars(GetPlayerChar(index)).Equipment(I).Num).Add_Stat(Stat) > 0 Then
-                X = X + Item(Account(index).Chars(GetPlayerChar(index)).Equipment(I).Num).Add_Stat(Stat)
+    For i = 1 To Equipment.Equipment_Count - 1
+        If Account(index).Chars(GetPlayerChar(index)).Equipment(i).Num > 0 Then
+            If Item(Account(index).Chars(GetPlayerChar(index)).Equipment(i).Num).Add_Stat(Stat) > 0 Then
+                X = X + Item(Account(index).Chars(GetPlayerChar(index)).Equipment(i).Num).Add_Stat(Stat)
             End If
         End If
     Next
@@ -531,7 +534,7 @@ End Sub
 Function GetPlayerHDSerial(ByVal index As Long) As String
     
     If index < 1 Or index > MAX_PLAYERS Then Exit Function
-    GetPlayerHDSerial = Trim$(TempPlayer(index).HDSerial)
+    GetPlayerHDSerial = Trim$(tempplayer(index).HDSerial)
 End Function
 
 Function GetClassName(ByVal ClassesNum As Long) As String

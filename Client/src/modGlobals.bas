@@ -1,6 +1,10 @@
 Attribute VB_Name = "modGlobals"
 Option Explicit
 
+' Player constants
+Public MAX_LEVEL As Long
+Public MAX_STAT As Long
+
 ' Audo engine
 Public Audio As New clsAudio
 
@@ -17,6 +21,9 @@ Public SoundCache() As String
 Public HasPopulated As Boolean
 
 Public Last_Dir As Long
+
+Public GAME_NAME As String
+Public GAME_WEBSITE As String
 
 ' Animation
 Public Const AnimColumns As Long = 5
@@ -208,12 +215,18 @@ Public SpawnNPCDir As Byte
 Public EditorShop As Long
 
 ' Storing width for HP/MP/Exp
-Public OldHPBarWidth As Long
-Public NewHPBarWidth As Long
-Public OldMPBarWidth As Long
-Public NewMPBarWidth As Long
-Public OldEXPBarWidth As Long
-Public NewEXPBarWidth As Long
+Public OldHPBarWidth  As Double
+Public CurrentHPBarWidth As Double
+Public NewHPBarWidth As Double
+Public OldMPBarWidth As Double
+Public CurrentMPBarWidth  As Double
+Public NewMPBarWidth  As Double
+Public OldEXPBarWidth As Double
+Public CurrentEXPBarWidth  As Double
+Public NewEXPBarWidth  As Double
+Public initHPBar  As Boolean
+Public initMPBar As Boolean
+Public initEXPBar   As Boolean
 
 Public HPBarInit As Boolean
 Public MPBarInit As Boolean
@@ -266,18 +279,18 @@ Public ChatBubbleIndex As Byte
 Public AnimationIndex As Byte
 
 ' Editor edited items array
-Public Item_Changed(1 To MAX_ITEMS) As Boolean
-Public Quest_Changed(1 To MAX_QUESTS) As Boolean
-Public NPC_Changed(1 To MAX_NPCS) As Boolean
-Public Resource_Changed(1 To MAX_NPCS) As Boolean
-Public Animation_Changed(1 To MAX_ANIMATIONS) As Boolean
-Public Spell_Changed(1 To MAX_SPELLS) As Boolean
-Public Shop_Changed(1 To MAX_SHOPS) As Boolean
-Public Ban_Changed(1 To MAX_BANS) As Boolean
-Public Title_Changed(1 To MAX_TITLES) As Boolean
-Public Moral_Changed(1 To MAX_MORALS) As Boolean
-Public Class_Changed(1 To MAX_CLASSES) As Boolean
-Public Emoticon_Changed(1 To MAX_EMOTICONS) As Boolean
+Public Item_Changed() As Boolean
+Public Quest_Changed() As Boolean
+Public NPC_Changed() As Boolean
+Public Resource_Changed() As Boolean
+Public Animation_Changed() As Boolean
+Public Spell_Changed() As Boolean
+Public Shop_Changed() As Boolean
+Public Ban_Changed() As Boolean
+Public Title_Changed() As Boolean
+Public Moral_Changed() As Boolean
+Public Class_Changed() As Boolean
+Public Emoticon_Changed() As Boolean
 
 ' New character
 Public NewCharClass As Long
@@ -361,7 +374,7 @@ Public ChatLocked As Boolean
 Public CurrentChatChannel As Long
 
 ' Character Creation Arrays
-Public ClassSelection(1 To MAX_CLASSES) As Byte
+Public ClassSelection() As Byte
 
 ' Option Buttons
 Public OptionButton(1 To OptionButtons.Opt_Count - 1) As ButtonRec
@@ -375,3 +388,18 @@ Public FadeAmount As Long
 Public FlashTimer As Long
 
 Public hwndLastActiveWnd As Long
+
+' Data Sizes
+Public MAX_MAPS As Long
+Public MAX_ITEMS As Long
+Public MAX_NPCS As Long
+Public MAX_ANIMATIONS As Long
+Public MAX_SHOPS As Long
+Public MAX_SPELLS As Long
+Public MAX_RESOURCES As Long
+Public MAX_QUESTS As Long
+Public MAX_BANS As Long
+Public MAX_TITLES As Long
+Public MAX_MORALS As Long
+Public MAX_CLASSES As Long
+Public MAX_EMOTICONS As Long

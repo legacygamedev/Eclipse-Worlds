@@ -25,6 +25,14 @@ Begin VB.Form frmEditor_Spell
    ScaleWidth      =   688
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdChangeDataSize 
+      Caption         =   "Change Data Size"
+      Height          =   375
+      Left            =   60
+      TabIndex        =   68
+      Top             =   7800
+      Width           =   3195
+   End
    Begin VB.CommandButton cmdSave 
       Caption         =   "Save"
       Height          =   375
@@ -33,8 +41,8 @@ Begin VB.Form frmEditor_Spell
       Top             =   7800
       Width           =   1455
    End
-   Begin VB.CommandButton cmdCancel 
-      Caption         =   "Cancel"
+   Begin VB.CommandButton cmdClose 
+      Caption         =   "Close"
       Height          =   375
       Left            =   7680
       TabIndex        =   30
@@ -51,7 +59,7 @@ Begin VB.Form frmEditor_Spell
    End
    Begin VB.Frame Frame3 
       Caption         =   "Spell List"
-      Height          =   8175
+      Height          =   7695
       Left            =   120
       TabIndex        =   31
       Top             =   0
@@ -81,10 +89,10 @@ Begin VB.Form frmEditor_Spell
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
-         Height          =   7275
+         Height          =   6885
          Left            =   120
          TabIndex        =   1
-         Top             =   600
+         Top             =   720
          Width           =   2895
       End
    End
@@ -114,12 +122,12 @@ Begin VB.Form frmEditor_Spell
          End
       End
       Begin VB.ComboBox cmbSound 
-         Height          =   300
-         Left            =   720
+         Height          =   315
+         Left            =   960
          Style           =   2  'Dropdown List
          TabIndex        =   27
          Top             =   7200
-         Width           =   6015
+         Width           =   5775
       End
       Begin VB.Frame Frame6 
          Caption         =   "Data"
@@ -715,6 +723,53 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Private Sub cmdChangeDataSize_Click()
+    Dim Res As VbMsgBoxResult, val As String
+    Dim dataModified As Boolean, i As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    For i = 1 To MAX_SPELLS
+        If Spell_Changed(i) Then
+        
+            dataModified = True
+            Exit For
+        End If
+    Next
+    
+    If dataModified Then
+        Res = MsgBox("Do you want to continue and discard the changes you made to your data?", vbYesNo)
+        
+        If Res = vbNo Then Exit Sub
+    End If
+    
+    val = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_SPELLS)
+    
+    If Not IsNumeric(val) Then
+        Exit Sub
+    End If
+    
+    Res = Abs(val)
+    
+    If Res = MAX_SPELLS Then Exit Sub
+    
+    Call SendChangeDataSize(Res, EDITOR_SPELL)
+    
+    Unload frmEditor_Spell
+    MAX_SPELLS = Res
+    ReDim Spell(MAX_SPELLS)
+    
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdChangeDataSize_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub cmdDelete_Click()
     Dim TmpIndex As Long
     
@@ -817,7 +872,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub cmdCancel_Click()
+Private Sub cmdClose_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SPELLS Then Exit Sub
 
     ' If debug mode, handle error then exit out
@@ -828,7 +883,7 @@ Private Sub cmdCancel_Click()
     
 ' Error handler
 ErrorHandler:
-    HandleError "cmdCancel_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "cmdClose_Click", "frmEditor_Spell", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1342,7 +1397,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         cmdSave_Click
         KeyAscii = 0
     ElseIf KeyAscii = vbKeyEscape Then
-        cmdCancel_Click
+        cmdClose_Click
         KeyAscii = 0
     End If
     Exit Sub

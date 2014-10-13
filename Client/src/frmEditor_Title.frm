@@ -15,9 +15,17 @@ Begin VB.Form frmEditor_Title
    ScaleWidth      =   5730
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdChangeDataSize 
+      Caption         =   "Change Data Size"
+      Height          =   375
+      Left            =   180
+      TabIndex        =   19
+      Top             =   3840
+      Width           =   2355
+   End
    Begin VB.Frame Frame3 
       Caption         =   "Title List"
-      Height          =   4215
+      Height          =   3735
       Left            =   120
       TabIndex        =   12
       Top             =   0
@@ -47,7 +55,7 @@ Begin VB.Form frmEditor_Title
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
-         Height          =   3375
+         Height          =   2985
          Left            =   120
          TabIndex        =   1
          Top             =   600
@@ -176,8 +184,8 @@ Begin VB.Form frmEditor_Title
       Top             =   3840
       Width           =   855
    End
-   Begin VB.CommandButton cmdCancel 
-      Caption         =   "Cancel"
+   Begin VB.CommandButton cmdClose 
+      Caption         =   "Close"
       Height          =   375
       Left            =   4680
       TabIndex        =   9
@@ -194,7 +202,53 @@ Option Explicit
 
 Dim TmpIndex As Long
 
-Private Sub cmdCancel_Click()
+Private Sub cmdChangeDataSize_Click()
+    Dim Res As VbMsgBoxResult, val As String
+    Dim dataModified As Boolean, i As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_TITLES Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    For i = 1 To MAX_TITLES
+        If Title_Changed(i) Then
+        
+            dataModified = True
+            Exit For
+        End If
+    Next
+    
+    If dataModified Then
+        Res = MsgBox("Do you want to continue and discard the changes you made to your data?", vbYesNo)
+        
+        If Res = vbNo Then Exit Sub
+    End If
+    
+    val = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_TITLES)
+    
+    If Not IsNumeric(val) Then
+        Exit Sub
+    End If
+    
+    Res = Abs(val)
+    
+    If Res = MAX_TITLES Then Exit Sub
+    
+    Call SendChangeDataSize(Res, EDITOR_TITLE)
+    
+    Unload frmEditor_Title
+    MAX_TITLES = Res
+    ReDim title(MAX_TITLES)
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdClose_Click", "frmEditor_Title", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdClose_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_TITLES Then Exit Sub
 
     ' If debug mode, handle error then exit out
@@ -205,7 +259,7 @@ Private Sub cmdCancel_Click()
     
 ' Error handler
 ErrorHandler:
-    HandleError "cmdCancel_Click", "frmEditor_Title", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "cmdClose_Click", "frmEditor_Title", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -453,7 +507,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         cmdSave_Click
         KeyAscii = 0
     ElseIf KeyAscii = vbKeyEscape Then
-        cmdCancel_Click
+        cmdClose_Click
         KeyAscii = 0
     End If
     Exit Sub

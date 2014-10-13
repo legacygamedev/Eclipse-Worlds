@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.ocx"
 Begin VB.Form frmEditor_Events 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Event Editor"
@@ -734,8 +734,8 @@ Begin VB.Form frmEditor_Events
          Width           =   3135
       End
    End
-   Begin VB.CommandButton cmdSave 
-      Caption         =   "Save"
+   Begin VB.CommandButton cmdOK 
+      Caption         =   "OK"
       Height          =   375
       Left            =   9600
       TabIndex        =   36
@@ -4666,7 +4666,7 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraCommand(22).Visible = True
             fraCommands.Visible = False
         Case 32
-            CmbWeather.ListIndex = 0
+            cmbWeather.ListIndex = 0
             scrlWeatherIntensity.Value = 0
             fraDialogue.Visible = True
             fraCommand(23).Visible = True
@@ -5200,7 +5200,7 @@ Private Sub cmdNewPage_Click()
     cmdDeletePage.Enabled = True
 End Sub
 
-Public Sub cmdSave_Click()
+Public Sub cmdOK_Click()
     EventEditorSave
 End Sub
 
@@ -6294,7 +6294,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     If KeyAscii = vbKeyReturn Then
-        cmdSave_Click
+        cmdOK_Click
         KeyAscii = 0
     ElseIf KeyAscii = vbKeyEscape Then
         cmdCancel_Click

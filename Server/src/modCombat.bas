@@ -489,7 +489,7 @@ Public Function CanPlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Lo
         Attackspeed = 1000
     End If
     
-    If NPCNum > 0 And timeGetTime > TempPlayer(Attacker).AttackTimer + Attackspeed Then
+    If NPCNum > 0 And timeGetTime > tempplayer(Attacker).AttackTimer + Attackspeed Then
         If Not IsSpell Then ' Melee attack
             ' Check if at same coordinates
             Select Case GetPlayerDir(Attacker)
@@ -544,7 +544,7 @@ Public Function DidNPCMitigatePlayer(ByVal Attacker As Long, ByVal MapNPCNum As 
     MapNum = GetPlayerMap(Attacker)
     NPCNum = MapNPC(MapNum).NPC(MapNPCNum).Num
     
-    If CanNPCMitigatePlayer(MapNPCNum, Attacker) = True Or TempPlayer(Attacker).SpellBuffer.Spell > 0 Then
+    If CanNPCMitigatePlayer(MapNPCNum, Attacker) = True Or tempplayer(Attacker).SpellBuffer.Spell > 0 Then
         ' Check if NPC can avoid the attack
         If CanNPCDodge(NPCNum) Then
             Call SendSoundToMap(MapNum, Options.DodgeSound)
@@ -585,8 +585,8 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
     
     ' Set the attacker's target
     If SpellNum = 0 Then
-        TempPlayer(Attacker).targetType = TARGET_TYPE_NPC
-        TempPlayer(Attacker).target = MapNPCNum
+        tempplayer(Attacker).targetType = TARGET_TYPE_NPC
+        tempplayer(Attacker).target = MapNPCNum
         Call SendPlayerTarget(Attacker)
     End If
     
@@ -603,8 +603,8 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
     End If
     
     ' Set the regen timer
-    TempPlayer(Attacker).StopRegen = True
-    TempPlayer(Attacker).StopRegenTimer = timeGetTime
+    tempplayer(Attacker).StopRegen = True
+    tempplayer(Attacker).StopRegenTimer = timeGetTime
     
     ' Send the sound
     If SpellNum > 0 Then
@@ -644,10 +644,11 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
         LevelDiff = GetPlayerLevel(Attacker) - NPC(NPCNum).Level
         
         If Exp > 0 Then
-            If LevelDiff > 0 Then
-                Exp = Exp / (Exp / (LevelDiff * 10))
-            ElseIf LevelDiff < 0 Then
-                Exp = Exp + (Exp * (LevelDiff * -2.5))
+            If LevelDiff > 0 And LevelDiff <= 10 Then
+                Exp = Exp / LevelDiff
+            ElseIf LevelDiff < 0 And LevelDiff >= -10 Then
+                LevelDiff = LevelDiff * -1
+                Exp = Exp + (Exp * (0.25 * LevelDiff))
             End If
         End If
         
@@ -663,10 +664,10 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
         If Exp < 0 Then Exp = 0
         
         ' In party
-        If TempPlayer(Attacker).InParty > 0 Then
+        If tempplayer(Attacker).InParty > 0 Then
             ' Pass through party sharing function
-            Party_ShareExp TempPlayer(Attacker).InParty, Exp, Attacker
-        ElseIf GetPlayerLevel(Attacker) < MAX_LEVEL Then
+            Party_ShareExp tempplayer(Attacker).InParty, Exp, Attacker
+        ElseIf GetPlayerLevel(Attacker) < Options.MaxLevel Then
             ' No party - keep exp for self
             Call SetPlayerExp(Attacker, GetPlayerExp(Attacker) + Exp)
             SendPlayerExp Attacker
@@ -692,8 +693,8 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
             If Value < 1 Then Value = 1
             
             If Rnd <= NPC(NPCNum).DropChance(n) Then
-                If TempPlayer(Attacker).InParty > 0 Then
-                    Call Party_GetLoot(TempPlayer(Attacker).InParty, NPC(NPCNum).DropItem(n), NPC(NPCNum).DropValue(n), MapNPC(MapNum).NPC(MapNPCNum).X, MapNPC(MapNum).NPC(MapNPCNum).Y)
+                If tempplayer(Attacker).InParty > 0 Then
+                    Call Party_GetLoot(tempplayer(Attacker).InParty, NPC(NPCNum).DropItem(n), NPC(NPCNum).DropValue(n), MapNPC(MapNum).NPC(MapNPCNum).X, MapNPC(MapNum).NPC(MapNPCNum).Y)
                 Else
                     Call SpawnItem(NPC(NPCNum).DropItem(n), Value, Item(NPC(NPCNum).DropItem(n)).Data1, MapNum, MapNPC(MapNum).NPC(MapNPCNum).X, MapNPC(MapNum).NPC(MapNPCNum).Y, GetPlayerName(Attacker))
                 End If
@@ -745,10 +746,10 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
         For i = 1 To Player_HighIndex
             If IsPlaying(i) Then
                 If Account(i).Chars(GetPlayerChar(i)).Map = MapNum Then
-                    If TempPlayer(i).targetType = TARGET_TYPE_NPC Then
-                        If TempPlayer(i).target = MapNPCNum Then
-                            TempPlayer(i).target = 0
-                            TempPlayer(i).targetType = TARGET_TYPE_NONE
+                    If tempplayer(i).targetType = TARGET_TYPE_NPC Then
+                        If tempplayer(i).target = MapNPCNum Then
+                            tempplayer(i).target = 0
+                            tempplayer(i).targetType = TARGET_TYPE_NONE
                             SendPlayerTarget i
                         End If
                     End If
@@ -756,8 +757,8 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
             End If
         Next
         
-        'See if we need to add to the player's kill count for a quest
-        Call CheckIfQuestKill(Attacker, NPCNum)
+        ' Quest
+        Call QuestUpdate(Attacker, Questing.QuestKill, NPCNum)
     Else
         ' NPC not dead, just do the damage
         MapNPC(MapNum).NPC(MapNPCNum).Vital(Vitals.HP) = MapNPC(MapNum).NPC(MapNPCNum).Vital(Vitals.HP) - Damage
@@ -813,7 +814,7 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
     
     If SpellNum = 0 Then
         ' Reset the attack timer
-        TempPlayer(Attacker).AttackTimer = timeGetTime
+        tempplayer(Attacker).AttackTimer = timeGetTime
     End If
     
     ' Reduce durability of weapon
@@ -1103,8 +1104,8 @@ Sub NPCAttackNPC(ByVal MapNum As Integer, ByVal Attacker As Long, ByVal Victim A
         SendBlood MapNum, MapNPC(MapNum).NPC(Victim).X, MapNPC(MapNum).NPC(Victim).Y
         
         ' Set the regen timer
-        TempPlayer(Victim).StopRegen = True
-        TempPlayer(Victim).StopRegenTimer = timeGetTime
+        tempplayer(Victim).StopRegen = True
+        tempplayer(Victim).StopRegenTimer = timeGetTime
     End If
 End Sub
 
@@ -1263,7 +1264,7 @@ Function CanNPCAttackPlayer(ByVal MapNPCNum As Long, ByVal index As Long, Option
     End If
     
     ' Make sure we dont attack the player if they are switching maps
-    If TempPlayer(index).GettingMap = YES Then Exit Function
+    If tempplayer(index).GettingMap = YES Then Exit Function
     
     ' Make sure npcs don't attack more than once a second
     If timeGetTime < MapNPC(MapNum).NPC(MapNPCNum).AttackTimer + 1000 And Spell = False Then Exit Function
@@ -1274,9 +1275,9 @@ Function CanNPCAttackPlayer(ByVal MapNPCNum As Long, ByVal index As Long, Option
     End If
     
     ' Adjust target if they have none
-    If TempPlayer(index).target = 0 Then
-        TempPlayer(index).target = MapNPCNum
-        TempPlayer(index).targetType = TARGET_TYPE_NPC
+    If tempplayer(index).target = 0 Then
+        tempplayer(index).target = MapNPCNum
+        tempplayer(index).targetType = TARGET_TYPE_NPC
         Call SendPlayerTarget(index)
     End If
     
@@ -1385,7 +1386,7 @@ Sub NPCAttackPlayer(ByVal MapNPCNum As Long, ByVal Victim As Long, ByVal Damage 
         SendActionMsg GetPlayerMap(Victim), "-" & Damage, BrightRed, 1, (GetPlayerX(Victim) * 32), (GetPlayerY(Victim) * 32)
         
         ' Kill player
-        KillPlayer Victim
+        Call OnDeath(Victim)
         
         Call GlobalMsg(GetPlayerName(Victim) & " has been killed by " & CheckGrammar(Trim$(Name)) & "!", BrightRed)
 
@@ -1412,8 +1413,8 @@ Sub NPCAttackPlayer(ByVal MapNPCNum As Long, ByVal Victim As Long, ByVal Damage 
         SendBlood GetPlayerMap(Victim), GetPlayerX(Victim), GetPlayerY(Victim)
         
         ' Set the regen timer
-        TempPlayer(Victim).StopRegen = True
-        TempPlayer(Victim).StopRegenTimer = timeGetTime
+        tempplayer(Victim).StopRegen = True
+        tempplayer(Victim).StopRegenTimer = timeGetTime
     End If
 End Sub
 
@@ -1460,9 +1461,9 @@ Public Sub BufferNPCSpell(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVa
     If HasBuffered Then
         SendAnimation MapNum, Spell(SpellNum).CastAnim, 0, 0, TARGET_TYPE_NPC, MapNPCNum
         
-        If Spell(SpellNum).CastTime > 0 Then
-            SendActionMsg MapNum, "Casting " & Trim$(Spell(SpellNum).Name), BrightBlue, ACTIONMSG_SCROLL, MapNPC(MapNum).NPC(MapNPCNum).X * 32, MapNPC(MapNum).NPC(MapNPCNum).Y * 32
-        End If
+        'If Spell(SpellNum).CastTime > 0 Then
+            'SendActionMsg MapNum, "Casting " & Trim$(Spell(SpellNum).Name), BrightBlue, ACTIONMSG_SCROLL, MapNPC(MapNum).NPC(MapNPCNum).X * 32, MapNPC(MapNum).NPC(MapNPCNum).Y * 32
+        'End If
         
         MapNPC(MapNum).NPC(MapNPCNum).SpellBuffer.Spell = SpellNum
         MapNPC(MapNum).NPC(MapNPCNum).SpellBuffer.Timer = timeGetTime
@@ -1831,7 +1832,7 @@ Function CanPlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, Opt
     If Not GetPlayerMap(Attacker) = GetPlayerMap(Victim) Then Exit Function
 
     ' Make sure we dont attack the player if they are switching maps
-    If TempPlayer(Victim).GettingMap = YES Then Exit Function
+    If tempplayer(Victim).GettingMap = YES Then Exit Function
 
     ' Make sure they have at least 1 HP
     If GetPlayerVital(Victim, Vitals.HP) < 1 Then Exit Function
@@ -1893,8 +1894,8 @@ Function CanPlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, Opt
     End If
     
     ' Don't attack a party member
-    If TempPlayer(Attacker).InParty > 0 And TempPlayer(Victim).InParty > 0 Then
-        If TempPlayer(Attacker).InParty = TempPlayer(Victim).InParty Then
+    If tempplayer(Attacker).InParty > 0 And tempplayer(Victim).InParty > 0 Then
+        If tempplayer(Attacker).InParty = tempplayer(Victim).InParty Then
             Call PlayerMsg(Attacker, "You can't attack another party member!", BrightRed)
             Exit Function
         End If
@@ -1909,27 +1910,27 @@ Function CanPlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, Opt
     End If
     
     ' Adjust target if they have none
-    If TempPlayer(Victim).target = 0 Then
-        TempPlayer(Victim).target = Attacker
-        TempPlayer(Victim).targetType = TARGET_TYPE_PLAYER
+    If tempplayer(Victim).target = 0 Then
+        tempplayer(Victim).target = Attacker
+        tempplayer(Victim).targetType = TARGET_TYPE_PLAYER
         Call SendPlayerTarget(Victim)
     End If
     
     If Not IsSpell Then
         ' Set the attack's target
-        TempPlayer(Attacker).targetType = TARGET_TYPE_PLAYER
-        TempPlayer(Attacker).target = Victim
+        tempplayer(Attacker).targetType = TARGET_TYPE_PLAYER
+        tempplayer(Attacker).target = Victim
         Call SendPlayerTarget(Attacker)
     
         ' Check attack timer
         If GetPlayerEquipment(Attacker, Weapon) > 0 Then
-            If timeGetTime < TempPlayer(Attacker).AttackTimer + Item(GetPlayerEquipment(Attacker, Weapon)).WeaponSpeed Then Exit Function
+            If timeGetTime < tempplayer(Attacker).AttackTimer + Item(GetPlayerEquipment(Attacker, Weapon)).WeaponSpeed Then Exit Function
         Else
-            If timeGetTime < TempPlayer(Attacker).AttackTimer + 1000 Then Exit Function
+            If timeGetTime < tempplayer(Attacker).AttackTimer + 1000 Then Exit Function
         End If
     End If
     
-    If CanPlayerMitigatePlayer(Attacker, Victim) Or TempPlayer(Attacker).SpellBuffer.Spell > 0 Then
+    If CanPlayerMitigatePlayer(Attacker, Victim) Or tempplayer(Attacker).SpellBuffer.Spell > 0 Then
         ' Check if player can avoid the attack
         If CanPlayerDodge(Victim) Then
             Call SendSoundToMap(GetPlayerMap(Victim), Options.DodgeSound)
@@ -1972,8 +1973,8 @@ Sub PlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, ByVal Damag
     End If
     
     ' Set the regen timer
-    TempPlayer(Attacker).StopRegen = True
-    TempPlayer(Attacker).StopRegenTimer = timeGetTime
+    tempplayer(Attacker).StopRegen = True
+    tempplayer(Attacker).StopRegenTimer = timeGetTime
     
     ' Send the sound
     If SpellNum > 0 Then
@@ -2005,10 +2006,11 @@ Sub PlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, ByVal Damag
         LevelDiff = GetPlayerLevel(Attacker) - GetPlayerLevel(Victim)
         
         If Exp > 0 Then
-            If LevelDiff > 0 Then
-                Exp = Exp / (Exp / (LevelDiff * 10))
-            ElseIf LevelDiff < 0 Then
-                Exp = Exp + (Exp * (LevelDiff * -2.5))
+            If LevelDiff > 0 And LevelDiff <= 10 Then
+                Exp = Exp / LevelDiff
+            ElseIf LevelDiff < 0 And LevelDiff >= -10 Then
+                LevelDiff = LevelDiff * -1
+                Exp = Exp + (Exp * (0.25 * LevelDiff))
             End If
         End If
         
@@ -2023,7 +2025,7 @@ Sub PlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, ByVal Damag
         ' Make sure we dont get less then 0
         If Exp < 0 Then Exp = 0
 
-        If Exp = 0 Or Moral(Map(GetPlayerMap(Attacker)).Moral).LoseExp = 0 Or GetPlayerLevel(Victim) < MAX_LEVEL Then
+        If Exp = 0 Or Moral(Map(GetPlayerMap(Attacker)).Moral).LoseExp = 0 Or GetPlayerLevel(Victim) < Options.MaxLevel Then
             SendActionMsg GetPlayerMap(Attacker), "+0 Exp", White, 1, (GetPlayerX(Attacker) * 32), (GetPlayerY(Attacker) * 32)
             Call PlayerMsg(Victim, "You did not lose any experience.", Grey)
         Else
@@ -2032,10 +2034,10 @@ Sub PlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, ByVal Damag
             Call PlayerMsg(Victim, "You lost " & Exp & " experience.", BrightRed)
             
             ' Check if we're in a party
-            If TempPlayer(Attacker).InParty > 0 Then
+            If tempplayer(Attacker).InParty > 0 Then
                 ' Pass through party exp share function
-                Party_ShareExp TempPlayer(Attacker).InParty, Exp, Attacker
-            ElseIf GetPlayerLevel(Attacker) < MAX_LEVEL Then
+                Party_ShareExp tempplayer(Attacker).InParty, Exp, Attacker
+            ElseIf GetPlayerLevel(Attacker) < Options.MaxLevel Then
                 ' Not in party, get exp for self
                 Call SetPlayerExp(Attacker, GetPlayerExp(Attacker) + Exp)
                 
@@ -2053,10 +2055,10 @@ Sub PlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, ByVal Damag
         For i = 1 To Player_HighIndex
             If IsPlaying(i) Then
                 If Account(i).Chars(GetPlayerChar(i)).Map = GetPlayerMap(Attacker) Then
-                    If TempPlayer(i).targetType = TARGET_TYPE_PLAYER Then
-                        If TempPlayer(i).target = Victim Then
-                            TempPlayer(i).target = 0
-                            TempPlayer(i).targetType = TARGET_TYPE_NONE
+                    If tempplayer(i).targetType = TARGET_TYPE_PLAYER Then
+                        If tempplayer(i).target = Victim Then
+                            tempplayer(i).target = 0
+                            tempplayer(i).targetType = TARGET_TYPE_NONE
                             SendPlayerTarget i
                         End If
                     End If
@@ -2102,8 +2104,8 @@ Sub PlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, ByVal Damag
         SendBlood GetPlayerMap(Victim), GetPlayerX(Victim), GetPlayerY(Victim)
         
         ' Set the regen timer
-        TempPlayer(Victim).StopRegen = True
-        TempPlayer(Victim).StopRegenTimer = timeGetTime
+        tempplayer(Victim).StopRegen = True
+        tempplayer(Victim).StopRegenTimer = timeGetTime
         
         ' If a stunning spell, stun the player
         If SpellNum > 0 Then
@@ -2116,7 +2118,7 @@ Sub PlayerAttackPlayer(ByVal Attacker As Long, ByVal Victim As Long, ByVal Damag
     End If
 
     ' Reset attack timer
-    TempPlayer(Attacker).AttackTimer = timeGetTime
+    tempplayer(Attacker).AttackTimer = timeGetTime
     
     ' Reduce durability of weapon
     Call DamagePlayerEquipment(Attacker, Equipment.Weapon)
@@ -2209,8 +2211,8 @@ Public Sub BufferPlayerSpell(ByVal index As Long, ByVal SpellSlot As Byte)
         End If
     End If
     
-    targetType = TempPlayer(index).targetType
-    target = TempPlayer(index).target
+    targetType = tempplayer(index).targetType
+    target = tempplayer(index).target
     Range = Spell(SpellNum).Range
     HasBuffered = False
     
@@ -2254,10 +2256,10 @@ Public Sub BufferPlayerSpell(ByVal index As Long, ByVal SpellSlot As Byte)
     
     If HasBuffered Then
         SendAnimation MapNum, Spell(SpellNum).CastAnim, 0, 0, TARGET_TYPE_PLAYER, index
-        TempPlayer(index).SpellBuffer.Spell = SpellSlot
-        TempPlayer(index).SpellBuffer.Timer = timeGetTime
-        TempPlayer(index).SpellBuffer.target = TempPlayer(index).target
-        TempPlayer(index).SpellBuffer.TType = TempPlayer(index).targetType
+        tempplayer(index).SpellBuffer.Spell = SpellSlot
+        tempplayer(index).SpellBuffer.Timer = timeGetTime
+        tempplayer(index).SpellBuffer.target = tempplayer(index).target
+        tempplayer(index).SpellBuffer.TType = tempplayer(index).targetType
     End If
 End Sub
 
@@ -2286,7 +2288,7 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
     If Not HasSpell(index, SpellNum) Then Exit Sub
     
     ' They are stunned, don't allow them to cast
-    If TempPlayer(index).StunDuration > 0 Then Exit Sub
+    If tempplayer(index).StunDuration > 0 Then Exit Sub
     
     ' Make sure they meet the requirements
     If CanPlayerCastSpell(index, SpellNum) = False Then Exit Sub
@@ -2552,7 +2554,7 @@ Public Sub CastSpell(ByVal index As Long, ByVal SpellSlot As Byte, ByVal target 
     If DidCast Then
         Call SetPlayerVital(index, Vitals.MP, GetPlayerVital(index, Vitals.MP) - MPCost)
         Call SendVital(index, Vitals.MP)
-        TempPlayer(index).SpellBuffer.Timer = timeGetTime + (Spell(SpellNum).CDTime * 1000)
+        tempplayer(index).SpellBuffer.Timer = timeGetTime + (Spell(SpellNum).CDTime * 1000)
         Call SetPlayerSpellCD(index, SpellSlot, timeGetTime + (Spell(SpellNum).CDTime * 1000))
         Call SendSpellCooldown(index, SpellSlot)
         SendActionMsg MapNum, Trim$(Spell(SpellNum).Name), BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(index) * 32, GetPlayerY(index) * 32
@@ -2657,7 +2659,7 @@ Public Sub AddDoT_Player(ByVal index As Long, ByVal SpellNum As Long, ByVal Cast
     Dim i As Long
 
     For i = 1 To MAX_DOTS
-        With TempPlayer(index).DoT(i)
+        With tempplayer(index).DoT(i)
             If .Spell = SpellNum Then
                 .Timer = timeGetTime
                 .Caster = Caster
@@ -2681,7 +2683,7 @@ Public Sub AddHoT_Player(ByVal index As Long, ByVal SpellNum As Long)
     Dim i As Long
 
     For i = 1 To MAX_DOTS
-        With TempPlayer(index).HoT(i)
+        With tempplayer(index).HoT(i)
             If .Spell = SpellNum Then
                 .Timer = timeGetTime
                 .StartTime = timeGetTime
@@ -2746,7 +2748,7 @@ Public Sub AddHoT_NPC(ByVal MapNum As Integer, ByVal index As Long, ByVal SpellN
 End Sub
 
 Public Sub HandleDoT_Player(ByVal index As Long, ByVal dotNum As Long)
-    With TempPlayer(index).DoT(dotNum)
+    With tempplayer(index).DoT(dotNum)
         If .Used And .Spell > 0 Then
             ' Time to tick?
             If timeGetTime > .Timer + (Spell(.Spell).Interval * 1000) Then
@@ -2782,7 +2784,7 @@ Public Sub HandleDoT_Player(ByVal index As Long, ByVal dotNum As Long)
 End Sub
 
 Public Sub HandleHoT_Player(ByVal index As Long, ByVal hotNum As Long)
-    With TempPlayer(index).HoT(hotNum)
+    With tempplayer(index).HoT(hotNum)
         If .Used And .Spell > 0 Then
             ' Time to tick?
             If timeGetTime > .Timer + (Spell(.Spell).Interval * 1000) Then
@@ -2883,8 +2885,8 @@ Public Sub StunPlayer(ByVal index As Long, ByVal SpellNum As Long, Optional ByVa
     ' Check if it's a stunning spell
     If Spell(SpellNum).StunDuration > 0 Then
         ' Set the values on Index
-        TempPlayer(index).StunDuration = Spell(SpellNum).StunDuration
-        TempPlayer(index).StunTimer = timeGetTime
+        tempplayer(index).StunDuration = Spell(SpellNum).StunDuration
+        tempplayer(index).StunTimer = timeGetTime
         
         ' Send it to the Index
         SendStunned index
@@ -2921,12 +2923,12 @@ Public Sub ClearNPCSpellBuffer(ByVal MapNum As Integer, ByVal MapNPCNum As Byte)
 End Sub
 
 Public Sub ClearAccountSpellBuffer(ByVal index As Long)
-    If TempPlayer(index).SpellBuffer.Spell = 0 Then Exit Sub
+    If tempplayer(index).SpellBuffer.Spell = 0 Then Exit Sub
     
-    TempPlayer(index).SpellBuffer.Spell = 0
-    TempPlayer(index).SpellBuffer.Timer = 0
-    TempPlayer(index).SpellBuffer.target = 0
-    TempPlayer(index).SpellBuffer.TType = 0
+    tempplayer(index).SpellBuffer.Spell = 0
+    tempplayer(index).SpellBuffer.Timer = 0
+    tempplayer(index).SpellBuffer.target = 0
+    tempplayer(index).SpellBuffer.TType = 0
     Call SendClearAccountSpellBuffer(index)
 End Sub
 

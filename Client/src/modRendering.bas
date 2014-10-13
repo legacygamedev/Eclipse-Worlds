@@ -1263,7 +1263,7 @@ Private Sub DrawBars()
     Dim tmpy As Long, tmpx As Long
     Dim sWidth As Long, sHeight As Long
     Dim sRECT As RECT
-    Dim i As Long, NPCNum As Long, PartyIndex As Long, BarWidth As Long, MoveSpeed As Long
+    Dim i As Long, npcNum As Long, PartyIndex As Long, BarWidth As Long, MoveSpeed As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1274,18 +1274,18 @@ Private Sub DrawBars()
     
     ' Render health bars and casting bar
     For i = 1 To MAX_MAP_NPCS
-        NPCNum = MapNPC(i).num
+        npcNum = MapNPC(i).num
         ' Exists
-        If NPCNum > 0 Then
+        If npcNum > 0 Then
             If Options.NPCVitals = 1 Then
                 ' Alive
-                If MapNPC(i).Vital(Vitals.HP) < NPC(NPCNum).HP Then
+                If MapNPC(i).Vital(Vitals.HP) < NPC(npcNum).HP Then
                     ' lock to npc
                     tmpx = MapNPC(i).X * PIC_X + MapNPC(i).xOffset + 16 - (sWidth / 2)
                     tmpy = MapNPC(i).Y * PIC_Y + MapNPC(i).yOffset + 35
                     
                     ' Calculate the width to fill
-                    BarWidth = ((MapNPC(i).Vital(Vitals.HP) / sWidth) / (NPC(NPCNum).HP / sWidth)) * sWidth
+                    BarWidth = ((MapNPC(i).Vital(Vitals.HP) / sWidth) / (NPC(npcNum).HP / sWidth)) * sWidth
                     
                     ' Draw bar background
                     With sRECT
@@ -1308,18 +1308,18 @@ Private Sub DrawBars()
                     RenderTexture Tex_Bars, ConvertMapX(tmpx), ConvertMapY(tmpy), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
                 End If
         
-                If MapNPC(i).Vital(Vitals.MP) < NPC(NPCNum).MP Then
+                If MapNPC(i).Vital(Vitals.MP) < NPC(npcNum).MP Then
                     ' lock to npc
                     tmpx = MapNPC(i).X * PIC_X + MapNPC(i).xOffset + 16 - (sWidth / 2)
                     
-                    If MapNPC(i).Vital(Vitals.HP) = NPC(NPCNum).HP Then
+                    If MapNPC(i).Vital(Vitals.HP) = NPC(npcNum).HP Then
                         tmpy = MapNPC(i).Y * PIC_Y + MapNPC(i).yOffset + 35
                     Else
                         tmpy = MapNPC(i).Y * PIC_Y + MapNPC(i).yOffset + 35 + sHeight
                     End If
                     
                     ' Calculate the width to fill
-                    BarWidth = ((MapNPC(i).Vital(Vitals.MP) / sWidth) / (NPC(NPCNum).MP / sWidth)) * sWidth
+                    BarWidth = ((MapNPC(i).Vital(Vitals.MP) / sWidth) / (NPC(npcNum).MP / sWidth)) * sWidth
                     
                     ' Draw bar background
                     With sRECT
@@ -1349,7 +1349,7 @@ Private Sub DrawBars()
                     ' lock to player
                     tmpx = MapNPC(i).X * PIC_X + MapNPC(i).xOffset + 16 - (sWidth / 2)
 
-                    If Options.NPCVitals = 0 Or (MapNPC(i).Vital(Vitals.HP) = NPC(NPCNum).HP And MapNPC(i).Vital(Vitals.MP) = NPC(NPCNum).MP) Then
+                    If Options.NPCVitals = 0 Or (MapNPC(i).Vital(Vitals.HP) = NPC(npcNum).HP And MapNPC(i).Vital(Vitals.MP) = NPC(npcNum).MP) Then
                         tmpy = MapNPC(i).Y * PIC_Y + MapNPC(i).yOffset + 35
                     Else
                         tmpy = MapNPC(i).Y * PIC_Y + MapNPC(i).yOffset + 35 + sHeight
@@ -1649,6 +1649,8 @@ Public Sub DrawPlayer(ByVal Index As Long)
     Else
         AttackSpeed = 1000
     End If
+    
+    If AttackSpeed < 500 Then AttackSpeed = 500
 
     ' Reset frame
     If TempPlayer(Index).Moving > 0 Then
@@ -1658,32 +1660,12 @@ Public Sub DrawPlayer(ByVal Index As Long)
     End If
     
     ' If the sprite is constantly animated, make it animate
-    If Not IsConstAnimated(GetPlayerSprite(Index)) Then
+    If Class(GetPlayerClass(Index)).Animated = 0 Or TempPlayer(Index).Moving > 0 Then
         ' Check for attacking animation
         If TempPlayer(Index).AttackTimer + (AttackSpeed / 2) > timeGetTime Then
             If TempPlayer(Index).Attacking = 1 Then
                 Anim = 3
             End If
-        Else
-            ' If not attacking, walk normally
-            Select Case GetPlayerDir(Index)
-                Case DIR_UP
-                    If (TempPlayer(Index).yOffset > 8) Then Anim = TempPlayer(Index).Step
-                Case DIR_DOWN
-                    If (TempPlayer(Index).yOffset < -8) Then Anim = TempPlayer(Index).Step
-                Case DIR_LEFT
-                    If (TempPlayer(Index).xOffset > 8) Then Anim = TempPlayer(Index).Step
-                Case DIR_RIGHT
-                    If (TempPlayer(Index).xOffset < -8) Then Anim = TempPlayer(Index).Step
-                Case DIR_UPLEFT
-                    If (TempPlayer(Index).yOffset > 8) And (TempPlayer(Index).xOffset > 8) Then Anim = TempPlayer(Index).Step
-                Case DIR_UPRIGHT
-                    If (TempPlayer(Index).yOffset > 8) And (TempPlayer(Index).xOffset < -8) Then Anim = TempPlayer(Index).Step
-                Case DIR_DOWNLEFT
-                    If (TempPlayer(Index).yOffset < -8) And (TempPlayer(Index).xOffset > 8) Then Anim = TempPlayer(Index).Step
-                Case DIR_DOWNRIGHT
-                    If (TempPlayer(Index).yOffset < -8) And (TempPlayer(Index).xOffset < -8) Then Anim = TempPlayer(Index).Step
-            End Select
         End If
     
         ' Check to see if we want to stop making him attack
@@ -1713,13 +1695,13 @@ Public Sub DrawPlayer(ByVal Index As Long)
         Case DIR_LEFT
             spritetop = 1
         Case DIR_UPLEFT
-            spritetop = 3
+            spritetop = 1
         Case DIR_UPRIGHT
-            spritetop = 3
+            spritetop = 2
         Case DIR_DOWNLEFT
-            spritetop = 0
+            spritetop = 1
         Case DIR_DOWNRIGHT
-            spritetop = 0
+            spritetop = 2
     End Select
 
     With rec
@@ -1767,52 +1749,36 @@ Public Sub DrawNPC(ByVal MapNPCNum As Long)
     Dim tIcon As Long
     Dim rec As RECT
     Dim AttackSpeed As Long
-    Dim NPCNum As Long, QuestNum As Long
+    Dim npcNum As Long, QuestNum As Long
     Static tmrCount As Long
     Static setIt As Boolean
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    NPCNum = MapNPC(MapNPCNum).num
+    npcNum = MapNPC(MapNPCNum).num
 
-    If NPCNum = 0 Then Exit Sub ' No npc set
+    If npcNum = 0 Then Exit Sub ' No npc set
     
-    Sprite = NPC(NPCNum).Sprite
+    Sprite = NPC(npcNum).Sprite
 
     If Sprite < 1 Or Sprite > NumCharacters Then Exit Sub
 
     AttackSpeed = 1000
 
     ' Reset frame
-    Anim = 0
+    If MapNPC(MapNPCNum).Moving > 0 Then
+        Anim = MapNPC(MapNPCNum).Step
+    Else
+        Anim = 0
+    End If
     
-    If Not IsConstAnimated(NPC(MapNPC(MapNPCNum).num).Sprite) Then
+    If NPC(npcNum).Animated = 0 Or MapNPC(MapNPCNum).Moving > 0 Then
         ' Check for attacking animation
         If MapNPC(MapNPCNum).AttackTimer + (AttackSpeed / 2) > timeGetTime Then
             If MapNPC(MapNPCNum).Attacking = 1 Then
                 Anim = 3
             End If
-        Else
-            ' If not attacking, walk normally
-            Select Case MapNPC(MapNPCNum).Dir
-                Case DIR_UP
-                    If (MapNPC(MapNPCNum).yOffset > 8) Then Anim = MapNPC(MapNPCNum).Step
-                Case DIR_DOWN
-                    If (MapNPC(MapNPCNum).yOffset < -8) Then Anim = MapNPC(MapNPCNum).Step
-                Case DIR_LEFT
-                    If (MapNPC(MapNPCNum).xOffset > 8) Then Anim = MapNPC(MapNPCNum).Step
-                Case DIR_RIGHT
-                    If (MapNPC(MapNPCNum).xOffset < -8) Then Anim = MapNPC(MapNPCNum).Step
-                Case DIR_UPLEFT
-                    If (MapNPC(MapNPCNum).yOffset > 8) And (MapNPC(MapNPCNum).xOffset > 8) Then Anim = MapNPC(MapNPCNum).Step
-                Case DIR_UPRIGHT
-                    If (MapNPC(MapNPCNum).yOffset > 8) And (MapNPC(MapNPCNum).xOffset < -8) Then Anim = MapNPC(MapNPCNum).Step
-                Case DIR_DOWNLEFT
-                    If (MapNPC(MapNPCNum).yOffset < -8) And (MapNPC(MapNPCNum).xOffset > 8) Then Anim = MapNPC(MapNPCNum).Step
-                Case DIR_DOWNRIGHT
-                    If (MapNPC(MapNPCNum).yOffset < -8) And (MapNPC(MapNPCNum).xOffset < -8) Then Anim = MapNPC(MapNPCNum).Step
-            End Select
         End If
     Else
         With MapNPC(MapNPCNum)
@@ -1844,13 +1810,13 @@ Public Sub DrawNPC(ByVal MapNPCNum As Long)
         Case DIR_LEFT
             spritetop = 1
         Case DIR_UPLEFT
-            spritetop = 3
+            spritetop = 1
         Case DIR_UPRIGHT
-            spritetop = 3
+            spritetop = 2
         Case DIR_DOWNLEFT
-            spritetop = 0
+            spritetop = 1
         Case DIR_DOWNRIGHT
-            spritetop = 0
+            spritetop = 2
     End Select
 
     With rec
@@ -1881,14 +1847,14 @@ Public Sub DrawNPC(ByVal MapNPCNum As Long)
     'run through quests and see if this NPC can start/manage one.
     For i = 1 To MAX_QUESTS
         For II = 1 To Quest(i).Max_CLI
-            If Quest(i).CLI(II).ItemIndex = NPCNum Then 'this quest is assigned to this NPC
+            If Quest(i).CLI(II).ItemIndex = npcNum Then 'this quest is assigned to this NPC
                 'show the icon based off quest status
-                If Player(MyIndex).QuestCLIID(i) = 0 Then 'haven't started this quest yet
+                If Player(MyIndex).QuestCLI(i) = 0 Then 'haven't started this quest yet
                     If II = 1 Then 'make sure this is the first Greeter of the quest
                         tIcon = Quest_Icon_Start
                         GoTo PastQuestDataRetrieval
                     End If
-                ElseIf Player(MyIndex).QuestCLIID(i) = II Then 'make sure the player is on this NPC within the progress of the quest
+                ElseIf Player(MyIndex).QuestCLI(i) = II Then 'make sure the player is on this NPC within the progress of the quest
                     tIcon = Quest_Icon_Progress
                     GoTo PastQuestDataRetrieval
                 End If
@@ -1898,9 +1864,9 @@ Public Sub DrawNPC(ByVal MapNPCNum As Long)
     
 PastQuestDataRetrieval:
     'display it above the NPC's name
-    If NPC(NPCNum).ShowQuestCompleteIcon = 1 Then tIcon = Quest_Icon_Finished
+    If NPC(npcNum).ShowQuestCompleteIcon = 1 Then tIcon = Quest_Icon_Finished
     
-    QuestNum = DoesNPCStartQuest(NPCNum)
+    QuestNum = DoesNPCStartQuest(npcNum)
     If QuestNum > 0 Then
         If Quest(QuestNum).CanBeRetaken = vbUnchecked Then
             If Player(MyIndex).QuestCompleted(QuestNum) = True Then
@@ -2011,7 +1977,7 @@ Sub DrawAnimatedItems()
     Dim ItemNum As Long, ItemPic As Long, Color As Long
     Dim X As Long, Y As Long
     Dim MaxFrames As Byte
-    Dim Amount As Long
+    Dim amount As Long
     Dim rec As RECT, rec_pos As RECT
     Dim TmpItem As Long, AmountModifier As Long
     Dim NoRender(1 To MAX_INV) As Long
@@ -2099,19 +2065,19 @@ Sub DrawAnimatedItems()
                         If GetPlayerInvItemValue(MyIndex, i) > 1 Then
                             Y = rec_pos.Top + 22
                             X = rec_pos.Left - 4
-                            Amount = GetPlayerInvItemValue(MyIndex, i) - AmountModifier
+                            amount = GetPlayerInvItemValue(MyIndex, i) - AmountModifier
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            If Amount < 1000000 Then
+                            If amount < 1000000 Then
                                 Color = White
-                            ElseIf Amount > 1000000 And Amount < 10000000 Then
+                            ElseIf amount > 1000000 And amount < 10000000 Then
                                 Color = Yellow
-                            ElseIf Amount > 10000000 Then
+                            ElseIf amount > 10000000 Then
                                 Color = BrightGreen
                             End If
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            RenderText Font_Default, ConvertCurrency(Amount), X, Y, Color
+                            RenderText Font_Default, ConvertCurrency(amount), X, Y, Color
                         End If
                     End If
                 End If
@@ -2157,19 +2123,19 @@ Sub DrawAnimatedItems()
                         If GetBankItemValue(i) > 1 Then
                             Y = rec_pos.Top + 22
                             X = rec_pos.Left - 4
-                            Amount = GetBankItemValue(i)
+                            amount = GetBankItemValue(i)
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            If Amount < 1000000 Then
+                            If amount < 1000000 Then
                                 Color = White
-                            ElseIf Amount > 1000000 And Amount < 10000000 Then
+                            ElseIf amount > 1000000 And amount < 10000000 Then
                                 Color = Yellow
-                            ElseIf Amount > 10000000 Then
+                            ElseIf amount > 10000000 Then
                                 Color = BrightGreen
                             End If
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            RenderText Font_Default, ConvertCurrency(Amount), X, Y, Color
+                            RenderText Font_Default, ConvertCurrency(amount), X, Y, Color
                         End If
                     End If
                 End If
@@ -2212,19 +2178,19 @@ Sub DrawAnimatedItems()
                         If Shop(InShop).TradeItem(i).ItemValue > 1 Then
                             Y = rec_pos.Top + 22
                             X = rec_pos.Left - 4
-                            Amount = Shop(InShop).TradeItem(i).ItemValue
+                            amount = Shop(InShop).TradeItem(i).ItemValue
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            If Amount < 1000000 Then
+                            If amount < 1000000 Then
                                 Color = White
-                            ElseIf Amount > 1000000 And Amount < 10000000 Then
+                            ElseIf amount > 1000000 And amount < 10000000 Then
                                 Color = Yellow
-                            ElseIf Amount > 10000000 Then
+                            ElseIf amount > 10000000 Then
                                 Color = BrightGreen
                             End If
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            RenderText Font_Default, ConvertCurrency(Amount), X, Y, Color
+                            RenderText Font_Default, ConvertCurrency(amount), X, Y, Color
                         End If
     
                         ' We'll now re-Draw the item, and place the currency value over it again :P
@@ -2273,19 +2239,19 @@ Sub DrawAnimatedItems()
                         If TradeTheirOffer(i).Value > 1 Then
                             Y = rec_pos.Top + 22
                             X = rec_pos.Left - 4
-                            Amount = TradeTheirOffer(i).Value
+                            amount = TradeTheirOffer(i).Value
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            If Amount < 1000000 Then
+                            If amount < 1000000 Then
                                 Color = White
-                            ElseIf Amount > 1000000 And Amount < 10000000 Then
+                            ElseIf amount > 1000000 And amount < 10000000 Then
                                 Color = Yellow
-                            ElseIf Amount > 10000000 Then
+                            ElseIf amount > 10000000 Then
                                 Color = BrightGreen
                             End If
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            RenderText Font_Default, ConvertCurrency(Amount), X, Y, Color
+                            RenderText Font_Default, ConvertCurrency(amount), X, Y, Color
                         End If
                     End If
                 End If
@@ -2329,19 +2295,19 @@ Sub DrawAnimatedItems()
                         If TradeYourOffer(i).Value > 1 Then
                             Y = rec_pos.Top + 22
                             X = rec_pos.Left - 4
-                            Amount = TradeYourOffer(i).Value
+                            amount = TradeYourOffer(i).Value
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            If Amount < 1000000 Then
+                            If amount < 1000000 Then
                                 Color = White
-                            ElseIf Amount > 1000000 And Amount < 10000000 Then
+                            ElseIf amount > 1000000 And amount < 10000000 Then
                                 Color = Yellow
-                            ElseIf Amount > 10000000 Then
+                            ElseIf amount > 10000000 Then
                                 Color = BrightGreen
                             End If
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            RenderText Font_Default, ConvertCurrency(Amount), X, Y, Color
+                            RenderText Font_Default, ConvertCurrency(amount), X, Y, Color
                         End If
                     End If
                 End If
@@ -2473,7 +2439,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Sub DrawQuestIcon(Image As Long, NPCNum As Long, Optional ByVal Up As Boolean = False)
+Sub DrawQuestIcon(Image As Long, npcNum As Long, Optional ByVal Up As Boolean = False)
     Dim i As Long, X As Long, Y As Long
     Dim Height As Long, Width As Long
     Dim tmpDX As DX8TextureRec
@@ -2482,7 +2448,7 @@ Sub DrawQuestIcon(Image As Long, NPCNum As Long, Optional ByVal Up As Boolean = 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    Sprite = NPC(MapNPC(NPCNum).num).Sprite
+    Sprite = NPC(MapNPC(npcNum).num).Sprite
     
     
     Select Case Image
@@ -2497,15 +2463,15 @@ Sub DrawQuestIcon(Image As Long, NPCNum As Long, Optional ByVal Up As Boolean = 
     End Select
     
     ' Calculate the X
-    X = MapNPC(NPCNum).X * PIC_X + MapNPC(NPCNum).xOffset - ((Tex_Character(Sprite).Width / 4 - 32) / 2)
+    X = MapNPC(npcNum).X * PIC_X + MapNPC(npcNum).xOffset - ((Tex_Character(Sprite).Width / 4 - 32) / 2)
     
     ' Is the player's height more than 32..?
     If (Tex_Character(Sprite).Height / 4) > 32 Then
         ' Create a 32 pixel offset for larger sprites
-        Y = MapNPC(NPCNum).Y * PIC_Y + MapNPC(NPCNum).yOffset - ((Tex_Character(Sprite).Height / 4) - 32)
+        Y = MapNPC(npcNum).Y * PIC_Y + MapNPC(npcNum).yOffset - ((Tex_Character(Sprite).Height / 4) - 32)
     Else
         ' Proceed as normal
-        Y = MapNPC(NPCNum).Y * PIC_Y + MapNPC(NPCNum).yOffset
+        Y = MapNPC(npcNum).Y * PIC_Y + MapNPC(npcNum).yOffset
     End If
     
     X = ConvertMapX(X)
@@ -2525,7 +2491,7 @@ End Sub
 
 Sub DrawInventory()
     Dim i As Long, X As Long, Y As Long, ItemNum As Long, ItemPic As Long
-    Dim Amount As Long
+    Dim amount As Long
     Dim rec As RECT, rec_pos As RECT, srcRect As D3DRECT, destRECT As D3DRECT
     Dim Color As Long
     Dim TmpItem As Long, AmountModifier As Long
@@ -2603,18 +2569,18 @@ Sub DrawInventory()
                     If GetPlayerInvItemValue(MyIndex, i) > 1 Then
                         Y = rec_pos.Top + 22
                         X = rec_pos.Left - 4
-                        Amount = GetPlayerInvItemValue(MyIndex, i) - AmountModifier
+                        amount = GetPlayerInvItemValue(MyIndex, i) - AmountModifier
                         
                         ' Draw currency but with k, m, b etc. using a convertion function
-                        If Amount < 1000000 Then
+                        If amount < 1000000 Then
                             Color = White
-                        ElseIf Amount > 1000000 And Amount < 10000000 Then
+                        ElseIf amount > 1000000 And amount < 10000000 Then
                             Color = Yellow
-                        ElseIf Amount > 10000000 Then
+                        ElseIf amount > 10000000 Then
                             Color = BrightGreen
                         End If
                         
-                        RenderText Font_Default, Format$(ConvertCurrency(str$(Amount)), "#,###,###,###"), X, Y, Color
+                        RenderText Font_Default, Format$(ConvertCurrency(str$(amount)), "#,###,###,###"), X, Y, Color
                     End If
                 End If
             End If
@@ -2652,7 +2618,7 @@ End Sub
 
 Sub DrawTrade()
     Dim i As Long, X As Long, Y As Long, ItemNum As Long, ItemPic As Long
-    Dim Amount As Long
+    Dim amount As Long
     Dim rec As RECT, rec_pos As RECT, srcRect As D3DRECT, destRECT As D3DRECT
     Dim Color As Long
 
@@ -2693,18 +2659,18 @@ Sub DrawTrade()
                     If TradeYourOffer(i).Value > 1 Then
                         Y = rec_pos.Top + 22
                         X = rec_pos.Left - 4
-                        Amount = TradeYourOffer(i).Value
+                        amount = TradeYourOffer(i).Value
                         
                         ' Draw currency but with k, m, b etc. using a convertion function
-                        If Amount < 1000000 Then
+                        If amount < 1000000 Then
                             Color = White
-                        ElseIf Amount > 1000000 And Amount < 10000000 Then
+                        ElseIf amount > 1000000 And amount < 10000000 Then
                             Color = Yellow
-                        ElseIf Amount > 10000000 Then
+                        ElseIf amount > 10000000 Then
                             Color = BrightGreen
                         End If
                         
-                        RenderText Font_Default, Format$(ConvertCurrency(str$(Amount)), "#,###,###,###"), X, Y, Color
+                        RenderText Font_Default, Format$(ConvertCurrency(str$(amount)), "#,###,###,###"), X, Y, Color
                     End If
                 End If
             End If
@@ -2760,18 +2726,18 @@ Sub DrawTrade()
                     If TradeTheirOffer(i).Value > 1 Then
                         Y = rec_pos.Top + 22
                         X = rec_pos.Left - 4
-                        Amount = TradeTheirOffer(i).Value
+                        amount = TradeTheirOffer(i).Value
                         
                         ' Draw currency but with k, m, b etc. using a convertion function
-                        If Amount < 1000000 Then
+                        If amount < 1000000 Then
                             Color = White
-                        ElseIf Amount > 1000000 And Amount < 10000000 Then
+                        ElseIf amount > 1000000 And amount < 10000000 Then
                             Color = Yellow
-                        ElseIf Amount > 10000000 Then
+                        ElseIf amount > 10000000 Then
                             Color = BrightGreen
                         End If
                         
-                        RenderText Font_Default, Format$(ConvertCurrency(str$(Amount)), "#,###,###,###"), X, Y, Color
+                        RenderText Font_Default, Format$(ConvertCurrency(str$(amount)), "#,###,###,###"), X, Y, Color
                     End If
                 End If
             End If
@@ -2804,7 +2770,7 @@ End Sub
 
 Sub DrawPlayerSpells()
     Dim i As Long, X As Long, Y As Long, SpellNum As Long, SpellIcon As Long, srcRect As D3DRECT, destRECT As D3DRECT
-    Dim Amount As String
+    Dim amount As String
     Dim rec As RECT, rec_pos As RECT
     Dim Color As Long
 
@@ -2887,7 +2853,7 @@ End Sub
 
 Sub DrawShop()
     Dim i As Long, X As Long, Y As Long, ItemNum As Long, ItemPic As Long, srcRect As D3DRECT, destRECT As D3DRECT
-    Dim Amount As String
+    Dim amount As String
     Dim rec As RECT, rec_pos As RECT
     Dim Color As Long
 
@@ -2927,18 +2893,18 @@ Sub DrawShop()
                     If Shop(InShop).TradeItem(i).ItemValue > 1 Then
                         Y = rec_pos.Top + 22
                         X = rec_pos.Left - 4
-                        Amount = Shop(InShop).TradeItem(i).ItemValue
+                        amount = Shop(InShop).TradeItem(i).ItemValue
                         
                         ' Draw currency but with k, m, b etc. using a convertion function
-                        If Amount < 1000000 Then
+                        If amount < 1000000 Then
                             Color = White
-                        ElseIf Amount > 1000000 And Amount < 10000000 Then
+                        ElseIf amount > 1000000 And amount < 10000000 Then
                             Color = Yellow
-                        ElseIf Amount > 10000000 Then
+                        ElseIf amount > 10000000 Then
                             Color = BrightGreen
                         End If
                         
-                        RenderText Font_Default, ConvertCurrency(Amount), X, Y, Color
+                        RenderText Font_Default, ConvertCurrency(amount), X, Y, Color
                     End If
                 End If
             End If
@@ -3349,7 +3315,7 @@ Public Sub Render_Graphics()
     Dim rec_pos As RECT, srcRect As D3DRECT, LocY As Long
     
     ' If debug mode, handle error then exit out
-    On Error GoTo ErrorHandler
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Check for device lost
     If Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICELOST Or Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then HandleDeviceLost: Exit Sub
@@ -3647,22 +3613,22 @@ Public Sub Render_Graphics()
     If BFPS Then
         LocY = 12
         If GUIVisible Then
-            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 12, 100, White
+            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 12, 104, White
         Else
-            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 12, 20, White
+            RenderText Font_Default, "FPS: " & GameFPS & " Ping: " & CStr(Ping), 12, 24, White
         End If
     End If
     
     ' Draw loc
     If BLoc Then
         If GUIVisible Then
-            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 12, 100 + LocY, Yellow
-            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 12, 112 + LocY, Yellow
-            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 12, 124 + LocY, Yellow
+            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 12, 108 + LocY, Yellow
+            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 12, 120 + LocY, Yellow
+            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 12, 132 + LocY, Yellow
         Else
-            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 12, 20 + LocY, Yellow
-            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 12, 32 + LocY, Yellow
-            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 12, 44 + LocY, Yellow
+            RenderText Font_Default, Trim$("Cur X: " & CurX & " Y: " & CurY), 12, 28 + LocY, Yellow
+            RenderText Font_Default, Trim$("Loc X: " & GetPlayerX(MyIndex) & " y: " & GetPlayerY(MyIndex)), 12, 40 + LocY, Yellow
+            RenderText Font_Default, Trim$(" (Map #" & GetPlayerMap(MyIndex) & ")"), 12, 52 + LocY, Yellow
         End If
     End If
     
@@ -3674,33 +3640,26 @@ Public Sub Render_Graphics()
         End If
     End If
     Call Direct3D_Device.EndScene
+    On Error Resume Next
     Call Direct3D_Device.Present(ByVal 0, ByVal 0, 0, ByVal 0)
-        
+    
     If Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICELOST Or Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then
         HandleDeviceLost
+
         Exit Sub
+
     Else
-        If InShop = 0 And InBank = False Then Direct3D_Device.Present srcRect, ByVal 0, 0, ByVal 0
+        On Error Resume Next
+    
+        Direct3D_Device.Present ByVal 0, ByVal 0, 0, ByVal 0
         DrawGDI
     End If
     Exit Sub
-
-' Error handler
+    
+ '  Error Handler
 ErrorHandler:
-    If Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICELOST Or Direct3D_Device.TestCooperativeLevel = D3DERR_DEVICENOTRESET Then
-        HandleDeviceLost
-
-        Exit Sub
-
-    Else
-
-        If App.LogMode = 1 And Options.Debug = 1 Then
-            HandleError "Render_Graphics", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
-            Err.Clear
-        End If
-
-        MsgBox "Unrecoverable DirectX8 error."
-    End If
+    HandleError "Render_Graphics", "modGraphics", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
 End Sub
 
 Public Function ConvertMapX(ByVal X As Long) As Long
@@ -3795,7 +3754,7 @@ End Sub
 
 Sub DrawBank()
     Dim i As Long, X As Long, Y As Long, ItemNum As Long, srcRect As D3DRECT, destRECT As D3DRECT
-    Dim Amount As String
+    Dim amount As String
     Dim sRECT As RECT, dRect As RECT
     Dim Sprite As Long, Color As Long
 
@@ -3833,17 +3792,17 @@ Sub DrawBank()
                         If GetBankItemValue(i) > 1 Then
                             Y = dRect.Top + 22
                             X = dRect.Left
-                            Amount = GetBankItemValue(i)
+                            amount = GetBankItemValue(i)
                             
                             ' Draw currency but with k, m, b etc. using a convertion function
-                            If CLng(Amount) < 1000000 Then
+                            If CLng(amount) < 1000000 Then
                                 Color = White
-                            ElseIf CLng(Amount) > 1000000 And CLng(Amount) < 10000000 Then
+                            ElseIf CLng(amount) > 1000000 And CLng(amount) < 10000000 Then
                                 Color = Yellow
-                            ElseIf CLng(Amount) > 10000000 Then
+                            ElseIf CLng(amount) > 10000000 Then
                                 Color = BrightGreen
                             End If
-                            RenderText Font_Default, ConvertCurrency(Amount), X, Y, Color
+                            RenderText Font_Default, ConvertCurrency(amount), X, Y, Color
                         End If
                     End If
                 End If
@@ -4299,26 +4258,6 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Function IsConstAnimated(ByVal Sprite As Long) As Boolean
-    ' If debug mode, handle error then exit out
-    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
-    
-    If AnimatedSpriteNumbers = vbNullString Then Exit Function
-    
-    If AnimatedSprites(Sprite) = 1 Then
-        IsConstAnimated = True
-        Exit Function
-    End If
-    
-    IsConstAnimated = False
-    Exit Function
-    
-' Error handler
-ErrorHandler:
-    HandleError "IsConstAnimated", "modRendering", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Function
-
 Public Sub EditorMap_DrawTilePreview()
     Dim Height As Long
     Dim Width As Long
@@ -4451,86 +4390,132 @@ End Sub
 
 Public Sub ResizeHPBar()
     Dim MoveSpeed As Long
-        
-    If Not NewHPBarWidth = OldHPBarWidth Then
+    
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    If CurrentHPBarWidth = 0 Then Exit Sub
+
+    If Not CurrentHPBarWidth = NewHPBarWidth Then
         If NewHPBarWidth > OldHPBarWidth Then
-            MoveSpeed = NewHPBarWidth - OldHPBarWidth
-            If MoveSpeed < 25 Then MoveSpeed = 25
-            
-            If OldHPBarWidth - (MoveSpeed / 25) > NewHPBarWidth Then
-                frmMain.imgHPBar.Width = NewHPBarWidth
+            MoveSpeed = (NewHPBarWidth - OldHPBarWidth) / 25
+
+            If MoveSpeed < 1 Then MoveSpeed = 1
+
+            If CurrentHPBarWidth + MoveSpeed > NewHPBarWidth Then
+                CurrentHPBarWidth = NewHPBarWidth
             Else
-                frmMain.imgHPBar.Width = OldHPBarWidth + (MoveSpeed / 25)
+                CurrentHPBarWidth = CurrentHPBarWidth + MoveSpeed
             End If
+
         Else
-            MoveSpeed = OldHPBarWidth - NewHPBarWidth
-            If MoveSpeed < 25 Then MoveSpeed = 25
-            
-            If NewHPBarWidth + (MoveSpeed / 25) > OldHPBarWidth Then
-                frmMain.imgHPBar.Width = NewHPBarWidth
+            MoveSpeed = (OldHPBarWidth - NewHPBarWidth) / 25
+
+            If MoveSpeed < 1 Then MoveSpeed = 1
+
+            If CurrentHPBarWidth + MoveSpeed < NewHPBarWidth Then
+                CurrentHPBarWidth = NewHPBarWidth
             Else
-                frmMain.imgHPBar.Width = OldHPBarWidth - (MoveSpeed / 25)
+                CurrentHPBarWidth = CurrentHPBarWidth - MoveSpeed
             End If
+        
         End If
         
-        OldHPBarWidth = frmMain.imgHPBar.Width
+        If CurrentHPBarWidth >= 0 Then frmMain.imgHPBar.Width = CurrentHPBarWidth
     End If
+    Exit Sub
+    
+' Error Handler
+ErrorHandler:
+    HandleError "ResizeHPBar", "modGeneral", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+    
 End Sub
 
 Public Sub ResizeMPBar()
     Dim MoveSpeed As Long
     
-    If Not NewMPBarWidth = OldMPBarWidth Then
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    If CurrentMPBarWidth = 0 Then Exit Sub
+
+    If Not CurrentMPBarWidth = NewMPBarWidth Then
         If NewMPBarWidth > OldMPBarWidth Then
-            MoveSpeed = NewMPBarWidth - OldMPBarWidth
-            If MoveSpeed < 25 Then MoveSpeed = 25
-            
-            If OldMPBarWidth - (MoveSpeed / 25) > NewMPBarWidth Then
-                frmMain.imgMPBar.Width = NewMPBarWidth
+            MoveSpeed = (NewMPBarWidth - OldMPBarWidth) / 25
+
+            If MoveSpeed < 1 Then MoveSpeed = 1
+
+            If CurrentMPBarWidth + MoveSpeed > NewMPBarWidth Then
+                CurrentMPBarWidth = NewMPBarWidth
             Else
-                frmMain.imgMPBar.Width = OldMPBarWidth + (MoveSpeed / 25)
+                CurrentMPBarWidth = CurrentMPBarWidth + MoveSpeed
             End If
+
         Else
-            MoveSpeed = OldMPBarWidth - NewMPBarWidth
-            If MoveSpeed < 25 Then MoveSpeed = 25
-            
-            If NewMPBarWidth + (MoveSpeed / 25) > OldMPBarWidth Then
-                frmMain.imgMPBar.Width = NewMPBarWidth
+            MoveSpeed = (OldMPBarWidth - NewMPBarWidth) / 25
+
+            If MoveSpeed < 1 Then MoveSpeed = 1
+
+            If CurrentMPBarWidth + MoveSpeed < NewMPBarWidth Then
+                CurrentMPBarWidth = NewMPBarWidth
             Else
-                frmMain.imgMPBar.Width = OldMPBarWidth - (MoveSpeed / 25)
+                CurrentMPBarWidth = CurrentMPBarWidth - MoveSpeed
             End If
+            
         End If
         
-        OldMPBarWidth = frmMain.imgMPBar.Width
+        If CurrentMPBarWidth >= 0 Then frmMain.imgMPBar.Width = CurrentMPBarWidth
     End If
+   Exit Sub
+   
+'' Error Handler
+ErrorHandler:
+    HandleError "ResizeMPBar", "modGeneral", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
 End Sub
 
 Public Sub ResizeExpBar()
     Dim MoveSpeed As Long
     
-    If Not NewEXPBarWidth = OldEXPBarWidth Then
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    If CurrentMPBarWidth = 0 Then Exit Sub
+
+    If Not CurrentEXPBarWidth = NewEXPBarWidth Then
         If NewEXPBarWidth > OldEXPBarWidth Then
-            MoveSpeed = NewEXPBarWidth - OldEXPBarWidth
-            If MoveSpeed < 25 Then MoveSpeed = 25
-            
-            If OldEXPBarWidth - (MoveSpeed / 25) > NewEXPBarWidth Then
-                frmMain.imgEXPBar.Width = NewEXPBarWidth
+            MoveSpeed = (NewEXPBarWidth - OldEXPBarWidth) / 25
+
+            If MoveSpeed < 1 Then MoveSpeed = 1
+
+            If CurrentEXPBarWidth + MoveSpeed > NewEXPBarWidth Then
+                CurrentEXPBarWidth = NewEXPBarWidth
             Else
-                frmMain.imgEXPBar.Width = OldEXPBarWidth + (MoveSpeed / 25)
+                CurrentEXPBarWidth = CurrentEXPBarWidth + MoveSpeed
             End If
+
         Else
-            MoveSpeed = OldEXPBarWidth - NewEXPBarWidth
-            If MoveSpeed < 25 Then MoveSpeed = 25
-            
-            If NewEXPBarWidth + (MoveSpeed / 25) > OldEXPBarWidth Then
-                frmMain.imgEXPBar.Width = NewEXPBarWidth
+            MoveSpeed = (OldEXPBarWidth - NewEXPBarWidth) / 25
+
+            If MoveSpeed < 1 Then MoveSpeed = 1
+
+            If CurrentEXPBarWidth + MoveSpeed < NewEXPBarWidth Then
+                CurrentEXPBarWidth = NewEXPBarWidth
             Else
-                frmMain.imgEXPBar.Width = OldEXPBarWidth - (MoveSpeed / 25)
+                CurrentEXPBarWidth = CurrentEXPBarWidth - MoveSpeed
             End If
+            
         End If
         
-        OldEXPBarWidth = frmMain.imgEXPBar.Width
+        If CurrentEXPBarWidth >= 0 Then frmMain.imgEXPBar.Width = CurrentEXPBarWidth
     End If
+    Exit Sub
+    
+' Error Handler
+ErrorHandler:
+    HandleError "ResizeMPBar", "modGeneral", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
 End Sub
 
 Public Sub DrawEquipment()
@@ -5485,40 +5470,28 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub DrawEvent(id As Long)
+Public Sub DrawEvent(ID As Long)
     Dim X As Long, Y As Long, Width As Long, Height As Long, sRECT As RECT, dRect As RECT, Anim As Long, spritetop As Long
     
-    If Map.MapEvents(id).Visible = 0 Then Exit Sub
+    If Map.MapEvents(ID).Visible = 0 Then Exit Sub
     If InMapEditor Then Exit Sub
     
-    Select Case Map.MapEvents(id).GraphicType
+    Select Case Map.MapEvents(ID).GraphicType
         Case 0
             Exit Sub
         Case 1
-            If Map.MapEvents(id).GraphicNum <= 0 Or Map.MapEvents(id).GraphicNum > NumCharacters Then Exit Sub
-            Width = Tex_Character(Map.MapEvents(id).GraphicNum).Width / 4
-            Height = Tex_Character(Map.MapEvents(id).GraphicNum).Height / 4
+            If Map.MapEvents(ID).GraphicNum <= 0 Or Map.MapEvents(ID).GraphicNum > NumCharacters Then Exit Sub
+            Width = Tex_Character(Map.MapEvents(ID).GraphicNum).Width / 4
+            Height = Tex_Character(Map.MapEvents(ID).GraphicNum).Height / 4
             
-            ' Reset frame
-            If Map.MapEvents(id).Step = 3 Then
+            If Map.MapEvents(ID).Moving > 0 Then
+                Anim = Map.MapEvents(ID).Step
+            Else
                 Anim = 0
-            ElseIf Map.MapEvents(id).Step = 1 Then
-                Anim = 2
             End If
             
-            Select Case Map.MapEvents(id).Dir
-                Case DIR_UP
-                    If (Map.MapEvents(id).yOffset > 8) Then Anim = Map.MapEvents(id).Step
-                Case DIR_DOWN
-                    If (Map.MapEvents(id).yOffset < -8) Then Anim = Map.MapEvents(id).Step
-                Case DIR_LEFT
-                    If (Map.MapEvents(id).xOffset > 8) Then Anim = Map.MapEvents(id).Step
-                Case DIR_RIGHT
-                    If (Map.MapEvents(id).xOffset < -8) Then Anim = Map.MapEvents(id).Step
-            End Select
-            
             ' Set the left
-            Select Case Map.MapEvents(id).ShowDir
+            Select Case Map.MapEvents(ID).ShowDir
                 Case DIR_UP
                     spritetop = 3
                 Case DIR_RIGHT
@@ -5529,9 +5502,9 @@ Public Sub DrawEvent(id As Long)
                     spritetop = 1
             End Select
             
-            If Map.MapEvents(id).WalkAnim = 1 Then Anim = 0
+            If Map.MapEvents(ID).WalkAnim = 1 Then Anim = 0
             
-            If Map.MapEvents(id).Moving = 0 Then Anim = Map.MapEvents(id).GraphicX
+            If Map.MapEvents(ID).Moving = 0 Then Anim = Map.MapEvents(ID).GraphicX
             
             With sRECT
                 .Top = spritetop * Height
@@ -5541,50 +5514,50 @@ Public Sub DrawEvent(id As Long)
             End With
         
             ' Calculate the X
-            X = Map.MapEvents(id).X * PIC_X + Map.MapEvents(id).xOffset - ((Width - 32) / 2)
+            X = Map.MapEvents(ID).X * PIC_X + Map.MapEvents(ID).xOffset - ((Width - 32) / 2)
         
             ' Is the player's height more than 32..?
             If (Height * 4) > 32 Then
                 ' Create a 32 pixel offset for larger sprites
-                Y = Map.MapEvents(id).Y * PIC_Y + Map.MapEvents(id).yOffset - ((Height) - 32)
+                Y = Map.MapEvents(ID).Y * PIC_Y + Map.MapEvents(ID).yOffset - ((Height) - 32)
             Else
                 ' Proceed as normal
-                Y = Map.MapEvents(id).Y * PIC_Y + Map.MapEvents(id).yOffset
+                Y = Map.MapEvents(ID).Y * PIC_Y + Map.MapEvents(ID).yOffset
             End If
         
             ' render the actual sprite
-            Call DrawSprite(Map.MapEvents(id).GraphicNum, X, Y, sRECT)
+            Call DrawSprite(Map.MapEvents(ID).GraphicNum, X, Y, sRECT)
             
         Case 2
-            If Map.MapEvents(id).GraphicNum < 1 Or Map.MapEvents(id).GraphicNum > NumTileSets Then Exit Sub
+            If Map.MapEvents(ID).GraphicNum < 1 Or Map.MapEvents(ID).GraphicNum > NumTileSets Then Exit Sub
             
-            If Map.MapEvents(id).GraphicY2 > 0 Or Map.MapEvents(id).GraphicX2 > 0 Then
+            If Map.MapEvents(ID).GraphicY2 > 0 Or Map.MapEvents(ID).GraphicX2 > 0 Then
                 With sRECT
-                    .Top = Map.MapEvents(id).GraphicY * 32
-                    .Bottom = .Top + ((Map.MapEvents(id).GraphicY2 - Map.MapEvents(id).GraphicY) * 32)
-                    .Left = Map.MapEvents(id).GraphicX * 32
-                    .Right = .Left + ((Map.MapEvents(id).GraphicX2 - Map.MapEvents(id).GraphicX) * 32)
+                    .Top = Map.MapEvents(ID).GraphicY * 32
+                    .Bottom = .Top + ((Map.MapEvents(ID).GraphicY2 - Map.MapEvents(ID).GraphicY) * 32)
+                    .Left = Map.MapEvents(ID).GraphicX * 32
+                    .Right = .Left + ((Map.MapEvents(ID).GraphicX2 - Map.MapEvents(ID).GraphicX) * 32)
                 End With
             Else
                 With sRECT
-                    .Top = Map.MapEvents(id).GraphicY * 32
+                    .Top = Map.MapEvents(ID).GraphicY * 32
                     .Bottom = .Top + 32
-                    .Left = Map.MapEvents(id).GraphicX * 32
+                    .Left = Map.MapEvents(ID).GraphicX * 32
                     .Right = .Left + 32
                 End With
             End If
             
-            X = Map.MapEvents(id).X * 32
-            Y = Map.MapEvents(id).Y * 32
+            X = Map.MapEvents(ID).X * 32
+            Y = Map.MapEvents(ID).Y * 32
             
             X = X - ((sRECT.Right - sRECT.Left) / 2)
             Y = Y - (sRECT.Bottom - sRECT.Top) + 32
             
             
-            If Map.MapEvents(id).GraphicY2 > 0 Then
-                RenderTexture Tex_Tileset(Map.MapEvents(id).GraphicNum), ConvertMapX(Map.MapEvents(id).X * 32), ConvertMapY((Map.MapEvents(id).Y - ((Map.MapEvents(id).GraphicY2 - Map.MapEvents(id).GraphicY) - 1)) * 32), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
+            If Map.MapEvents(ID).GraphicY2 > 0 Then
+                RenderTexture Tex_Tileset(Map.MapEvents(ID).GraphicNum), ConvertMapX(Map.MapEvents(ID).X * 32), ConvertMapY((Map.MapEvents(ID).Y - ((Map.MapEvents(ID).GraphicY2 - Map.MapEvents(ID).GraphicY) - 1)) * 32), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
             Else
-                RenderTexture Tex_Tileset(Map.MapEvents(id).GraphicNum), ConvertMapX(Map.MapEvents(id).X * 32), ConvertMapY(Map.MapEvents(id).Y * 32), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
+                RenderTexture Tex_Tileset(Map.MapEvents(ID).GraphicNum), ConvertMapX(Map.MapEvents(ID).X * 32), ConvertMapY(Map.MapEvents(ID).Y * 32), sRECT.Left, sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, sRECT.Right - sRECT.Left, sRECT.Bottom - sRECT.Top, D3DColorRGBA(255, 255, 255, 255)
             End If
     End Select
 End Sub
@@ -5661,14 +5634,14 @@ End Function
 
 Public Sub UpdateCamera()
     Dim offsetX As Long, offsetY As Long, StartX As Long, StartY As Long, EndX As Long, EndY As Long
-    Dim centerX As Long, centerY As Long
+    Dim CenterX As Long, CenterY As Long
     
-    centerX = (ScreenX \ PIC_X) / 2
-    centerY = (ScreenY \ PIC_Y) / 2
+    CenterX = (ScreenX \ PIC_X) / 2
+    CenterY = (ScreenY \ PIC_Y) / 2
     offsetX = TempPlayer(MyIndex).xOffset + PIC_X
     offsetY = TempPlayer(MyIndex).yOffset + PIC_Y
-    StartX = GetPlayerX(MyIndex) - centerX
-    StartY = GetPlayerY(MyIndex) - centerY
+    StartX = GetPlayerX(MyIndex) - CenterX
+    StartY = GetPlayerY(MyIndex) - CenterY
  
     If StartX <= 0 Then
         offsetX = 0
@@ -5697,11 +5670,11 @@ Public Sub UpdateCamera()
     EndX = StartX + MIN_MAPX
     EndY = StartY + MIN_MAPY
     
-    If GetPlayerX(MyIndex) > centerX And EndX <= Map.MaxX Then
+    If GetPlayerX(MyIndex) > CenterX And EndX <= Map.MaxX Then
         StartX = StartX - 1
     End If
     
-    If GetPlayerY(MyIndex) > centerY And EndY <= Map.MaxY Then
+    If GetPlayerY(MyIndex) > CenterY And EndY <= Map.MaxY Then
         StartY = StartY - 1
     End If
     

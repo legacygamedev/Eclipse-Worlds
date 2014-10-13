@@ -1138,7 +1138,7 @@ Begin VB.Form frmEditor_Map
    End
    Begin VB.CommandButton cmdCopy 
       Caption         =   "Copy"
-      Height          =   240
+      Height          =   360
       Left            =   1680
       TabIndex        =   94
       Top             =   1650
@@ -1146,7 +1146,7 @@ Begin VB.Form frmEditor_Map
    End
    Begin VB.CommandButton cmdPaste 
       Caption         =   "Paste"
-      Height          =   210
+      Height          =   330
       Left            =   2400
       TabIndex        =   95
       Top             =   1665
@@ -1734,7 +1734,7 @@ ErrorHandler:
 End Sub
 
 Private Sub Form_Load()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1763,8 +1763,8 @@ Private Sub Form_Load()
     frmEditor_Map.cmbSoundEffect.Clear
     frmEditor_Map.cmbSoundEffect.AddItem "None"
 
-    For i = 1 To UBound(SoundCache)
-        frmEditor_Map.cmbSoundEffect.AddItem SoundCache(i)
+    For I = 1 To UBound(SoundCache)
+        frmEditor_Map.cmbSoundEffect.AddItem SoundCache(I)
     Next
     
     frmEditor_Map.cmbSoundEffect.ListIndex = 0
@@ -1808,7 +1808,7 @@ ErrorHandler:
 End Sub
 
 Private Sub optLayer_Click(Index As Integer)
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1903,7 +1903,7 @@ ErrorHandler:
 End Sub
 
 Private Sub chkRandom_Click()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler

@@ -103,7 +103,7 @@ Public Sub PlaySound(FileName As String, _
                      Optional ByVal X As Long, _
                      Optional ByVal Y As Long, _
                      Optional ByVal Ignore As Boolean = False)
-   Dim i As Long
+   Dim I As Long
 
    '
    If Ignore = False And (Options.Sound = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None") Then Exit Sub
@@ -111,18 +111,18 @@ Public Sub PlaySound(FileName As String, _
    If FileExist(App.Path & SOUND_PATH & Trim$(FileName), True) Then
 
       ' Find the index
-      For i = 1 To MAX_SOUNDS
+      For I = 1 To MAX_SOUNDS
 
-         If Sounds(i) = 0 Then
-            SoundIndex = i
+         If Sounds(I) = 0 Then
+            SoundIndex = I
             Exit For
-         ElseIf BASS_ChannelIsActive(Sounds(i)) Then
-            SoundIndex = i
+         ElseIf BASS_ChannelIsActive(Sounds(I)) Then
+            SoundIndex = I
             Exit For
          End If
             
          ' Set it to the beginning and stop the sound if all sounds are being used
-         If i = MAX_SOUNDS Then
+         If I = MAX_SOUNDS Then
             StopSound 1
             SoundIndex = 1
          End If
@@ -171,19 +171,19 @@ Public Sub StopMapSound(ByVal Index As Byte, Optional ByVal Clear As Boolean = T
 End Sub
 
 Public Sub StopSounds()
-    Dim i As Long
+    Dim I As Long
     
-    For i = 1 To MAX_SOUNDS
-        Call StopSound(i)
+    For I = 1 To MAX_SOUNDS
+        Call StopSound(I)
     Next
 End Sub
 
 Sub StopMapSounds()
-    Dim i As Long
+    Dim I As Long
     
     If MapSoundCount > 0 Then
-        For i = 1 To MapSoundCount
-            Call StopMapSound(i)
+        For I = 1 To MapSoundCount
+            Call StopMapSound(I)
         Next
         
         MapSoundCount = 0
@@ -232,35 +232,35 @@ Function CalculateSoundVolume(X As Long, Y As Long) As Double
 End Function
 
 Sub UpdateSounds()
-    Dim i As Long, X As Long
+    Dim I As Long, X As Long
 
     If MapSoundCount > 0 Then
-        For i = 1 To MapSoundCount
-            If BASS_ChannelIsActive(MapSounds(i).handle) Then
-                BASS_ChannelSetAttribute MapSounds(i).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(i).X, MapSounds(MapSoundCount).Y)
+        For I = 1 To MapSoundCount
+            If BASS_ChannelIsActive(MapSounds(I).handle) Then
+                BASS_ChannelSetAttribute MapSounds(I).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(I).X, MapSounds(MapSoundCount).Y)
             Else
-                Call StopMapSound(i)
+                Call StopMapSound(I)
             End If
         Next
     End If
 End Sub
 
 Sub UpdateMapSounds()
-    Dim i As Long, X As Long
+    Dim I As Long, X As Long
     
     If MapSoundCount > 0 Then
-        For i = 1 To MapSoundCount
-            If BASS_ChannelIsActive(MapSounds(i).handle) Then
-                BASS_ChannelSetAttribute MapSounds(i).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(i).X, MapSounds(MapSoundCount).Y)
+        For I = 1 To MapSoundCount
+            If BASS_ChannelIsActive(MapSounds(I).handle) Then
+                BASS_ChannelSetAttribute MapSounds(I).handle, BASS_ATTRIB_VOL, CalculateSoundVolume(MapSounds(I).X, MapSounds(MapSoundCount).Y)
             Else
-                Call StopMapSound(i)
+                Call StopMapSound(I)
             End If
         Next
     End If
 End Sub
 
 Sub CacheNewMapSounds()
-    Dim i As Long, X As Long, Y As Long
+    Dim I As Long, X As Long, Y As Long
     
     StopMapSounds
     
@@ -295,7 +295,7 @@ End Sub
 
 Public Sub MuteVolume()
 
-    Dim i As Long
+    Dim I As Long
 
     ' Adjust volume
     If CurrentMusicIndex <> 0 Then
@@ -312,7 +312,7 @@ End Sub
 
 Public Sub UpdateVolume()
 
-    Dim i As Long
+    Dim I As Long
 
     If CurrentMusicIndex <> 0 Then
         Call BASS_ChannelSetAttribute(CurrentMusicIndex, BASS_ATTRIB_VOL, Options.Music)
@@ -321,25 +321,25 @@ Public Sub UpdateVolume()
     Call BASS_ChannelPlay(CurrentMusicIndex, BASSFALSE)
     
     ' Adjust sound volume
-    For i = 1 To MAX_SOUNDS
+    For I = 1 To MAX_SOUNDS
 
-        If BASS_ChannelIsActive(Sounds(i)) Then
-            Call BASS_ChannelSetAttribute(Sounds(i), BASS_ATTRIB_VOL, Options.Sound)
-            Call BASS_ChannelPlay(Sounds(i), BASSFALSE)
+        If BASS_ChannelIsActive(Sounds(I)) Then
+            Call BASS_ChannelSetAttribute(Sounds(I), BASS_ATTRIB_VOL, Options.Sound)
+            Call BASS_ChannelPlay(Sounds(I), BASSFALSE)
         Else
-            Call StopSound(i)
+            Call StopSound(I)
         End If
 
     Next
 
     If MapSoundCount > 0 Then
 
-        For i = 1 To MapSoundCount
+        For I = 1 To MapSoundCount
             
-            If BASS_ChannelIsActive(MapSounds(i).handle) Then
-                Call BASS_ChannelSetAttribute(MapSounds(i).handle, BASS_ATTRIB_VOL, Options.Sound)
+            If BASS_ChannelIsActive(MapSounds(I).handle) Then
+                Call BASS_ChannelSetAttribute(MapSounds(I).handle, BASS_ATTRIB_VOL, Options.Sound)
             Else
-                Call StopMapSound(i)
+                Call StopMapSound(I)
             End If
 
         Next

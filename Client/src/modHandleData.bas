@@ -111,6 +111,7 @@ Public Sub InitMessages()
     HandleDataSub(SFoesList) = GetAddress(AddressOf HandleFoesList)
     HandleDataSub(SHighIndex) = GetAddress(AddressOf HandlePlayer_HighIndex)
     HandleDataSub(SEntitySound) = GetAddress(AddressOf HandleEntitySound)
+    HandleDataSub(SGameData) = GetAddress(AddressOf HandleGameData)
     HandleDataSub(SSendNews) = GetAddress(AddressOf HandleNews)
     HandleDataSub(SSound) = GetAddress(AddressOf HandleSound)
     HandleDataSub(SBanEditor) = GetAddress(AddressOf HandleBanEditor)
@@ -250,7 +251,7 @@ Dim QuestNum As Long
                         For II = 1 To .CLI(i).Max_Actions
                             .CLI(i).Action(II).TextHolder = buffer.ReadString
                             .CLI(i).Action(II).ActionID = buffer.ReadLong
-                            .CLI(i).Action(II).Amount = buffer.ReadLong
+                            .CLI(i).Action(II).amount = buffer.ReadLong
                             .CLI(i).Action(II).MainData = buffer.ReadLong
                             .CLI(i).Action(II).QuadData = buffer.ReadLong
                             .CLI(i).Action(II).SecondaryData = buffer.ReadLong
@@ -331,6 +332,8 @@ Sub HandleAlertMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As
     If InGame Then
         IsLogging = True
         LogoutGame
+        frmMain.Visible = False
+        frmMenu.Visible = True
     End If
     
     Call AlertMsg(Msg)
@@ -356,10 +359,14 @@ Sub HandleLoginOk(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As 
     
     ' Player high Index
     Player_HighIndex = buffer.ReadLong
+    MAX_LEVEL = buffer.ReadLong
+    MAX_STAT = buffer.ReadLong
     
     Set buffer = Nothing
     frmLoad.Visible = True
     Call SetStatus("Receiving game data...")
+    
+    frmMain.Caption = GAME_NAME
     
 ' Error handler
     Exit Sub
@@ -387,6 +394,7 @@ Sub HandleInGame(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As L
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     InGame = True
+    
     Call GameInit
     Call GameLoop
     Exit Sub
@@ -545,18 +553,22 @@ Private Sub HandlePlayerHP(ByVal Index As Long, ByRef data() As Byte, ByVal Star
     Player(Index).MaxVital(Vitals.HP) = buffer.ReadLong
     
     Call SetPlayerVital(Index, Vitals.HP, buffer.ReadLong)
+    
+    OldHPBarWidth = CurrentHPBarWidth
 
     If Index = MyIndex Then
+        If GetPlayerMaxVital(MyIndex, Vitals.HP) = 0 Then Exit Sub
+        
         If HPBarInit = False Then
-            frmMain.imgHPBar.Width = ((GetPlayerVital(MyIndex, Vitals.HP) / HPBar_Width) / (GetPlayerMaxVital(MyIndex, Vitals.HP) / HPBar_Width)) * HPBar_Width
+            CurrentHPBarWidth = ((GetPlayerVital(MyIndex, Vitals.HP) / HPBar_Width) / (GetPlayerMaxVital(MyIndex, Vitals.HP) / HPBar_Width)) * HPBar_Width
+            frmMain.imgHPBar.Width = CurrentHPBarWidth
             HPBarInit = True
         End If
+        
         OldHPBarWidth = frmMain.imgHPBar.Width
         NewHPBarWidth = ((GetPlayerVital(MyIndex, Vitals.HP) / HPBar_Width) / (GetPlayerMaxVital(MyIndex, Vitals.HP) / HPBar_Width)) * HPBar_Width
         
-        If GetPlayerMaxVital(MyIndex, Vitals.HP) > 0 Then
-            frmMain.lblHP.Caption = GetPlayerVital(MyIndex, Vitals.HP) & "/" & GetPlayerMaxVital(MyIndex, Vitals.HP)
-        End If
+        frmMain.lblHP.Caption = GetPlayerVital(MyIndex, Vitals.HP) & "/" & GetPlayerMaxVital(MyIndex, Vitals.HP)
     End If
     Exit Sub
     
@@ -581,16 +593,18 @@ Private Sub HandlePlayerMP(ByVal Index As Long, ByRef data() As Byte, ByVal Star
     Call SetPlayerVital(Index, Vitals.MP, buffer.ReadLong)
 
     If Index = MyIndex Then
+        If GetPlayerMaxVital(MyIndex, Vitals.MP) = 0 Then Exit Sub
+        
         If MPBarInit = False Then
-            frmMain.imgMPBar.Width = ((GetPlayerVital(MyIndex, Vitals.MP) / MPBar_Width) / (GetPlayerMaxVital(MyIndex, Vitals.MP) / MPBar_Width)) * MPBar_Width
+            CurrentMPBarWidth = ((GetPlayerVital(MyIndex, Vitals.MP) / MPBar_Width) / (GetPlayerMaxVital(MyIndex, Vitals.MP) / MPBar_Width)) * MPBar_Width
+            frmMain.imgMPBar.Width = CurrentMPBarWidth
             MPBarInit = True
         End If
+        
         OldMPBarWidth = frmMain.imgMPBar.Width
         NewMPBarWidth = ((GetPlayerVital(MyIndex, Vitals.MP) / MPBar_Width) / (GetPlayerMaxVital(MyIndex, Vitals.MP) / MPBar_Width)) * MPBar_Width
         
-        If GetPlayerMaxVital(MyIndex, Vitals.MP) > 0 Then
-            frmMain.lblMP.Caption = GetPlayerVital(MyIndex, Vitals.MP) & "/" & GetPlayerMaxVital(MyIndex, Vitals.MP)
-        End If
+        frmMain.lblMP.Caption = GetPlayerVital(MyIndex, Vitals.MP) & "/" & GetPlayerMaxVital(MyIndex, Vitals.MP)
     End If
     Exit Sub
     
@@ -732,6 +746,7 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
     
     ' Player titles
     For X = 1 To Player(i).AmountOfTitles
+        ReDim Player(i).title(MAX_TITLES)
         Player(i).title(X) = buffer.ReadByte
     Next
     
@@ -745,15 +760,7 @@ Private Sub HandlePlayerData(ByVal Index As Long, ByRef data() As Byte, ByVal St
         Player(i).Skills(X).Level = buffer.ReadByte
         Player(i).Skills(X).exp = buffer.ReadLong
     Next
-    
-    ' Quest info
-    For X = 1 To MAX_QUESTS
-        Player(i).QuestCLIID(X) = buffer.ReadLong
-        Player(i).QuestTaskID(X) = buffer.ReadLong
-        Player(i).QuestAmount(X) = buffer.ReadLong
-        Player(i).QuestCompleted(X) = buffer.ReadLong
-    Next X
-    
+
     ' Check if the player is the client player
     If i = MyIndex Then
         ' Update the form guild boxes
@@ -1499,7 +1506,7 @@ Private Sub HandleGlobalMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     Msg = buffer.ReadString
     
     Color = buffer.ReadLong
-    Call AddText(CheckMessage(Msg), Color)
+    Call AddText(Msg, Color)
     Exit Sub
     
 ' Error handler
@@ -1527,7 +1534,7 @@ Private Sub HandlePlayerMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     Set buffer = Nothing
     
     If Not QuestMsg Then
-        Call AddText(CheckMessage(Msg), Color)
+        Call AddText(Msg, Color)
     Else
         frmMain.lblQuestName.Caption = Trim$(Quest(QuestNum).Name)
         frmMain.lblQuestMsg.Caption = Msg
@@ -1558,7 +1565,7 @@ Private Sub HandleMapMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
     buffer.WriteBytes data()
     Msg = buffer.ReadString
     Color = buffer.ReadByte
-    Call AddText(CheckMessage(Msg), Color)
+    Call AddText(Msg, Color)
     Exit Sub
     
 ' Error handler
@@ -1579,7 +1586,7 @@ Private Sub HandleAdminMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Star
     buffer.WriteBytes data()
     Msg = buffer.ReadString
     Color = buffer.ReadByte
-    Call AddText(CheckMessage(Msg), Color)
+    Call AddText(Msg, Color)
     Exit Sub
     
 ' Error handler
@@ -1693,6 +1700,8 @@ Private Sub HandleUpdateItem(ByVal Index As Long, ByRef data() As Byte, ByVal St
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     n = buffer.ReadLong
+    
+    If n > MAX_ITEMS Then Exit Sub
     
     ' Update the item
     ItemSize = LenB(Item(n))
@@ -2284,22 +2293,18 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     TNL = buffer.ReadLong
     
     If Index = MyIndex Then
-        ' Exp bar
-        If Not GetPlayerLevel(MyIndex) = MAX_LEVEL Then
-            If EXPBarInit = False Then
-                frmMain.imgEXPBar.Width = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
-                EXPBarInit = True
-            End If
-            
-            OldEXPBarWidth = frmMain.imgEXPBar.Width
-            NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
-            frmMain.lblEXP.Visible = True
-            frmMain.lblEXP.Caption = GetPlayerExp(Index) & "/" & TNL
-        Else
-            frmMain.imgEXPBar.Width = EXPBar_Width
-            frmMain.lblEXP.Visible = False
-            frmMain.lblEXP.Caption = ""
+        If TNL = 0 Then Exit Sub
+        
+        If EXPBarInit = False Then
+            CurrentEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
+            frmMain.imgEXPBar.Width = CurrentEXPBarWidth
+            EXPBarInit = True
         End If
+        
+        OldEXPBarWidth = frmMain.imgEXPBar.Width
+        NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
+        
+        frmMain.lblExp.Caption = GetPlayerExp(MyIndex) & "/" & TNL
     End If
 End Sub
 
@@ -2439,26 +2444,10 @@ Private Sub HandleSayMsg(ByVal Index As Long, ByRef data() As Byte, ByVal StartA
     Name = buffer.ReadString
     Access = buffer.ReadLong
     PK = buffer.ReadLong
-    Message = CheckMessage(buffer.ReadString)
+    Message = buffer.ReadString
     Header = buffer.ReadString
     SayColor = buffer.ReadLong
-    
-    ' Prevent ascii characters
-    Dim Size As Long
-    Size = Len(Message)
-    For i = 1 To Size
-        ' limit the ASCII
-        If AscW(Mid$(Message, i, 1)) < 32 Or AscW(Mid$(Message, i, 1)) > 126 Then
-            ' limit the extended ASCII
-            If AscW(Mid$(Message, i, 1)) < 128 Or AscW(Mid$(Message, i, 1)) > 168 Then
-                ' limit the extended ASCII
-                If AscW(Mid$(Message, i, 1)) < 224 Or AscW(Mid$(Message, i, 1)) > 253 Then
-                    Mid$(Message, i, 1) = ""
-                End If
-            End If
-        End If
-    Next
-    
+
     ' Check access level
     If PK = NO Then
         Select Case Access
@@ -2908,7 +2897,7 @@ ErrorHandler:
 End Sub
 
 Private Sub HandleSpawnEventPage(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim id As Long, i As Long, Z As Long, X As Long, Y As Long
+    Dim ID As Long, i As Long, Z As Long, X As Long, Y As Long
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -2916,14 +2905,14 @@ Private Sub HandleSpawnEventPage(ByVal Index As Long, ByRef data() As Byte, ByVa
     
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
-    id = buffer.ReadLong
+    ID = buffer.ReadLong
     
-    If id > Map.CurrentEvents Then
-        Map.CurrentEvents = id
+    If ID > Map.CurrentEvents Then
+        Map.CurrentEvents = ID
         ReDim Preserve Map.MapEvents(Map.CurrentEvents)
     End If
 
-    With Map.MapEvents(id)
+    With Map.MapEvents(ID)
         .Name = buffer.ReadString
         .Dir = buffer.ReadLong
         .ShowDir = .Dir
@@ -2958,7 +2947,7 @@ ErrorHandler:
 End Sub
 
 Private Sub HandleEventMove(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
-    Dim id As Long
+    Dim ID As Long
     Dim X As Long
     Dim Y As Long
     Dim Dir As Long, ShowDir As Long
@@ -2970,16 +2959,16 @@ Private Sub HandleEventMove(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
-    id = buffer.ReadLong
+    ID = buffer.ReadLong
     X = buffer.ReadLong
     Y = buffer.ReadLong
     Dir = buffer.ReadLong
     ShowDir = buffer.ReadLong
     MovementSpeed = buffer.ReadLong
     
-    If id > Map.CurrentEvents Then Exit Sub
+    If ID > Map.CurrentEvents Then Exit Sub
 
-    With Map.MapEvents(id)
+    With Map.MapEvents(ID)
         .X = X
         .Y = Y
         .Dir = Dir
@@ -3803,6 +3792,45 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Private Sub HandleGameData(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
+    Dim buffer As clsBuffer
+    Dim i As Long
+    
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    Set buffer = New clsBuffer
+     buffer.WriteBytes data()
+    
+    GAME_NAME = buffer.ReadString
+    GAME_WEBSITE = buffer.ReadString
+    
+    MAX_MAPS = buffer.ReadLong
+    MAX_ITEMS = buffer.ReadLong
+    MAX_NPCS = buffer.ReadLong
+    MAX_ANIMATIONS = buffer.ReadLong
+    MAX_SHOPS = buffer.ReadLong
+    MAX_SPELLS = buffer.ReadLong
+    MAX_RESOURCES = buffer.ReadLong
+    MAX_QUESTS = buffer.ReadLong
+    MAX_BANS = buffer.ReadLong
+    MAX_TITLES = buffer.ReadLong
+    MAX_MORALS = buffer.ReadLong
+    MAX_CLASSES = buffer.ReadLong
+    MAX_EMOTICONS = buffer.ReadLong
+    
+    Set buffer = Nothing
+    
+    frmMenu.Caption = GAME_NAME
+    redimData
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "HandleGameData", "modHandleData", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub HandleNews(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
     Dim i As Long
@@ -3814,6 +3842,7 @@ Private Sub HandleNews(ByVal Index As Long, ByRef data() As Byte, ByVal StartAdd
     buffer.WriteBytes data()
     
     frmMenu.lblNews.Caption = buffer.ReadString
+    
     Set buffer = Nothing
     StopTimer = False
     
@@ -4221,21 +4250,25 @@ Private Sub UpdateCharacterMenu()
     
     n = 1
     
-    For i = 1 To MAX_CLASSES
-        If Class(i).Locked = 0 And Not Trim$(Class(i).Name) = vbNullString Then
-            frmMenu.cmbClass.AddItem Trim$(Class(i).Name)
-            ClassSelection(n) = i
-            n = n + 1
+    If MAX_CLASSES > 0 Then
+        For i = 1 To MAX_CLASSES
+            If Class(i).Locked = 0 And Not Trim$(Class(i).Name) = vbNullString Then
+                frmMenu.cmbClass.AddItem Trim$(Class(i).Name)
+                ClassSelection(n) = i
+                n = n + 1
+            End If
+        Next
+        
+        If frmMenu.cmbClass.ListCount = 0 Then
+            frmMenu.cmbClass.AddItem "None"
+            ClassSelection(n) = 1
         End If
-    Next
-    
-    If frmMenu.cmbClass.ListCount = 0 Then
-        frmMenu.cmbClass.AddItem "None"
-        ClassSelection(n) = 1
+        
+        frmMenu.cmbClass.ListIndex = 0
     End If
     
-    frmMenu.cmbClass.ListIndex = 0
     Menu_DrawCharacter
+    
     Exit Sub
     
 ' Error handler

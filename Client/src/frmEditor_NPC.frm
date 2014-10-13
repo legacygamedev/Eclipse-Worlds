@@ -26,6 +26,23 @@ Begin VB.Form frmEditor_NPC
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.CheckBox chkAnimated 
+      Caption         =   "Animated"
+      Height          =   255
+      Left            =   7140
+      TabIndex        =   82
+      TabStop         =   0   'False
+      Top             =   1860
+      Width           =   1095
+   End
+   Begin VB.CommandButton cmdChangeDataSize 
+      Caption         =   "Change Data Size"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   81
+      Top             =   8640
+      Width           =   3135
+   End
    Begin VB.CheckBox chkShowOnDeath 
       Caption         =   "Show On Death"
       Height          =   255
@@ -66,8 +83,8 @@ Begin VB.Form frmEditor_NPC
       Top             =   8640
       Width           =   1455
    End
-   Begin VB.CommandButton cmdCancel 
-      Caption         =   "Cancel"
+   Begin VB.CommandButton cmdClosel 
+      Caption         =   "Close"
       Height          =   375
       Left            =   6840
       TabIndex        =   31
@@ -84,7 +101,7 @@ Begin VB.Form frmEditor_NPC
    End
    Begin VB.Frame fraNPC 
       Caption         =   "NPC List"
-      Height          =   8895
+      Height          =   8415
       Left            =   120
       TabIndex        =   32
       Top             =   120
@@ -114,10 +131,10 @@ Begin VB.Form frmEditor_NPC
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
-         Height          =   7860
+         Height          =   7470
          Left            =   120
          TabIndex        =   1
-         Top             =   600
+         Top             =   720
          Width           =   2895
       End
    End
@@ -762,8 +779,20 @@ Private DropIndex As Long
 Private SpellIndex As Long
 Private TmpIndex As Long
 
-Private Sub chkDrop_Click()
+Private Sub chkAnimated_Click()
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    NPC(EditorIndex).Animated = chkAnimated.Value
+    Exit Sub
     
+' Error Handler
+ErrorHandler:
+    HandleError "chkAnimated", "frmEditor_NPC", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub chkDrop_Click()
     ' If debug mode then handle error
     If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
 
@@ -927,6 +956,53 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Private Sub cmdChangeDataSize_Click()
+    Dim Res As VbMsgBoxResult, val As String
+    Dim dataModified As Boolean, I As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    For I = 1 To MAX_NPCS
+        If NPC_Changed(I) Then
+        
+            dataModified = True
+            Exit For
+        End If
+    Next
+    
+    If dataModified Then
+        Res = MsgBox("Do you want to continue and discard the changes you made to your data?", vbYesNo)
+        
+        If Res = vbNo Then Exit Sub
+    End If
+    
+    val = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_NPCS)
+    
+    If Not IsNumeric(val) Then
+        Exit Sub
+    End If
+    
+    Res = Abs(val)
+    
+    If Res = MAX_NPCS Then Exit Sub
+    
+    Call SendChangeDataSize(Res, EDITOR_NPC)
+    
+    Unload frmEditor_NPC
+    MAX_NPCS = Res
+    ReDim NPC(MAX_NPCS)
+    
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdChangeDataSize_Click", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub cmdDelete_Click()
     Dim TmpIndex As Long
     
@@ -994,7 +1070,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub cmdCancel_Click()
+Private Sub cmdClosel_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
@@ -1005,7 +1081,7 @@ Private Sub cmdCancel_Click()
     
 ' Error handler
 ErrorHandler:
-    HandleError "cmdCancel_Click", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "cmdClosel_Click", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1309,10 +1385,10 @@ Private Sub txtExp_Change()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If Not IsNumeric(txtExp.text) Then txtExp.text = 0
-    If txtExp.text > MAX_LONG Then txtExp.text = MAX_LONG
-    If txtExp.text < 0 Then txtExp.text = 0
-    NPC(EditorIndex).exp = txtExp.text
+    If Not IsNumeric(txtEXP.text) Then txtEXP.text = 0
+    If txtEXP.text > MAX_LONG Then txtEXP.text = MAX_LONG
+    If txtEXP.text < 0 Then txtEXP.text = 0
+    NPC(EditorIndex).exp = txtEXP.text
     Exit Sub
     
 ' Error handler
@@ -1397,7 +1473,7 @@ ErrorHandler:
 End Sub
 
 Private Sub txtChance_Validate(Cancel As Boolean)
-    Dim i() As String
+    Dim I() As String
     
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
@@ -1413,8 +1489,8 @@ Private Sub txtChance_Validate(Cancel As Boolean)
     If Right$(txtChance.text, 1) = "%" Then
         txtChance.text = Left$(txtChance.text, Len(txtChance.text) - 1) / 100
     ElseIf InStr(1, txtChance.text, "/") > 0 Then
-        i = Split(txtChance.text, "/")
-        txtChance.text = Int(i(0) / i(1) * 1000) / 1000
+        I = Split(txtChance.text, "/")
+        txtChance.text = Int(I(0) / I(1) * 1000) / 1000
     End If
     
     If txtChance.text > 1 Then
@@ -1529,7 +1605,7 @@ Private Sub txtEXP_GotFocus()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    txtExp.SelStart = Len(txtExp)
+    txtEXP.SelStart = Len(txtEXP)
     Exit Sub
     
 ' Error handler
@@ -1552,18 +1628,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If
@@ -1599,7 +1675,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         cmdSave_Click
         KeyAscii = 0
     ElseIf KeyAscii = vbKeyEscape Then
-        cmdCancel_Click
+        cmdClosel_Click
         KeyAscii = 0
     End If
     Exit Sub

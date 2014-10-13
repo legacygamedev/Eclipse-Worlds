@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMenu 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -36,6 +36,241 @@ Begin VB.Form frmMenu
       Interval        =   1000
       Left            =   0
       Top             =   0
+   End
+   Begin VB.PictureBox picLogin 
+      AutoSize        =   -1  'True
+      BackColor       =   &H00C0C0C0&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   3630
+      Left            =   555
+      ScaleHeight     =   242
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   442
+      TabIndex        =   4
+      TabStop         =   0   'False
+      Top             =   180
+      Visible         =   0   'False
+      Width           =   6630
+      Begin VB.CheckBox chkUsername 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00000000&
+         Caption         =   "Save Username"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   1320
+         TabIndex        =   26
+         TabStop         =   0   'False
+         Top             =   2160
+         Value           =   1  'Checked
+         Width           =   1815
+      End
+      Begin VB.CheckBox chkPass 
+         Appearance      =   0  'Flat
+         BackColor       =   &H00000000&
+         Caption         =   "Save Password"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   3720
+         TabIndex        =   7
+         TabStop         =   0   'False
+         Top             =   2160
+         Width           =   1575
+      End
+      Begin VB.TextBox txtLPass 
+         Appearance      =   0  'Flat
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   225
+         IMEMode         =   3  'DISABLE
+         Left            =   2520
+         PasswordChar    =   "•"
+         TabIndex        =   2
+         Top             =   1800
+         Width           =   2775
+      End
+      Begin VB.TextBox txtLUser 
+         Appearance      =   0  'Flat
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00000000&
+         Height          =   225
+         Left            =   2520
+         TabIndex        =   1
+         Top             =   1440
+         Width           =   2775
+      End
+      Begin VB.Label lblLAccept 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Accept"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   2760
+         TabIndex        =   3
+         Top             =   2640
+         Width           =   1215
+      End
+      Begin VB.Label lblBlank 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Password:"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Index           =   3
+         Left            =   1320
+         TabIndex        =   6
+         Top             =   1800
+         Width           =   1215
+      End
+      Begin VB.Label lblBlank 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Username:"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Index           =   0
+         Left            =   1320
+         TabIndex        =   5
+         Top             =   1440
+         Width           =   1215
+      End
+   End
+   Begin VB.PictureBox picCredits 
+      AutoSize        =   -1  'True
+      BackColor       =   &H00C0C0C0&
+      BorderStyle     =   0  'None
+      Height          =   3645
+      Left            =   540
+      ScaleHeight     =   3645
+      ScaleWidth      =   6630
+      TabIndex        =   28
+      TabStop         =   0   'False
+      Top             =   180
+      Width           =   6630
+   End
+   Begin VB.PictureBox picMain 
+      AutoSize        =   -1  'True
+      BackColor       =   &H00C0C0C0&
+      BorderStyle     =   0  'None
+      Height          =   3645
+      Left            =   555
+      ScaleHeight     =   3645
+      ScaleWidth      =   6630
+      TabIndex        =   24
+      TabStop         =   0   'False
+      Top             =   180
+      Width           =   6630
+      Begin VB.Label lblServerStatus 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Offline"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H000000FF&
+         Height          =   255
+         Left            =   0
+         TabIndex        =   27
+         Top             =   3320
+         Visible         =   0   'False
+         Width           =   6615
+      End
+      Begin VB.Label lblNews 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Connecting to server..."
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   1575
+         Left            =   1680
+         TabIndex        =   25
+         Top             =   1200
+         Width           =   3135
+         WordWrap        =   -1  'True
+      End
    End
    Begin VB.PictureBox picCharacter 
       AutoSize        =   -1  'True
@@ -468,241 +703,6 @@ Begin VB.Form frmMenu
          Width           =   1455
       End
    End
-   Begin VB.PictureBox picLogin 
-      AutoSize        =   -1  'True
-      BackColor       =   &H00C0C0C0&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Tahoma"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   3630
-      Left            =   555
-      ScaleHeight     =   242
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   442
-      TabIndex        =   4
-      TabStop         =   0   'False
-      Top             =   180
-      Visible         =   0   'False
-      Width           =   6630
-      Begin VB.CheckBox chkUsername 
-         Appearance      =   0  'Flat
-         BackColor       =   &H00000000&
-         Caption         =   "Save Username"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   1320
-         TabIndex        =   26
-         TabStop         =   0   'False
-         Top             =   2160
-         Value           =   1  'Checked
-         Width           =   1815
-      End
-      Begin VB.CheckBox chkPass 
-         Appearance      =   0  'Flat
-         BackColor       =   &H00000000&
-         Caption         =   "Save Password"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   3720
-         TabIndex        =   7
-         TabStop         =   0   'False
-         Top             =   2160
-         Width           =   1575
-      End
-      Begin VB.TextBox txtLPass 
-         Appearance      =   0  'Flat
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00000000&
-         Height          =   225
-         IMEMode         =   3  'DISABLE
-         Left            =   2520
-         PasswordChar    =   "•"
-         TabIndex        =   2
-         Top             =   1800
-         Width           =   2775
-      End
-      Begin VB.TextBox txtLUser 
-         Appearance      =   0  'Flat
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00000000&
-         Height          =   225
-         Left            =   2520
-         TabIndex        =   1
-         Top             =   1440
-         Width           =   2775
-      End
-      Begin VB.Label lblLAccept 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Accept"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   2760
-         TabIndex        =   3
-         Top             =   2640
-         Width           =   1215
-      End
-      Begin VB.Label lblBlank 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Password:"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Index           =   3
-         Left            =   1320
-         TabIndex        =   6
-         Top             =   1800
-         Width           =   1215
-      End
-      Begin VB.Label lblBlank 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Username:"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Index           =   0
-         Left            =   1320
-         TabIndex        =   5
-         Top             =   1440
-         Width           =   1215
-      End
-   End
-   Begin VB.PictureBox picCredits 
-      AutoSize        =   -1  'True
-      BackColor       =   &H00C0C0C0&
-      BorderStyle     =   0  'None
-      Height          =   3645
-      Left            =   540
-      ScaleHeight     =   3645
-      ScaleWidth      =   6630
-      TabIndex        =   28
-      TabStop         =   0   'False
-      Top             =   180
-      Width           =   6630
-   End
-   Begin VB.PictureBox picMain 
-      AutoSize        =   -1  'True
-      BackColor       =   &H00C0C0C0&
-      BorderStyle     =   0  'None
-      Height          =   3645
-      Left            =   555
-      ScaleHeight     =   3645
-      ScaleWidth      =   6630
-      TabIndex        =   24
-      TabStop         =   0   'False
-      Top             =   180
-      Width           =   6630
-      Begin VB.Label lblServerStatus 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Offline"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H000000FF&
-         Height          =   255
-         Left            =   0
-         TabIndex        =   27
-         Top             =   3320
-         Visible         =   0   'False
-         Width           =   6615
-      End
-      Begin VB.Label lblNews 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Connecting to server..."
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   1575
-         Left            =   1680
-         TabIndex        =   25
-         Top             =   1200
-         Width           =   3135
-         WordWrap        =   -1  'True
-      End
-   End
    Begin VB.Image ImgButton 
       Height          =   435
       Index           =   4
@@ -754,13 +754,13 @@ ErrorHandler:
 End Sub
 
 Private Sub Form_Load()
-    Dim TmpTxt As String, TmpArray() As String, i As Long
+    Dim TmpTxt As String, TmpArray() As String, I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ' General menu things
-    Me.Caption = GAME_Name
+    Me.Caption = ""
     
     ' Set the maxes for the username and password
     txtLUser.MaxLength = NAME_LENGTH
@@ -1130,15 +1130,20 @@ End Sub
 Private Sub Form_KeyPress(KeyAscii As Integer)
     
     If KeyAscii = vbKeyReturn Then
-        If picLogin.Visible = True Then
+        If picLogin.Visible = True And lblLAccept.Enabled Then
             lblLAccept_Click
-        ElseIf picCharacter.Visible = True Then
+        ElseIf picCharacter.Visible And lblCAccept.Enabled Then
             lblCAccept_Click
-        ElseIf picRegister.Visible = True Then
+        ElseIf picRegister.Visible And txtRAccept.Enabled Then
             txtRAccept_Click
-        ElseIf picMain.Visible = True Then
+        ElseIf picMain.Visible Then
             Call ImgButton_Click(1)
         End If
+        KeyAscii = 0
+    End If
+    
+    If KeyAscii = vbKeyEscape Then
+        DestroyGame
         KeyAscii = 0
     End If
 End Sub

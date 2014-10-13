@@ -97,6 +97,7 @@ Public Enum ServerPackets
     SFoesList
     SHighIndex
     SEntitySound
+    SGameData
     SSendNews
     SSound
     SBanEditor
@@ -294,6 +295,8 @@ Public Enum ClientPackets
     CQuitQuest
     CAcceptQuest
     CRequestQuests
+    
+    CChangeDataSize
     
     ' Make sure CMSG_COUNT is below everything else
     CMSG_COUNT

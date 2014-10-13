@@ -15,37 +15,45 @@ Begin VB.Form frmEditor_Emoticon
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   520
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdChangeDataSize 
+      Caption         =   "Change Data Size"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   16
+      Top             =   2160
+      Width           =   3495
+   End
+   Begin VB.CommandButton cmdSave 
+      Caption         =   "Save"
+      Height          =   375
+      Left            =   3900
+      TabIndex        =   15
+      Top             =   2160
+      Width           =   1095
+   End
+   Begin VB.CommandButton cmdClose 
+      Caption         =   "Close"
+      Height          =   375
+      Left            =   6420
+      TabIndex        =   14
+      Top             =   2160
+      Width           =   1095
+   End
+   Begin VB.CommandButton cmdDelete 
+      Caption         =   "Delete"
+      Height          =   375
+      Left            =   5160
+      TabIndex        =   13
+      Top             =   2160
+      Width           =   1095
+   End
    Begin VB.Frame Frame1 
       Caption         =   "Properties"
-      Height          =   2535
+      Height          =   2055
       Left            =   3720
-      TabIndex        =   8
+      TabIndex        =   5
       Top             =   0
       Width           =   3975
-      Begin VB.CommandButton cmdDelete 
-         Caption         =   "Delete"
-         Height          =   375
-         Left            =   1440
-         TabIndex        =   5
-         Top             =   2040
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdCancel 
-         Caption         =   "Cancel"
-         Height          =   375
-         Left            =   2760
-         TabIndex        =   6
-         Top             =   2040
-         Width           =   1095
-      End
-      Begin VB.CommandButton cmdSave 
-         Caption         =   "Save"
-         Height          =   375
-         Left            =   120
-         TabIndex        =   4
-         Top             =   2040
-         Width           =   1095
-      End
       Begin VB.PictureBox Picture1 
          Appearance      =   0  'Flat
          BackColor       =   &H80000005&
@@ -55,7 +63,7 @@ Begin VB.Form frmEditor_Emoticon
          ScaleHeight     =   34
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   34
-         TabIndex        =   11
+         TabIndex        =   8
          TabStop         =   0   'False
          Top             =   960
          Width           =   540
@@ -76,7 +84,7 @@ Begin VB.Form frmEditor_Emoticon
             ScaleHeight     =   32
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   32
-            TabIndex        =   12
+            TabIndex        =   9
             TabStop         =   0   'False
             Top             =   15
             Width           =   480
@@ -99,7 +107,7 @@ Begin VB.Form frmEditor_Emoticon
                ScaleHeight     =   32
                ScaleMode       =   3  'Pixel
                ScaleWidth      =   128
-               TabIndex        =   13
+               TabIndex        =   10
                TabStop         =   0   'False
                Top             =   0
                Width           =   1920
@@ -146,7 +154,7 @@ Begin VB.Form frmEditor_Emoticon
          EndProperty
          Height          =   195
          Left            =   120
-         TabIndex        =   10
+         TabIndex        =   7
          Top             =   240
          Width           =   750
       End
@@ -163,23 +171,23 @@ Begin VB.Form frmEditor_Emoticon
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   9
+         TabIndex        =   6
          Top             =   1440
          Width           =   1215
       End
    End
    Begin VB.Frame Frame3 
       Caption         =   "Emoticon List"
-      Height          =   2535
+      Height          =   2055
       Left            =   120
-      TabIndex        =   7
+      TabIndex        =   4
       Top             =   0
       Width           =   3495
       Begin VB.CommandButton cmdPaste 
          Caption         =   "Paste"
          Height          =   315
          Left            =   2760
-         TabIndex        =   15
+         TabIndex        =   12
          Top             =   240
          Width           =   615
       End
@@ -187,7 +195,7 @@ Begin VB.Form frmEditor_Emoticon
          Caption         =   "Copy"
          Height          =   315
          Left            =   2040
-         TabIndex        =   14
+         TabIndex        =   11
          Top             =   240
          Width           =   615
       End
@@ -200,10 +208,10 @@ Begin VB.Form frmEditor_Emoticon
          Width           =   1815
       End
       Begin VB.ListBox lstIndex 
-         Height          =   1815
+         Height          =   1230
          Left            =   120
          TabIndex        =   1
-         Top             =   600
+         Top             =   660
          Width           =   3255
       End
    End
@@ -217,7 +225,54 @@ Option Explicit
 
 Private TmpIndex As Long
 
-Private Sub cmdCancel_Click()
+Private Sub cmdChangeDataSize_Click()
+    Dim Res As VbMsgBoxResult, val As String
+    Dim dataModified As Boolean, i As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    For i = 1 To MAX_EMOTICONS
+        If Emoticon_Changed(i) Then
+        
+            dataModified = True
+            Exit For
+        End If
+    Next
+    
+    If dataModified Then
+        Res = MsgBox("Do you want to continue and discard the changes you made to your data?", vbYesNo)
+        
+        If Res = vbNo Then Exit Sub
+    End If
+    
+    val = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_EMOTICONS)
+    
+    If Not IsNumeric(val) Then
+        Exit Sub
+    End If
+    
+    Res = Abs(val)
+    
+    If Res = MAX_EMOTICONS Then Exit Sub
+    
+    Call SendChangeDataSize(Res, EDITOR_EMOTICON)
+    
+    Unload frmEditor_Emoticon
+    MAX_EMOTICONS = Res
+    ReDim Emoticon(MAX_EMOTICONS)
+    
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdChangeDataSize_Click", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdClose_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
@@ -228,7 +283,7 @@ Private Sub cmdCancel_Click()
     
 ' Error handler
 ErrorHandler:
-    HandleError "cmdCancel_Click", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "cmdClose_Click", "frmEditor_Emoticon", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -455,7 +510,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         cmdSave_Click
         KeyAscii = 0
     ElseIf KeyAscii = vbKeyEscape Then
-        cmdCancel_Click
+        cmdClose_Click
         KeyAscii = 0
     End If
     Exit Sub

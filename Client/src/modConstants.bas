@@ -15,10 +15,6 @@ Public Const MAX_MAINBUTTONS As Byte = 16
 Public Const MENUBUTTON_PATH As String = "\data files\graphics\gui\menu\buttons\"
 Public Const MAINBUTTON_PATH As String = "\data files\graphics\gui\main\buttons\"
 
-' Swear filter
-Public Const SwearWords As String = "ass, fuck, shit, bitch, bastard, damn, dick, vagina, penis, boob, cock, cunt"
-Public Const ReplaceSwearWords As String = "***, ****, ****, *****, *******, ****, ****, ******, *****, ****, ****, ****"
-
 ' PK constants
 Public Const PLAYER_KILLER As Byte = 1
 Public Const PLAYER_DEFENDER As Byte = 2
@@ -118,7 +114,7 @@ Public Const MENU_STATE_USECHAR As Byte = 7
 Public Const MENU_STATE_INIT As Byte = 8
 
 ' Speed moving variables
-Public Const MOVEMENT_SPEED As Byte = 8
+Public Const MOVEMENT_SPEED As Byte = 4
 
 ' Tile size constants
 Public Const PIC_X As Integer = 32
@@ -185,7 +181,6 @@ Public EndYValue As Integer
 Public CameraEndXValue As Integer
 Public CameraEndYValue As Integer
 
-
 ' Autotiles
 Public Const AUTO_INNER As Byte = 1
 Public Const AUTO_OUTER As Byte = 2
@@ -221,19 +216,11 @@ Public Const EFFECT_TYPE_TINT As Long = 6
 ' ********************************************************
 
 ' General constants
-Public Const GAME_Name As String = "Eclipse Worlds"
-Public Const MAX_MAPS As Byte = 100
 Public Const MAX_PLAYERS As Byte = 70
-Public Const MAX_ITEMS As Byte = 100
-Public Const MAX_NPCS As Byte = 100
-Public Const MAX_ANIMATIONS As Byte = 100
-Public Const MAX_EVENTS As Long = 255
 Public Const MAX_MAP_ITEMS As Byte = 50
 Public Const MAX_MAP_NPCS As Byte = 50
-Public Const MAX_SHOPS As Byte = 50
-Public Const MAX_SPELLS As Byte = 100
+Public Const MAX_EVENTS As Long = 255
 Public Const MAX_TRADES As Byte = 30
-Public Const MAX_RESOURCES As Byte = 100
 Public Const MAX_BANK As Byte = 88
 Public Const MAX_NPC_DROPS As Byte = 25
 Public Const MAX_PARTYS As Byte = 35
@@ -241,12 +228,6 @@ Public Const MAX_PARTY_MEMBERS As Byte = 4
 Public Const MAX_BUFFS As Byte = 30
 Public Const MAX_HOTBAR As Byte = 12
 Public Const MAX_GUILDS As Byte = 50
-Public Const MAX_QUESTS As Byte = 50
-Public Const MAX_BANS As Byte = 50
-Public Const MAX_TITLES As Byte = 50
-Public Const MAX_MORALS As Byte = 10
-Public Const MAX_CLASSES As Byte = 10
-Public Const MAX_EMOTICONS As Byte = 50
 Public Const MAX_NPC_SPELLS As Byte = 5
 Public Const MAX_SWITCHES As Long = 1000
 Public Const MAX_VARIABLES As Long = 1000
@@ -254,15 +235,10 @@ Public Const MAX_WEATHER_PARTICLES As Long = 250
 Public Const MAX_COMMON_EVENTS As Long = 100
 
 ' Player constants
-Public Const MAX_LEVEL As Byte = 99
-Public Const MAX_STAT As Integer = 255 ' The max a player can train a stat
 Public Const MAX_PEOPLE As Byte = 100
 Public Const MAX_PLAYER_SPELLS As Byte = 35
 Public Const MAX_INV As Byte = 35
 Public Const MAX_GUILDACCESS As Byte = 4
-
-' Website
-Public Const GAME_WEBSITE As String = "http://www.arteix.com/"
 
 ' Text color constants
 Public Const Black As Byte = 0

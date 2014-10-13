@@ -9,17 +9,9 @@ Public Sub CheckKeys()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If GetAsyncKeyState(VK_W) >= 0 Then DirUp = False
-    If GetAsyncKeyState(VK_S) >= 0 Then DirDown = False
-    If GetAsyncKeyState(VK_A) >= 0 Then DirLeft = False
-    If GetAsyncKeyState(VK_D) >= 0 Then DirRight = False
-    If GetAsyncKeyState(VK_UP) >= 0 Then DirUp = False
-    If GetAsyncKeyState(VK_DOWN) >= 0 Then DirDown = False
-    If GetAsyncKeyState(VK_LEFT) >= 0 Then DirLeft = False
-    If GetAsyncKeyState(VK_RIGHT) >= 0 Then DirRight = False
-    
     If GetAsyncKeyState(VK_CONTROL) >= 0 Then ControlDown = False
     If GetAsyncKeyState(VK_SHIFT) >= 0 Then ShiftDown = False
+   
     Exit Sub
     
 ' Error handler
@@ -142,27 +134,29 @@ Public Sub CheckInputKeys()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
+    If GettingMap And InGame Then Exit Sub
+    
     If GetKeyState(vbKeyShift) < 0 Then
         ShiftDown = True
     Else
         ShiftDown = False
     End If
-    
+
     If GetKeyState(vbKeySpace) < 0 Then
         CheckMapGetItem
     End If
-    
+
     If GetKeyState(vbKeyControl) < 0 Then
         ControlDown = True
     Else
         ControlDown = False
     End If
-    
+
     If Not InGame Then Exit Sub
 
     ' Mouse movement
     If Not MouseX = -1 And Not MouseY = -1 Then
-        ' Don't move if a target is there
+        ' Don't move if a player is there
         For I = 1 To Player_HighIndex
             If IsPlaying(I) Then
                 If Player(I).Map = Player(MyIndex).Map Then
@@ -175,7 +169,7 @@ Public Sub CheckInputKeys()
             End If
         Next
         
-        ' Don't move if a target is there
+        ' Don't move if a NPC is there
         For I = 1 To Map.NPC_HighIndex
             If MapNPC(I).num > 0 Then
                 If CurX = MapNPC(I).X And CurY = MapNPC(I).Y Then
@@ -188,7 +182,7 @@ Public Sub CheckInputKeys()
         
         distanceX = 0
         distanceY = 0
-    
+
         If MouseX > -1 Then
             If MouseX < GetPlayerX(MyIndex) Then
                 distanceX = GetPlayerX(MyIndex) - MouseX
@@ -196,7 +190,7 @@ Public Sub CheckInputKeys()
                 distanceX = MouseX - GetPlayerX(MyIndex)
             End If
         End If
-    
+
         If MouseY > -1 Then
             If MouseY < GetPlayerY(MyIndex) Then
                 distanceY = GetPlayerY(MyIndex) - MouseY + 1
@@ -204,16 +198,31 @@ Public Sub CheckInputKeys()
                 distanceY = MouseY - GetPlayerY(MyIndex) + 1
             End If
         End If
-       
-        ' Are we moving?
-        If (GetPlayerDir(MyIndex) = DIR_LEFT And GetPlayerX(MyIndex) = 0) Or (GetPlayerDir(MyIndex) = DIR_RIGHT And GetPlayerX(MyIndex) = Map.MaxX) Then
-            Call MouseMoveX
-        ElseIf (GetPlayerDir(MyIndex) = DIR_UP And GetPlayerY(MyIndex) = 0) Or (GetPlayerDir(MyIndex) = DIR_DOWN And GetPlayerY(MyIndex) = Map.MaxY) Then
-            Call MouseMoveY
-        ElseIf distanceX >= distanceY Then
-            Call MouseMoveX
+        
+        DirUp = False
+        DirDown = False
+        DirLeft = False
+        DirRight = False
+        
+        If GetPlayerY(MyIndex) = 0 And GetPlayerDir(MyIndex) = DIR_UP Then
+            DirUp = True
+        ElseIf GetPlayerY(MyIndex) = Map.MaxY And GetPlayerDir(MyIndex) = DIR_DOWN Then
+            DirDown = True
+        ElseIf GetPlayerX(MyIndex) = 0 And GetPlayerDir(MyIndex) = DIR_LEFT Then
+            DirLeft = True
+        ElseIf GetPlayerX(MyIndex) = Map.MaxX And GetPlayerDir(MyIndex) = DIR_RIGHT Then
+            DirRight = True
         Else
-            Call MouseMoveY
+
+            ' Are we moving?
+            If distanceX > 0 And distanceY > 0 Then
+                Call MouseMoveX
+                Call MouseMoveY
+            ElseIf distanceX >= distanceY And distanceY >= distanceY Then
+                Call MouseMoveX
+            Else
+                Call MouseMoveY
+            End If
         End If
     End If
     Exit Sub
@@ -428,10 +437,15 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendPartyLeave
                     
                 Case "/gquit"
+                    AddText "This feature has been disabled for this release! Will be back soon.", 12
+                    GoTo Continue
+                    
                     RequestGuildResign
                     
                 Case "/createguild"
-
+                    AddText "This feature has been disabled for this release! Will be back soon.", 12
+                    GoTo Continue
+                    
                     ' Make sure they are actually sending something
                     If UBound(Command) < 1 Then
                         AddText "Usage: /createguild name", BrightRed
@@ -474,7 +488,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     End If
                     
                     ' Send regular help commands
-                    Call AddText("Available Commands: /trade, /gui, /clearchat, /createguild, /gmotd, /pquit, /gquit, /fps, /ping, /afk, /emotes", HelpColor)
+                    Call AddText("Available Commands: /trade, /gui, /clearchat, /pquit, /fps, /ping, /afk, /emotes", HelpColor)
                     
                     ' Send the admin help commands
                     If GetPlayerAccess(MyIndex) > 0 Then
@@ -644,7 +658,7 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     If n > 0 And n <= MAX_MAPS Then
                         Call WarpTo(n)
                     Else
-                        Call AddText("Invalid map number.", Red)
+                        Call AddText("Invalid map number.", BrightRed)
                     End If
 
                     ' Setting sprite
@@ -742,7 +756,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendSMOTDChange Right$(ChatText, Len(ChatText) - 6)
                     
                 Case "/gmotd"
-
+                    AddText "This feature has been disabled for this release! Will be back soon.", 12
+                    GoTo Continue
+                    
                     If GetPlayerGuild(MyIndex) = vbNullString Then
                         AddText "You are not in a guild!", BrightRed
                         GoTo Continue
@@ -788,6 +804,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendRequestEditItem
                     
                 Case "/editquest"
+                    AddText "This feature has been disabled for version 1.2.5! It will be back soon.", BrightRed
+                    GoTo Continue
+                        
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed
                         GoTo Continue
@@ -1039,23 +1058,13 @@ Public Sub MouseMoveX()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Left movement
-    If GetPlayerX(MyIndex) > MouseX Or (GetPlayerDir(MyIndex) = DIR_LEFT And GetPlayerX(MyIndex) = 0) Then
-        DirUp = False
-        DirDown = False
+    If GetPlayerX(MyIndex) > MouseX Then
         DirLeft = True
-        DirRight = False
-    ' Right movement
-    ElseIf GetPlayerX(MyIndex) < MouseX Or (GetPlayerDir(MyIndex) = DIR_RIGHT And GetPlayerX(MyIndex) = Map.MaxX) Then
-        DirUp = False
-        DirDown = False
-        DirLeft = False
+        ' Right movement
+    ElseIf GetPlayerX(MyIndex) < MouseX Then
         DirRight = True
     Else
         MouseX = -1
-        DirUp = False
-        DirDown = False
-        DirLeft = False
-        DirRight = False
     End If
     Exit Sub
     
@@ -1070,23 +1079,13 @@ Public Sub MouseMoveY()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Up movement
-    If GetPlayerY(MyIndex) > MouseY Or (GetPlayerDir(MyIndex) = DIR_UP And GetPlayerY(MyIndex) = 0) Then
+    If GetPlayerY(MyIndex) > MouseY Then
         DirUp = True
-        DirDown = False
-        DirLeft = False
-        DirRight = False
-    ' Down movement
-    ElseIf GetPlayerY(MyIndex) < MouseY Or (GetPlayerDir(MyIndex) = DIR_DOWN And GetPlayerY(MyIndex) = Map.MaxY) Then
-        DirUp = False
+        ' Down movement
+    ElseIf GetPlayerY(MyIndex) < MouseY Then
         DirDown = True
-        DirLeft = False
-        DirRight = False
     Else
         MouseY = -1
-        DirUp = False
-        DirDown = False
-        DirLeft = False
-        DirRight = False
     End If
     Exit Sub
     

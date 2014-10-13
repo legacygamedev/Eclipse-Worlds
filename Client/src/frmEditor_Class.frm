@@ -16,8 +16,25 @@ Begin VB.Form frmEditor_Class
    ScaleWidth      =   526
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
-   Begin VB.CommandButton cmdCancel 
-      Caption         =   "Cancel"
+   Begin VB.CheckBox chkAnimated 
+      Caption         =   "Animated"
+      Height          =   255
+      Left            =   5760
+      TabIndex        =   58
+      TabStop         =   0   'False
+      Top             =   240
+      Width           =   975
+   End
+   Begin VB.CommandButton cmdChangeDataSize 
+      Caption         =   "Change Data Size"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   57
+      Top             =   8040
+      Width           =   2535
+   End
+   Begin VB.CommandButton cmdClose 
+      Caption         =   "Close"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -69,7 +86,7 @@ Begin VB.Form frmEditor_Class
    End
    Begin VB.Frame Frame3 
       Caption         =   "Class List"
-      Height          =   8415
+      Height          =   7935
       Left            =   120
       TabIndex        =   16
       Top             =   0
@@ -99,10 +116,10 @@ Begin VB.Form frmEditor_Class
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
-         Height          =   7665
+         Height          =   7080
          Left            =   120
          TabIndex        =   1
-         Top             =   600
+         Top             =   660
          Width           =   2295
       End
    End
@@ -210,7 +227,7 @@ Begin VB.Form frmEditor_Class
          Width           =   855
       End
       Begin VB.CheckBox chkSwapStart 
-         Caption         =   "Swap Start"
+         Caption         =   "Start Spell"
          Height          =   255
          Left            =   120
          TabIndex        =   32
@@ -608,6 +625,21 @@ Private ItemIndex As Long
 Private SpellIndex As Long
 Private TmpIndex As Long
 
+Private Sub chkAnimated_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    Class(EditorIndex).Animated = chkAnimated.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "chkAnimated_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub chkLocked_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
@@ -681,6 +713,53 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Private Sub cmdChangeDataSize_Click()
+    Dim Res As VbMsgBoxResult, val As String
+    Dim dataModified As Boolean, I As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    For I = 1 To MAX_CLASSES
+        If Class_Changed(I) Then
+        
+            dataModified = True
+            Exit For
+        End If
+    Next
+    
+    If dataModified Then
+        Res = MsgBox("Do you want to continue and discard the changes you made to your data?", vbYesNo)
+        
+        If Res = vbNo Then Exit Sub
+    End If
+    
+    val = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_CLASSES)
+    
+    If Not IsNumeric(val) Then
+        Exit Sub
+    End If
+    
+    Res = Abs(val)
+    
+    If Res = MAX_CLASSES Then Exit Sub
+    
+    Call SendChangeDataSize(Res, EDITOR_CLASS)
+    
+    Unload frmEditor_Class
+    MAX_CLASSES = Res
+    ReDim Class(MAX_CLASSES)
+    
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdChangeDataSize_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub cmdDelete_Click()
     Dim TmpIndex As Long
     
@@ -721,7 +800,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub cmdCancel_Click()
+Private Sub cmdClose_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
     
     ' If debug mode, handle error then exit out
@@ -732,7 +811,7 @@ Private Sub cmdCancel_Click()
     
 ' Error handler
 ErrorHandler:
-    HandleError "cmdCancel_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "cmdClose_Click", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1134,18 +1213,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If
@@ -1181,7 +1260,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         cmdSave_Click
         KeyAscii = 0
     ElseIf KeyAscii = vbKeyEscape Then
-        cmdCancel_Click
+        cmdClose_Click
         KeyAscii = 0
     End If
     Exit Sub

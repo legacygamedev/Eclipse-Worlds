@@ -7,20 +7,20 @@ Public TempMap As MapRec
 Public Bank As BankRec
 Public Player(1 To MAX_PLAYERS) As PlayerRec
 Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
-Public Item(1 To MAX_ITEMS) As ItemRec
-Public NPC(1 To MAX_NPCS) As NPCRec
-Public MapItem(1 To MAX_MAP_ITEMS) As MapItemRec
-Public MapNPC(1 To MAX_MAP_NPCS) As MapNPCRec
-Public Shop(1 To MAX_SHOPS) As ShopRec
-Public Spell(1 To MAX_SPELLS) As SpellRec
-Public Resource(1 To MAX_RESOURCES) As ResourceRec
-Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
+Public Item() As ItemRec
+Public NPC() As NPCRec
+Public MapItem(MAX_MAP_ITEMS) As MapItemRec
+Public MapNPC(MAX_MAP_NPCS) As MapNPCRec
+Public Shop() As ShopRec
+Public Spell() As SpellRec
+Public Resource() As ResourceRec
+Public Animation() As AnimationRec
 Public events(1 To MAX_EVENTS) As EventWrapperRec
-Public Ban(1 To MAX_BANS) As BanRec
-Public title(1 To MAX_TITLES) As TitleRec
-Public Moral(1 To MAX_MORALS) As MoralRec
-Public Class(1 To MAX_CLASSES) As ClassRec
-Public Emoticon(1 To MAX_EMOTICONS) As EmoticonRec
+Public Ban() As BanRec
+Public title() As TitleRec
+Public Moral() As MoralRec
+Public Class() As ClassRec
+Public Emoticon() As EmoticonRec
 Public Switches(1 To MAX_SWITCHES) As String
 Public Variables(1 To MAX_VARIABLES) As String
 Public WeatherParticle(1 To MAX_WEATHER_PARTICLES) As WeatherParticleRec
@@ -31,7 +31,7 @@ Public Sounds(1 To MAX_SOUNDS) As Long
 Public SoundsXY(1 To MAX_SOUNDS) As XYRec
 
 ' Battle Music
-Public CacheNPCTargets(1 To MAX_MAP_NPCS) As Byte
+Public CacheNPCTargets() As Byte
 Public ActiveNPCTarget As Byte
 Public InitBattleMusic As Boolean
 
@@ -40,9 +40,6 @@ Public Log As LogRec
 
 ' Options
 Public Options As OptionsRec
-
-' Animated sprites
-Public AnimatedSprites() As Integer
 
 ' Client-side stuff
 Public ActionMsg(1 To MAX_BYTE) As ActionMsgRec
@@ -118,7 +115,7 @@ Private Type SpellAnim
 End Type
 
 Public Type BuffRec
-    id As Long
+    ID As Long
     Behavior As Long
     Vital As Long
     Timer As Long
@@ -135,6 +132,10 @@ End Type
 Public Type SkillRec
     Level As Byte
     exp As Long
+End Type
+
+Private Type QuestAmountRec
+    ID() As Integer
 End Type
 
 Public Type PlayerRec
@@ -158,8 +159,8 @@ Public Type PlayerRec
     
     ' Position
     Map As Integer
-    X As Byte
-    Y As Byte
+    X As Long
+    Y As Long
     Dir As Byte
     
     ' Vitals
@@ -174,7 +175,7 @@ Public Type PlayerRec
     AmountOfTitles As Byte
     
     ' Titles
-    title(1 To MAX_TITLES) As Byte
+    title() As Byte
     
     ' Current title
     CurTitle As Byte
@@ -202,10 +203,10 @@ Public Type PlayerRec
     Skills(1 To Skill_Count - 1) As SkillRec
     
     ' Questing
-    QuestCLIID(1 To MAX_QUESTS) As Long
-    QuestTaskID(1 To MAX_QUESTS) As Long
-    QuestAmount(1 To MAX_QUESTS) As Long
-    QuestCompleted(1 To MAX_QUESTS) As Boolean
+    QuestCLI() As Long
+    QuestTask() As Long
+    QuestAmount() As QuestAmountRec
+    QuestCompleted() As Boolean
 End Type
 
 ' Character editor
@@ -232,8 +233,8 @@ Public Type PlayerEditableRec
 End Type
 
 Private Type TempPlayerRec
-    xOffset As Integer
-    yOffset As Integer
+    xOffset As Double
+    yOffset As Double
     Moving As Byte
     Attacking As Byte
     AttackTimer As Long
@@ -433,8 +434,8 @@ Private Type MapRec
     NPC_HighIndex As Byte
     
     Tile() As TileRec
-    NPC(1 To MAX_MAP_NPCS) As Long
-    NPCSpawnType(1 To MAX_MAP_NPCS) As Long
+    NPC(MAX_MAP_NPCS) As Long
+    NPCSpawnType(MAX_MAP_NPCS) As Long
     EventCount As Long
     events() As EventRec
     
@@ -470,6 +471,8 @@ Private Type ClassRec
     
     ' Combat tree
     CombatTree As Byte
+    
+    Animated As Byte
 End Type
 
 Public Type ItemRec
@@ -561,6 +564,7 @@ Private Type NPCRec
     AddToVariable As Byte
     ShowQuestCompleteIcon As Long
     DropRandom(1 To MAX_NPC_DROPS) As Byte
+    Animated As Byte
 End Type
 
 Private Type MapNPCRec

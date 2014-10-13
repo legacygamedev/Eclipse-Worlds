@@ -2,34 +2,34 @@ Attribute VB_Name = "modTypes"
 Option Explicit
 
 ' Public data structures
-Public Map(1 To MAX_MAPS) As MapRec
-Public TempEventMap(1 To MAX_MAPS) As GlobalEventsRec
-Public MapCache(1 To MAX_MAPS) As Cache
-Public PlayersOnMap(1 To MAX_MAPS) As Long
-Public ResourceCache(1 To MAX_MAPS) As ResourceCacheRec
+Public Map() As MapRec
+Public TempEventMap() As GlobalEventsRec
+Public MapCache() As Cache
+Public PlayersOnMap() As Long
+Public ResourceCache() As ResourceCacheRec
 Public Account(1 To MAX_PLAYERS) As AccountRec
-Public TempPlayer(1 To MAX_PLAYERS) As TempPlayerRec
+Public tempplayer(1 To MAX_PLAYERS) As TempPlayerRec
 Public TempGuildMember(1 To MAX_GUILD_MEMBERS) As PlayerRec
 
-Public Item(1 To MAX_ITEMS) As ItemRec
-Public NPC(1 To MAX_NPCS) As NPCRec
-Public MapItem(1 To MAX_MAPS, 1 To MAX_MAP_ITEMS) As MapItemRec
-Public MapNPC(1 To MAX_MAPS) As MapDataRec
-Public Shop(1 To MAX_SHOPS) As ShopRec
-Public Spell(1 To MAX_SPELLS) As SpellRec
-Public Resource(1 To MAX_RESOURCES) As ResourceRec
-Public Animation(1 To MAX_ANIMATIONS) As AnimationRec
+Public Item() As ItemRec
+Public NPC() As NPCRec
+Public MapItem() As MapItemRec
+Public MapNPC() As MapDataRec
+Public Shop() As ShopRec
+Public Spell() As SpellRec
+Public Resource() As ResourceRec
+Public Animation() As AnimationRec
 Public Guild(1 To MAX_GUILDS) As GuildRec
 Public Party(1 To MAX_PARTYS) As PartyRec
-Public Ban(1 To MAX_BANS) As BanRec
-Public Title(1 To MAX_TITLES) As TitleRec
-Public Moral(1 To MAX_MORALS) As MoralRec
-Public Class(1 To MAX_CLASSES) As ClassRec
-Public Emoticon(1 To MAX_EMOTICONS) As EmoticonRec
+Public Ban() As BanRec
+Public Title() As TitleRec
+Public Moral() As MoralRec
+Public Class() As ClassRec
+Public Emoticon() As EmoticonRec
 
 Public Switches(1 To MAX_SWITCHES) As String
 Public Variables(1 To MAX_VARIABLES) As String
-Public MapBlocks(1 To MAX_MAPS) As MapBlockRec
+Public MapBlocks() As MapBlockRec
 
 ' Logs
 Public Log As LogRec
@@ -114,6 +114,9 @@ Private Type OptionsRec
     DeflectAnimation As Long
     CriticalAnimation As Long
     DodgeAnimation As Long
+    MaxLevel As Long
+    StatsLevel As Long
+    MaxStat As Long
 End Type
 
 Public Type PartyRec
@@ -196,6 +199,10 @@ Public Type SkillRec
     Exp As Long
 End Type
 
+Private Type QuestAmountRec
+     ID() As Integer
+End Type
+
 Public Type PlayerRec
     ' Face - both
     Face As Integer
@@ -205,7 +212,7 @@ Public Type PlayerRec
     Exp As Long
     
     ' Stats - both
-    Stat(1 To Stats.Stat_count - 1) As Integer
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     Points As Integer
     
     ' Spells - server only
@@ -238,7 +245,7 @@ Public Type PlayerRec
     CurrentTitle As Byte
     
     ' Titles - both
-    Title(1 To MAX_TITLES) As Byte
+    Title() As Byte
     
     ' Worn equipment - both
     Equipment(1 To Equipment.Equipment_Count - 1) As PlayerItemRec
@@ -271,10 +278,10 @@ Public Type PlayerRec
     PlayerKills As Integer
     
     ' Questing
-    QuestCompleted(1 To MAX_QUESTS) As Boolean
-    QuestCLIID(1 To MAX_QUESTS) As Long
-    QuestTaskID(1 To MAX_QUESTS) As Long
-    QuestAmount(1 To MAX_QUESTS) As Long
+    QuestCompleted() As Boolean
+    QuestCLI() As Long
+    QuestTask() As Long
+    QuestAmount() As QuestAmountRec
 End Type
 
 ' Character Editor
@@ -297,11 +304,11 @@ Public Type PlayerEditableRec
     ' Max Vitals are dynamically calculated on server
     
     ' Stats
-    Stat(1 To Stats.Stat_count - 1) As Integer
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     Points As Integer
 End Type
 
-Type AccountRec
+Public Type AccountRec
     ' Account
     Login As String * NAME_LENGTH
     Password As String * NAME_LENGTH
@@ -500,7 +507,7 @@ End Type
 
 Public Type TempPlayerRec
     ' Non saved local vars
-    Buffer As clsBuffer
+    buffer As clsBuffer
     HDSerial As String * NAME_LENGTH
     InGame As Boolean
     AttackTimer As Long
@@ -611,14 +618,14 @@ End Type
 
 Private Type ClassRec
     Name As String * NAME_LENGTH
-    Stat(1 To Stats.Stat_count - 1) As Integer
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     MaleSprite As Integer
     FemaleSprite As Integer
     
     StartItem(1 To MAX_INV) As Long
     StartItemValue(1 To MAX_INV) As Long
     StartSpell(1 To MAX_PLAYER_SPELLS) As Long
-
+    
     Locked As Byte
     
     ' Faces
@@ -636,6 +643,8 @@ Private Type ClassRec
     
     ' Combat tree
     CombatTree As Byte
+    
+    Animated As Byte
 End Type
 
 Private Type ItemRec
@@ -659,12 +668,12 @@ Private Type ItemRec
     ProficiencyReq As Byte
     
     Price As Long
-    Add_Stat(1 To Stats.Stat_count - 1) As Integer
+    Add_Stat(1 To Stats.Stat_Count - 1) As Integer
     Rarity As Byte
     WeaponSpeed As Long
     Handed As Long
     BindType As Byte
-    Stat_Req(1 To Stats.Stat_count - 1) As Integer
+    Stat_Req(1 To Stats.Stat_Count - 1) As Integer
     Animation As Long
     Paperdoll As Long
     AddHP As Long
@@ -677,7 +686,7 @@ Private Type ItemRec
     Tool As Integer
     HoT As Byte
     TwoHanded As Byte
-    Stackable As Byte
+    stackable As Byte
     Indestructable As Byte
     SkillReq As Byte
     ToolRequired As Integer
@@ -714,7 +723,7 @@ Private Type NPCRec
     DropItem(1 To MAX_NPC_DROPS) As Byte
     DropValue(1 To MAX_NPC_DROPS) As Integer
     Damage As Long
-    Stat(1 To Stats.Stat_count - 1) As Integer
+    Stat(1 To Stats.Stat_Count - 1) As Integer
     HP As Long
     MP As Long
     Exp As Long
@@ -731,6 +740,7 @@ Private Type NPCRec
     AddToVariable As Byte
     ShowQuestCompleteIcon As Long
     DropRandom(1 To MAX_NPC_DROPS) As Byte
+    Animated As Byte
 End Type
 
 Private Type MapNPCRec
@@ -820,7 +830,7 @@ Private Type GuildRec
 End Type
 
 Private Type MapDataRec
-    NPC() As MapNPCRec
+    NPC(MAX_MAP_NPCS) As MapNPCRec
 End Type
 
 Private Type MapResourceRec

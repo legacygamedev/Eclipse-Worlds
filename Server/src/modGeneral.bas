@@ -17,7 +17,7 @@ Sub Main()
 End Sub
 
 Sub InitServer()
-    Dim I As Long
+    Dim i As Long
     Dim F As Long
     Dim Time1 As Long
     Dim Time2 As Long
@@ -69,9 +69,9 @@ Sub InitServer()
         ' Init all the player sockets
         Call SetStatus("Initializing player array...")
     
-        For I = 1 To MAX_PLAYERS
-            Call ClearAccount(I)
-            Load .Socket(I)
+        For i = 1 To MAX_PLAYERS
+            Call ClearAccount(i)
+            Load .Socket(i)
         Next
     
         ' Serves as a constructor
@@ -122,6 +122,8 @@ Sub InitServer()
         .lblExpRate.Enabled = True
         .txtExpRate.Enabled = True
         .cmdSet.Enabled = True
+        '.cmdEditPlayer.Enabled = True
+        .cmdSavePlayers.Enabled = True
         
         ' Set the experience modifier to 1
         EXP_RATE = 1
@@ -144,7 +146,7 @@ Sub InitServer()
 End Sub
 
 Sub DestroyServer()
-    Dim I As Long
+    Dim i As Long
     
     ServerOnline = False
     
@@ -155,9 +157,9 @@ Sub DestroyServer()
     Call ClearGameData
     Call SetStatus("Unloading sockets...")
 
-    For I = 1 To Player_HighIndex
-        Call CloseSocket(I, True)
-        Unload frmServer.Socket(I)
+    For i = 1 To Player_HighIndex
+        Call CloseSocket(i, True)
+        Unload frmServer.Socket(i)
     Next
     End
 End Sub

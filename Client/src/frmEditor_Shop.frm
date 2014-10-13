@@ -26,6 +26,14 @@ Begin VB.Form frmEditor_Shop
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.CommandButton cmdChangeDataSize 
+      Caption         =   "Change Data Size"
+      Height          =   375
+      Left            =   60
+      TabIndex        =   31
+      Top             =   4560
+      Width           =   3195
+   End
    Begin VB.Frame Frame1 
       Caption         =   "Properties"
       Height          =   4455
@@ -241,7 +249,7 @@ Begin VB.Form frmEditor_Shop
    End
    Begin VB.Frame Frame3 
       Caption         =   "Shop List"
-      Height          =   4935
+      Height          =   4455
       Left            =   120
       TabIndex        =   17
       Top             =   0
@@ -271,10 +279,10 @@ Begin VB.Form frmEditor_Shop
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
-         Height          =   4155
+         Height          =   3570
          Left            =   120
          TabIndex        =   1
-         Top             =   600
+         Top             =   720
          Width           =   2895
       End
    End
@@ -286,8 +294,8 @@ Begin VB.Form frmEditor_Shop
       Top             =   4560
       Width           =   1575
    End
-   Begin VB.CommandButton cmdCancel 
-      Caption         =   "Cancel"
+   Begin VB.CommandButton cmdClose 
+      Caption         =   "Close"
       Height          =   420
       Left            =   6960
       TabIndex        =   16
@@ -316,6 +324,53 @@ Private Sub chkCanFix_Click()
 ' Error handler
 ErrorHandler:
     HandleError "chkCanFix_Click", "frmEditor_Shop", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdChangeDataSize_Click()
+    Dim Res As VbMsgBoxResult, val As String
+    Dim dataModified As Boolean, i As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_SHOPS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    For i = 1 To MAX_SHOPS
+        If Shop_Changed(i) Then
+        
+            dataModified = True
+            Exit For
+        End If
+    Next
+    
+    If dataModified Then
+        Res = MsgBox("Do you want to continue and discard the changes you made to your data?", vbYesNo)
+        
+        If Res = vbNo Then Exit Sub
+    End If
+    
+    val = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_SHOPS)
+    
+    If Not IsNumeric(val) Then
+        Exit Sub
+    End If
+    
+    Res = Abs(val)
+    
+    If Res = MAX_SHOPS Then Exit Sub
+    
+    Call SendChangeDataSize(Res, EDITOR_SHOP)
+    
+    Unload frmEditor_Shop
+    MAX_SHOPS = Res
+    ReDim Shop(MAX_SHOPS)
+    
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdChangeDataSize_Click", "frmEditor_Shop", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -359,7 +414,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub cmdCancel_Click()
+Private Sub cmdClose_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_SHOPS Then Exit Sub
 
     ' If debug mode, handle error then exit out
@@ -370,7 +425,7 @@ Private Sub cmdCancel_Click()
     
 ' Error handler
 ErrorHandler:
-    HandleError "cmdCancel_Click", "frmEditor_Shop", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "cmdClose_Click", "frmEditor_Shop", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -392,11 +447,11 @@ Private Sub cmdUpdate_Click()
         If .CostItem = 1 Then .CostValue = 0
         If .CostItem2 = 1 Then .CostValue2 = 0
         .Item = cmbItem.ListIndex
-        .ItemValue = Val(txtItemValue.text)
+        .ItemValue = val(txtItemValue.text)
         .CostItem = cmbCostItem.ListIndex
         .CostItem2 = cmbCostItem2.ListIndex
-        .CostValue = Val(txtCostValue.text)
-        .CostValue2 = Val(txtCostValue2.text)
+        .CostValue = val(txtCostValue.text)
+        .CostValue2 = val(txtCostValue2.text)
     End With
     UpdateShopTrade tmpPos
     Exit Sub
@@ -725,7 +780,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         cmdSave_Click
         KeyAscii = 0
     ElseIf KeyAscii = vbKeyEscape Then
-        cmdCancel_Click
+        cmdClose_Click
         KeyAscii = 0
     End If
     Exit Sub

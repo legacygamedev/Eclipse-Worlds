@@ -16,6 +16,14 @@ Begin VB.Form frmEditor_Moral
    ScaleWidth      =   391
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdChangeDataSize 
+      Caption         =   "Change Data Size"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   21
+      Top             =   3600
+      Width           =   2535
+   End
    Begin VB.CheckBox chkPlayerBlocked 
       Caption         =   "Player Blocked"
       Height          =   255
@@ -159,8 +167,8 @@ Begin VB.Form frmEditor_Moral
          Width           =   420
       End
    End
-   Begin VB.CommandButton cmdCancel 
-      Caption         =   "Cancel"
+   Begin VB.CommandButton cmdClose 
+      Caption         =   "Close"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -212,7 +220,7 @@ Begin VB.Form frmEditor_Moral
    End
    Begin VB.Frame Frame3 
       Caption         =   "Moral List"
-      Height          =   3975
+      Height          =   3495
       Left            =   120
       TabIndex        =   7
       Top             =   0
@@ -242,10 +250,10 @@ Begin VB.Form frmEditor_Moral
          Width           =   615
       End
       Begin VB.ListBox lstIndex 
-         Height          =   2985
+         Height          =   2595
          Left            =   120
          TabIndex        =   1
-         Top             =   600
+         Top             =   720
          Width           =   2295
       End
    End
@@ -379,6 +387,51 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Private Sub cmdChangeDataSize_Click()
+    Dim Res As VbMsgBoxResult, val As String
+    Dim dataModified As Boolean, i As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    For i = 1 To MAX_BANS
+        If Ban_Changed(i) Then
+        
+            dataModified = True
+            Exit For
+        End If
+    Next
+    
+    If dataModified Then
+        Res = MsgBox("Do you want to continue and discard the changes you made to your data?", vbYesNo)
+        
+        If Res = vbNo Then Exit Sub
+    End If
+    
+    If Not IsNumeric(val) Then
+        Exit Sub
+    End If
+    
+    Res = Abs(val)
+    
+    If Res = MAX_MORALS Then Exit Sub
+    
+    Call SendChangeDataSize(Res, EDITOR_MORAL)
+    
+    Unload frmEditor_Moral
+    MAX_MORALS = Res
+    ReDim Moral(MAX_MORALS)
+    
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdChangeDataSize_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub cmdDelete_Click()
     Dim TmpIndex As Long
     
@@ -419,7 +472,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub cmdCancel_Click()
+Private Sub cmdClose_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
     
     ' If debug mode, handle error then exit out
@@ -430,7 +483,7 @@ Private Sub cmdCancel_Click()
     
 ' Error handler
 ErrorHandler:
-    HandleError "cmdCancel_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "cmdClose_Click", "frmEditor_Moral", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -582,7 +635,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         cmdSave_Click
         KeyAscii = 0
     ElseIf KeyAscii = vbKeyEscape Then
-        cmdCancel_Click
+        cmdClose_Click
         KeyAscii = 0
     End If
     Exit Sub
