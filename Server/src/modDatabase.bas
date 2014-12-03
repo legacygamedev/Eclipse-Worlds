@@ -254,6 +254,62 @@ Public Sub InitOptions()
         Options.MaxStat = GetVar(filename, "Options", "MaxStat")
     End If
     
+    If GetVar(filename, "Data Sizes", "Maps") = "" Then
+        Call PutVar(filename, "Data Sizes", "Maps", "100")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "NPCs") = "" Then
+        Call PutVar(filename, "Data Sizes", "NPCs", "250")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Animations") = "" Then
+        Call PutVar(filename, "Data Sizes", "Animations", "100")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Events") = "" Then
+        Call PutVar(filename, "Data Sizes", "Events", "100")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Shops") = "" Then
+        Call PutVar(filename, "Data Sizes", "Shops", "100")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Quests") = "" Then
+        Call PutVar(filename, "Data Sizes", "Quests", "100")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Classes") = "" Then
+        Call PutVar(filename, "Data Sizes", "Classes", "100")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Titles") = "" Then
+        Call PutVar(filename, "Data Sizes", "Titles", "100")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Emoticons") = "" Then
+        Call PutVar(filename, "Data Sizes", "Emoticons", "50")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Morals") = "" Then
+        Call PutVar(filename, "Data Sizes", "Morals", "25")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Items") = "" Then
+        Call PutVar(filename, "Data Sizes", "Items", "250")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Bans") = "" Then
+        Call PutVar(filename, "Data Sizes", "Bans", "100")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Resources") = "" Then
+        Call PutVar(filename, "Data Sizes", "Resources", "50")
+    End If
+    
+    If GetVar(filename, "Data Sizes", "Spells") = "" Then
+        Call PutVar(filename, "Data Sizes", "Spells", "100")
+    End If
+    
     LoadDataSizes
     
 End Sub
