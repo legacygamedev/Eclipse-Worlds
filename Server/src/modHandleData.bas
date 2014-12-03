@@ -4688,7 +4688,7 @@ Dim buffer As clsBuffer, dataSize As Long, dataType As Byte, i As Long
         Case EDITOR_RESOURCE
             MAX_RESOURCES = dataSize
             ReDim Resource(MAX_RESOURCES)
-            ReDim ResourceCache(MAX_RESOURCES)
+            ReDim ResourceCache(MAX_MAPS)
             SaveDataSizes
             frmServer.cmdReloadResources_Click
             SendEditResource Index
