@@ -59,8 +59,8 @@ Public currentMapLayerNum As String
 Public displayTilesets As Boolean
 
 Public Function getCurrentMapLayerName() As String
-    
     Dim llayer As OptionButton
+    
     For Each llayer In frmEditor_Map.optLayer
         If llayer Then
             currentMapLayerNum = llayer.Index
@@ -73,7 +73,6 @@ Public Function getCurrentMapLayerName() As String
 End Function
 
 Public Sub MapEditorMode(switch As Boolean)
-
     If switch Then
         frmMain.picMapEditor.Top = 0
         frmMain.picMapEditor.Left = 0
@@ -89,12 +88,14 @@ Public Sub MapEditorMode(switch As Boolean)
         Else
             frmMain.mapPreviewSwitch.Picture = LoadResPicture("MAP_UP", vbResBitmap)
         End If
+        
         'Tile Preview
         If frmMain.chkEyeDropper.Value Then
             frmMain.chkEyeDropper.Picture = LoadResPicture("EYE_DOWN", vbResBitmap)
         Else
             frmMain.chkEyeDropper.Picture = LoadResPicture("EYE_UP", vbResBitmap)
         End If
+        
         'Buttons
         frmMain.cmdSave.Picture = LoadResPicture("MAP_SAVE", vbResBitmap)
         frmMain.cmdRevert.Picture = LoadResPicture("MAP_REVERT", vbResBitmap)
@@ -158,6 +159,7 @@ Public Sub LeaveMapEditorMode(Cancel As Boolean)
         PlayMapMusic
     End If
 End Sub
+
 Private Function FlipBit(ByVal Bit As Long, ByVal Value As Boolean) As Boolean
    Dim nStyle As Long
    

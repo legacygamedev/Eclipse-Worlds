@@ -626,7 +626,7 @@ Private Sub Form_Unload(Cancel As Integer)
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    'frmMain.cmdOK.Enabled = True
+    frmMain.cmdSave.Enabled = True
     frmMain.cmdRevert.Enabled = True
     Exit Sub
     
@@ -808,11 +808,11 @@ Public Sub cmdOK_Click()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     If Not IsNumeric(txtMaxX.text) Then txtMaxX.text = Map.MaxX
-    If Val(txtMaxX.text) < MIN_MAPX Then txtMaxX.text = MIN_MAPX
-    If Val(txtMaxX.text) > MAX_BYTE Then txtMaxX.text = MAX_BYTE
+    If val(txtMaxX.text) < MIN_MAPX Then txtMaxX.text = MIN_MAPX
+    If val(txtMaxX.text) > MAX_BYTE Then txtMaxX.text = MAX_BYTE
     If Not IsNumeric(txtMaxY.text) Then txtMaxY.text = Map.MaxY
-    If Val(txtMaxY.text) < MIN_MAPY Then txtMaxY.text = MIN_MAPY
-    If Val(txtMaxY.text) > MAX_BYTE Then txtMaxY.text = MAX_BYTE
+    If val(txtMaxY.text) < MIN_MAPY Then txtMaxY.text = MIN_MAPY
+    If val(txtMaxY.text) > MAX_BYTE Then txtMaxY.text = MAX_BYTE
     
     With Map
         ' Set values
@@ -835,13 +835,13 @@ Public Sub cmdOK_Click()
         End If
         
         ' Other things to save
-        .Up = Val(txtUp.text)
-        .Down = Val(txtDown.text)
-        .Left = Val(txtLeft.text)
-        .Right = Val(txtRight.text)
+        .Up = val(txtUp.text)
+        .Down = val(txtDown.text)
+        .Left = val(txtLeft.text)
+        .Right = val(txtRight.text)
         .Moral = cmbMoral.ListIndex + 1
 
-        .Weather = CmbWeather.ListIndex
+        .Weather = cmbWeather.ListIndex
         .WeatherIntensity = scrlWeatherIntensity.Value
         
         .Fog = ScrlFog.Value
@@ -860,8 +860,8 @@ Public Sub cmdOK_Click()
         Y2 = Map.MaxY
         
         ' Set the data before changing it
-        .MaxX = Val(txtMaxX.text)
-        .MaxY = Val(txtMaxY.text)
+        .MaxX = val(txtMaxX.text)
+        .MaxY = val(txtMaxY.text)
         
         ReDim Map.Tile(0 To .MaxX, 0 To .MaxY)
 
@@ -875,9 +875,9 @@ Public Sub cmdOK_Click()
         Next
         
         ' Set Bootmap
-        .BootMap = Val(txtBootMap.text)
-        .BootX = Val(txtBootX.text)
-        .BootY = Val(txtBootY.text)
+        .BootMap = val(txtBootMap.text)
+        .BootX = val(txtBootX.text)
+        .BootY = val(txtBootY.text)
     End With
     
     ' Update the map Name
