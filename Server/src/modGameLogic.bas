@@ -520,10 +520,10 @@ Function CanNPCMove(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVal Dir 
                 Next
                 
                 ' Directional blocking
-                'If IsDirBlocked(Map(MapNum).Tile(MapNPC(MapNum).NPC(MapNPCNum).X - 1, MapNPC(MapNum).NPC(MapNPCNum).Y - 1).DirBlock, DIR_UPLEFT + 1) Then
-                '    CanNPCMove = False
-                '    Exit Function
-                'End If
+                If IsDirBlocked(Map(MapNum).Tile(MapNPC(MapNum).NPC(MapNPCNum).X - 1, MapNPC(MapNum).NPC(MapNPCNum).Y - 1).DirBlock, DIR_UPLEFT + 1) Then
+                    CanNPCMove = False
+                    Exit Function
+                End If
                 
                 ' Event blocking
                 If IsEventBlocked(MapNPCNum, -1, -1, MapNum) Then
@@ -564,10 +564,10 @@ Function CanNPCMove(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVal Dir 
                 Next
                 
                 ' Directional blocking
-                'If IsDirBlocked(Map(MapNum).Tile(MapNPC(MapNum).NPC(MapNPCNum).X + 1, MapNPC(MapNum).NPC(MapNPCNum).Y - 1).DirBlock, DIR_UPRIGHT + 1) Then
-                '    CanNPCMove = False
-                '    Exit Function
-                'End If
+                If IsDirBlocked(Map(MapNum).Tile(MapNPC(MapNum).NPC(MapNPCNum).X + 1, MapNPC(MapNum).NPC(MapNPCNum).Y - 1).DirBlock, DIR_UPRIGHT + 1) Then
+                    CanNPCMove = False
+                    Exit Function
+                End If
                 
                 ' Event blocking
                 If IsEventBlocked(MapNPCNum, 1, -1, MapNum) Then
@@ -608,10 +608,10 @@ Function CanNPCMove(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVal Dir 
                 Next
                 
                 ' Directional blocking
-                'If IsDirBlocked(Map(MapNum).Tile(MapNPC(MapNum).NPC(MapNPCNum).X - 1, MapNPC(MapNum).NPC(MapNPCNum).Y + 1).DirBlock, DIR_DOWNLEFT + 1) Then
-                '    CanNPCMove = False
-                '    Exit Function
-                'End If
+                If IsDirBlocked(Map(MapNum).Tile(MapNPC(MapNum).NPC(MapNPCNum).X - 1, MapNPC(MapNum).NPC(MapNPCNum).Y + 1).DirBlock, DIR_DOWNLEFT + 1) Then
+                    CanNPCMove = False
+                    Exit Function
+                End If
                 
                 ' Event blocking
                 If IsEventBlocked(MapNPCNum, -1, 1, MapNum) Then
@@ -652,10 +652,10 @@ Function CanNPCMove(ByVal MapNum As Integer, ByVal MapNPCNum As Long, ByVal Dir 
                 Next
                 
                 ' Directional blocking
-                'If IsDirBlocked(Map(MapNum).Tile(MapNPC(MapNum).NPC(MapNPCNum).X + 1, MapNPC(MapNum).NPC(MapNPCNum).Y + 1).DirBlock, DIR_DOWNRIGHT + 1) Then
-                '    CanNPCMove = False
-                '    Exit Function
-                'End If
+                If IsDirBlocked(Map(MapNum).Tile(MapNPC(MapNum).NPC(MapNPCNum).X + 1, MapNPC(MapNum).NPC(MapNPCNum).Y + 1).DirBlock, DIR_DOWNRIGHT + 1) Then
+                    CanNPCMove = False
+                    Exit Function
+                End If
                 
                 ' Event blocking
                 If IsEventBlocked(MapNPCNum, 1, 1, MapNum) Then
