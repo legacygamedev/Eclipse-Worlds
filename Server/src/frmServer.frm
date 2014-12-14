@@ -59,27 +59,27 @@ Begin VB.Form frmServer
       TabCaption(1)   =   "Players"
       TabPicture(1)   =   "frmServer.frx":170A6
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "cmdEditPlayer"
+      Tab(1).Control(0)=   "lvwInfo"
       Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdSavePlayers"
       Tab(1).Control(1).Enabled=   0   'False
-      Tab(1).Control(2)=   "lvwInfo"
+      Tab(1).Control(2)=   "cmdEditPlayer"
       Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Control "
       TabPicture(2)   =   "frmServer.frx":170C2
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "fraDatabase"
+      Tab(2).Control(0)=   "fraServer"
       Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "fraServer"
+      Tab(2).Control(1)=   "fraDatabase"
       Tab(2).Control(1).Enabled=   0   'False
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "News"
       TabPicture(3)   =   "frmServer.frx":170DE
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "txtNews"
+      Tab(3).Control(0)=   "cmdLoadNews"
       Tab(3).Control(1)=   "cmdSaveNews"
-      Tab(3).Control(2)=   "cmdLoadNews"
+      Tab(3).Control(2)=   "txtNews"
       Tab(3).ControlCount=   3
       Begin VB.TextBox txtText 
          Appearance      =   0  'Flat
@@ -159,7 +159,7 @@ Begin VB.Form frmServer
             Height          =   255
             Left            =   1140
             TabIndex        =   42
-            Top             =   2040
+            Top             =   2100
             Width           =   1695
          End
          Begin VB.Label Label6 
@@ -902,22 +902,22 @@ End Sub
 ' ********************
 ' ** Winsock object **
 ' ********************
-Private Sub Socket_ConnectionRequest(index As Integer, ByVal requestID As Long)
-    Call AcceptConnection(index, requestID)
+Private Sub Socket_ConnectionRequest(Index As Integer, ByVal requestID As Long)
+    Call AcceptConnection(Index, requestID)
 End Sub
 
-Private Sub Socket_Accept(index As Integer, SocketId As Integer)
-    Call AcceptConnection(index, SocketId)
+Private Sub Socket_Accept(Index As Integer, SocketId As Integer)
+    Call AcceptConnection(Index, SocketId)
 End Sub
 
-Private Sub Socket_DataArrival(index As Integer, ByVal bytesTotal As Long)
-    If IsConnected(index) Then
-        Call IncomingData(index, bytesTotal)
+Private Sub Socket_DataArrival(Index As Integer, ByVal bytesTotal As Long)
+    If IsConnected(Index) Then
+        Call IncomingData(Index, bytesTotal)
     End If
 End Sub
 
-Private Sub Socket_Close(index As Integer)
-    Call CloseSocket(index)
+Private Sub Socket_Close(Index As Integer)
+    Call CloseSocket(Index)
 End Sub
 
 Private Sub chkServerLog_Click()
@@ -1220,7 +1220,7 @@ Private Sub lvwInfo_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
         lvwInfo.SortOrder = lvwAscending
     End If
 
-    lvwInfo.SortKey = ColumnHeader.index - 1
+    lvwInfo.SortKey = ColumnHeader.Index - 1
     lvwInfo.Sorted = True
 End Sub
 
@@ -1287,14 +1287,14 @@ End Sub
 
 Sub mnuBanPlayer_click()
     Dim Name As String
-    Dim index As Long
+    Dim Index As Long
     
     Name = frmServer.lvwInfo.SelectedItem.SubItems(3)
-    index = FindPlayer(Name)
+    Index = FindPlayer(Name)
 
-    If index > 0 And index <= MAX_PLAYERS Then
-        If IsConnected(index) Then
-            Call BanIndex(index, "server", vbNullString)
+    If Index > 0 And Index <= MAX_PLAYERS Then
+        If IsConnected(Index) Then
+            Call BanIndex(Index, "server", vbNullString)
         End If
     End If
 End Sub

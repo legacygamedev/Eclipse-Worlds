@@ -388,6 +388,7 @@ Public Sub redimData()
     ReDim Map(MAX_MAPS)
     ReDim PlayersOnMap(MAX_MAPS)
     ReDim MapCache(MAX_MAPS)
+    ReDim MapBlocks(MAX_MAPS)
     ReDim TempEventMap(MAX_MAPS)
     ReDim Item(MAX_ITEMS)
     ReDim MapItem(MAX_MAPS)
@@ -1442,8 +1443,6 @@ Sub LoadMaps()
     Dim newtileset As Long, newtiley As Long
     
     Call CheckMaps
-    
-    ReDim MapBlocks(MAX_MAPS)
 
     For i = 1 To MAX_MAPS
         filename = App.path & "\data\maps\" & i & ".dat"
@@ -1674,13 +1673,14 @@ End Sub
 
 Sub ClearMap(ByVal MapNum As Long)
     Call ZeroMemory(ByVal VarPtr(Map(MapNum)), LenB(Map(MapNum)))
+    
     Map(MapNum).Name = vbNullString
     Map(MapNum).Music = vbNullString
     Map(MapNum).BGS = vbNullString
     Map(MapNum).Moral = 1
     Map(MapNum).MaxX = MIN_MAPX
     Map(MapNum).MaxY = MIN_MAPY
-    ReDim Map(MAX_MAPS)
+    
     ReDim Map(MapNum).Tile(0 To Map(MapNum).MaxX, 0 To Map(MapNum).MaxY)
     
     ' Reset the values for if a player is on the map or not

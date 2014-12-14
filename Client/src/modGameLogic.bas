@@ -258,7 +258,7 @@ Sub ProcessPlayerMovement(ByVal Index As Long)
     
     If TempPlayer(Index).Step = 0 Then TempPlayer(Index).Step = 1
     
-     ' Diagonal...
+    ' Diagonal...
     If GetPlayerDir(Index) > DIR_RIGHT Then
         MovementSpeed = MovementSpeed / 1.25
     End If
