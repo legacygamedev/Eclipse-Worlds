@@ -25,6 +25,51 @@ Begin VB.Form frmEditor_Map
    ScaleWidth      =   999
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.Frame fraType 
+      Caption         =   "Type"
+      Height          =   1650
+      Left            =   1650
+      TabIndex        =   80
+      Top             =   2835
+      Width           =   1455
+      Begin VB.OptionButton OptLayers 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Layers"
+         Height          =   255
+         Left            =   360
+         TabIndex        =   89
+         Top             =   240
+         Value           =   -1  'True
+         Width           =   855
+      End
+      Begin VB.OptionButton OptAttributes 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Attributes"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   88
+         Top             =   480
+         Width           =   1095
+      End
+      Begin VB.OptionButton OptBlock 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Block"
+         Height          =   255
+         Left            =   480
+         TabIndex        =   87
+         Top             =   720
+         Width           =   735
+      End
+      Begin VB.OptionButton OptEvents 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Events"
+         Height          =   255
+         Left            =   360
+         TabIndex        =   86
+         Top             =   960
+         Width           =   855
+      End
+   End
    Begin VB.PictureBox picAttributes 
       BorderStyle     =   0  'None
       BeginProperty Font 
@@ -754,51 +799,6 @@ Begin VB.Form frmEditor_Map
          End
       End
    End
-   Begin VB.Frame fraType 
-      Caption         =   "Type"
-      Height          =   1650
-      Left            =   1650
-      TabIndex        =   80
-      Top             =   2835
-      Width           =   1455
-      Begin VB.OptionButton OptLayers 
-         Alignment       =   1  'Right Justify
-         Caption         =   "Layers"
-         Height          =   255
-         Left            =   360
-         TabIndex        =   89
-         Top             =   240
-         Value           =   -1  'True
-         Width           =   855
-      End
-      Begin VB.OptionButton OptAttributes 
-         Alignment       =   1  'Right Justify
-         Caption         =   "Attributes"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   88
-         Top             =   480
-         Width           =   1095
-      End
-      Begin VB.OptionButton OptBlock 
-         Alignment       =   1  'Right Justify
-         Caption         =   "Block"
-         Height          =   255
-         Left            =   480
-         TabIndex        =   87
-         Top             =   720
-         Width           =   735
-      End
-      Begin VB.OptionButton OptEvents 
-         Alignment       =   1  'Right Justify
-         Caption         =   "Events"
-         Height          =   255
-         Left            =   360
-         TabIndex        =   86
-         Top             =   960
-         Width           =   855
-      End
-   End
    Begin VB.Frame fraRandom 
       Caption         =   "Random"
       BeginProperty Font 
@@ -1082,7 +1082,7 @@ Begin VB.Form frmEditor_Map
       End
    End
    Begin VB.Frame fraTileSet 
-      Caption         =   "Tileset: 0"
+      Caption         =   "Tileset: 1"
       BeginProperty Font 
          Name            =   "Verdana"
          Size            =   8.25
