@@ -2239,8 +2239,8 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     MIN_MAPX = XWide
     MIN_MAPY = YTall
     
-    realWidth = MIN_MAPX * PIC_Y + PIC_X
-    realHeight = MIN_MAPY * PIC_X + PIC_Y
+    realWidth = MIN_MAPX * PIC_Y
+    realHeight = MIN_MAPY * PIC_X
     
     frmMain.Width = PixelsToTwips(realWidth, 0)
     frmMain.Height = PixelsToTwips(realHeight, 1)
