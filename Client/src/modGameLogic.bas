@@ -966,9 +966,7 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
-    
-    CheckDirection = False
-    
+
     ' Check directional blocking
     If Direction < DIR_RIGHT Then
         If IsDirBlocked(Map.Tile(GetPlayerX(MyIndex), GetPlayerY(MyIndex)).DirBlock, Direction + 1) Then
@@ -2236,8 +2234,8 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     MIN_MAPX = XWide
     MIN_MAPY = YTall
     
-    realWidth = MIN_MAPX * PIC_Y
-    realHeight = MIN_MAPY * PIC_X
+    realWidth = MIN_MAPX * PIC_Y + PIC_X
+    realHeight = MIN_MAPY * PIC_X + PIC_Y
     
     frmMain.Width = PixelsToTwips(realWidth, 0)
     frmMain.Height = PixelsToTwips(realHeight, 1)
@@ -2253,8 +2251,8 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     ' Recalculate the other variables
     HalfX = ((MIN_MAPX + 1) / 2) * PIC_X
     HalfY = ((MIN_MAPY + 1) / 2) * PIC_Y
-    ScreenX = (MIN_MAPX) * PIC_X
-    ScreenY = (MIN_MAPY) * PIC_Y
+    ScreenX = (MIN_MAPX + 1) * PIC_X
+    ScreenY = (MIN_MAPY + 1) * PIC_Y
     StartXValue = ((MIN_MAPX + 1) / 2)
     StartYValue = ((MIN_MAPY + 1) / 2)
     EndXValue = (MIN_MAPX + 1)

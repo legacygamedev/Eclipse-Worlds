@@ -88,7 +88,7 @@ Public Sub SubClassHwnd(ByVal hWnd As Long)
 End Sub
 
 Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal MovedMouse As Boolean = True)
-    Dim I As Long
+    Dim i As Long
     Dim TmpDir As Byte
     Dim RandomSelected As Byte, Tile As Long
     Dim X2 As Long
@@ -134,11 +134,11 @@ Public Sub MapEditorMouseDown(ByVal Button As Integer, ByVal X As Long, ByVal Y 
             Y = Y - ((Y \ 32) * 32)
             
             ' See if it hits an arrow
-            For I = 1 To 4
-                If X >= DirArrowX(I) And X <= DirArrowX(I) + 8 Then
-                    If Y >= DirArrowY(I) And Y <= DirArrowY(I) + 8 Then
+            For i = 1 To 4
+                If X >= DirArrowX(i) And X <= DirArrowX(i) + 8 Then
+                    If Y >= DirArrowY(i) And Y <= DirArrowY(i) + 8 Then
                         ' Flip the Value
-                        SetDirBlock Map.Tile(CurX, CurY).DirBlock, CByte(I), Not IsDirBlocked(Map.Tile(CurX, CurY).DirBlock, CByte(I))
+                        SetDirBlock Map.Tile(CurX, CurY).DirBlock, CByte(i), Not IsDirBlocked(Map.Tile(CurX, CurY).DirBlock, CByte(i))
                         Exit Sub
                     End If
                 End If
@@ -192,14 +192,13 @@ Public Sub MapEditorSetTile(ByVal X As Long, ByVal Y As Long, ByVal CurrentLayer
         ' Subscript out of range
         If RandomTileSheet(RandomSelected) < 1 Or RandomTileSheet(RandomSelected) > NumTileSets Then Exit Sub
         
-        X2 = Tile Mod (Tex_Tileset(RandomTileSheet(RandomSelected)).Width / 32)
-        Y2 = Tile / ((Tex_Tileset(RandomTileSheet(RandomSelected)).Width + 32) / 32)
+        X2 = Tile Mod (Tex_Tileset(RandomTileSheet(RandomSelected)).Width / PIC_X)
+        Y2 = Tile / ((Tex_Tileset(RandomTileSheet(RandomSelected)).Width + PIC_Y) / PIC_Y)
         
-        With Map.Tile(CurX, CurY)
+        With Map.Tile(X, Y)
             .Layer(CurrentLayer).Tileset = RandomTileSheet(RandomSelected)
             .Layer(CurrentLayer).X = X2
             .Layer(CurrentLayer).Y = Y2
-            .Layer(CurrentLayer).Tileset = RandomTileSheet(RandomSelected)
             If .Autotile(CurrentLayer) <> 0 Then
                 .Autotile(CurrentLayer) = 0
                 InitAutotiles
@@ -486,7 +485,7 @@ ErrorHandler:
 End Sub
 
 Public Sub MapEditorClearLayer()
-    Dim I As Long, X As Long, Y As Long
+    Dim i As Long, X As Long, Y As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -709,7 +708,7 @@ End Sub
 ' // Item Editor //
 ' /////////////////
 Public Sub ItemEditorInit()
-    Dim I As Long
+    Dim i As Long
     Dim SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
@@ -725,8 +724,8 @@ Public Sub ItemEditorInit()
     frmEditor_Item.cmbSound.Clear
     frmEditor_Item.cmbSound.AddItem "None"
 
-    For I = 1 To UBound(SoundCache)
-        frmEditor_Item.cmbSound.AddItem SoundCache(I)
+    For i = 1 To UBound(SoundCache)
+        frmEditor_Item.cmbSound.AddItem SoundCache(i)
     Next
 
     With Item(EditorIndex)
@@ -766,12 +765,12 @@ Public Sub ItemEditorInit()
         
         ' Reusable
         If .IsReusable Then
-            For I = 1 To frmEditor_Item.chkReusable.Count - 1
-                frmEditor_Item.chkReusable.Item(I) = 1
+            For i = 1 To frmEditor_Item.chkReusable.Count - 1
+                frmEditor_Item.chkReusable.Item(i) = 1
             Next
         Else
-            For I = 1 To frmEditor_Item.chkReusable.Count - 1
-                frmEditor_Item.chkReusable.Item(I) = 0
+            For i = 1 To frmEditor_Item.chkReusable.Count - 1
+                frmEditor_Item.chkReusable.Item(i) = 0
             Next
         End If
         
@@ -798,10 +797,10 @@ Public Sub ItemEditorInit()
 
         ' Find the sound we have set
         If frmEditor_Item.cmbSound.ListCount > 0 Then
-            For I = 1 To frmEditor_Item.cmbSound.ListCount
+            For i = 1 To frmEditor_Item.cmbSound.ListCount
                 If Len(Trim$(.Sound)) > 0 Then
-                    If frmEditor_Item.cmbSound.List(I) = Trim$(.Sound) Then
-                        frmEditor_Item.cmbSound.ListIndex = I
+                    If frmEditor_Item.cmbSound.List(i) = Trim$(.Sound) Then
+                        frmEditor_Item.cmbSound.ListIndex = i
                         SoundSet = True
                     End If
                 End If
@@ -829,8 +828,8 @@ Public Sub ItemEditorInit()
         End With
         
         ' Loop for stats
-        For I = 1 To Stats.Stat_Count - 1
-            frmEditor_Item.scrlStatBonus(I).Value = .Add_Stat(I)
+        For i = 1 To Stats.Stat_Count - 1
+            frmEditor_Item.scrlStatBonus(i).Value = .Add_Stat(i)
         Next
         
         frmEditor_Item.scrlDamage.Value = .Data2
@@ -881,8 +880,8 @@ Public Sub ItemEditorInit()
         frmEditor_Item.scrlLevelReq.Value = .LevelReq
         
         ' Loop for stats
-        For I = 1 To Stats.Stat_Count - 1
-            frmEditor_Item.scrlStatReq(I).Value = .Stat_Req(I)
+        For i = 1 To Stats.Stat_Count - 1
+            frmEditor_Item.scrlStatReq(i).Value = .Stat_Req(i)
         Next
         
         ItemClassReqListInit
@@ -920,14 +919,14 @@ ErrorHandler:
 End Sub
 
 Public Sub ItemEditorSave()
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For I = 1 To MAX_ITEMS
-        If Item_Changed(I) Then
-            Call SendSaveItem(I)
+    For i = 1 To MAX_ITEMS
+        If Item_Changed(i) Then
+            Call SendSaveItem(i)
         End If
     Next
     
@@ -988,7 +987,7 @@ End Sub
 ' // Animation Editor //
 ' //////////////////////
 Public Sub AnimationEditorInit()
-    Dim I As Long
+    Dim i As Long
     Dim SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
@@ -1004,8 +1003,8 @@ Public Sub AnimationEditorInit()
     frmEditor_Animation.cmbSound.Clear
     frmEditor_Animation.cmbSound.AddItem "None"
     
-    For I = 1 To UBound(SoundCache)
-        frmEditor_Animation.cmbSound.AddItem SoundCache(I)
+    For i = 1 To UBound(SoundCache)
+        frmEditor_Animation.cmbSound.AddItem SoundCache(i)
     Next
 
     With Animation(EditorIndex)
@@ -1013,10 +1012,10 @@ Public Sub AnimationEditorInit()
         
         ' Find the sound we have set
         If frmEditor_Animation.cmbSound.ListCount > 0 Then
-            For I = 1 To frmEditor_Animation.cmbSound.ListCount
+            For i = 1 To frmEditor_Animation.cmbSound.ListCount
                 If Len(Trim$(.Sound)) > 0 Then
-                    If frmEditor_Animation.cmbSound.List(I) = Trim$(.Sound) Then
-                        frmEditor_Animation.cmbSound.ListIndex = I
+                    If frmEditor_Animation.cmbSound.List(i) = Trim$(.Sound) Then
+                        frmEditor_Animation.cmbSound.ListIndex = i
                         SoundSet = True
                     End If
                 End If
@@ -1025,25 +1024,25 @@ Public Sub AnimationEditorInit()
         
         If Not SoundSet Or frmEditor_Animation.cmbSound.ListIndex = -1 Then frmEditor_Animation.cmbSound.ListIndex = 0
         
-        For I = 0 To 1
-            If .Sprite(I) < 1 Or .Sprite(I) > NumAnimations Then
-                frmEditor_Animation.scrlSprite(I).Value = 0
+        For i = 0 To 1
+            If .Sprite(i) < 1 Or .Sprite(i) > NumAnimations Then
+                frmEditor_Animation.scrlSprite(i).Value = 0
             Else
-                frmEditor_Animation.scrlSprite(I).Value = .Sprite(I)
+                frmEditor_Animation.scrlSprite(i).Value = .Sprite(i)
             End If
             
-            If .Frames(I) = 0 Then .Frames(I) = 1
-            frmEditor_Animation.scrlFrameCount(I).Value = .Frames(I)
+            If .Frames(i) = 0 Then .Frames(i) = 1
+            frmEditor_Animation.scrlFrameCount(i).Value = .Frames(i)
             
-            If .LoopCount(I) = 0 Then .LoopCount(I) = 1
-            frmEditor_Animation.scrlLoopCount(I).Value = .LoopCount(I)
+            If .LoopCount(i) = 0 Then .LoopCount(i) = 1
+            frmEditor_Animation.scrlLoopCount(i).Value = .LoopCount(i)
             
-            If .looptime(I) = 0 Then .looptime(I) = 1
-            frmEditor_Animation.scrlLoopTime(I).Value = .looptime(I)
+            If .looptime(i) = 0 Then .looptime(i) = 1
+            frmEditor_Animation.scrlLoopTime(i).Value = .looptime(i)
             
             ' Set the loop time to 40 if it is 1
-            If frmEditor_Animation.scrlLoopTime(I).Value = 1 Then
-                frmEditor_Animation.scrlLoopTime(I).Value = 40
+            If frmEditor_Animation.scrlLoopTime(i).Value = 1 Then
+                frmEditor_Animation.scrlLoopTime(i).Value = 40
             End If
         Next
     End With
@@ -1056,14 +1055,14 @@ ErrorHandler:
 End Sub
 
 Public Sub AnimationEditorSave()
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For I = 1 To MAX_ANIMATIONS
-        If Animation_Changed(I) Then
-            Call SendSaveAnimation(I)
+    For i = 1 To MAX_ANIMATIONS
+        If Animation_Changed(i) Then
+            Call SendSaveAnimation(i)
         End If
     Next
     
@@ -1111,7 +1110,7 @@ End Sub
 ' // NPC Editor //
 ' ////////////////
 Public Sub NPCEditorInit()
-    Dim I As Long
+    Dim i As Long
     Dim MusicSet As Boolean, SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
@@ -1133,12 +1132,12 @@ Public Sub NPCEditorInit()
     frmEditor_NPC.cmbSound.Clear
     frmEditor_NPC.cmbSound.AddItem "None"
     
-    For I = 1 To UBound(MusicCache)
-        frmEditor_NPC.cmbMusic.AddItem MusicCache(I)
+    For i = 1 To UBound(MusicCache)
+        frmEditor_NPC.cmbMusic.AddItem MusicCache(i)
     Next
     
-    For I = 1 To UBound(SoundCache)
-        frmEditor_NPC.cmbSound.AddItem SoundCache(I)
+    For i = 1 To UBound(SoundCache)
+        frmEditor_NPC.cmbSound.AddItem SoundCache(i)
     Next
     
     With frmEditor_NPC
@@ -1185,15 +1184,15 @@ Public Sub NPCEditorInit()
         ' Switches
         .cmbPlayerSwitch.Clear
         .cmbPlayerSwitch.AddItem "None"
-        For I = 1 To MAX_SWITCHES
-            .cmbPlayerSwitch.AddItem I & ". " & Switches(I)
+        For i = 1 To MAX_SWITCHES
+            .cmbPlayerSwitch.AddItem i & ". " & Switches(i)
         Next
         
         ' Variables
         .cmbPlayerVar.Clear
         .cmbPlayerVar.AddItem "None"
-        For I = 1 To MAX_VARIABLES
-            .cmbPlayerVar.AddItem I & ". " & Variables(I)
+        For i = 1 To MAX_VARIABLES
+            .cmbPlayerVar.AddItem i & ". " & Variables(i)
         Next
         
         .cmbPlayerVar.ListIndex = NPC(EditorIndex).VariableNum
@@ -1204,10 +1203,10 @@ Public Sub NPCEditorInit()
         
         ' Find the music we have set
         If .cmbMusic.ListCount > 0 Then
-            For I = 1 To .cmbMusic.ListCount
+            For i = 1 To .cmbMusic.ListCount
                 If Len(Trim$(NPC(EditorIndex).Music)) > 0 Then
-                    If .cmbMusic.List(I) = Trim$(NPC(EditorIndex).Music) Then
-                        .cmbMusic.ListIndex = I
+                    If .cmbMusic.List(i) = Trim$(NPC(EditorIndex).Music) Then
+                        .cmbMusic.ListIndex = i
                         MusicSet = True
                     End If
                 End If
@@ -1218,10 +1217,10 @@ Public Sub NPCEditorInit()
         
         ' Find the sound we have set
         If .cmbSound.ListCount > 0 Then
-            For I = 1 To .cmbSound.ListCount
+            For i = 1 To .cmbSound.ListCount
                 If Len(Trim$(NPC(EditorIndex).Sound)) > 0 Then
-                    If .cmbSound.List(I) = Trim$(NPC(EditorIndex).Sound) Then
-                        .cmbSound.ListIndex = I
+                    If .cmbSound.List(i) = Trim$(NPC(EditorIndex).Sound) Then
+                        .cmbSound.ListIndex = i
                         SoundSet = True
                     End If
                 End If
@@ -1230,14 +1229,12 @@ Public Sub NPCEditorInit()
         
         If Not SoundSet Or .cmbSound.ListIndex = -1 Then .cmbSound.ListIndex = 0
         
-        For I = 1 To Stats.Stat_Count - 1
-            .scrlStat(I).Value = NPC(EditorIndex).Stat(I)
+        For i = 1 To Stats.Stat_Count - 1
+            .scrlStat(i).Value = NPC(EditorIndex).Stat(i)
         Next
         
         .chkAnimated = NPC(EditorIndex).Animated
     End With
-    
-    Call EditorNPC_DrawSprite
     Exit Sub
     
 ' Error handler
@@ -1247,14 +1244,14 @@ ErrorHandler:
 End Sub
 
 Public Sub NPCEditorSave()
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For I = 1 To MAX_NPCS
-        If NPC_Changed(I) Then
-            Call SendSaveNPC(I)
+    For i = 1 To MAX_NPCS
+        If NPC_Changed(i) Then
+            Call SendSaveNPC(i)
         End If
     Next
     
@@ -1302,7 +1299,7 @@ End Sub
 ' // Resource Editor //
 ' /////////////////////
 Public Sub ResourceEditorInit()
-    Dim I As Long
+    Dim i As Long
     Dim SoundSet As Boolean
 
     ' If debug mode, handle error then exit out
@@ -1319,8 +1316,8 @@ Public Sub ResourceEditorInit()
     frmEditor_Resource.cmbSound.Clear
     frmEditor_Resource.cmbSound.AddItem "None"
     
-    For I = 1 To UBound(SoundCache)
-        frmEditor_Resource.cmbSound.AddItem SoundCache(I)
+    For i = 1 To UBound(SoundCache)
+        frmEditor_Resource.cmbSound.AddItem SoundCache(i)
     Next
     
     With frmEditor_Resource
@@ -1346,10 +1343,10 @@ Public Sub ResourceEditorInit()
         
         ' Find the sound we have set
         If .cmbSound.ListCount > 0 Then
-            For I = 1 To .cmbSound.ListCount
+            For i = 1 To .cmbSound.ListCount
                 If Len(Trim$(Resource(EditorIndex).Sound)) > 0 Then
-                    If .cmbSound.List(I) = Trim$(Resource(EditorIndex).Sound) Then
-                        .cmbSound.ListIndex = I
+                    If .cmbSound.List(i) = Trim$(Resource(EditorIndex).Sound) Then
+                        .cmbSound.ListIndex = i
                         SoundSet = True
                     End If
                 End If
@@ -1379,14 +1376,14 @@ ErrorHandler:
 End Sub
 
 Public Sub ResourceEditorSave()
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For I = 1 To MAX_RESOURCES
-        If Resource_Changed(I) Then
-            Call SendSaveResource(I)
+    For i = 1 To MAX_RESOURCES
+        If Resource_Changed(i) Then
+            Call SendSaveResource(i)
         End If
     Next
     
@@ -1434,7 +1431,7 @@ End Sub
 ' // Shop Editor //
 ' /////////////////
 Public Sub ShopEditorInit()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1470,24 +1467,24 @@ ErrorHandler:
 End Sub
 
 Public Sub UpdateShopTrade(Optional ByVal tmpPos As Long = 0)
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     frmEditor_Shop.lstTradeItem.Clear
     
-    For I = 1 To MAX_TRADES
-        With Shop(EditorIndex).TradeItem(I)
+    For i = 1 To MAX_TRADES
+        With Shop(EditorIndex).TradeItem(i)
             ' If none, show as none
             If .Item = 0 Or .CostItem = 0 And .CostItem2 = 0 Then
                 frmEditor_Shop.lstTradeItem.AddItem "Empty Trade Slot"
             ElseIf .CostItem2 = 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem I & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).Name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).Name)
             ElseIf .CostItem = 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem I & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem2).Name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem2).Name)
             ElseIf .CostItem > 0 And .CostItem2 > 0 Then
-                frmEditor_Shop.lstTradeItem.AddItem I & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).Name) & " & " & .CostValue2 & "X " & Trim$(Item(.CostItem2).Name)
+                frmEditor_Shop.lstTradeItem.AddItem i & ": " & .ItemValue & "X " & Trim$(Item(.Item).Name) & " for " & .CostValue & "X " & Trim$(Item(.CostItem).Name) & " & " & .CostValue2 & "X " & Trim$(Item(.CostItem2).Name)
             End If
         End With
     Next
@@ -1502,14 +1499,14 @@ ErrorHandler:
 End Sub
 
 Public Sub ShopEditorSave()
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For I = 1 To MAX_SHOPS
-        If Shop_Changed(I) Then
-            Call SendSaveShop(I)
+    For i = 1 To MAX_SHOPS
+        If Shop_Changed(i) Then
+            Call SendSaveShop(i)
         End If
     Next
     
@@ -1558,7 +1555,7 @@ End Sub
 ' // Spell Editor //
 ' //////////////////
 Public Sub SpellEditorInit()
-    Dim I As Long
+    Dim i As Long
     Dim SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
@@ -1577,8 +1574,8 @@ Public Sub SpellEditorInit()
     frmEditor_Spell.cmbSound.Clear
     frmEditor_Spell.cmbSound.AddItem "None"
     
-    For I = 1 To UBound(SoundCache)
-        frmEditor_Spell.cmbSound.AddItem SoundCache(I)
+    For i = 1 To UBound(SoundCache)
+        frmEditor_Spell.cmbSound.AddItem SoundCache(i)
     Next
     
     With frmEditor_Spell
@@ -1628,10 +1625,10 @@ Public Sub SpellEditorInit()
         .scrlRankUp.Value = Spell(EditorIndex).NewSpell
         
         If .cmbSound.ListCount > 0 Then
-            For I = 1 To .cmbSound.ListCount
+            For i = 1 To .cmbSound.ListCount
                 If Len(Trim$(Spell(EditorIndex).Sound)) > 0 Then
-                    If .cmbSound.List(I) = Trim$(Spell(EditorIndex).Sound) Then
-                        .cmbSound.ListIndex = I
+                    If .cmbSound.List(i) = Trim$(Spell(EditorIndex).Sound) Then
+                        .cmbSound.ListIndex = i
                         SoundSet = True
                     End If
                 End If
@@ -1649,14 +1646,14 @@ ErrorHandler:
 End Sub
 
 Public Sub SpellEditorSave()
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For I = 1 To MAX_SPELLS
-        If Spell_Changed(I) Then
-            Call SendSaveSpell(I)
+    For i = 1 To MAX_SPELLS
+        If Spell_Changed(i) Then
+            Call SendSaveSpell(i)
         End If
     Next
     
@@ -1672,7 +1669,7 @@ ErrorHandler:
 End Sub
 
 Public Sub SpellEditorCancel()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1682,9 +1679,9 @@ Public Sub SpellEditorCancel()
     ClearSpells
     SendRequestSpells
     
-    For I = 1 To MAX_PLAYER_SPELLS
-        If PlayerSpells(I) > 0 Then
-            Call SendRequestSpellCooldown(I)
+    For i = 1 To MAX_PLAYER_SPELLS
+        If PlayerSpells(i) > 0 Then
+            Call SendRequestSpellCooldown(i)
         End If
     Next
     Exit Sub
@@ -1732,7 +1729,7 @@ ErrorHandler:
 End Sub
 
 Public Sub MapPropertiesInit()
-    Dim I As Long, MusicSet As Boolean, SoundSet As Boolean
+    Dim i As Long, MusicSet As Boolean, SoundSet As Boolean
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1752,28 +1749,28 @@ Public Sub MapPropertiesInit()
         .cmbSound.AddItem "None"
         
         ' Build music list
-        For I = 1 To UBound(MusicCache)
-            .lstMusic.AddItem MusicCache(I)
+        For i = 1 To UBound(MusicCache)
+            .lstMusic.AddItem MusicCache(i)
         Next
         
         ' Build sound list
-        For I = 1 To UBound(SoundCache)
-            frmEditor_MapProperties.cmbSound.AddItem SoundCache(I)
+        For i = 1 To UBound(SoundCache)
+            frmEditor_MapProperties.cmbSound.AddItem SoundCache(i)
         Next
         
         ' Clear the combo box
         .cmbMoral.Clear
         
-        For I = 1 To MAX_MORALS
-            .cmbMoral.AddItem I & ": " & Trim$(Moral(I).Name)
+        For i = 1 To MAX_MORALS
+            .cmbMoral.AddItem i & ": " & Trim$(Moral(i).Name)
         Next
 
         ' Find the music we have set
         If .lstMusic.ListCount > 1 Then
-            For I = 1 To .lstMusic.ListCount
+            For i = 1 To .lstMusic.ListCount
                 If Len(Trim$(Map.Music)) > 0 Then
-                    If .lstMusic.List(I) = Trim$(Map.Music) Then
-                        .lstMusic.ListIndex = I
+                    If .lstMusic.List(i) = Trim$(Map.Music) Then
+                        .lstMusic.ListIndex = i
                         MusicSet = True
                     End If
                 End If
@@ -1783,10 +1780,10 @@ Public Sub MapPropertiesInit()
         If Not MusicSet Or .lstMusic.ListIndex = -1 Then .lstMusic.ListIndex = 0
         
         If .cmbSound.ListCount > 1 Then
-            For I = 0 To .cmbSound.ListCount
+            For i = 0 To .cmbSound.ListCount
                 If Len(Trim$(Map.BGS)) > 0 Then
-                    If .cmbSound.List(I) = Trim$(Map.BGS) Then
-                        .cmbSound.ListIndex = I
+                    If .cmbSound.List(i) = Trim$(Map.BGS) Then
+                        .cmbSound.ListIndex = i
                         SoundSet = True
                     End If
                 End If
@@ -1800,11 +1797,11 @@ Public Sub MapPropertiesInit()
         .cmbNpcs.ListIndex = 0
         
         ' Load all the npcs that can be selected into the combo box
-        For I = 1 To MAX_NPCS
-            .cmbNpcs.AddItem I & ": " & Trim$(NPC(I).Name)
+        For i = 1 To MAX_NPCS
+            .cmbNpcs.AddItem i & ": " & Trim$(NPC(i).Name)
         Next
         
-        .cmbWeather.ListIndex = Map.Weather
+        .CmbWeather.ListIndex = Map.Weather
         .scrlWeatherIntensity.Value = Map.WeatherIntensity
         
         .ScrlFog.Value = Map.Fog
@@ -1845,18 +1842,18 @@ ErrorHandler:
 End Sub
 
 Public Sub LoadMapPropertiesNPCs()
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     ' Load the npcs into the list
     With Map
-        For I = 1 To MAX_MAP_NPCS
-            If .NPC(I) < 1 Or .NPC(I) > MAX_NPCS Then
-                frmEditor_MapProperties.lstNpcs.AddItem I & ": None"
+        For i = 1 To MAX_MAP_NPCS
+            If .NPC(i) < 1 Or .NPC(i) > MAX_NPCS Then
+                frmEditor_MapProperties.lstNpcs.AddItem i & ": None"
             Else
-                frmEditor_MapProperties.lstNpcs.AddItem I & ": " & Trim$(NPC(.NPC(I)).Name)
+                frmEditor_MapProperties.lstNpcs.AddItem i & ": " & Trim$(NPC(.NPC(i)).Name)
             End If
         Next
     End With
@@ -1869,7 +1866,7 @@ ErrorHandler:
 End Sub
 
 Public Sub MapEditorInitShop()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1878,8 +1875,8 @@ Public Sub MapEditorInitShop()
     frmEditor_Map.cmbShop.AddItem "None"
     
     ' Set shops for the shop attribute
-    For I = 1 To MAX_SHOPS
-        frmEditor_Map.cmbShop.AddItem I & ": " & Shop(I).Name, I
+    For i = 1 To MAX_SHOPS
+        frmEditor_Map.cmbShop.AddItem i & ": " & Shop(i).Name, i
     Next
     
     ' Reset the shop list Index
@@ -1921,7 +1918,7 @@ ErrorHandler:
 End Sub
 
 Public Sub BanEditorSave()
-    Dim I As Long
+    Dim i As Long
     
     ' Subscript out of range
     If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
@@ -1929,9 +1926,9 @@ Public Sub BanEditorSave()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_BANS
-        If Ban_Changed(I) Then
-            Call SendSaveBan(I)
+    For i = 1 To MAX_BANS
+        If Ban_Changed(i) Then
+            Call SendSaveBan(i)
         End If
     Next
     
@@ -2008,7 +2005,7 @@ ErrorHandler:
 End Sub
 
 Public Sub TitleEditorSave()
-    Dim I As Long
+    Dim i As Long
     
     ' Subscript out of range
     If EditorIndex < 1 Or EditorIndex > MAX_TITLES Then Exit Sub
@@ -2016,9 +2013,9 @@ Public Sub TitleEditorSave()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_TITLES
-        If Title_Changed(I) Then
-            Call SendSaveTitle(I)
+    For i = 1 To MAX_TITLES
+        If Title_Changed(i) Then
+            Call SendSaveTitle(i)
         End If
     Next
     
@@ -2069,14 +2066,14 @@ ErrorHandler:
 End Sub
 
 Public Sub MoralEditorSave()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_MORALS
-        If Moral_Changed(I) Then
-            Call SendSaveMoral(I)
+    For i = 1 To MAX_MORALS
+        If Moral_Changed(i) Then
+            Call SendSaveMoral(i)
         End If
     Next
     
@@ -2149,14 +2146,14 @@ ErrorHandler:
 End Sub
 
 Public Sub ClassEditorSave()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_CLASSES
-        If Class_Changed(I) Then
-            Call SendSaveClass(I)
+    For i = 1 To MAX_CLASSES
+        If Class_Changed(i) Then
+            Call SendSaveClass(i)
         End If
     Next
     
@@ -2201,7 +2198,7 @@ ErrorHandler:
 End Sub
 
 Public Sub ClassEditorInit()
-    Dim I As Long
+    Dim i As Long
 
     ' Check if the form is visible if not then exit
     If frmEditor_Class.Visible = False Then Exit Sub
@@ -2242,9 +2239,9 @@ Public Sub ClassEditorInit()
         .chkAnimated = Class(EditorIndex).Animated
         
         ' Loop for stats
-        For I = 1 To Stats.Stat_Count - 1
-            If Class(EditorIndex).Stat(I) < 1 Then Class(EditorIndex).Stat(I) = 1
-            .scrlStat(I).Value = Class(EditorIndex).Stat(I)
+        For i = 1 To Stats.Stat_Count - 1
+            If Class(EditorIndex).Stat(i) < 1 Then Class(EditorIndex).Stat(i) = 1
+            .scrlStat(i).Value = Class(EditorIndex).Stat(i)
         Next
         
         ' Set visibility on
@@ -2307,15 +2304,15 @@ End Sub
 
 ' Item Spawner
 Public Function populateSpecificType(ByRef tempItems() As ItemRec, ItemType As Byte) As Boolean
-    Dim I As Long, counter As Long, found As Boolean
-    For I = 1 To MAX_ITEMS
-        If Item(I).Type = ItemType And Item(I).Pic > 0 And Len(Item(I).Name) > 0 Then
+    Dim i As Long, counter As Long, found As Boolean
+    For i = 1 To MAX_ITEMS
+        If Item(i).Type = ItemType And Item(i).Pic > 0 And Len(Item(i).Name) > 0 Then
             found = True
             ReDim Preserve tempItems(counter)
-            tempItems(counter) = Item(I)
+            tempItems(counter) = Item(i)
             ReDim Preserve currentlyListedIndexes(counter)
-            currentlyListedIndexes(counter) = I
-            frmItemSpawner.itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & Item(I).Pic & GFX_EXT, False, 32, 32, 16777215)
+            currentlyListedIndexes(counter) = i
+            frmItemSpawner.itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & Item(i).Pic & GFX_EXT, False, 32, 32, 16777215)
 
             counter = counter + 1
         End If
@@ -2327,39 +2324,39 @@ Public Function populateSpecificType(ByRef tempItems() As ItemRec, ItemType As B
 End Function
 
 Public Function countFreeSlots() As Byte
-    Dim I As Long, counter As Byte
+    Dim i As Long, counter As Byte
     
-        For I = 1 To MAX_INV
-        If GetPlayerInvItemNum(MyIndex, I) = 0 Then
+        For i = 1 To MAX_INV
+        If GetPlayerInvItemNum(MyIndex, i) = 0 Then
             counter = counter + 1
         End If
         countFreeSlots = counter
     Next
 End Function
 Public Sub SpellClassListInit()
-    Dim I As Long
+    Dim i As Long
     
     With frmEditor_Spell
         ' Build Class combo
         .cmbClass.Clear
         .cmbClass.AddItem "None"
         
-        For I = 1 To MAX_CLASSES
-            .cmbClass.AddItem Trim$(Class(I).Name)
+        For i = 1 To MAX_CLASSES
+            .cmbClass.AddItem Trim$(Class(i).Name)
         Next
         .cmbClass.ListIndex = Spell(EditorIndex).ClassReq
     End With
 End Sub
 
 Public Sub ItemClassReqListInit()
-    Dim I As Long
+    Dim i As Long
     
     ' Build cmbClassReq
     frmEditor_Item.cmbClassReq.Clear
     frmEditor_Item.cmbClassReq.AddItem "None"
 
-    For I = 1 To MAX_CLASSES
-        frmEditor_Item.cmbClassReq.AddItem Class(I).Name
+    For i = 1 To MAX_CLASSES
+        frmEditor_Item.cmbClassReq.AddItem Class(i).Name
     Next
     frmEditor_Item.cmbClassReq.ListIndex = Item(EditorIndex).ClassReq
 End Sub
@@ -2393,14 +2390,14 @@ ErrorHandler:
 End Sub
 
 Public Sub EmoticonEditorSave()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_EMOTICONS
-        If Emoticon_Changed(I) Then
-            Call SendSaveEmoticon(I)
+    For i = 1 To MAX_EMOTICONS
+        If Emoticon_Changed(i) Then
+            Call SendSaveEmoticon(i)
         End If
     Next
     
@@ -2445,7 +2442,7 @@ ErrorHandler:
 End Sub
 
 Sub CopyEvent_Map(X As Long, Y As Long)
-    Dim Count As Long, I As Long
+    Dim Count As Long, i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2453,10 +2450,10 @@ Sub CopyEvent_Map(X As Long, Y As Long)
     Count = Map.EventCount
     If Count = 0 Then Exit Sub
     
-    For I = 1 To Count
-        If Map.events(I).X = X And Map.events(I).Y = Y Then
+    For i = 1 To Count
+        If Map.events(i).X = X And Map.events(i).Y = Y Then
             ' Copy it
-            cpEvent = Map.events(I)
+            cpEvent = Map.events(i)
             Exit Sub
         End If
     Next
@@ -2469,7 +2466,7 @@ ErrorHandler:
 End Sub
 
 Sub PasteEvent_Map(X As Long, Y As Long)
-    Dim Count As Long, I As Long, EventNum As Long
+    Dim Count As Long, i As Long, EventNum As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2477,10 +2474,10 @@ Sub PasteEvent_Map(X As Long, Y As Long)
     Count = Map.EventCount
     
     If Count > 0 Then
-        For I = 1 To Count
-            If Map.events(I).X = X And Map.events(I).Y = Y Then
+        For i = 1 To Count
+            If Map.events(i).X = X And Map.events(i).Y = Y Then
                 ' Already an event - paste over it
-                EventNum = I
+                EventNum = i
             End If
         Next
     End If
@@ -2507,7 +2504,7 @@ ErrorHandler:
 End Sub
 
 Sub DeleteEvent(X As Long, Y As Long)
-    Dim Count As Long, I As Long, lowIndex As Long
+    Dim Count As Long, i As Long, lowIndex As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2517,11 +2514,11 @@ Sub DeleteEvent(X As Long, Y As Long)
     
     Count = Map.EventCount
     
-    For I = 1 To Count
-        If Map.events(I).X = X And Map.events(I).Y = Y Then
+    For i = 1 To Count
+        If Map.events(i).X = X And Map.events(i).Y = Y Then
             ' Delete it
-            ClearEvent I
-            lowIndex = I
+            ClearEvent i
+            lowIndex = i
             Exit For
         End If
     Next
@@ -2530,8 +2527,8 @@ Sub DeleteEvent(X As Long, Y As Long)
     If lowIndex = 0 Then Exit Sub
     
     ' Move everything down an index
-    For I = lowIndex To Count - 1
-        CopyEvent I + 1, I
+    For i = lowIndex To Count - 1
+        CopyEvent i + 1, i
     Next
     
     ' Delete the last index
@@ -2548,7 +2545,7 @@ ErrorHandler:
 End Sub
 
 Sub AddEvent(X As Long, Y As Long, Optional ByVal CancelLoad As Boolean = False)
-    Dim Count As Long, PageCount As Long, I As Long
+    Dim Count As Long, PageCount As Long, i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2557,10 +2554,10 @@ Sub AddEvent(X As Long, Y As Long, Optional ByVal CancelLoad As Boolean = False)
     
     ' Make sure there's not already an event
     If Count - 1 > 0 Then
-        For I = 1 To Count - 1
-            If Map.events(I).X = X And Map.events(I).Y = Y Then
+        For i = 1 To Count - 1
+            If Map.events(i).X = X And Map.events(i).Y = Y Then
                 ' Already an event - edit it
-                If Not CancelLoad Then EventEditorInit I
+                If Not CancelLoad Then EventEditorInit i
                 Exit Sub
             End If
         Next
@@ -2616,7 +2613,7 @@ ErrorHandler:
 End Sub
 
 Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = False)
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2655,32 +2652,32 @@ Sub EventEditorInit(EventNum As Long, Optional ByVal CommonEvent As Boolean = Fa
         ' Set the tabs
         .tabPages.Tabs.Clear
         
-        For I = 1 To tmpEvent.PageCount
-            .tabPages.Tabs.Add , , str$(I)
+        For i = 1 To tmpEvent.PageCount
+            .tabPages.Tabs.Add , , str$(i)
         Next
         
         ' Variables
         .cmbPlayerVar.Clear
         .cmbPlayerVar.AddItem "None"
         
-        For I = 1 To MAX_VARIABLES
-            .cmbPlayerVar.AddItem I & ". " & Variables(I)
+        For i = 1 To MAX_VARIABLES
+            .cmbPlayerVar.AddItem i & ". " & Variables(i)
         Next
         
         ' Switches
         .cmbPlayerSwitch.Clear
         .cmbPlayerSwitch.AddItem "None"
         
-        For I = 1 To MAX_SWITCHES
-            .cmbPlayerSwitch.AddItem I & ". " & Switches(I)
+        For i = 1 To MAX_SWITCHES
+            .cmbPlayerSwitch.AddItem i & ". " & Switches(i)
         Next
         
         ' Items
         .cmbHasItem.Clear
         .cmbHasItem.AddItem "None"
         
-        For I = 1 To MAX_ITEMS
-            .cmbHasItem.AddItem I & ": " & Trim$(Item(I).Name)
+        For i = 1 To MAX_ITEMS
+            .cmbHasItem.AddItem i & ": " & Trim$(Item(i).Name)
         Next
         
         ' Name
@@ -2816,7 +2813,7 @@ ErrorHandler:
 End Sub
 
 Public Sub EventListCommands()
-Dim I As Long, CurList As Long, oldI As Long, X As Long, Indent As String, listleftoff() As Long, conditionalstage() As Long
+Dim i As Long, CurList As Long, oldI As Long, X As Long, Indent As String, listleftoff() As Long, conditionalstage() As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2832,70 +2829,70 @@ Dim I As Long, CurList As Long, oldI As Long, X As Long, Indent As String, listl
         X = -1
         
 newlist:
-        For I = 1 To tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount
+        For i = 1 To tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount
             If listleftoff(CurList) > 0 Then
                 If (tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(listleftoff(CurList)).Index = EventType.evCondition Or tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(listleftoff(CurList)).Index = EventType.evShowChoices) And conditionalstage(CurList) <> 0 Then
-                    I = listleftoff(CurList)
-                ElseIf listleftoff(CurList) >= I Then
-                    I = listleftoff(CurList) + 1
+                    i = listleftoff(CurList)
+                ElseIf listleftoff(CurList) >= i Then
+                    i = listleftoff(CurList) + 1
                 End If
             End If
             
-            If I <= tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount Then
-                If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Index = EventType.evCondition Then
+            If i <= tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount Then
+                If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Index = EventType.evCondition Then
                     X = X + 1
                     Select Case conditionalstage(CurList)
                         Case 0
                             ReDim Preserve EventList(X)
                             EventList(X).CommandList = CurList
-                            EventList(X).CommandNum = I
+                            EventList(X).CommandNum = i
                             
-                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Condition
+                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Condition
                                 Case 0
-                                    Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data2
+                                    Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data2
                                         Case 0
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1) & "] == " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data3
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] == " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data3
                                         Case 1
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1) & "] >= " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data3
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] >= " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data3
                                         Case 2
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1) & "] <= " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data3
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] <= " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data3
                                         Case 3
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1) & "] > " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data3
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] > " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data3
                                         Case 4
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1) & "] < " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data3
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] < " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data3
                                         Case 5
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1) & "] != " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data3
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] != " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data3
                                     End Select
                                 Case 1
-                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data2 = 0 Then
-                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1) & "] == " & "True"
-                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data2 = 1 Then
-                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1) & "] == " & "False"
+                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data2 = 0 Then
+                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] == " & "True"
+                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data2 = 1 Then
+                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1) & "] == " & "False"
                                     End If
                                 Case 2
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Has Item [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1).Name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Has Item [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).Name) & "]"
                                 Case 3
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Class Is [" & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1).Name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Class Is [" & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).Name) & "]"
                                 Case 4
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Knows Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1).Name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player Knows Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1).Name) & "]"
                                 Case 5
-                                    Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data2
+                                    Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data2
                                         Case 0
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is == " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is == " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1
                                         Case 1
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is >= " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is >= " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1
                                         Case 2
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is <= " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is <= " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1
                                         Case 3
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is > " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is > " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1
                                         Case 4
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is < " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is < " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1
                                         Case 5
-                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is NOT " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1
+                                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Player's Level is NOT " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1
                                     End Select
                                 Case 6
-                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data2 = 0 Then
-                                        Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1
+                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data2 = 0 Then
+                                        Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1
                                             Case 0
                                                 frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Self Switch [A] == " & "True"
                                             Case 1
@@ -2905,8 +2902,8 @@ newlist:
                                             Case 3
                                                 frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Self Switch [D] == " & "True"
                                         End Select
-                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data2 = 1 Then
-                                        Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.Data1
+                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data2 = 1 Then
+                                        Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.Data1
                                             Case 0
                                                 frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Conditional Branch: Self Switch [A] == " & "False"
                                             Case 1
@@ -2920,18 +2917,18 @@ newlist:
                             End Select
                             
                             Indent = Indent & "       "
-                            listleftoff(CurList) = I
+                            listleftoff(CurList) = i
                             conditionalstage(CurList) = 1
-                            CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.CommandList
+                            CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.CommandList
                             GoTo newlist
                         Case 1
                             ReDim Preserve EventList(X)
                             EventList(X).CommandList = CurList
                             EventList(X).CommandNum = 0
                             frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "Else"
-                            listleftoff(CurList) = I
+                            listleftoff(CurList) = i
                             conditionalstage(CurList) = 2
-                            CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).ConditionalBranch.ElseCommandList
+                            CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).ConditionalBranch.ElseCommandList
                             GoTo newlist
                         Case 2
                             ReDim Preserve EventList(X)
@@ -2939,87 +2936,87 @@ newlist:
                             EventList(X).CommandNum = 0
                             frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "End Branch"
                             Indent = Mid$(Indent, 1, Len(Indent) - 7)
-                            listleftoff(CurList) = I
+                            listleftoff(CurList) = i
                             conditionalstage(CurList) = 0
                     End Select
-                ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Index = EventType.evShowChoices Then
+                ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Index = EventType.evShowChoices Then
                     X = X + 1
                     
                     Select Case conditionalstage(CurList)
                         Case 0
                             ReDim Preserve EventList(X)
                             EventList(X).CommandList = CurList
-                            EventList(X).CommandNum = I
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Choices - Prompt: " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1, 1, 20) & "..."
+                            EventList(X).CommandNum = i
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Choices - Prompt: " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "..."
                             
                             Indent = Indent & "       "
-                            listleftoff(CurList) = I
+                            listleftoff(CurList) = i
                             conditionalstage(CurList) = 1
                             GoTo newlist
                         Case 1
-                            If Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text2) <> "" Then
+                            If Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text2) <> "" Then
                                 ReDim Preserve EventList(X)
                                 EventList(X).CommandList = CurList
                                 EventList(X).CommandNum = 0
-                                frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text2) & "]"
-                                listleftoff(CurList) = I
+                                frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text2) & "]"
+                                listleftoff(CurList) = i
                                 conditionalstage(CurList) = 2
-                                CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1
+                                CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                                 GoTo newlist
                             Else
                                 X = X - 1
-                                listleftoff(CurList) = I
+                                listleftoff(CurList) = i
                                 conditionalstage(CurList) = 2
                                 CurList = CurList
                                 GoTo newlist
                             End If
                         Case 2
-                            If Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text3) <> "" Then
+                            If Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text3) <> "" Then
                                 ReDim Preserve EventList(X)
                                 EventList(X).CommandList = CurList
                                 EventList(X).CommandNum = 0
-                                frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text3) & "]"
-                                listleftoff(CurList) = I
+                                frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text3) & "]"
+                                listleftoff(CurList) = i
                                 conditionalstage(CurList) = 3
-                                CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2
+                                CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2
                                 GoTo newlist
                             Else
                                 X = X - 1
-                                listleftoff(CurList) = I
+                                listleftoff(CurList) = i
                                 conditionalstage(CurList) = 3
                                 CurList = CurList
                                 GoTo newlist
                             End If
                         Case 3
-                            If Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text4) <> "" Then
+                            If Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text4) <> "" Then
                                 ReDim Preserve EventList(X)
                                 EventList(X).CommandList = CurList
                                 EventList(X).CommandNum = 0
-                                frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text4) & "]"
-                                listleftoff(CurList) = I
+                                frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text4) & "]"
+                                listleftoff(CurList) = i
                                 conditionalstage(CurList) = 4
-                                CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3
+                                CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
                                 GoTo newlist
                             Else
                                 X = X - 1
-                                listleftoff(CurList) = I
+                                listleftoff(CurList) = i
                                 conditionalstage(CurList) = 4
                                 CurList = CurList
                                 GoTo newlist
                             End If
                         Case 4
-                            If Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text5) <> "" Then
+                            If Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text5) <> "" Then
                                 ReDim Preserve EventList(X)
                                 EventList(X).CommandList = CurList
                                 EventList(X).CommandNum = 0
-                                frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text5) & "]"
-                                listleftoff(CurList) = I
+                                frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "When [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text5) & "]"
+                                listleftoff(CurList) = i
                                 conditionalstage(CurList) = 5
-                                CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data4
+                                CurList = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4
                                 GoTo newlist
                             Else
                                 X = X - 1
-                                listleftoff(CurList) = I
+                                listleftoff(CurList) = i
                                 conditionalstage(CurList) = 5
                                 CurList = CurList
                                 GoTo newlist
@@ -3030,80 +3027,80 @@ newlist:
                             EventList(X).CommandNum = 0
                             frmEditor_Events.lstCommands.AddItem Mid$(Indent, 1, Len(Indent) - 4) & " : " & "Branch End"
                             Indent = Mid$(Indent, 1, Len(Indent) - 7)
-                            listleftoff(CurList) = I
+                            listleftoff(CurList) = i
                             conditionalstage(CurList) = 0
                     End Select
                 Else
                     X = X + 1
                     ReDim Preserve EventList(X)
                     EventList(X).CommandList = CurList
-                    EventList(X).CommandNum = I
+                    EventList(X).CommandNum = i
                     
-                    Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Index
+                    Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Index
                         Case EventType.evAddText
-                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2
+                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2
                                 Case 0
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Add Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & " - Chat Type: Player"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Add Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " - Chat Type: Player"
                                 Case 1
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Add Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & " - Chat Type: Map"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Add Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " - Chat Type: Map"
                                 Case 2
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Add Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & " - Chat Type: Global"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Add Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - Color: " & GetColorName(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " - Chat Type: Global"
                             End Select
                         Case EventType.evShowText
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1, 1, 20) & "..."
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Text - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "..."
                         Case EventType.evPlayerVar
-                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2
+                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2
                                 Case 0
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & "] == " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & "] == " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
                                 Case 1
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & "] + " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & "] + " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
                                 Case 2
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & "] - " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & "] - " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
                                 Case 3
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & "] Random Between " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & " and " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data4
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Variable [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & Variables(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & "] Random Between " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " and " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4
                             End Select
                         Case EventType.evPlayerSwitch
-                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & "] == True"
-                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & "] == False"
+                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & "] == True"
+                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Switch [" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & ". " & Switches(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & "] == False"
                             End If
                         Case EventType.evSelfSwitch
-                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1
+                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                                 Case 0
-                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 0 Then
+                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
                                         frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Self Switch [A] to ON"
-                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 1 Then
+                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
                                         frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Self Switch [A] to OFF"
                                     End If
                                 Case 1
-                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 0 Then
+                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
                                         frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Self Switch [B] to ON"
-                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 1 Then
+                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
                                         frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Self Switch [B] to OFF"
                                     End If
                                 Case 2
-                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 0 Then
+                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
                                         frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Self Switch [C] to ON"
-                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 1 Then
+                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
                                         frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Self Switch [C] to OFF"
                                     End If
                                 Case 3
-                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 0 Then
+                                    If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
                                         frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Self Switch [D] to ON"
-                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 1 Then
+                                    ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
                                         frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Self Switch [D] to OFF"
                                     End If
                             End Select
                         Case EventType.evExitProcess
                             frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Exit Event Processing"
                         Case EventType.evChangeItems
-                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Item Amount of [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name) & "] to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3
-                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name) & "(s)"
-                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 2 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Take " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name) & "(s) from Player."
+                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Item Amount of [" & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "] to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3
+                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "(s)"
+                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 2 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Take " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " " & Trim$(Item(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "(s) from Player."
                             End If
                         Case EventType.evRestoreHP
                             frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Restore Player HP"
@@ -3112,98 +3109,98 @@ newlist:
                         Case EventType.evLevelUp
                             frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Level Up Player"
                         Case EventType.evChangeLevel
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Level to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Level to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                         Case EventType.evChangeSkills
-                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Teach Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name) & "]"
-                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Remove Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name) & "]"
+                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Teach Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
+                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Remove Player Skill [" & Trim$(Spell(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
                             End If
                         Case EventType.evChangeClass
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Class to " & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name)
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Class to " & Trim$(Class(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name)
                         Case EventType.evChangeSprite
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Sprite to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Sprite to " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                         Case EventType.evChangeGender
-                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 = 0 Then
+                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 = 0 Then
                                 frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Sex to Male."
-                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 = 1 Then
+                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 = 1 Then
                                 frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Sex to Female."
                             End If
                         Case EventType.evChangePK
-                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 = 0 Then
+                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 = 0 Then
                                 frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player PK to No."
-                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 = 1 Then
+                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 = 1 Then
                                 frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player PK to Yes."
                             End If
                         Case EventType.evWarpPlayer
-                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data4 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Warp Player To Map: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & " Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & ") while retaining direction."
+                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4 = 0 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Warp Player To Map: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & ") while retaining direction."
                             Else
-                                Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data4 - 1
+                                Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4 - 1
                                     Case DIR_UP
-                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Warp Player To Map: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & " Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & ") facing upward."
+                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Warp Player To Map: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & ") facing upward."
                                     Case DIR_DOWN
-                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Warp Player To Map: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & " Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & ") facing downward."
+                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Warp Player To Map: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & ") facing downward."
                                     Case DIR_LEFT
-                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Warp Player To Map: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & " Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & ") facing left."
+                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Warp Player To Map: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & ") facing left."
                                     Case DIR_RIGHT
-                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Warp Player To Map: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & " Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & ") facing right."
+                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Warp Player To Map: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & ") facing right."
                                 End Select
                             End If
                         Case EventType.evSetMoveRoute
-                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 <= Map.EventCount Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Move Route for Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name) & "]"
+                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 <= Map.EventCount Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Move Route for Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
                             Else
                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Move Route for COULD NOT FIND EVENT!"
                             End If
                         Case EventType.evPlayAnimation
-                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 0 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name) & "]" & " on Player"
-                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 1 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name) & "]" & " on Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3).Name) & "]"
-                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2 = 2 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name) & "]" & " on Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data4 & ")"
+                            If tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 0 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]" & " on Player"
+                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 1 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]" & " on Event #" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & " [" & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3).Name) & "]"
+                            ElseIf tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2 = 2 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Play Animation " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " [" & Trim$(Animation(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]" & " on Tile(" & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3 & "," & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4 & ")"
                             End If
                         Case EventType.evCustomScript
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Execute Custom Script Case: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Execute Custom Script Case: " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                         Case EventType.evPlayBGM
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Play BGM [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1) & "]"
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Play BGM [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"
                         Case EventType.evFadeoutBGM
                             frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Fadeout BGM"
                         Case EventType.evPlaySound
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Play Sound [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1) & "]"
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Play Sound [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"
                         Case EventType.evStopSound
                             frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Stop Sound"
                         Case EventType.evOpenBank
                             frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Open Bank"
                         Case EventType.evOpenShop
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Open Shop [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & ". " & Trim$(Shop(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1).Name) & "]"
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Open Shop [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & Trim$(Shop(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1).Name) & "]"
                         Case EventType.evSetAccess
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Access [" & frmEditor_Events.cmbSetAccess.List(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & "]"
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Player Access [" & frmEditor_Events.cmbSetAccess.List(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & "]"
                         Case EventType.evGiveExp
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1 & " Experience."
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Give Player " & tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1 & " Experience."
                         Case EventType.evShowChatBubble
-                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1
+                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                                 Case TARGET_TYPE_PLAYER
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1, 1, 20) & "... - On Player"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Player"
                                 Case TARGET_TYPE_NPC
-                                    If Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2) <= 0 Then
-                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2) & ". ]"
+                                    If Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) <= 0 Then
+                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". ]"
                                     Else
-                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2)).Name) & "]"
+                                        frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On NPC [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2)).Name) & "]"
                                     End If
                                 Case TARGET_TYPE_EVENT
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2) & ". " & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2).Name) & "]"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Show Chat Bubble - " & Mid$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1, 1, 20) & "... - On Event [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & ". " & Trim$(Map.events(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2).Name) & "]"
                             End Select
                         Case EventType.evLabel
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1) & "]"
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"
                         Case EventType.evGotoLabel
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Jump to Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Text1) & "]"
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Jump to Label: [" & Trim$(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Text1) & "]"
                         Case EventType.evSpawnNPC
-                            If Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) <= 0 Then
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & ". " & "]"
+                            If Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) <= 0 Then
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & "]"
                             Else
-                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1)).Name) & "]"
+                                frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Spawn NPC: [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & ". " & Trim$(NPC(Map.NPC(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1)).Name) & "]"
                             End If
                         Case EventType.evFadeIn
                             frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Fade In"
@@ -3212,24 +3209,24 @@ newlist:
                         Case EventType.evFlashWhite
                             frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Flash White"
                         Case EventType.evSetFog
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Fog [Fog: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & " Speed: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2) & " Opacity: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3) & "]"
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Fog [Fog: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " Speed: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & " Opacity: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3) & "]"
                         Case EventType.evSetWeather
-                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1
+                            Select Case tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1
                                 Case WEATHER_TYPE_NONE
                                     frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Weather [None]"
                                 Case WEATHER_TYPE_RAIN
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Weather [Rain - Intensity: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2) & "]"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Weather [Rain - Intensity: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & "]"
                                 Case WEATHER_TYPE_SNOW
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Weather [Snow - Intensity: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2) & "]"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Weather [Snow - Intensity: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & "]"
                                 Case WEATHER_TYPE_SANDSTORM
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Weather [Sand Storm - Intensity: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2) & "]"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Weather [Sand Storm - Intensity: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & "]"
                                 Case WEATHER_TYPE_STORM
-                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Weather [Storm - Intensity: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2) & "]"
+                                    frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Weather [Storm - Intensity: " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & "]"
                             End Select
                         Case EventType.evSetTint
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Map Tint RGBA [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & "," & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data2) & "," & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data3) & "," & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data4) & "]"
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Set Map Tint RGBA [" & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & "," & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data2) & "," & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data3) & "," & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data4) & "]"
                         Case EventType.evWait
-                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Wait " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I).Data1) & " Ms"
+                            frmEditor_Events.lstCommands.AddItem Indent & "@>" & "Wait " & CStr(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i).Data1) & " Ms"
                         Case Else
                             'Ghost
                             X = X - 1
@@ -3286,7 +3283,7 @@ ErrorHandler:
 End Sub
 
 Sub AddCommand(Index As Long)
-    Dim CurList As Long, I As Long, X As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
+    Dim CurList As Long, i As Long, X As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -3317,17 +3314,17 @@ Sub AddCommand(Index As Long)
         ReDim tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(1 To p)
         tmpEvent.Pages(curPageNum).CommandList(CurList).ParentList = oldCommandList.ParentList
         tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount = p
-        For I = 1 To p - 1
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(I) = oldCommandList.Commands(I)
+        For i = 1 To p - 1
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(i) = oldCommandList.Commands(i)
         Next
     End If
     
     If frmEditor_Events.lstCommands.ListIndex = frmEditor_Events.lstCommands.ListCount - 1 Then
         CurSlot = tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount
     Else
-        I = EventList(frmEditor_Events.lstCommands.ListIndex).CommandNum
-        If I < tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount Then
-            For X = tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount - 1 To I Step -1
+        i = EventList(frmEditor_Events.lstCommands.ListIndex).CommandNum
+        If i < tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount Then
+            For X = tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount - 1 To i Step -1
                 tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(X + 1) = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(X)
             Next
             CurSlot = EventList(frmEditor_Events.lstCommands.ListIndex).CommandNum
@@ -3359,8 +3356,8 @@ Sub AddCommand(Index As Long)
             tmpEvent.Pages(curPageNum).CommandList(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.CommandList).ParentList = CurList
             tmpEvent.Pages(curPageNum).CommandList(tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).ConditionalBranch.ElseCommandList).ParentList = CurList
             
-            For I = 0 To 6
-                If frmEditor_Events.optCondition_Index(I).Value = True Then X = I
+            For i = 0 To 6
+                If frmEditor_Events.optCondition_Index(i).Value = True Then X = i
             Next
             
             Select Case X
@@ -3417,17 +3414,17 @@ Sub AddCommand(Index As Long)
         Case EventType.evPlayerVar
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbVariable.ListIndex + 1
-            For I = 0 To 3
-                If frmEditor_Events.optVariableAction(I).Value = True Then
+            For i = 0 To 3
+                If frmEditor_Events.optVariableAction(i).Value = True Then
                     Exit For
                 End If
             Next
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = I
-            If I = 3 Then
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = val(frmEditor_Events.txtVariableData(I).text)
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data4 = val(frmEditor_Events.txtVariableData(I + 1).text)
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = i
+            If i = 3 Then
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = val(frmEditor_Events.txtVariableData(i).text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data4 = val(frmEditor_Events.txtVariableData(i + 1).text)
             Else
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = val(frmEditor_Events.txtVariableData(I).text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = val(frmEditor_Events.txtVariableData(i).text)
             End If
         Case EventType.evPlayerSwitch
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
@@ -3571,7 +3568,7 @@ Sub AddCommand(Index As Long)
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
@@ -3594,18 +3591,18 @@ ErrorHandler:
 End Sub
 
 Public Sub EditEventCommand()
-    Dim I As Long, X As Long, Z As Long, CurList As Long, CurSlot As Long
+    Dim i As Long, X As Long, Z As Long, CurList As Long, CurSlot As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    I = frmEditor_Events.lstCommands.ListIndex
+    i = frmEditor_Events.lstCommands.ListIndex
     
-    If I = -1 Then Exit Sub
-    If I > UBound(EventList) Then Exit Sub
+    If i = -1 Then Exit Sub
+    If i > UBound(EventList) Then Exit Sub
 
-    CurList = EventList(I).CommandList
-    CurSlot = EventList(I).CommandNum
+    CurList = EventList(i).CommandList
+    CurSlot = EventList(i).CommandNum
     
     If CurList = 0 Then Exit Sub
     If CurSlot = 0 Then Exit Sub
@@ -3820,12 +3817,12 @@ Public Sub EditEventCommand()
             frmEditor_Events.cmbEvent.ListIndex = 0
             frmEditor_Events.cmbEvent.Enabled = True
             
-            For I = 1 To Map.EventCount
-                If I <> EditorEvent Then
-                    frmEditor_Events.cmbEvent.AddItem Trim$(Map.events(I).Name)
+            For i = 1 To Map.EventCount
+                If i <> EditorEvent Then
+                    frmEditor_Events.cmbEvent.AddItem Trim$(Map.events(i).Name)
                     X = X + 1
-                    ListOfEvents(X) = I
-                    If I = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 Then frmEditor_Events.cmbEvent.ListIndex = X
+                    ListOfEvents(X) = i
+                    If i = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 Then frmEditor_Events.cmbEvent.ListIndex = X
                 End If
             Next
                 
@@ -3837,8 +3834,8 @@ Public Sub EditEventCommand()
             TempMoveRouteCount = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).MoveRouteCount
             TempMoveRoute = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).MoveRoute
             
-            For I = 1 To TempMoveRouteCount
-                Select Case TempMoveRoute(I).Index
+            For i = 1 To TempMoveRouteCount
+                Select Case TempMoveRoute(i).Index
                     Case 1
                         frmEditor_Events.lstMoveRoute.AddItem "Move Up"
                     Case 2
@@ -3944,8 +3941,8 @@ Public Sub EditEventCommand()
             frmEditor_Events.cmbPlayAnim.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 - 1
             frmEditor_Events.cmbPlayAnimEvent.Clear
             
-            For I = 1 To Map.EventCount
-                frmEditor_Events.cmbPlayAnimEvent.AddItem I & ". " & Trim$(Map.events(I).Name)
+            For i = 1 To Map.EventCount
+                frmEditor_Events.cmbPlayAnimEvent.AddItem i & ". " & Trim$(Map.events(i).Name)
             Next
             
             frmEditor_Events.cmbPlayAnimEvent.ListIndex = 0
@@ -3973,9 +3970,9 @@ Public Sub EditEventCommand()
         Case EventType.evPlayBGM
             isEdit = True
             
-            For I = 1 To UBound(MusicCache())
-                If MusicCache(I) = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 Then
-                    frmEditor_Events.cmbPlayBGM.ListIndex = I - 1
+            For i = 1 To UBound(MusicCache())
+                If MusicCache(i) = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 Then
+                    frmEditor_Events.cmbPlayBGM.ListIndex = i - 1
                 End If
             Next
             
@@ -3985,9 +3982,9 @@ Public Sub EditEventCommand()
         Case EventType.evPlaySound
             isEdit = True
             
-            For I = 1 To UBound(SoundCache())
-                If SoundCache(I) = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 Then
-                    frmEditor_Events.cmbPlaySound.ListIndex = I - 1
+            For i = 1 To UBound(SoundCache())
+                If SoundCache(i) = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Text1 Then
+                    frmEditor_Events.cmbPlaySound.ListIndex = i - 1
                 End If
             Next
             
@@ -4057,7 +4054,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.fraCommands.Visible = False
         Case EventType.evSetWeather
             isEdit = True
-            frmEditor_Events.cmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
+            frmEditor_Events.CmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
             frmEditor_Events.scrlWeatherIntensity.Value = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(23).Visible = True
@@ -4087,18 +4084,18 @@ ErrorHandler:
 End Sub
 
 Public Sub DeleteEventCommand()
-    Dim I As Long, X As Long, Z As Long, CurList As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
+    Dim i As Long, X As Long, Z As Long, CurList As Long, CurSlot As Long, p As Long, oldCommandList As CommandListRec
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    I = frmEditor_Events.lstCommands.ListIndex
+    i = frmEditor_Events.lstCommands.ListIndex
     
-    If I = -1 Then Exit Sub
-    If I > UBound(EventList) Then Exit Sub
+    If i = -1 Then Exit Sub
+    If i > UBound(EventList) Then Exit Sub
     
-    CurList = EventList(I).CommandList
-    CurSlot = EventList(I).CommandNum
+    CurList = EventList(i).CommandList
+    CurSlot = EventList(i).CommandNum
     
     If CurList = 0 Then Exit Sub
     If CurSlot = 0 Then Exit Sub
@@ -4117,9 +4114,9 @@ Public Sub DeleteEventCommand()
             X = 1
             tmpEvent.Pages(curPageNum).CommandList(CurList).ParentList = oldCommandList.ParentList
             tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount = p
-            For I = 1 To p + 1
-                If I <> CurSlot Then
-                    tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(X) = oldCommandList.Commands(I)
+            For i = 1 To p + 1
+                If i <> CurSlot Then
+                    tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(X) = oldCommandList.Commands(i)
                     X = X + 1
                 End If
             Next
@@ -4135,9 +4132,9 @@ Public Sub DeleteEventCommand()
             ReDim tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(p)
             tmpEvent.Pages(curPageNum).CommandList(CurList).ParentList = oldCommandList.ParentList
             tmpEvent.Pages(curPageNum).CommandList(CurList).CommandCount = p
-            For I = 1 To p + 1
-                If I <> CurSlot Then
-                    tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(X) = oldCommandList.Commands(I)
+            For i = 1 To p + 1
+                If i <> CurSlot Then
+                    tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(X) = oldCommandList.Commands(i)
                     X = X + 1
                 End If
             Next
@@ -4169,18 +4166,18 @@ ErrorHandler:
 End Sub
 
 Public Sub EditCommand()
-    Dim I As Long, X As Long, Z As Long, CurList As Long, CurSlot As Long
+    Dim i As Long, X As Long, Z As Long, CurList As Long, CurSlot As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    I = frmEditor_Events.lstCommands.ListIndex
-    If I = -1 Then Exit Sub
+    i = frmEditor_Events.lstCommands.ListIndex
+    If i = -1 Then Exit Sub
     
-    If I > UBound(EventList) Then Exit Sub
+    If i > UBound(EventList) Then Exit Sub
     
-    CurList = EventList(I).CommandList
-    CurSlot = EventList(I).CommandNum
+    CurList = EventList(i).CommandList
+    CurSlot = EventList(i).CommandNum
     
     If CurList = 0 Then Exit Sub
     If CurSlot = 0 Then Exit Sub
@@ -4240,17 +4237,17 @@ Public Sub EditCommand()
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data5 = frmEditor_Events.scrlFace2.Value
         Case EventType.evPlayerVar
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbVariable.ListIndex + 1
-            For I = 0 To 3
-                If frmEditor_Events.optVariableAction(I).Value = True Then
+            For i = 0 To 3
+                If frmEditor_Events.optVariableAction(i).Value = True Then
                     Exit For
                 End If
             Next
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = I
-            If I = 3 Then
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = val(frmEditor_Events.txtVariableData(I).text)
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data4 = val(frmEditor_Events.txtVariableData(I + 1).text)
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = i
+            If i = 3 Then
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = val(frmEditor_Events.txtVariableData(i).text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data4 = val(frmEditor_Events.txtVariableData(i + 1).text)
             Else
-                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = val(frmEditor_Events.txtVariableData(I).text)
+                tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = val(frmEditor_Events.txtVariableData(i).text)
             End If
         Case EventType.evPlayerSwitch
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbSwitch.ListIndex + 1
@@ -4350,7 +4347,7 @@ Public Sub EditCommand()
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.ScrlFogData(1).Value
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlMapTintData(0).Value
@@ -4467,7 +4464,7 @@ End Function
 Public Sub MapEditorEyeDropper()
     Dim TileLeft As Single
     Dim TileTop As Single
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler

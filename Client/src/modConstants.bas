@@ -132,9 +132,6 @@ Public CurrentLayer As Byte
 Public Const SIZE_X As Integer = 32
 Public Const SIZE_Y As Integer = 32
 
-' Animated sprite numbers
-Public Const AnimatedSpriteNumbers As String = ""
-
 ' Game editor constants
 Public Const EDITOR_ANIMATION As Byte = 0
 Public Const EDITOR_BAN As Byte = 1
