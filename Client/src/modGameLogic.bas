@@ -967,6 +967,11 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
+    If GetPlayerX(MyIndex) > Map.MaxX Then Exit Function
+    If GetPlayerY(MyIndex) > Map.MaxY Then Exit Function
+    If GetPlayerX(MyIndex) < 0 Then Exit Function
+    If GetPlayerY(MyIndex) < 0 Then Exit Function
+    
     ' Check directional blocking
     If Direction < DIR_RIGHT Then
         If IsDirBlocked(Map.Tile(GetPlayerX(MyIndex), GetPlayerY(MyIndex)).DirBlock, Direction + 1) Then
