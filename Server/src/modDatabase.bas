@@ -254,6 +254,13 @@ Public Sub InitOptions()
         Options.MaxStat = GetVar(filename, "Options", "MaxStat")
     End If
     
+    If GetVar(filename, "Options", "LevelUpAnimation") = "" Then
+        Options.LevelUpAnimation = 7
+        Call PutVar(filename, "Options", "LevelUpAnimation", Trim$(Options.LevelUpAnimation))
+    Else
+        Options.LevelUpAnimation = GetVar(filename, "Options", "LevelUpAnimation")
+    End If
+    
     If GetVar(filename, "Data Sizes", "Maps") = "" Then
         Call PutVar(filename, "Data Sizes", "Maps", "100")
     End If
@@ -339,6 +346,7 @@ Public Sub SaveOptions()
     PutVar App.path & "\data\options.ini", "Options", "MaxLevel", Trim$(Options.MaxLevel)
     PutVar App.path & "\data\options.ini", "Options", "StatsLevel", Trim$(Options.StatsLevel)
     PutVar App.path & "\data\options.ini", "Options", "MaxStat", Trim$(Options.MaxStat)
+    PutVar App.path & "\data\options.ini", "Options", "LevelUpAnimation", Trim$(Options.LevelUpAnimation)
 End Sub
 
 Public Sub LoadOptions()
@@ -365,6 +373,7 @@ Public Sub LoadOptions()
     Options.MaxLevel = GetVar(App.path & "\data\options.ini", "Options", "MaxLevel")
     Options.StatsLevel = GetVar(App.path & "\data\options.ini", "Options", "StatsLevel")
     Options.MaxStat = GetVar(App.path & "\data\options.ini", "Options", "MaxStat")
+    Options.LevelUpAnimation = GetVar(App.path & "\data\options.ini", "Options", "LevelUpAnimation")
 End Sub
 
 Public Sub LoadDataSizes()

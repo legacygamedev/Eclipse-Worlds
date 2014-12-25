@@ -1314,7 +1314,7 @@ Sub CheckPlayerLevelUp(ByVal Index As Long)
         Loop
         
         If Level_Count > 0 Then
-            SendActionMsg GetPlayerMap(Index), "Level Up", Yellow, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
+            Call SendAnimation(GetPlayerMap(Index), Options.LevelUpAnimation, 0, 0, TARGET_TYPE_PLAYER, Index)
             SendPlayerExp Index
             
             If Level_Count > 1 Then
@@ -1366,7 +1366,7 @@ Sub CheckPlayerSkillLevelUp(ByVal Index As Long, ByVal SkillNum As Byte)
         Loop
         
         If Level_Count > 0 Then
-            SendActionMsg GetPlayerMap(Index), "Level Up", Yellow, 1, (GetPlayerX(Index) * 32), (GetPlayerY(Index) * 32)
+            Call SendAnimation(GetPlayerMap(Index), Options.LevelUpAnimation, 0, 0, TARGET_TYPE_PLAYER, Index)
             Call PlayerMsg(Index, "Your " & CheckGrammar(GetSkillName(SkillNum)) & " level is now " & GetPlayerSkill(Index, SkillNum) & ".", BrightGreen)
         End If
     End If

@@ -38,7 +38,7 @@ Public Log As LogRec
 Public Options As OptionsRec
 
 Private Type MoveRouteRec
-    index As Long
+    Index As Long
     Data1 As Long
     Data2 As Long
     Data3 As Long
@@ -48,7 +48,7 @@ Private Type MoveRouteRec
 End Type
 
 Private Type GuildMemberRec
-    index As Long
+    Index As Long
     Access As Byte
 End Type
 
@@ -117,6 +117,7 @@ Private Type OptionsRec
     MaxLevel As Long
     StatsLevel As Long
     MaxStat As Long
+    LevelUpAnimation As Long
 End Type
 
 Public Type PartyRec
@@ -212,7 +213,7 @@ Public Type PlayerRec
     Exp As Long
     
     ' Stats - both
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_count - 1) As Integer
     Points As Integer
     
     ' Spells - server only
@@ -304,7 +305,7 @@ Public Type PlayerEditableRec
     ' Max Vitals are dynamically calculated on server
     
     ' Stats
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_count - 1) As Integer
     Points As Integer
 End Type
 
@@ -353,7 +354,7 @@ Public Type ConditionalBranchRec
 End Type
 
 Private Type EventCommandRec
-    index As Byte
+    Index As Byte
     Text1 As String
     Text2 As String
     Text3 As String
@@ -618,7 +619,7 @@ End Type
 
 Private Type ClassRec
     Name As String * NAME_LENGTH
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_count - 1) As Integer
     MaleSprite As Integer
     FemaleSprite As Integer
     
@@ -668,12 +669,12 @@ Private Type ItemRec
     ProficiencyReq As Byte
     
     Price As Long
-    Add_Stat(1 To Stats.Stat_Count - 1) As Integer
+    Add_Stat(1 To Stats.Stat_count - 1) As Integer
     Rarity As Byte
     WeaponSpeed As Long
     Handed As Long
     BindType As Byte
-    Stat_Req(1 To Stats.Stat_Count - 1) As Integer
+    Stat_Req(1 To Stats.Stat_count - 1) As Integer
     Animation As Long
     Paperdoll As Long
     AddHP As Long
@@ -723,7 +724,7 @@ Private Type NPCRec
     DropItem(1 To MAX_NPC_DROPS) As Byte
     DropValue(1 To MAX_NPC_DROPS) As Integer
     Damage As Long
-    Stat(1 To Stats.Stat_Count - 1) As Integer
+    Stat(1 To Stats.Stat_count - 1) As Integer
     HP As Long
     MP As Long
     Exp As Long
