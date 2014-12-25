@@ -568,15 +568,27 @@ Sub DrawActionMsg(ByVal Index As Long)
     If ActionMsg(Index).Timer = 0 Then Exit Sub
 
     With ActionMsg(Index)
+
+        If .WaitTimer > 0 Then
+            If .WaitTimer > timeGetTime Then
+
+                Exit Sub
+
+            End If
+        End If
+
         If .Alpha <= 0 Then
             Call ClearActionMsg(Index)
+
             Exit Sub
+
         End If
-        
+
         ' Check if we should be seeing it
-        If .Timer + 5000 < timeGetTime Then
+        If .Timer + 100 < timeGetTime Then
             .Alpha = .Alpha - 2.5
         End If
+
     End With
 
     ' How long we want each message to appear

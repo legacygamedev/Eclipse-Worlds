@@ -586,12 +586,18 @@ Sub UpdatePlayerVitals()
                 If GetPlayerVital(i, Vitals.HP) <> GetPlayerMaxVital(i, Vitals.HP) Then
                     Call SetPlayerVital(i, Vitals.HP, GetPlayerVital(i, Vitals.HP) + GetPlayerVitalRegen(i, Vitals.HP))
                     Call SendVital(i, HP)
+                    
+                    SendActionMsg GetPlayerMap(i), "+" & GetPlayerVitalRegen(i, Vitals.HP), BrightGreen, ACTIONMSG_SCROLL, GetPlayerX(i) * 32, GetPlayerY(i) * 32, 1
+                    
                     ' Send vitals to party if in one
                     If tempplayer(i).InParty > 0 Then SendPartyVitals tempplayer(i).InParty, i
                 End If
                 If GetPlayerVital(i, Vitals.MP) <> GetPlayerMaxVital(i, Vitals.MP) Then
                     Call SetPlayerVital(i, Vitals.MP, GetPlayerVital(i, Vitals.MP) + GetPlayerVitalRegen(i, Vitals.MP))
                     Call SendVital(i, MP)
+                    
+                    SendActionMsg GetPlayerMap(i), "+" & GetPlayerVitalRegen(i, Vitals.MP), BrightBlue, ACTIONMSG_SCROLL, GetPlayerX(i) * 32, GetPlayerY(i) * 32, 1
+                    
                     ' Send vitals to party if in one
                     If tempplayer(i).InParty > 0 Then SendPartyVitals tempplayer(i).InParty, i
                 End If

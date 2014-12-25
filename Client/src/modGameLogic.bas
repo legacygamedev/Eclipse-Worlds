@@ -1590,8 +1590,30 @@ Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal m
     End With
 
     If ActionMsg(ActionMsgIndex).Type = ACTIONMSG_SCROLL Then
-        ActionMsg(ActionMsgIndex).Y = ActionMsg(ActionMsgIndex).Y + Random(-2, 6)
-        ActionMsg(ActionMsgIndex).X = ActionMsg(ActionMsgIndex).X + Random(-8, 8)
+
+        For I = 1 To Action_HighIndex
+
+            If ActionMsg(I).Y >= ActionMsg(ActionMsgIndex).Y - 4 And ActionMsg(I).Y <= ActionMsg(ActionMsgIndex).Y + 4 Then
+                ActionMsg(ActionMsgIndex).WaitTimer = timeGetTime + 125
+
+                Exit For
+
+            End If
+
+        Next
+
+        For I = 1 To Action_HighIndex
+
+            If ActionMsg(I).WaitTimer > 0 Then
+                If ActionMsg(I).Y >= ActionMsg(ActionMsgIndex).Y - 4 And ActionMsg(I).Y <= ActionMsg(ActionMsgIndex).Y + 4 Then
+                    ActionMsg(ActionMsgIndex).WaitTimer = ActionMsg(ActionMsgIndex).WaitTimer + 125
+
+                    Exit For
+
+                End If
+            End If
+
+        Next
     End If
     
     SetActionHighIndex

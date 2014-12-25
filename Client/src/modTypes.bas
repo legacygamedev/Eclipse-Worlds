@@ -677,6 +677,7 @@ Private Type ActionMsgRec
     X As Long
     Y As Long
     Alpha As Byte
+    WaitTimer As Long
 End Type
 
 Private Type BloodRec

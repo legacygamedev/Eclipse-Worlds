@@ -3758,6 +3758,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   -2147483647
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -5934,6 +5935,25 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Private Sub picScreen_DblClick()
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    MouseX = -1
+    MouseY = -1
+    
+    ' Mouse
+    If CurX = GetPlayerX(MyIndex) And CurY = GetPlayerY(MyIndex) Then
+        Call CheckMapGetItem
+    End If
+    Exit Sub
+   
+' Error Handler
+ErrorHandler:
+    HandleError "Form_DblClick", "frmMain", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
 Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -5991,10 +6011,9 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
                 End If
             End If
             
-            ' Targetting
-            Call PlayerSearch(CurX, CurY)
             ' Right click
         ElseIf Button = vbRightButton Then
+        
             If ShiftDown Then
                 ' Admin warp if we're pressing shift and right clicking
                 If GetPlayerAccess(MyIndex) >= STAFF_MAPPER Then
@@ -6002,6 +6021,8 @@ Private Sub picScreen_MouseDown(Button As Integer, Shift As Integer, X As Single
                         AdminWarp CurX, CurY
                     End If
                 End If
+            Else
+                Call PlayerSearch(CurX, CurY)
             End If
         End If
     End If
