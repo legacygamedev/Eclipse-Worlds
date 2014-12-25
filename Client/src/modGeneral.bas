@@ -30,9 +30,13 @@ Public Sub Main()
     ChDrive App.Path
     ChDir App.Path
     
+    ' Load options
+    Call SetStatus("Loading Options...")
+    LoadOptions
+    
      ' Setup screen
-    ResizeScreen 25, 19
-
+    ResizeScreen 25, 20
+    
     ' Set the high-resolution timer
     timeBeginPeriod 1
     
@@ -45,10 +49,6 @@ Public Sub Main()
     ' Set the loading screen
     frmLoad.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\loading.jpg")
     frmLoad.Visible = True
-
-    ' Load options
-    Call SetStatus("Loading Options...")
-    LoadOptions
     
     ' Load the images used for the menu and main forms
     Call SetStatus("Loading Menu...")
@@ -375,7 +375,7 @@ Sub GameInit()
     SetPing
     
     ' Show the main form
-    frmMain.Show
+    frmMain.Visible = True
     If Not GetForegroundWindow() = frmMain.hWnd Then BringWindowToTop frmMain.hWnd
     
     'AdvMapEditor

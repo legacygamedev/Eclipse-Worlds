@@ -2239,8 +2239,8 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     MIN_MAPX = XWide
     MIN_MAPY = YTall
     
-    realWidth = MIN_MAPX * PIC_Y
-    realHeight = MIN_MAPY * PIC_X
+    realWidth = Options.ResolutionWidth + PIC_X
+    realHeight = Options.ResolutionHeight + 60
     
     frmMain.Width = PixelsToTwips(realWidth, 0)
     frmMain.Height = PixelsToTwips(realHeight, 1)
@@ -2248,10 +2248,10 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     frmMain.ScaleHeight = realHeight
 
     ' Resize and position the screen
-    frmMain.picScreen.Width = MIN_MAPX * PIC_X
-    frmMain.picScreen.Height = MIN_MAPY * PIC_Y
-    frmMain.picForm.Width = MIN_MAPX * PIC_X
-    frmMain.picForm.Height = MIN_MAPY * PIC_Y
+    frmMain.picScreen.Width = realWidth
+    frmMain.picScreen.Height = realHeight
+    frmMain.picForm.Width = realWidth
+    frmMain.picForm.Height = realHeight
     
     ' Recalculate the other variables
     HalfX = ((MIN_MAPX + 1) / 2) * PIC_X

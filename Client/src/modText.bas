@@ -38,12 +38,12 @@ Public Sub RenderText(ByRef UseFont As CustomFont, ByVal text As String, ByVal X
     Dim TempVA(0 To 3)  As TLVERTEX
     Dim TempVAS(0 To 3) As TLVERTEX
     Dim TempStr() As String
-    Dim count As Integer
+    Dim Count As Integer
     Dim Ascii() As Byte
     Dim Row As Integer
     Dim u As Single
     Dim v As Single
-    Dim i As Long
+    Dim I As Long
     Dim J As Long
     Dim KeyPhrase As Byte
     Dim TempColor As Long
@@ -77,24 +77,24 @@ Public Sub RenderText(ByRef UseFont As CustomFont, ByVal text As String, ByVal X
     ' Loop through each line if there are line breaks (vbCrLf)
     Dim Size As Long
     Size = UBound(TempStr)
-    For i = 0 To Size
-        If Len(TempStr(i)) > 0 Then
-            yOffset = i * UseFont.CharHeight
-            count = 0
+    For I = 0 To Size
+        If Len(TempStr(I)) > 0 Then
+            yOffset = I * UseFont.CharHeight
+            Count = 0
             ' Convert the characters to the ascii value
-            Ascii() = StrConv(TempStr(i), vbFromUnicode)
+            Ascii() = StrConv(TempStr(I), vbFromUnicode)
             
             Dim size2 As Long
-            size2 = Len(TempStr(i))
+            size2 = Len(TempStr(I))
             ' Loop through the characters
             For J = 1 To size2
                 ' Copy from the cached vertex array to the temp vertex array
                 Call CopyMemory(TempVA(0), UseFont.HeaderInfo.CharVA(Ascii(J - 1)).Vertex(0), FVF_SIZE * 4)
                 
                 ' Set up the verticies
-                TempVA(0).X = X + count
+                TempVA(0).X = X + Count
                 TempVA(0).Y = Y + yOffset
-                TempVA(1).X = TempVA(1).X + X + count
+                TempVA(1).X = TempVA(1).X + X + Count
                 TempVA(1).Y = TempVA(0).Y
                 TempVA(2).X = TempVA(0).X
                 TempVA(2).Y = TempVA(2).Y + TempVA(0).Y
@@ -111,7 +111,7 @@ Public Sub RenderText(ByRef UseFont As CustomFont, ByVal text As String, ByVal X
                 Call Direct3D_Device.DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, TempVA(0), Len(TempVA(0)))
                 
                 ' Shift over the the position to render the next character
-                count = count + UseFont.HeaderInfo.CharWidth(Ascii(J - 1))
+                Count = Count + UseFont.HeaderInfo.CharWidth(Ascii(J - 1))
                 
                 ' Check to reset the color
                 If ResetColor Then
@@ -120,7 +120,7 @@ Public Sub RenderText(ByRef UseFont As CustomFont, ByVal text As String, ByVal X
                 End If
             Next J
         End If
-    Next i
+    Next I
 End Sub
 
 Sub EngineInitFontTextures()
@@ -412,30 +412,30 @@ Public Sub DrawNPCName(ByVal Index As Long)
     Dim TextX As Long
     Dim TextY As Long
     Dim Color As Long
-    Dim NPCNum As Long
+    Dim npcNum As Long
     Dim Name As String
     Dim Level As String
     Dim Difference As Long
-    Dim i As Long, II As Long, tIcon As String
+    Dim I As Long, II As Long, tIcon As String
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    NPCNum = MapNPC(Index).num
+    npcNum = MapNPC(Index).num
     
     ' Set the basic Y Value
-    If NPC(NPCNum).Sprite < 1 Or NPC(NPCNum).Sprite > NumCharacters Then
+    If NPC(npcNum).Sprite < 1 Or NPC(npcNum).Sprite > NumCharacters Then
         TextY = GetNPCTextY(Index) - 16
     Else
         ' Determine location for the text
-        TextY = GetNPCTextY(Index) - (Tex_Character(NPC(NPCNum).Sprite).Height / 4) + 16
+        TextY = GetNPCTextY(Index) - (Tex_Character(NPC(npcNum).Sprite).Height / 4) + 16
     
-        If (Tex_Character(NPC(NPCNum).Sprite).Height / 4) < 32 Then
+        If (Tex_Character(NPC(npcNum).Sprite).Height / 4) < 32 Then
             TextY = TextY - 16
         End If
     End If
     
-    Select Case NPC(NPCNum).Behavior
+    Select Case NPC(npcNum).Behavior
         Case NPC_BEHAVIOR_ATTACKONSIGHT
             Color = BrightRed
         Case NPC_BEHAVIOR_ATTACKWHENATTACKED
@@ -446,15 +446,15 @@ Public Sub DrawNPCName(ByVal Index As Long)
             Color = Yellow
     End Select
     
-    Name = Trim$(NPC(NPCNum).Name)
+    Name = Trim$(NPC(npcNum).Name)
     
     If Len(Name) > 0 Then
         TextX = GetNPCTextX(Index) - GetFontWidth((Name))
         
-        If Options.Levels = 1 And NPC(NPCNum).Level > 0 Then
-            Level = "Lv: " & NPC(NPCNum).Level
+        If Options.Levels = 1 And NPC(npcNum).Level > 0 Then
+            Level = "Lv: " & NPC(npcNum).Level
             
-            If NPC(NPCNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(NPCNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
+            If NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
                 TextX = TextX + GetFontWidth(Trim$(Level)) + 4
             End If
         End If
@@ -463,18 +463,18 @@ Public Sub DrawNPCName(ByVal Index As Long)
         Call RenderText(Font_Default, Name, TextX, TextY, Color)
     End If
     
-    If Options.Levels = 1 And NPC(NPCNum).Level > 0 Then
-        If NPC(NPCNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(NPCNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
+    If Options.Levels = 1 And NPC(npcNum).Level > 0 Then
+        If NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
             TextX = TextX - (GetFontWidth(Trim$(Level)) * 2) - 4
             
-            If NPC(NPCNum).Level = GetPlayerLevel(MyIndex) Then
+            If NPC(npcNum).Level = GetPlayerLevel(MyIndex) Then
                 Color = D3DColorARGB(255, 255, 255, 0)
-            ElseIf NPC(NPCNum).Level > GetPlayerLevel(MyIndex) Then
-                Difference = NPC(NPCNum).Level - GetPlayerLevel(MyIndex)
+            ElseIf NPC(npcNum).Level > GetPlayerLevel(MyIndex) Then
+                Difference = NPC(npcNum).Level - GetPlayerLevel(MyIndex)
                 If Difference > 10 Then Difference = 10
                 Color = D3DColorARGB(255, 255, 255 - (255 * (Difference / 10)), 0)
-            ElseIf NPC(NPCNum).Level < GetPlayerLevel(MyIndex) Then
-                Difference = GetPlayerLevel(MyIndex) - NPC(NPCNum).Level
+            ElseIf NPC(npcNum).Level < GetPlayerLevel(MyIndex) Then
+                Difference = GetPlayerLevel(MyIndex) - NPC(npcNum).Level
                 If Difference > 10 Then Difference = 10
                 Color = D3DColorARGB(255, 255 - (255 * (Difference / 10)), 255, 0)
             End If
@@ -483,14 +483,14 @@ Public Sub DrawNPCName(ByVal Index As Long)
         End If
     End If
     
-    If Len(Trim$(NPC(NPCNum).title)) > 0 And Options.Titles = 1 Then
-        TextX = GetNPCTextX(Index) - GetFontWidth(Trim$(NPC(NPCNum).title))
+    If Len(Trim$(NPC(npcNum).title)) > 0 And Options.Titles = 1 Then
+        TextX = GetNPCTextX(Index) - GetFontWidth(Trim$(NPC(npcNum).title))
         
         ' Move it up
         TextY = TextY - 12
         
         ' Draw title
-        Call RenderText(Font_Default, Trim$(NPC(NPCNum).title), TextX, TextY, Color)
+        Call RenderText(Font_Default, Trim$(NPC(npcNum).title), TextX, TextY, Color)
     End If
     Exit Sub
     
@@ -559,7 +559,7 @@ ErrorHandler:
 End Function
 
 Sub DrawActionMsg(ByVal Index As Long)
-    Dim X As Long, Y As Long, i As Long, time As Long
+    Dim X As Long, Y As Long, I As Long, time As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -609,11 +609,11 @@ Sub DrawActionMsg(ByVal Index As Long)
             time = 3000
             
             ' This will kill any action screen messages that there in the system
-            For i = Action_HighIndex To 1 Step -1
-                If ActionMsg(i).Type = ACTIONMSG_SCREEN Then
-                    If Not i = Index Then
+            For I = Action_HighIndex To 1 Step -1
+                If ActionMsg(I).Type = ACTIONMSG_SCREEN Then
+                    If Not I = Index Then
                         Call ClearActionMsg(Index)
-                        Index = i
+                        Index = I
                     End If
                 End If
             Next
@@ -743,7 +743,7 @@ ErrorHandler:
 End Sub
 
 Public Sub DrawChatBubble(ByVal Index As Long)
-    Dim theArray() As String, X As Long, Y As Long, i As Long, MaxWidth As Long, X2 As Long, Y2 As Long, Color As Long
+    Dim theArray() As String, X As Long, Y As Long, I As Long, MaxWidth As Long, X2 As Long, Y2 As Long, Color As Long
         
     With ChatBubble(Index)
         If .Alpha <= 0 Then
@@ -778,8 +778,8 @@ Public Sub DrawChatBubble(ByVal Index As Long)
         ' Find max width
         Dim Size As Long
         Size = UBound(theArray)
-        For i = 1 To Size
-            If EngineGetTextWidth(Font_Default, theArray(i)) > MaxWidth Then MaxWidth = EngineGetTextWidth(Font_Default, theArray(i))
+        For I = 1 To Size
+            If EngineGetTextWidth(Font_Default, theArray(I)) > MaxWidth Then MaxWidth = EngineGetTextWidth(Font_Default, theArray(I))
         Next
                 
         ' Calculate the new position
@@ -820,8 +820,8 @@ Public Sub DrawChatBubble(ByVal Index As Long)
         RenderTexture Tex_ChatBubble, X - 5, Y, 58, 19, 11, 11, 11, 11, D3DColorARGB(ChatBubble(Index).Alpha, 255, 255, 255)
         Size = UBound(theArray)
         ' Render each line centralised
-        For i = 1 To Size
-            RenderText Font_Georgia, theArray(i), X - (EngineGetTextWidth(Font_Default, theArray(i)) / 2), Y2, DarkBrown, .Alpha
+        For I = 1 To Size
+            RenderText Font_Georgia, theArray(I), X - (EngineGetTextWidth(Font_Default, theArray(I)) / 2), Y2, DarkBrown, .Alpha
             Y2 = Y2 + 12
         Next
         
@@ -833,7 +833,7 @@ Public Sub DrawChatBubble(ByVal Index As Long)
 End Sub
 
 Public Sub WordWrap_Array(ByVal text As String, ByVal MaxLineLen As Long, ByRef theArray() As String)
-    Dim lineCount As Long, i As Long, Size As Long, lastSpace As Long, B As Long
+    Dim lineCount As Long, I As Long, Size As Long, lastSpace As Long, B As Long
     Dim textLen As Long
     textLen = Len(text)
     ' Too small of text
@@ -848,26 +848,26 @@ Public Sub WordWrap_Array(ByVal text As String, ByVal MaxLineLen As Long, ByRef 
     lastSpace = 1
     Size = 0
     
-    For i = 1 To textLen
+    For I = 1 To textLen
         ' If it's a space, store it
-        Select Case Mid$(text, i, 1)
-            Case " ": lastSpace = i
-            Case "_": lastSpace = i
-            Case "-": lastSpace = i
+        Select Case Mid$(text, I, 1)
+            Case " ": lastSpace = I
+            Case "_": lastSpace = I
+            Case "-": lastSpace = I
         End Select
         
         ' Add up the size
-        Size = Size + Font_Default.HeaderInfo.CharWidth(Asc(Mid$(text, i, 1)))
+        Size = Size + Font_Default.HeaderInfo.CharWidth(Asc(Mid$(text, I, 1)))
         
         ' Check for too large of a size
         If Size > MaxLineLen Then
             ' Check if the last space was too far back
-            If i - lastSpace > 12 Then
+            If I - lastSpace > 12 Then
                 ' Too far away to the last space, so break at the last character
                 lineCount = lineCount + 1
                 ReDim Preserve theArray(1 To lineCount) As String
-                theArray(lineCount) = Trim$(Mid$(text, B, (i - 1) - B))
-                B = i - 1
+                theArray(lineCount) = Trim$(Mid$(text, B, (I - 1) - B))
+                B = I - 1
                 Size = 0
             Else
                 ' Break at the last space to preserve the word
@@ -877,16 +877,16 @@ Public Sub WordWrap_Array(ByVal text As String, ByVal MaxLineLen As Long, ByRef 
                 B = lastSpace + 1
                 
                 ' Count all the words we ignored (the ones that weren't printed, but are before "i")
-                Size = EngineGetTextWidth(Font_Default, Mid$(text, lastSpace, i - lastSpace))
+                Size = EngineGetTextWidth(Font_Default, Mid$(text, lastSpace, I - lastSpace))
             End If
         End If
         
         ' Remainder
-        If i = Len(text) Then
-            If B <> i Then
+        If I = Len(text) Then
+            If B <> I Then
                 lineCount = lineCount + 1
                 ReDim Preserve theArray(1 To lineCount) As String
-                theArray(lineCount) = theArray(lineCount) & Mid$(text, B, i)
+                theArray(lineCount) = theArray(lineCount) & Mid$(text, B, I)
             End If
         End If
     Next
@@ -897,7 +897,7 @@ Public Function WordWrap(ByVal text As String, ByVal MaxLineLen As Integer) As S
     Dim TSLoop As Long
     Dim lastSpace As Long
     Dim Size As Long
-    Dim i As Long
+    Dim I As Long
     Dim B As Long
 
     ' Too small of text
@@ -925,25 +925,25 @@ Public Function WordWrap(ByVal text As String, ByVal MaxLineLen As Integer) As S
             ' Loop through all the characters
             Dim size2 As Long
             size2 = Len(TempSplit(TSLoop))
-            For i = 1 To size2
+            For I = 1 To size2
             
                 ' If it is a space, store it so we can easily break at it
-                Select Case Mid$(TempSplit(TSLoop), i, 1)
-                    Case " ": lastSpace = i
-                    Case "_": lastSpace = i
-                    Case "-": lastSpace = i
+                Select Case Mid$(TempSplit(TSLoop), I, 1)
+                    Case " ": lastSpace = I
+                    Case "_": lastSpace = I
+                    Case "-": lastSpace = I
                 End Select
     
                 'Add up the size
-                Size = Size + Font_Default.HeaderInfo.CharWidth(Asc(Mid$(TempSplit(TSLoop), i, 1)))
+                Size = Size + Font_Default.HeaderInfo.CharWidth(Asc(Mid$(TempSplit(TSLoop), I, 1)))
  
                 'Check for too large of a size
                 If Size > MaxLineLen Then
                     'Check if the last space was too far back
-                    If i - lastSpace > 12 Then
+                    If I - lastSpace > 12 Then
                         ' Too far away to the last space, so break at the last character
-                        WordWrap = WordWrap & Trim$(Mid$(TempSplit(TSLoop), B, (i - 1) - B)) & vbNewLine
-                        B = i - 1
+                        WordWrap = WordWrap & Trim$(Mid$(TempSplit(TSLoop), B, (I - 1) - B)) & vbNewLine
+                        B = I - 1
                         Size = 0
                     Else
                         ' Break at the last space to preserve the word
@@ -951,17 +951,17 @@ Public Function WordWrap(ByVal text As String, ByVal MaxLineLen As Integer) As S
                         B = lastSpace + 1
                         
                         ' Count all the words we ignored (the ones that weren't printed, but are before "i")
-                        Size = EngineGetTextWidth(Font_Default, Mid$(TempSplit(TSLoop), lastSpace, i - lastSpace))
+                        Size = EngineGetTextWidth(Font_Default, Mid$(TempSplit(TSLoop), lastSpace, I - lastSpace))
                     End If
                 End If
                 
                 ' This handles the remainder
-                If i = Len(TempSplit(TSLoop)) Then
-                    If B <> i Then
-                        WordWrap = WordWrap & Mid$(TempSplit(TSLoop), B, i)
+                If I = Len(TempSplit(TSLoop)) Then
+                    If B <> I Then
+                        WordWrap = WordWrap & Mid$(TempSplit(TSLoop), B, I)
                     End If
                 End If
-            Next i
+            Next I
         Else
             WordWrap = WordWrap & TempSplit(TSLoop)
         End If

@@ -18,7 +18,7 @@ Begin VB.Form frmMapReport
    Begin VB.CommandButton cmdChangeDataSize 
       Caption         =   "Change Data Size"
       Height          =   375
-      Left            =   2280
+      Left            =   2220
       TabIndex        =   6
       Top             =   4080
       Width           =   1455
@@ -35,7 +35,7 @@ Begin VB.Form frmMapReport
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   900
+      Left            =   960
       TabIndex        =   4
       Top             =   4080
       Width           =   1185
@@ -55,7 +55,7 @@ Begin VB.Form frmMapReport
       Left            =   120
       TabIndex        =   3
       Top             =   4080
-      Width           =   705
+      Width           =   765
    End
    Begin VB.CommandButton cmdClose 
       Caption         =   "Close"
@@ -69,10 +69,10 @@ Begin VB.Form frmMapReport
          Strikethrough   =   0   'False
       EndProperty
       Height          =   375
-      Left            =   3780
+      Left            =   3720
       TabIndex        =   5
       Top             =   4080
-      Width           =   705
+      Width           =   765
    End
    Begin VB.Frame Frame1 
       Caption         =   "Maps"
@@ -123,26 +123,10 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub cmdChangeDataSize_Click()
     Dim Res As VbMsgBoxResult, val As String
-    Dim dataModified As Boolean, i As Long
+    Dim dataModified As Boolean, I As Long
     
-    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
-
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
-    
-    For i = 1 To MAX_BANS
-        If Ban_Changed(i) Then
-        
-            dataModified = True
-            Exit For
-        End If
-    Next
-    
-    If dataModified Then
-        Res = MsgBox("Do you want to continue and discard the changes you made to your data?", vbYesNo)
-        
-        If Res = vbNo Then Exit Sub
-    End If
     
     val = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_MAPS)
     
@@ -153,7 +137,11 @@ Private Sub cmdChangeDataSize_Click()
     Res = Abs(val)
     
     If Res = MAX_MAPS Then Exit Sub
-    If Res < GetPlayerMap(Index) Then Exit Sub
+    
+    If Res <= GetPlayerMap(MyIndex) Then
+        Call AlertMsg("You can't resize to a map number that would affect the map you are currently on!")
+        Exit Sub
+    End If
     
     Call SendChangeDataSize(Res, EDITOR_MAP)
     
@@ -222,18 +210,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 0 To lstMaps.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstMaps.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstMaps.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstMaps.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstMaps.ListIndex = i
+        If Len(lstMaps.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstMaps.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstMaps.ListIndex = I
                 Exit For
             End If
         End If

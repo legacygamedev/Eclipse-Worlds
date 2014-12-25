@@ -50,6 +50,7 @@ Type MINMAXINFO
     ptMinTrackSize As POINTAPI
     ptMaxTrackSize As POINTAPI
 End Type
+
 'Mod Globals
 Private g_MovingMainWnd As Boolean
 Private g_OrigCursorPos As POINTAPI
@@ -57,6 +58,7 @@ Private g_OrigWndPos As POINTAPI
 Private CurrentLayer As String
 Public currentMapLayerNum As String
 Public displayTilesets As Boolean
+Public layersActive As Boolean
 
 Public Function getCurrentMapLayerName() As String
     Dim llayer As OptionButton
@@ -197,7 +199,7 @@ Public Sub MainMouseMove(hWnd As Long)
             wnd_y = g_OrigWndPos.Y + (pt.Y - g_OrigCursorPos.Y)
             SetWindowPos frmMain.hWnd, 0, wnd_x, wnd_y, 0, 0, (SWP_NOACTIVATE Or SWP_NOOWNERZORDER Or SWP_NOZORDER Or SWP_NOSIZE)
             If FormVisible("frmMapPreview") Then
-                frmMapPreview.Move frmMain.Left - frmMapPreview.Width - 80, frmMain.Top + 75
+                frmMapPreview.Move frmMain.Left - frmMapPreview.Width, frmMain.Top
             End If
         End If
     End If

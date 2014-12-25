@@ -111,6 +111,7 @@ Private Function InternationalizeDoubles(Value As String) As String
     test = CDbl(Value)
     InternationalizeDoubles = test
 End Function
+
 ' Gets a string from a text File
 Public Function GetVar(file As String, Header As String, Var As String) As String
     Dim sSpaces As String   ' Max string length
@@ -193,7 +194,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub LoadOptionVariables()
+Private Sub LoadOptionValues()
     Dim FileName As String
     
     FileName = App.Path & "\data files\config.ini"
@@ -366,11 +367,25 @@ Private Sub LoadOptionVariables()
     Else
         Options.SoundVolume = GetVar(FileName, "Options", "SoundVolume")
     End If
+    
+    If GetVar(FileName, "Options", "ResolutionWidth") = "" Then
+        Options.ResolutionWidth = "800"
+        Call PutVar(FileName, "Options", "ResolutionWidth", Trim$(Options.ResolutionWidth))
+    Else
+        Options.ResolutionWidth = GetVar(FileName, "Options", "ResolutionWidth")
+    End If
+    
+    If GetVar(FileName, "Options", "ResolutionHeight") = "" Then
+        Options.ResolutionHeight = "608"
+        Call PutVar(FileName, "Options", "ResolutionHeight", Trim$(Options.ResolutionHeight))
+    Else
+        Options.ResolutionHeight = GetVar(FileName, "Options", "ResolutionHeight")
+    End If
 End Sub
 
 Public Sub LoadOptions()
     ' Load the variables in the options.ini
-    Call LoadOptionVariables
+    Call LoadOptionValues
     
     ' Set the form items based on what the options are
     ResetOptionButtons

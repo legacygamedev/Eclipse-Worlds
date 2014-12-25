@@ -329,15 +329,15 @@ End Sub
 
 Private Sub cmdChangeDataSize_Click()
     Dim Res As VbMsgBoxResult, val As String
-    Dim dataModified As Boolean, i As Long
+    Dim dataModified As Boolean, I As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_SHOPS Then Exit Sub
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 1 To MAX_SHOPS
-        If Shop_Changed(i) Then
+    For I = 1 To MAX_SHOPS
+        If Shop_Changed(I) Then
         
             dataModified = True
             Exit For
@@ -666,7 +666,7 @@ ErrorHandler:
 End Sub
 
 Private Sub Form_Load()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -683,10 +683,10 @@ Private Sub Form_Load()
     frmEditor_Shop.cmbCostItem2.Clear
     frmEditor_Shop.cmbCostItem2.AddItem "None"
 
-    For i = 1 To MAX_ITEMS
-        frmEditor_Shop.cmbItem.AddItem i & ": " & Trim$(Item(i).Name)
-        frmEditor_Shop.cmbCostItem.AddItem i & ": " & Trim$(Item(i).Name)
-        frmEditor_Shop.cmbCostItem2.AddItem i & ": " & Trim$(Item(i).Name)
+    For I = 1 To MAX_ITEMS
+        frmEditor_Shop.cmbItem.AddItem I & ": " & Trim$(Item(I).Name)
+        frmEditor_Shop.cmbCostItem.AddItem I & ": " & Trim$(Item(I).Name)
+        frmEditor_Shop.cmbCostItem2.AddItem I & ": " & Trim$(Item(I).Name)
     Next
     
     frmEditor_Shop.cmbItem.ListIndex = 0
@@ -733,18 +733,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If

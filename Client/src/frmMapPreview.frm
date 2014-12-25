@@ -53,7 +53,7 @@ Public Sub RecalcuateDimensions()
     Height = PixelsToTwips(Map.MaxY * mapScale + 28, 1)
     picMapPreview.Width = Map.MaxX * mapScale
     picMapPreview.Height = Map.MaxY * mapScale
-    Move frmMain.Left - Width - 80, frmMain.Top + 75
+    Move frmMain.Left - Width, frmMain.Top
     redrawMapPreview = True
 End Sub
 
@@ -82,6 +82,7 @@ Private Sub picMapPreview_MouseMove(Button As Integer, Shift As Integer, X As Si
         End If
     End If
 End Sub
+
 Private Sub myWndProc(ByVal bBefore As Boolean, _
                       ByRef bHandled As Boolean, _
                       ByRef lReturn As Long, _
@@ -92,8 +93,8 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
                       ByRef lParamUser As Long)
     Select Case uMsg
         Case WM_MOVE
-            frmMain.Move frmMapPreview.Left + frmMapPreview.Width + 80, frmMapPreview.Top - 75
-            frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75 + 145 + frmMapPreview.Height
+            frmMain.Move frmMapPreview.Left + frmMapPreview.Width, frmMapPreview.Top
+            frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width, frmMain.Top + frmMapPreview.Height
             bHandled = 1
     End Select
 

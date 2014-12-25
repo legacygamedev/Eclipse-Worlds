@@ -4667,6 +4667,7 @@ Dim buffer As clsBuffer, dataSize As Long, dataType As Byte, i As Long
             ReDim TempEventMap(MAX_MAPS)
             ReDim MapItem(MAX_MAPS)
             ReDim MapItem(MAX_MAPS, MAX_MAP_ITEMS)
+            ReDim PlayersOnMap(MAX_MAPS)
             SaveDataSizes
             frmServer.cmdReloadMaps_Click
             SendMapReport Index

@@ -7,7 +7,7 @@ Begin VB.Form frmMain
    ClientHeight    =   13470
    ClientLeft      =   105
    ClientTop       =   780
-   ClientWidth     =   12000
+   ClientWidth     =   14640
    BeginProperty Font 
       Name            =   "Georgia"
       Size            =   8.25
@@ -23,10 +23,109 @@ Begin VB.Form frmMain
    MaxButton       =   0   'False
    ScaleHeight     =   898
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   800
+   ScaleWidth      =   976
    StartUpPosition =   2  'CenterScreen
    Tag             =   " "
    Visible         =   0   'False
+   Begin VB.PictureBox picTempInv 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      AutoSize        =   -1  'True
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   238
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   540
+      Left            =   14100
+      ScaleHeight     =   36
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   36
+      TabIndex        =   227
+      TabStop         =   0   'False
+      Top             =   12240
+      Visible         =   0   'False
+      Width           =   540
+   End
+   Begin VB.PictureBox picTempBank 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      AutoSize        =   -1  'True
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   238
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   540
+      Left            =   13860
+      ScaleHeight     =   36
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   36
+      TabIndex        =   226
+      TabStop         =   0   'False
+      Top             =   12900
+      Visible         =   0   'False
+      Width           =   540
+   End
+   Begin VB.PictureBox picButton 
+      BackColor       =   &H8000000A&
+      BorderStyle     =   0  'None
+      Height          =   435
+      Index           =   13
+      Left            =   15780
+      ScaleHeight     =   29
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   32
+      TabIndex        =   223
+      TabStop         =   0   'False
+      Top             =   13380
+      Visible         =   0   'False
+      Width           =   480
+      Begin VB.PictureBox picButton 
+         BackColor       =   &H8000000A&
+         BorderStyle     =   0  'None
+         Height          =   435
+         Index           =   8
+         Left            =   360
+         ScaleHeight     =   29
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   32
+         TabIndex        =   224
+         TabStop         =   0   'False
+         Top             =   360
+         Visible         =   0   'False
+         Width           =   480
+         Begin VB.PictureBox picButton 
+            BackColor       =   &H8000000A&
+            BorderStyle     =   0  'None
+            Height          =   435
+            Index           =   11
+            Left            =   300
+            ScaleHeight     =   29
+            ScaleMode       =   3  'Pixel
+            ScaleWidth      =   32
+            TabIndex        =   225
+            TabStop         =   0   'False
+            Top             =   360
+            Visible         =   0   'False
+            Width           =   480
+         End
+      End
+   End
    Begin VB.PictureBox picMapEditor 
       Appearance      =   0  'Flat
       BackColor       =   &H0080C0FF&
@@ -35,19 +134,19 @@ Begin VB.Form frmMain
       Left            =   30
       ScaleHeight     =   72
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   798
-      TabIndex        =   138
+      ScaleWidth      =   834
+      TabIndex        =   135
       Top             =   12360
       Visible         =   0   'False
-      Width           =   12000
+      Width           =   12540
       Begin VB.CheckBox chkLayers 
          Appearance      =   0  'Flat
          BackColor       =   &H0080C0FF&
          ForeColor       =   &H80000008&
          Height          =   540
-         Left            =   3720
+         Left            =   4560
          Style           =   1  'Graphical
-         TabIndex        =   157
+         TabIndex        =   154
          ToolTipText     =   "Eye Dropper (Shift + LMouse)"
          Top             =   120
          Width           =   540
@@ -57,9 +156,9 @@ Begin VB.Form frmMain
          BackColor       =   &H0080C0FF&
          ForeColor       =   &H80000008&
          Height          =   540
-         Left            =   5880
+         Left            =   6360
          Style           =   1  'Graphical
-         TabIndex        =   152
+         TabIndex        =   149
          ToolTipText     =   "Eye Dropper (Shift + LMouse)"
          Top             =   120
          Width           =   540
@@ -68,19 +167,19 @@ Begin VB.Form frmMain
          BackColor       =   &H0080C0FF&
          Caption         =   "Dim Layers"
          Height          =   225
-         Left            =   10215
-         TabIndex        =   151
+         Left            =   9780
+         TabIndex        =   148
          ToolTipText     =   "Will dim tiles of layers that are below your current layer."
-         Top             =   870
+         Top             =   180
          Value           =   1  'Checked
          Width           =   1500
       End
       Begin VB.CommandButton cmdDelete 
          BackColor       =   &H0080C0FF&
          Height          =   420
-         Left            =   8880
+         Left            =   11820
          Style           =   1  'Graphical
-         TabIndex        =   150
+         TabIndex        =   147
          ToolTipText     =   "Delete all content of this map. "
          Top             =   540
          Width           =   420
@@ -88,9 +187,9 @@ Begin VB.Form frmMain
       Begin VB.CommandButton cmdRevert 
          BackColor       =   &H0080C0FF&
          Height          =   420
-         Left            =   8880
+         Left            =   11820
          Style           =   1  'Graphical
-         TabIndex        =   149
+         TabIndex        =   146
          ToolTipText     =   "Revert/Cancel all changes to this map."
          Top             =   120
          Width           =   420
@@ -98,9 +197,9 @@ Begin VB.Form frmMain
       Begin VB.CommandButton cmdProperties 
          BackColor       =   &H0080C0FF&
          Height          =   420
-         Left            =   8460
+         Left            =   11400
          Style           =   1  'Graphical
-         TabIndex        =   148
+         TabIndex        =   145
          ToolTipText     =   "Map Properties"
          Top             =   540
          Width           =   420
@@ -108,9 +207,9 @@ Begin VB.Form frmMain
       Begin VB.CommandButton cmdSave 
          BackColor       =   &H0080C0FF&
          Height          =   420
-         Left            =   8460
+         Left            =   11400
          Style           =   1  'Graphical
-         TabIndex        =   147
+         TabIndex        =   144
          ToolTipText     =   "Save Map"
          Top             =   120
          Width           =   420
@@ -119,39 +218,39 @@ Begin VB.Form frmMain
          BackColor       =   &H0080C0FF&
          Caption         =   "Draw Events"
          Height          =   225
-         Left            =   10215
-         TabIndex        =   146
+         Left            =   9780
+         TabIndex        =   143
          ToolTipText     =   "Draw white square around events "
-         Top             =   660
+         Top             =   420
          Value           =   1  'Checked
-         Width           =   1500
+         Width           =   1425
       End
       Begin VB.CheckBox chkShowAttributes 
          BackColor       =   &H0080C0FF&
          Caption         =   "Show Attributes"
          Height          =   225
-         Left            =   10215
-         TabIndex        =   145
+         Left            =   8100
+         TabIndex        =   142
          ToolTipText     =   "Show attributes like Block, Warp etc. "
-         Top             =   435
+         Top             =   660
          Width           =   1740
       End
       Begin VB.CheckBox chkGrid 
          BackColor       =   &H0080C0FF&
          Caption         =   "Show Grid"
          Height          =   225
-         Left            =   10215
-         TabIndex        =   144
-         Top             =   210
+         Left            =   8100
+         TabIndex        =   141
+         Top             =   420
          Width           =   1395
       End
       Begin VB.CheckBox chkTilePreview 
          BackColor       =   &H0080C0FF&
          Caption         =   "Tile Preview"
          Height          =   225
-         Left            =   10215
-         TabIndex        =   143
-         Top             =   0
+         Left            =   8100
+         TabIndex        =   140
+         Top             =   180
          Value           =   1  'Checked
          Width           =   1395
       End
@@ -160,9 +259,9 @@ Begin VB.Form frmMain
          BackColor       =   &H0080C0FF&
          ForeColor       =   &H80000008&
          Height          =   540
-         Left            =   1920
+         Left            =   2760
          Style           =   1  'Graphical
-         TabIndex        =   141
+         TabIndex        =   138
          ToolTipText     =   "Eye Dropper (Shift + LMouse)"
          Top             =   120
          Width           =   540
@@ -172,9 +271,9 @@ Begin VB.Form frmMain
          BackColor       =   &H0080C0FF&
          ForeColor       =   &H80000008&
          Height          =   540
-         Left            =   300
+         Left            =   960
          Style           =   1  'Graphical
-         TabIndex        =   139
+         TabIndex        =   136
          ToolTipText     =   "Map Preview - Docked"
          Top             =   120
          Width           =   540
@@ -193,9 +292,9 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000011&
          Height          =   180
-         Left            =   3720
-         TabIndex        =   159
-         Top             =   900
+         Left            =   4560
+         TabIndex        =   156
+         Top             =   840
          Width           =   1140
       End
       Begin VB.Label lblLayers 
@@ -211,9 +310,9 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   240
-         Left            =   3720
-         TabIndex        =   158
-         Top             =   720
+         Left            =   4560
+         TabIndex        =   155
+         Top             =   660
          Width           =   480
       End
       Begin VB.Label lblHotMapPreview 
@@ -230,9 +329,9 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000011&
          Height          =   180
-         Left            =   300
-         TabIndex        =   156
-         Top             =   885
+         Left            =   960
+         TabIndex        =   153
+         Top             =   825
          Width           =   570
       End
       Begin VB.Label lblHotEye 
@@ -249,9 +348,9 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000011&
          Height          =   180
-         Left            =   1920
-         TabIndex        =   155
-         Top             =   900
+         Left            =   2760
+         TabIndex        =   152
+         Top             =   840
          Width           =   1260
       End
       Begin VB.Label lblHotTilesets 
@@ -268,9 +367,9 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000011&
          Height          =   180
-         Left            =   5880
-         TabIndex        =   154
-         Top             =   900
+         Left            =   6360
+         TabIndex        =   151
+         Top             =   840
          Width           =   1095
       End
       Begin VB.Label lblTilesets 
@@ -286,9 +385,9 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   240
-         Left            =   5880
-         TabIndex        =   153
-         Top             =   720
+         Left            =   6360
+         TabIndex        =   150
+         Top             =   660
          Width           =   870
       End
       Begin VB.Label lblTilePreview 
@@ -304,9 +403,9 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   240
-         Left            =   1920
-         TabIndex        =   142
-         Top             =   705
+         Left            =   2760
+         TabIndex        =   139
+         Top             =   645
          Width           =   870
       End
       Begin VB.Label lblMapPreview 
@@ -322,22 +421,96 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          Height          =   240
-         Left            =   300
-         TabIndex        =   140
-         Top             =   720
+         Left            =   960
+         TabIndex        =   137
+         Top             =   660
          Width           =   930
+      End
+   End
+   Begin VB.PictureBox picQuest 
+      BackColor       =   &H00000000&
+      Height          =   4935
+      Left            =   9060
+      ScaleHeight     =   4875
+      ScaleWidth      =   3315
+      TabIndex        =   218
+      TabStop         =   0   'False
+      Top             =   12240
+      Visible         =   0   'False
+      Width           =   3375
+      Begin VB.CommandButton cmdX 
+         BackColor       =   &H00E0E0E0&
+         Caption         =   "X"
+         Height          =   255
+         Left            =   3060
+         MaskColor       =   &H00FFFFFF&
+         Style           =   1  'Graphical
+         TabIndex        =   220
+         Top             =   0
+         Width           =   255
+      End
+      Begin VB.ListBox lstQuests 
+         BackColor       =   &H00000000&
+         ForeColor       =   &H00FFFFFF&
+         Height          =   4050
+         Left            =   120
+         TabIndex        =   219
+         Top             =   480
+         Width           =   3135
+      End
+      Begin VB.Label lblSelectOne 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Select one to view details."
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   222
+         Top             =   4560
+         Width           =   3135
+      End
+      Begin VB.Label lblQuestLog 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Quest Log"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   480
+         TabIndex        =   221
+         Top             =   120
+         Width           =   2415
       End
    End
    Begin VB.PictureBox picQuestDesc 
       BackColor       =   &H00000000&
       ForeColor       =   &H0080FFFF&
       Height          =   5295
-      Left            =   8580
+      Left            =   9060
       ScaleHeight     =   5235
       ScaleWidth      =   3435
-      TabIndex        =   223
+      TabIndex        =   212
       TabStop         =   0   'False
-      Top             =   9120
+      Top             =   12480
       Visible         =   0   'False
       Width           =   3495
       Begin VB.TextBox txtQuestTask 
@@ -357,7 +530,7 @@ Begin VB.Form frmMain
          Locked          =   -1  'True
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertical
-         TabIndex        =   225
+         TabIndex        =   214
          Text            =   "frmMain.frx":038A
          Top             =   2880
          Width           =   3135
@@ -369,7 +542,7 @@ Begin VB.Form frmMain
          Left            =   120
          MaskColor       =   &H00FFFFFF&
          Style           =   1  'Graphical
-         TabIndex        =   224
+         TabIndex        =   213
          Top             =   4920
          Width           =   3255
       End
@@ -396,7 +569,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   120
-         TabIndex        =   228
+         TabIndex        =   217
          Top             =   120
          Width           =   3135
       End
@@ -418,7 +591,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   1815
          Left            =   120
-         TabIndex        =   227
+         TabIndex        =   216
          Top             =   480
          Width           =   3135
       End
@@ -447,7 +620,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00C0FFFF&
          Height          =   255
          Left            =   120
-         TabIndex        =   226
+         TabIndex        =   215
          Top             =   2520
          Width           =   3135
       End
@@ -464,12 +637,12 @@ Begin VB.Form frmMain
       BackColor       =   &H00000000&
       ForeColor       =   &H00C0FFFF&
       Height          =   2175
-      Left            =   3720
+      Left            =   9060
       ScaleHeight     =   2115
       ScaleWidth      =   7155
-      TabIndex        =   218
+      TabIndex        =   207
       TabStop         =   0   'False
-      Top             =   10020
+      Top             =   12240
       Visible         =   0   'False
       Width           =   7215
       Begin VB.Label lblQuestName 
@@ -490,7 +663,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   375
          Left            =   120
-         TabIndex        =   222
+         TabIndex        =   211
          Top             =   0
          Width           =   6915
       End
@@ -511,7 +684,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H008080FF&
          Height          =   255
          Left            =   3960
-         TabIndex        =   221
+         TabIndex        =   210
          Top             =   1800
          Width           =   3015
       End
@@ -532,7 +705,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H0080FF80&
          Height          =   255
          Left            =   120
-         TabIndex        =   220
+         TabIndex        =   209
          Top             =   1800
          Width           =   3015
       End
@@ -554,7 +727,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   1215
          Left            =   120
-         TabIndex        =   219
+         TabIndex        =   208
          Top             =   480
          Width           =   6915
       End
@@ -580,9 +753,9 @@ Begin VB.Form frmMain
       ScaleHeight     =   270
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   196
-      TabIndex        =   204
+      TabIndex        =   198
       TabStop         =   0   'False
-      Top             =   9000
+      Top             =   12240
       Visible         =   0   'False
       Width           =   2940
       Begin VB.PictureBox picGuild_No 
@@ -602,89 +775,15 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   4095
-         Left            =   0
+         Left            =   60
          ScaleHeight     =   273
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   201
-         TabIndex        =   211
+         TabIndex        =   205
          TabStop         =   0   'False
-         Top             =   0
+         Top             =   360
          Visible         =   0   'False
          Width           =   3015
-         Begin VB.PictureBox picQuest 
-            BackColor       =   &H00000000&
-            Height          =   4935
-            Left            =   0
-            ScaleHeight     =   4875
-            ScaleWidth      =   3315
-            TabIndex        =   213
-            TabStop         =   0   'False
-            Top             =   0
-            Visible         =   0   'False
-            Width           =   3375
-            Begin VB.ListBox lstQuests 
-               BackColor       =   &H00000000&
-               ForeColor       =   &H00FFFFFF&
-               Height          =   4050
-               Left            =   120
-               TabIndex        =   215
-               Top             =   480
-               Width           =   3135
-            End
-            Begin VB.CommandButton cmdX 
-               BackColor       =   &H00E0E0E0&
-               Caption         =   "X"
-               Height          =   255
-               Left            =   3060
-               MaskColor       =   &H00FFFFFF&
-               Style           =   1  'Graphical
-               TabIndex        =   214
-               Top             =   0
-               Width           =   255
-            End
-            Begin VB.Label lblQuestLog 
-               Alignment       =   2  'Center
-               AutoSize        =   -1  'True
-               BackStyle       =   0  'Transparent
-               Caption         =   "Quest Log"
-               BeginProperty Font 
-                  Name            =   "Georgia"
-                  Size            =   9.75
-                  Charset         =   0
-                  Weight          =   400
-                  Underline       =   0   'False
-                  Italic          =   0   'False
-                  Strikethrough   =   0   'False
-               EndProperty
-               ForeColor       =   &H00FFFFFF&
-               Height          =   255
-               Left            =   480
-               TabIndex        =   217
-               Top             =   120
-               Width           =   2415
-            End
-            Begin VB.Label lblSelectOne 
-               Alignment       =   2  'Center
-               AutoSize        =   -1  'True
-               BackStyle       =   0  'Transparent
-               Caption         =   "Select one to view details."
-               BeginProperty Font 
-                  Name            =   "Georgia"
-                  Size            =   9.75
-                  Charset         =   0
-                  Weight          =   400
-                  Underline       =   0   'False
-                  Italic          =   0   'False
-                  Strikethrough   =   0   'False
-               EndProperty
-               ForeColor       =   &H00FFFFFF&
-               Height          =   255
-               Left            =   120
-               TabIndex        =   216
-               Top             =   4560
-               Width           =   3135
-            End
-         End
          Begin VB.Label lblYouAre 
             Alignment       =   2  'Center
             AutoSize        =   -1  'True
@@ -702,7 +801,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   330
-            TabIndex        =   212
+            TabIndex        =   206
             Top             =   2040
             Width           =   2205
          End
@@ -723,7 +822,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   2130
          Left            =   240
-         TabIndex        =   205
+         TabIndex        =   199
          TabStop         =   0   'False
          Top             =   600
          Width           =   2460
@@ -745,7 +844,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   210
          Left            =   120
-         TabIndex        =   210
+         TabIndex        =   204
          Top             =   3000
          Width           =   2715
       End
@@ -766,7 +865,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   210
          Left            =   120
-         TabIndex        =   209
+         TabIndex        =   203
          Top             =   3720
          Width           =   2715
       End
@@ -787,7 +886,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   210
          Left            =   120
-         TabIndex        =   208
+         TabIndex        =   202
          Top             =   3240
          Width           =   2715
       End
@@ -808,7 +907,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   210
          Left            =   1080
-         TabIndex        =   207
+         TabIndex        =   201
          Top             =   3480
          Width           =   795
       End
@@ -828,54 +927,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H8000000E&
          Height          =   255
          Left            =   240
-         TabIndex        =   206
+         TabIndex        =   200
          Top             =   240
          Width           =   2475
-      End
-   End
-   Begin VB.PictureBox picButton 
-      BackColor       =   &H8000000A&
-      BorderStyle     =   0  'None
-      Height          =   435
-      Index           =   13
-      Left            =   9960
-      ScaleHeight     =   29
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   32
-      TabIndex        =   198
-      TabStop         =   0   'False
-      Top             =   9060
-      Visible         =   0   'False
-      Width           =   480
-      Begin VB.PictureBox picButton 
-         BackColor       =   &H8000000A&
-         BorderStyle     =   0  'None
-         Height          =   435
-         Index           =   8
-         Left            =   0
-         ScaleHeight     =   29
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   32
-         TabIndex        =   202
-         TabStop         =   0   'False
-         Top             =   0
-         Visible         =   0   'False
-         Width           =   480
-         Begin VB.PictureBox picButton 
-            BackColor       =   &H8000000A&
-            BorderStyle     =   0  'None
-            Height          =   435
-            Index           =   11
-            Left            =   0
-            ScaleHeight     =   29
-            ScaleMode       =   3  'Pixel
-            ScaleWidth      =   32
-            TabIndex        =   203
-            TabStop         =   0   'False
-            Top             =   0
-            Visible         =   0   'False
-            Width           =   480
-         End
       End
    End
    Begin VB.PictureBox picSpellDesc 
@@ -885,12 +939,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   3570
-      Left            =   3120
+      Left            =   12480
       ScaleHeight     =   238
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   210
-      TabIndex        =   126
-      Top             =   8715
+      TabIndex        =   123
+      Top             =   12240
       Visible         =   0   'False
       Width           =   3150
       Begin VB.PictureBox picSpellDescPic 
@@ -904,7 +958,7 @@ Begin VB.Form frmMain
          ScaleHeight     =   64
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   64
-         TabIndex        =   127
+         TabIndex        =   124
          Top             =   600
          Width           =   960
       End
@@ -924,7 +978,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   210
          Left            =   150
-         TabIndex        =   129
+         TabIndex        =   126
          Top             =   210
          Width           =   2805
       End
@@ -934,7 +988,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   1530
          Left            =   240
-         TabIndex        =   128
+         TabIndex        =   125
          Top             =   1800
          Width           =   2640
       End
@@ -955,12 +1009,12 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H80000008&
       Height          =   3570
-      Left            =   -120
+      Left            =   12180
       ScaleHeight     =   238
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   210
-      TabIndex        =   122
-      Top             =   8715
+      TabIndex        =   119
+      Top             =   12240
       Visible         =   0   'False
       Width           =   3150
       Begin VB.PictureBox picItemDescPic 
@@ -974,7 +1028,7 @@ Begin VB.Form frmMain
          ScaleHeight     =   64
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   64
-         TabIndex        =   123
+         TabIndex        =   120
          Top             =   600
          Width           =   960
       End
@@ -994,7 +1048,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   210
          Left            =   150
-         TabIndex        =   125
+         TabIndex        =   122
          Top             =   210
          Width           =   2805
       End
@@ -1004,7 +1058,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   1530
          Left            =   240
-         TabIndex        =   124
+         TabIndex        =   121
          Top             =   1800
          Width           =   2640
       End
@@ -1015,12 +1069,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8085
+      Left            =   15540
       ScaleHeight     =   285
       ScaleWidth      =   735
-      TabIndex        =   94
+      TabIndex        =   91
       TabStop         =   0   'False
-      Top             =   9990
+      Top             =   12420
       Width           =   735
    End
    Begin VB.PictureBox picOptionWeather 
@@ -1029,12 +1083,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8085
+      Left            =   14685
       ScaleHeight     =   285
       ScaleWidth      =   735
-      TabIndex        =   93
+      TabIndex        =   90
       TabStop         =   0   'False
-      Top             =   10350
+      Top             =   12390
       Width           =   735
    End
    Begin VB.PictureBox picOptionAutoTile 
@@ -1043,12 +1097,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8085
+      Left            =   14685
       ScaleHeight     =   285
       ScaleWidth      =   735
-      TabIndex        =   92
+      TabIndex        =   89
       TabStop         =   0   'False
-      Top             =   10710
+      Top             =   12750
       Width           =   735
    End
    Begin VB.PictureBox picOptionDebug 
@@ -1057,12 +1111,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8085
+      Left            =   14685
       ScaleHeight     =   285
       ScaleWidth      =   735
-      TabIndex        =   91
+      TabIndex        =   88
       TabStop         =   0   'False
-      Top             =   11430
+      Top             =   13470
       Width           =   735
    End
    Begin VB.PictureBox picOptionBlood 
@@ -1071,35 +1125,13 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   285
-      Left            =   8085
+      Left            =   14685
       ScaleHeight     =   285
       ScaleWidth      =   735
-      TabIndex        =   90
+      TabIndex        =   87
       TabStop         =   0   'False
-      Top             =   11070
+      Top             =   13110
       Width           =   735
-   End
-   Begin VB.PictureBox picSSMap 
-      AutoRedraw      =   -1  'True
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   210
-      Left            =   12000
-      ScaleHeight     =   11.529
-      ScaleMode       =   0  'User
-      ScaleWidth      =   17
-      TabIndex        =   12
-      TabStop         =   0   'False
-      Top             =   8520
-      Width           =   255
    End
    Begin VB.PictureBox picTempSpell 
       Appearance      =   0  'Flat
@@ -1118,67 +1150,13 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H80000008&
       Height          =   540
-      Left            =   7560
+      Left            =   15720
       ScaleHeight     =   36
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   36
-      TabIndex        =   11
+      TabIndex        =   9
       TabStop         =   0   'False
-      Top             =   8760
-      Visible         =   0   'False
-      Width           =   540
-   End
-   Begin VB.PictureBox picTempBank 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      AutoSize        =   -1  'True
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   8.25
-         Charset         =   238
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   540
-      Left            =   6960
-      ScaleHeight     =   36
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   36
-      TabIndex        =   10
-      TabStop         =   0   'False
-      Top             =   8760
-      Visible         =   0   'False
-      Width           =   540
-   End
-   Begin VB.PictureBox picTempInv 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      AutoSize        =   -1  'True
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   8.25
-         Charset         =   238
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   540
-      Left            =   6360
-      ScaleHeight     =   36
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   36
-      TabIndex        =   1
-      TabStop         =   0   'False
-      Top             =   8760
+      Top             =   12780
       Visible         =   0   'False
       Width           =   540
    End
@@ -1209,7 +1187,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   341
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   275
-      TabIndex        =   7
+      TabIndex        =   6
       TabStop         =   0   'False
       Top             =   1800
       Visible         =   0   'False
@@ -1234,7 +1212,7 @@ Begin VB.Form frmMain
          ScaleHeight     =   211
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   193
-         TabIndex        =   8
+         TabIndex        =   7
          TabStop         =   0   'False
          Top             =   630
          Width           =   2895
@@ -1264,141 +1242,53 @@ Begin VB.Form frmMain
          Width           =   375
       End
    End
-   Begin VB.PictureBox picCurrency 
+   Begin VB.PictureBox picSkills 
       Appearance      =   0  'Flat
-      BackColor       =   &H80000001&
+      BackColor       =   &H80000017&
       BorderStyle     =   0  'None
       BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   238
          Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   2175
-      Left            =   120
-      ScaleHeight     =   145
-      ScaleMode       =   0  'User
-      ScaleWidth      =   484
-      TabIndex        =   2
+      Height          =   5850
+      Left            =   8130
+      ScaleHeight     =   390
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   273
+      TabIndex        =   157
       TabStop         =   0   'False
-      Top             =   6360
+      Top             =   2310
       Visible         =   0   'False
-      Width           =   7260
-      Begin VB.TextBox txtCurrency 
-         Appearance      =   0  'Flat
-         Height          =   285
-         Left            =   2160
-         TabIndex        =   4
-         TabStop         =   0   'False
-         Top             =   840
-         Width           =   2775
-      End
-      Begin VB.Label lblCurrencyCancel 
-         Alignment       =   2  'Center
-         BackColor       =   &H00000000&
+      Width           =   4095
+      Begin VB.Label lblSkills 
          BackStyle       =   0  'Transparent
-         Caption         =   "Cancel"
+         Caption         =   "Skills"
          BeginProperty Font 
             Name            =   "Georgia"
-            Size            =   8.25
+            Size            =   9.75
             Charset         =   0
             Weight          =   700
             Underline       =   0   'False
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   2160
-         TabIndex        =   6
-         Top             =   1440
-         Width           =   2775
+         ForeColor       =   &H80000004&
+         Height          =   240
+         Left            =   1740
+         TabIndex        =   194
+         Top             =   240
+         Width           =   615
       End
-      Begin VB.Label lblCurrencyOk 
-         Alignment       =   2  'Center
-         BackColor       =   &H00000000&
-         BackStyle       =   0  'Transparent
-         Caption         =   "Ok"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   2160
-         TabIndex        =   5
-         Top             =   1200
-         Width           =   2775
-      End
-      Begin VB.Label lblCurrency 
-         Alignment       =   2  'Center
-         BackColor       =   &H00000000&
-         BackStyle       =   0  'Transparent
-         Caption         =   "How many do you want to drop?"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   30
-         TabIndex        =   3
-         Top             =   480
-         Width           =   7155
-      End
-   End
-   Begin VB.PictureBox picDialogue 
-      Appearance      =   0  'Flat
-      BackColor       =   &H80000001&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   2175
-      Left            =   120
-      ScaleHeight     =   2175
-      ScaleWidth      =   7260
-      TabIndex        =   59
-      TabStop         =   0   'False
-      Top             =   6360
-      Visible         =   0   'False
-      Width           =   7260
-      Begin VB.TextBox txtDialogue 
-         Height          =   315
-         Left            =   2520
-         TabIndex        =   60
-         TabStop         =   0   'False
-         Top             =   960
-         Visible         =   0   'False
-         Width           =   2295
-      End
-      Begin VB.Label lblDialogue_Button 
-         Alignment       =   2  'Center
+      Begin VB.Label lblSkill 
          AutoSize        =   -1  'True
-         BackColor       =   &H00000000&
          BackStyle       =   0  'Transparent
-         Caption         =   "No"
+         Caption         =   "Skill"
          BeginProperty Font 
             Name            =   "Georgia"
             Size            =   8.25
@@ -1408,118 +1298,533 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H00FFFFFF&
+         ForeColor       =   &H008080FF&
          Height          =   210
          Index           =   3
-         Left            =   3405
-         TabIndex        =   65
-         Top             =   1665
-         Width           =   285
-      End
-      Begin VB.Label lblDialogue_Title 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Trade Request"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   0
-         TabIndex        =   63
-         Top             =   360
-         Width           =   7215
-      End
-      Begin VB.Label lblDialogue_Text 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Player has requested a trade. Would you like to accept?"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   495
-         Left            =   0
-         TabIndex        =   62
-         Top             =   600
-         Width           =   7215
-      End
-      Begin VB.Label lblDialogue_Button 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         BackColor       =   &H00000000&
-         BackStyle       =   0  'Transparent
-         Caption         =   "Ok"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   210
-         Index           =   1
-         Left            =   3405
-         TabIndex        =   61
+         Left            =   2640
+         TabIndex        =   193
          Top             =   1560
-         Width           =   285
+         Width           =   450
       End
-      Begin VB.Label lblDialogue_Button 
-         Alignment       =   2  'Center
+      Begin VB.Label lblLevel 
          AutoSize        =   -1  'True
-         BackColor       =   &H00000000&
          BackStyle       =   0  'Transparent
-         Caption         =   "Yes"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   210
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   0
+         Left            =   480
+         TabIndex        =   192
+         Top             =   960
+         Width           =   465
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   1
+         Left            =   2640
+         TabIndex        =   191
+         Top             =   960
+         Width           =   465
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
          Index           =   2
-         Left            =   3360
-         TabIndex        =   64
-         Top             =   1440
+         Left            =   480
+         TabIndex        =   190
+         Top             =   1800
+         Width           =   465
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   3
+         Left            =   2640
+         TabIndex        =   189
+         Top             =   1800
+         Width           =   465
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   0
+         Left            =   480
+         TabIndex        =   188
+         Top             =   1200
          Width           =   345
       End
-   End
-   Begin VB.PictureBox picBank 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      AutoSize        =   -1  'True
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Georgia"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   5760
-      Left            =   150
-      ScaleHeight     =   384
-      ScaleMode       =   0  'User
-      ScaleWidth      =   480
-      TabIndex        =   9
-      TabStop         =   0   'False
-      Top             =   2760
-      Visible         =   0   'False
-      Width           =   7200
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   1
+         Left            =   2640
+         TabIndex        =   187
+         Top             =   1200
+         Width           =   345
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   2
+         Left            =   480
+         TabIndex        =   186
+         Top             =   2040
+         Width           =   345
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   3
+         Left            =   2640
+         TabIndex        =   185
+         Top             =   2040
+         Width           =   345
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   4
+         Left            =   480
+         TabIndex        =   184
+         Top             =   2880
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   4
+         Left            =   480
+         TabIndex        =   183
+         Top             =   2640
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   4
+         Left            =   480
+         TabIndex        =   182
+         Top             =   2400
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   5
+         Left            =   2640
+         TabIndex        =   181
+         Top             =   2880
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   5
+         Left            =   2640
+         TabIndex        =   180
+         Top             =   2640
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   5
+         Left            =   2640
+         TabIndex        =   179
+         Top             =   2400
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   6
+         Left            =   480
+         TabIndex        =   178
+         Top             =   3720
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   6
+         Left            =   480
+         TabIndex        =   177
+         Top             =   3480
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   6
+         Left            =   480
+         TabIndex        =   176
+         Top             =   3240
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   7
+         Left            =   2640
+         TabIndex        =   175
+         Top             =   3720
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   7
+         Left            =   2640
+         TabIndex        =   174
+         Top             =   3480
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   7
+         Left            =   2640
+         TabIndex        =   173
+         Top             =   3240
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   8
+         Left            =   480
+         TabIndex        =   172
+         Top             =   4560
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   8
+         Left            =   480
+         TabIndex        =   171
+         Top             =   4320
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   8
+         Left            =   480
+         TabIndex        =   170
+         Top             =   4080
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   9
+         Left            =   2640
+         TabIndex        =   169
+         Top             =   4560
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   9
+         Left            =   2640
+         TabIndex        =   168
+         Top             =   4320
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   9
+         Left            =   2640
+         TabIndex        =   167
+         Top             =   4080
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   10
+         Left            =   480
+         TabIndex        =   166
+         Top             =   5400
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   10
+         Left            =   480
+         TabIndex        =   165
+         Top             =   5160
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   10
+         Left            =   480
+         TabIndex        =   164
+         Top             =   4920
+         Width           =   450
+      End
+      Begin VB.Label lblSkillExp 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Exp"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   11
+         Left            =   2640
+         TabIndex        =   163
+         Top             =   5400
+         Width           =   345
+      End
+      Begin VB.Label lblLevel 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Level"
+         ForeColor       =   &H8000000E&
+         Height          =   195
+         Index           =   11
+         Left            =   2640
+         TabIndex        =   162
+         Top             =   5160
+         Width           =   465
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   11
+         Left            =   2640
+         TabIndex        =   161
+         Top             =   4920
+         Width           =   450
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   0
+         Left            =   480
+         TabIndex        =   160
+         Top             =   720
+         Width           =   450
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   1
+         Left            =   2640
+         TabIndex        =   159
+         Top             =   720
+         Width           =   450
+      End
+      Begin VB.Label lblSkill 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Skill"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H008080FF&
+         Height          =   210
+         Index           =   2
+         Left            =   480
+         TabIndex        =   158
+         Top             =   1560
+         Width           =   450
+      End
    End
    Begin VB.PictureBox picTrade 
       Appearance      =   0  'Flat
@@ -1532,7 +1837,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   384
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   480
-      TabIndex        =   13
+      TabIndex        =   10
       TabStop         =   0   'False
       Top             =   1440
       Visible         =   0   'False
@@ -1557,7 +1862,7 @@ Begin VB.Form frmMain
          ScaleHeight     =   247
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   193
-         TabIndex        =   15
+         TabIndex        =   12
          TabStop         =   0   'False
          Top             =   480
          Width           =   2895
@@ -1582,7 +1887,7 @@ Begin VB.Form frmMain
          ScaleHeight     =   247
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   193
-         TabIndex        =   14
+         TabIndex        =   11
          TabStop         =   0   'False
          Top             =   480
          Width           =   2895
@@ -1593,7 +1898,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   1680
-         TabIndex        =   18
+         TabIndex        =   15
          Top             =   4500
          Width           =   1815
       End
@@ -1612,7 +1917,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H000000C0&
          Height          =   255
          Left            =   600
-         TabIndex        =   16
+         TabIndex        =   13
          Top             =   5520
          Width           =   5895
       End
@@ -1634,10 +1939,37 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   5160
-         TabIndex        =   17
+         TabIndex        =   14
          Top             =   4500
          Width           =   1815
       End
+   End
+   Begin VB.PictureBox picBank 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      AutoSize        =   -1  'True
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Georgia"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   5760
+      Left            =   150
+      ScaleHeight     =   384
+      ScaleMode       =   0  'User
+      ScaleWidth      =   480
+      TabIndex        =   8
+      TabStop         =   0   'False
+      Top             =   2760
+      Visible         =   0   'False
+      Width           =   7200
    End
    Begin VB.PictureBox picForm 
       Appearance      =   0  'Flat
@@ -1654,138 +1986,27 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   8640
+      Height          =   10020
       Left            =   120
-      ScaleHeight     =   576
+      ScaleHeight     =   668
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   800
+      ScaleWidth      =   864
       TabIndex        =   0
       TabStop         =   0   'False
-      Top             =   180
-      Width           =   12000
-      Begin VB.PictureBox picFoes 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         AutoSize        =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   4050
-         Left            =   8850
-         ScaleHeight     =   270
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   195
-         TabIndex        =   81
-         TabStop         =   0   'False
-         Top             =   2850
-         Visible         =   0   'False
-         Width           =   2925
-         Begin VB.ListBox lstFoes 
-            Appearance      =   0  'Flat
-            BackColor       =   &H80000006&
-            Enabled         =   0   'False
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   2550
-            Left            =   300
-            TabIndex        =   82
-            TabStop         =   0   'False
-            Top             =   600
-            Width           =   2340
-         End
-         Begin VB.Label lblFoes 
-            Alignment       =   2  'Center
-            AutoSize        =   -1  'True
-            BackStyle       =   0  'Transparent
-            Caption         =   "Foes"
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   9.75
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   240
-            Left            =   1245
-            TabIndex        =   201
-            Top             =   180
-            Width           =   525
-         End
-         Begin VB.Label lblAddFoe 
-            Alignment       =   2  'Center
-            AutoSize        =   -1  'True
-            BackStyle       =   0  'Transparent
-            Caption         =   "Add Foe"
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   210
-            Left            =   1140
-            TabIndex        =   84
-            Top             =   3300
-            Width           =   795
-         End
-         Begin VB.Label lblRemoveFoe 
-            Alignment       =   2  'Center
-            AutoSize        =   -1  'True
-            BackStyle       =   0  'Transparent
-            Caption         =   "Remove Foe"
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   210
-            Left            =   960
-            TabIndex        =   83
-            Top             =   3600
-            Width           =   1155
-         End
-      End
+      Top             =   0
+      Width           =   12960
       Begin VB.PictureBox picButton 
          BackColor       =   &H8000000A&
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   9
-         Left            =   10680
+         Left            =   11160
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   80
+         TabIndex        =   77
          TabStop         =   0   'False
-         Top             =   7620
+         Top             =   8940
          Visible         =   0   'False
          Width           =   480
       End
@@ -1794,13 +2015,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   10
-         Left            =   9480
+         Left            =   9960
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   79
+         TabIndex        =   76
          TabStop         =   0   'False
-         Top             =   8160
+         Top             =   9480
          Visible         =   0   'False
          Width           =   480
       End
@@ -1809,13 +2030,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   16
-         Left            =   10080
+         Left            =   10560
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   77
+         TabIndex        =   74
          TabStop         =   0   'False
-         Top             =   7620
+         Top             =   8940
          Visible         =   0   'False
          Width           =   480
       End
@@ -1824,13 +2045,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   12
-         Left            =   8880
+         Left            =   9360
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   75
+         TabIndex        =   72
          TabStop         =   0   'False
-         Top             =   8160
+         Top             =   9480
          Visible         =   0   'False
          Width           =   480
       End
@@ -1839,13 +2060,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   15
-         Left            =   11280
+         Left            =   11760
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   74
+         TabIndex        =   71
          TabStop         =   0   'False
-         Top             =   8160
+         Top             =   9480
          Width           =   480
       End
       Begin VB.PictureBox picButton 
@@ -1853,13 +2074,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   14
-         Left            =   10680
+         Left            =   11160
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   73
+         TabIndex        =   70
          TabStop         =   0   'False
-         Top             =   8160
+         Top             =   9480
          Width           =   480
       End
       Begin VB.PictureBox picButton 
@@ -1867,13 +2088,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   1
-         Left            =   8280
+         Left            =   8760
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   72
+         TabIndex        =   69
          TabStop         =   0   'False
-         Top             =   7620
+         Top             =   8940
          Visible         =   0   'False
          Width           =   480
       End
@@ -1882,13 +2103,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   3
-         Left            =   9480
+         Left            =   9960
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   71
+         TabIndex        =   68
          TabStop         =   0   'False
-         Top             =   7620
+         Top             =   8940
          Visible         =   0   'False
          Width           =   480
       End
@@ -1897,13 +2118,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   4
-         Left            =   11280
+         Left            =   11760
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   70
+         TabIndex        =   67
          TabStop         =   0   'False
-         Top             =   7620
+         Top             =   8940
          Visible         =   0   'False
          Width           =   480
       End
@@ -1912,13 +2133,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   5
-         Left            =   11280
+         Left            =   11760
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   69
+         TabIndex        =   66
          TabStop         =   0   'False
-         Top             =   7080
+         Top             =   8400
          Visible         =   0   'False
          Width           =   480
       End
@@ -1927,13 +2148,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   6
-         Left            =   10080
+         Left            =   10560
          ScaleHeight     =   29
          ScaleMode       =   0  'User
          ScaleWidth      =   32
-         TabIndex        =   68
+         TabIndex        =   65
          TabStop         =   0   'False
-         Top             =   8160
+         Top             =   9480
          Visible         =   0   'False
          Width           =   480
       End
@@ -1942,13 +2163,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   7
-         Left            =   8280
+         Left            =   8760
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   67
+         TabIndex        =   64
          TabStop         =   0   'False
-         Top             =   8160
+         Top             =   9480
          Visible         =   0   'False
          Width           =   480
       End
@@ -1957,13 +2178,13 @@ Begin VB.Form frmMain
          BorderStyle     =   0  'None
          Height          =   435
          Index           =   2
-         Left            =   8880
+         Left            =   9360
          ScaleHeight     =   29
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   66
+         TabIndex        =   63
          TabStop         =   0   'False
-         Top             =   7620
+         Top             =   8940
          Visible         =   0   'False
          Width           =   480
       End
@@ -1984,11 +2205,11 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   450
-         Left            =   4320
+         Left            =   5040
          ScaleHeight     =   30
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   476
-         TabIndex        =   26
+         TabIndex        =   23
          TabStop         =   0   'False
          Top             =   120
          Width           =   7140
@@ -2002,7 +2223,7 @@ Begin VB.Form frmMain
          ScaleHeight     =   75
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   254
-         TabIndex        =   19
+         TabIndex        =   16
          TabStop         =   0   'False
          Top             =   120
          Width           =   3810
@@ -2014,7 +2235,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   1815
-            TabIndex        =   22
+            TabIndex        =   19
             Top             =   135
             Width           =   1845
          End
@@ -2026,7 +2247,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   1815
-            TabIndex        =   21
+            TabIndex        =   18
             Top             =   465
             Width           =   1845
          End
@@ -2038,7 +2259,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   1815
-            TabIndex        =   20
+            TabIndex        =   17
             Top             =   795
             Width           =   1845
          End
@@ -2061,61 +2282,6 @@ Begin VB.Form frmMain
             Width           =   3615
          End
       End
-      Begin VB.PictureBox picChatbox 
-         Appearance      =   0  'Flat
-         BorderStyle     =   0  'None
-         ForeColor       =   &H80000008&
-         Height          =   2175
-         Left            =   120
-         ScaleHeight     =   145
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   484
-         TabIndex        =   23
-         TabStop         =   0   'False
-         Top             =   6420
-         Width           =   7260
-         Begin VB.TextBox txtMyChat 
-            Appearance      =   0  'Flat
-            BackColor       =   &H80000001&
-            BorderStyle     =   0  'None
-            Enabled         =   0   'False
-            ForeColor       =   &H00FFFFFF&
-            Height          =   225
-            Left            =   600
-            MaxLength       =   512
-            TabIndex        =   25
-            TabStop         =   0   'False
-            Top             =   1890
-            Width           =   6585
-         End
-         Begin RichTextLib.RichTextBox txtChat 
-            Height          =   1755
-            Left            =   60
-            TabIndex        =   24
-            TabStop         =   0   'False
-            Top             =   60
-            Width           =   7170
-            _ExtentX        =   12647
-            _ExtentY        =   3096
-            _Version        =   393217
-            BackColor       =   -2147483647
-            BorderStyle     =   0
-            Enabled         =   -1  'True
-            ReadOnly        =   -1  'True
-            ScrollBars      =   2
-            Appearance      =   0
-            TextRTF         =   $"frmMain.frx":03A8
-            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   400
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-         End
-      End
       Begin VB.PictureBox picScreen 
          Appearance      =   0  'Flat
          AutoRedraw      =   -1  'True
@@ -2127,173 +2293,14 @@ Begin VB.Form frmMain
          ScaleHeight     =   384
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   512
-         TabIndex        =   89
+         TabIndex        =   86
          TabStop         =   0   'False
          Top             =   0
          Width           =   7680
       End
-      Begin VB.PictureBox picEventChat 
+      Begin VB.PictureBox picSpells 
          Appearance      =   0  'Flat
-         BackColor       =   &H80000001&
-         BorderStyle     =   0  'None
-         ForeColor       =   &H80000008&
-         Height          =   2790
-         Left            =   120
-         ScaleHeight     =   186
-         ScaleMode       =   0  'User
-         ScaleWidth      =   482
-         TabIndex        =   130
-         TabStop         =   0   'False
-         Top             =   5760
-         Visible         =   0   'False
-         Width           =   7230
-         Begin VB.PictureBox picChatFace 
-            AutoRedraw      =   -1  'True
-            BorderStyle     =   0  'None
-            Height          =   1500
-            Left            =   120
-            ScaleHeight     =   100
-            ScaleMode       =   3  'Pixel
-            ScaleWidth      =   100
-            TabIndex        =   131
-            TabStop         =   0   'False
-            Top             =   120
-            Visible         =   0   'False
-            Width           =   1500
-         End
-         Begin VB.Label lblChoices 
-            AutoSize        =   -1  'True
-            BackColor       =   &H00000000&
-            BackStyle       =   0  'Transparent
-            Caption         =   "[Option 1]"
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H80000003&
-            Height          =   210
-            Index           =   1
-            Left            =   240
-            TabIndex        =   137
-            Top             =   1920
-            Width           =   975
-         End
-         Begin VB.Label lblChoices 
-            AutoSize        =   -1  'True
-            BackColor       =   &H00000000&
-            BackStyle       =   0  'Transparent
-            Caption         =   "[Option 2]"
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H80000003&
-            Height          =   210
-            Index           =   2
-            Left            =   240
-            TabIndex        =   136
-            Top             =   2400
-            Width           =   975
-         End
-         Begin VB.Label lblChoices 
-            AutoSize        =   -1  'True
-            BackColor       =   &H00000000&
-            BackStyle       =   0  'Transparent
-            Caption         =   "[Option 3]"
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H80000003&
-            Height          =   210
-            Index           =   3
-            Left            =   3240
-            TabIndex        =   135
-            Top             =   1920
-            Width           =   975
-         End
-         Begin VB.Label lblChoices 
-            AutoSize        =   -1  'True
-            BackColor       =   &H00000000&
-            BackStyle       =   0  'Transparent
-            Caption         =   "[Option 4]"
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H80000003&
-            Height          =   210
-            Index           =   4
-            Left            =   3240
-            TabIndex        =   134
-            Top             =   2400
-            Width           =   975
-         End
-         Begin VB.Label lblEventChatContinue 
-            AutoSize        =   -1  'True
-            BackColor       =   &H00000000&
-            BackStyle       =   0  'Transparent
-            Caption         =   "Continue..."
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H80000003&
-            Height          =   210
-            Left            =   6000
-            TabIndex        =   133
-            Top             =   2400
-            Width           =   1095
-         End
-         Begin VB.Label lblEventChat 
-            Appearance      =   0  'Flat
-            BackColor       =   &H80000005&
-            BackStyle       =   0  'Transparent
-            Caption         =   "[Text]"
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   1335
-            Left            =   180
-            TabIndex        =   132
-            Top             =   120
-            Width           =   6915
-         End
-      End
-      Begin VB.PictureBox picEquipment 
-         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
          AutoSize        =   -1  'True
          BackColor       =   &H00000000&
          BorderStyle     =   0  'None
@@ -2307,14 +2314,262 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          ForeColor       =   &H80000008&
-         Height          =   2400
-         Left            =   8850
-         ScaleHeight     =   160
+         Height          =   4050
+         Left            =   9300
+         ScaleHeight     =   270
          ScaleMode       =   0  'User
          ScaleWidth      =   195
-         TabIndex        =   76
+         TabIndex        =   118
          TabStop         =   0   'False
-         Top             =   4500
+         Top             =   4110
+         Visible         =   0   'False
+         Width           =   2925
+      End
+      Begin VB.PictureBox picFriends 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   238
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   4050
+         Left            =   9300
+         ScaleHeight     =   270
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   195
+         TabIndex        =   52
+         TabStop         =   0   'False
+         Top             =   4110
+         Visible         =   0   'False
+         Width           =   2925
+         Begin VB.ListBox lstFriends 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000006&
+            Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   2550
+            Left            =   300
+            TabIndex        =   53
+            TabStop         =   0   'False
+            Top             =   600
+            Width           =   2340
+         End
+         Begin VB.Label Label6 
+            Alignment       =   2  'Center
+            AutoSize        =   -1  'True
+            BackStyle       =   0  'Transparent
+            Caption         =   "Friends"
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   9.75
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   240
+            Left            =   60
+            TabIndex        =   195
+            Top             =   180
+            Width           =   2835
+         End
+         Begin VB.Label lblRemoveFriend 
+            Alignment       =   2  'Center
+            AutoSize        =   -1  'True
+            BackStyle       =   0  'Transparent
+            Caption         =   "Remove Friend"
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   210
+            Left            =   60
+            TabIndex        =   55
+            Top             =   3600
+            Width           =   2805
+         End
+         Begin VB.Label lblAddFriend 
+            Alignment       =   2  'Center
+            AutoSize        =   -1  'True
+            BackStyle       =   0  'Transparent
+            Caption         =   "Add Friend"
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   210
+            Left            =   900
+            TabIndex        =   54
+            Top             =   3300
+            Width           =   1125
+         End
+      End
+      Begin VB.PictureBox picFoes 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   238
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   4050
+         Left            =   9300
+         ScaleHeight     =   270
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   195
+         TabIndex        =   78
+         TabStop         =   0   'False
+         Top             =   4110
+         Visible         =   0   'False
+         Width           =   2925
+         Begin VB.ListBox lstFoes 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000006&
+            Enabled         =   0   'False
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   2550
+            Left            =   300
+            TabIndex        =   79
+            TabStop         =   0   'False
+            Top             =   600
+            Width           =   2340
+         End
+         Begin VB.Label lblFoes 
+            Alignment       =   2  'Center
+            AutoSize        =   -1  'True
+            BackStyle       =   0  'Transparent
+            Caption         =   "Foes"
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   9.75
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   240
+            Left            =   75
+            TabIndex        =   197
+            Top             =   180
+            Width           =   2805
+         End
+         Begin VB.Label lblAddFoe 
+            Alignment       =   2  'Center
+            AutoSize        =   -1  'True
+            BackStyle       =   0  'Transparent
+            Caption         =   "Add Foe"
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   210
+            Left            =   1140
+            TabIndex        =   81
+            Top             =   3300
+            Width           =   795
+         End
+         Begin VB.Label lblRemoveFoe 
+            Alignment       =   2  'Center
+            AutoSize        =   -1  'True
+            BackStyle       =   0  'Transparent
+            Caption         =   "Remove Foe"
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H00FFFFFF&
+            Height          =   210
+            Left            =   960
+            TabIndex        =   80
+            Top             =   3600
+            Width           =   1155
+         End
+      End
+      Begin VB.PictureBox picInventory 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   238
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   4050
+         Left            =   9300
+         ScaleHeight     =   269.004
+         ScaleMode       =   0  'User
+         ScaleWidth      =   195
+         TabIndex        =   24
+         TabStop         =   0   'False
+         Top             =   4110
          Visible         =   0   'False
          Width           =   2925
       End
@@ -2335,13 +2590,13 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   4200
-         Left            =   8850
+         Left            =   9300
          ScaleHeight     =   280
          ScaleMode       =   0  'User
          ScaleWidth      =   195
-         TabIndex        =   28
+         TabIndex        =   25
          TabStop         =   0   'False
-         Top             =   2700
+         Top             =   3960
          Visible         =   0   'False
          Width           =   2925
          Begin VB.PictureBox picFace 
@@ -2364,7 +2619,7 @@ Begin VB.Form frmMain
             ScaleHeight     =   96
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   96
-            TabIndex        =   29
+            TabIndex        =   26
             TabStop         =   0   'False
             Top             =   570
             Width           =   1440
@@ -2386,7 +2641,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   1200
-            TabIndex        =   78
+            TabIndex        =   75
             Top             =   2160
             Width           =   465
          End
@@ -2407,7 +2662,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   225
             Left            =   1170
-            TabIndex        =   47
+            TabIndex        =   44
             Top             =   150
             Width           =   660
          End
@@ -2428,7 +2683,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   1
             Left            =   720
-            TabIndex        =   46
+            TabIndex        =   43
             Top             =   2880
             Width           =   315
          End
@@ -2449,7 +2704,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   4
             Left            =   2040
-            TabIndex        =   45
+            TabIndex        =   42
             Top             =   2880
             Width           =   315
          End
@@ -2470,7 +2725,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   2
             Left            =   720
-            TabIndex        =   44
+            TabIndex        =   41
             Top             =   3120
             Width           =   315
          End
@@ -2491,7 +2746,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   5
             Left            =   2040
-            TabIndex        =   43
+            TabIndex        =   40
             Top             =   3120
             Width           =   315
          End
@@ -2512,7 +2767,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   3
             Left            =   720
-            TabIndex        =   42
+            TabIndex        =   39
             Top             =   3360
             Width           =   315
          End
@@ -2533,7 +2788,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   1
             Left            =   1200
-            TabIndex        =   41
+            TabIndex        =   38
             Top             =   2880
             Width           =   120
          End
@@ -2554,7 +2809,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   4
             Left            =   2520
-            TabIndex        =   40
+            TabIndex        =   37
             Top             =   2880
             Width           =   120
          End
@@ -2575,7 +2830,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   2
             Left            =   1200
-            TabIndex        =   39
+            TabIndex        =   36
             Top             =   3120
             Width           =   120
          End
@@ -2596,7 +2851,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   5
             Left            =   2520
-            TabIndex        =   38
+            TabIndex        =   35
             Top             =   3120
             Width           =   120
          End
@@ -2617,7 +2872,7 @@ Begin VB.Form frmMain
             Height          =   210
             Index           =   3
             Left            =   1200
-            TabIndex        =   37
+            TabIndex        =   34
             Top             =   3360
             Width           =   120
          End
@@ -2637,7 +2892,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   2280
-            TabIndex        =   36
+            TabIndex        =   33
             Top             =   3360
             Width           =   315
          End
@@ -2657,7 +2912,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   35
+            TabIndex        =   32
             Top             =   2880
             Width           =   360
          End
@@ -2677,7 +2932,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   34
+            TabIndex        =   31
             Top             =   3120
             Width           =   435
          End
@@ -2697,7 +2952,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   33
+            TabIndex        =   30
             Top             =   3360
             Width           =   360
          End
@@ -2717,7 +2972,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   1560
-            TabIndex        =   32
+            TabIndex        =   29
             Top             =   3120
             Width           =   360
          End
@@ -2737,7 +2992,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   1560
-            TabIndex        =   31
+            TabIndex        =   28
             Top             =   2880
             Width           =   390
          End
@@ -2757,36 +3012,10 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   1560
-            TabIndex        =   30
+            TabIndex        =   27
             Top             =   3360
             Width           =   675
          End
-      End
-      Begin VB.PictureBox picInventory 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   4050
-         Left            =   8850
-         ScaleHeight     =   269.004
-         ScaleMode       =   0  'User
-         ScaleWidth      =   195
-         TabIndex        =   27
-         TabStop         =   0   'False
-         Top             =   2850
-         Visible         =   0   'False
-         Width           =   2925
       End
       Begin VB.PictureBox picParty 
          Appearance      =   0  'Flat
@@ -2805,15 +3034,15 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   3750
-         Left            =   8850
+         Left            =   9300
          ScaleHeight     =   250
          ScaleMode       =   3  'Pixel
-         ScaleWidth      =   195
-         TabIndex        =   48
+         ScaleWidth      =   191
+         TabIndex        =   45
          TabStop         =   0   'False
-         Top             =   3150
+         Top             =   4410
          Visible         =   0   'False
-         Width           =   2925
+         Width           =   2865
          Begin VB.Image imgPartySpirit 
             Height          =   135
             Index           =   4
@@ -2893,7 +3122,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   375
             Left            =   1575
-            TabIndex        =   54
+            TabIndex        =   51
             Top             =   3165
             Width           =   1095
          End
@@ -2912,7 +3141,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   375
             Left            =   375
-            TabIndex        =   53
+            TabIndex        =   50
             Top             =   3165
             Width           =   1095
          End
@@ -2923,7 +3152,7 @@ Begin VB.Form frmMain
             Height          =   255
             Index           =   4
             Left            =   255
-            TabIndex        =   52
+            TabIndex        =   49
             Top             =   2355
             Width           =   2415
          End
@@ -2934,7 +3163,7 @@ Begin VB.Form frmMain
             Height          =   255
             Index           =   3
             Left            =   255
-            TabIndex        =   51
+            TabIndex        =   48
             Top             =   1620
             Width           =   2415
          End
@@ -2945,7 +3174,7 @@ Begin VB.Form frmMain
             Height          =   255
             Index           =   2
             Left            =   255
-            TabIndex        =   50
+            TabIndex        =   47
             Top             =   885
             Width           =   2415
          End
@@ -2956,10 +3185,36 @@ Begin VB.Form frmMain
             Height          =   255
             Index           =   1
             Left            =   255
-            TabIndex        =   49
+            TabIndex        =   46
             Top             =   150
             Width           =   2415
          End
+      End
+      Begin VB.PictureBox picEquipment 
+         Appearance      =   0  'Flat
+         AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   238
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   2400
+         Left            =   9300
+         ScaleHeight     =   160
+         ScaleMode       =   0  'User
+         ScaleWidth      =   195
+         TabIndex        =   73
+         TabStop         =   0   'False
+         Top             =   5760
+         Visible         =   0   'False
+         Width           =   2925
       End
       Begin VB.PictureBox picOptions 
          Appearance      =   0  'Flat
@@ -2978,13 +3233,13 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   4095
-         Left            =   8850
+         Left            =   9300
          ScaleHeight     =   270
          ScaleMode       =   0  'User
          ScaleWidth      =   195
-         TabIndex        =   100
+         TabIndex        =   97
          TabStop         =   0   'False
-         Top             =   2850
+         Top             =   4110
          Visible         =   0   'False
          Width           =   2925
          Begin VB.PictureBox picOptionMusic 
@@ -2996,7 +3251,7 @@ Begin VB.Form frmMain
             Left            =   2040
             ScaleHeight     =   285
             ScaleWidth      =   735
-            TabIndex        =   110
+            TabIndex        =   107
             TabStop         =   0   'False
             Top             =   240
             Width           =   735
@@ -3010,7 +3265,7 @@ Begin VB.Form frmMain
             Left            =   2040
             ScaleHeight     =   285
             ScaleWidth      =   735
-            TabIndex        =   109
+            TabIndex        =   106
             TabStop         =   0   'False
             Top             =   600
             Width           =   735
@@ -3024,7 +3279,7 @@ Begin VB.Form frmMain
             Left            =   2040
             ScaleHeight     =   285
             ScaleWidth      =   735
-            TabIndex        =   108
+            TabIndex        =   105
             TabStop         =   0   'False
             Top             =   960
             Width           =   735
@@ -3038,7 +3293,7 @@ Begin VB.Form frmMain
             Left            =   2040
             ScaleHeight     =   285
             ScaleWidth      =   735
-            TabIndex        =   107
+            TabIndex        =   104
             TabStop         =   0   'False
             Top             =   1320
             Width           =   735
@@ -3052,7 +3307,7 @@ Begin VB.Form frmMain
             Left            =   2040
             ScaleHeight     =   285
             ScaleWidth      =   735
-            TabIndex        =   106
+            TabIndex        =   103
             TabStop         =   0   'False
             Top             =   1680
             Width           =   735
@@ -3066,7 +3321,7 @@ Begin VB.Form frmMain
             Left            =   2040
             ScaleHeight     =   285
             ScaleWidth      =   735
-            TabIndex        =   105
+            TabIndex        =   102
             TabStop         =   0   'False
             Top             =   2040
             Width           =   735
@@ -3080,7 +3335,7 @@ Begin VB.Form frmMain
             Left            =   2040
             ScaleHeight     =   285
             ScaleWidth      =   735
-            TabIndex        =   104
+            TabIndex        =   101
             TabStop         =   0   'False
             Top             =   2400
             Width           =   735
@@ -3094,7 +3349,7 @@ Begin VB.Form frmMain
             Left            =   2040
             ScaleHeight     =   285
             ScaleWidth      =   735
-            TabIndex        =   103
+            TabIndex        =   100
             TabStop         =   0   'False
             Top             =   2760
             Width           =   735
@@ -3108,7 +3363,7 @@ Begin VB.Form frmMain
             Left            =   2040
             ScaleHeight     =   285
             ScaleWidth      =   735
-            TabIndex        =   102
+            TabIndex        =   99
             TabStop         =   0   'False
             Top             =   3480
             Width           =   735
@@ -3122,7 +3377,7 @@ Begin VB.Form frmMain
             Left            =   2040
             ScaleHeight     =   285
             ScaleWidth      =   735
-            TabIndex        =   101
+            TabIndex        =   98
             TabStop         =   0   'False
             Top             =   3120
             Width           =   735
@@ -3143,7 +3398,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   120
+            TabIndex        =   117
             Top             =   240
             Width           =   555
          End
@@ -3163,7 +3418,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   119
+            TabIndex        =   116
             Top             =   600
             Width           =   600
          End
@@ -3183,7 +3438,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   118
+            TabIndex        =   115
             Top             =   1320
             Width           =   630
          End
@@ -3203,7 +3458,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   117
+            TabIndex        =   114
             Top             =   960
             Width           =   615
          End
@@ -3223,7 +3478,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   116
+            TabIndex        =   113
             Top             =   2040
             Width           =   615
          End
@@ -3243,7 +3498,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   115
+            TabIndex        =   112
             Top             =   2400
             Width           =   600
          End
@@ -3263,7 +3518,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   114
+            TabIndex        =   111
             Top             =   1680
             Width           =   570
          End
@@ -3283,7 +3538,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   113
+            TabIndex        =   110
             Top             =   3480
             Width           =   1035
          End
@@ -3303,7 +3558,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   112
+            TabIndex        =   109
             Top             =   2760
             Width           =   1200
          End
@@ -3323,7 +3578,7 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   240
-            TabIndex        =   111
+            TabIndex        =   108
             Top             =   3120
             Width           =   1290
          End
@@ -3345,13 +3600,13 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000008&
          Height          =   4050
-         Left            =   8850
+         Left            =   9300
          ScaleHeight     =   270
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   195
-         TabIndex        =   85
+         TabIndex        =   82
          TabStop         =   0   'False
-         Top             =   2850
+         Top             =   4110
          Visible         =   0   'False
          Width           =   2925
          Begin VB.ListBox lstTitles 
@@ -3368,11 +3623,11 @@ Begin VB.Form frmMain
                Strikethrough   =   0   'False
             EndProperty
             ForeColor       =   &H00FFFFFF&
-            Height          =   2340
+            Height          =   2550
             Left            =   300
-            TabIndex        =   86
+            TabIndex        =   83
             TabStop         =   0   'False
-            Top             =   660
+            Top             =   600
             Width           =   2340
          End
          Begin VB.Label lblTitle 
@@ -3391,10 +3646,10 @@ Begin VB.Form frmMain
             EndProperty
             ForeColor       =   &H00FFFFFF&
             Height          =   240
-            Left            =   1185
-            TabIndex        =   200
-            Top             =   240
-            Width           =   645
+            Left            =   60
+            TabIndex        =   196
+            Top             =   180
+            Width           =   2805
          End
          Begin VB.Label lblDesc 
             Alignment       =   2  'Center
@@ -3410,10 +3665,10 @@ Begin VB.Form frmMain
                Strikethrough   =   0   'False
             EndProperty
             ForeColor       =   &H00FFFFFF&
-            Height          =   615
+            Height          =   555
             Left            =   240
-            TabIndex        =   88
-            Top             =   3420
+            TabIndex        =   85
+            Top             =   3480
             Width           =   2535
          End
          Begin VB.Label Label1 
@@ -3433,111 +3688,45 @@ Begin VB.Form frmMain
             ForeColor       =   &H00FFFFFF&
             Height          =   210
             Left            =   855
-            TabIndex        =   87
-            Top             =   3180
+            TabIndex        =   84
+            Top             =   3240
             Width           =   1215
          End
       End
-      Begin VB.PictureBox picSpells 
+      Begin VB.PictureBox picEventChat 
          Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         AutoSize        =   -1  'True
-         BackColor       =   &H00000000&
+         BackColor       =   &H80000001&
          BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
          ForeColor       =   &H80000008&
-         Height          =   4050
-         Left            =   8850
-         ScaleHeight     =   270
+         Height          =   2790
+         Left            =   120
+         ScaleHeight     =   186
          ScaleMode       =   0  'User
-         ScaleWidth      =   195
-         TabIndex        =   121
+         ScaleWidth      =   486
+         TabIndex        =   127
          TabStop         =   0   'False
-         Top             =   2850
+         Top             =   7125
          Visible         =   0   'False
-         Width           =   2925
-      End
-      Begin VB.PictureBox picFriends 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         AutoSize        =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   4050
-         Left            =   8850
-         ScaleHeight     =   270
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   195
-         TabIndex        =   55
-         TabStop         =   0   'False
-         Top             =   2850
-         Visible         =   0   'False
-         Width           =   2925
-         Begin VB.ListBox lstFriends 
-            Appearance      =   0  'Flat
-            BackColor       =   &H80000006&
-            Enabled         =   0   'False
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   8.25
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   2550
-            Left            =   300
-            TabIndex        =   56
+         Width           =   7290
+         Begin VB.PictureBox picChatFace 
+            AutoRedraw      =   -1  'True
+            BorderStyle     =   0  'None
+            Height          =   1500
+            Left            =   120
+            ScaleHeight     =   100
+            ScaleMode       =   3  'Pixel
+            ScaleWidth      =   100
+            TabIndex        =   128
             TabStop         =   0   'False
-            Top             =   600
-            Width           =   2340
+            Top             =   120
+            Visible         =   0   'False
+            Width           =   1500
          End
-         Begin VB.Label Label6 
-            Alignment       =   2  'Center
-            AutoSize        =   -1  'True
+         Begin VB.Label lblEventChat 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000005&
             BackStyle       =   0  'Transparent
-            Caption         =   "Friends"
-            BeginProperty Font 
-               Name            =   "Georgia"
-               Size            =   9.75
-               Charset         =   0
-               Weight          =   700
-               Underline       =   0   'False
-               Italic          =   0   'False
-               Strikethrough   =   0   'False
-            EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   240
-            Left            =   1140
-            TabIndex        =   199
-            Top             =   180
-            Width           =   855
-         End
-         Begin VB.Label lblRemoveFriend 
-            Alignment       =   2  'Center
-            AutoSize        =   -1  'True
-            BackStyle       =   0  'Transparent
-            Caption         =   "Remove Friend"
+            Caption         =   "[Text]"
             BeginProperty Font 
                Name            =   "Georgia"
                Size            =   8.25
@@ -3548,82 +3737,216 @@ Begin VB.Form frmMain
                Strikethrough   =   0   'False
             EndProperty
             ForeColor       =   &H00FFFFFF&
+            Height          =   1515
+            Left            =   1680
+            TabIndex        =   129
+            Top             =   120
+            Width           =   5535
+         End
+         Begin VB.Label lblChoices 
+            AutoSize        =   -1  'True
+            BackColor       =   &H00000000&
+            BackStyle       =   0  'Transparent
+            Caption         =   "[Option 1]"
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H80000003&
             Height          =   210
+            Index           =   1
+            Left            =   240
+            TabIndex        =   134
+            Top             =   1920
+            Width           =   975
+         End
+         Begin VB.Label lblChoices 
+            AutoSize        =   -1  'True
+            BackColor       =   &H00000000&
+            BackStyle       =   0  'Transparent
+            Caption         =   "[Option 2]"
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H80000003&
+            Height          =   210
+            Index           =   2
+            Left            =   240
+            TabIndex        =   133
+            Top             =   2400
+            Width           =   975
+         End
+         Begin VB.Label lblChoices 
+            AutoSize        =   -1  'True
+            BackColor       =   &H00000000&
+            BackStyle       =   0  'Transparent
+            Caption         =   "[Option 3]"
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H80000003&
+            Height          =   210
+            Index           =   3
+            Left            =   3240
+            TabIndex        =   132
+            Top             =   1920
+            Width           =   975
+         End
+         Begin VB.Label lblChoices 
+            AutoSize        =   -1  'True
+            BackColor       =   &H00000000&
+            BackStyle       =   0  'Transparent
+            Caption         =   "[Option 4]"
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H80000003&
+            Height          =   210
+            Index           =   4
+            Left            =   3240
+            TabIndex        =   131
+            Top             =   2400
+            Width           =   975
+         End
+         Begin VB.Label lblEventChatContinue 
+            AutoSize        =   -1  'True
+            BackColor       =   &H00000000&
+            BackStyle       =   0  'Transparent
+            Caption         =   "Continue..."
+            BeginProperty Font 
+               Name            =   "Georgia"
+               Size            =   8.25
+               Charset         =   0
+               Weight          =   700
+               Underline       =   0   'False
+               Italic          =   0   'False
+               Strikethrough   =   0   'False
+            EndProperty
+            ForeColor       =   &H80000003&
+            Height          =   210
+            Left            =   6000
+            TabIndex        =   130
+            Top             =   2400
+            Width           =   1095
+         End
+      End
+      Begin VB.PictureBox picChatbox 
+         Appearance      =   0  'Flat
+         BorderStyle     =   0  'None
+         ForeColor       =   &H80000008&
+         Height          =   2175
+         Left            =   120
+         ScaleHeight     =   145
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   484
+         TabIndex        =   20
+         TabStop         =   0   'False
+         Top             =   7740
+         Width           =   7260
+         Begin VB.TextBox txtMyChat 
+            Appearance      =   0  'Flat
+            BackColor       =   &H80000001&
+            BorderStyle     =   0  'None
+            Enabled         =   0   'False
+            ForeColor       =   &H00FFFFFF&
+            Height          =   225
+            Left            =   600
+            MaxLength       =   512
+            TabIndex        =   22
+            TabStop         =   0   'False
+            Top             =   1890
+            Width           =   6585
+         End
+         Begin RichTextLib.RichTextBox txtChat 
+            Height          =   1755
             Left            =   60
-            TabIndex        =   58
-            Top             =   3600
-            Width           =   2805
-         End
-         Begin VB.Label lblAddFriend 
-            Alignment       =   2  'Center
-            AutoSize        =   -1  'True
-            BackStyle       =   0  'Transparent
-            Caption         =   "Add Friend"
-            BeginProperty Font 
+            TabIndex        =   21
+            TabStop         =   0   'False
+            Top             =   60
+            Width           =   7170
+            _ExtentX        =   12647
+            _ExtentY        =   3096
+            _Version        =   393217
+            BackColor       =   -2147483647
+            BorderStyle     =   0
+            ReadOnly        =   -1  'True
+            ScrollBars      =   2
+            Appearance      =   0
+            TextRTF         =   $"frmMain.frx":03A8
+            BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                Name            =   "Georgia"
                Size            =   8.25
                Charset         =   0
-               Weight          =   700
+               Weight          =   400
                Underline       =   0   'False
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
-            ForeColor       =   &H00FFFFFF&
-            Height          =   210
-            Left            =   900
-            TabIndex        =   57
-            Top             =   3300
-            Width           =   1125
          End
       End
    End
-   Begin VB.PictureBox picSkills 
+   Begin VB.PictureBox picCurrency 
       Appearance      =   0  'Flat
-      BackColor       =   &H80000017&
+      BackColor       =   &H80000001&
       BorderStyle     =   0  'None
+      FillColor       =   &H80000001&
       BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   9.75
-         Charset         =   238
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
          Weight          =   400
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H80000008&
-      Height          =   5850
-      Left            =   7680
-      ScaleHeight     =   390
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   273
-      TabIndex        =   160
+      Height          =   2175
+      Left            =   120
+      ScaleHeight     =   145
+      ScaleMode       =   0  'User
+      ScaleWidth      =   484
+      TabIndex        =   1
       TabStop         =   0   'False
-      Top             =   1050
+      Top             =   7740
       Visible         =   0   'False
-      Width           =   4095
-      Begin VB.Label lblSkills 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skills"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000004&
-         Height          =   240
-         Left            =   1740
-         TabIndex        =   197
-         Top             =   240
-         Width           =   615
+      Width           =   7260
+      Begin VB.TextBox txtCurrency 
+         Appearance      =   0  'Flat
+         Height          =   285
+         Left            =   2160
+         TabIndex        =   3
+         TabStop         =   0   'False
+         Top             =   840
+         Width           =   2775
       End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
+      Begin VB.Label lblCurrencyCancel 
+         Alignment       =   2  'Center
+         BackColor       =   &H00000000&
          BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
+         Caption         =   "Cancel"
          BeginProperty Font 
             Name            =   "Georgia"
             Size            =   8.25
@@ -3633,138 +3956,116 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   3
-         Left            =   2640
-         TabIndex        =   196
-         Top             =   1560
-         Width           =   450
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   2160
+         TabIndex        =   5
+         Top             =   1440
+         Width           =   2775
       End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
+      Begin VB.Label lblCurrencyOk 
+         Alignment       =   2  'Center
+         BackColor       =   &H00000000&
          BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   0
-         Left            =   480
-         TabIndex        =   195
-         Top             =   960
-         Width           =   465
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   1
-         Left            =   2640
-         TabIndex        =   194
-         Top             =   960
-         Width           =   465
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   2
-         Left            =   480
-         TabIndex        =   193
-         Top             =   1800
-         Width           =   465
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   3
-         Left            =   2640
-         TabIndex        =   192
-         Top             =   1800
-         Width           =   465
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   0
-         Left            =   480
-         TabIndex        =   191
+         Caption         =   "Ok"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   2160
+         TabIndex        =   4
          Top             =   1200
-         Width           =   345
+         Width           =   2775
       End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
+      Begin VB.Label lblCurrency 
+         Alignment       =   2  'Center
+         BackColor       =   &H00000000&
          BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   1
-         Left            =   2640
-         TabIndex        =   190
-         Top             =   1200
-         Width           =   345
+         Caption         =   "How many do you want to drop?"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   60
+         TabIndex        =   2
+         Top             =   480
+         Width           =   7155
       End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   2
-         Left            =   480
-         TabIndex        =   189
-         Top             =   2040
-         Width           =   345
+   End
+   Begin VB.PictureBox picDialogue 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000001&
+      BorderStyle     =   0  'None
+      FillColor       =   &H80000001&
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   2175
+      Left            =   120
+      ScaleHeight     =   2175
+      ScaleWidth      =   7260
+      TabIndex        =   56
+      TabStop         =   0   'False
+      Top             =   7740
+      Visible         =   0   'False
+      Width           =   7260
+      Begin VB.TextBox txtDialogue 
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   57
+         TabStop         =   0   'False
+         Top             =   960
+         Visible         =   0   'False
+         Width           =   2295
       End
-      Begin VB.Label lblSkillExp 
+      Begin VB.Label lblDialogue_Button 
+         Alignment       =   2  'Center
          AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
          BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
+         Caption         =   "No"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   210
          Index           =   3
-         Left            =   2640
-         TabIndex        =   188
-         Top             =   2040
-         Width           =   345
+         Left            =   3405
+         TabIndex        =   62
+         Top             =   1665
+         Width           =   285
       End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
+      Begin VB.Label lblDialogue_Title 
+         Alignment       =   2  'Center
          BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   4
-         Left            =   480
-         TabIndex        =   187
-         Top             =   2880
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   4
-         Left            =   480
-         TabIndex        =   186
-         Top             =   2640
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
+         Caption         =   "Trade Request"
          BeginProperty Font 
             Name            =   "Georgia"
             Size            =   8.25
@@ -3774,42 +4075,30 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   4
-         Left            =   480
-         TabIndex        =   185
-         Top             =   2400
-         Width           =   450
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   0
+         TabIndex        =   60
+         Top             =   360
+         Width           =   7215
       End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
+      Begin VB.Label lblDialogue_Text 
+         Alignment       =   2  'Center
          BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   5
-         Left            =   2640
-         TabIndex        =   184
-         Top             =   2880
-         Width           =   345
+         Caption         =   "Player has requested a trade. Would you like to accept?"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   495
+         Left            =   0
+         TabIndex        =   59
+         Top             =   600
+         Width           =   7215
       End
-      Begin VB.Label lblLevel 
+      Begin VB.Label lblDialogue_Button 
+         Alignment       =   2  'Center
          AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
          BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   5
-         Left            =   2640
-         TabIndex        =   183
-         Top             =   2640
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
+         Caption         =   "Ok"
          BeginProperty Font 
             Name            =   "Georgia"
             Size            =   8.25
@@ -3819,330 +4108,20 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   5
-         Left            =   2640
-         TabIndex        =   182
-         Top             =   2400
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   6
-         Left            =   480
-         TabIndex        =   181
-         Top             =   3720
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   6
-         Left            =   480
-         TabIndex        =   180
-         Top             =   3480
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   6
-         Left            =   480
-         TabIndex        =   179
-         Top             =   3240
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   7
-         Left            =   2640
-         TabIndex        =   178
-         Top             =   3720
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   7
-         Left            =   2640
-         TabIndex        =   177
-         Top             =   3480
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   7
-         Left            =   2640
-         TabIndex        =   176
-         Top             =   3240
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   8
-         Left            =   480
-         TabIndex        =   175
-         Top             =   4560
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   8
-         Left            =   480
-         TabIndex        =   174
-         Top             =   4320
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   8
-         Left            =   480
-         TabIndex        =   173
-         Top             =   4080
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   9
-         Left            =   2640
-         TabIndex        =   172
-         Top             =   4560
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   9
-         Left            =   2640
-         TabIndex        =   171
-         Top             =   4320
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   9
-         Left            =   2640
-         TabIndex        =   170
-         Top             =   4080
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   10
-         Left            =   480
-         TabIndex        =   169
-         Top             =   5400
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   10
-         Left            =   480
-         TabIndex        =   168
-         Top             =   5160
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   10
-         Left            =   480
-         TabIndex        =   167
-         Top             =   4920
-         Width           =   450
-      End
-      Begin VB.Label lblSkillExp 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Exp"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   11
-         Left            =   2640
-         TabIndex        =   166
-         Top             =   5400
-         Width           =   345
-      End
-      Begin VB.Label lblLevel 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Level"
-         ForeColor       =   &H8000000E&
-         Height          =   195
-         Index           =   11
-         Left            =   2640
-         TabIndex        =   165
-         Top             =   5160
-         Width           =   465
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   11
-         Left            =   2640
-         TabIndex        =   164
-         Top             =   4920
-         Width           =   450
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
-         Height          =   210
-         Index           =   0
-         Left            =   480
-         TabIndex        =   163
-         Top             =   720
-         Width           =   450
-      End
-      Begin VB.Label lblSkill 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H008080FF&
+         ForeColor       =   &H00FFFFFF&
          Height          =   210
          Index           =   1
-         Left            =   2640
-         TabIndex        =   162
-         Top             =   720
-         Width           =   450
+         Left            =   3405
+         TabIndex        =   58
+         Top             =   1560
+         Width           =   285
       End
-      Begin VB.Label lblSkill 
+      Begin VB.Label lblDialogue_Button 
+         Alignment       =   2  'Center
          AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
          BackStyle       =   0  'Transparent
-         Caption         =   "Skill"
+         Caption         =   "Yes"
          BeginProperty Font 
             Name            =   "Georgia"
             Size            =   8.25
@@ -4152,13 +4131,13 @@ Begin VB.Form frmMain
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         ForeColor       =   &H008080FF&
+         ForeColor       =   &H00FFFFFF&
          Height          =   210
          Index           =   2
-         Left            =   480
-         TabIndex        =   161
-         Top             =   1560
-         Width           =   450
+         Left            =   3360
+         TabIndex        =   61
+         Top             =   1440
+         Width           =   345
       End
    End
    Begin VB.Label lblSwearFilter 
@@ -4176,9 +4155,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6285
-      TabIndex        =   99
-      Top             =   9990
+      Left            =   13380
+      TabIndex        =   96
+      Top             =   12360
       Width           =   1200
    End
    Begin VB.Label lblWeather 
@@ -4196,9 +4175,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6285
-      TabIndex        =   98
-      Top             =   10350
+      Left            =   12885
+      TabIndex        =   95
+      Top             =   12390
       Width           =   855
    End
    Begin VB.Label lblAutoTile 
@@ -4216,9 +4195,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6285
-      TabIndex        =   97
-      Top             =   10710
+      Left            =   12885
+      TabIndex        =   94
+      Top             =   12750
       Width           =   915
    End
    Begin VB.Label lblDebug 
@@ -4236,9 +4215,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6285
-      TabIndex        =   96
-      Top             =   11430
+      Left            =   12885
+      TabIndex        =   93
+      Top             =   13470
       Width           =   600
    End
    Begin VB.Label lblBlood 
@@ -4256,9 +4235,9 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H00FFFFFF&
       Height          =   210
-      Left            =   6285
-      TabIndex        =   95
-      Top             =   11070
+      Left            =   12885
+      TabIndex        =   92
+      Top             =   13110
       Width           =   525
    End
 End
@@ -4330,8 +4309,10 @@ End Sub
 Public Sub chkLayers_Click()
     If frmMain.chkLayers.Value Then
         frmMain.chkLayers.Picture = LoadResPicture("LAYERS_DOWN", vbResBitmap)
+        layersActive = True
     Else
         frmMain.chkLayers.Picture = LoadResPicture("LAYERS_UP", vbResBitmap)
+        layersActive = False
     End If
 End Sub
 
@@ -6275,7 +6256,7 @@ Private Sub picSpells_MouseMove(Button As Integer, Shift As Integer, X As Single
     Else
         If SpellSlot <> 0 Then
             X2 = picSpells.Left - picSpellDesc.Width - 4
-            Y2 = picSpells.Top
+            Y2 = picSpells.Top + 12
             UpdateSpellDescWindow PlayerSpells(SpellSlot), X2, Y2
             LastSpellDesc = PlayerSpells(SpellSlot)
             LastSpellSlotDesc = SpellSlot
@@ -7043,7 +7024,7 @@ Private Sub picInventory_MouseMove(Button As Integer, Shift As Integer, X As Sin
             End If
             
             X = picInventory.Left - picItemDesc.Width - 4
-            Y = picInventory.Top
+            Y = picInventory.Top + 12
             UpdateItemDescWindow GetPlayerInvItemNum(MyIndex, InvNum), X, Y
             LastItemDesc = GetPlayerInvItemNum(MyIndex, InvNum) ' Set it so you don't re-set values
             Exit Sub
@@ -7169,8 +7150,8 @@ Private Sub picEquipment_MouseMove(Button As Integer, Shift As Integer, X As Sin
     EqNum = IsEqItem(X, Y)
 
     If Not EqNum = 0 Then
-        X = X + picEquipment.Left - picItemDesc.Width - 1
-        Y = Y + picEquipment.Top - picItemDesc.Height
+        X = X + picEquipment.Left - picItemDesc.Width + 12
+        Y = Y + picEquipment.Top - picItemDesc.Height + 16
         UpdateItemDescWindow GetPlayerEquipment(MyIndex, EqNum), X, Y
         LastItemDesc = GetPlayerEquipment(MyIndex, EqNum) ' Set it so you don't re-set values
         Exit Sub
@@ -7434,12 +7415,12 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
                         frmAdmin.centerMiniVert PixelsToTwips((rectt.Right - rectt.Left), 0), PixelsToTwips((rectt.Bottom - rectt.Top), 1), PixelsToTwips(rectt.Left, 0), PixelsToTwips(rectt.Top, 1)
                     End If
                     If FormVisible("frmMapPreview") And lng_hWnd = frmMain.hWnd Then
-                        frmMapPreview.Move frmMain.Left - frmMapPreview.Width - 80, frmMain.Top + 75
+                        frmMapPreview.Move frmMain.Left - frmMapPreview.Width, frmMain.Top
                     End If
                     If FormVisible("frmMapPreview") Then
-                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75 + 145 + frmMapPreview.Height
+                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width, frmMain.Top + frmMapPreview.Height
                     Else
-                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 80, frmMain.Top + 75
+                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width, frmMain.Top
                     End If
                 End If
         Case WM_NCACTIVATE
@@ -7479,7 +7460,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
             If InMapEditor Then
                 Dim Up As Boolean, curTil As Long
                 Up = IIf(HiWord(wParam) = 120, False, True)
-                If displayTilesets And chkLayers.Value = 0 Then
+                If displayTilesets And chkLayers.Value = 0 And layersActive = False Then
                     curTil = frmEditor_Map.scrlTileSet.Value
                     frmEditor_Map.scrlTileSet.Value = (IIf((curTil = 1 And Not Up) Or (curTil = NumTileSets And Up), curTil, IIf(Up, 1, -1) + curTil))
                     'lblTitle = "UBER Map Editor - " & "Tileset: " & frmEditor_Map.scrlTileSet.Value

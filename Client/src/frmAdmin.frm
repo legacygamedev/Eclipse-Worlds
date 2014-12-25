@@ -1975,7 +1975,7 @@ Public Sub UpdatePlayersOnline()
     Next
     
     If foundStuff Then
-        cmbPlayersOnline.AddItem ("----Staff: " & stuffCounter & "-----")
+        cmbPlayersOnline.AddItem ("Staff: " & stuffCounter)
         
             ReDim Preserve ignoreIndexes(0)
             ignoreIndexes(0) = currentIgnore
@@ -1989,7 +1989,7 @@ Public Sub UpdatePlayersOnline()
     End If
 
     If foundPlayer Then
-        cmbPlayersOnline.AddItem ("----Players: " & playersCounter & "----")
+        cmbPlayersOnline.AddItem ("Players: " & playersCounter)
         
             ReDim Preserve ignoreIndexes(1)
             ignoreIndexes(1) = currentIgnore
@@ -2189,7 +2189,7 @@ Public Sub picSizer_Click()
         BorderStyle = 1
         Caption = "Admin Panel"
         Height = 9060
-        frmAdmin.Left = frmMain.Left + frmMain.Width + TwipsToPixels(frmAdmin.Width, 0)
+        frmAdmin.Left = frmMain.Left + frmMain.Width
         frmAdmin.Top = frmMain.Top
     Else
         For Each ctrl In Controls

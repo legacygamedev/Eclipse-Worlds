@@ -28,16 +28,16 @@ Begin VB.Form frmEditor_Map
    Begin VB.Frame fraType 
       Caption         =   "Type"
       Height          =   1650
-      Left            =   1650
-      TabIndex        =   80
-      Top             =   2835
+      Left            =   1680
+      TabIndex        =   79
+      Top             =   2820
       Width           =   1455
       Begin VB.OptionButton OptLayers 
          Alignment       =   1  'Right Justify
          Caption         =   "Layers"
          Height          =   255
          Left            =   360
-         TabIndex        =   89
+         TabIndex        =   88
          Top             =   240
          Value           =   -1  'True
          Width           =   855
@@ -47,7 +47,7 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Attributes"
          Height          =   255
          Left            =   120
-         TabIndex        =   88
+         TabIndex        =   87
          Top             =   480
          Width           =   1095
       End
@@ -56,7 +56,7 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Block"
          Height          =   255
          Left            =   480
-         TabIndex        =   87
+         TabIndex        =   86
          Top             =   720
          Width           =   735
       End
@@ -65,7 +65,7 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Events"
          Height          =   255
          Left            =   360
-         TabIndex        =   86
+         TabIndex        =   85
          Top             =   960
          Width           =   855
       End
@@ -156,7 +156,7 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Sound Effect"
          Height          =   2655
          Left            =   15
-         TabIndex        =   91
+         TabIndex        =   90
          Top             =   810
          Visible         =   0   'False
          Width           =   3000
@@ -173,7 +173,7 @@ Begin VB.Form frmEditor_Map
             EndProperty
             Height          =   375
             Left            =   240
-            TabIndex        =   93
+            TabIndex        =   92
             Top             =   2040
             Width           =   1215
          End
@@ -192,7 +192,7 @@ Begin VB.Form frmEditor_Map
             Left            =   240
             List            =   "frmEditor_Map.frx":03B7
             Style           =   2  'Dropdown List
-            TabIndex        =   92
+            TabIndex        =   91
             Top             =   360
             Width           =   2565
          End
@@ -812,7 +812,7 @@ Begin VB.Form frmEditor_Map
       EndProperty
       Height          =   1575
       Left            =   1665
-      TabIndex        =   70
+      TabIndex        =   69
       Top             =   2850
       Visible         =   0   'False
       Width           =   1455
@@ -834,7 +834,7 @@ Begin VB.Form frmEditor_Map
          ScaleHeight     =   34
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   34
-         TabIndex        =   81
+         TabIndex        =   80
          Top             =   240
          Width           =   540
          Begin VB.PictureBox Picture8 
@@ -854,7 +854,7 @@ Begin VB.Form frmEditor_Map
             ScaleHeight     =   32
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   32
-            TabIndex        =   82
+            TabIndex        =   81
             Top             =   15
             Width           =   480
             Begin VB.PictureBox picRandomTile 
@@ -876,7 +876,7 @@ Begin VB.Form frmEditor_Map
                ScaleHeight     =   32
                ScaleMode       =   3  'Pixel
                ScaleWidth      =   32
-               TabIndex        =   83
+               TabIndex        =   82
                Top             =   0
                Width           =   480
             End
@@ -900,7 +900,7 @@ Begin VB.Form frmEditor_Map
          ScaleHeight     =   34
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   34
-         TabIndex        =   77
+         TabIndex        =   76
          Top             =   900
          Width           =   540
          Begin VB.PictureBox Picture12 
@@ -920,7 +920,7 @@ Begin VB.Form frmEditor_Map
             ScaleHeight     =   32
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   32
-            TabIndex        =   78
+            TabIndex        =   77
             Top             =   15
             Width           =   480
             Begin VB.PictureBox picRandomTile 
@@ -942,7 +942,7 @@ Begin VB.Form frmEditor_Map
                ScaleHeight     =   32
                ScaleMode       =   3  'Pixel
                ScaleWidth      =   32
-               TabIndex        =   79
+               TabIndex        =   78
                Top             =   0
                Width           =   480
             End
@@ -966,7 +966,7 @@ Begin VB.Form frmEditor_Map
          ScaleHeight     =   34
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   34
-         TabIndex        =   74
+         TabIndex        =   73
          Top             =   900
          Width           =   540
          Begin VB.PictureBox Picture10 
@@ -986,7 +986,7 @@ Begin VB.Form frmEditor_Map
             ScaleHeight     =   32
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   32
-            TabIndex        =   75
+            TabIndex        =   74
             Top             =   15
             Width           =   480
             Begin VB.PictureBox picRandomTile 
@@ -1008,7 +1008,7 @@ Begin VB.Form frmEditor_Map
                ScaleHeight     =   32
                ScaleMode       =   3  'Pixel
                ScaleWidth      =   32
-               TabIndex        =   76
+               TabIndex        =   75
                Top             =   0
                Width           =   480
             End
@@ -1032,7 +1032,7 @@ Begin VB.Form frmEditor_Map
          ScaleHeight     =   34
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   34
-         TabIndex        =   71
+         TabIndex        =   70
          Top             =   240
          Width           =   540
          Begin VB.PictureBox Picture6 
@@ -1052,7 +1052,7 @@ Begin VB.Form frmEditor_Map
             ScaleHeight     =   32
             ScaleMode       =   3  'Pixel
             ScaleWidth      =   32
-            TabIndex        =   72
+            TabIndex        =   71
             Top             =   15
             Width           =   480
             Begin VB.PictureBox picRandomTile 
@@ -1074,7 +1074,7 @@ Begin VB.Form frmEditor_Map
                ScaleHeight     =   32
                ScaleMode       =   3  'Pixel
                ScaleWidth      =   32
-               TabIndex        =   73
+               TabIndex        =   72
                Top             =   0
                Width           =   480
             End
@@ -1092,18 +1092,18 @@ Begin VB.Form frmEditor_Map
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   1095
-      Left            =   1605
+      Height          =   1155
+      Left            =   1620
       TabIndex        =   22
-      Top             =   450
+      Top             =   0
       Width           =   1365
       Begin VB.CheckBox chkRandom 
          Caption         =   "Random"
          Height          =   255
          Left            =   240
-         TabIndex        =   68
+         TabIndex        =   95
          ToolTipText     =   "Will place tiles you select randomly."
-         Top             =   225
+         Top             =   240
          Width           =   915
       End
       Begin VB.HScrollBar scrlTileSet 
@@ -1112,7 +1112,7 @@ Begin VB.Form frmEditor_Map
          Max             =   10
          Min             =   1
          TabIndex        =   0
-         Top             =   720
+         Top             =   840
          Value           =   1
          Width           =   960
       End
@@ -1131,8 +1131,8 @@ Begin VB.Form frmEditor_Map
          EndProperty
          Height          =   255
          Left            =   0
-         TabIndex        =   69
-         Top             =   480
+         TabIndex        =   68
+         Top             =   600
          Width           =   1335
       End
    End
@@ -1140,16 +1140,16 @@ Begin VB.Form frmEditor_Map
       Caption         =   "Copy"
       Height          =   360
       Left            =   1680
-      TabIndex        =   94
-      Top             =   1650
+      TabIndex        =   93
+      Top             =   1230
       Width           =   495
    End
    Begin VB.CommandButton cmdPaste 
       Caption         =   "Paste"
       Height          =   330
       Left            =   2400
-      TabIndex        =   95
-      Top             =   1665
+      TabIndex        =   94
+      Top             =   1245
       Width           =   555
    End
    Begin VB.Frame fraAttribs 
@@ -1164,7 +1164,7 @@ Begin VB.Form frmEditor_Map
          Caption         =   "Sound"
          Height          =   270
          Left            =   120
-         TabIndex        =   90
+         TabIndex        =   89
          Top             =   3120
          Width           =   1215
       End
@@ -1302,7 +1302,7 @@ Begin VB.Form frmEditor_Map
          Height          =   255
          Left            =   255
          Max             =   5
-         TabIndex        =   84
+         TabIndex        =   83
          Top             =   1905
          Width           =   975
       End
@@ -1447,7 +1447,7 @@ Begin VB.Form frmEditor_Map
          EndProperty
          Height          =   255
          Left            =   135
-         TabIndex        =   85
+         TabIndex        =   84
          Top             =   1665
          Width           =   1215
       End

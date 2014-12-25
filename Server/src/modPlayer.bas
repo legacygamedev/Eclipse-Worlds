@@ -1849,7 +1849,11 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                      ' Send the sound
                     SendPlayerSound Index, GetPlayerX(Index), GetPlayerY(Index), SoundEntity.seItem, GetPlayerInvItemNum(Index, InvNum)
                 Else
-                    Call PlayerMsg(Index, "The item you are trying to equip is broken!", 12)
+                    If Item(GetPlayerInvItemNum(Index, InvNum)).Data1 = 0 Then
+                        Call PlayerMsg(Index, "This item lacks durability, report it to a staff member!", 12)
+                    Else
+                        Call PlayerMsg(Index, "The item you are trying to equip is broken!", 12)
+                    End If
                 End If
             End If
         

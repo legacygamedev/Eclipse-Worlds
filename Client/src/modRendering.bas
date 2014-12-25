@@ -144,12 +144,13 @@ Public Function InitDX8() As Boolean
     Direct3D_Window.BackBufferFormat = Display_Mode.Format ' Sets the format that was retrieved into the backbuffer.
     
     ' Creates the rendering device with some useful info, along with the info
-    ' DispMode.Format = D3DFMT_X8R8G8B8
     Direct3D_Window.SwapEffect = D3DSWAPEFFECT_COPY
-    Direct3D_Window.BackBufferCount = 1 '1 backbuffer only
-    Direct3D_Window.BackBufferWidth = frmMain.picScreen.ScaleWidth 'Match the backbuffer width with the display width
-    Direct3D_Window.BackBufferHeight = frmMain.picScreen.ScaleHeight 'Match the backbuffer height with the display height
-    Direct3D_Window.hDeviceWindow = frmMain.picScreen.hWnd 'Use frmMain as the device window.
+    Direct3D_Window.BackBufferCount = 1
+    Display_Mode.Width = frmMain.picScreen.ScaleWidth
+    Display_Mode.Height = frmMain.picScreen.ScaleHeight
+    Direct3D_Window.BackBufferWidth = frmMain.picScreen.ScaleWidth
+    Direct3D_Window.BackBufferHeight = frmMain.picScreen.ScaleHeight
+    Direct3D_Window.hDeviceWindow = frmMain.picScreen.hWnd ' Use frmMain as the device window.
     
     ' We've already setup for Direct3D_Window.
     If TryCreateDirectX8Device = False Then
@@ -5678,10 +5679,10 @@ Public Sub UpdateCamera()
         StartY = 0
     End If
 
-    EndX = StartX + (MIN_MAPX + 1) + 1
-    EndY = StartY + (MIN_MAPY + 1) + 1
+    EndX = StartX + (MIN_MAPX + 1)
+    EndY = StartY + (MIN_MAPY + 1)
 
-    If EndX > Map.MaxX Then
+    If EndX >= Map.MaxX Then
         offsetX = 32
         
         If EndX = Map.MaxX Then
@@ -5694,7 +5695,7 @@ Public Sub UpdateCamera()
         StartX = EndX - MIN_MAPX - 1
     End If
 
-    If EndY > Map.MaxY Then
+    If EndY >= Map.MaxY Then
         offsetY = 32
 
         If EndY = Map.MaxY Then
@@ -5731,7 +5732,6 @@ ErrorHandler:
     Exit Sub
 
 End Sub
-
 
 Public Sub InitAutotiles()
     Dim X As Long, Y As Long, layerNum As Long

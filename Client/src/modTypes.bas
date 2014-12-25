@@ -89,6 +89,8 @@ Private Type OptionsRec
     Blood As Byte
     MusicVolume As Double
     SoundVolume As Double
+    ResolutionWidth As Long
+    ResolutionHeight As Long
 End Type
 
 Public Type PartyRec

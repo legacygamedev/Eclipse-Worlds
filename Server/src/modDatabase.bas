@@ -370,6 +370,7 @@ End Sub
 Public Sub LoadDataSizes()
     MAX_MAPS = GetVar(App.path & "\data\options.ini", "Data Sizes", "Maps")
     MAX_ITEMS = GetVar(App.path & "\data\options.ini", "Data Sizes", "Items")
+    MAX_SHOPS = GetVar(App.path & "\data\options.ini", "Data Sizes", "Shops")
     MAX_ANIMATIONS = GetVar(App.path & "\data\options.ini", "Data Sizes", "Animations")
     MAX_CLASSES = GetVar(App.path & "\data\options.ini", "Data Sizes", "Classes")
     MAX_EMOTICONS = GetVar(App.path & "\data\options.ini", "Data Sizes", "Emoticons")
@@ -952,8 +953,8 @@ Sub CheckShops()
 End Sub
 
 Sub ClearShop(ByVal Index As Long)
-    Call ZeroMemory(ByVal VarPtr(Shop(Index)), LenB(Shop(Index)))
     ReDim Shop(MAX_SHOPS)
+    Call ZeroMemory(ByVal VarPtr(Shop(Index)), LenB(Shop(Index)))
     Shop(Index).Name = vbNullString
 End Sub
 
