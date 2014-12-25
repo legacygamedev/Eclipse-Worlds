@@ -115,7 +115,6 @@ Public ShopItemFrame(1 To MAX_TRADES) As Byte ' Used for animated items
 Public LastItemDesc As Long ' Stores the last item we showed in desc
 Public LastSpellDesc As Long ' Stores the last spell we showed in desc
 Public LastSpellSlotDesc As Byte
-Public LastBankDesc As Long ' Stores the last Bank item we showed in desc
 Public TmpCurrencyItem As Long
 Public InShop As Long ' Is the player in a shop?
 Public ShopAction As Byte ' stores the current shop action

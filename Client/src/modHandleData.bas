@@ -2304,7 +2304,7 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
         OldEXPBarWidth = frmMain.imgEXPBar.Width
         NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
         
-        frmMain.lblEXP.Caption = GetPlayerExp(MyIndex) & "/" & TNL
+        frmMain.lblExp.Caption = GetPlayerExp(MyIndex) & "/" & TNL
     End If
 End Sub
 
