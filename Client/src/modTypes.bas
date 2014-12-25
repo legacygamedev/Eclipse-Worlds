@@ -68,7 +68,6 @@ Private Type OptionsRec
     SavePassword As Byte
     Password As String * NAME_LENGTH
     UserName As String * NAME_LENGTH
-    Website As String
     IP As String
     Port As Long
     MenuMusic As String
