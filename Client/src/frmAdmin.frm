@@ -680,7 +680,7 @@ Begin VB.Form frmAdmin
          TabIndex        =   11
          TabStop         =   0   'False
          Top             =   1440
-         Width           =   855
+         Width           =   915
       End
       Begin VB.CommandButton cmdLevelUp 
          Caption         =   "Level Up"
@@ -698,7 +698,7 @@ Begin VB.Form frmAdmin
          TabIndex        =   10
          TabStop         =   0   'False
          Top             =   1980
-         Width           =   855
+         Width           =   915
       End
       Begin VB.CommandButton cmdARespawn 
          Caption         =   "Respawn"
@@ -840,7 +840,7 @@ Begin VB.Form frmAdmin
          TabIndex        =   3
          TabStop         =   0   'False
          Top             =   1170
-         Width           =   855
+         Width           =   915
       End
       Begin VB.CommandButton cmdAKick 
          Caption         =   "Kick"
@@ -858,7 +858,7 @@ Begin VB.Form frmAdmin
          TabIndex        =   2
          TabStop         =   0   'False
          Top             =   1710
-         Width           =   855
+         Width           =   915
       End
       Begin MSComCtl2.UpDown upSprite 
          Height          =   555
