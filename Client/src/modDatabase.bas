@@ -376,7 +376,7 @@ Private Sub LoadOptionValues()
     End If
     
     If GetVar(FileName, "Options", "ResolutionHeight") = "" Then
-        Options.ResolutionHeight = "608"
+        Options.ResolutionHeight = "640"
         Call PutVar(FileName, "Options", "ResolutionHeight", Trim$(Options.ResolutionHeight))
     Else
         Options.ResolutionHeight = GetVar(FileName, "Options", "ResolutionHeight")
