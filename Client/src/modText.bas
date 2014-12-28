@@ -764,8 +764,8 @@ Public Sub DrawChatBubble(ByVal Index As Long)
         End If
         
         ' Check if we should be seeing it
-        If .Timer + 100 < timeGetTime Then
-            .Alpha = .Alpha - 2.5
+        If .Timer + 500 < timeGetTime Then
+            .Alpha = .Alpha - 1.25
         End If
 
         If .TargetType = TARGET_TYPE_PLAYER Then
@@ -838,7 +838,7 @@ Public Sub DrawChatBubble(ByVal Index As Long)
         Next
         
         ' Check if it's timed out - close it if so
-        If .Timer + 8000 < timeGetTime Then
+        If .Alpha = 0 Then
             .active = False
         End If
     End With
