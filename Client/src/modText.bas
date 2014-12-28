@@ -764,8 +764,8 @@ Public Sub DrawChatBubble(ByVal Index As Long)
         End If
         
         ' Check if we should be seeing it
-        If .Timer + 500 < timeGetTime Then
-            .Alpha = .Alpha - 1.25
+        If .Timer + 5000 < timeGetTime Then
+            .Alpha = .Alpha - 7.5
         End If
 
         If .TargetType = TARGET_TYPE_PLAYER Then
