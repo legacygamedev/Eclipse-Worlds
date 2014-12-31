@@ -51,7 +51,8 @@ End Sub
 Public Sub PlayMusic(FileName As String, Optional ByVal Ignore As Boolean = False)
     Dim SplitMusic() As String
     
-    If Ignore = False And (Options.Music = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None" Or CurrentMusic = Trim$(FileName)) Then Exit Sub
+    If Ignore = False And Options.Music = 0 Then Exit Sub
+    If Trim$(FileName) = vbNullString Or Trim$(FileName) = "None" Or CurrentMusic = Trim$(FileName) Then Exit Sub
     
     StopMusic
     
@@ -106,7 +107,8 @@ Public Sub PlaySound(FileName As String, _
    Dim I As Long
 
    '
-   If Ignore = False And (Options.Sound = 0 Or Trim$(FileName) = vbNullString Or Trim$(FileName) = "None") Then Exit Sub
+   If Ignore = False And Options.Sound = 0 Then Exit Sub
+   If Trim$(FileName) = vbNullString Or Trim$(FileName) = "None" Then Exit Sub
     
    If FileExist(App.Path & SOUND_PATH & Trim$(FileName), True) Then
 

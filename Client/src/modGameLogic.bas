@@ -1589,12 +1589,13 @@ Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal m
         .Alpha = 255
     End With
 
+
     If ActionMsg(ActionMsgIndex).Type = ACTIONMSG_SCROLL Then
 
         For I = 1 To Action_HighIndex
 
-            If ActionMsg(I).Y >= ActionMsg(ActionMsgIndex).Y - 4 And ActionMsg(I).Y <= ActionMsg(ActionMsgIndex).Y + 4 Then
-                ActionMsg(ActionMsgIndex).WaitTimer = timeGetTime + 125
+            If ActionMsg(I).Y >= ActionMsg(ActionMsgIndex).Y - 12 And ActionMsg(I).Y <= ActionMsg(ActionMsgIndex).Y + 12 Then
+                ActionMsg(ActionMsgIndex).WaitTimer = timeGetTime + 250
 
                 Exit For
 
@@ -1605,8 +1606,8 @@ Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal m
         For I = 1 To Action_HighIndex
 
             If ActionMsg(I).WaitTimer > 0 Then
-                If ActionMsg(I).Y >= ActionMsg(ActionMsgIndex).Y - 4 And ActionMsg(I).Y <= ActionMsg(ActionMsgIndex).Y + 4 Then
-                    ActionMsg(ActionMsgIndex).WaitTimer = ActionMsg(ActionMsgIndex).WaitTimer + 125
+                If ActionMsg(I).Y >= ActionMsg(ActionMsgIndex).Y - 12 And ActionMsg(I).Y <= ActionMsg(ActionMsgIndex).Y + 12 Then
+                    ActionMsg(ActionMsgIndex).WaitTimer = ActionMsg(ActionMsgIndex).WaitTimer + 250
 
                     Exit For
 
@@ -1614,7 +1615,6 @@ Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal m
             End If
 
         Next
-    End If
     
     SetActionHighIndex
     Exit Sub
