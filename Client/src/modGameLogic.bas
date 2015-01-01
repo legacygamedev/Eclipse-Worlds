@@ -1615,6 +1615,8 @@ Public Sub CreateActionMsg(ByVal Message As String, ByVal Color As Long, ByVal m
             End If
 
         Next
+        
+    End If
     
     SetActionHighIndex
     Exit Sub
