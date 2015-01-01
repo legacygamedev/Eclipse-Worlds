@@ -25,51 +25,6 @@ Begin VB.Form frmEditor_Map
    ScaleWidth      =   999
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
-   Begin VB.Frame fraType 
-      Caption         =   "Type"
-      Height          =   1650
-      Left            =   1680
-      TabIndex        =   79
-      Top             =   2820
-      Width           =   1455
-      Begin VB.OptionButton OptLayers 
-         Alignment       =   1  'Right Justify
-         Caption         =   "Layers"
-         Height          =   255
-         Left            =   360
-         TabIndex        =   88
-         Top             =   240
-         Value           =   -1  'True
-         Width           =   855
-      End
-      Begin VB.OptionButton OptAttributes 
-         Alignment       =   1  'Right Justify
-         Caption         =   "Attributes"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   87
-         Top             =   480
-         Width           =   1095
-      End
-      Begin VB.OptionButton OptBlock 
-         Alignment       =   1  'Right Justify
-         Caption         =   "Block"
-         Height          =   255
-         Left            =   480
-         TabIndex        =   86
-         Top             =   720
-         Width           =   735
-      End
-      Begin VB.OptionButton OptEvents 
-         Alignment       =   1  'Right Justify
-         Caption         =   "Events"
-         Height          =   255
-         Left            =   360
-         TabIndex        =   85
-         Top             =   960
-         Width           =   855
-      End
-   End
    Begin VB.PictureBox picAttributes 
       BorderStyle     =   0  'None
       BeginProperty Font 
@@ -799,6 +754,122 @@ Begin VB.Form frmEditor_Map
          End
       End
    End
+   Begin VB.Frame fraTileSet 
+      Caption         =   "Tileset: 1"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   1155
+      Left            =   1620
+      TabIndex        =   22
+      Top             =   0
+      Width           =   1365
+      Begin VB.CheckBox chkRandom 
+         Caption         =   "Random"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   95
+         ToolTipText     =   "Will place tiles you select randomly."
+         Top             =   240
+         Width           =   915
+      End
+      Begin VB.HScrollBar scrlTileSet 
+         Height          =   255
+         Left            =   240
+         Max             =   10
+         Min             =   1
+         TabIndex        =   0
+         Top             =   840
+         Value           =   1
+         Width           =   960
+      End
+      Begin VB.Label lblRevision 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Revision:"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   0
+         TabIndex        =   68
+         Top             =   600
+         Width           =   1335
+      End
+   End
+   Begin VB.CommandButton cmdCopy 
+      Caption         =   "Copy"
+      Height          =   405
+      Left            =   1620
+      TabIndex        =   93
+      Top             =   1260
+      Width           =   555
+   End
+   Begin VB.CommandButton cmdPaste 
+      Caption         =   "Paste"
+      Height          =   390
+      Left            =   2400
+      TabIndex        =   94
+      Top             =   1260
+      Width           =   615
+   End
+   Begin VB.Frame fraType 
+      Caption         =   "Type"
+      Height          =   1590
+      Left            =   1620
+      TabIndex        =   79
+      Top             =   2880
+      Width           =   1455
+      Begin VB.OptionButton OptLayers 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Layers"
+         Height          =   255
+         Left            =   360
+         TabIndex        =   88
+         Top             =   240
+         Value           =   -1  'True
+         Width           =   855
+      End
+      Begin VB.OptionButton OptAttributes 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Attributes"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   87
+         Top             =   480
+         Width           =   1095
+      End
+      Begin VB.OptionButton OptBlock 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Block"
+         Height          =   255
+         Left            =   480
+         TabIndex        =   86
+         Top             =   720
+         Width           =   735
+      End
+      Begin VB.OptionButton OptEvents 
+         Alignment       =   1  'Right Justify
+         Caption         =   "Events"
+         Height          =   255
+         Left            =   360
+         TabIndex        =   85
+         Top             =   960
+         Width           =   855
+      End
+   End
    Begin VB.Frame fraRandom 
       Caption         =   "Random"
       BeginProperty Font 
@@ -810,10 +881,10 @@ Begin VB.Form frmEditor_Map
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   1575
-      Left            =   1665
+      Height          =   1515
+      Left            =   1620
       TabIndex        =   69
-      Top             =   2850
+      Top             =   2955
       Visible         =   0   'False
       Width           =   1455
       Begin VB.PictureBox Picture7 
@@ -1081,80 +1152,9 @@ Begin VB.Form frmEditor_Map
          End
       End
    End
-   Begin VB.Frame fraTileSet 
-      Caption         =   "Tileset: 1"
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   1155
-      Left            =   1620
-      TabIndex        =   22
-      Top             =   0
-      Width           =   1365
-      Begin VB.CheckBox chkRandom 
-         Caption         =   "Random"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   95
-         ToolTipText     =   "Will place tiles you select randomly."
-         Top             =   240
-         Width           =   915
-      End
-      Begin VB.HScrollBar scrlTileSet 
-         Height          =   255
-         Left            =   240
-         Max             =   10
-         Min             =   1
-         TabIndex        =   0
-         Top             =   840
-         Value           =   1
-         Width           =   960
-      End
-      Begin VB.Label lblRevision 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Revision:"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   0
-         TabIndex        =   68
-         Top             =   600
-         Width           =   1335
-      End
-   End
-   Begin VB.CommandButton cmdCopy 
-      Caption         =   "Copy"
-      Height          =   360
-      Left            =   1680
-      TabIndex        =   93
-      Top             =   1230
-      Width           =   495
-   End
-   Begin VB.CommandButton cmdPaste 
-      Caption         =   "Paste"
-      Height          =   330
-      Left            =   2400
-      TabIndex        =   94
-      Top             =   1245
-      Width           =   555
-   End
    Begin VB.Frame fraAttribs 
       Caption         =   "Attributes"
-      Height          =   4455
+      Height          =   4470
       Left            =   120
       TabIndex        =   23
       Top             =   0
@@ -1173,7 +1173,7 @@ Begin VB.Form frmEditor_Map
          Height          =   375
          Left            =   240
          TabIndex        =   13
-         Top             =   3480
+         Top             =   3540
          Width           =   975
       End
       Begin VB.OptionButton optCheckpoint 
@@ -1293,10 +1293,10 @@ Begin VB.Form frmEditor_Map
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   4425
+      Height          =   4470
       Left            =   120
       TabIndex        =   24
-      Top             =   30
+      Top             =   0
       Width           =   1455
       Begin VB.HScrollBar scrlAutotile 
          Height          =   255
