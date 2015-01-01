@@ -2283,7 +2283,7 @@ Public Sub Party_GetLoot(ByVal PartyNum As Long, ByVal ItemNum As Long, ByVal It
     ' Prevent subscript out of range
     If foundMember = False Then Exit Sub
     
-    If Moral(GetPlayerMap(tmpIndex)).CanDropItem = 1 Then
+    If Moral(Map(GetPlayerMap(tmpIndex)).Moral).CanDropItem = 1 Then
         Call SpawnItem(ItemNum, ItemValue, Item(ItemNum).Data1, GetPlayerMap(tmpIndex), X, Y, GetPlayerName(tmpIndex))
     Else
         GiveInvItem tmpIndex, ItemNum, ItemValue, Item(ItemNum).Data1

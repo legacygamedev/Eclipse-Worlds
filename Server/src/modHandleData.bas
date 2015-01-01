@@ -2549,7 +2549,7 @@ Sub HandleSpawnItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     ' Location
     Where = buffer.ReadInteger
     
-    If Where = 1 And Moral(GetPlayerMap(Index)).CanDropItem = 1 Then
+    If Where = 1 And Moral(Map(GetPlayerMap(Index)).Moral).CanDropItem = 1 Then
         SpawnItem TmpItem, TmpAmount, Item(TmpItem).Data1, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Index)
         Call PlayerMsg(Index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been dropped beneath you.", BrightGreen)
     Else

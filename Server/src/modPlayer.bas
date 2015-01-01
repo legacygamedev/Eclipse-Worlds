@@ -1448,7 +1448,7 @@ Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
                     Call Party_GetLoot(tempplayer(Attacker).InParty, GetPlayerEquipment(Index, i), 1, GetPlayerX(Index), GetPlayerY(Index))
                     RemoveItem = True
                 Else
-                    If Moral(GetPlayerMap(Index)).CanDropItem = 1 Then
+                    If Moral(Map(GetPlayerMap(Index)).Moral).CanDropItem = 1 Then
                         If Attacker > 0 Then
                             Call SpawnItem(GetPlayerEquipment(Index, i), 1, 0, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Attacker))
                             RemoveItem = True
