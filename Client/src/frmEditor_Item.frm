@@ -1737,15 +1737,15 @@ End Sub
 
 Private Sub cmdChangeDataSize_Click()
     Dim Res As VbMsgBoxResult, val As String
-    Dim dataModified As Boolean, I As Long
+    Dim dataModified As Boolean, i As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_ITEMS
-        If Item_Changed(I) Then
+    For i = 1 To MAX_ITEMS
+        If Item_Changed(i) Then
         
             dataModified = True
             Exit For
@@ -1808,7 +1808,7 @@ End Sub
 
 
 Public Sub Form_Load()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -1825,15 +1825,15 @@ Public Sub Form_Load()
     cmbProficiencyReq.Clear
     cmbProficiencyReq.AddItem "None"
     
-    For I = 1 To Proficiency_Count - 1
-        cmbProficiencyReq.AddItem GetProficiencyName(I)
+    For i = 1 To Proficiency_Count - 1
+        cmbProficiencyReq.AddItem GetProficiencyName(i)
     Next
     
     cmbSkillReq.Clear
     cmbSkillReq.AddItem "None"
     
-    For I = 1 To Skill_Count - 1
-        cmbSkillReq.AddItem GetSkillName(I)
+    For i = 1 To Skill_Count - 1
+        cmbSkillReq.AddItem GetSkillName(i)
     Next
     
     scrlItem1.max = MAX_ITEMS
@@ -2726,18 +2726,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, I As Long
+    Dim Find As String, i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 0 To lstIndex.ListCount - 1
-        Find = Trim$(I + 1 & ": " & txtSearch.text)
+    For i = 0 To lstIndex.ListCount - 1
+        Find = Trim$(i + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(I)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = I
+        If Len(lstIndex.List(i)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = i
                 Exit For
             End If
         End If

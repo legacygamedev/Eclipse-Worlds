@@ -72,7 +72,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Function ConnectToServer(ByVal I As Long) As Boolean
+Public Function ConnectToServer(ByVal i As Long) As Boolean
     Dim Wait As Long
 
     ' If debug mode, handle error then exit out
@@ -454,7 +454,7 @@ Public Sub SendSaveMap()
     Dim packet As String
     Dim X As Long
     Dim Y As Long
-    Dim I As Long, Z As Long, w As Long
+    Dim i As Long, Z As Long, w As Long
     Dim buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
@@ -501,10 +501,10 @@ Public Sub SendSaveMap()
     For X = 0 To Map.MaxX
         For Y = 0 To Map.MaxY
             With Map.Tile(X, Y)
-                For I = 1 To MapLayer.Layer_Count - 1
-                    buffer.WriteLong .Layer(I).X
-                    buffer.WriteLong .Layer(I).Y
-                    buffer.WriteLong .Layer(I).Tileset
+                For i = 1 To MapLayer.Layer_Count - 1
+                    buffer.WriteLong .Layer(i).X
+                    buffer.WriteLong .Layer(i).Y
+                    buffer.WriteLong .Layer(i).Tileset
                 Next
                 
                 For Z = 1 To MapLayer.Layer_Count - 1
@@ -532,17 +532,17 @@ Public Sub SendSaveMap()
     buffer.WriteLong Map.EventCount
         
     If Map.EventCount > 0 Then
-        For I = 1 To Map.EventCount
-            With Map.events(I)
+        For i = 1 To Map.EventCount
+            With Map.events(i)
                 buffer.WriteString .Name
                 buffer.WriteLong .Global
                 buffer.WriteLong .X
                 buffer.WriteLong .Y
                 buffer.WriteLong .PageCount
             End With
-            If Map.events(I).PageCount > 0 Then
-                For X = 1 To Map.events(I).PageCount
-                    With Map.events(I).Pages(X)
+            If Map.events(i).PageCount > 0 Then
+                For X = 1 To Map.events(i).PageCount
+                    With Map.events(i).Pages(X)
                         buffer.WriteLong .chkVariable
                         buffer.WriteLong .VariableIndex
                         buffer.WriteLong .VariableCondition
@@ -596,13 +596,13 @@ Public Sub SendSaveMap()
                         buffer.WriteLong .Position
                     End With
                         
-                    If Map.events(I).Pages(X).CommandListCount > 0 Then
-                        For Y = 1 To Map.events(I).Pages(X).CommandListCount
-                            buffer.WriteLong Map.events(I).Pages(X).CommandList(Y).CommandCount
-                            buffer.WriteLong Map.events(I).Pages(X).CommandList(Y).ParentList
-                            If Map.events(I).Pages(X).CommandList(Y).CommandCount > 0 Then
-                                For Z = 1 To Map.events(I).Pages(X).CommandList(Y).CommandCount
-                                    With Map.events(I).Pages(X).CommandList(Y).Commands(Z)
+                    If Map.events(i).Pages(X).CommandListCount > 0 Then
+                        For Y = 1 To Map.events(i).Pages(X).CommandListCount
+                            buffer.WriteLong Map.events(i).Pages(X).CommandList(Y).CommandCount
+                            buffer.WriteLong Map.events(i).Pages(X).CommandList(Y).ParentList
+                            If Map.events(i).Pages(X).CommandList(Y).CommandCount > 0 Then
+                                For Z = 1 To Map.events(i).Pages(X).CommandList(Y).CommandCount
+                                    With Map.events(i).Pages(X).CommandList(Y).Commands(Z)
                                         buffer.WriteLong .Index
                                         buffer.WriteString .Text1
                                         buffer.WriteString .Text2
@@ -655,7 +655,7 @@ End Sub
 
 Public Sub SendSaveQuest(ByVal QuestNum As Long)
 Dim buffer As clsBuffer
-Dim I As Long, II As Long
+Dim i As Long, II As Long
     Set buffer = New clsBuffer
     
         buffer.WriteLong CSaveQuest
@@ -667,21 +667,21 @@ Dim I As Long, II As Long
             buffer.WriteLong .CanBeRetaken
             buffer.WriteLong .Max_CLI
             
-            For I = 1 To .Max_CLI
-                buffer.WriteLong .CLI(I).ItemIndex
-                buffer.WriteLong .CLI(I).isNPC
-                buffer.WriteLong .CLI(I).Max_Actions
+            For i = 1 To .Max_CLI
+                buffer.WriteLong .CLI(i).ItemIndex
+                buffer.WriteLong .CLI(i).isNPC
+                buffer.WriteLong .CLI(i).Max_Actions
                 
-                For II = 1 To .CLI(I).Max_Actions
-                    buffer.WriteString .CLI(I).Action(II).TextHolder
-                    buffer.WriteLong .CLI(I).Action(II).ActionID
-                    buffer.WriteLong .CLI(I).Action(II).amount
-                    buffer.WriteLong .CLI(I).Action(II).MainData
-                    buffer.WriteLong .CLI(I).Action(II).QuadData
-                    buffer.WriteLong .CLI(I).Action(II).SecondaryData
-                    buffer.WriteLong .CLI(I).Action(II).TertiaryData
+                For II = 1 To .CLI(i).Max_Actions
+                    buffer.WriteString .CLI(i).Action(II).TextHolder
+                    buffer.WriteLong .CLI(i).Action(II).ActionID
+                    buffer.WriteLong .CLI(i).Action(II).amount
+                    buffer.WriteLong .CLI(i).Action(II).MainData
+                    buffer.WriteLong .CLI(i).Action(II).QuadData
+                    buffer.WriteLong .CLI(i).Action(II).SecondaryData
+                    buffer.WriteLong .CLI(i).Action(II).TertiaryData
                 Next II
-            Next I
+            Next i
             
             buffer.WriteLong .Requirements.AccessReq
             buffer.WriteLong .Requirements.ClassReq
@@ -690,9 +690,9 @@ Dim I As Long, II As Long
             buffer.WriteLong .Requirements.SkillLevelReq
             buffer.WriteLong .Requirements.SkillReq
             
-            For I = 1 To Stats.Stat_Count - 1
-                buffer.WriteLong .Requirements.Stat_Req(I)
-            Next I
+            For i = 1 To Stats.Stat_Count - 1
+                buffer.WriteLong .Requirements.Stat_Req(i)
+            Next i
             
         End With
         
@@ -2066,7 +2066,7 @@ ErrorHandler:
 End Sub
 
 Sub PlayerSearch(ByVal CurX As Long, ByVal CurY As Long)
-    Dim I As Long
+    Dim i As Long
     Dim Found_Target As Boolean
     Dim TargetType As Byte
     
@@ -2076,12 +2076,12 @@ Sub PlayerSearch(ByVal CurX As Long, ByVal CurY As Long)
     If Not IsInBounds Then Exit Sub
     
     ' Player
-    For I = 1 To Player_HighIndex
-        If IsPlaying(I) Then
-            If GetPlayerMap(I) = GetPlayerMap(MyIndex) Then
-                If Player(I).X = CurX Then
-                    If Player(I).Y = CurY Then
-                        MyTarget = I
+    For i = 1 To Player_HighIndex
+        If IsPlaying(i) Then
+            If GetPlayerMap(i) = GetPlayerMap(MyIndex) Then
+                If Player(i).X = CurX Then
+                    If Player(i).Y = CurY Then
+                        MyTarget = i
                         MyTargetType = TARGET_TYPE_PLAYER
                         Found_Target = True
                         TargetType = TARGET_TYPE_PLAYER
@@ -2094,11 +2094,11 @@ Sub PlayerSearch(ByVal CurX As Long, ByVal CurY As Long)
     
     If TargetType = 0 Then
         ' NPC
-        For I = 1 To Map.NPC_HighIndex
-            If MapNPC(I).num > 0 Then
-                If MapNPC(I).X = CurX Then
-                    If MapNPC(I).Y = CurY Then
-                        MyTarget = I
+        For i = 1 To Map.NPC_HighIndex
+            If MapNPC(i).num > 0 Then
+                If MapNPC(i).X = CurX Then
+                    If MapNPC(i).Y = CurY Then
+                        MyTarget = i
                         MyTargetType = TARGET_TYPE_NPC
                         Found_Target = True
                         TargetType = TARGET_TYPE_NPC
@@ -2111,14 +2111,14 @@ Sub PlayerSearch(ByVal CurX As Long, ByVal CurY As Long)
     
      If TargetType = 0 Then
         ' Check for an item
-        For I = 1 To MAX_MAP_ITEMS
-            If MapItem(I).num > 0 Then
-                If MapItem(I).X = CurX And MapItem(I).Y = CurY Then
-                    If CanPlayerPickupItem(MyIndex, I) Then
-                        If Item(MapItem(I).num).stackable = 1 Then
-                            Call AddText("You see " & MapItem(I).Value & " " & Trim$(Item(MapItem(I).num).Name) & ".", Yellow)
+        For i = 1 To MAX_MAP_ITEMS
+            If MapItem(i).num > 0 Then
+                If MapItem(i).X = CurX And MapItem(i).Y = CurY Then
+                    If CanPlayerPickupItem(MyIndex, i) Then
+                        If Item(MapItem(i).num).stackable = 1 Then
+                            Call AddText("You see " & MapItem(i).Value & " " & Trim$(Item(MapItem(i).num).Name) & ".", Yellow)
                         Else
-                            Call AddText("You see " & CheckGrammar(Trim$(Item(MapItem(I).num).Name)) & ".", Yellow)
+                            Call AddText("You see " & CheckGrammar(Trim$(Item(MapItem(i).num).Name)) & ".", Yellow)
                         End If
                         Exit Sub
                     End If
@@ -2907,7 +2907,7 @@ ErrorHandler:
 End Sub
 
 Sub RequestSwitchesAndVariables()
-    Dim I As Long, buffer As clsBuffer
+    Dim i As Long, buffer As clsBuffer
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2926,7 +2926,7 @@ ErrorHandler:
 End Sub
 
 Sub SendSwitchesAndVariables()
-    Dim I As Long, buffer As clsBuffer
+    Dim i As Long, buffer As clsBuffer
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2934,12 +2934,12 @@ Sub SendSwitchesAndVariables()
     Set buffer = New clsBuffer
     buffer.WriteLong CSwitchesAndVariables
     
-    For I = 1 To MAX_SWITCHES
-        buffer.WriteString Switches(I)
+    For i = 1 To MAX_SWITCHES
+        buffer.WriteString Switches(i)
     Next
     
-    For I = 1 To MAX_VARIABLES
-        buffer.WriteString Variables(I)
+    For i = 1 To MAX_VARIABLES
+        buffer.WriteString Variables(i)
     Next
     
     SendData buffer.ToArray
