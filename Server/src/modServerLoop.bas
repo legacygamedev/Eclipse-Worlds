@@ -8,7 +8,7 @@ Sub ServerLoop()
     Dim i As Integer, X As Integer, n As Integer
     Dim Tick As Long
     Dim TickCPS As Long, CPS As Long, tmr25 As Long, tmr500 As Long, tmr1000 As Long, FrameTime As Long
-    Dim LastUpdateSavePlayers, LastUpdateMapSpawnItems As Long, LastUpdateVitals As Long
+    Dim LastUpdateSavePlayers As Long, LastUpdateMapSpawnItems As Long, LastUpdateVitals As Long
 
     ServerOnline = True
 
@@ -113,8 +113,8 @@ Sub ServerLoop()
             End If
             
             ' Update the form labels, and reset the packets per second
-            frmServer.lblPackIn.Caption = Trim(STR(PacketsIn))
-            frmServer.lblPackOut.Caption = Trim(STR(PacketsOut))
+            frmServer.lblPackIn.Caption = Trim$(STR$(PacketsIn))
+            frmServer.lblPackOut.Caption = Trim$(STR$(PacketsOut))
             PacketsIn = 0
             PacketsOut = 0
 
@@ -131,7 +131,7 @@ Sub ServerLoop()
                 End If
             End If
             
-            frmServer.lblTime.Caption = Trim(STR(ServerHours)) & ":" & Trim(STR(ServerMinutes)) & ":" & Trim(STR(ServerSeconds))
+            frmServer.lblTime.Caption = Trim$(STR$(ServerHours)) & ":" & Trim$(STR$(ServerMinutes)) & ":" & Trim$(STR$(ServerSeconds))
 
             Call ConsumeLogic
         
@@ -1357,7 +1357,7 @@ Function GetNpcDir(X As Long, Y As Long, x1 As Long, y1 As Long) As Long
     GetNpcDir = i
 End Function
 
-Public Sub UpdateMapBlock(MapNum, X, Y, blocked As Boolean)
+Public Sub UpdateMapBlock(ByVal MapNum As Long, ByVal X As Long, ByVal Y As Long, ByRef blocked As Boolean)
     If blocked Then
         MapBlocks(MapNum).Blocks(X, Y) = 9
     Else

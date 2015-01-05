@@ -20,7 +20,7 @@ Begin VB.Form frmItemDesc
       BackStyle       =   0  'Transparent
       Caption         =   "DESCRIPTION"
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   238
          Weight          =   700
@@ -84,7 +84,7 @@ Begin VB.Form frmItemDesc
       BackStyle       =   0  'Transparent
       Caption         =   "ItemName"
       BeginProperty Font 
-         Name            =   "MS Sans Serif"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   238
          Weight          =   700
@@ -104,6 +104,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Private Sub Form_Load()
     Move frmItemSpawner.Left - Width, frmItemSpawner.Top + frmItemSpawner.Height - Height
 End Sub

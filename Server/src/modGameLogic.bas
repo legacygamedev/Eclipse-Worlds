@@ -152,7 +152,7 @@ Sub SpawnMapItems(ByVal MapNum As Integer)
     Next
 End Sub
 
-Public Sub SpawnNPC(ByVal MapNPCNum As Long, ByVal MapNum As Integer, Optional ForcedSpawn As Boolean = False, Optional ByVal SetX As Integer, Optional ByVal SetY As Integer)
+Public Sub SpawnNPC(ByVal MapNPCNum As Long, ByVal MapNum As Integer, Optional ForcedSpawn As Boolean = False, Optional ByVal SetX As Integer = 0, Optional ByVal SetY As Integer = 0)
     Dim buffer As clsBuffer
     Dim NPCNum As Long
     Dim i As Long
@@ -1015,7 +1015,7 @@ Public Sub CheckPlayerNewTitle(ByVal Index As Long, Optional ByVal Message As Bo
     Next
 End Sub
 
-Public Sub AddPlayerTitle(ByVal Index As Long, ByVal TitleNum As Long, Optional ByVal InvNum As Byte, Optional ByVal Message As Boolean = True)
+Public Sub AddPlayerTitle(ByVal Index As Long, ByVal TitleNum As Long, Optional ByVal InvNum As Byte = 0, Optional ByVal Message As Boolean = True)
     Dim i As Byte, X As Byte
     
     If CanAddTitle(Index, TitleNum, False, True) Then
@@ -1048,7 +1048,7 @@ Public Sub AddPlayerTitle(ByVal Index As Long, ByVal TitleNum As Long, Optional 
     End If
 End Sub
 
-Public Sub RemovePlayerTitle(ByVal Index As Long, ByVal TitleNum As Long, Optional ByVal InvNum As Byte, Optional ByVal Message As Boolean = True)
+Public Sub RemovePlayerTitle(ByVal Index As Long, ByVal TitleNum As Long, Optional ByVal InvNum As Byte = 0, Optional ByVal Message As Boolean = True)
     Dim i As Byte, X As Byte
     
     For i = 1 To MAX_TITLES
@@ -2311,7 +2311,7 @@ Public Function IsPlayerBlocked(Index As Long, ByVal X As Long, ByVal Y As Long)
     End If
 End Function
 
-Public Function IsEventBlocked(Index As Long, ByVal X As Long, ByVal Y As Long, Optional ByVal MapNum As Integer)
+Public Function IsEventBlocked(Index As Long, ByVal X As Long, ByVal Y As Long, Optional ByVal MapNum As Integer = 0)
     Dim i As Long
     
     If MapNum = 0 Then

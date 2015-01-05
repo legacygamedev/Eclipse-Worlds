@@ -32,6 +32,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Private WithEvents subclasser As cSelfSubHookCallback
 Attribute subclasser.VB_VarHelpID = -1
 Private Const WM_MOVE       As Long = &H3

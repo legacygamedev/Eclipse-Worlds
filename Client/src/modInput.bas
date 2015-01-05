@@ -804,8 +804,6 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                     SendRequestEditItem
                     
                 Case "/editquest"
-                    AddText "This feature has been disabled for version 1.2.5! It will be back soon.", BrightRed
-                    GoTo Continue
                         
                     If GetPlayerAccess(MyIndex) < STAFF_DEVELOPER Then
                         AddText "You have insufficent access to do this!", BrightRed

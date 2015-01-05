@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmItemSpawner 
    Appearance      =   0  'Flat
    BorderStyle     =   4  'Fixed ToolWindow
@@ -351,6 +351,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Public lastTab As Integer
 Private allowTitle As Boolean
 Private currentItemIndex As Integer
@@ -392,7 +394,7 @@ Public Sub updateFreeSlots()
 End Sub
 
 Private Sub updateMaxLimit()
-    If Me.Visible = True And listItems.listItems.count > 0 Then
+    If Me.Visible = True And listItems.listItems.Count > 0 Then
         Dim stackable As Boolean
         stackable = Item(currentlyListedIndexes(listItems.SelectedItem.Index - 1)).stackable
         If radioGround.Value And Not stackable Then
@@ -410,7 +412,7 @@ Private Sub updateMaxLimit()
     End If
 End Sub
 
-Private Sub styleListwView(sType As Status, Optional Msg As String)
+Private Sub styleListwView(sType As Status, Optional Msg As String = vbNullString)
     Select Case sType
         Case Status.Correct
             listItems.BackColor = &H8000000E
@@ -427,7 +429,7 @@ Private Sub styleListwView(sType As Status, Optional Msg As String)
 End Sub
 
 Private Function generateItemsForTab(tabNum As Byte) As Boolean
-    Dim i As Long, Z As Long, tempItems() As ItemRec, ret As Boolean
+    Dim I As Long, Z As Long, tempItems() As ItemRec, ret As Boolean
     
     tabNum = tabNum - 2
     
@@ -457,8 +459,8 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
     If ret Then
         Set listItems.Icons = itemsImageList
                 
-        For i = 0 To UBound(tempItems)
-            listItems.listItems.Add , , Trim$(tempItems(i).Name), itemsImageList.ListImages(i + 1).Index
+        For I = 0 To UBound(tempItems)
+            listItems.listItems.Add , , Trim$(tempItems(I).Name), itemsImageList.ListImages(I + 1).Index
         Next
         currentItemIndex = 0
         generateItemsForTab = True
@@ -466,18 +468,18 @@ Private Function generateItemsForTab(tabNum As Byte) As Boolean
 End Function
 
 Private Sub generateRecentItems()
-Dim i As Byte
+Dim I As Byte
     If ArrayIsInitialized(lastSpawnedItems) = 0 Then
         styleListwView Status.Error, "You haven't spawned any items yet!"
     Else
         styleListwView Status.Correct
-        For i = 0 To UBound(lastSpawnedItems) - 1
-            itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & Item(lastSpawnedItems(i)).Pic & GFX_EXT, False, 32, 32, 16777215)
-        Next i
+        For I = 0 To UBound(lastSpawnedItems) - 1
+            itemsImageList.ListImages.Add , , LoadPictureGDIPlus(App.Path & GFX_PATH & "items\" & Item(lastSpawnedItems(I)).Pic & GFX_EXT, False, 32, 32, 16777215)
+        Next I
         Set listItems.Icons = itemsImageList
                 
-        For i = 0 To UBound(lastSpawnedItems) - 1
-            listItems.listItems.Add , , Trim$(Item(lastSpawnedItems(i)).Name), itemsImageList.ListImages(i + 1).Index
+        For I = 0 To UBound(lastSpawnedItems) - 1
+            listItems.listItems.Add , , Trim$(Item(lastSpawnedItems(I)).Name), itemsImageList.ListImages(I + 1).Index
         Next
         cmdSpawn.Enabled = True
         currentItemIndex = 0
@@ -486,7 +488,7 @@ End Sub
 
 Private Sub cmdSpawn_Click()
     Dim Item As Byte
-    Dim i As Byte
+    Dim I As Byte
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -509,9 +511,9 @@ Private Sub cmdSpawn_Click()
     found = -1
     If ArrayIsInitialized(lastSpawnedItems) Then
      If UBound(lastSpawnedItems) > 0 Then
-        For i = 0 To UBound(lastSpawnedItems) - 1
-            If lastSpawnedItems(i) = Item Then
-                found = i
+        For I = 0 To UBound(lastSpawnedItems) - 1
+            If lastSpawnedItems(I) = Item Then
+                found = I
                 Exit For
             End If
         Next
@@ -654,7 +656,7 @@ Public Sub tabItems_Click()
         frmAdmin.optCat_MouseUp tabItems.SelectedItem.Index - 1, 0, 0, 0, 0
     End If
 
-    Me.Caption = "Item Spawner - " & tabItems.SelectedItem.Caption & " -> " & listItems.listItems.count & " item" & IIf(listItems.listItems.count > 1, "s", "") & " available"
+    Me.Caption = "Item Spawner - " & tabItems.SelectedItem.Caption & " -> " & listItems.listItems.Count & " item" & IIf(listItems.listItems.Count > 1, "s", "") & " available"
     
     lastTab = tabItems.SelectedItem.Index
 End Sub

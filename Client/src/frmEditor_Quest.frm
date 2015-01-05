@@ -365,8 +365,10 @@ Begin VB.Form frmEditor_Quest
          Height          =   255
          LargeChange     =   10
          Left            =   120
+         Min             =   1
          TabIndex        =   59
          Top             =   3600
+         Value           =   1
          Width           =   4815
       End
       Begin VB.CommandButton btnCLICancel 
@@ -476,7 +478,7 @@ Begin VB.Form frmEditor_Quest
          Alignment       =   2  'Center
          AutoSize        =   -1  'True
          BackStyle       =   0  'Transparent
-         Caption         =   "Amount: 0"
+         Caption         =   "Amount: 1"
          BeginProperty Font 
             Name            =   "Times New Roman"
             Size            =   9.75
@@ -486,11 +488,11 @@ Begin VB.Form frmEditor_Quest
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   255
-         Left            =   120
+         Height          =   225
+         Left            =   2100
          TabIndex        =   122
          Top             =   3360
-         Width           =   4800
+         Width           =   840
       End
       Begin VB.Line Line3 
          X1              =   120
@@ -511,7 +513,7 @@ Begin VB.Form frmEditor_Quest
          Strikethrough   =   0   'False
       EndProperty
       Height          =   4335
-      Left            =   6480
+      Left            =   6360
       TabIndex        =   102
       Top             =   2640
       Visible         =   0   'False
@@ -816,7 +818,6 @@ Begin VB.Form frmEditor_Quest
          Width           =   1455
       End
       Begin VB.ComboBox cmbGenderReq 
-         Enabled         =   0   'False
          BeginProperty Font 
             Name            =   "Verdana"
             Size            =   8.25
@@ -1580,11 +1581,19 @@ Begin VB.Form frmEditor_Quest
    End
    Begin VB.Frame fraNPC 
       Caption         =   "Mission List"
-      Height          =   8655
+      Height          =   9015
       Left            =   0
       TabIndex        =   95
       Top             =   0
       Width           =   3135
+      Begin VB.CommandButton cmdChangeData 
+         Caption         =   "Change Data Size"
+         Height          =   375
+         Left            =   120
+         TabIndex        =   147
+         Top             =   8460
+         Width           =   2895
+      End
       Begin VB.ListBox lstIndex 
          Height          =   7665
          Left            =   120
@@ -1834,6 +1843,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 
 Private CLIHasFocus        As Boolean
 
@@ -1859,14 +1870,14 @@ Private TmpIndex           As Long
 
 Private Sub btnAddCLI_Click()
 
-    Dim Index As Long, I As Long, tmpID As Long, TempStr As String, NPCIndex As Long
+    Dim Index As Long, I As Long, tmpID As Long, TmpStr As String, NPCIndex As Long
     
     ' If debug mode then handle error
     If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
 
     If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
     
-    TmpStr = Replace(cmbNPC.List(cmbNPC.ListIndex), Val(cmbNPC.List(cmbNPC.ListIndex)) & ": ", vbNullString)
+    TmpStr = Replace(cmbNPC.List(cmbNPC.ListIndex), val(cmbNPC.List(cmbNPC.ListIndex)) & ": ", vbNullString)
 
     If Not Len(TmpStr) > 0 Then Exit Sub
     NPCIndex = 0
@@ -3363,7 +3374,7 @@ Private Sub CLI_DblClick()
 
         For I = 0 To cmbNPC.ListCount - 1
 
-            If Replace$(cmbNPC.List(I), Val(cmbNPC.List(I)) & ": ", vbNullString) = Trim$(NPC(Quest(EditorIndex).CLI(Index).ItemIndex).Name) Then
+            If Replace$(cmbNPC.List(I), val(cmbNPC.List(I)) & ": ", vbNullString) = Trim$(NPC(Quest(EditorIndex).CLI(Index).ItemIndex).Name) Then
                 cmbNPC.ListIndex = I
 
                 Exit For
@@ -3524,6 +3535,53 @@ ErrorHandler:
 
     Exit Sub
 
+End Sub
+
+Private Sub cmdChangeData_Click()
+    Dim Res As VbMsgBoxResult, val As String
+    Dim dataModified As Boolean, I As Long
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
+
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    For I = 1 To MAX_QUESTS
+        If Quest_Changed(I) Then
+        
+            dataModified = True
+            Exit For
+        End If
+    Next
+    
+    If dataModified Then
+        Res = MsgBox("Do you want to continue and discard the changes you made to your data?", vbYesNo)
+        
+        If Res = vbNo Then Exit Sub
+    End If
+    
+    val = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_QUESTS)
+    
+    If Not IsNumeric(val) Then
+        Exit Sub
+    End If
+    
+    Res = Abs(val)
+    
+    If Res = MAX_QUESTS Then Exit Sub
+    
+    Call SendChangeDataSize(Res, EDITOR_Quest)
+    
+    Unload frmEditor_Quest
+    MAX_QUESTS = Res
+    ReDim Quest(MAX_QUESTS)
+    
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdChangeDataSize_Click", "frmEditor_Quest", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
 End Sub
 
 Private Sub cmdCopy_Click()
@@ -3717,15 +3775,17 @@ Private Sub Form_Load()
     frmEditor_Quest.Width = 14895
     frmEditor_Quest.Height = 9195
     frmEditor_Quest.Caption = "Mission Editor"
-    frmEditor_Quest.scrlLevelReq.max = MAX_LEVELS
+    frmEditor_Quest.scrlLevelReq.max = MAX_LEVEL
     txtName.MaxLength = QUESTNAME_LENGTH
     txtSearch.MaxLength = NAME_LENGTH
     txtDesc.MaxLength = QUESTDESC_LENGTH
     
     cmbSkillReq.Clear
     cmbClassReq.Clear
+    cmbGenderReq.Clear
     cmbSkillReq.AddItem "None"
     cmbClassReq.AddItem "None"
+    cmbGenderReq.AddItem "None"
     
     cmbSkillReq.Enabled = False
     cmbObSKill.Enabled = False
@@ -3745,11 +3805,14 @@ Private Sub Form_Load()
     
     For I = 1 To MAX_CLASSES
 
-        If Len(Trim$(Class(I).Name)) > 0 Then
+        If Len(Trim$(Replace(Class(I).Name, Chr(0), ""))) > 0 Then
             cmbClassReq.AddItem Trim$(Class(I).Name)
         End If
 
     Next I
+    
+    cmbGenderReq.AddItem "Male"
+    cmbGenderReq.AddItem "Female"
     
     Call PositionFrames
     Call SetItemBox
@@ -3961,7 +4024,7 @@ Private Sub lstTasks_DblClick()
 
                 For I = 0 To cmbNPC.ListCount - 1
 
-                    If Replace$(cmbNPC.List(I), Val(cmbNPC.List(I)) & ": ", vbNullString) = Trim$(NPC(.MainData).Name) Then
+                    If Replace$(cmbNPC.List(I), val(cmbNPC.List(I)) & ": ", vbNullString) = Trim$(NPC(.MainData).Name) Then
                         cmbNPC.ListIndex = I
 
                         Exit For
@@ -4050,10 +4113,10 @@ Private Sub lstTasks_DblClick()
                 scrlModify.Value = .amount
                 cboItem.ListIndex = .SecondaryData
 
-            Case ACTION_ADJUST_STAT_EXP
+            Case ACTION_ADJUST_EXP
                 fmeModify.Visible = True
                 Call BTF(fmeModify)
-                opStatEXP.Value = True
+                opEXP.Value = True
                 chkSet.Value = .MainData
                 scrlModify.Value = .amount
                 cboItem.ListIndex = .SecondaryData
@@ -5026,7 +5089,7 @@ Private Sub txtName_Validate(Cancel As Boolean)
     For I = 1 To MAX_QUESTS
 
         If I <> EditorIndex Then
-            If LCase(Trim(txtName.text)) = LCase(Trim(Quest(I).Name)) And Len(Trim(txtName.text)) > 0 Then
+            If LCase$(Trim$(txtName.text)) = LCase$(Trim$(Quest(I).Name)) And Len(Trim$(txtName.text)) > 0 Then
                 txtName.text = vbNullString
                 Call MsgBox("Duplicate quest name found.  Quest names must be unique.  Please change it.", vbOKOnly, "Duplicate Quest Name")
 

@@ -185,7 +185,7 @@ Private Type EncoderParameter
 End Type
 '-- Encoder Parameters structure
 Private Type EncoderParameters
-    count     As Long
+    Count     As Long
     Parameter(0 To 5) As EncoderParameter
 End Type
 Private Type ImageCodecInfo
@@ -332,7 +332,7 @@ Public Sub Clear()
     Call pvCleanUp(cuDestroyAll)
 End Sub
 
-Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As Long, Optional ByVal Height As Long, _
+Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As Long = 0, Optional ByVal Height As Long = 0, _
                             Optional ByVal WithAttributes As Boolean = False) As Boolean
 
     ' Function can apply rotation, grayscaling, scaling etc to a new image
@@ -889,7 +889,7 @@ Public Function LoadPicture_Stream(Stream() As Byte, TokenClass As cGDIpToken, O
                     If lType = imageGIF Or lType = imageTIFF Then
                         Set newMultiImage = New cGDIpMultiImage
                         newMultiImage.frSetImage hImage, lType
-                        If newMultiImage.count = 1& Then
+                        If newMultiImage.Count = 1& Then
                             If lType = imageTIFF Then               ' Single frame TIFF; make sourceless
                                 hImage = pvCreateSourcelessImage(hImage, 0&, 0&, m_Mirror * Abs(ClearAttributes = False))
                                 If hImage = 0& Then Exit Function
@@ -907,7 +907,7 @@ Public Function LoadPicture_Stream(Stream() As Byte, TokenClass As cGDIpToken, O
                     Call GdipGetImageBounds(hImage, m_Size, UnitPixel)
                     m_ImageType = lType
                     If m_ImageType = imageGIF Or m_ImageType = imageTIFF Then   ' Cache original data for gifs & multipage tiffs
-                        If m_ImageType = imageGIF Or m_MultiImage.count > 1& Then Set m_Source(m_SourceIndex) = IStream
+                        If m_ImageType = imageGIF Or m_MultiImage.Count > 1& Then Set m_Source(m_SourceIndex) = IStream
                         If (m_Attr Or m_Mirror) Then Call pvModifyAttributes  ' Create clone if necessary
                     End If
                 End If
@@ -921,9 +921,9 @@ End Function
 
 Public Function LockImageBits(ByVal LockMode As LockModeConstants, _
                             Optional ByRef PixelFormat As ImageColorFormatConstants = PixelFormat32bppARGB, _
-                            Optional ByVal X As Long, Optional ByVal Y As Long, _
-                            Optional ByRef Width As Long, Optional ByRef Height As Long, _
-                            Optional ByRef StrideOut As Long) As Long
+                            Optional ByVal X As Long = 0, Optional ByVal Y As Long = 0, _
+                            Optional ByRef Width As Long = 0, Optional ByRef Height As Long = 0, _
+                            Optional ByRef StrideOut As Long = 0) As Long
             
     ' Used to edit pixel data. Image cannot be modified and any updates don't take effect until unlocked
     ' Parameters
@@ -978,7 +978,7 @@ Public Property Let Mirrored(newVal As MirrorConstants)
             Else
                 ' do we need to create a clone; we do if m_multimage and not an icon/cursor
                 If (m_ImageType = imageGIF Or m_ImageType = imageTIFF) Then
-                    If m_MultiImage.count > 1& And m_SourceIndex = 0& Then ' not yet cloned
+                    If m_MultiImage.Count > 1& And m_SourceIndex = 0& Then ' not yet cloned
                         Debug.Assert (m_Image(1) = 0&)          ' testing purposes. Not executed when compiled
                         m_Mirror = (newVal * 2&)                ' Set mirror state
                         pvCreateClone m_MultiImage.Index, 0&    ' Create clone, got a multi-image GIF/TIF
@@ -1084,7 +1084,7 @@ Public Function SaveAsJPG(outArray() As Byte, Optional ByVal QualityPct As Long 
                     If m_Mirror Then GdipImageRotateFlip hImage, m_Mirror
                 End If
                 If hImage Then
-                    uEncParams.count = 1
+                    uEncParams.Count = 1
                     With uEncParams.Parameter(0)
                         .NumberOfValues = 1
                         .Type = EncoderParameterValueTypeLong
@@ -1279,7 +1279,7 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
             If lParamVal = 0& Then Exit Function
             nrImages = lParamVal
         End If
-        On Error GoTo 0
+        On Error Resume Next
     End If
     
     ' /// This section creates the TIFF if no errors are encountered
@@ -1297,26 +1297,26 @@ Public Function SaveAsTIFF(outArray() As Byte, Optional ArrayOfImageClasses As V
                          CLSIDFromString StrPtr(TIFFCompress), .Guid(0)
                         .Value = VarPtr(lCompress)
                     End With
-                    uEncParams.count = 1                        ' keep count
+                    uEncParams.Count = 1                        ' keep count
                 End If
                 
-                With uEncParams.Parameter(uEncParams.count)     ' Set up bit depth parameter
+                With uEncParams.Parameter(uEncParams.Count)     ' Set up bit depth parameter
                     .NumberOfValues = 1
                     .Type = EncoderParameterValueTypeLong
                     CLSIDFromString StrPtr(TIFFBitDepth), .Guid(0)
                    .Value = VarPtr(lDepth)                      ' will be applied per page
                 End With
-                uEncParams.count = uEncParams.count + 1         ' keep count
+                uEncParams.Count = uEncParams.Count + 1         ' keep count
                 
                 If nrImages > 1& Then                           ' Multiple images
                     lParamVal = EncoderValueMultiFrame          ' Set multipage flag
-                    With uEncParams.Parameter(uEncParams.count)
+                    With uEncParams.Parameter(uEncParams.Count)
                         .NumberOfValues = 1
                         .Type = EncoderParameterValueTypeLong
                         CLSIDFromString StrPtr(SaveFlag), .Guid(0)
                        .Value = VarPtr(lParamVal)
                     End With
-                    uEncParams.count = uEncParams.count + 1     ' keep count
+                    uEncParams.Count = uEncParams.Count + 1     ' keep count
                     
                     For Index = 0 To nrImages - 1&              ' begin writing multiple pages
                         ' determine destination color depth
@@ -2268,7 +2268,7 @@ Private Sub pvModifyAttributes()
             ' If so, no clone must exist and attributes and/or mirroring must be applied
             ' also only applies to GIFs/TIFFs, and only if more than one frame/page exists
             If (m_Image(1) = 0&) And (m_ImageType = imageGIF Or m_ImageType = imageTIFF) Then
-                If m_MultiImage.count > 1& Then Call pvCreateClone(0, 0&)
+                If m_MultiImage.Count > 1& Then Call pvCreateClone(0, 0&)
             End If
         ElseIf m_Image(1) Then
             Call pvCleanUp(cuDestroyClone)
@@ -2422,6 +2422,7 @@ Private Function pvStreamToArray(hStream As Long, arrayBytes() As Byte) As Boole
 End Function
 
 Private Sub Class_Terminate()
+On Error Resume Next
     Call pvCleanUp(cuDestroyAll)
     If Not m_Token Is Nothing Then
         m_Token.RemoveUser Me

@@ -2051,7 +2051,7 @@ ErrorHandler:
     Err.Clear
 End Function
 
-Public Function IsHotbarSlot(ByVal X As Single, ByVal Y As Single, Optional ByVal sType As Byte) As Long
+Public Function IsHotbarSlot(ByVal X As Single, ByVal Y As Single, Optional ByVal sType As Byte = 0) As Long
     Dim Top As Long, Left As Long
     Dim I As Long
 
@@ -2079,7 +2079,7 @@ ErrorHandler:
     Err.Clear
 End Function
 
-Public Sub PlaySoundEntity(ByVal X As Long, ByVal Y As Long, ByVal EntityType As Long, ByVal EntityNum As Long, Optional ByVal LockIndex As Long, Optional ByVal LockType As Byte)
+Public Sub PlaySoundEntity(ByVal X As Long, ByVal Y As Long, ByVal EntityType As Long, ByVal EntityNum As Long, Optional ByVal LockIndex As Long = 0, Optional ByVal LockType As Byte = 0)
     Dim SoundName As String
 
     ' If debug mode, handle error then exit out

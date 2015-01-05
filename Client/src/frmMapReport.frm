@@ -121,6 +121,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Private Sub cmdChangeDataSize_Click()
     Dim Res As VbMsgBoxResult, val As String
     Dim dataModified As Boolean, I As Long

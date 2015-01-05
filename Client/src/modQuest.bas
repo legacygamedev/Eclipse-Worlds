@@ -1,4 +1,6 @@
 Attribute VB_Name = "modQuest"
+Option Explicit
+
 
 Public Const QUESTICON_LENGTH = 5
 
@@ -162,7 +164,7 @@ Public Function GetQuestEXP(ByVal QuestID As Long) As String
     End With
     
     If Count > 0 Then
-        GetQuestEXP = Format(Count, "###,###,###,###")
+        GetQuestEXP = Format$(Count, "###,###,###,###")
     Else
         GetQuestEXP = 0
     End If
@@ -299,8 +301,7 @@ Public Sub QuestEditorInit()
         frmEditor_Quest.chkUnOrder.Value = .OutOfOrder
         
         ' Gender requirement
-        'frmEditor_Quest.cmbGenderReq.ListIndex = .Requirements.GenderReq
-        frmEditor_Quest.cmbGenderReq.Enabled = False
+        frmEditor_Quest.cmbGenderReq.ListIndex = .Requirements.GenderReq
         
         ' Skill requirement
         frmEditor_Quest.cmbSkillReq.ListIndex = .Requirements.SkillReq

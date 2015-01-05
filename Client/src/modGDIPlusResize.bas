@@ -99,7 +99,7 @@ Public Sub FreeGDIPlus(Token As Long)
     GdiplusShutdown Token
 End Sub
 
-Public Function LoadPictureGDIPlus(ByVal PicFile As String, Optional ByVal AutoLoad As Boolean = True, Optional ByVal Width As Long = -1, Optional ByVal Height As Long = -1, Optional ByVal BackColor As Long, Optional ByVal RetainRatio As Boolean = False, Optional ByVal UseAlpha As Boolean = False) As IPicture
+Public Function LoadPictureGDIPlus(ByVal PicFile As String, Optional ByVal AutoLoad As Boolean = True, Optional ByVal Width As Long = -1, Optional ByVal Height As Long = -1, Optional ByVal BackColor As Long = 0, Optional ByVal RetainRatio As Boolean = False, Optional ByVal UseAlpha As Boolean = False) As IPicture
     Dim hDC     As Long
     Dim hBitmap As Long
     Dim croppedBitmap As Long
@@ -168,7 +168,7 @@ Public Function LoadPictureGDIPlus(ByVal PicFile As String, Optional ByVal AutoL
     
     'should probably do this eventually: DeleteObject hBitmap
 
-   On Error GoTo 0
+   On Error Resume Next
    Exit Function
     
 LoadPictureGDIPlus_Error:
@@ -179,7 +179,7 @@ LoadPictureGDIPlus_Error:
 End Function
 
 ' Loads the picture (optionally resized)
-Public Sub LoadPictureFXDC(ByVal PicFile As String, fxDC As tFXDCS, Optional ByVal AutoLoad As Boolean = True, Optional ByVal Width As Long = -1, Optional ByVal Height As Long = -1, Optional ByVal BackColor As Long, Optional ByVal RetainRatio As Boolean = False, Optional ByVal UseAlpha As Boolean = False)
+Public Sub LoadPictureFXDC(ByVal PicFile As String, fxDC As tFXDCS, Optional ByVal AutoLoad As Boolean = True, Optional ByVal Width As Long = -1, Optional ByVal Height As Long = -1, Optional ByVal BackColor As Long = 0, Optional ByVal RetainRatio As Boolean = False, Optional ByVal UseAlpha As Boolean = False)
 'purpose: load graphic from file
 'returns: fxDC, passed by reference, return a hDC and a stock bitmap handle to *reselect into DC to return bitmap this creates*
 'function returns: .Picture compatible object(like form, picturebox, etc)
@@ -232,7 +232,7 @@ Public Sub LoadPictureFXDC(ByVal PicFile As String, fxDC As tFXDCS, Optional ByV
     
     'should probably do this eventually: DeleteObject hBitmap
 
-   On Error GoTo 0
+   On Error Resume Next
    Exit Sub
    
 LoadPictureFXDC_Error:
@@ -339,7 +339,7 @@ Public Function GetShortName(ByVal sLongFileName As String) As String
 
 End Function
 
-Public Sub AlphaBlt(ByVal dhDC As Long, ByVal dX As Long, ByVal dY As Long, ByVal dW As Long, ByVal dH As Long, ByVal shDC As Long, ByVal sX As Long, ByVal sY As Long, ByVal sW As Long, ByVal sH As Long, Optional ByVal UseAlpha As Boolean, Optional ByVal AlphaConstant As Byte = 255)
+Public Sub AlphaBlt(ByVal dhDC As Long, ByVal dX As Long, ByVal dY As Long, ByVal dW As Long, ByVal dH As Long, ByVal shDC As Long, ByVal sX As Long, ByVal sY As Long, ByVal sW As Long, ByVal sH As Long, Optional ByVal UseAlpha As Boolean = False, Optional ByVal AlphaConstant As Byte = 255)
 Dim tmpHDC As Long, hBitmap As Long, BITMAP As Long
 Dim Blend As BLENDFUNCTION, BlendLng As Long
 

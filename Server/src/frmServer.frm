@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "Tabctl32.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmServer 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Loading..."
@@ -60,19 +60,14 @@ Begin VB.Form frmServer
       TabPicture(1)   =   "frmServer.frx":170A6
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "lvwInfo"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdSavePlayers"
-      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "cmdEditPlayer"
-      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Control "
       TabPicture(2)   =   "frmServer.frx":170C2
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "fraServer"
-      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "fraDatabase"
-      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "News"
       TabPicture(3)   =   "frmServer.frx":170DE
@@ -1198,6 +1193,7 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub Form_Resize()
+On Error Resume Next
     If frmServer.WindowState = vbMinimized Then
         frmServer.Hide
     End If

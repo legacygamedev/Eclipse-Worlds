@@ -378,7 +378,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub UnsetTexture(ByRef textureNum As Long, Optional ByVal Ignore As Boolean)
+Public Sub UnsetTexture(ByRef textureNum As Long, Optional ByVal Ignore As Boolean = False)
     ' If debug mode then handle error
     If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
 

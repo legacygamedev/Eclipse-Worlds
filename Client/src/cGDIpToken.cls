@@ -65,10 +65,11 @@ Private Sub Class_Initialize()
 End Sub
 
 Private Sub Class_Terminate()
+On Error Resume Next
     If m_Token Then
         Dim u As Long, o As Object, oTmp As Object, oPtr As Long
         If Not m_Users Is Nothing Then
-            For u = m_Users.count To 1 Step -1
+            For u = m_Users.Count To 1 Step -1
                 oPtr = m_Users(u)
                 CopyMemory oTmp, oPtr, 4&
                 Set o = oTmp

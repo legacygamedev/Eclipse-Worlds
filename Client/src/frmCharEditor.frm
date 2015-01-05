@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmCharEditor 
    BorderStyle     =   3  'Fixed Dialog
@@ -586,6 +586,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Option Explicit
+
 Public currentSprite As Long
 Private textureNum As Long
 Public maxSprites As Long
@@ -642,7 +644,7 @@ End Sub
 Public Sub fetchPlayerData()
     textureNum = -1
     txtLevel = requestedPlayer.Level
-    txtExp = requestedPlayer.exp
+    txtEXP = requestedPlayer.exp
     txtHP.text = requestedPlayer.Vital(1)
     txtMP.text = requestedPlayer.Vital(2)
     txtStr.text = requestedPlayer.Stat(1)
@@ -753,19 +755,19 @@ Private Sub txtEnd_LostFocus()
 End Sub
 
 Private Sub txtExp_Change()
-     correctValue txtExp, requestedPlayer.exp, 0, 9999999
+     correctValue txtEXP, requestedPlayer.exp, 0, 9999999
 End Sub
 
 Private Sub txtExp_Click()
-    selectValue txtExp
+    selectValue txtEXP
 End Sub
 
 Private Sub txtEXP_GotFocus()
-    selectValue txtExp
+    selectValue txtEXP
 End Sub
 
 Private Sub txtExp_LostFocus()
-    reviseValue txtExp, requestedPlayer.exp
+    reviseValue txtEXP, requestedPlayer.exp
 End Sub
 
 Private Sub txtFilter_Change()
@@ -781,7 +783,7 @@ Private Sub txtFilter_Change()
         For i = 0 To Length
             If InStr(LCase$(charList(i, 0)), LCase$(content)) <> 0 Then
                 listCharacters.listItems.Add , , charList(i, 0)
-                listCharacters.listItems.Item(listCharacters.listItems.count).SubItems(1) = charList(i, 1)
+                listCharacters.listItems.Item(listCharacters.listItems.Count).SubItems(1) = charList(i, 1)
             End If
         Next
         listCharacters.Sorted = True
@@ -872,8 +874,7 @@ Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min
         Exit Function
     ElseIf Len(textBox.text) = 1 And IsNumeric(textBox.text) Then
         If verifyValue(textBox, min, max) Then
-            TempValue = textBox.text
-            valueToChange = TempValue
+            valueToChange = textBox.text
             correctValue = True
         Else
             textBox.text = CStr(valueToChange)
@@ -883,8 +884,7 @@ Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min
     ElseIf Len(textBox.text) > 1 And InStr(1, textBox.text, "-") = 0 And InStrRev(textBox.text, "-") = 0 And IsNumeric(textBox.text) Then
 
         If verifyValue(textBox, min, max) Then
-            TempValue = textBox.text
-            valueToChange = TempValue
+            valueToChange = textBox.text
             correctValue = True
         Else
             textBox.text = CStr(valueToChange)
@@ -895,8 +895,7 @@ Private Function correctValue(ByRef textBox As textBox, ByRef valueToChange, min
     ElseIf Len(textBox.text) > 1 And InStr(1, textBox.text, "-") = 1 And InStrRev(textBox.text, "-") = 1 And IsNumeric(textBox.text) Then
 
         If verifyValue(textBox, min, max) Then
-            TempValue = textBox.text
-            valueToChange = TempValue
+            valueToChange = textBox.text
             correctValue = True
         Else
             textBox.text = CStr(valueToChange)

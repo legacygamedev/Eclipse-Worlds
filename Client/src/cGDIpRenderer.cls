@@ -38,7 +38,7 @@ Private Declare Function GdipDeleteGraphics Lib "GdiPlus.dll" (ByVal mGraphics A
 Private Declare Function GdipRotateWorldTransform Lib "gdiplus" (ByVal graphics As Long, ByVal Angle As Single, ByVal Order As Long) As Long
 Private Declare Function GdipTranslateWorldTransform Lib "gdiplus" (ByVal graphics As Long, ByVal dX As Single, ByVal dY As Single, ByVal Order As Long) As Long
 Private Declare Function GdipDrawImageRectRectI Lib "gdiplus" (ByVal hGraphics As Long, ByVal hImage As Long, ByVal dstX As Long, ByVal dstY As Long, ByVal dstWidth As Long, ByVal dstHeight As Long, ByVal srcX As Long, ByVal srcY As Long, ByVal srcWidth As Long, ByVal srcHeight As Long, ByVal srcUnit As Long, Optional ByVal imageAttributes As Long = 0, Optional ByVal Callback As Long = 0, Optional ByVal callbackData As Long = 0) As Long
-Private Declare Function GdipDrawImagePointsRectI Lib "gdiplus" (ByVal graphics As Long, ByVal pImage As Long, ByRef pPoints As Any, ByVal count As Long, ByVal srcX As Long, ByVal srcY As Long, ByVal srcWidth As Long, ByVal srcHeight As Long, ByVal srcUnit As Long, ByVal imageAttributes As Long, Optional ByVal pcallback As Long = 0&, Optional ByVal callbackData As Long = 0&) As Long
+Private Declare Function GdipDrawImagePointsRectI Lib "gdiplus" (ByVal graphics As Long, ByVal pImage As Long, ByRef pPoints As Any, ByVal Count As Long, ByVal srcX As Long, ByVal srcY As Long, ByVal srcWidth As Long, ByVal srcHeight As Long, ByVal srcUnit As Long, ByVal imageAttributes As Long, Optional ByVal pcallback As Long = 0&, Optional ByVal callbackData As Long = 0&) As Long
 Private Declare Function GdipGraphicsClear Lib "gdiplus" (ByVal graphics As Long, ByVal pColor As Long) As Long
 Private Declare Function GdipCreateSolidFill Lib "GdiPlus.dll" (ByVal mColor As Long, ByRef mBrush As Long) As Long
 Private Declare Function GdipDeleteBrush Lib "GdiPlus.dll" (ByVal mBrush As Long) As Long
@@ -50,13 +50,13 @@ Private Declare Function GdipResetWorldTransform Lib "GdiPlus.dll" (ByVal graphi
 Private Declare Function GdipDrawEllipseI Lib "gdiplus" (ByVal hGraphics As Long, ByVal hPen As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
 Private Declare Function GdipFillEllipseI Lib "gdiplus" (ByVal hGraphics As Long, ByVal hBrush As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
 Private Declare Function GdipDrawLineI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByVal X1 As Long, ByVal Y1 As Long, ByVal X2 As Long, ByVal Y2 As Long) As Long
-Private Declare Function GdipDrawLinesI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByRef pPoints As Any, ByVal count As Long) As Long
-Private Declare Function GdipDrawPolygonI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByRef pPoints As Any, ByVal count As Long) As Long
-Private Declare Function GdipFillPolygonI Lib "gdiplus" (ByVal graphics As Long, ByVal brush As Long, ByRef pPoints As Any, ByVal count As Long, ByVal FillMode As Long) As Long
+Private Declare Function GdipDrawLinesI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByRef pPoints As Any, ByVal Count As Long) As Long
+Private Declare Function GdipDrawPolygonI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByRef pPoints As Any, ByVal Count As Long) As Long
+Private Declare Function GdipFillPolygonI Lib "gdiplus" (ByVal graphics As Long, ByVal brush As Long, ByRef pPoints As Any, ByVal Count As Long, ByVal FillMode As Long) As Long
 Private Declare Function GdipDrawRectangleI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
 Private Declare Function GdipFillRectangleI Lib "gdiplus" (ByVal graphics As Long, ByVal brush As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
-Private Declare Function GdipDrawRectanglesI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByRef rects As Any, ByVal count As Long) As Long
-Private Declare Function GdipFillRectanglesI Lib "gdiplus" (ByVal graphics As Long, ByVal brush As Long, ByRef rects As Any, ByVal count As Long) As Long
+Private Declare Function GdipDrawRectanglesI Lib "gdiplus" (ByVal graphics As Long, ByVal pen As Long, ByRef rects As Any, ByVal Count As Long) As Long
+Private Declare Function GdipFillRectanglesI Lib "gdiplus" (ByVal graphics As Long, ByVal brush As Long, ByRef rects As Any, ByVal Count As Long) As Long
 
 Private Const UnitPixel As Long = &H2&
 
@@ -195,7 +195,7 @@ Public Function DrawPolygon(ByVal hGraphics As Long, _
                             ByRef PointsVarPtr As Long, ByVal PointCount As Long, _
                             Optional FillMode As FillModeConstants = FillModeWinding, _
                             Optional OutlinePenHandle As Long = 0&, _
-                            Optional ARGBFillColor As Long = 0&, Optional FillBrushHandle As Long) As Boolean
+                            Optional ARGBFillColor As Long = 0&, Optional FillBrushHandle As Long = 0) As Boolean
     ' Draws a polygon. This is slightly different than using DrawLines (multiple lines)
     '   to draw a polygon because it will automatically close the polygon
     ' How to use PointsVarPtr...
@@ -368,7 +368,7 @@ Public Function PlgBltImageClassToDC(ImageClass As cGDIpImage, ByVal hDC As Long
 End Function
 
 Public Function RenderImageClassToDC(ImageClass As cGDIpImage, ByVal hDC As Long, _
-                        Optional ByVal destX As Long, Optional ByVal destY As Long, _
+                        Optional ByVal destX As Long = 0&, Optional ByVal destY As Long = 0&, _
                         Optional ByVal destWidth As Long = 0&, Optional ByVal destHeight As Long = 0&, _
                         Optional ByVal srcX As Long = 0&, Optional ByVal srcY As Long = 0&, _
                         Optional ByVal srcWidth As Long = 0&, Optional ByVal srcHeight As Long = 0&, _
@@ -445,7 +445,7 @@ Public Function RenderImageClassToDC(ImageClass As cGDIpImage, ByVal hDC As Long
 End Function
 
 Public Function RenderImageClassToHGraphics(ImageClass As cGDIpImage, ByVal hGraphics As Long, _
-                        Optional ByVal destX As Long, Optional ByVal destY As Long, _
+                        Optional ByVal destX As Long = 0&, Optional ByVal destY As Long = 0&, _
                         Optional ByVal destWidth As Long = 0&, Optional ByVal destHeight As Long = 0&, _
                         Optional ByVal srcX As Long = 0&, Optional ByVal srcY As Long = 0&, _
                         Optional ByVal srcWidth As Long = 0&, Optional ByVal srcHeight As Long = 0&) As Boolean
@@ -475,7 +475,7 @@ Public Function RenderToHGraphics(ByVal hBitmap As Long, ByVal hGraphics As Long
                         ByVal destWidth As Long, ByVal destHeight As Long, _
                         ByVal srcX As Long, ByVal srcY As Long, _
                         ByVal srcWidth As Long, ByVal srcHeight As Long, _
-                        Optional ByVal hAttributes As Long) As Boolean
+                        Optional ByVal hAttributes As Long = 0) As Boolean
 
     ' Parameters
     '   :: hBitmap - any GDI+ image handle

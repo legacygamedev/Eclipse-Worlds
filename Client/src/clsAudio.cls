@@ -101,8 +101,8 @@ Public Sub PlayMusic(FileName As String, Optional ByVal Ignore As Boolean = Fals
 End Sub
 
 Public Sub PlaySound(FileName As String, _
-                     Optional ByVal X As Long, _
-                     Optional ByVal Y As Long, _
+                     Optional ByVal X As Long = 0, _
+                     Optional ByVal Y As Long = 0, _
                      Optional ByVal Ignore As Boolean = False)
    Dim I As Long
 

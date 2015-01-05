@@ -211,7 +211,7 @@ Public Sub AttachTokenClass(TokenClass As cGDIpToken)
     End If
 End Sub
 
-Public Function ARGBtoRGB(ByVal ARGBColor As Long, Optional ByRef Opacity As Byte) As Long
+Public Function ARGBtoRGB(ByVal ARGBColor As Long, Optional ByRef Opacity As Byte = 0) As Long
 
     ARGBtoRGB = (ARGBColor And &HFF) * &H10000 Or ((ARGBColor And &HFFFF&) \ &H100&) * &H100& Or ((ARGBColor And &HFFFFFF) \ &H10000)
     If ARGBColor < 0& Then
@@ -225,7 +225,7 @@ End Function
 Public Sub Clear()
     Dim I As Long, sKey As String, hBrush As Long
     If Not m_Objects Is Nothing Then
-        For I = m_Objects.count To 1 Step -1&
+        For I = m_Objects.Count To 1 Step -1&
             If Not TypeOf m_Objects(I) Is IUnknown Then
                 sKey = m_Objects(I)
                 Select Case Left$(sKey, 1)
@@ -420,7 +420,7 @@ Public Function GetBrushType(ByVal BrushHandle As Long) As BrushTypeConstants
 End Function
 
 Public Function GetGradientLineBrushColors(ByVal BrushHandle As Long, _
-                                            Optional ARGBStartColor As Long, Optional ARGBEndColor As Long) As Boolean
+                                            Optional ARGBStartColor As Long = 0, Optional ARGBEndColor As Long = 0) As Boolean
     
     If Not m_Token Is Nothing Then
         If m_Token.Token Then
@@ -474,7 +474,7 @@ Public Function GetHatchStyle(ByVal BrushHandle As Long) As Long
 
 End Function
 
-Public Function GetPenProps(ByVal PenHandle As Long, Optional ByRef ARGBColor As Long, Optional Width As Single, _
+Public Function GetPenProps(ByVal PenHandle As Long, Optional ByRef ARGBColor As Long = 0, Optional Width As Single = 0, _
                                 Optional PenStyle As PenStyleConstants, Optional DashCapStyle As DashCapConstants, _
                                 Optional EndCap As PenEndCapConstants, Optional StartCap As PenEndCapConstants) As Boolean
     Dim lValue As Long
@@ -598,6 +598,7 @@ Public Function SystemColorToRGB(ByVal SysColorValue As Long) As Long
 End Function
 
 Private Sub Class_Terminate()
+On Error Resume Next
     If Not m_Token Is Nothing Then
         Call Clear
         m_Token.RemoveUser Me

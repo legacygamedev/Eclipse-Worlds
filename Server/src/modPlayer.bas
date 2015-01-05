@@ -242,7 +242,7 @@ Sub LeftGame(ByVal Index As Long)
     End If
 End Sub
 
-Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal NeedMap = False, Optional ByVal Dir As Integer = -1)
+Sub PlayerWarp(ByVal Index As Long, ByVal MapNum As Integer, ByVal X As Long, ByVal Y As Long, Optional ByVal NeedMap As Boolean = False, Optional ByVal Dir As Integer = -1)
     Dim ShopNum As Long
     Dim OldMap As Long
     Dim i As Long
@@ -1423,7 +1423,7 @@ Private Function AutoLife(ByVal Index As Long) As Boolean
     Next
 End Function
 
-Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long)
+Sub OnDeath(ByVal Index As Long, Optional ByVal Attacker As Long = 0)
     Dim i As Long, RemoveItem As Boolean
    
     ' Set HP to 0
@@ -1683,7 +1683,7 @@ Sub CheckResource(ByVal Index As Long, ByVal X As Long, ByVal Y As Long)
 End Sub
 
 Sub GiveBankItem(ByVal Index As Long, ByVal InvSlot As Byte, ByVal Amount As Long, Optional ByVal Durability As Integer = 0)
-    Dim BankSlot
+    Dim BankSlot As Long
     
     BankSlot = FindOpenBankSlot(Index, GetPlayerInvItemNum(Index, InvSlot))
         
@@ -1716,7 +1716,7 @@ Sub GiveBankItem(ByVal Index As Long, ByVal InvSlot As Byte, ByVal Amount As Lon
 End Sub
 
 Sub TakeBankItem(ByVal Index As Long, ByVal BankSlot As Byte, ByVal Amount As Long)
-    Dim InvSlot
+    Dim InvSlot As Long
 
     If BankSlot < 1 Or BankSlot > MAX_BANK Then Exit Sub
     If GetPlayerBankItemNum(Index, BankSlot) < 1 Or GetPlayerBankItemNum(Index, BankSlot) > MAX_ITEMS Then Exit Sub
@@ -2053,7 +2053,7 @@ Public Sub UseItem(ByVal Index As Long, ByVal InvNum As Byte)
                     Call TakeInvSlot(Index, Item1, 1)
                     Call TakeInvSlot(Index, Item2, 1)
                     Call GiveInvItem(Index, Result, 1)
-                    Call PlayerMsg(Index, "You have successfully created " & Trim(Item(Result).Name) & " and earned " & SkillExp & " experience for the skill " & GetSkillName(Skill) & ".", BrightGreen)
+                    Call PlayerMsg(Index, "You have successfully created " & Trim$(Item(Result).Name) & " and earned " & SkillExp & " experience for the skill " & GetSkillName(Skill) & ".", BrightGreen)
                     
                     If GetPlayerSkill(Index, Skill) < Options.MaxLevel Then
                         ' Add the experience to the skill
@@ -2249,7 +2249,7 @@ Public Sub UpdateClassData(ByVal Index As Long)
 End Sub
 
 Public Sub UpdateAllClassData()
-    Dim i, X As Long
+    Dim i As Long, X As Long
     
     For X = 1 To Player_HighIndex
         If GetPlayerAccess(X) <= STAFF_MODERATOR Then

@@ -96,8 +96,8 @@ End Type
         ALL_MESSAGES = -1     'All messages will callback
     End Enum
     
-    Private Declare Function CallWindowProcA Lib "user32" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
-    Private Declare Function CallWindowProcW Lib "user32" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByVal msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+    Private Declare Function CallWindowProcA Lib "user32" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+    Private Declare Function CallWindowProcW Lib "user32" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByVal Msg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
     Private Declare Function GetCurrentProcessId Lib "kernel32" () As Long
     Private Declare Function GetWindowThreadProcessId Lib "user32" (ByVal hWnd As Long, lpdwProcessId As Long) As Long
     Private Declare Function IsWindow Lib "user32" (ByVal hWnd As Long) As Long
@@ -158,7 +158,7 @@ End Type
   '  f. At a minimum, review scb_SetCallbackAddr, scb_ReleaseCallback & scb_TerminateCallbacks
 '-------------------------------------------------------------------------------------------------
 
-Public Function EnumWindowHandles(Optional ByVal oCallback As Object, Optional ByVal nOrdinal As Long = 1) As Boolean
+Public Function EnumWindowHandles(Optional ByVal oCallback As Object = Nothing, Optional ByVal nOrdinal As Long = 1) As Boolean
     
     Dim lAddrOf As Long
     If oCallback Is Nothing Then nOrdinal = 3
@@ -175,7 +175,7 @@ Public Function EnumWindowHandles(Optional ByVal oCallback As Object, Optional B
     
 End Function
 
-Public Function EnumFonts(ByVal hDC As Long, Optional ByVal oCallback As Object, Optional ByVal nOrdinal As Long = 1) As Boolean
+Public Function EnumFonts(ByVal hDC As Long, Optional ByVal oCallback As Object = Nothing, Optional ByVal nOrdinal As Long = 1) As Boolean
 
     Dim lAddrOf As Long
     If oCallback Is Nothing Then nOrdinal = 4
@@ -193,7 +193,7 @@ Public Function EnumFonts(ByVal hDC As Long, Optional ByVal oCallback As Object,
 End Function
 
 Private Sub Class_Terminate()
-
+On Error Resume Next
   ssc_Terminate      '(add this to Unload or Terminate event if you are subclassing)
   shk_TerminateHooks  '(add this to Unload or Terminate event if you are hooking)
   scb_TerminateCallbacks '(add this to Unload or Terminate event if you are using callbacks)
@@ -305,7 +305,7 @@ Public Function ssc_Subclass(ByVal lng_hWnd As Long, _
       If z_scFunk Is Nothing Then Set z_scFunk = New Collection 'If this is the first time through, do the one-time initialization
       On Error GoTo CatchDoubleSub                              'Catch double subclassing
         z_scFunk.Add z_ScMem, "h" & lng_hWnd                    'Add the hWnd/thunk-address to the collection
-      On Error GoTo 0
+      On Error Resume Next
       
    'z_Sc (0) thru z_Sc(17) are used as storage for the thunks & IDX_ constants above relate to these thunk positions which are filled in below
     z_Sc(18) = &HD231C031: z_Sc(19) = &HBBE58960: z_Sc(21) = &H21E8F631: z_Sc(22) = &HE9000001: z_Sc(23) = &H12C&: z_Sc(24) = &HD231C031: z_Sc(25) = &HBBE58960: z_Sc(27) = &H3FFF631: z_Sc(28) = &H75047339: z_Sc(29) = &H2873FF23: z_Sc(30) = &H751C53FF: z_Sc(31) = &HC433913: z_Sc(32) = &H53FF2274: z_Sc(33) = &H13D0C: z_Sc(34) = &H18740000: z_Sc(35) = &H875C085: z_Sc(36) = &H820443C7: z_Sc(37) = &H90000000: z_Sc(38) = &H87E8&: z_Sc(39) = &H22E900: z_Sc(40) = &H90900000: z_Sc(41) = &H2C7B8B4A: z_Sc(42) = &HE81C7589: z_Sc(43) = &H90&: z_Sc(44) = &H75147539: z_Sc(45) = &H6AE80F: z_Sc(46) = &HD2310000: z_Sc(47) = &HE8307B8B: z_Sc(48) = &H7C&: z_Sc(49) = &H7D810BFF: z_Sc(50) = &H8228&: z_Sc(51) = &HC7097500: z_Sc(52) = &H80000443: z_Sc(53) = &H90900000: z_Sc(54) = &H44753339: z_Sc(55) = &H74047339: z_Sc(56) = &H2473FF3F: z_Sc(57) = &HFFFFFC68
@@ -529,7 +529,7 @@ End Sub
 '-SelfHook code------------------------------------------------------------------------------------
 '-The following routines are exclusively for the shk_SetHook routines----------------------------
 Public Function shk_SetHook(ByVal HookType As eHookType, _
-                    Optional ByVal bGlobal As Boolean, _
+                    Optional ByVal bGlobal As Boolean = False, _
                     Optional ByVal When As eMsgWhen = MSG_BEFORE, _
                     Optional ByVal lParamUser As Long = 0, _
                     Optional ByVal nOrdinal As Long = 1, _
@@ -596,7 +596,7 @@ Public Function shk_SetHook(ByVal HookType As eHookType, _
         If z_hkFunk Is Nothing Then Set z_hkFunk = New Collection   'If this is the first time through, do the one-time initialization
         On Error GoTo CatchDoubleSub                                'Catch double subclassing
           z_hkFunk.Add z_ScMem, "h" & HookType                      'Add the hook/thunk-address to the collection
-        On Error GoTo 0
+        On Error Resume Next
         
         z_Sc(14) = &HD231C031: z_Sc(15) = &HBBE58960: z_Sc(17) = &H3FFF631: z_Sc(18) = &H75047339: z_Sc(19) = &H2873FF2F: z_Sc(20) = &H751C53FF: z_Sc(21) = &HC43391F: z_Sc(22) = &H7B8B2E74: z_Sc(23) = &H8478B20: z_Sc(24) = &H75184339: z_Sc(25) = &HC53FF0F: z_Sc(26) = &H13D&: z_Sc(27) = &H85197400: z_Sc(28) = &H900975C0: z_Sc(29) = &H443C7: z_Sc(30) = &H90000080: z_Sc(31) = &H47E8&: z_Sc(32) = &H2AE900: z_Sc(33) = &H90900000: z_Sc(34) = &H742C7339: z_Sc(35) = &H75894A0F: z_Sc(36) = &H46E81C: z_Sc(37) = &H75390000: z_Sc(38) = &H90157514: z_Sc(39) = &H27E8&: z_Sc(40) = &H30733900: z_Sc(41) = &HD2310A74: z_Sc(42) = &H2FE8&: z_Sc(43) = &H90909000: z_Sc(44) = &H33390BFF: z_Sc(45) = &H73390E75: z_Sc(46) = &HFF097404: z_Sc(47) = &H53FF2473: z_Sc(48) = &H90909014: z_Sc(49) = &HCC261: z_Sc(50) = &HFF2C75FF: z_Sc(51) = &H75FF2875: z_Sc(52) = &H2473FF24
         z_Sc(53) = &H891053FF: z_Sc(54) = &H90C31C45: z_Sc(55) = &H2873FF52: z_Sc(56) = &H5A1C53FF: z_Sc(57) = &H438D2275: z_Sc(58) = &H144D8D34: z_Sc(59) = &H1C458D50: z_Sc(60) = &HFF0873FF: z_Sc(61) = &H75FF2C75: z_Sc(62) = &H2475FF28: z_Sc(63) = &HFF525150: z_Sc(64) = &H53FF2073: z_Sc(65) = &H90909028: z_Sc(66) = &HC3&
@@ -670,8 +670,8 @@ End Sub
 'Maps zData() to the memory address for the specified thunk type
 Private Function zMap_VFunction(vFuncTarget As Long, _
                                 vType As eThunkType, _
-                                Optional oCallback As Object, _
-                                Optional bIgnoreErrors As Boolean) As Long
+                                Optional oCallback As Object = Nothing, _
+                                Optional bIgnoreErrors As Boolean = False) As Long
     
     '\\LaVolpe - Redone to be shared/used by Hook, Subclass & Callback routines
     
@@ -697,7 +697,7 @@ Private Function zMap_VFunction(vFuncTarget As Long, _
     If thunkCol Is Nothing Then
         zError "zMap_VFunction", "Thunk hasn't been initialized"
     Else
-        If thunkCol.count Then
+        If thunkCol.Count Then
             On Error GoTo Catch
             z_ScMem = thunkCol(colID)               'Get the thunk address
             If IsBadCodePtr(z_ScMem) Then z_ScMem = 0&
@@ -811,7 +811,7 @@ Private Function zInIDE(ByRef bIDE As Boolean) As Boolean
     zInIDE = bIDE
 End Function
 
-Private Sub zUnThunk(ByVal thunkID As Long, ByVal vType As eThunkType, Optional ByVal oCallback As Object)
+Private Sub zUnThunk(ByVal thunkID As Long, ByVal vType As eThunkType, Optional ByVal oCallback As Object = Nothing)
 
     ' thunkID, depends on vType:
     '   - Subclassing:  the hWnd of the window subclassed
@@ -878,8 +878,8 @@ Private Sub zTerminateThunks(ByVal vType As eThunkType)
     
     If Not (thunkCol Is Nothing) Then                 'Ensure that hooking has been started
       With thunkCol
-        For I = .count To 1 Step -1                   'Loop through the collection of hook types in reverse order
-          z_ScMem = .item(I)                          'Get the thunk address
+        For I = .Count To 1 Step -1                   'Loop through the collection of hook types in reverse order
+          z_ScMem = .Item(I)                          'Get the thunk address
           If IsBadCodePtr(z_ScMem) = 0 Then           'Ensure that the thunk hasn't already released its memory
             Select Case vType
                 Case SubclassThunk
@@ -909,7 +909,7 @@ Public Function scb_SetCallbackAddr(ByVal nParamCount As Long, _
                      Optional ByVal nOrdinal As Long = 1, _
                      Optional ByVal oCallback As Object = Nothing, _
                      Optional ByVal bIdeSafety As Boolean = True, _
-                     Optional ByVal bIsTimerCallback As Boolean) As Long   'Return the address of the specified callback thunk
+                     Optional ByVal bIsTimerCallback As Boolean = False) As Long   'Return the address of the specified callback thunk
     '*************************************************************************************************
     '* nParamCount  - The number of parameters that will callback
     '* nOrdinal     - Callback ordinal number, the final private method is ordinal 1, the second last is ordinal 2, etc...
@@ -946,12 +946,12 @@ Public Function scb_SetCallbackAddr(ByVal nParamCount As Long, _
         Set z_cbFunk = New Collection           'If this is the first time through, do the one-time initialization
     Else
         On Error Resume Next                    'Catch already initialized?
-        z_ScMem = z_cbFunk.item("h" & ObjPtr(oCallback) & "." & nOrdinal) 'Test it
+        z_ScMem = z_cbFunk.Item("h" & ObjPtr(oCallback) & "." & nOrdinal) 'Test it
         If Err = 0 Then
             scb_SetCallbackAddr = z_ScMem + PROC_OFF  'we had this one, just reference it
             Exit Function
         End If
-        On Error GoTo 0
+        On Error Resume Next
     End If
     
     If nParamCount < 0 Then                     ' validate parameters
@@ -1003,7 +1003,7 @@ Public Function scb_SetCallbackAddr(ByVal nParamCount As Long, _
 
 End Function
 
-Public Sub scb_ReleaseCallback(ByVal nOrdinal As Long, Optional ByVal oCallback As Object)
+Public Sub scb_ReleaseCallback(ByVal nOrdinal As Long, Optional ByVal oCallback As Object = Nothing)
     ' Can be made public, can be removed & zUnThunk can be called instead
     ' NEVER call this from within the callback routine itself
     

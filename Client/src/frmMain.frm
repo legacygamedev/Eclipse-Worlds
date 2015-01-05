@@ -1,6 +1,6 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
-Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -27,105 +27,6 @@ Begin VB.Form frmMain
    StartUpPosition =   2  'CenterScreen
    Tag             =   " "
    Visible         =   0   'False
-   Begin VB.PictureBox picTempInv 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      AutoSize        =   -1  'True
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   8.25
-         Charset         =   238
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   540
-      Left            =   14100
-      ScaleHeight     =   36
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   36
-      TabIndex        =   227
-      TabStop         =   0   'False
-      Top             =   12240
-      Visible         =   0   'False
-      Width           =   540
-   End
-   Begin VB.PictureBox picTempBank 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      AutoSize        =   -1  'True
-      BackColor       =   &H00000000&
-      BorderStyle     =   0  'None
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   8.25
-         Charset         =   238
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   540
-      Left            =   13860
-      ScaleHeight     =   36
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   36
-      TabIndex        =   226
-      TabStop         =   0   'False
-      Top             =   12900
-      Visible         =   0   'False
-      Width           =   540
-   End
-   Begin VB.PictureBox picButton 
-      BackColor       =   &H8000000A&
-      BorderStyle     =   0  'None
-      Height          =   435
-      Index           =   13
-      Left            =   15780
-      ScaleHeight     =   29
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   32
-      TabIndex        =   223
-      TabStop         =   0   'False
-      Top             =   13380
-      Visible         =   0   'False
-      Width           =   480
-      Begin VB.PictureBox picButton 
-         BackColor       =   &H8000000A&
-         BorderStyle     =   0  'None
-         Height          =   435
-         Index           =   8
-         Left            =   360
-         ScaleHeight     =   29
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   32
-         TabIndex        =   224
-         TabStop         =   0   'False
-         Top             =   360
-         Visible         =   0   'False
-         Width           =   480
-         Begin VB.PictureBox picButton 
-            BackColor       =   &H8000000A&
-            BorderStyle     =   0  'None
-            Height          =   435
-            Index           =   11
-            Left            =   300
-            ScaleHeight     =   29
-            ScaleMode       =   3  'Pixel
-            ScaleWidth      =   32
-            TabIndex        =   225
-            TabStop         =   0   'False
-            Top             =   360
-            Visible         =   0   'False
-            Width           =   480
-         End
-      End
-   End
    Begin VB.PictureBox picMapEditor 
       Appearance      =   0  'Flat
       BackColor       =   &H0080C0FF&
@@ -427,28 +328,116 @@ Begin VB.Form frmMain
          Width           =   930
       End
    End
+   Begin VB.PictureBox picTempInv 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      AutoSize        =   -1  'True
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   238
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   540
+      Left            =   14160
+      ScaleHeight     =   36
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   36
+      TabIndex        =   226
+      TabStop         =   0   'False
+      Top             =   12240
+      Visible         =   0   'False
+      Width           =   540
+   End
+   Begin VB.PictureBox picTempBank 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      AutoSize        =   -1  'True
+      BackColor       =   &H00000000&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   8.25
+         Charset         =   238
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   540
+      Left            =   13860
+      ScaleHeight     =   36
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   36
+      TabIndex        =   225
+      TabStop         =   0   'False
+      Top             =   12900
+      Visible         =   0   'False
+      Width           =   540
+   End
+   Begin VB.PictureBox picButton 
+      BackColor       =   &H8000000A&
+      BorderStyle     =   0  'None
+      Height          =   435
+      Index           =   13
+      Left            =   15780
+      ScaleHeight     =   29
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   32
+      TabIndex        =   222
+      TabStop         =   0   'False
+      Top             =   13380
+      Visible         =   0   'False
+      Width           =   480
+      Begin VB.PictureBox picButton 
+         BackColor       =   &H8000000A&
+         BorderStyle     =   0  'None
+         Height          =   435
+         Index           =   8
+         Left            =   360
+         ScaleHeight     =   29
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   32
+         TabIndex        =   223
+         TabStop         =   0   'False
+         Top             =   360
+         Visible         =   0   'False
+         Width           =   480
+         Begin VB.PictureBox deleteThis 
+            BackColor       =   &H8000000A&
+            BorderStyle     =   0  'None
+            Height          =   15000
+            Index           =   11
+            Left            =   300
+            ScaleHeight     =   1000
+            ScaleMode       =   3  'Pixel
+            ScaleWidth      =   1000
+            TabIndex        =   224
+            TabStop         =   0   'False
+            Top             =   360
+            Visible         =   0   'False
+            Width           =   15000
+         End
+      End
+   End
    Begin VB.PictureBox picQuest 
       BackColor       =   &H00000000&
       Height          =   4935
-      Left            =   9060
+      Left            =   8880
       ScaleHeight     =   4875
       ScaleWidth      =   3315
       TabIndex        =   218
       TabStop         =   0   'False
-      Top             =   12240
+      Top             =   3240
       Visible         =   0   'False
       Width           =   3375
-      Begin VB.CommandButton cmdX 
-         BackColor       =   &H00E0E0E0&
-         Caption         =   "X"
-         Height          =   255
-         Left            =   3060
-         MaskColor       =   &H00FFFFFF&
-         Style           =   1  'Graphical
-         TabIndex        =   220
-         Top             =   0
-         Width           =   255
-      End
       Begin VB.ListBox lstQuests 
          BackColor       =   &H00000000&
          ForeColor       =   &H00FFFFFF&
@@ -475,7 +464,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   120
-         TabIndex        =   222
+         TabIndex        =   221
          Top             =   4560
          Width           =   3135
       End
@@ -496,7 +485,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   480
-         TabIndex        =   221
+         TabIndex        =   220
          Top             =   120
          Width           =   2415
       End
@@ -637,12 +626,12 @@ Begin VB.Form frmMain
       BackColor       =   &H00000000&
       ForeColor       =   &H00C0FFFF&
       Height          =   2175
-      Left            =   9060
+      Left            =   1320
       ScaleHeight     =   2115
       ScaleWidth      =   7155
       TabIndex        =   207
       TabStop         =   0   'False
-      Top             =   12240
+      Top             =   2880
       Visible         =   0   'False
       Width           =   7215
       Begin VB.Label lblQuestName 
@@ -1853,6 +1842,356 @@ Begin VB.Form frmMain
       Visible         =   0   'False
       Width           =   7200
    End
+   Begin VB.PictureBox picCurrency 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000001&
+      BorderStyle     =   0  'None
+      FillColor       =   &H80000001&
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   2175
+      Left            =   120
+      ScaleHeight     =   145
+      ScaleMode       =   0  'User
+      ScaleWidth      =   484
+      TabIndex        =   1
+      TabStop         =   0   'False
+      Top             =   7740
+      Visible         =   0   'False
+      Width           =   7260
+      Begin VB.TextBox txtCurrency 
+         Appearance      =   0  'Flat
+         Height          =   285
+         Left            =   2160
+         TabIndex        =   3
+         TabStop         =   0   'False
+         Top             =   840
+         Width           =   2775
+      End
+      Begin VB.Label lblCurrencyCancel 
+         Alignment       =   2  'Center
+         BackColor       =   &H00000000&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Cancel"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   2160
+         TabIndex        =   5
+         Top             =   1440
+         Width           =   2775
+      End
+      Begin VB.Label lblCurrencyOk 
+         Alignment       =   2  'Center
+         BackColor       =   &H00000000&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Ok"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   2160
+         TabIndex        =   4
+         Top             =   1200
+         Width           =   2775
+      End
+      Begin VB.Label lblCurrency 
+         Alignment       =   2  'Center
+         BackColor       =   &H00000000&
+         BackStyle       =   0  'Transparent
+         Caption         =   "How many do you want to drop?"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   60
+         TabIndex        =   2
+         Top             =   480
+         Width           =   7155
+      End
+   End
+   Begin VB.PictureBox picDialogue 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000001&
+      BorderStyle     =   0  'None
+      FillColor       =   &H80000001&
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   2175
+      Left            =   120
+      ScaleHeight     =   2175
+      ScaleWidth      =   7260
+      TabIndex        =   56
+      TabStop         =   0   'False
+      Top             =   7740
+      Visible         =   0   'False
+      Width           =   7260
+      Begin VB.TextBox txtDialogue 
+         Height          =   315
+         Left            =   2520
+         TabIndex        =   57
+         TabStop         =   0   'False
+         Top             =   960
+         Visible         =   0   'False
+         Width           =   2295
+      End
+      Begin VB.Label lblDialogue_Button 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
+         BackStyle       =   0  'Transparent
+         Caption         =   "No"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   210
+         Index           =   3
+         Left            =   3405
+         TabIndex        =   62
+         Top             =   1665
+         Width           =   285
+      End
+      Begin VB.Label lblDialogue_Title 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Trade Request"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   0
+         TabIndex        =   60
+         Top             =   360
+         Width           =   7215
+      End
+      Begin VB.Label lblDialogue_Text 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         Caption         =   "Player has requested a trade. Would you like to accept?"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   495
+         Left            =   0
+         TabIndex        =   59
+         Top             =   600
+         Width           =   7215
+      End
+      Begin VB.Label lblDialogue_Button 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Ok"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   210
+         Index           =   1
+         Left            =   3405
+         TabIndex        =   58
+         Top             =   1560
+         Width           =   285
+      End
+      Begin VB.Label lblDialogue_Button 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackColor       =   &H00000000&
+         BackStyle       =   0  'Transparent
+         Caption         =   "Yes"
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H00FFFFFF&
+         Height          =   210
+         Index           =   2
+         Left            =   3360
+         TabIndex        =   61
+         Top             =   1440
+         Width           =   345
+      End
+   End
+   Begin VB.PictureBox picTrade 
+      Appearance      =   0  'Flat
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H00E0E0E0&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H80000008&
+      Height          =   5760
+      Left            =   2400
+      ScaleHeight     =   384
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   480
+      TabIndex        =   10
+      TabStop         =   0   'False
+      Top             =   1440
+      Visible         =   0   'False
+      Width           =   7200
+      Begin VB.PictureBox picYourTrade 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   238
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   3705
+         Left            =   435
+         ScaleHeight     =   247
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   193
+         TabIndex        =   12
+         TabStop         =   0   'False
+         Top             =   480
+         Width           =   2895
+      End
+      Begin VB.PictureBox picTheirTrade 
+         Appearance      =   0  'Flat
+         AutoRedraw      =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   8.25
+            Charset         =   238
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H80000008&
+         Height          =   3705
+         Left            =   3840
+         ScaleHeight     =   247
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   193
+         TabIndex        =   11
+         TabStop         =   0   'False
+         Top             =   480
+         Width           =   2895
+      End
+      Begin VB.Label lblYourWorth 
+         BackStyle       =   0  'Transparent
+         Caption         =   "1234567890"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   1680
+         TabIndex        =   15
+         Top             =   4500
+         Width           =   1815
+      End
+      Begin VB.Label lblTradeStatus 
+         Alignment       =   2  'Center
+         BackStyle       =   0  'Transparent
+         BeginProperty Font 
+            Name            =   "Georgia"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         ForeColor       =   &H000000C0&
+         Height          =   255
+         Left            =   600
+         TabIndex        =   13
+         Top             =   5520
+         Width           =   5895
+      End
+      Begin VB.Image imgAcceptTrade 
+         Height          =   435
+         Left            =   2475
+         Top             =   5040
+         Width           =   1035
+      End
+      Begin VB.Image imgDeclineTrade 
+         Height          =   435
+         Left            =   3675
+         Top             =   5040
+         Width           =   1035
+      End
+      Begin VB.Label lblTheirWorth 
+         BackStyle       =   0  'Transparent
+         Caption         =   "1234567890"
+         ForeColor       =   &H00FFFFFF&
+         Height          =   255
+         Left            =   5160
+         TabIndex        =   14
+         Top             =   4500
+         Width           =   1815
+      End
+   End
    Begin VB.PictureBox picForm 
       Appearance      =   0  'Flat
       AutoRedraw      =   -1  'True
@@ -1877,6 +2216,21 @@ Begin VB.Form frmMain
       TabStop         =   0   'False
       Top             =   0
       Width           =   12960
+      Begin VB.PictureBox picButton 
+         BackColor       =   &H8000000A&
+         BorderStyle     =   0  'None
+         Height          =   435
+         Index           =   11
+         Left            =   11160
+         ScaleHeight     =   29
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   32
+         TabIndex        =   227
+         TabStop         =   0   'False
+         Top             =   8400
+         Visible         =   0   'False
+         Width           =   480
+      End
       Begin VB.PictureBox picButton 
          BackColor       =   &H8000000A&
          BorderStyle     =   0  'None
@@ -2187,7 +2541,7 @@ Begin VB.Form frmMain
          ScaleWidth      =   195
          TabIndex        =   118
          TabStop         =   0   'False
-         Top             =   4110
+         Top             =   4080
          Visible         =   0   'False
          Width           =   2925
       End
@@ -3791,356 +4145,6 @@ Begin VB.Form frmMain
          Width           =   7680
       End
    End
-   Begin VB.PictureBox picCurrency 
-      Appearance      =   0  'Flat
-      BackColor       =   &H80000001&
-      BorderStyle     =   0  'None
-      FillColor       =   &H80000001&
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   2175
-      Left            =   120
-      ScaleHeight     =   145
-      ScaleMode       =   0  'User
-      ScaleWidth      =   484
-      TabIndex        =   1
-      TabStop         =   0   'False
-      Top             =   7740
-      Visible         =   0   'False
-      Width           =   7260
-      Begin VB.TextBox txtCurrency 
-         Appearance      =   0  'Flat
-         Height          =   285
-         Left            =   2160
-         TabIndex        =   3
-         TabStop         =   0   'False
-         Top             =   840
-         Width           =   2775
-      End
-      Begin VB.Label lblCurrencyCancel 
-         Alignment       =   2  'Center
-         BackColor       =   &H00000000&
-         BackStyle       =   0  'Transparent
-         Caption         =   "Cancel"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   2160
-         TabIndex        =   5
-         Top             =   1440
-         Width           =   2775
-      End
-      Begin VB.Label lblCurrencyOk 
-         Alignment       =   2  'Center
-         BackColor       =   &H00000000&
-         BackStyle       =   0  'Transparent
-         Caption         =   "Ok"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   2160
-         TabIndex        =   4
-         Top             =   1200
-         Width           =   2775
-      End
-      Begin VB.Label lblCurrency 
-         Alignment       =   2  'Center
-         BackColor       =   &H00000000&
-         BackStyle       =   0  'Transparent
-         Caption         =   "How many do you want to drop?"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   60
-         TabIndex        =   2
-         Top             =   480
-         Width           =   7155
-      End
-   End
-   Begin VB.PictureBox picDialogue 
-      Appearance      =   0  'Flat
-      BackColor       =   &H80000001&
-      BorderStyle     =   0  'None
-      FillColor       =   &H80000001&
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      ForeColor       =   &H80000008&
-      Height          =   2175
-      Left            =   120
-      ScaleHeight     =   2175
-      ScaleWidth      =   7260
-      TabIndex        =   56
-      TabStop         =   0   'False
-      Top             =   7740
-      Visible         =   0   'False
-      Width           =   7260
-      Begin VB.TextBox txtDialogue 
-         Height          =   315
-         Left            =   2520
-         TabIndex        =   57
-         TabStop         =   0   'False
-         Top             =   960
-         Visible         =   0   'False
-         Width           =   2295
-      End
-      Begin VB.Label lblDialogue_Button 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         BackColor       =   &H00000000&
-         BackStyle       =   0  'Transparent
-         Caption         =   "No"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   210
-         Index           =   3
-         Left            =   3405
-         TabIndex        =   62
-         Top             =   1665
-         Width           =   285
-      End
-      Begin VB.Label lblDialogue_Title 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Trade Request"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   0
-         TabIndex        =   60
-         Top             =   360
-         Width           =   7215
-      End
-      Begin VB.Label lblDialogue_Text 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         Caption         =   "Player has requested a trade. Would you like to accept?"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   495
-         Left            =   0
-         TabIndex        =   59
-         Top             =   600
-         Width           =   7215
-      End
-      Begin VB.Label lblDialogue_Button 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         BackColor       =   &H00000000&
-         BackStyle       =   0  'Transparent
-         Caption         =   "Ok"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   210
-         Index           =   1
-         Left            =   3405
-         TabIndex        =   58
-         Top             =   1560
-         Width           =   285
-      End
-      Begin VB.Label lblDialogue_Button 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         BackColor       =   &H00000000&
-         BackStyle       =   0  'Transparent
-         Caption         =   "Yes"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   210
-         Index           =   2
-         Left            =   3360
-         TabIndex        =   61
-         Top             =   1440
-         Width           =   345
-      End
-   End
-   Begin VB.PictureBox picTrade 
-      Appearance      =   0  'Flat
-      AutoRedraw      =   -1  'True
-      BackColor       =   &H00E0E0E0&
-      BorderStyle     =   0  'None
-      ForeColor       =   &H80000008&
-      Height          =   5760
-      Left            =   2400
-      ScaleHeight     =   384
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   480
-      TabIndex        =   10
-      TabStop         =   0   'False
-      Top             =   1440
-      Visible         =   0   'False
-      Width           =   7200
-      Begin VB.PictureBox picYourTrade 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   3705
-         Left            =   435
-         ScaleHeight     =   247
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   193
-         TabIndex        =   12
-         TabStop         =   0   'False
-         Top             =   480
-         Width           =   2895
-      End
-      Begin VB.PictureBox picTheirTrade 
-         Appearance      =   0  'Flat
-         AutoRedraw      =   -1  'True
-         BackColor       =   &H00000000&
-         BorderStyle     =   0  'None
-         BeginProperty Font 
-            Name            =   "Arial"
-            Size            =   8.25
-            Charset         =   238
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H80000008&
-         Height          =   3705
-         Left            =   3840
-         ScaleHeight     =   247
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   193
-         TabIndex        =   11
-         TabStop         =   0   'False
-         Top             =   480
-         Width           =   2895
-      End
-      Begin VB.Label lblYourWorth 
-         BackStyle       =   0  'Transparent
-         Caption         =   "1234567890"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   1680
-         TabIndex        =   15
-         Top             =   4500
-         Width           =   1815
-      End
-      Begin VB.Label lblTradeStatus 
-         Alignment       =   2  'Center
-         BackStyle       =   0  'Transparent
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H000000C0&
-         Height          =   255
-         Left            =   600
-         TabIndex        =   13
-         Top             =   5520
-         Width           =   5895
-      End
-      Begin VB.Image imgAcceptTrade 
-         Height          =   435
-         Left            =   2475
-         Top             =   5040
-         Width           =   1035
-      End
-      Begin VB.Image imgDeclineTrade 
-         Height          =   435
-         Left            =   3675
-         Top             =   5040
-         Width           =   1035
-      End
-      Begin VB.Label lblTheirWorth 
-         BackStyle       =   0  'Transparent
-         Caption         =   "1234567890"
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   5160
-         TabIndex        =   14
-         Top             =   4500
-         Width           =   1815
-      End
-   End
    Begin VB.Label lblSwearFilter 
       AutoSize        =   -1  'True
       BackStyle       =   0  'Transparent
@@ -5518,7 +5522,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Sub ToggleChatLock(Optional ByVal ForceLock As Boolean, Optional ByVal SoundEffect As Boolean = True)
+Public Sub ToggleChatLock(Optional ByVal ForceLock As Boolean = False, Optional ByVal SoundEffect As Boolean = True)
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
@@ -7509,7 +7513,7 @@ Dim SEP_CHAR As String * 1
     frmMain.lstQuests.Clear
     Cnt = 1
     For I = 1 To MAX_QUESTS
-        If Not InStr(Trim(Quest(I).Name), SEP_CHAR) > 0 Then
+        If Not InStr(Trim$(Quest(I).Name), SEP_CHAR) > 0 Then
             frmMain.lstQuests.AddItem Cnt & ": " & Trim$(Quest(I).Name)
             Cnt = Cnt + 1
         End If
@@ -7518,10 +7522,10 @@ End Sub
 
 Public Function FindQuest(ByVal QuestName As String) As Long
 Dim I As Long
-    QuestName = Mid(QuestName, 4, Len(QuestName))
+    QuestName = Mid$(QuestName, 4, Len(QuestName))
 
     For I = 1 To MAX_QUESTS
-        If LCase(Trim(Quest(I).Name)) = LCase(Trim(QuestName)) Then
+        If LCase$(Trim$(Quest(I).Name)) = LCase$(Trim$(QuestName)) Then
             FindQuest = I
             Exit Function
         End If

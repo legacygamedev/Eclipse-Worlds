@@ -10,7 +10,7 @@ Public Declare Sub ZeroMemory Lib "Kernel32.dll" Alias "RtlZeroMemory" (Destinat
 
 Public Sub ChkDir(ByVal tDir As String, ByVal tName As String)
     If tName = "" Then Exit Sub
-    If LCase$(Dir(tDir & tName, vbDirectory)) <> LCase$(tName) Then Call MkDir(LCase$(tDir & "\" & tName))
+    If LCase$(Dir$(tDir & tName, vbDirectory)) <> LCase$(tName) Then Call MkDir(LCase$(tDir & "\" & tName))
 End Sub
 
 ' Outputs string to text file
@@ -58,11 +58,11 @@ End Sub
 
 Public Function FileExist(ByVal filename As String, Optional RAW As Boolean = False) As Boolean
     If Not RAW Then
-        If Len(Dir(App.path & filename)) > 0 Then
+        If Len(Dir$(App.path & filename)) > 0 Then
             FileExist = True
         End If
     Else
-        If Len(Dir(filename)) > 0 Then
+        If Len(Dir$(filename)) > 0 Then
             FileExist = True
         End If
     End If
@@ -493,8 +493,8 @@ End Sub
 Function AccountExist(ByVal Name As String) As Boolean
     Dim filename As String
     
-    Call ChkDir(App.path & "\data\accounts\", Trim(Name))
-    filename = "\data\accounts\" & Trim(Name) & "\data.bin"
+    Call ChkDir(App.path & "\data\accounts\", Trim$(Name))
+    filename = "\data\accounts\" & Trim$(Name) & "\data.bin"
 
     If FileExist(filename) Then
         AccountExist = True

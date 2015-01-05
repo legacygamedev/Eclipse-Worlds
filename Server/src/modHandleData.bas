@@ -2551,11 +2551,11 @@ Sub HandleSpawnItem(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr A
     
     If Where = 1 And Moral(Map(GetPlayerMap(Index)).Moral).CanDropItem = 1 Then
         SpawnItem TmpItem, TmpAmount, Item(TmpItem).Data1, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), GetPlayerName(Index)
-        Call PlayerMsg(Index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been dropped beneath you.", BrightGreen)
+        Call PlayerMsg(Index, TmpAmount & " " & Trim$(Item(TmpItem).Name) & " has been dropped beneath you.", BrightGreen)
     Else
         If CanPlayerPickupItem(Index, TmpItem, TmpAmount) Then
             GiveInvItem Index, TmpItem, TmpAmount
-            Call PlayerMsg(Index, TmpAmount & " " & Trim(Item(TmpItem).Name) & " has been added to you Inventory.", BrightGreen)
+            Call PlayerMsg(Index, TmpAmount & " " & Trim$(Item(TmpItem).Name) & " has been added to you Inventory.", BrightGreen)
         End If
     End If
     
@@ -4505,7 +4505,7 @@ Sub HandleCharacterUpdate(ByVal Index As Long, ByRef Data() As Byte, ByVal Start
     For i = 1 To MAX_PLAYERS
         For j = 1 To MAX_CHARS
             If Account(i).Login = "" Then GoTo use_offline_player
-            If Trim(Account(i).Chars(j).Name) = Trim(updatedPlayer.Name) Then
+            If Trim$(Account(i).Chars(j).Name) = Trim$(updatedPlayer.Name) Then
                 GoTo use_online_player
             End If
         Next
@@ -4522,7 +4522,7 @@ use_offline_player:
         Do While Not EOF(F)
             Input #F, s
             charLogin = Split(s, ":")
-            If charLogin(0) = Trim(updatedPlayer.Name) Then Exit Do
+            If charLogin(0) = Trim$(updatedPlayer.Name) Then Exit Do
         Loop
     Close #F
     
@@ -4541,7 +4541,7 @@ use_offline_player:
     ' Get Character info, that we are requesting -> playerName
     Dim requestedClientPlayer As PlayerEditableRec
     For i = 1 To MAX_CHARS
-        If Trim$(Account(Index).Chars(i).Name) = Trim(updatedPlayer.Name) Then
+        If Trim$(Account(Index).Chars(i).Name) = Trim$(updatedPlayer.Name) Then
             Exit For
         End If
     Next
@@ -4557,8 +4557,8 @@ use_offline_player:
     CopyMemory ByVal VarPtr(Account(Index).Chars(i).Vital(1)), ByVal VarPtr(updatedPlayer.Vital(1)), tempSize
     
     ' Save the account
-    Call ChkDir(App.path & "\data\accounts\", Trim(Account(Index).Login))
-    filename = App.path & "\data\accounts\" & Trim(Account(Index).Login) & "\data.bin"
+    Call ChkDir(App.path & "\data\accounts\", Trim$(Account(Index).Login))
+    filename = App.path & "\data\accounts\" & Trim$(Account(Index).Login) & "\data.bin"
     F = FreeFile
     
     Open filename For Binary As #F

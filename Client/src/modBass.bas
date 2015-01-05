@@ -1,4 +1,6 @@
 Attribute VB_Name = "modBass"
+Option Explicit
+
 ' BASS 2.4 Visual Basic module
 ' Copyright (c) 1999-2013 Un4seen Developments Ltd.
 '
@@ -108,7 +110,7 @@ Global Const BASS_OBJECT_DS3DL = 2                  'IDirectSound3DListener
 
 ' Device info structure
 Type BASS_DEVICEINFO
-    name As Long          ' description
+    Name As Long          ' description
     driver As Long        ' driver
     flags As Long
 End Type
@@ -296,7 +298,7 @@ Global Const BASS_CTYPE_MUSIC_MO3 = &H100    ' MO3 flag
 
 Type BASS_PLUGINFORM
     ctype As Long         ' Channel type
-    name As Long          ' format description
+    Name As Long          ' format description
     exts As Long          ' file extension filter (*.ext1;*.ext2;etc...)
 End Type
 
@@ -464,7 +466,7 @@ Global Const BASS_TAG_MUSIC_SAMPLE = &H10300 ' + sample #, MOD sample name : ANS
 
 ' ID3v1 tag structure
 Type TAG_ID3
-    id As String * 3
+    ID As String * 3
     title As String * 30
     artist As String * 30
     album As String * 30
