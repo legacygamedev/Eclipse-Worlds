@@ -648,6 +648,16 @@ Sub AddChar(ByVal Index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
                 End If
             End If
         Next
+        
+        ReDim .QuestCompleted(MAX_QUESTS)
+        ReDim .QuestCLI(MAX_QUESTS)
+        ReDim .QuestAmount(MAX_QUESTS)
+        ReDim .QuestTask(MAX_QUESTS)
+        
+        For i = 1 To MAX_QUESTS
+            ReDim .QuestAmount(i).ID(MAX_NPCS)
+        Next
+        
     End With
     
     ' Append name to file
