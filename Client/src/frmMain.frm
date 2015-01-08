@@ -494,12 +494,12 @@ Begin VB.Form frmMain
       BackColor       =   &H00000000&
       ForeColor       =   &H0080FFFF&
       Height          =   5295
-      Left            =   9060
+      Left            =   3720
       ScaleHeight     =   5235
       ScaleWidth      =   3435
       TabIndex        =   212
       TabStop         =   0   'False
-      Top             =   12480
+      Top             =   3840
       Visible         =   0   'False
       Width           =   3495
       Begin VB.TextBox txtQuestTask 
@@ -4112,7 +4112,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   -2147483647
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -5072,7 +5071,7 @@ Dim I As Long, II As Long, TmpStr As String
             txtQuestTask.text = "You have previously completed this quest."
         End If
         btnQuestCancel.Visible = False
-        picQuestDesc.Height = 329
+        picQuestDesc.Height = 353
         Exit Sub
     Else
         btnQuestCancel.Visible = True

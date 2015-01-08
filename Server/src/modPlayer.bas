@@ -65,7 +65,8 @@ Sub JoinGame(ByVal Index As Long)
     Call UpdatePlayerEquipmentItems(Index)
     
     ' Send the player's data
-    Call SendPlayerData(Index)
+    Call SetPlayerQuestData(Index)
+    'Call SendPlayerData(Index) ' Above line does this as well
     
     ' Send vitals to player of all other players online
     For n = 1 To Player_HighIndex
@@ -949,7 +950,7 @@ Function HasItem(ByVal Index As Long, ByVal ItemNum As Integer) As Long
 End Function
 
 Function TakeInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVal As Long, Optional Update As Boolean = True) As Boolean
-    Dim i As Long, II As Long, NPCNum As Long
+    Dim i As Long, ii As Long, NPCNum As Long
     Dim n As Long
     Dim Parse() As String
 
@@ -969,15 +970,15 @@ Function TakeInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVa
                     If Update Then Call SendInventoryUpdate(Index, i)
                     
                     'check quests
-                    For II = 1 To MAX_QUESTS
-                        Parse() = Split(HasQuestItems(Index, II, True), "|")
+                    For ii = 1 To MAX_QUESTS
+                        Parse() = Split(HasQuestItems(Index, ii, True), "|")
                         If UBound(Parse()) > 0 Then
                             NPCNum = Parse(0)
                             If NPCNum > 0 Then
                                 Call SendShowTaskCompleteOnNPC(Index, NPCNum, False)
                             End If
                         End If
-                    Next II
+                    Next ii
                     
                     Exit Function
                 End If
@@ -996,15 +997,15 @@ Function TakeInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVa
     Next
     
     'check quests
-    For II = 1 To MAX_QUESTS
-        Parse() = Split(HasQuestItems(Index, II, True), "|")
+    For ii = 1 To MAX_QUESTS
+        Parse() = Split(HasQuestItems(Index, ii, True), "|")
         If UBound(Parse()) > 0 Then
             NPCNum = Parse(0)
             If NPCNum > 0 Then
                 Call SendShowTaskCompleteOnNPC(Index, NPCNum, False)
             End If
         End If
-    Next II
+    Next ii
     
     ' Send the inventory update
     If Update Then Call SendInventory(Index)
@@ -1054,7 +1055,7 @@ Function TakeInvSlot(ByVal Index As Long, ByVal InvSlot As Byte, ByVal ItemVal A
 End Function
 
 Function GiveInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVal As Long, Optional ByVal ItemDur As Integer = -1, Optional ByVal ItemBind As Integer = 0, Optional ByVal SendUpdate As Boolean = True) As Byte
-    Dim i As Long, II As Long, NPCNum As Long, X As Long
+    Dim i As Long, ii As Long, NPCNum As Long, X As Long
 
     ' Check for subscript out of range
     If IsPlaying(Index) = False Or ItemNum <= 0 Or ItemNum > MAX_ITEMS Then Exit Function
@@ -1079,31 +1080,31 @@ Function GiveInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVa
                 End If
                 
                 For X = 1 To ItemVal - 1
-                    II = FindOpenInvSlot(Index, ItemNum)
+                    ii = FindOpenInvSlot(Index, ItemNum)
                     
-                    If II > 0 And II <= MAX_INV Then
-                        Call SetPlayerInvItemNum(Index, II, ItemNum)
-                        If Item(ItemNum).Type <> ITEM_TYPE_EQUIPMENT Then Call SetPlayerInvItemValue(Index, II, 1)
+                    If ii > 0 And ii <= MAX_INV Then
+                        Call SetPlayerInvItemNum(Index, ii, ItemNum)
+                        If Item(ItemNum).Type <> ITEM_TYPE_EQUIPMENT Then Call SetPlayerInvItemValue(Index, ii, 1)
                         
-                        If Item(GetPlayerInvItemNum(Index, II)).Type = ITEM_TYPE_EQUIPMENT Then
+                        If Item(GetPlayerInvItemNum(Index, ii)).Type = ITEM_TYPE_EQUIPMENT Then
                             If ItemDur = -1 Then
-                                Call SetPlayerInvItemDur(Index, II, Item(ItemNum).Data1)
+                                Call SetPlayerInvItemDur(Index, ii, Item(ItemNum).Data1)
                             Else
-                                Call SetPlayerInvItemDur(Index, II, ItemDur)
+                                Call SetPlayerInvItemDur(Index, ii, ItemDur)
                             End If
                         End If
                         
-                        If ItemBind = BIND_ON_PICKUP Or Item(GetPlayerInvItemNum(Index, II)).BindType = BIND_ON_PICKUP Then
-                            Call SetPlayerInvItemBind(Index, II, BIND_ON_PICKUP)
-                        ElseIf ItemBind = BIND_ON_EQUIP Or Item(GetPlayerInvItemNum(Index, II)).BindType = BIND_ON_EQUIP Then
-                            Call SetPlayerInvItemBind(Index, II, BIND_ON_EQUIP)
+                        If ItemBind = BIND_ON_PICKUP Or Item(GetPlayerInvItemNum(Index, ii)).BindType = BIND_ON_PICKUP Then
+                            Call SetPlayerInvItemBind(Index, ii, BIND_ON_PICKUP)
+                        ElseIf ItemBind = BIND_ON_EQUIP Or Item(GetPlayerInvItemNum(Index, ii)).BindType = BIND_ON_EQUIP Then
+                            Call SetPlayerInvItemBind(Index, ii, BIND_ON_EQUIP)
                         Else
-                            Call SetPlayerInvItemBind(Index, II, 0)
+                            Call SetPlayerInvItemBind(Index, ii, 0)
                         End If
                         
-                        If SendUpdate Then Call SendInventoryUpdate(Index, II)
+                        If SendUpdate Then Call SendInventoryUpdate(Index, ii)
                     Else
-                        For II = X To ItemVal - 1
+                        For ii = X To ItemVal - 1
                             If Item(ItemNum).Type <> ITEM_TYPE_EQUIPMENT Then
                                 If ItemDur = -1 Then
                                     Call SpawnItem(ItemNum, 1, Item(ItemNum).Data1, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index))
@@ -1146,12 +1147,12 @@ Function GiveInvItem(ByVal Index As Long, ByVal ItemNum As Integer, ByVal ItemVa
         GiveInvItem = True
         
         'check quests
-        For II = 1 To MAX_QUESTS
-            NPCNum = HasQuestItems(Index, II)
+        For ii = 1 To MAX_QUESTS
+            NPCNum = HasQuestItems(Index, ii)
             If NPCNum > 0 Then
                 Call SendShowTaskCompleteOnNPC(Index, NPCNum, True)
             End If
-        Next II
+        Next ii
     Else
         Call PlayerMsg(Index, "Your inventory is full!", BrightRed)
     End If

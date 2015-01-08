@@ -202,6 +202,8 @@ Public Sub ClearGameData()
     Call ClearEmoticons
     Call SetStatus("Clearing quests...")
     Call ClearQuests
+    Call SetStatus("Clearing player quests...")
+    Call ClearPlayerQuests
 End Sub
 
 Private Sub LoadGameData()

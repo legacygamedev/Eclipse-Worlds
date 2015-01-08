@@ -90,21 +90,21 @@ ErrorHandler:
 End Function
 Private Function InternationalizeDoubles(Value As String) As String
     InternationalizeDoubles = Value
-    Dim i As Long, B() As Byte, dotsCounter As Long, commasCounter As Long, test As Double
+    Dim I As Long, B() As Byte, dotsCounter As Long, commasCounter As Long, test As Double
     B = Value
-    For i = 0 To UBound(B) Step 2
-        If B(i) = 44 Then
+    For I = 0 To UBound(B) Step 2
+        If B(I) = 44 Then
             commasCounter = commasCounter + 1
-            Mid$(Value, i / 2 + 1, 1) = DecimalSeparator
-        ElseIf B(i) = 46 Then
+            Mid$(Value, I / 2 + 1, 1) = DecimalSeparator
+        ElseIf B(I) = 46 Then
             dotsCounter = dotsCounter + 1
-            Mid$(Value, i / 2 + 1, 1) = DecimalSeparator
-        ElseIf B(i) >= 48 And B(i) <= 57 Then
+            Mid$(Value, I / 2 + 1, 1) = DecimalSeparator
+        ElseIf B(I) >= 48 And B(I) <= 57 Then
         
         Else
             Exit Function
         End If
-    Next i
+    Next I
     If (commasCounter <> 0 And dotsCounter <> 0) Or (commasCounter > 1) Or (dotsCounter > 1) Then
         Exit Function
     End If
@@ -433,24 +433,24 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckTilesets()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    i = 1
+    I = 1
     NumTileSets = 1
     
     ReDim Tex_Tileset(1)
 
-    While FileExist(GFX_PATH & "tilesets\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "tilesets\" & I & GFX_EXT)
         ReDim Preserve Tex_Tileset(NumTileSets)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
-        Tex_Tileset(NumTileSets).filepath = App.Path & GFX_PATH & "tilesets\" & i & GFX_EXT
+        Tex_Tileset(NumTileSets).filepath = App.Path & GFX_PATH & "tilesets\" & I & GFX_EXT
         Tex_Tileset(NumTileSets).Texture = NumTextures
         NumTileSets = NumTileSets + 1
-        i = i + 1
+        I = I + 1
     Wend
     
     NumTileSets = NumTileSets - 1
@@ -469,26 +469,26 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckCharacters()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    i = 1
+    I = 1
     NumCharacters = 1
     
     ReDim Tex_Character(1)
     Dim test As String
     test = Dir$(GFX_PATH & "characters\" & "*" & GFX_EXT, vbNormal)
     
-    While FileExist(GFX_PATH & "characters\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "characters\" & I & GFX_EXT)
         ReDim Preserve Tex_Character(NumCharacters)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
-        Tex_Character(NumCharacters).filepath = App.Path & GFX_PATH & "characters\" & i & GFX_EXT
+        Tex_Character(NumCharacters).filepath = App.Path & GFX_PATH & "characters\" & I & GFX_EXT
         Tex_Character(NumCharacters).Texture = NumTextures
         NumCharacters = NumCharacters + 1
-        i = i + 1
+        I = I + 1
     Wend
     
     NumCharacters = NumCharacters - 1
@@ -507,24 +507,24 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckPaperdolls()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    i = 1
+    I = 1
     NumPaperdolls = 1
     
     ReDim Tex_Paperdoll(1)
 
-    While FileExist(GFX_PATH & "paperdolls\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "paperdolls\" & I & GFX_EXT)
         ReDim Preserve Tex_Paperdoll(NumPaperdolls)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
-        Tex_Paperdoll(NumPaperdolls).filepath = App.Path & GFX_PATH & "paperdolls\" & i & GFX_EXT
+        Tex_Paperdoll(NumPaperdolls).filepath = App.Path & GFX_PATH & "paperdolls\" & I & GFX_EXT
         Tex_Paperdoll(NumPaperdolls).Texture = NumTextures
         NumPaperdolls = NumPaperdolls + 1
-        i = i + 1
+        I = I + 1
     Wend
     
     NumPaperdolls = NumPaperdolls - 1
@@ -543,24 +543,24 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckAnimations()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    i = 1
+    I = 1
     NumAnimations = 1
     
     ReDim Tex_Animation(1)
 
-    While FileExist(GFX_PATH & "animations\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "animations\" & I & GFX_EXT)
         ReDim Preserve Tex_Animation(NumAnimations)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
         Tex_Animation(NumAnimations).Texture = NumTextures
-        Tex_Animation(NumAnimations).filepath = App.Path & GFX_PATH & "animations\" & i & GFX_EXT
+        Tex_Animation(NumAnimations).filepath = App.Path & GFX_PATH & "animations\" & I & GFX_EXT
         NumAnimations = NumAnimations + 1
-        i = i + 1
+        I = I + 1
     Wend
     
     NumAnimations = NumAnimations - 1
@@ -579,24 +579,24 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckItems()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    i = 1
+    I = 1
     NumItems = 1
     
     ReDim Tex_Item(1)
 
-    While FileExist(GFX_PATH & "items\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "items\" & I & GFX_EXT)
         ReDim Preserve Tex_Item(NumItems)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
-        Tex_Item(NumItems).filepath = App.Path & GFX_PATH & "items\" & i & GFX_EXT
+        Tex_Item(NumItems).filepath = App.Path & GFX_PATH & "items\" & I & GFX_EXT
         Tex_Item(NumItems).Texture = NumTextures
         NumItems = NumItems + 1
-        i = i + 1
+        I = I + 1
     Wend
     
     NumItems = NumItems - 1
@@ -615,24 +615,24 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckResources()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    i = 1
+    I = 1
     NumResources = 1
     
     ReDim Tex_Resource(1)
 
-    While FileExist(GFX_PATH & "resources\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "resources\" & I & GFX_EXT)
         ReDim Preserve Tex_Resource(NumResources)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
-        Tex_Resource(NumResources).filepath = App.Path & GFX_PATH & "resources\" & i & GFX_EXT
+        Tex_Resource(NumResources).filepath = App.Path & GFX_PATH & "resources\" & I & GFX_EXT
         Tex_Resource(NumResources).Texture = NumTextures
         NumResources = NumResources + 1
-        i = i + 1
+        I = I + 1
     Wend
     
     NumResources = NumResources - 1
@@ -651,24 +651,24 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckSpellIcons()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    i = 1
+    I = 1
     NumSpellIcons = 1
     
     ReDim Tex_SpellIcon(1)
 
-    While FileExist(GFX_PATH & "spellicons\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "spellicons\" & I & GFX_EXT)
         ReDim Preserve Tex_SpellIcon(NumSpellIcons)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
-        Tex_SpellIcon(NumSpellIcons).filepath = App.Path & GFX_PATH & "spellicons\" & i & GFX_EXT
+        Tex_SpellIcon(NumSpellIcons).filepath = App.Path & GFX_PATH & "spellicons\" & I & GFX_EXT
         Tex_SpellIcon(NumSpellIcons).Texture = NumTextures
         NumSpellIcons = NumSpellIcons + 1
-        i = i + 1
+        I = I + 1
     Wend
 
     NumSpellIcons = NumSpellIcons - 1
@@ -687,24 +687,24 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckFaces()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    i = 1
+    I = 1
     NumFaces = 1
     
     ReDim Tex_Face(1)
 
-    While FileExist(GFX_PATH & "Faces\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "Faces\" & I & GFX_EXT)
         ReDim Preserve Tex_Face(NumFaces)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
-        Tex_Face(NumFaces).filepath = App.Path & GFX_PATH & "faces\" & i & GFX_EXT
+        Tex_Face(NumFaces).filepath = App.Path & GFX_PATH & "faces\" & I & GFX_EXT
         Tex_Face(NumFaces).Texture = NumTextures
         NumFaces = NumFaces + 1
-        i = i + 1
+        I = I + 1
     Wend
     
     NumFaces = NumFaces - 1
@@ -723,24 +723,24 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckFogs()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    i = 1
+    I = 1
     NumFogs = 1
     
     ReDim Tex_Fog(1)
     
-    While FileExist(GFX_PATH & "fogs\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "fogs\" & I & GFX_EXT)
         ReDim Preserve Tex_Fog(NumFogs)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
-        Tex_Fog(NumFogs).filepath = App.Path & GFX_PATH & "fogs\" & i & GFX_EXT
+        Tex_Fog(NumFogs).filepath = App.Path & GFX_PATH & "fogs\" & I & GFX_EXT
         Tex_Fog(NumFogs).Texture = NumTextures
         NumFogs = NumFogs + 1
-        i = i + 1
+        I = I + 1
     Wend
     
     NumFogs = NumFogs - 1
@@ -759,23 +759,23 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckPanoramas()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    i = 1
+    I = 1
     NumPanoramas = 1
     
     ReDim Tex_Panorama(1)
-    While FileExist(GFX_PATH & "Panoramas\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "Panoramas\" & I & GFX_EXT)
         ReDim Preserve Tex_Panorama(NumPanoramas)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
-        Tex_Panorama(NumPanoramas).filepath = App.Path & GFX_PATH & "Panoramas\" & i & GFX_EXT
+        Tex_Panorama(NumPanoramas).filepath = App.Path & GFX_PATH & "Panoramas\" & I & GFX_EXT
         Tex_Panorama(NumPanoramas).Texture = NumTextures
         NumPanoramas = NumPanoramas + 1
-        i = i + 1
+        I = I + 1
     Wend
     
     NumPanoramas = NumPanoramas - 1
@@ -794,24 +794,24 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckEmoticons()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    i = 1
+    I = 1
     NumEmoticons = 1
     
     ReDim Tex_Emoticon(1)
 
-    While FileExist(GFX_PATH & "Emoticons\" & i & GFX_EXT)
+    While FileExist(GFX_PATH & "Emoticons\" & I & GFX_EXT)
         ReDim Preserve Tex_Emoticon(NumEmoticons)
         NumTextures = NumTextures + 1
         ReDim Preserve gTexture(NumTextures)
-        Tex_Emoticon(NumEmoticons).filepath = App.Path & GFX_PATH & "Emoticons\" & i & GFX_EXT
+        Tex_Emoticon(NumEmoticons).filepath = App.Path & GFX_PATH & "Emoticons\" & I & GFX_EXT
         Tex_Emoticon(NumEmoticons).Texture = NumTextures
         NumEmoticons = NumEmoticons + 1
-        i = i + 1
+        I = I + 1
     Wend
     
     NumEmoticons = NumEmoticons - 1
@@ -830,7 +830,7 @@ ErrorHandler:
 End Sub
 
 Sub ClearPlayer(ByVal Index As Long)
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -872,13 +872,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearItems()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_ITEMS
-        Call ClearItem(i)
+    For I = 1 To MAX_ITEMS
+        Call ClearItem(I)
     Next
     Exit Sub
     
@@ -918,13 +918,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearAnimations()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_ANIMATIONS
-        Call ClearAnimation(i)
+    For I = 1 To MAX_ANIMATIONS
+        Call ClearAnimation(I)
     Next
     Exit Sub
     
@@ -954,13 +954,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearNPCs()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_NPCS
-        Call ClearNPC(i)
+    For I = 1 To MAX_NPCS
+        Call ClearNPC(I)
     Next
     Exit Sub
     
@@ -988,13 +988,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearSpells()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_SPELLS
-        Call ClearSpell(i)
+    For I = 1 To MAX_SPELLS
+        Call ClearSpell(I)
     Next
     Exit Sub
     
@@ -1020,13 +1020,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearShops()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_SHOPS
-        Call ClearShop(i)
+    For I = 1 To MAX_SHOPS
+        Call ClearShop(I)
     Next
     Exit Sub
     
@@ -1055,13 +1055,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearResources()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_RESOURCES
-        Call ClearResource(i)
+    For I = 1 To MAX_RESOURCES
+        Call ClearResource(I)
     Next
     Exit Sub
     
@@ -1107,13 +1107,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearMapItems()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_MAP_ITEMS
-        Call ClearMapItem(i)
+    For I = 1 To MAX_MAP_ITEMS
+        Call ClearMapItem(I)
     Next
     Exit Sub
     
@@ -1137,13 +1137,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearMapNPCs()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_MAP_NPCS
-        Call ClearMapNPC(i)
+    For I = 1 To MAX_MAP_NPCS
+        Call ClearMapNPC(I)
     Next
     Exit Sub
     
@@ -1154,13 +1154,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearBans()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 1 To MAX_BANS
-        Call ClearBan(i)
+    For I = 1 To MAX_BANS
+        Call ClearBan(I)
     Next
     Exit Sub
     
@@ -1193,13 +1193,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearTitles()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 1 To MAX_TITLES
-        Call ClearTitle(i)
+    For I = 1 To MAX_TITLES
+        Call ClearTitle(I)
     Next
     Exit Sub
     
@@ -1240,13 +1240,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearMorals()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_MORALS
-        Call ClearMoral(i)
+    For I = 1 To MAX_MORALS
+        Call ClearMoral(I)
     Next
     Exit Sub
     
@@ -1275,13 +1275,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearClasses()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_CLASSES
-        Call ClearClass(i)
+    For I = 1 To MAX_CLASSES
+        Call ClearClass(I)
     Next
     Exit Sub
     
@@ -1307,13 +1307,13 @@ ErrorHandler:
 End Sub
 
 Sub ClearEmoticons()
-    Dim i As Long
+    Dim I As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    For i = 1 To MAX_EMOTICONS
-        Call ClearEmoticon(i)
+    For I = 1 To MAX_EMOTICONS
+        Call ClearEmoticon(I)
     Next
     Exit Sub
     
@@ -1324,14 +1324,14 @@ ErrorHandler:
 End Sub
 
 Public Sub ClearEvents()
-    Dim i As Long
+    Dim I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 1 To MAX_EVENTS
-        Call ClearEvent(i)
-    Next i
+    For I = 1 To MAX_EVENTS
+        Call ClearEvent(I)
+    Next I
     Exit Sub
     
 ' Error handler
@@ -1383,10 +1383,15 @@ Public Sub redimData()
     ReDim Class_Changed(MAX_CLASSES)
     ReDim Emoticon_Changed(MAX_EMOTICONS)
     
-    Dim i As Long
-    For i = 1 To MAX_PLAYERS
-        ReDim Player(i).QuestCLI(MAX_QUESTS)
-        ReDim Player(i).QuestCompleted(MAX_QUESTS)
+    Dim I As Long, ii As Long
+    For I = 1 To MAX_PLAYERS
+        ReDim Preserve Player(I).QuestCLI(MAX_QUESTS)
+        ReDim Preserve Player(I).QuestTask(MAX_QUESTS)
+        ReDim Preserve Player(I).QuestCompleted(MAX_QUESTS)
+        ReDim Preserve Player(I).QuestAmount(MAX_QUESTS)
+        For ii = 1 To MAX_QUESTS
+            ReDim Preserve Player(I).QuestAmount(ii).ID(1 To MAX_NPCS)
+        Next
     Next
 End Sub
 
