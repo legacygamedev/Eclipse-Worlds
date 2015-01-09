@@ -1185,7 +1185,6 @@ End Sub
 
 Sub ClearResource(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Resource(Index)), LenB(Resource(Index)))
-    ReDim Resource(MAX_RESOURCES)
     Resource(Index).Name = vbNullString
     Resource(Index).SuccessMessage = vbNullString
     Resource(Index).EmptyMessage = vbNullString
