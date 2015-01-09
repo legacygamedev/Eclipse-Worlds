@@ -150,7 +150,7 @@ End Function
 Function GetPlayerQuestAmount(ByVal Index As Long, ByVal QuestID As Long, ByVal NPCNum As Long)
     If Index < 1 Or Index > MAX_PLAYERS Then Exit Function
 
-    ReDim Preserve Account(Index).Chars(GetPlayerChar(Index)).QuestAmount(MAX_QUESTS)
+    ReDim Preserve Account(Index).Chars(GetPlayerChar(Index)).QuestAmount(MAX_QUESTS).ID(MAX_NPCS)
     GetPlayerQuestAmount = Account(Index).Chars(GetPlayerChar(Index)).QuestAmount(QuestID).ID(NPCNum)
 End Function
 
@@ -232,7 +232,7 @@ End Function
 
 Public Function IsQuestCLI(ByVal Index As Long, ByVal NPCIndex As Long) As FindQuestRec
 
-    Dim i    As Long, ii As Long, III As Long
+    Dim i    As Long, II As Long, III As Long
 
     Dim temp As FindQuestRec
 
@@ -243,13 +243,13 @@ Public Function IsQuestCLI(ByVal Index As Long, ByVal NPCIndex As Long) As FindQ
 
         With Quest(i)
 
-            For ii = 1 To .Max_CLI
+            For II = 1 To .Max_CLI
 
                 'See if this npc is within a started quest first.
-                If .CLI(ii).ItemIndex = NPCIndex Then    'found a matching quest cli item, this npc is part of a quest
+                If .CLI(II).ItemIndex = NPCIndex Then    'found a matching quest cli item, this npc is part of a quest
                     If IsInQuest(Index, i) Then
                         temp.QuestIndex = i
-                        temp.CLIIndex = ii
+                        temp.CLIIndex = II
                         IsQuestCLI = temp
 
                         Exit Function
@@ -257,7 +257,7 @@ Public Function IsQuestCLI(ByVal Index As Long, ByVal NPCIndex As Long) As FindQ
                     End If
                 End If
 
-            Next ii
+            Next II
 
         End With
 
@@ -267,13 +267,13 @@ Public Function IsQuestCLI(ByVal Index As Long, ByVal NPCIndex As Long) As FindQ
 
         With Quest(i)
 
-            For ii = 1 To .Max_CLI
+            For II = 1 To .Max_CLI
 
                 'It's not within a started quest, so see if it's a start to a new quest
-                If .CLI(ii).ItemIndex = NPCIndex Then    'found a matching quest cli item, this npc is part of a quest
-                    If ii = 1 Then
+                If .CLI(II).ItemIndex = NPCIndex Then    'found a matching quest cli item, this npc is part of a quest
+                    If II = 1 Then
                         temp.QuestIndex = i
-                        temp.CLIIndex = ii
+                        temp.CLIIndex = II
                         IsQuestCLI = temp
 
                         Exit Function
@@ -281,7 +281,7 @@ Public Function IsQuestCLI(ByVal Index As Long, ByVal NPCIndex As Long) As FindQ
                     End If
                 End If
 
-            Next ii
+            Next II
 
         End With
 
@@ -294,7 +294,7 @@ Public Sub CheckQuest(ByVal Index As Long, _
                       CLIIndex As Long, _
                       TaskIndex As Long)
 
-    Dim i As Long, ii As Long
+    Dim i As Long, II As Long
 
     'Is the PlayerQuest on this quest?  If not, cancel out.
     If IsInQuest(Index, QuestIndex) Then
@@ -339,18 +339,18 @@ Public Sub CheckQuest(ByVal Index As Long, _
 
                     'See if we have a retort message for a quest that cannot be retaken
                     For i = 1 To Quest(QuestIndex).Max_CLI
-                        For ii = 1 To Quest(QuestIndex).CLI(i).Max_Actions
+                        For II = 1 To Quest(QuestIndex).CLI(i).Max_Actions
 
-                            If Quest(QuestIndex).CLI(i).Action(ii).ActionID = ACTION_SHOWMSG Then
-                                If Quest(QuestIndex).CLI(i).Action(ii).QuadData = vbChecked Then
-                                    Call PlayerMsg(Index, Trim$(Quest(QuestIndex).CLI(i).Action(ii).TextHolder), Quest(QuestIndex).CLI(i).Action(ii).TertiaryData, True, QuestIndex, Trim$(NPC(Quest(QuestIndex).CLI(CLIIndex).ItemIndex).Name))
+                            If Quest(QuestIndex).CLI(i).Action(II).ActionID = ACTION_SHOWMSG Then
+                                If Quest(QuestIndex).CLI(i).Action(II).QuadData = vbChecked Then
+                                    Call PlayerMsg(Index, Trim$(Quest(QuestIndex).CLI(i).Action(II).TextHolder), Quest(QuestIndex).CLI(i).Action(II).TertiaryData, True, QuestIndex, Trim$(NPC(Quest(QuestIndex).CLI(CLIIndex).ItemIndex).Name))
 
                                     Exit Sub
 
                                 End If
                             End If
 
-                        Next ii
+                        Next II
                     Next i
                     
                     Exit Sub
@@ -706,20 +706,20 @@ Public Function ModifyTxt(ByVal Index As Integer, _
 
     Dim nMsg As String
 
-    Dim i    As Long, ii As Long, ID As Long
+    Dim i    As Long, II As Long, ID As Long
 
     nMsg = Replace$(Msg, "<kills>", GetPlayerTotalQuestAmount(Index, QuestID))    'replace with PlayerQuest kill amount
     ModifyTxt = nMsg
     
     i = GetPlayerQuestCLI(Index, QuestID)
-    ii = GetPlayerQuestTask(Index, QuestID)
-    ID = Quest(QuestID).CLI(i).Action(ii).SecondaryData
+    II = GetPlayerQuestTask(Index, QuestID)
+    ID = Quest(QuestID).CLI(i).Action(II).SecondaryData
 
     If ID > 0 Then
-        If Quest(QuestID).CLI(i).Action(ii).ActionID = TASK_VARIABLE Then
+        If Quest(QuestID).CLI(i).Action(II).ActionID = TASK_VARIABLE Then
 
             'working with variable
-            If CBool(Quest(QuestID).CLI(i).Action(ii).MainData) = True Then
+            If CBool(Quest(QuestID).CLI(i).Action(II).MainData) = True Then
                 nMsg = Replace$(ModifyTxt, "<amount>", Account(Index).Chars(GetPlayerChar(Index)).Variables(ID))
             Else
 
@@ -829,7 +829,7 @@ Public Sub QuestUpdate(ByVal PlayerID As Long, _
                        Optional ByVal Data1 As Long = 0, _
                        Optional ByVal Data2 As Long = 0)
 
-    Dim i       As Long, ii As Long, III As Long, Index As Long
+    Dim i       As Long, II As Long, III As Long, Index As Long
 
     Dim Parse() As String
 
@@ -864,19 +864,19 @@ Public Sub QuestUpdate(ByVal PlayerID As Long, _
                 NPCNum = HasQuestItems(PlayerID, i)
 
                 If NPCNum > 0 Then
-                    ii = GetPlayerQuestCLI(PlayerID, i)
+                    II = GetPlayerQuestCLI(PlayerID, i)
                     III = GetPlayerQuestTask(PlayerID, i)
                 
-                    If Quest(i).CLI(ii).Action(III).ActionID = TASK_GATHER Then
-                        If Quest(i).CLI(ii).Action(III).MainData = Data1 Then
+                    If Quest(i).CLI(II).Action(III).ActionID = TASK_GATHER Then
+                        If Quest(i).CLI(II).Action(III).MainData = Data1 Then
                             'found a quest, let's see if we move on from it.
-                            Data2 = Quest(i).CLI(ii).Action(III).TertiaryData
+                            Data2 = Quest(i).CLI(II).Action(III).TertiaryData
                         End If
                     End If
                 
                     If Data2 = vbChecked Then
-                        Call PlayerMsg(PlayerID, "Mission Task Completed!  You gathered the required items.", BrightGreen, True, i, Trim$(NPC(Quest(i).CLI(ii).ItemIndex).Name))
-                        Call HandleQuestTask(PlayerID, i, ii, III, False)
+                        Call PlayerMsg(PlayerID, "Mission Task Completed!  You gathered the required items.", BrightGreen, True, i, Trim$(NPC(Quest(i).CLI(II).ItemIndex).Name))
+                        Call HandleQuestTask(PlayerID, i, II, III, False)
                     Else
                         Call SendShowTaskCompleteOnNPC(PlayerID, NPCNum, True)
                     End If
@@ -890,15 +890,15 @@ Public Sub QuestUpdate(ByVal PlayerID As Long, _
             For i = 1 To MAX_QUESTS
                 Index = PlayerID
                 NPCNum = Data1
-                ii = GetPlayerQuestCLI(Index, i)
+                II = GetPlayerQuestCLI(Index, i)
                 III = GetPlayerQuestTask(Index, i)
                 
-                If ii < 1 Then GoTo NextLoop
+                If II < 1 Then GoTo NextLoop
                 If III < 1 Then GoTo NextLoop
                 If Not Quest(i).Max_CLI > 0 Then Exit Sub
-                If Not Quest(i).CLI(ii).Max_Actions > 0 Then Exit Sub
+                If Not Quest(i).CLI(II).Max_Actions > 0 Then Exit Sub
                 
-                If ii > 0 Then
+                If II > 0 Then
                     If III > 0 Then
                         
                         'If out-of-order is selected, add a kill count for any npc the player attacks.
@@ -908,15 +908,15 @@ Public Sub QuestUpdate(ByVal PlayerID As Long, _
                             
                         'Make sure the PlayerQuest's current task for this quest is to kill enemies
                         If Quest(i).Max_CLI > 0 Then
-                            If Quest(i).CLI(ii).Action(III).ActionID = TASK_KILL Then
+                            If Quest(i).CLI(II).Action(III).ActionID = TASK_KILL Then
     
                                 'Make sure this is the NPC we're supposed to kill for this quest
-                                If Quest(i).CLI(ii).Action(III).MainData = NPCNum Then
+                                If Quest(i).CLI(II).Action(III).MainData = NPCNum Then
                                 
-                                    If Quest(i).CLI(ii).Action(III).QuadData <> 0 Then
+                                    If Quest(i).CLI(II).Action(III).QuadData <> 0 Then
 
                                         'reset the kill count for the selected NPC('s) | only once
-                                        If ResetIt Then Call SetPlayerQuestAmount(Index, i, 0, Quest(i).CLI(ii).Action(III).QuadData)
+                                        If ResetIt Then Call SetPlayerQuestAmount(Index, i, 0, Quest(i).CLI(II).Action(III).QuadData)
                                         ResetIt = True
                                     End If
                             
@@ -925,7 +925,7 @@ Public Sub QuestUpdate(ByVal PlayerID As Long, _
                                     End If
                                 
                                     Kills = GetPlayerQuestAmount(Index, i, NPCNum)
-                                    Needed = Quest(i).CLI(ii).Action(III).Amount
+                                    Needed = Quest(i).CLI(II).Action(III).Amount
                                     
                                     'check if the player killed enough
                                     If Not Kills >= Needed Then
@@ -934,12 +934,12 @@ Public Sub QuestUpdate(ByVal PlayerID As Long, _
                                     Else
                                         ResetIt = False
 
-                                        If Quest(i).CLI(ii).Action(III).TertiaryData = False Then
-                                            Call PlayerMsg(Index, "Mission Task Completed!  Kills: " & GetPlayerQuestAmount(Index, i, NPCNum) & " / " & Quest(i).CLI(ii).Action(III).Amount & "  Go back and speak with " & Trim$(NPC(Quest(i).CLI(ii).ItemIndex).Name) & " to continue.", BrightGreen, True, i)
-                                            Call SendShowTaskCompleteOnNPC(Index, Quest(i).CLI(ii).ItemIndex, True)
+                                        If Quest(i).CLI(II).Action(III).TertiaryData = False Then
+                                            Call PlayerMsg(Index, "Mission Task Completed!  Kills: " & GetPlayerQuestAmount(Index, i, NPCNum) & " / " & Quest(i).CLI(II).Action(III).Amount & "  Go back and speak with " & Trim$(NPC(Quest(i).CLI(II).ItemIndex).Name) & " to continue.", BrightGreen, True, i)
+                                            Call SendShowTaskCompleteOnNPC(Index, Quest(i).CLI(II).ItemIndex, True)
                                         Else
-                                            Call PlayerMsg(Index, "Mission Task Completed!  Kills: " & GetPlayerQuestAmount(Index, i, NPCNum) & " / " & Quest(i).CLI(ii).Action(III).Amount, BrightGreen, True, i)
-                                            Call HandleQuestTask(Index, i, ii, III, False)
+                                            Call PlayerMsg(Index, "Mission Task Completed!  Kills: " & GetPlayerQuestAmount(Index, i, NPCNum) & " / " & Quest(i).CLI(II).Action(III).Amount, BrightGreen, True, i)
+                                            Call HandleQuestTask(Index, i, II, III, False)
                                         End If
                                     End If
                                 End If
@@ -1019,7 +1019,7 @@ Public Sub SaveQuest(ByVal QuestNum As Long)
 
     Dim F        As Long
 
-    Dim i        As Long, ii As Long
+    Dim i        As Long, II As Long
 
     filename = App.path & "\data\quests\" & QuestNum & ".dat"
     F = FreeFile
@@ -1050,15 +1050,15 @@ Public Sub SaveQuest(ByVal QuestNum As Long)
             Put #F, , Quest(QuestNum).CLI(i).isNPC
             Put #F, , Quest(QuestNum).CLI(i).Max_Actions
     
-            For ii = 1 To Quest(QuestNum).CLI(i).Max_Actions
-                Put #F, , Quest(QuestNum).CLI(i).Action(ii).TextHolder
-                Put #F, , Quest(QuestNum).CLI(i).Action(ii).ActionID
-                Put #F, , Quest(QuestNum).CLI(i).Action(ii).Amount
-                Put #F, , Quest(QuestNum).CLI(i).Action(ii).MainData
-                Put #F, , Quest(QuestNum).CLI(i).Action(ii).QuadData
-                Put #F, , Quest(QuestNum).CLI(i).Action(ii).SecondaryData
-                Put #F, , Quest(QuestNum).CLI(i).Action(ii).TertiaryData
-            Next ii
+            For II = 1 To Quest(QuestNum).CLI(i).Max_Actions
+                Put #F, , Quest(QuestNum).CLI(i).Action(II).TextHolder
+                Put #F, , Quest(QuestNum).CLI(i).Action(II).ActionID
+                Put #F, , Quest(QuestNum).CLI(i).Action(II).Amount
+                Put #F, , Quest(QuestNum).CLI(i).Action(II).MainData
+                Put #F, , Quest(QuestNum).CLI(i).Action(II).QuadData
+                Put #F, , Quest(QuestNum).CLI(i).Action(II).SecondaryData
+                Put #F, , Quest(QuestNum).CLI(i).Action(II).TertiaryData
+            Next II
         Next i
 
     End If
@@ -1074,10 +1074,8 @@ Public Sub LoadQuests()
 
     Dim F        As Long
 
-    Dim i        As Long, ii As Long, III As Long
+    Dim i        As Long, II As Long, III As Long
 
-    Exit Sub
-    
     Call CheckQuests
 
     For i = 1 To MAX_QUESTS
@@ -1100,34 +1098,34 @@ Public Sub LoadQuests()
         Get #F, , Quest(i).Requirements.SkillLevelReq
         Get #F, , Quest(i).Requirements.SkillReq
         
-        For ii = 1 To Stats.Stat_count - 1
-            Get #F, , Quest(i).Requirements.Stat_Req(ii)
-        Next ii
+        For II = 1 To Stats.Stat_count - 1
+            Get #F, , Quest(i).Requirements.Stat_Req(II)
+        Next II
 
         If Quest(i).Max_CLI > 0 Then
             ReDim Quest(i).CLI(1 To Quest(i).Max_CLI)
 
-            For ii = 1 To Quest(i).Max_CLI
-                Get #F, , Quest(i).CLI(ii).ItemIndex
-                Get #F, , Quest(i).CLI(ii).isNPC
-                Get #F, , Quest(i).CLI(ii).Max_Actions
+            For II = 1 To Quest(i).Max_CLI
+                Get #F, , Quest(i).CLI(II).ItemIndex
+                Get #F, , Quest(i).CLI(II).isNPC
+                Get #F, , Quest(i).CLI(II).Max_Actions
 
-                If Quest(i).CLI(ii).Max_Actions > 0 Then
-                    ReDim Preserve Quest(i).CLI(ii).Action(1 To Quest(i).CLI(ii).Max_Actions)
+                If Quest(i).CLI(II).Max_Actions > 0 Then
+                    ReDim Preserve Quest(i).CLI(II).Action(1 To Quest(i).CLI(II).Max_Actions)
 
-                    For III = 1 To Quest(i).CLI(ii).Max_Actions
-                        Get #F, , Quest(i).CLI(ii).Action(III).TextHolder
-                        Get #F, , Quest(i).CLI(ii).Action(III).ActionID
-                        Get #F, , Quest(i).CLI(ii).Action(III).Amount
-                        Get #F, , Quest(i).CLI(ii).Action(III).MainData
-                        Get #F, , Quest(i).CLI(ii).Action(III).QuadData
-                        Get #F, , Quest(i).CLI(ii).Action(III).SecondaryData
-                        Get #F, , Quest(i).CLI(ii).Action(III).TertiaryData
+                    For III = 1 To Quest(i).CLI(II).Max_Actions
+                        Get #F, , Quest(i).CLI(II).Action(III).TextHolder
+                        Get #F, , Quest(i).CLI(II).Action(III).ActionID
+                        Get #F, , Quest(i).CLI(II).Action(III).Amount
+                        Get #F, , Quest(i).CLI(II).Action(III).MainData
+                        Get #F, , Quest(i).CLI(II).Action(III).QuadData
+                        Get #F, , Quest(i).CLI(II).Action(III).SecondaryData
+                        Get #F, , Quest(i).CLI(II).Action(III).TertiaryData
                     Next III
 
                 End If
 
-            Next ii
+            Next II
 
         End If
         
@@ -1229,7 +1227,7 @@ Sub SendUpdateQuestTo23(ByVal Index As Long, ByVal QuestNum As Integer)
 
     Dim buffer As clsBuffer
 
-    Dim i      As Long, ii As Long
+    Dim i      As Long, II As Long
 
     Set buffer = New clsBuffer
 
@@ -1262,15 +1260,15 @@ Sub SendUpdateQuestTo23(ByVal Index As Long, ByVal QuestNum As Integer)
                 buffer.WriteLong .CLI(i).isNPC
                 buffer.WriteLong .CLI(i).Max_Actions
     
-                For ii = 1 To .CLI(i).Max_Actions
-                    buffer.WriteString .CLI(i).Action(ii).TextHolder
-                    buffer.WriteLong .CLI(i).Action(ii).ActionID
-                    buffer.WriteLong .CLI(i).Action(ii).Amount
-                    buffer.WriteLong .CLI(i).Action(ii).MainData
-                    buffer.WriteLong .CLI(i).Action(ii).QuadData
-                    buffer.WriteLong .CLI(i).Action(ii).SecondaryData
-                    buffer.WriteLong .CLI(i).Action(ii).TertiaryData
-                Next ii
+                For II = 1 To .CLI(i).Max_Actions
+                    buffer.WriteString .CLI(i).Action(II).TextHolder
+                    buffer.WriteLong .CLI(i).Action(II).ActionID
+                    buffer.WriteLong .CLI(i).Action(II).Amount
+                    buffer.WriteLong .CLI(i).Action(II).MainData
+                    buffer.WriteLong .CLI(i).Action(II).QuadData
+                    buffer.WriteLong .CLI(i).Action(II).SecondaryData
+                    buffer.WriteLong .CLI(i).Action(II).TertiaryData
+                Next II
             Next i
 
         End If
@@ -1310,7 +1308,7 @@ Public Sub HandleSaveQuest2(ByVal Index As Long, _
 
     Dim buffer   As clsBuffer
 
-    Dim i        As Long, ii As Long
+    Dim i        As Long, II As Long
 
     Dim QuestNum As Long
 
@@ -1349,15 +1347,15 @@ Public Sub HandleSaveQuest2(ByVal Index As Long, _
                 If .CLI(i).Max_Actions > 0 Then
                     ReDim Preserve .CLI(i).Action(1 To .CLI(i).Max_Actions)
 
-                    For ii = 1 To .CLI(i).Max_Actions
-                        .CLI(i).Action(ii).TextHolder = buffer.ReadString
-                        .CLI(i).Action(ii).ActionID = buffer.ReadLong
-                        .CLI(i).Action(ii).Amount = buffer.ReadLong
-                        .CLI(i).Action(ii).MainData = buffer.ReadLong
-                        .CLI(i).Action(ii).QuadData = buffer.ReadLong
-                        .CLI(i).Action(ii).SecondaryData = buffer.ReadLong
-                        .CLI(i).Action(ii).TertiaryData = buffer.ReadLong
-                    Next ii
+                    For II = 1 To .CLI(i).Max_Actions
+                        .CLI(i).Action(II).TextHolder = buffer.ReadString
+                        .CLI(i).Action(II).ActionID = buffer.ReadLong
+                        .CLI(i).Action(II).Amount = buffer.ReadLong
+                        .CLI(i).Action(II).MainData = buffer.ReadLong
+                        .CLI(i).Action(II).QuadData = buffer.ReadLong
+                        .CLI(i).Action(II).SecondaryData = buffer.ReadLong
+                        .CLI(i).Action(II).TertiaryData = buffer.ReadLong
+                    Next II
 
                 End If
 
@@ -1425,7 +1423,7 @@ Public Sub Var_Switch_Change(ByVal Index As Long, _
                              ByVal Variable As Boolean, _
                              ByVal Value As Long)
 
-    Dim i         As Long, ii As Long, CLIID As Long, TASK As Long
+    Dim i         As Long, II As Long, CLIID As Long, TASK As Long
 
     Dim SkipConvo As Boolean
 
@@ -1547,7 +1545,7 @@ Dim i As Long, CLIIndex As Long, TaskIndex As Long
 End Function
 
 Sub SendPlayerQuest(ByVal Index As Long)
-    Dim i      As Long, ii As Long
+    Dim i      As Long, II As Long
             
     For i = 1 To MAX_QUESTS
 
@@ -1556,9 +1554,9 @@ Sub SendPlayerQuest(ByVal Index As Long)
                 Account(Index).Chars(GetPlayerChar(Index)).QuestCLI(i) = .QuestCLI(i)
                 Account(Index).Chars(GetPlayerChar(Index)).QuestTask(i) = .QuestTask(i)
                     
-            For ii = 1 To MAX_NPCS
-                Account(Index).Chars(GetPlayerChar(Index)).QuestAmount(i).ID(ii) = .QuestAmount(i).ID(ii)
-            Next ii
+            For II = 1 To MAX_NPCS
+                Account(Index).Chars(GetPlayerChar(Index)).QuestAmount(i).ID(II) = .QuestAmount(i).ID(II)
+            Next II
         End With
     Next i
     
@@ -1567,18 +1565,18 @@ Sub SendPlayerQuest(ByVal Index As Long)
 End Sub
 
 Sub SetPlayerQuestData(ByVal Index As Long)
-    Dim i As Long, ii As Long
+    Dim i As Long, II As Long
     
     For i = 1 To MAX_QUESTS
 
         With PlayerQuest(Index)
-                .QuestCompleted(i) = Account(Index).Chars(GetPlayerChar(Index)).QuestCompleted(i)
-                .QuestCLI(i) = Account(Index).Chars(GetPlayerChar(Index)).QuestCLI(i)
-                .QuestTask(i) = Account(Index).Chars(GetPlayerChar(Index)).QuestTask(i)
+                .QuestCompleted(i) = GetPlayerQuestCompleted(Index, i)
+                .QuestCLI(i) = GetPlayerQuestCLI(Index, i)
+                .QuestTask(i) = GetPlayerQuestTask(Index, i)
                     
-            For ii = 1 To MAX_NPCS
-                .QuestAmount(i).ID(ii) = Account(Index).Chars(GetPlayerChar(Index)).QuestAmount(i).ID(ii)
-            Next ii
+            For II = 1 To MAX_NPCS
+                .QuestAmount(i).ID(II) = GetPlayerQuestAmount(Index, i, II)
+            Next II
                 
         End With
 
