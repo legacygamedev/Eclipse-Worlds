@@ -415,6 +415,7 @@ Public Sub redimData()
     ReDim Title(MAX_TITLES)
     ReDim Ban(MAX_BANS)
     ReDim MapNPC(MAX_MAPS)
+    ReDim Shop(MAX_SHOPS)
 End Sub
 
 Public Sub SaveDataSizes()
@@ -837,7 +838,6 @@ End Sub
 
 Sub ClearClass(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Class(Index)), LenB(Class(Index)))
-    ReDim Class(MAX_CLASSES)
     Class(Index).Name = vbNullString
     Class(Index).CombatTree = 1
     Class(Index).Map = 1
@@ -905,7 +905,6 @@ End Sub
 
 Sub ClearItem(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Item(Index)), LenB(Item(Index)))
-    ReDim Item(MAX_ITEMS)
     Item(Index).Name = vbNullString
     Item(Index).Desc = vbNullString
     Item(Index).Sound = vbNullString
@@ -972,7 +971,6 @@ Sub CheckShops()
 End Sub
 
 Sub ClearShop(ByVal Index As Long)
-    ReDim Shop(MAX_SHOPS)
     Call ZeroMemory(ByVal VarPtr(Shop(Index)), LenB(Shop(Index)))
     Shop(Index).Name = vbNullString
 End Sub
@@ -1040,7 +1038,6 @@ End Sub
 
 Sub ClearSpell(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Spell(Index)), LenB(Spell(Index)))
-    ReDim Spell(MAX_SPELLS)
     Spell(Index).Name = vbNullString
     Spell(Index).Desc = vbNullString
     Spell(Index).LevelReq = 1 ' Needs to be 1 for the spell editor
@@ -1115,7 +1112,6 @@ End Sub
 
 Sub ClearNPC(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(NPC(Index)), LenB(NPC(Index)))
-    ReDim NPC(MAX_NPCS)
     NPC(Index).Name = vbNullString
     NPC(Index).Title = vbNullString
     NPC(Index).AttackSay = vbNullString
@@ -1818,7 +1814,6 @@ End Sub
 
 Sub ClearBan(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Ban(Index)), LenB(Ban(Index)))
-    ReDim Ban(MAX_BANS)
     Ban(Index).PlayerLogin = vbNullString
     Ban(Index).playerName = vbNullString
     Ban(Index).Reason = vbNullString
@@ -1887,7 +1882,6 @@ End Sub
 
 Sub ClearTitle(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Title(Index)), LenB(Title(Index)))
-    ReDim Title(MAX_TITLES)
     Title(Index).Name = vbNullString
 End Sub
 
@@ -1944,7 +1938,6 @@ End Sub
 
 Sub ClearMoral(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Moral(Index)), LenB(Moral(Index)))
-    ReDim Moral(MAX_MORALS)
     Moral(Index).Name = vbNullString
 End Sub
 
@@ -2017,7 +2010,6 @@ End Sub
 
 Sub ClearEmoticon(ByVal Index As Long)
     Call ZeroMemory(ByVal VarPtr(Emoticon(Index)), LenB(Emoticon(Index)))
-    ReDim Emoticon(MAX_EMOTICONS)
     Emoticon(Index).Command = "/"
 End Sub
 

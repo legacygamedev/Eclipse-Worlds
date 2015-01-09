@@ -62,6 +62,8 @@ Sub InitServer()
         ' Save options for server
         SaveOptions
         
+        redimData
+        
         ' Get the listening socket ready to go
         .Socket(0).RemoteHost = .Socket(0).LocalIP
         .Socket(0).LocalPort = Options.Port
