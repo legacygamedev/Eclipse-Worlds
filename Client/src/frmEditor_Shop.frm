@@ -55,11 +55,11 @@ Begin VB.Form frmEditor_Shop
       Begin VB.CheckBox chkCanFix 
          Caption         =   "Can Fix"
          Height          =   180
-         Left            =   4200
+         Left            =   4320
          TabIndex        =   27
          TabStop         =   0   'False
          Top             =   240
-         Width           =   975
+         Width           =   855
       End
       Begin VB.TextBox txtCostValue2 
          Alignment       =   1  'Right Justify

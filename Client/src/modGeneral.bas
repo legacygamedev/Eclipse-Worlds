@@ -16,7 +16,7 @@ Public Declare Function timeBeginPeriod Lib "winmm.dll" (ByVal uPeriod As Long) 
 Public Declare Sub ZeroMemory Lib "kernel32.dll" Alias "RtlZeroMemory" (Destination As Any, ByVal Length As Long)
 
 Public DX7 As New DirectX7  ' Master Object, early binding
-
+    
 Public gameDestroyed As Boolean
 Public readyToExit As Boolean
 

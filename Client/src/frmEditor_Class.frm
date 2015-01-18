@@ -19,11 +19,11 @@ Begin VB.Form frmEditor_Class
    Begin VB.CheckBox chkAnimated 
       Caption         =   "Animated"
       Height          =   255
-      Left            =   5640
+      Left            =   5760
       TabIndex        =   58
       TabStop         =   0   'False
       Top             =   240
-      Width           =   1095
+      Width           =   975
    End
    Begin VB.CommandButton cmdChangeDataSize 
       Caption         =   "Change Data Size"
@@ -715,15 +715,15 @@ End Sub
 
 Private Sub cmdChangeDataSize_Click()
     Dim Res As VbMsgBoxResult, val As String
-    Dim dataModified As Boolean, i As Long
+    Dim dataModified As Boolean, I As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_CLASSES Then Exit Sub
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 1 To MAX_CLASSES
-        If Class_Changed(i) Then
+    For I = 1 To MAX_CLASSES
+        If Class_Changed(I) Then
         
             dataModified = True
             Exit For
@@ -1213,18 +1213,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If
