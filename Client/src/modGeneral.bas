@@ -4,6 +4,9 @@ Option Explicit
 ' Stops the timer from processing actions in frmMenu
 Public StopTimer As Boolean
 
+Public Declare Function GetForegroundWindow Lib "user32.dll" () As Long
+Public Declare Function GetTopWindow Lib "user32.dll" (ByVal hwnd As Long) As Long
+
 ' Halts thread of execution
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
@@ -147,7 +150,7 @@ Public Sub Main()
     
     ' Set the form visible
     frmMenu.Show
-    If Not GetForegroundWindow() = frmMenu.hWnd Then BringWindowToTop frmMenu.hWnd
+    If GetTopWindow(frmMenu.hwnd) = 0 Then BringWindowToTop frmMenu.hwnd
     
     ' Hide all pictures
     Call ClearMenuPictures
@@ -376,7 +379,7 @@ Sub GameInit()
     
     ' Show the main form
     frmMain.Visible = True
-    If Not GetForegroundWindow() = frmMain.hWnd Then BringWindowToTop frmMain.hWnd
+    If GetTopWindow(frmMain.hwnd) = 0 Then BringWindowToTop frmMain.hwnd
     
     'AdvMapEditor
     

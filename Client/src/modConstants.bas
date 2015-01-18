@@ -3,8 +3,7 @@ Option Explicit
 
 ' API Declares
 Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
-Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lParam As Long) As Long
-Public Declare Function GetForegroundWindow Lib "user32" () As Long
+Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lParam As Long) As Long
 
 ' Sounds
 Public Const MAX_SOUNDS As Byte = 30
@@ -358,3 +357,15 @@ Public Const TARGET_TYPE_EVENT As Byte = 3
 Public Const ACTIONMSG_STATIC As Byte = 0
 Public Const ACTIONMSG_SCROLL As Byte = 1
 Public Const ACTIONMSG_SCREEN As Byte = 2
+
+Public Const WM_MOUSEMOVE      As Long = &H200
+Public Const WM_LBUTTONDOWN    As Long = &H201
+Public Const WM_LBUTTONUP      As Long = &H202
+Public Const WM_CAPTURECHANGED As Long = &H215
+Public Const WM_GETMINMAXINFO  As Long = &H24
+Public Const WM_ACTIVATEAPP    As Long = &H1C
+Public Const WM_SETFOCUS       As Long = &H7
+Public Const WM_MOUSEWHEEL     As Long = &H20A
+Public Const WM_NCACTIVATE     As Long = &H86
+Public Const WM_MOVE           As Long = &H3
+Public Const WM_DESTROY        As Long = &H2
