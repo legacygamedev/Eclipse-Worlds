@@ -981,7 +981,7 @@ Public Function WordWrap(ByVal text As String, ByVal MaxLineLen As Integer) As S
 End Function
 
 Public Function GetPlayerTextX(ByVal Index As Long) As Long
-    GetPlayerTextX = ConvertMapX(GetPlayerX(Index) * PIC_X) + TempPlayer(Index).xOffset + (PIC_X / 2)
+    GetPlayerTextX = ConvertMapX(GetPlayerX(Index) * PIC_X) + TempPlayer(Index).xOffset + (PIC_X / 2) + 1
 End Function
 
 Public Function GetPlayerTextY(ByVal Index As Long) As Long
@@ -989,7 +989,7 @@ Public Function GetPlayerTextY(ByVal Index As Long) As Long
 End Function
 
 Public Function GetNPCTextX(ByVal Index As Long) As Long
-    GetNPCTextX = ConvertMapX(MapNPC(Index).X * PIC_X) + MapNPC(Index).xOffset + (PIC_X / 2)
+    GetNPCTextX = ConvertMapX(MapNPC(Index).X * PIC_X) + MapNPC(Index).xOffset + (PIC_X / 2) + 1
 End Function
 
 Public Function GetNPCTextY(ByVal Index As Long) As Long
