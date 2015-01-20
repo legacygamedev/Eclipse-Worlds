@@ -38,7 +38,7 @@ Public Sub Main()
     LoadOptions
     
      ' Setup screen
-    ResizeScreen 25, 20
+    ResizeScreen
     
     ' Set the high-resolution timer
     timeBeginPeriod 1

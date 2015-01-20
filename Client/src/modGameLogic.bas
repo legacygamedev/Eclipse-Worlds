@@ -2280,12 +2280,9 @@ Public Sub DialogueHandler(ByVal Index As Long)
 End Sub
 
 ' Used to resize the game screen
-Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
+Public Sub ResizeScreen()
     Dim realWidth As Long
     Dim realHeight As Long
-    
-    MIN_MAPX = XWide
-    MIN_MAPY = YTall
     
     realWidth = Options.ResolutionWidth + PIC_X
     realHeight = Options.ResolutionHeight + 60
@@ -2301,6 +2298,11 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     frmMain.picForm.Width = realWidth
     frmMain.picForm.Height = realHeight
     
+    MIN_MAPX = (frmMain.Width / Screen.TwipsPerPixelX) / 32
+    MIN_MAPY = (frmMain.Height / Screen.TwipsPerPixelY) / 32
+    MIN_MAPY = MIN_MAPY - 2
+    MIN_MAPX = MIN_MAPX - 1
+    
     ' Recalculate the other variables
     HalfX = ((MIN_MAPX + 1) / 2) * PIC_X
     HalfY = ((MIN_MAPY + 1) / 2) * PIC_Y
@@ -2312,7 +2314,7 @@ Public Sub ResizeScreen(ByVal XWide As Long, ByVal YTall As Long)
     EndYValue = (MIN_MAPY + 1)
     CameraEndXValue = EndXValue + 1
     CameraEndYValue = EndYValue + 1
-    
+
     frmMain.picScreen.Top = 0
     frmMain.picScreen.Left = 0
     frmMain.picForm.Top = 0
