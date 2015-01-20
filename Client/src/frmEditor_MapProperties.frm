@@ -372,14 +372,14 @@ Begin VB.Form frmEditor_MapProperties
       Width           =   4215
       Begin VB.CheckBox chkAutoSpawn 
          BackColor       =   &H80000004&
-         Caption         =   "Auto Spawn"
+         Caption         =   "No Auto Spawn"
          ForeColor       =   &H80000008&
          Height          =   255
-         Left            =   1440
+         Left            =   1200
          MaskColor       =   &H00000000&
          TabIndex        =   53
          Top             =   1920
-         Width           =   1335
+         Width           =   1815
       End
       Begin VB.ListBox lstNpcs 
          Height          =   1230
@@ -637,7 +637,7 @@ ErrorHandler:
 End Sub
 
 Private Sub cmbClear_Click()
-    Dim i As Long
+    Dim I As Long
     Dim TmpIndex As Long
     
     ' If debug mode, handle error then exit out
@@ -647,8 +647,8 @@ Private Sub cmbClear_Click()
     If lstNpcs.ListIndex + 1 < 1 Or lstNpcs.ListIndex + 1 > MAX_MAP_NPCS Then Exit Sub
     
     ' Clear the NPCs from the list
-    For i = 1 To MAX_MAP_NPCS
-        Map.NPC(i) = 0
+    For I = 1 To MAX_MAP_NPCS
+        Map.NPC(I) = 0
     Next
     
     TmpIndex = lstNpcs.ListIndex
@@ -798,7 +798,7 @@ ErrorHandler:
 End Sub
 
 Public Sub cmdOK_Click()
-    Dim i As Long
+    Dim I As Long
     Dim sTemp As Long
     Dim X As Long, X2 As Long
     Dim Y As Long, Y2 As Long
@@ -907,7 +907,7 @@ ErrorHandler:
 End Sub
 
 Private Sub lstNPCs_dblClick()
-    Dim i As Long
+    Dim I As Long
     Dim Index As Long
     
     ' If debug mode, handle error then exit out
@@ -917,12 +917,12 @@ Private Sub lstNPCs_dblClick()
     
     If Index < 1 Or Index > MAX_NPCS Then Exit Sub
     
-    For i = 1 To MAX_NPCS
+    For I = 1 To MAX_NPCS
         If frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": None" Then
             cmbNpcs.ListIndex = 0
             Exit For
-        ElseIf frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": " & Trim$(NPC(i).Name) Then
-            cmbNpcs.ListIndex = i
+        ElseIf frmEditor_MapProperties.lstNpcs.List(Index - 1) = Index & ": " & Trim$(NPC(I).Name) Then
+            cmbNpcs.ListIndex = I
             Exit For
         End If
     Next
