@@ -136,7 +136,7 @@ Public Sub GameLoop()
                 Next
             End If
 
-            WalkTimer = tick + 25  ' Edit this Value to change WalkTimer
+            WalkTimer = tick + 15  ' Edit this Value to change WalkTimer
         End If
         
           ' Fog scrolling
