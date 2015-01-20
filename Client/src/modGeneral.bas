@@ -97,19 +97,6 @@ Public Sub Main()
     EngineInitFontSettings
     InitDX8
     
-    ' Set the data to default
-    ClearNPCs
-    ClearResources
-    ClearItems
-    ClearShops
-    ClearSpells
-    ClearAnimations
-    ClearBans
-    ClearTitles
-    ClearMorals
-    ClearClasses
-    ClearEmoticons
-    
     Call SetStatus("Initializing TCP settings...")
     Call TcpInit
     Call InitMessages
