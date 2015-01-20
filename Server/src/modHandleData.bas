@@ -771,7 +771,7 @@ Sub HandlePlayerMove(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr 
     TmpY = buffer.ReadLong
     Set buffer = Nothing
     
-        ' Desynced
+    ' Desynced
     If Dir = DIR_LEFT Or Dir = DIR_RIGHT Or Dir = DIR_UPLEFT Or Dir = DIR_UPRIGHT Or Dir = DIR_DOWNLEFT Or Dir = DIR_DOWNRIGHT Then
         If GetPlayerX(Index) <> TmpX Then
             SendPlayerXY (Index)
