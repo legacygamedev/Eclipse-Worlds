@@ -305,12 +305,12 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     End If
 
     text = Trim$(Player(Index).Name)
-    TextX = GetPlayerTextX(Index) - GetFontWidth(text)
+    TextX = GetPlayerTextX(Index) - (EngineGetTextWidth(Font_Default, text) / 2)
     
     If Options.Levels = 1 Then
         If Not Index = MyIndex Then
             Level = "Lv: " & GetPlayerLevel(Index)
-            TextX = TextX + GetFontWidth(Level) + 4
+            TextX = TextX + EngineGetTextWidth(Font_Default, Level) + 4
         End If
     End If
     
@@ -337,7 +337,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     
     If Options.Levels = 1 Then
         If Not Index = MyIndex Then
-            TextX = TextX - (GetFontWidth((Trim$(Level))) * 2) - 4
+            TextX = TextX - (EngineGetTextWidth(Font_Default, (Trim$(Level))) * 2) - 4
 
             If GetPlayerLevel(Index) = GetPlayerLevel(MyIndex) Then
                 Color = D3DColorARGB(255, 255, 255, 0)
@@ -360,7 +360,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
         text = Trim$(title(Player(Index).CurTitle).Name)
         Color = Trim$(title(Player(Index).CurTitle).Color)
         
-        TextX = GetPlayerTextX(Index) - GetFontWidth(Trim$(title(Player(Index).CurTitle).Name))
+        TextX = GetPlayerTextX(Index) + EngineGetTextWidth(Font_Default, Trim$(title(Player(Index).CurTitle).Name))
         TextY = TextY - 12
         
         ' Draw title
@@ -383,7 +383,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
             End Select
     
             ' Re-center
-            TextX = GetPlayerTextX(Index) - GetFontWidth(Guild)
+            TextX = GetPlayerTextX(Index) + EngineGetTextWidth(Font_Default, Guild)
             
             ' Determine location for text
             If GetPlayerSprite(Index) < 1 Or GetPlayerSprite(Index) > NumCharacters Then
@@ -449,13 +449,13 @@ Public Sub DrawNPCName(ByVal Index As Long)
     Name = Trim$(NPC(npcNum).Name)
     
     If Len(Name) > 0 Then
-        TextX = GetNPCTextX(Index) - GetFontWidth((Name))
+        TextX = GetNPCTextX(Index) + EngineGetTextWidth(Font_Default, (Name))
         
         If Options.Levels = 1 And NPC(npcNum).Level > 0 Then
             Level = "Lv: " & NPC(npcNum).Level
             
             If NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
-                TextX = TextX + GetFontWidth(Trim$(Level)) + 4
+                TextX = TextX + EngineGetTextWidth(Font_Default, Trim$(Level)) + 4
             End If
         End If
         
@@ -465,7 +465,7 @@ Public Sub DrawNPCName(ByVal Index As Long)
     
     If Options.Levels = 1 And NPC(npcNum).Level > 0 Then
         If NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
-            TextX = TextX - (GetFontWidth(Trim$(Level)) * 2) - 4
+            TextX = TextX - (EngineGetTextWidth(Font_Default, Trim$(Level)) * 2) - 4
             
             If NPC(npcNum).Level = GetPlayerLevel(MyIndex) Then
                 Color = D3DColorARGB(255, 255, 255, 0)
@@ -484,7 +484,7 @@ Public Sub DrawNPCName(ByVal Index As Long)
     End If
     
     If Len(Trim$(NPC(npcNum).title)) > 0 And Options.Titles = 1 Then
-        TextX = GetNPCTextX(Index) - GetFontWidth(Trim$(NPC(npcNum).title))
+        TextX = GetNPCTextX(Index) + EngineGetTextWidth(Font_Default, Trim$(NPC(npcNum).title))
         
         ' Move it up
         TextY = TextY - 12
@@ -650,19 +650,6 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Public Function GetFontWidth(ByVal text As String) As Long
-    ' If debug mode, handle error then exit out
-    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
-    
-    GetFontWidth = frmMain.TextWidth(text) / 2
-    Exit Function
-    
-' Error handler
-ErrorHandler:
-    HandleError "GetFontWidth", "modText", Err.Number, Err.Description, Err.Source, Err.HelpContext
-    Err.Clear
-End Function
-
 Public Sub AddText(ByVal Msg As String, ByVal Color As Long)
     Dim S As String
 
@@ -719,6 +706,8 @@ Public Sub DrawEventName(ByVal Index As Long)
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    ' Don't draw while in the map editor
     If InMapEditor Then Exit Sub
 
     Color = White
@@ -726,7 +715,8 @@ Public Sub DrawEventName(ByVal Index As Long)
     Name = Trim$(Map.MapEvents(Index).Name)
     
     ' Calc pos
-    TextX = ConvertMapX(Map.MapEvents(Index).X * PIC_X) + Map.MapEvents(Index).xOffset + (PIC_X \ 2) - (EngineGetTextWidth(Font_Default, (Trim$(Name))) / 2)
+    TextX = ConvertMapX(Map.MapEvents(Index).X * PIC_X) + Map.MapEvents(Index).xOffset + (PIC_X \ 2) + 1 - (EngineGetTextWidth(Font_Default, (Trim$(Name))) / 2)
+    
     If Map.MapEvents(Index).GraphicType = 0 Then
         TextY = ConvertMapY(Map.MapEvents(Index).Y * PIC_Y) + Map.MapEvents(Index).yOffset - 16
     ElseIf Map.MapEvents(Index).GraphicType = 1 Then
@@ -789,7 +779,9 @@ Public Sub DrawChatBubble(ByVal Index As Long)
                 
         ' Find max width
         Dim Size As Long
+        
         Size = UBound(theArray)
+        
         For I = 1 To Size
             If EngineGetTextWidth(Font_Default, theArray(I)) > MaxWidth Then MaxWidth = EngineGetTextWidth(Font_Default, theArray(I))
         Next
@@ -847,7 +839,9 @@ End Sub
 Public Sub WordWrap_Array(ByVal text As String, ByVal MaxLineLen As Long, ByRef theArray() As String)
     Dim lineCount As Long, I As Long, Size As Long, lastSpace As Long, B As Long
     Dim textLen As Long
+    
     textLen = Len(text)
+    
     ' Too small of text
     If textLen < 2 Then
         ReDim theArray(1 To 1) As String
@@ -981,17 +975,17 @@ Public Function WordWrap(ByVal text As String, ByVal MaxLineLen As Integer) As S
 End Function
 
 Public Function GetPlayerTextX(ByVal Index As Long) As Long
-    GetPlayerTextX = ConvertMapX(GetPlayerX(Index) * PIC_X) + TempPlayer(Index).xOffset + (PIC_X / 2) + 1
+    GetPlayerTextX = ConvertMapX(GetPlayerX(Index) * PIC_X) + TempPlayer(Index).xOffset + (PIC_X \ 2) + 1
 End Function
 
 Public Function GetPlayerTextY(ByVal Index As Long) As Long
-    GetPlayerTextY = ConvertMapY(GetPlayerY(Index) * PIC_Y) + TempPlayer(Index).yOffset - (PIC_Y / 2)
+    GetPlayerTextY = ConvertMapY(GetPlayerY(Index) * PIC_Y) + TempPlayer(Index).yOffset + (PIC_Y \ 2)
 End Function
 
 Public Function GetNPCTextX(ByVal Index As Long) As Long
-    GetNPCTextX = ConvertMapX(MapNPC(Index).X * PIC_X) + MapNPC(Index).xOffset + (PIC_X / 2) + 1
+    GetNPCTextX = ConvertMapX(MapNPC(Index).X * PIC_X) + MapNPC(Index).xOffset + (PIC_X \ 2) + 1
 End Function
 
 Public Function GetNPCTextY(ByVal Index As Long) As Long
-    GetNPCTextY = ConvertMapY(MapNPC(Index).Y * PIC_Y) + MapNPC(Index).yOffset
+    GetNPCTextY = ConvertMapY(MapNPC(Index).Y * PIC_Y) + MapNPC(Index).yOffset + (PIC_Y \ 2)
 End Function

@@ -3922,12 +3922,12 @@ Begin VB.Form frmMain
          Left            =   120
          ScaleHeight     =   186
          ScaleMode       =   0  'User
-         ScaleWidth      =   486
+         ScaleWidth      =   482
          TabIndex        =   127
          TabStop         =   0   'False
          Top             =   7125
          Visible         =   0   'False
-         Width           =   7290
+         Width           =   7230
          Begin VB.PictureBox picChatFace 
             AutoRedraw      =   -1  'True
             BorderStyle     =   0  'None
@@ -4737,6 +4737,7 @@ Sub ClearEventChat()
         EventChatTimer = timeGetTime + 100
     Else
         frmMain.picEventChat.Visible = False
+        frmMain.picChatbox.Visible = True
     End If
 End Sub
 

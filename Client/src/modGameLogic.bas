@@ -109,6 +109,7 @@ Public Sub GameLoop()
             If frmMain.lblEventChat.Visible = False Then
                 If frmMain.picEventChat.Visible Then
                     frmMain.picEventChat.Visible = False
+                    frmMain.picChatbox.Visible = True
                 End If
             End If
         End If

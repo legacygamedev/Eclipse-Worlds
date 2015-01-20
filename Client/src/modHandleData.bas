@@ -3040,7 +3040,7 @@ Private Sub HandleEventChat(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    frmMain.picEventChat.Visible = True
+    frmMain.picChatbox.Visible = False
     frmMain.picEventChat.ZOrder (0)
     EventReplyID = buffer.ReadLong
     EventReplyPage = buffer.ReadLong
