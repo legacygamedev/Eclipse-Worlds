@@ -75,3 +75,6 @@ $RECYCLE.BIN/
 # Mac crap
 .DS_Store
 /Server - Kopia 12.24/
+
+*.vbw
+*.csi

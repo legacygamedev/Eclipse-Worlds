@@ -14,11 +14,11 @@ Sub TcpInit()
     Set PlayerBuffer = New clsBuffer
 
     ' Connect
-    frmMenu.Socket.RemoteHost = Options.IP
-    frmMenu.Socket.RemotePort = Options.Port
+    frmMain.Socket.RemoteHost = Options.IP
+    frmMain.Socket.RemotePort = Options.Port
 
     ' Enable news now that we are done
-    frmMenu.tmrUpdateNews.Enabled = True
+'    frmMenu.tmrUpdateNews.Enabled = True
     Exit Sub
     
 ' Error handler
@@ -31,8 +31,8 @@ Sub DestroyTCP()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    frmMenu.Socket.close
-    frmMenu.Socket.close
+'    frmMenu.Socket.close
+'    frmMenu.Socket.close
     Exit Sub
     
 ' Error handler
@@ -48,7 +48,7 @@ Public Sub IncomingData(ByVal DataLength As Long)
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    frmMenu.Socket.GetData buffer, vbUnicode, DataLength
+    frmMain.Socket.GetData buffer, vbUnicode, DataLength
 
     PlayerBuffer.WriteBytes buffer()
     

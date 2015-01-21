@@ -55,7 +55,7 @@ Public Sub Main()
     
     ' Load the images used for the menu and main forms
     Call SetStatus("Loading Menu...")
-    Load frmMenu
+    Load frmMain
     
     ' Load gui
     LoadGUI
@@ -149,13 +149,13 @@ Public Sub Main()
     frmLoad.Visible = False
     
     ' Set the form visible
-    frmMenu.Show
-    If GetTopWindow(frmMenu.hwnd) = 0 Then BringWindowToTop frmMenu.hwnd
+    frmMain.Show
+    If GetTopWindow(frmMain.hwnd) = 0 Then BringWindowToTop frmMenu.hwnd
     
     ' Hide all pictures
     Call ClearMenuPictures
     
-    frmMenu.picMain.Visible = True
+    'frmMenu.picMain.Visible = True
     
     ' Check if we have main-menu music
     If Len(Trim$(Options.MenuMusic)) > 0 Then Call Audio.PlayMusic(Trim$(Options.MenuMusic))
@@ -176,7 +176,7 @@ restartmenuloop:
          ' *********************
          ' ** Render Graphics **
          ' *********************
-         Call DrawGDI
+         Call Render_Menu
         
          ' Mute everything but still keep everything playing
          If frmMenu.WindowState = vbMinimized Then
@@ -200,7 +200,7 @@ ErrorHandler:
 End Sub
 
 Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
-    Dim I As Long
+    Dim i As Long
 
     ' If we can't find the interface
     On Error GoTo ErrorHandler
@@ -211,17 +211,17 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
         Exit Sub
     End If
     
-    For I = 1 To MAX_MENUBUTTONS
-        Call RenderButton_Menu(I)
+    For i = 1 To MAX_MENUBUTTONS
+        Call RenderButton_Menu(i)
     Next
 
     ' Menu
-    frmMenu.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\background.jpg")
-    frmMenu.picMain.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\main.jpg")
-    frmMenu.picLogin.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\login.jpg")
-    frmMenu.picRegister.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\register.jpg")
-    frmMenu.picCredits.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\credits.jpg")
-    frmMenu.picCharacter.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\character.jpg")
+    'frmMenu.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\background.jpg")
+    'frmMenu.picMain.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\main.jpg")
+    'frmMenu.picLogin.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\login.jpg")
+    'frmMenu.picRegister.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\register.jpg")
+    'frmMenu.picCredits.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\credits.jpg")
+    'frmMenu.picCharacter.Picture = LoadPicture(App.Path & "\data files\graphics\gui\menu\character.jpg")
     
     ' Main
     frmMain.picCharacter.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\character.jpg")
@@ -255,8 +255,8 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     frmMain.imgEXPBar.Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\experience.jpg")
     
     ' Gui Buttons
-    For I = 1 To MAX_MAINBUTTONS
-        frmMain.picButton(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\buttons\" & MainButton(I).FileName & "_norm.jpg")
+    For i = 1 To MAX_MAINBUTTONS
+        frmMain.picButton(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\buttons\" & MainButton(i).FileName & "_norm.jpg")
     Next
     
     ' Equipment Slots
@@ -283,9 +283,9 @@ Public Sub LoadGUI(Optional ByVal LoadingScreen As Boolean = False)
     EXPBar_Width = frmMain.imgEXPBar.Width
         
     ' Main - Party Bars
-    For I = 1 To MAX_PARTY_MEMBERS
-        frmMain.imgPartyHealth(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_health.jpg")
-        frmMain.imgPartySpirit(I).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_spirit.jpg")
+    For i = 1 To MAX_PARTY_MEMBERS
+        frmMain.imgPartyHealth(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_health.jpg")
+        frmMain.imgPartySpirit(i).Picture = LoadPicture(App.Path & "\data files\graphics\gui\main\bars\party_spirit.jpg")
     Next
     
     ' Party
@@ -603,7 +603,7 @@ ErrorHandler:
 End Function
 
 Public Function IsStringLegal(ByVal sInput As String) As Boolean
-    Dim I As Long
+    Dim i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -611,8 +611,8 @@ Public Function IsStringLegal(ByVal sInput As String) As Boolean
     ' Prevent high ascii chars
     Dim inputLen As Long
     inputLen = Len(sInput)
-    For I = 1 To inputLen
-        If Asc(Mid$(sInput, I, 1)) < vbKeySpace Or Asc(Mid$(sInput, I, 1)) > vbKeyF15 Then
+    For i = 1 To inputLen
+        If Asc(Mid$(sInput, i, 1)) < vbKeySpace Or Asc(Mid$(sInput, i, 1)) > vbKeyF15 Then
             Call AlertMsg("You cannot use high ASCII characters in your Name, please re-enter.")
             Exit Function
         End If
@@ -762,14 +762,14 @@ ErrorHandler:
 End Sub
 
 Public Sub ResetMenuButtons()
-    Dim I As Long
+    Dim i As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_MENUBUTTONS
-        If Not CurButton_Menu = I Then
-            frmMenu.ImgButton(I).Picture = LoadPicture(App.Path & GFX_PATH & "gui\menu\buttons\" & MenuButton(I).FileName & "_norm.jpg")
+    For i = 1 To MAX_MENUBUTTONS
+        If Not CurButton_Menu = i Then
+            frmMenu.ImgButton(i).Picture = LoadPicture(App.Path & GFX_PATH & "gui\menu\buttons\" & MenuButton(i).FileName & "_norm.jpg")
         End If
     Next
     Exit Sub
@@ -831,21 +831,21 @@ ErrorHandler:
 End Sub
 
 Public Sub PopulateLists()
-    Dim StrLoad As String, I As Long
+    Dim StrLoad As String, i As Long
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     ' Cache music list
     StrLoad = Dir$(App.Path & MUSIC_PATH & "*")
-    I = 1
+    i = 1
     
     If Not StrLoad = vbNullString Then
         Do While StrLoad > vbNullString
-            ReDim Preserve MusicCache(1 To I) As String
-            MusicCache(I) = StrLoad
+            ReDim Preserve MusicCache(1 To i) As String
+            MusicCache(i) = StrLoad
             StrLoad = Dir
-            I = I + 1
+            i = i + 1
         Loop
     Else
         ReDim Preserve MusicCache(1) As String
@@ -854,18 +854,18 @@ Public Sub PopulateLists()
     
     ' Cache sound list
     StrLoad = Dir$(App.Path & SOUND_PATH & "*")
-    I = 1
+    i = 1
     
     If Not StrLoad = vbNullString Then
         Do While StrLoad > vbNullString
-            ReDim Preserve SoundCache(1 To I) As String
-            SoundCache(I) = StrLoad
+            ReDim Preserve SoundCache(1 To i) As String
+            SoundCache(i) = StrLoad
             StrLoad = Dir
-            I = I + 1
+            i = i + 1
         Loop
     Else
         ReDim Preserve SoundCache(1) As String
-        SoundCache(I) = vbNullString
+        SoundCache(i) = vbNullString
     End If
     Exit Sub
     

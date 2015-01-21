@@ -829,6 +829,37 @@ ErrorHandler:
     Err.Clear
 End Sub
 
+Public Sub CheckInterface()
+    Dim i As Long
+
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    i = 1
+    NumInterfaces = i
+
+    ReDim Tex_Interface(i)
+
+    While FileExist(GFX_PATH & "gui\" & i & GFX_EXT)
+        ReDim Preserve Tex_Interface(NumInterfaces)
+        NumTextures = NumTextures + 1
+        ReDim Preserve gTexture(NumTextures)
+        Tex_Interface(NumInterfaces).filepath = App.Path & GFX_PATH & "gui\" & i & GFX_EXT
+        Tex_Interface(NumInterfaces).Texture = NumTextures
+        NumInterfaces = NumInterfaces + 1
+        i = i + 1
+    Wend
+    
+    NumInterfaces = NumInterfaces - 1
+    
+    ' Error Handler
+    Exit Sub
+ErrorHandler:
+    HandleError "CheckInterface", "modDatabase", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+    Exit Sub
+End Sub
+
 Sub ClearPlayer(ByVal Index As Long)
     Dim i As Long
     
@@ -1375,7 +1406,7 @@ Public Sub redimData()
         ReDim Preserve Player(i).QuestCompleted(MAX_QUESTS)
         ReDim Preserve Player(i).QuestAmount(MAX_QUESTS)
         For II = 1 To MAX_QUESTS
-            ReDim Preserve Player(i).QuestAmount(II).id(1 To MAX_NPCS)
+            ReDim Preserve Player(i).QuestAmount(II).ID(1 To MAX_NPCS)
         Next
     Next
 End Sub
