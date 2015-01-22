@@ -1316,11 +1316,11 @@ Sub CheckPlayerLevelUp(ByVal Index As Long)
             Call SendAnimation(GetPlayerMap(Index), Options.LevelUpAnimation, 0, 0, TARGET_TYPE_PLAYER, Index)
             SendPlayerExp Index
             
-            If Level_Count > 1 Then
-                Call GlobalMsg(GetPlayerName(Index) & " has gained " & Level_Count & " levels!", Yellow)
-            Else
-                Call GlobalMsg(GetPlayerName(Index) & " has gained a level!", Yellow)
-            End If
+            'If Level_Count > 1 Then
+            '    Call GlobalMsg(GetPlayerName(Index) & " has gained " & Level_Count & " levels!", Yellow)
+            'Else
+            '    Call GlobalMsg(GetPlayerName(Index) & " has gained a level!", Yellow)
+            'End If
             
             ' Restore and send vitals
             For i = 1 To Vitals.Vital_Count - 1
