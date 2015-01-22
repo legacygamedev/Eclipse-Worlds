@@ -308,10 +308,10 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     TextX = GetPlayerTextX(Index) - (EngineGetTextWidth(Font_Default, text) / 2)
     
     If Options.Levels = 1 Then
-        If Not Index = MyIndex Then
+        'If Not Index = MyIndex Then
             Level = "Lv: " & GetPlayerLevel(Index)
             TextX = TextX + (EngineGetTextWidth(Font_Default, Level) / 2) + 4
-        End If
+        'End If
     End If
     
     If GetPlayerSprite(Index) < 1 Or GetPlayerSprite(Index) > NumCharacters Then
@@ -336,8 +336,8 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     RenderText Font_Default, text, TextX, TextY, Color
     
     If Options.Levels = 1 Then
-        If Not Index = MyIndex Then
-            TextX = TextX - (EngineGetTextWidth(Font_Default, (Trim$(Level))) / 2) - 4
+        'If Not Index = MyIndex Then
+            TextX = TextX - (EngineGetTextWidth(Font_Default, (Trim$(Level)))) - 4
 
             If GetPlayerLevel(Index) = GetPlayerLevel(MyIndex) Then
                 Color = D3DColorARGB(255, 255, 255, 0)
@@ -353,14 +353,14 @@ Public Sub DrawPlayerName(ByVal Index As Long)
             
             ' Draw Level
             RenderText Font_Default, Level, TextX, TextY, Color
-        End If
+        'End If
     End If
     
     If Options.Titles = 1 And Player(Index).CurTitle > 0 Then
         text = Trim$(title(Player(Index).CurTitle).Name)
         Color = Trim$(title(Player(Index).CurTitle).Color)
         
-        TextX = GetPlayerTextX(Index) + EngineGetTextWidth(Font_Default, Trim$(title(Player(Index).CurTitle).Name) / 2)
+        TextX = GetPlayerTextX(Index) - EngineGetTextWidth(Font_Default, Trim$(title(Player(Index).CurTitle).Name)) / 2
         TextY = TextY - 12
         
         ' Draw title

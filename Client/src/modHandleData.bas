@@ -884,6 +884,7 @@ End Sub
 Private Sub HandlePlayerTitles(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
     Dim I As Byte
+    Dim thePlayer As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -891,22 +892,22 @@ Private Sub HandlePlayerTitles(ByVal Index As Long, ByRef data() As Byte, ByVal 
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    Index = buffer.ReadLong
+    thePlayer = buffer.ReadLong
     
     ' Amount of titles
-    Player(Index).AmountOfTitles = buffer.ReadByte
+    Player(thePlayer).AmountOfTitles = buffer.ReadByte
     
     ' Player titles
-    For I = 1 To Player(Index).AmountOfTitles
-        Player(Index).title(I) = buffer.ReadByte
+    For I = 1 To Player(thePlayer).AmountOfTitles
+        Player(thePlayer).title(I) = buffer.ReadByte
     Next
     
     ' Current title
-    Player(Index).CurTitle = buffer.ReadByte
+    Player(thePlayer).CurTitle = buffer.ReadByte
     
     Set buffer = Nothing
     
-    If Index = MyIndex Then
+    If thePlayer = MyIndex Then
         UpdatePlayerTitles
     End If
     Exit Sub
@@ -4175,7 +4176,7 @@ End Sub
 
 Private Sub HandleLeaveGame(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
-    Dim ThePlayer As Long
+    Dim thePlayer As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -4183,10 +4184,10 @@ Private Sub HandleLeaveGame(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    ThePlayer = buffer.ReadLong
+    thePlayer = buffer.ReadLong
     Set buffer = Nothing
     
-    Call ClearPlayer(ThePlayer)
+    Call ClearPlayer(thePlayer)
     Exit Sub
     
 ' Error handler
