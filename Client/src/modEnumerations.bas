@@ -15,6 +15,7 @@ Public Enum ServerPackets
     SPlayerHP
     SPlayerMP '
     SPlayerStats
+    SPlayerSkills
     SPlayerPoints
     SPlayerLevel
     SPlayerGuild
