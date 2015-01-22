@@ -256,9 +256,7 @@ Sub ProcessPlayerMovement(ByVal Index As Long)
         Case MOVING_RUNNING: MovementSpeed = MOVEMENT_SPEED
         Case Else: Exit Sub
     End Select
-    
-    'If TempPlayer(Index).Step = 0 Then TempPlayer(Index).Step = 1
-    
+
     ' Diagonal...
     If GetPlayerDir(Index) > DIR_RIGHT Then
         MovementSpeed = MovementSpeed / 1.25
@@ -629,6 +627,12 @@ Function CanMove() As Boolean
 
     ' Make sure they aren't trying to move when they are already moving
     If TempPlayer(MyIndex).Moving <> 0 Then
+        CanMove = False
+        Exit Function
+    End If
+    
+    ' Don't let them move if in quest
+    If frmMain.picQuestAccept.Visible Then
         CanMove = False
         Exit Function
     End If
