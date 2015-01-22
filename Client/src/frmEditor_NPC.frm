@@ -29,11 +29,11 @@ Begin VB.Form frmEditor_NPC
    Begin VB.CheckBox chkAnimated 
       Caption         =   "Animated"
       Height          =   255
-      Left            =   7020
+      Left            =   7200
       TabIndex        =   82
       TabStop         =   0   'False
       Top             =   1860
-      Width           =   1215
+      Width           =   1155
    End
    Begin VB.CommandButton cmdChangeDataSize 
       Caption         =   "Change Data Size"
@@ -46,11 +46,11 @@ Begin VB.Form frmEditor_NPC
    Begin VB.CheckBox chkShowOnDeath 
       Caption         =   "Show On Death"
       Height          =   255
-      Left            =   6480
+      Left            =   6660
       TabIndex        =   69
       TabStop         =   0   'False
-      Top             =   4680
-      Width           =   1815
+      Top             =   4740
+      Width           =   1635
    End
    Begin VB.PictureBox picSprite 
       AutoRedraw      =   -1  'True
@@ -289,7 +289,7 @@ Begin VB.Form frmEditor_NPC
          Left            =   120
          TabIndex        =   66
          TabStop         =   0   'False
-         Top             =   4560
+         Top             =   4620
          Width           =   1455
       End
       Begin VB.Frame fraDrop 
@@ -958,15 +958,15 @@ End Sub
 
 Private Sub cmdChangeDataSize_Click()
     Dim Res As VbMsgBoxResult, val As String
-    Dim dataModified As Boolean, i As Long
+    Dim dataModified As Boolean, I As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 1 To MAX_NPCS
-        If NPC_Changed(i) Then
+    For I = 1 To MAX_NPCS
+        If NPC_Changed(I) Then
         
             dataModified = True
             Exit For
@@ -1385,10 +1385,10 @@ Private Sub txtExp_Change()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If Not IsNumeric(txtEXP.text) Then txtEXP.text = 0
-    If txtEXP.text > MAX_LONG Then txtEXP.text = MAX_LONG
-    If txtEXP.text < 0 Then txtEXP.text = 0
-    NPC(EditorIndex).exp = txtEXP.text
+    If Not IsNumeric(txtExp.text) Then txtExp.text = 0
+    If txtExp.text > MAX_LONG Then txtExp.text = MAX_LONG
+    If txtExp.text < 0 Then txtExp.text = 0
+    NPC(EditorIndex).exp = txtExp.text
     Exit Sub
     
 ' Error handler
@@ -1473,7 +1473,7 @@ ErrorHandler:
 End Sub
 
 Private Sub txtChance_Validate(Cancel As Boolean)
-    Dim i() As String
+    Dim I() As String
     
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
@@ -1489,8 +1489,8 @@ Private Sub txtChance_Validate(Cancel As Boolean)
     If Right$(txtChance.text, 1) = "%" Then
         txtChance.text = Left$(txtChance.text, Len(txtChance.text) - 1) / 100
     ElseIf InStr(1, txtChance.text, "/") > 0 Then
-        i = Split(txtChance.text, "/")
-        txtChance.text = Int(i(0) / i(1) * 1000) / 1000
+        I = Split(txtChance.text, "/")
+        txtChance.text = Int(I(0) / I(1) * 1000) / 1000
     End If
     
     If txtChance.text > 1 Then
@@ -1605,7 +1605,7 @@ Private Sub txtEXP_GotFocus()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    txtEXP.SelStart = Len(txtEXP)
+    txtExp.SelStart = Len(txtExp)
     Exit Sub
     
 ' Error handler
@@ -1628,18 +1628,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If

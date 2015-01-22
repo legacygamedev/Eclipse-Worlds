@@ -310,7 +310,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     If Options.Levels = 1 Then
         If Not Index = MyIndex Then
             Level = "Lv: " & GetPlayerLevel(Index)
-            TextX = TextX + EngineGetTextWidth(Font_Default, Level) + 4
+            TextX = TextX + (EngineGetTextWidth(Font_Default, Level) / 2) + 4
         End If
     End If
     
@@ -337,7 +337,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     
     If Options.Levels = 1 Then
         If Not Index = MyIndex Then
-            TextX = TextX - (EngineGetTextWidth(Font_Default, (Trim$(Level))) * 2) - 4
+            TextX = TextX - (EngineGetTextWidth(Font_Default, (Trim$(Level))) / 2) - 4
 
             If GetPlayerLevel(Index) = GetPlayerLevel(MyIndex) Then
                 Color = D3DColorARGB(255, 255, 255, 0)
@@ -360,7 +360,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
         text = Trim$(title(Player(Index).CurTitle).Name)
         Color = Trim$(title(Player(Index).CurTitle).Color)
         
-        TextX = GetPlayerTextX(Index) + EngineGetTextWidth(Font_Default, Trim$(title(Player(Index).CurTitle).Name))
+        TextX = GetPlayerTextX(Index) + EngineGetTextWidth(Font_Default, Trim$(title(Player(Index).CurTitle).Name) / 2)
         TextY = TextY - 12
         
         ' Draw title
@@ -383,7 +383,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
             End Select
     
             ' Re-center
-            TextX = GetPlayerTextX(Index) + EngineGetTextWidth(Font_Default, Guild)
+            TextX = GetPlayerTextX(Index) + (EngineGetTextWidth(Font_Default, Guild) / 2)
             
             ' Determine location for text
             If GetPlayerSprite(Index) < 1 Or GetPlayerSprite(Index) > NumCharacters Then
@@ -428,7 +428,7 @@ Public Sub DrawNPCName(ByVal Index As Long)
         TextY = GetNPCTextY(Index) - 16
     Else
         ' Determine location for the text
-        TextY = GetNPCTextY(Index) - (Tex_Character(NPC(npcNum).Sprite).Height / 4) + 16
+        TextY = GetNPCTextY(Index) - (Tex_Character(NPC(npcNum).Sprite).Height / 4)
     
         If (Tex_Character(NPC(npcNum).Sprite).Height / 4) < 32 Then
             TextY = TextY - 16
@@ -449,13 +449,13 @@ Public Sub DrawNPCName(ByVal Index As Long)
     Name = Trim$(NPC(npcNum).Name)
     
     If Len(Name) > 0 Then
-        TextX = GetNPCTextX(Index) + EngineGetTextWidth(Font_Default, (Name))
+        TextX = GetNPCTextX(Index) - (EngineGetTextWidth(Font_Default, Name) / 2)
         
         If Options.Levels = 1 And NPC(npcNum).Level > 0 Then
             Level = "Lv: " & NPC(npcNum).Level
             
             If NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
-                TextX = TextX + EngineGetTextWidth(Font_Default, Trim$(Level)) + 4
+                TextX = TextX + EngineGetTextWidth(Font_Default, Trim$(Level) / 2) + 4
             End If
         End If
         
@@ -465,7 +465,7 @@ Public Sub DrawNPCName(ByVal Index As Long)
     
     If Options.Levels = 1 And NPC(npcNum).Level > 0 Then
         If NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
-            TextX = TextX - (EngineGetTextWidth(Font_Default, Trim$(Level)) * 2) - 4
+            TextX = TextX - (EngineGetTextWidth(Font_Default, Trim$(Level)) / 2) - 4
             
             If NPC(npcNum).Level = GetPlayerLevel(MyIndex) Then
                 Color = D3DColorARGB(255, 255, 255, 0)
@@ -484,7 +484,7 @@ Public Sub DrawNPCName(ByVal Index As Long)
     End If
     
     If Len(Trim$(NPC(npcNum).title)) > 0 And Options.Titles = 1 Then
-        TextX = GetNPCTextX(Index) + EngineGetTextWidth(Font_Default, Trim$(NPC(npcNum).title))
+        TextX = GetNPCTextX(Index) + EngineGetTextWidth(Font_Default, Trim$(NPC(npcNum).title) / 2)
         
         ' Move it up
         TextY = TextY - 12
@@ -983,9 +983,9 @@ Public Function GetPlayerTextY(ByVal Index As Long) As Long
 End Function
 
 Public Function GetNPCTextX(ByVal Index As Long) As Long
-    GetNPCTextX = ConvertMapX(MapNPC(Index).X * PIC_X) + MapNPC(Index).xOffset + (PIC_X \ 2) + 1
+    GetNPCTextX = ConvertMapX(MapNPC(Index).X * PIC_X) + MapNPC(Index).xOffset + (PIC_X / 2) + 1
 End Function
 
 Public Function GetNPCTextY(ByVal Index As Long) As Long
-    GetNPCTextY = ConvertMapY(MapNPC(Index).Y * PIC_Y) + MapNPC(Index).yOffset + (PIC_Y \ 2)
+    GetNPCTextY = ConvertMapY(MapNPC(Index).Y * PIC_Y) + MapNPC(Index).yOffset + (PIC_Y / 2)
 End Function
