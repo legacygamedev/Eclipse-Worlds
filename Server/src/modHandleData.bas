@@ -181,6 +181,7 @@ End Sub
 Sub HandleQuestAccept(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
 Dim buffer As clsBuffer
 Dim QuestID As Long
+
     Set buffer = New clsBuffer
         buffer.WriteBytes Data()
         QuestID = buffer.ReadLong
@@ -191,7 +192,7 @@ Dim QuestID As Long
     'set the player questid to this quest, and set the cli/greeter to the first one in the quest
     Call SetPlayerQuestCLI(Index, QuestID, 1)
     Call SetPlayerQuestTask(Index, QuestID, 2)
-    Call SendPlayerData(Index)
+    'Call SendPlayerData(Index)
     
     'Start processing the tasks of the quest.
     Call HandleQuestTask(Index, QuestID, GetPlayerQuestCLI(Index, QuestID), GetPlayerQuestTask(Index, QuestID), False)
@@ -200,6 +201,7 @@ End Sub
 Sub HandleQuitQuest(ByVal Index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
 Dim buffer As clsBuffer
 Dim QuestNum As Long
+
     Set buffer = New clsBuffer
         buffer.WriteBytes Data()
         QuestNum = buffer.ReadLong

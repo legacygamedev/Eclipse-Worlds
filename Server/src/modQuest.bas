@@ -443,13 +443,15 @@ Public Sub HandleQuestTask(ByVal Index As Long, _
     'If Not ValidArray1(Quest(QuestID).CLI) Then Exit Sub
     'If Not ValidArray2(Quest(QuestID).CLI(II).Action) Then Exit Sub
     
+    TaskID = TaskID - 1
+    
     With Quest(QuestID).CLI(CLIID)
         NPCNum = .ItemIndex
 
         ' Figure out what we need to do.
         If Quest(QuestID).Max_CLI > 0 Then
-            If .Max_Actions > 0 Then
-
+            If .Max_Actions > 0 And .Max_Actions >= TaskID Then
+                
                 Select Case .Action(TaskID).ActionID
     
                     Case TASK_GATHER
@@ -566,28 +568,27 @@ Public Sub HandleQuestTask(ByVal Index As Long, _
     
                     Case ACTION_ADJUST_LVL
                         Call SetPlayerLevel(Index, .Action(TaskID).Amount, .Action(TaskID).MainData)
-                        Call SendPlayerData(Index)
+                        Call SendPlayerLevel(Index)
     
                     Case ACTION_ADJUST_EXP
                         Call SetPlayerExp(Index, .Action(TaskID).Amount, .Action(TaskID).MainData)
-                        Call SendPlayerData(Index)
+                        Call SendPlayerExp(Index)
     
                     Case ACTION_ADJUST_STAT_LVL
                         Call SetPlayerStat(Index, .Action(TaskID).SecondaryData, .Action(TaskID).Amount, .Action(TaskID).MainData)
-                        'Call SendPlayerQueststats(index)
-                        Call SendPlayerData(Index)
+                        Call SendPlayerStats(Index)
     
                     Case ACTION_ADJUST_SKILL_LVL
-                        'Call SetPlayerQuestSkill(index, .Action(TaskID).Amount, .Action(TaskID).SecondaryData, .Action(TaskID).MainData)
-                        'Call SendPlayerData(index)
+                        Call SetPlayerSkill(Index, .Action(TaskID).Amount, .Action(TaskID).SecondaryData, .Action(TaskID).MainData)
+                        Call SendPlayerSkills(Index)
     
                     Case ACTION_ADJUST_SKILL_LVL
-                        'Call SetPlayerQuestSkill(index, .Action(TaskID).Amount, .Action(TaskID).SecondaryData, .Action(TaskID).MainData)
-                        'Call SendPlayerData(index)
+                        Call SetPlayerSkill(Index, .Action(TaskID).Amount, .Action(TaskID).SecondaryData, .Action(TaskID).MainData)
+                        Call SendPlayerSkills(Index)
     
                     Case ACTION_ADJUST_SKILL_EXP
-                        'Call SetPlayerQuestSkillExp(index, .Action(TaskID).Amount, .Action(TaskID).SecondaryData, .Action(TaskID).MainData)
-                        'Call SendPlayerQuestPoints(index)
+                        Call SetPlayerSkillExp(Index, .Action(TaskID).Amount, .Action(TaskID).SecondaryData, .Action(TaskID).MainData)
+                        Call SendPlayerSkills(Index)
     
                     Case ACTION_WARP
                         Call PlayerWarp(Index, .Action(TaskID).Amount, .Action(TaskID).MainData, .Action(TaskID).SecondaryData, , DIR_DOWN)
@@ -627,7 +628,7 @@ Public Sub CheckNextTask(ByVal Index As Long, _
     With Quest(QuestID).CLI(CLIID)
 
         ' move on to next task if there is one
-        If TaskID + 1 > .Max_Actions Then GoTo NextCLI
+        If TaskID > .Max_Actions Then GoTo NextCLI
 
         'check if the next task is a rebuttal, if so, skip it
         If .Action(TaskID + 1).ActionID = ACTION_SHOWMSG Then
@@ -1104,14 +1105,14 @@ Public Sub LoadQuests()
 
         If Quest(i).Max_CLI > 0 Then
             ReDim Quest(i).CLI(1 To Quest(i).Max_CLI)
-
+            
             For II = 1 To Quest(i).Max_CLI
                 Get #F, , Quest(i).CLI(II).ItemIndex
                 Get #F, , Quest(i).CLI(II).isNPC
                 Get #F, , Quest(i).CLI(II).Max_Actions
 
                 If Quest(i).CLI(II).Max_Actions > 0 Then
-                    ReDim Preserve Quest(i).CLI(II).Action(1 To Quest(i).CLI(II).Max_Actions)
+                    ReDim Quest(i).CLI(II).Action(Quest(i).CLI(II).Max_Actions)
 
                     For III = 1 To Quest(i).CLI(II).Max_Actions
                         Get #F, , Quest(i).CLI(II).Action(III).TextHolder

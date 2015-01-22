@@ -66,8 +66,9 @@ Sub JoinGame(ByVal Index As Long)
     
     ' Send the player's data
     Call SetPlayerQuestData(Index)
-    'Call SendPlayerData(Index) ' Above line does this as well
     
+    ' Check for new title
+    Call CheckPlayerNewTitle(Index)
     
     ' Send vitals to player of all other players online
     For n = 1 To Player_HighIndex
@@ -81,11 +82,7 @@ Sub JoinGame(ByVal Index As Long)
             End If
         Next
     Next
-    
-    ' Send other data
-    Call SendPlayerStatus(Index)
-    Call SendPlayerExp(Index)
-    
+
     ' Warp the player to their saved location
     Call PlayerWarp(Index, GetPlayerMap(Index), GetPlayerX(Index), GetPlayerY(Index), True)
     
