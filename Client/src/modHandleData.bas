@@ -723,6 +723,7 @@ End Sub
 
 Private Sub HandlePlayerLevel(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
+    Dim playerNum As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -730,11 +731,11 @@ Private Sub HandlePlayerLevel(ByVal Index As Long, ByRef data() As Byte, ByVal S
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    Index = buffer.ReadLong
-    SetPlayerLevel Index, buffer.ReadByte
+    playerNum = buffer.ReadLong
+    SetPlayerLevel playerNum, buffer.ReadByte
     
     ' Set the character windows
-    If Index = MyIndex Then
+    If playerNum = MyIndex Then
         frmMain.lblCharName = GetPlayerName(MyIndex)
         frmMain.lblCharLevel = "Lv: " & GetPlayerLevel(MyIndex)
     End If
@@ -879,6 +880,7 @@ End Sub
 
 Private Sub HandlePlayerGuild(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
+    Dim playerNum As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -886,13 +888,13 @@ Private Sub HandlePlayerGuild(ByVal Index As Long, ByRef data() As Byte, ByVal S
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    Index = buffer.ReadLong
+    playerNum = buffer.ReadLong
     
     ' Guild
-    Player(Index).Guild = buffer.ReadString
-    Player(Index).GuildAcc = buffer.ReadByte
+    Player(playerNum).Guild = buffer.ReadString
+    Player(playerNum).GuildAcc = buffer.ReadByte
     
-    If Index = MyIndex Then
+    If playerNum = MyIndex Then
         ' Update the form guild boxes
         UpdateGuildPanel
     End If
@@ -906,6 +908,7 @@ End Sub
 
 Private Sub HandlePlayerSprite(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
+    Dim playerNum As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -913,8 +916,8 @@ Private Sub HandlePlayerSprite(ByVal Index As Long, ByRef data() As Byte, ByVal 
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    Index = buffer.ReadLong
-    Player(Index).Sprite = buffer.ReadInteger
+    playerNum = buffer.ReadLong
+    Player(playerNum).Sprite = buffer.ReadInteger
     Exit Sub
     
 ' Error handler
@@ -965,6 +968,7 @@ End Sub
 Private Sub HandlePlayerStatus(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
     Dim I As Long
+    Dim playerNum As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -972,9 +976,9 @@ Private Sub HandlePlayerStatus(ByVal Index As Long, ByRef data() As Byte, ByVal 
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    Index = buffer.ReadLong
+    playerNum = buffer.ReadLong
     
-    Player(Index).Status = buffer.ReadString
+    Player(playerNum).Status = buffer.ReadString
     Set buffer = Nothing
     Exit Sub
     
@@ -987,6 +991,7 @@ End Sub
 Private Sub HandlePlayerPK(ByVal Index As Long, ByRef data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim buffer As clsBuffer
     Dim I As Long
+    Dim playerNum As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -994,9 +999,9 @@ Private Sub HandlePlayerPK(ByVal Index As Long, ByRef data() As Byte, ByVal Star
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    Index = buffer.ReadLong
+    playerNum = buffer.ReadLong
     
-    Player(Index).PK = buffer.ReadByte
+    Player(playerNum).PK = buffer.ReadByte
     Set buffer = Nothing
     Exit Sub
     
@@ -2322,22 +2327,23 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     Dim buffer As clsBuffer
     Dim I As Long
     Dim TNL As Long
+    Dim playerNum As Long
     
     Set buffer = New clsBuffer
     buffer.WriteBytes data()
     
-    Index = buffer.ReadLong
+    playerNum = buffer.ReadLong
     
     ' Make sure their not the max level
-    If Not GetPlayerLevel(Index) = MAX_LEVEL Then
-        Call SetPlayerExp(Index, buffer.ReadLong)
-    ElseIf GetPlayerExp(Index) > 0 And GetPlayerLevel(Index) = MAX_LEVEL Then
-        Call SetPlayerExp(Index, 0)
+    If Not GetPlayerLevel(playerNum) = MAX_LEVEL Then
+        Call SetPlayerExp(playerNum, buffer.ReadLong)
+    ElseIf GetPlayerExp(playerNum) > 0 And GetPlayerLevel(playerNum) = MAX_LEVEL Then
+        Call SetPlayerExp(playerNum, 0)
     End If
     
     TNL = buffer.ReadLong
     
-    If Index = MyIndex Then
+    If playerNum = MyIndex Then
         If TNL = 0 Then Exit Sub
         
         If EXPBarInit = False Then
