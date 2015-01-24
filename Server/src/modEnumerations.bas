@@ -200,7 +200,6 @@ Public Enum ClientPackets
     CSearch
     CSpells
     CCastSpell
-    CLeaveGame
     CSwapInvSlots
     CSwapSpellSlots
     CSwapHotbarSlots

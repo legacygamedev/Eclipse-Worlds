@@ -53,7 +53,7 @@ Private Type GuildMemberRec
 End Type
 
 Private Type GlobalEventRec
-    X As Long
+    x As Long
     Y As Long
     Dir As Long
     Active As Long
@@ -232,7 +232,7 @@ Public Type PlayerRec
     
     ' Position
     Map As Integer
-    X As Byte
+    x As Byte
     Y As Byte
     Dir As Byte
     
@@ -429,7 +429,7 @@ Private Type EventPageRec
     Position As Byte
     
     ' For EventMap
-    X As Long
+    x As Long
     Y As Long
 End Type
 
@@ -438,7 +438,7 @@ Private Type EventRec
     Global As Byte
     PageCount As Long
     Pages() As EventPageRec
-    X As Long
+    x As Long
     Y As Long
     
     ' Self switches re-set on restart
@@ -448,13 +448,13 @@ End Type
 Public Type GlobalMapEvents
     eventID As Long
     PageID As Long
-    X As Long
+    x As Long
     Y As Long
 End Type
 
 Private Type MapEventRec
     Dir As Long
-    X As Long
+    x As Long
     Y As Long
     
     WalkingAnim As Long
@@ -557,10 +557,11 @@ Public Type TempPlayerRec
     EventProcessing() As EventProcessingRec
     
     PVPTimer As Long
+    HasLogged As Boolean
 End Type
 
 Private Type TileDataRec
-    X As Integer
+    x As Integer
     Y As Integer
     Tileset As Byte
 End Type
@@ -640,7 +641,7 @@ Private Type ClassRec
     
     ' Start position
     Map As Integer
-    X As Byte
+    x As Byte
     Y As Byte
     Dir As Byte
     
@@ -703,7 +704,7 @@ Private Type MapItemRec
     Num As Byte
     Value As Long
     Durability As Integer
-    X As Byte
+    x As Byte
     Y As Byte
     
     ' Ownership & despawn
@@ -751,7 +752,7 @@ Private Type MapNPCRec
     target As Byte
     targetType As Byte
     Vital(1 To Vitals.Vital_Count - 1) As Long
-    X As Byte
+    x As Byte
     Y As Byte
     Dir As Byte
     
@@ -808,7 +809,7 @@ Private Type SpellRec
     CDTime As Long
     Icon As Long
     Map As Long
-    X As Long
+    x As Long
     Y As Long
     Dir As Byte
     Vital As Long
@@ -839,7 +840,7 @@ End Type
 Private Type MapResourceRec
     ResourceState As Byte
     ResourceTimer As Long
-    X As Long
+    x As Long
     Y As Long
     Cur_Reward As Byte
 End Type
@@ -881,7 +882,7 @@ Private Type AnimationRec
 End Type
 
 Public Type Vector
-    X As Long
+    x As Long
     Y As Long
 End Type
 

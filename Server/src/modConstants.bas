@@ -146,7 +146,7 @@ Public Const DIR_DOWNLEFT As Byte = 6
 Public Const DIR_DOWNRIGHT As Byte = 7
 
 ' Constants for player movement
-Public Const MOVING_WALKING As Byte = 1
+Public Const MOVING_MOVING As Byte = 1
 Public Const MOVING_RUNNING As Byte = 2
 
 ' Admin constants

@@ -160,7 +160,7 @@ Sub DestroyServer()
     Call SetStatus("Unloading sockets...")
 
     For i = 1 To Player_HighIndex
-        Call CloseSocket(i, True)
+        Call CloseSocket(i)
         Unload frmServer.Socket(i)
     Next
     End

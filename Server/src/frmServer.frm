@@ -1,7 +1,7 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
-Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "Tabctl32.ocx"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmServer 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Loading..."
@@ -24,6 +24,14 @@ Begin VB.Form frmServer
    ScaleHeight     =   3555
    ScaleWidth      =   9360
    StartUpPosition =   2  'CenterScreen
+   Begin MSWinsockLib.Winsock Socket 
+      Index           =   0
+      Left            =   0
+      Top             =   0
+      _ExtentX        =   741
+      _ExtentY        =   741
+      _Version        =   393216
+   End
    Begin TabDlg.SSTab SSTab1 
       Height          =   3375
       Left            =   120
@@ -72,9 +80,12 @@ Begin VB.Form frmServer
       TabCaption(3)   =   "News"
       TabPicture(3)   =   "frmServer.frx":170DE
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "cmdLoadNews"
+      Tab(3).Control(0)=   "txtNews"
+      Tab(3).Control(0).Enabled=   0   'False
       Tab(3).Control(1)=   "cmdSaveNews"
-      Tab(3).Control(2)=   "txtNews"
+      Tab(3).Control(1).Enabled=   0   'False
+      Tab(3).Control(2)=   "cmdLoadNews"
+      Tab(3).Control(2).Enabled=   0   'False
       Tab(3).ControlCount=   3
       Begin VB.TextBox txtText 
          Appearance      =   0  'Flat
@@ -850,14 +861,6 @@ Begin VB.Form frmServer
          EndProperty
       End
    End
-   Begin MSWinsockLib.Winsock Socket 
-      Index           =   0
-      Left            =   0
-      Top             =   0
-      _ExtentX        =   741
-      _ExtentY        =   741
-      _Version        =   393216
-   End
    Begin VB.Menu mnuKick 
       Caption         =   "&Kick"
       Visible         =   0   'False
@@ -897,22 +900,22 @@ End Sub
 ' ********************
 ' ** Winsock object **
 ' ********************
-Private Sub Socket_ConnectionRequest(Index As Integer, ByVal requestID As Long)
-    Call AcceptConnection(Index, requestID)
+Private Sub Socket_ConnectionRequest(index As Integer, ByVal requestID As Long)
+    Call AcceptConnection(index, requestID)
 End Sub
 
-Private Sub Socket_Accept(Index As Integer, SocketId As Integer)
-    Call AcceptConnection(Index, SocketId)
+Private Sub Socket_Accept(index As Integer, SocketId As Integer)
+    Call AcceptConnection(index, SocketId)
 End Sub
 
-Private Sub Socket_DataArrival(Index As Integer, ByVal bytesTotal As Long)
-    If IsConnected(Index) Then
-        Call IncomingData(Index, bytesTotal)
+Private Sub Socket_DataArrival(index As Integer, ByVal bytesTotal As Long)
+    If IsConnected(index) Then
+        Call IncomingData(index, bytesTotal)
     End If
 End Sub
 
-Private Sub Socket_Close(Index As Integer)
-    Call CloseSocket(Index)
+Private Sub Socket_Close(index As Integer)
+    Call CloseSocket(index)
 End Sub
 
 Private Sub chkServerLog_Click()
@@ -1216,7 +1219,7 @@ Private Sub lvwInfo_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
         lvwInfo.SortOrder = lvwAscending
     End If
 
-    lvwInfo.SortKey = ColumnHeader.Index - 1
+    lvwInfo.SortKey = ColumnHeader.index - 1
     lvwInfo.Sorted = True
 End Sub
 
@@ -1263,7 +1266,7 @@ Sub UsersOnline_Start()
 
 End Sub
 
-Private Sub lvwInfo_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lvwInfo_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
     If Button = vbRightButton Then
         PopupMenu mnuKick
     End If
@@ -1283,14 +1286,14 @@ End Sub
 
 Sub mnuBanPlayer_click()
     Dim Name As String
-    Dim Index As Long
+    Dim index As Long
     
     Name = frmServer.lvwInfo.SelectedItem.SubItems(3)
-    Index = FindPlayer(Name)
+    index = FindPlayer(Name)
 
-    If Index > 0 And Index <= MAX_PLAYERS Then
-        If IsConnected(Index) Then
-            Call BanIndex(Index, "server", vbNullString)
+    If index > 0 And index <= MAX_PLAYERS Then
+        If IsConnected(index) Then
+            Call BanIndex(index, "server", vbNullString)
         End If
     End If
 End Sub
@@ -1321,10 +1324,10 @@ Sub mnuRemoveAdmin_click()
 
 End Sub
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
     Dim lmsg As Long
     
-    lmsg = X / Screen.TwipsPerPixelX
+    lmsg = x / Screen.TwipsPerPixelX
 
     Select Case lmsg
         Case WM_LBUTTONDBLCLK
