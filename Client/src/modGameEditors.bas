@@ -925,7 +925,7 @@ Public Sub ItemEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_ITEMS
-        If Item_Changed(I) Then
+        If Item_Changed(I) And I <> EditorIndex Then
             Call SendSaveItem(I)
         End If
     Next
@@ -1061,7 +1061,7 @@ Public Sub AnimationEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_ANIMATIONS
-        If Animation_Changed(I) Then
+        If Animation_Changed(I) And I <> EditorIndex Then
             Call SendSaveAnimation(I)
         End If
     Next
@@ -1157,7 +1157,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtExp.text = NPC(EditorIndex).exp
+        .txtEXP.text = NPC(EditorIndex).exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -1250,7 +1250,7 @@ Public Sub NPCEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_NPCS
-        If NPC_Changed(I) Then
+        If NPC_Changed(I) And I <> EditorIndex Then
             Call SendSaveNPC(I)
         End If
     Next
@@ -1382,7 +1382,7 @@ Public Sub ResourceEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_RESOURCES
-        If Resource_Changed(I) Then
+        If Resource_Changed(I) And I <> EditorIndex Then
             Call SendSaveResource(I)
         End If
     Next
@@ -1505,7 +1505,7 @@ Public Sub ShopEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_SHOPS
-        If Shop_Changed(I) Then
+        If Shop_Changed(I) And I <> EditorIndex Then
             Call SendSaveShop(I)
         End If
     Next
@@ -1652,7 +1652,7 @@ Public Sub SpellEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_SPELLS
-        If Spell_Changed(I) Then
+        If Spell_Changed(I) And I <> EditorIndex Then
             Call SendSaveSpell(I)
         End If
     Next
@@ -1801,7 +1801,7 @@ Public Sub MapPropertiesInit()
             .cmbNpcs.AddItem I & ": " & Trim$(NPC(I).Name)
         Next
         
-        .CmbWeather.ListIndex = Map.Weather
+        .cmbWeather.ListIndex = Map.Weather
         .scrlWeatherIntensity.Value = Map.WeatherIntensity
         
         .ScrlFog.Value = Map.Fog
@@ -1927,7 +1927,7 @@ Public Sub BanEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_BANS
-        If Ban_Changed(I) Then
+        If Ban_Changed(I) And I <> EditorIndex Then
             Call SendSaveBan(I)
         End If
     Next
@@ -2014,7 +2014,7 @@ Public Sub TitleEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_TITLES
-        If Title_Changed(I) Then
+        If Title_Changed(I) And I <> EditorIndex Then
             Call SendSaveTitle(I)
         End If
     Next
@@ -2072,7 +2072,7 @@ Public Sub MoralEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_MORALS
-        If Moral_Changed(I) Then
+        If Moral_Changed(I) And I <> EditorIndex Then
             Call SendSaveMoral(I)
         End If
     Next
@@ -2152,7 +2152,7 @@ Public Sub ClassEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_CLASSES
-        If Class_Changed(I) Then
+        If Class_Changed(I) And I <> EditorIndex Then
             Call SendSaveClass(I)
         End If
     Next
@@ -2396,7 +2396,7 @@ Public Sub EmoticonEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_EMOTICONS
-        If Emoticon_Changed(I) Then
+        If Emoticon_Changed(I) And I <> EditorIndex Then
             Call SendSaveEmoticon(I)
         End If
     Next
@@ -3568,7 +3568,7 @@ Sub AddCommand(Index As Long)
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Index = Index
@@ -4054,7 +4054,7 @@ Public Sub EditEventCommand()
             frmEditor_Events.fraCommands.Visible = False
         Case EventType.evSetWeather
             isEdit = True
-            frmEditor_Events.CmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
+            frmEditor_Events.cmbWeather.ListIndex = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1
             frmEditor_Events.scrlWeatherIntensity.Value = tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2
             frmEditor_Events.fraDialogue.Visible = True
             frmEditor_Events.fraCommand(23).Visible = True
@@ -4347,7 +4347,7 @@ Public Sub EditCommand()
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.ScrlFogData(1).Value
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data3 = frmEditor_Events.ScrlFogData(2).Value
         Case EventType.evSetWeather
-            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.CmbWeather.ListIndex
+            tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.cmbWeather.ListIndex
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data2 = frmEditor_Events.scrlWeatherIntensity.Value
         Case EventType.evSetTint
             tmpEvent.Pages(curPageNum).CommandList(CurList).Commands(CurSlot).Data1 = frmEditor_Events.scrlMapTintData(0).Value

@@ -2304,7 +2304,7 @@ Private Sub HandleActionMsg(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Set buffer = New clsBuffer
-    buffer.WriteBytes data()
+''    buffer.WriteBytes data()
     
     Message = buffer.ReadString
     Color = buffer.ReadLong

@@ -3548,7 +3548,7 @@ Private Sub cmdChangeData_Click()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_QUESTS
-        If Quest_Changed(I) Then
+        If Quest_Changed(I) And I <> EditorIndex Then
         
             dataModified = True
             Exit For

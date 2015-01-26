@@ -966,7 +966,7 @@ Private Sub cmdChangeDataSize_Click()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_NPCS
-        If NPC_Changed(I) Then
+        If NPC_Changed(I) And I <> EditorIndex Then
         
             dataModified = True
             Exit For
@@ -1385,10 +1385,10 @@ Private Sub txtExp_Change()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If Not IsNumeric(txtExp.text) Then txtExp.text = 0
-    If txtExp.text > MAX_LONG Then txtExp.text = MAX_LONG
-    If txtExp.text < 0 Then txtExp.text = 0
-    NPC(EditorIndex).exp = txtExp.text
+    If Not IsNumeric(txtEXP.text) Then txtEXP.text = 0
+    If txtEXP.text > MAX_LONG Then txtEXP.text = MAX_LONG
+    If txtEXP.text < 0 Then txtEXP.text = 0
+    NPC(EditorIndex).exp = txtEXP.text
     Exit Sub
     
 ' Error handler
@@ -1605,7 +1605,7 @@ Private Sub txtEXP_GotFocus()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    txtExp.SelStart = Len(txtExp)
+    txtEXP.SelStart = Len(txtEXP)
     Exit Sub
     
 ' Error handler

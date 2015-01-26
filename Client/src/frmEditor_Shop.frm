@@ -337,7 +337,7 @@ Private Sub cmdChangeDataSize_Click()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_SHOPS
-        If Shop_Changed(I) Then
+        If Shop_Changed(I) And I <> EditorIndex Then
         
             dataModified = True
             Exit For

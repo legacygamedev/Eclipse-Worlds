@@ -5,7 +5,7 @@ Option Explicit
 Public StopTimer As Boolean
 
 Public Declare Function GetForegroundWindow Lib "user32.dll" () As Long
-Public Declare Function GetTopWindow Lib "user32.dll" (ByVal hwnd As Long) As Long
+Public Declare Function GetTopWindow Lib "user32.dll" (ByVal hWnd As Long) As Long
 
 ' Halts thread of execution
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
@@ -137,7 +137,7 @@ Public Sub Main()
     
     ' Set the form visible
     frmMenu.Show
-    If GetTopWindow(frmMenu.hwnd) = 0 Then BringWindowToTop frmMenu.hwnd
+    If GetTopWindow(frmMenu.hWnd) = 0 Then BringWindowToTop frmMenu.hWnd
     
     ' Hide all pictures
     Call ClearMenuPictures
@@ -366,7 +366,7 @@ Sub GameInit()
     
     ' Show the main form
     frmMain.Visible = True
-    If GetTopWindow(frmMain.hwnd) = 0 Then BringWindowToTop frmMain.hwnd
+    If GetTopWindow(frmMain.hWnd) = 0 Then BringWindowToTop frmMain.hWnd
     
     'AdvMapEditor
     
@@ -952,7 +952,7 @@ Public Sub LogoutGame()
     frmMenu.picMain.Visible = True
     ResetMenuButtons
     CurButton_Menu = 0
-     frmMenu.lblLAccept.Enabled = True
+    frmMenu.lblLAccept.Enabled = True
     HPBarInit = False
     MPBarInit = False
     EXPBarInit = False

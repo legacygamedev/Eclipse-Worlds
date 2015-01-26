@@ -1008,7 +1008,7 @@ Public Sub QuestEditorSave()
 
     For I = 1 To MAX_QUESTS
 
-        If Quest_Changed(I) Then
+        If Quest_Changed(I) And I <> EditorIndex Then
             Call SendSaveQuest(I)
         End If
 

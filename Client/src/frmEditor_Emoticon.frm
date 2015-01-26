@@ -227,15 +227,15 @@ Private TmpIndex As Long
 
 Private Sub cmdChangeDataSize_Click()
     Dim Res As VbMsgBoxResult, val As String
-    Dim dataModified As Boolean, i As Long
+    Dim dataModified As Boolean, I As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 1 To MAX_EMOTICONS
-        If Emoticon_Changed(i) Then
+    For I = 1 To MAX_EMOTICONS
+        If Emoticon_Changed(I) And I <> EditorIndex Then
         
             dataModified = True
             Exit For
@@ -312,20 +312,20 @@ ErrorHandler:
 End Sub
 
 Private Sub cmdSave_Click()
-    Dim i As Long, n As Long
+    Dim I As Long, n As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 1 To MAX_EMOTICONS
+    For I = 1 To MAX_EMOTICONS
         ' Loop through a second time to compare if any match
         For n = 1 To MAX_EMOTICONS
-            If Not Trim$(Emoticon(i).Command) = "/" And Not Trim$(Emoticon(n).Command) = "/" Then
+            If Not Trim$(Emoticon(I).Command) = "/" And Not Trim$(Emoticon(n).Command) = "/" Then
                 ' Make sure they are not the same one
-                If Not i = n Then
-                    If Trim$(Emoticon(i).Command) = Trim$(Emoticon(n).Command) Then
+                If Not I = n Then
+                    If Trim$(Emoticon(I).Command) = Trim$(Emoticon(n).Command) Then
                         AlertMsg "There is more than one command that uses " & Trim$(txtCommand.text) & "!", True
                         Exit Sub
                     End If
@@ -377,7 +377,7 @@ ErrorHandler:
 End Sub
 
 Private Sub txtCommand_Validate(Cancel As Boolean)
-    Dim i As Long, TmpIndex As Long
+    Dim I As Long, TmpIndex As Long
     
     If EditorIndex < 1 Or EditorIndex > MAX_EMOTICONS Then Exit Sub
     
@@ -463,18 +463,18 @@ ErrorHandler:
 End Sub
 
 Private Sub txtSearch_Change()
-    Dim Find As String, i As Long
+    Dim Find As String, I As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For i = 0 To lstIndex.ListCount - 1
-        Find = Trim$(i + 1 & ": " & txtSearch.text)
+    For I = 0 To lstIndex.ListCount - 1
+        Find = Trim$(I + 1 & ": " & txtSearch.text)
         
         ' Make sure we dont try to check a name that's too small
-        If Len(lstIndex.List(i)) >= Len(Find) Then
-            If UCase$(Mid$(Trim$(lstIndex.List(i)), 1, Len(Find))) = UCase$(Find) Then
-                lstIndex.ListIndex = i
+        If Len(lstIndex.List(I)) >= Len(Find) Then
+            If UCase$(Mid$(Trim$(lstIndex.List(I)), 1, Len(Find))) = UCase$(Find) Then
+                lstIndex.ListIndex = I
                 Exit For
             End If
         End If
