@@ -2385,6 +2385,7 @@ Private Sub RefreshUpperTilesCacheWhole()
 
     Direct3D_Device.SetRenderTarget bUpper, Nothing, 0
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorARGB(0, 0, 0, 0), 1#, 0
+    On Error Resume Next
     Direct3D_Device.BeginScene
 
     For X = 0 To (Map.MaxX)
@@ -2421,6 +2422,7 @@ Private Sub RefreshLowerTilesCacheWhole()
     
     Direct3D_Device.SetRenderTarget bLower, Nothing, 0
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorARGB(0, 0, 0, 0), 1#, 0
+    On Error Resume Next
     Direct3D_Device.BeginScene
      
     For X = 0 To (Map.MaxX)
@@ -3349,6 +3351,7 @@ Public Sub Render_Graphics()
     End If
     
     Direct3D_Device.Clear 0, ByVal 0, D3DCLEAR_TARGET, D3DColorARGB(0, 0, 0, 0), 1#, 0
+    On Error Resume Next
     Direct3D_Device.BeginScene
  
     ' Update draw Name

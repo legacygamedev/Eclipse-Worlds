@@ -4326,11 +4326,11 @@ Private Sub chkTilesets_Click()
 End Sub
 
 Private Sub cmdDelete_Click()
-    If AlertMsg("Are you sure you want to erase this map?", False, False) = YES Then
+    'If AlertMsg("Are you sure you want to erase this map?", False, False) = YES Then
         Call ClearMap
         Call MapEditorSave
         redrawMapCache = True
-    End If
+    'End If
 End Sub
 
 Private Sub cmdProperties_Click()
@@ -4364,14 +4364,14 @@ Private Sub cmdSave_Click()
     LeaveMapEditorMode True
 End Sub
 
-Public Sub SubDaFocus(hwnd As Long)
-    If cSubclasserHooker.ssc_Subclass(hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_NCACTIVATE, WM_MOVE
+Public Sub SubDaFocus(hWnd As Long)
+    If cSubclasserHooker.ssc_Subclass(hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_NCACTIVATE, WM_MOVE
     End If
 End Sub
 
-Public Sub UnsubDaFocus(hwnd As Long)
-    cSubclasserHooker.ssc_UnSubclass hwnd
+Public Sub UnsubDaFocus(hWnd As Long)
+    cSubclasserHooker.ssc_UnSubclass hWnd
 End Sub
 
 Private Sub Form_Load()
@@ -4379,30 +4379,30 @@ Private Sub Form_Load()
         Set cSubclasserHooker = New cSelfSubHookCallback
     End If
 
-    If cSubclasserHooker.ssc_Subclass(Me.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO, WM_MOUSEWHEEL, WM_NCACTIVATE, WM_MOVE
+    If cSubclasserHooker.ssc_Subclass(Me.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO, WM_MOUSEWHEEL, WM_NCACTIVATE, WM_MOVE
     End If
     
-    If cSubclasserHooker.ssc_Subclass(Me.picMapEditor.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.picMapEditor.hwnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
+    If cSubclasserHooker.ssc_Subclass(Me.picMapEditor.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.picMapEditor.hWnd, eMsgWhen.MSG_BEFORE, WM_ACTIVATEAPP, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP, WM_CAPTURECHANGED, WM_GETMINMAXINFO
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.mapPreviewSwitch.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.mapPreviewSwitch.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.mapPreviewSwitch.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.mapPreviewSwitch.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.chkEyeDropper.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.chkEyeDropper.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.chkEyeDropper.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.chkEyeDropper.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.cmdSave.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.cmdSave.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.cmdSave.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdSave.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.cmdRevert.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.cmdRevert.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.cmdRevert.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdRevert.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.cmdDelete.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.cmdDelete.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.cmdDelete.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdDelete.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
-    If cSubclasserHooker.ssc_Subclass(Me.cmdProperties.hwnd, ByVal 1, 1, Me) Then
-        cSubclasserHooker.ssc_AddMsg Me.cmdProperties.hwnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
+    If cSubclasserHooker.ssc_Subclass(Me.cmdProperties.hWnd, ByVal 1, 1, Me) Then
+        cSubclasserHooker.ssc_AddMsg Me.cmdProperties.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
 End Sub
 
@@ -4416,18 +4416,27 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
+    If MyIndex > 0 Then
+        If Moral(Map.Moral).CanPK = 1 Or Moral(Map.Moral).DropItems = 1 Or Moral(Map.Moral).LoseExp = 1 Or GetPlayerPK(MyIndex) = YES Then
+            If AlertMsg("Are you sure you want to logout? You will remain logged in, please find a safe spot to logout!", False, False) = NO Then
+                Cancel = True
+                Exit Sub
+            End If
+        End If
+    End If
+    
     If Not readyToExit Then
         Cancel = True
         Me.Visible = False
     Else
-        cSubclasserHooker.ssc_UnSubclass Me.picMapEditor.hwnd
-        cSubclasserHooker.ssc_UnSubclass Me.mapPreviewSwitch.hwnd
-        cSubclasserHooker.ssc_UnSubclass Me.chkEyeDropper.hwnd
-        cSubclasserHooker.ssc_UnSubclass Me.cmdSave.hwnd
-        cSubclasserHooker.ssc_UnSubclass Me.cmdRevert.hwnd
-        cSubclasserHooker.ssc_UnSubclass Me.cmdDelete.hwnd
-        cSubclasserHooker.ssc_UnSubclass Me.cmdProperties.hwnd
-        cSubclasserHooker.ssc_UnSubclass Me.hwnd
+        cSubclasserHooker.ssc_UnSubclass Me.picMapEditor.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.mapPreviewSwitch.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.chkEyeDropper.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.cmdSave.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.cmdRevert.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.cmdDelete.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.cmdProperties.hWnd
+        cSubclasserHooker.ssc_UnSubclass Me.hWnd
         Set cSubclasserHooker = Nothing
     End If
     
@@ -6548,10 +6557,10 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Case vbKeyInsert
             If Player(MyIndex).Access >= STAFF_MODERATOR Then
                 If FormVisible("frmAdmin") Then
-                    If GetForegroundWindow = frmAdmin.hwnd Then
+                    If GetForegroundWindow = frmAdmin.hWnd Then
                         Unload frmAdmin
-                    ElseIf GetForegroundWindow <> frmAdmin.hwnd Then
-                        BringWindowToTop (frmAdmin.hwnd)
+                    ElseIf GetForegroundWindow <> frmAdmin.hWnd Then
+                        BringWindowToTop (frmAdmin.hWnd)
                     End If
                 Else
                     InitAdminPanel
@@ -7424,7 +7433,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
                     If FormVisible("frmAdmin") And adminMin Then
                         frmAdmin.centerMiniVert PixelsToTwips((rectt.Right - rectt.Left), 0), PixelsToTwips((rectt.Bottom - rectt.Top), 1), PixelsToTwips(rectt.Left, 0), PixelsToTwips(rectt.Top, 1)
                     End If
-                    If FormVisible("frmMapPreview") And lng_hWnd = frmMain.hwnd Then
+                    If FormVisible("frmMapPreview") And lng_hWnd = frmMain.hWnd Then
                         frmMapPreview.Move frmMain.Left - frmMapPreview.Width, frmMain.Top
                     End If
                     If FormVisible("frmMapPreview") Then
@@ -7451,18 +7460,18 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
         Case WM_MOUSEMOVE
             MainMouseMove lng_hWnd
             If InMapEditor Then
-                If GetForegroundWindow = hwnd Or GetForegroundWindow = picScreen.hwnd Then
+                If GetForegroundWindow = hWnd Or GetForegroundWindow = picScreen.hWnd Then
                     picScreen.SetFocus
                 End If
             End If
         Case WM_GETMINMAXINFO 'Prevent Resizing, so we can keep nice frame when turning off CAPTION.
             If Not taskBarClick Then
-                MainPreventResizing Me.hwnd, (Me.Width \ Screen.TwipsPerPixelX), (Me.Height \ Screen.TwipsPerPixelY), lParam
+                MainPreventResizing Me.hWnd, (Me.Width \ Screen.TwipsPerPixelX), (Me.Height \ Screen.TwipsPerPixelY), lParam
             Else
                 taskBarClick = False
             End If
         Case WM_SETFOCUS
-            If lng_hWnd = mapPreviewSwitch.hwnd Or lng_hWnd = chkEyeDropper.hwnd Or lng_hWnd = cmdSave.hwnd Or lng_hWnd = cmdRevert.hwnd Or lng_hWnd = cmdDelete.hwnd Or lng_hWnd = cmdProperties.hwnd Then
+            If lng_hWnd = mapPreviewSwitch.hWnd Or lng_hWnd = chkEyeDropper.hWnd Or lng_hWnd = cmdSave.hWnd Or lng_hWnd = cmdRevert.hWnd Or lng_hWnd = cmdDelete.hWnd Or lng_hWnd = cmdProperties.hWnd Then
                 bHandled = True
                 lReturn = 1
             End If

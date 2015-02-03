@@ -490,7 +490,7 @@ Public Sub MapEditorClearLayer()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    If AlertMsg("Are you sure you wish to clear this layer", False, False) = YES Then
+    'If AlertMsg("Are you sure you wish to clear this layer", False, False) = YES Then
         If CurrentLayer = 0 Then Exit Sub
     
         For X = 0 To Map.MaxX
@@ -503,7 +503,7 @@ Public Sub MapEditorClearLayer()
                 End With
             Next
         Next
-    End If
+    'End If
     Exit Sub
     
 ' Error handler
@@ -519,7 +519,7 @@ Public Sub MapEditorFillLayer()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If AlertMsg("Are you sure you wish to fill this layer", False, False) = YES Then
+    'If AlertMsg("Are you sure you wish to fill this layer", False, False) = YES Then
         For X = 0 To Map.MaxX
             For Y = 0 To Map.MaxY
                 With Map.Tile(X, Y).Layer(CurrentLayer)
@@ -532,7 +532,7 @@ Public Sub MapEditorFillLayer()
                 CacheRenderState X, Y, CurrentLayer
             Next
         Next
-    End If
+    'End If
     Exit Sub
     
 ' Error handler
@@ -644,7 +644,7 @@ Public Sub MapEditorClearAttributes()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    If AlertMsg("Are you sure you wish to clear all the attributes on this map", False, False) = YES Then
+    'If AlertMsg("Are you sure you wish to clear all the attributes on this map", False, False) = YES Then
         For X = 0 To Map.MaxX
             For Y = 0 To Map.MaxY
                 With Map.Tile(X, Y)
@@ -655,7 +655,7 @@ Public Sub MapEditorClearAttributes()
                 End With
             Next
         Next
-    End If
+    'End If
     Exit Sub
     
 ' Error handler
@@ -670,13 +670,13 @@ Public Sub MapEditorFillAttributes(ByVal Button As Integer)
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
-    If AlertMsg("Are you sure you wish to fill this attribute on the entire map", False, False) = YES Then
+    'If AlertMsg("Are you sure you wish to fill this attribute on the entire map", False, False) = YES Then
         For X = 0 To Map.MaxX
             For Y = 0 To Map.MaxY
                 Call MapEditorSetAttributes(Button, X, Y)
             Next
         Next
-    End If
+    'End If
     Exit Sub
     
 ' Error handler
@@ -925,14 +925,14 @@ Public Sub ItemEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_ITEMS
-        If Item_Changed(I) And I <> EditorIndex Then
+        If Item_Changed(I) Then
             Call SendSaveItem(I)
         End If
     Next
     
     'Unload frmEditor_Item
     'Editor = 0
-    'ClearChanged_Item
+    ClearChanged_Item
     Exit Sub
     
 ' Error handler
@@ -1061,14 +1061,14 @@ Public Sub AnimationEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_ANIMATIONS
-        If Animation_Changed(I) And I <> EditorIndex Then
+        If Animation_Changed(I) Then
             Call SendSaveAnimation(I)
         End If
     Next
     
     'Unload frmEditor_Animation
     'Editor = 0
-    'ClearChanged_Animation
+    ClearChanged_Animation
     Exit Sub
     
 ' Error handler
@@ -1157,7 +1157,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtEXP.text = NPC(EditorIndex).exp
+        .txtExp.text = NPC(EditorIndex).exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -1250,14 +1250,14 @@ Public Sub NPCEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_NPCS
-        If NPC_Changed(I) And I <> EditorIndex Then
+        If NPC_Changed(I) Then
             Call SendSaveNPC(I)
         End If
     Next
     
     'Unload frmEditor_NPC
     'Editor = 0
-    'ClearChanged_NPC
+    ClearChanged_NPC
     Exit Sub
     
 ' Error handler
@@ -1382,14 +1382,14 @@ Public Sub ResourceEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_RESOURCES
-        If Resource_Changed(I) And I <> EditorIndex Then
+        If Resource_Changed(I) Then
             Call SendSaveResource(I)
         End If
     Next
     
     'Unload frmEditor_Resource
     'Editor = 0
-    'ClearChanged_Resource
+    ClearChanged_Resource
     Exit Sub
     
 ' Error handler
@@ -1505,14 +1505,14 @@ Public Sub ShopEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_SHOPS
-        If Shop_Changed(I) And I <> EditorIndex Then
+        If Shop_Changed(I) Then
             Call SendSaveShop(I)
         End If
     Next
     
     'Unload frmEditor_Shop
     'Editor = 0
-    'ClearChanged_Shop
+    ClearChanged_Shop
     Exit Sub
     
 ' Error handler
@@ -1652,14 +1652,14 @@ Public Sub SpellEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
     For I = 1 To MAX_SPELLS
-        If Spell_Changed(I) And I <> EditorIndex Then
+        If Spell_Changed(I) Then
             Call SendSaveSpell(I)
         End If
     Next
     
     'Unload frmEditor_Spell
     'Editor = 0
-    'ClearChanged_Spell
+    ClearChanged_Spell
     Exit Sub
     
 ' Error handler
@@ -1927,14 +1927,14 @@ Public Sub BanEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_BANS
-        If Ban_Changed(I) And I <> EditorIndex Then
+        If Ban_Changed(I) Then
             Call SendSaveBan(I)
         End If
     Next
     
     'Unload frmEditor_Ban
     'Editor = 0
-    'ClearChanged_Ban
+    ClearChanged_Ban
     Exit Sub
     
 ' Error handler
@@ -2014,14 +2014,14 @@ Public Sub TitleEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_TITLES
-        If Title_Changed(I) And I <> EditorIndex Then
+        If Title_Changed(I) Then
             Call SendSaveTitle(I)
         End If
     Next
     
     'Unload frmEditor_Title
     'Editor = 0
-    'ClearChanged_Title
+    ClearChanged_Title
     Exit Sub
     
 ' Error handler
@@ -2072,14 +2072,14 @@ Public Sub MoralEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_MORALS
-        If Moral_Changed(I) And I <> EditorIndex Then
+        If Moral_Changed(I) Then
             Call SendSaveMoral(I)
         End If
     Next
     
-    'Editor = 0
-    'ClearChanged_Moral
     'Unload frmEditor_Moral
+    'Editor = 0
+    ClearChanged_Moral
     Exit Sub
     
 ' Error handler
@@ -2152,14 +2152,14 @@ Public Sub ClassEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_CLASSES
-        If Class_Changed(I) And I <> EditorIndex Then
+        If Class_Changed(I) Then
             Call SendSaveClass(I)
         End If
     Next
     
-    'Editor = 0
-    'ClearChanged_Class
     'Unload frmEditor_Class
+    'Editor = 0
+    ClearChanged_Class
     Exit Sub
     
 ' Error handler
@@ -2396,14 +2396,14 @@ Public Sub EmoticonEditorSave()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     For I = 1 To MAX_EMOTICONS
-        If Emoticon_Changed(I) And I <> EditorIndex Then
+        If Emoticon_Changed(I) Then
             Call SendSaveEmoticon(I)
         End If
     Next
     
-    'Editor = 0
-    'ClearChanged_Emoticon
     'Unload frmEditor_Emoticon
+    'Editor = 0
+    ClearChanged_Emoticon
     Exit Sub
     
 ' Error handler

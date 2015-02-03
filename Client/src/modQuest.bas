@@ -880,7 +880,7 @@ Public Sub HandleQuestEditor()
     If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
 
     With frmEditor_Quest
-        Editor = EDITOR_QUESTS
+        Editor = EDITOR_QUEST
         .lstIndex.Clear
 
         ' Add the names
@@ -1008,14 +1008,14 @@ Public Sub QuestEditorSave()
 
     For I = 1 To MAX_QUESTS
 
-        If Quest_Changed(I) And I <> EditorIndex Then
+        If Quest_Changed(I) Then
             Call SendSaveQuest(I)
         End If
 
     Next
     
-    Unload frmEditor_Quest
-    Editor = 0
+    'Unload frmEditor_Quest
+    'Editor = 0
     ClearChanged_Quest
 
     Exit Sub

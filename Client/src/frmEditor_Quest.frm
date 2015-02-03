@@ -11,216 +11,35 @@ Begin VB.Form frmEditor_Quest
    ScaleHeight     =   10170
    ScaleWidth      =   18975
    StartUpPosition =   2  'CenterScreen
-   Begin VB.Frame fmeShowMsg 
-      Caption         =   "Show player a message"
-      Height          =   3015
-      Left            =   9360
-      TabIndex        =   118
-      Top             =   5280
-      Visible         =   0   'False
-      Width           =   4455
-      Begin VB.CheckBox chkComplete 
-         Caption         =   "This is the response if the quest cannot be retaken."
-         Height          =   255
-         Left            =   120
-         TabIndex        =   146
-         ToolTipText     =   "Check this box if this message will be shown to the player when he/she talks to this NPC after completing the mission."
-         Top             =   1800
-         Width           =   4215
-      End
-      Begin VB.ComboBox cmbColor 
-         Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":0000
-         Left            =   720
-         List            =   "frmEditor_Quest.frx":0002
-         Style           =   2  'Dropdown List
-         TabIndex        =   84
-         Top             =   2040
-         Width           =   3615
-      End
-      Begin VB.CommandButton btnMsgCancel 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Cancel"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   2280
-         Style           =   1  'Graphical
-         TabIndex        =   88
-         Top             =   2400
-         Width           =   2055
-      End
-      Begin VB.CommandButton btnMsgAccept 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Accept"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   120
-         Style           =   1  'Graphical
-         TabIndex        =   87
-         Top             =   2400
-         Width           =   2055
-      End
-      Begin VB.CheckBox chkRes 
-         Caption         =   "This is the response if the last task is not done."
-         Height          =   255
-         Left            =   120
-         TabIndex        =   79
-         ToolTipText     =   "Check this box if this message will be shown to the player if the first task before this message isn't completed yet."
-         Top             =   1560
-         Width           =   4215
-      End
-      Begin VB.CheckBox chkStart 
-         Caption         =   "This is just a placeholder"
-         Enabled         =   0   'False
-         Height          =   255
-         Left            =   120
-         TabIndex        =   89
-         ToolTipText     =   "Check this box if this message will be the first message the player sees before starting the quest."
-         Top             =   2400
-         Width           =   4215
-      End
-      Begin VB.TextBox txtMsg 
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   1305
-         Left            =   120
-         MaxLength       =   300
-         MultiLine       =   -1  'True
-         TabIndex        =   69
-         ToolTipText     =   "Enter a message that will be shown to the player."
-         Top             =   240
-         Width           =   4215
-      End
-      Begin VB.Label Label9 
-         BackStyle       =   0  'Transparent
-         Caption         =   "Color:"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   128
-         Top             =   2085
-         Width           =   495
-      End
+   Begin VB.CommandButton cmdDelete 
+      Caption         =   "Delete"
+      Height          =   375
+      Left            =   5040
+      TabIndex        =   147
+      Top             =   8280
+      Width           =   1455
    End
-   Begin VB.Frame fmeSound 
-      Caption         =   "Play a sound."
-      Height          =   2175
-      Left            =   9000
-      TabIndex        =   137
-      Top             =   7200
-      Visible         =   0   'False
-      Width           =   3975
-      Begin VB.CommandButton btnSoundAccept 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Accept"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   120
-         Style           =   1  'Graphical
-         TabIndex        =   144
-         Top             =   1680
-         Width           =   1695
-      End
-      Begin VB.CommandButton btnSoundCancel 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Cancel"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   2160
-         Style           =   1  'Graphical
-         TabIndex        =   143
-         Top             =   1680
-         Width           =   1695
-      End
-      Begin VB.OptionButton opEveryone 
-         Caption         =   "Play for everyone in the game."
-         Height          =   255
-         Left            =   120
-         TabIndex        =   142
-         ToolTipText     =   "This will play the sound for all players in the game."
-         Top             =   1320
-         Width           =   3735
-      End
-      Begin VB.OptionButton opMap 
-         Caption         =   "Play for entire map that the player is on."
-         Height          =   255
-         Left            =   120
-         TabIndex        =   141
-         ToolTipText     =   "This will play the sound for all players on the same map as the player triggering this action."
-         Top             =   1080
-         Width           =   3735
-      End
-      Begin VB.OptionButton opPlayer 
-         Caption         =   "Play for player."
-         Height          =   255
-         Left            =   120
-         TabIndex        =   140
-         ToolTipText     =   "This will play the sound for the player only."
-         Top             =   840
-         Width           =   3735
-      End
-      Begin VB.ComboBox cmbSound 
-         Height          =   315
-         Left            =   720
-         Style           =   2  'Dropdown List
-         TabIndex        =   139
-         Top             =   360
-         Width           =   3135
-      End
-      Begin VB.Label Label8 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Sound:"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   138
-         Top             =   400
-         Width           =   510
-      End
+   Begin VB.CommandButton cmdClose 
+      Caption         =   "Close"
+      Height          =   375
+      Left            =   6720
+      TabIndex        =   146
+      Top             =   8280
+      Width           =   1455
+   End
+   Begin VB.CommandButton cmdSave 
+      Caption         =   "Save"
+      Height          =   375
+      Left            =   3360
+      TabIndex        =   145
+      Top             =   8280
+      Width           =   1455
    End
    Begin VB.Frame fmeVar 
       Caption         =   "Get/Set a game variable."
       Height          =   3375
       Left            =   15720
-      TabIndex        =   135
+      TabIndex        =   132
       Top             =   6360
       Visible         =   0   'False
       Width           =   5175
@@ -228,8 +47,8 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Move on to next task automatically."
          Height          =   255
          Left            =   120
-         TabIndex        =   91
-         ToolTipText     =   $"frmEditor_Quest.frx":0004
+         TabIndex        =   88
+         ToolTipText     =   $"frmEditor_Quest.frx":0000
          Top             =   2520
          Visible         =   0   'False
          Width           =   3375
@@ -238,7 +57,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   285
          Left            =   120
          MaxLength       =   60
-         TabIndex        =   86
+         TabIndex        =   83
          ToolTipText     =   "This text will be displayed in the mission request and mission log to show the player what needs done."
          Top             =   2160
          Width           =   4935
@@ -277,7 +96,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   495
          Left            =   120
          Style           =   1  'Graphical
-         TabIndex        =   93
+         TabIndex        =   90
          Top             =   2760
          Width           =   2175
       End
@@ -296,7 +115,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   495
          Left            =   2880
          Style           =   1  'Graphical
-         TabIndex        =   94
+         TabIndex        =   91
          Top             =   2760
          Width           =   2175
       End
@@ -331,181 +150,16 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Value: 0"
          Height          =   195
          Left            =   120
-         TabIndex        =   136
+         TabIndex        =   133
          Top             =   1500
          Width           =   585
-      End
-   End
-   Begin VB.Frame fmeCLI 
-      Caption         =   "Add a new NPC/Event the player will need to meet with"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   4575
-      Left            =   3480
-      TabIndex        =   101
-      Top             =   4920
-      Visible         =   0   'False
-      Width           =   5055
-      Begin VB.ComboBox cmbNPC 
-         Height          =   315
-         Left            =   120
-         Style           =   2  'Dropdown List
-         TabIndex        =   25
-         Top             =   1440
-         Width           =   4815
-      End
-      Begin VB.HScrollBar scrlKillAmnt 
-         Height          =   255
-         LargeChange     =   10
-         Left            =   120
-         Min             =   1
-         TabIndex        =   59
-         Top             =   3600
-         Value           =   1
-         Width           =   4815
-      End
-      Begin VB.CommandButton btnCLICancel 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Cancel"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   2760
-         Style           =   1  'Graphical
-         TabIndex        =   67
-         Top             =   3960
-         Width           =   2175
-      End
-      Begin VB.OptionButton opEvent 
-         Caption         =   "Interact using Events."
-         Height          =   255
-         Left            =   240
-         TabIndex        =   34
-         ToolTipText     =   "Selecting this option removes the need for an NPC to start/continue the mission."
-         Top             =   2160
-         Width           =   4455
-      End
-      Begin VB.OptionButton opNPC 
-         Caption         =   "NPC's"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   30
-         Top             =   1920
-         Value           =   -1  'True
-         Width           =   4455
-      End
-      Begin VB.CommandButton btnAddCLI 
-         BackColor       =   &H00FFFFFF&
-         Caption         =   "Accept"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   700
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   495
-         Left            =   120
-         Style           =   1  'Graphical
-         TabIndex        =   66
-         Top             =   3960
-         Width           =   2175
-      End
-      Begin VB.CheckBox chkReset 
-         Caption         =   "Reset pre-existing kill amounts."
-         Height          =   255
-         Left            =   240
-         TabIndex        =   44
-         ToolTipText     =   "This option resets the kill count for the selected NPC('s) when the task begins."
-         Top             =   2760
-         Width           =   4695
-      End
-      Begin VB.OptionButton opThis 
-         Caption         =   "Just this NPC."
-         Height          =   255
-         Left            =   480
-         TabIndex        =   50
-         ToolTipText     =   "Reset the kill count value for this specific NPC."
-         Top             =   3000
-         Visible         =   0   'False
-         Width           =   1335
-      End
-      Begin VB.OptionButton opAll 
-         Caption         =   "All NPC's"
-         Height          =   255
-         Left            =   480
-         TabIndex        =   53
-         ToolTipText     =   "Reset the kill count values for all NPC's.  (Only applys to this quest.)"
-         Top             =   3240
-         Visible         =   0   'False
-         Width           =   1335
-      End
-      Begin VB.CheckBox chkPass 
-         Caption         =   "Move on to next task automatically."
-         Height          =   255
-         Left            =   240
-         TabIndex        =   40
-         ToolTipText     =   $"frmEditor_Quest.frx":0094
-         Top             =   2520
-         Width           =   4695
-      End
-      Begin VB.Label Label6 
-         BackStyle       =   0  'Transparent
-         Caption         =   $"frmEditor_Quest.frx":0124
-         Height          =   855
-         Left            =   120
-         TabIndex        =   134
-         Top             =   480
-         Width           =   4815
-      End
-      Begin VB.Label lblKillAmnt 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Amount: 1"
-         BeginProperty Font 
-            Name            =   "Times New Roman"
-            Size            =   9.75
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   225
-         Left            =   2100
-         TabIndex        =   122
-         Top             =   3360
-         Width           =   840
-      End
-      Begin VB.Line Line3 
-         X1              =   120
-         X2              =   4920
-         Y1              =   240
-         Y2              =   240
       End
    End
    Begin VB.Frame fmeWarp 
       Caption         =   "Select map and location to warp the player to"
       Height          =   3015
       Left            =   15000
-      TabIndex        =   129
+      TabIndex        =   126
       Top             =   120
       Visible         =   0   'False
       Width           =   3735
@@ -580,7 +234,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Y: 0"
          Height          =   255
          Left            =   120
-         TabIndex        =   132
+         TabIndex        =   129
          Top             =   1800
          Width           =   3495
       End
@@ -588,7 +242,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "X: 0"
          Height          =   255
          Left            =   120
-         TabIndex        =   131
+         TabIndex        =   128
          Top             =   1200
          Width           =   3495
       End
@@ -597,7 +251,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Map: 1"
          Height          =   255
          Left            =   120
-         TabIndex        =   130
+         TabIndex        =   127
          Top             =   360
          Width           =   3495
       End
@@ -606,7 +260,7 @@ Begin VB.Form frmEditor_Quest
       Caption         =   "Select a skill and skill level for the player to obtain."
       Height          =   1935
       Left            =   15720
-      TabIndex        =   125
+      TabIndex        =   122
       Top             =   480
       Visible         =   0   'False
       Width           =   3855
@@ -681,7 +335,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Skill Level:"
          Height          =   195
          Left            =   240
-         TabIndex        =   127
+         TabIndex        =   124
          Top             =   840
          Width           =   765
       End
@@ -691,7 +345,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Skill:"
          Height          =   195
          Left            =   360
-         TabIndex        =   126
+         TabIndex        =   123
          Top             =   360
          Width           =   330
       End
@@ -700,7 +354,7 @@ Begin VB.Form frmEditor_Quest
       Caption         =   "Adjust Player Stats"
       Height          =   3855
       Left            =   15360
-      TabIndex        =   120
+      TabIndex        =   117
       Top             =   5520
       Visible         =   0   'False
       Width           =   4575
@@ -766,7 +420,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   375
          Left            =   3000
          Style           =   1  'Graphical
-         TabIndex        =   92
+         TabIndex        =   89
          Top             =   3360
          Width           =   1455
       End
@@ -785,7 +439,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   375
          Left            =   120
          Style           =   1  'Graphical
-         TabIndex        =   90
+         TabIndex        =   87
          Top             =   3360
          Width           =   2775
       End
@@ -803,7 +457,7 @@ Begin VB.Form frmEditor_Quest
          LargeChange     =   25
          Left            =   120
          Min             =   -32767
-         TabIndex        =   85
+         TabIndex        =   82
          Top             =   3000
          Width           =   4335
       End
@@ -831,7 +485,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Amount to modify: 0"
          Height          =   255
          Left            =   240
-         TabIndex        =   121
+         TabIndex        =   118
          Top             =   2640
          Width           =   4095
       End
@@ -840,7 +494,7 @@ Begin VB.Form frmEditor_Quest
       Caption         =   "Select Item To Give"
       Height          =   2415
       Left            =   15000
-      TabIndex        =   116
+      TabIndex        =   113
       Top             =   3240
       Visible         =   0   'False
       Width           =   3615
@@ -857,7 +511,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   255
          Left            =   120
          TabIndex        =   38
-         ToolTipText     =   $"frmEditor_Quest.frx":0216
+         ToolTipText     =   $"frmEditor_Quest.frx":0090
          Top             =   1560
          Visible         =   0   'False
          Width           =   3375
@@ -933,7 +587,7 @@ Begin VB.Form frmEditor_Quest
          EndProperty
          Height          =   255
          Left            =   120
-         TabIndex        =   117
+         TabIndex        =   114
          Top             =   720
          Width           =   3360
       End
@@ -942,7 +596,7 @@ Begin VB.Form frmEditor_Quest
       Caption         =   "Move List Items"
       Height          =   2415
       Left            =   1560
-      TabIndex        =   115
+      TabIndex        =   112
       Top             =   4320
       Visible         =   0   'False
       Width           =   1815
@@ -1016,75 +670,18 @@ Begin VB.Form frmEditor_Quest
          Y2              =   1320
       End
    End
-   Begin VB.CommandButton btnDelete 
-      BackColor       =   &H00FFFFFF&
-      Caption         =   "Delete"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   12
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   375
-      Left            =   9360
-      Style           =   1  'Graphical
-      TabIndex        =   82
-      Top             =   8280
-      Width           =   2535
-   End
-   Begin VB.CommandButton btnCancel 
-      BackColor       =   &H00FFFFFF&
-      Caption         =   "Cancel"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   12
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   375
-      Left            =   12120
-      Style           =   1  'Graphical
-      TabIndex        =   83
-      Top             =   8280
-      Width           =   2535
-   End
-   Begin VB.CommandButton btnSave 
-      BackColor       =   &H00FFFFFF&
-      Caption         =   "Save"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   12
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   375
-      Left            =   3360
-      Style           =   1  'Graphical
-      TabIndex        =   81
-      Top             =   8280
-      Width           =   5775
-   End
    Begin VB.Frame fraNPC 
       Caption         =   "Mission List"
       Height          =   8775
       Left            =   0
-      TabIndex        =   95
+      TabIndex        =   92
       Top             =   0
       Width           =   3135
       Begin VB.CommandButton cmdChangeData 
          Caption         =   "Change Data Size"
          Height          =   375
          Left            =   120
-         TabIndex        =   147
+         TabIndex        =   144
          Top             =   8280
          Width           =   2895
       End
@@ -1110,7 +707,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   270
          Left            =   120
          TabIndex        =   0
-         Top             =   240
+         Top             =   300
          Width           =   1455
       End
       Begin VB.CommandButton cmdPaste 
@@ -1128,7 +725,7 @@ Begin VB.Form frmEditor_Quest
       Caption         =   "Mission Details"
       Height          =   2415
       Left            =   3240
-      TabIndex        =   96
+      TabIndex        =   93
       Top             =   0
       Width           =   4455
       Begin VB.TextBox txtDesc 
@@ -1175,7 +772,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Description:"
          Height          =   195
          Left            =   120
-         TabIndex        =   98
+         TabIndex        =   95
          Top             =   720
          UseMnemonic     =   0   'False
          Width           =   840
@@ -1186,7 +783,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Name:"
          Height          =   195
          Left            =   120
-         TabIndex        =   97
+         TabIndex        =   94
          Top             =   360
          UseMnemonic     =   0   'False
          Width           =   465
@@ -1196,7 +793,7 @@ Begin VB.Form frmEditor_Quest
       Caption         =   "Editing Features"
       Height          =   2415
       Left            =   7800
-      TabIndex        =   99
+      TabIndex        =   96
       Top             =   0
       Width           =   6975
       Begin VB.CheckBox chkUnOrder 
@@ -1256,7 +853,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Mission Rank:"
          Height          =   255
          Left            =   120
-         TabIndex        =   133
+         TabIndex        =   130
          Top             =   1680
          Width           =   1095
       End
@@ -1277,7 +874,7 @@ Begin VB.Form frmEditor_Quest
          ForeColor       =   &H00808000&
          Height          =   315
          Left            =   120
-         TabIndex        =   114
+         TabIndex        =   111
          Top             =   360
          Width           =   6675
       End
@@ -1295,7 +892,7 @@ Begin VB.Form frmEditor_Quest
       EndProperty
       Height          =   4335
       Left            =   6360
-      TabIndex        =   102
+      TabIndex        =   99
       Top             =   2640
       Visible         =   0   'False
       Width           =   8295
@@ -1305,7 +902,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   375
          Left            =   6120
          Style           =   1  'Graphical
-         TabIndex        =   145
+         TabIndex        =   142
          ToolTipText     =   "Set the value for a variable or a switch."
          Top             =   1440
          Width           =   2055
@@ -1481,7 +1078,7 @@ Begin VB.Form frmEditor_Quest
          EndProperty
          Height          =   375
          Left            =   4080
-         TabIndex        =   124
+         TabIndex        =   121
          Top             =   480
          Width           =   2775
       End
@@ -1500,7 +1097,7 @@ Begin VB.Form frmEditor_Quest
          EndProperty
          Height          =   375
          Left            =   480
-         TabIndex        =   123
+         TabIndex        =   120
          Top             =   480
          Width           =   2775
       End
@@ -1524,7 +1121,7 @@ Begin VB.Form frmEditor_Quest
       EndProperty
       Height          =   3495
       Left            =   6480
-      TabIndex        =   103
+      TabIndex        =   100
       Top             =   4200
       Visible         =   0   'False
       Width           =   8295
@@ -1584,9 +1181,9 @@ Begin VB.Form frmEditor_Quest
       End
       Begin VB.ComboBox cmbClassReq 
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":02A6
+         ItemData        =   "frmEditor_Quest.frx":0120
          Left            =   6360
-         List            =   "frmEditor_Quest.frx":02A8
+         List            =   "frmEditor_Quest.frx":0122
          Style           =   2  'Dropdown List
          TabIndex        =   47
          Top             =   1200
@@ -1669,7 +1266,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Skill Level: 0"
          Height          =   195
          Left            =   3960
-         TabIndex        =   119
+         TabIndex        =   116
          Top             =   600
          Width           =   900
       End
@@ -1680,7 +1277,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   195
          Index           =   5
          Left            =   5400
-         TabIndex        =   113
+         TabIndex        =   110
          Top             =   2160
          UseMnemonic     =   0   'False
          Width           =   405
@@ -1692,7 +1289,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   195
          Index           =   4
          Left            =   2880
-         TabIndex        =   112
+         TabIndex        =   109
          Top             =   2160
          UseMnemonic     =   0   'False
          Width           =   465
@@ -1704,7 +1301,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   195
          Index           =   3
          Left            =   240
-         TabIndex        =   111
+         TabIndex        =   108
          Top             =   2160
          UseMnemonic     =   0   'False
          Width           =   360
@@ -1716,7 +1313,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   195
          Index           =   2
          Left            =   5400
-         TabIndex        =   110
+         TabIndex        =   107
          Top             =   1680
          UseMnemonic     =   0   'False
          Width           =   405
@@ -1728,7 +1325,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   195
          Index           =   1
          Left            =   2880
-         TabIndex        =   109
+         TabIndex        =   106
          Top             =   1680
          UseMnemonic     =   0   'False
          Width           =   375
@@ -1739,7 +1336,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Class:"
          Height          =   195
          Left            =   5400
-         TabIndex        =   108
+         TabIndex        =   105
          Top             =   1200
          Width           =   420
       End
@@ -1749,7 +1346,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Access: 0"
          Height          =   195
          Left            =   240
-         TabIndex        =   107
+         TabIndex        =   104
          Top             =   1200
          Width           =   705
       End
@@ -1759,7 +1356,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Gender:"
          Height          =   195
          Left            =   2880
-         TabIndex        =   106
+         TabIndex        =   103
          Top             =   1200
          Width           =   570
       End
@@ -1769,7 +1366,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Level: 0"
          Height          =   195
          Left            =   240
-         TabIndex        =   105
+         TabIndex        =   102
          Top             =   1680
          Width           =   570
       End
@@ -1779,7 +1376,7 @@ Begin VB.Form frmEditor_Quest
          Caption         =   "Skill:"
          Height          =   195
          Left            =   240
-         TabIndex        =   104
+         TabIndex        =   101
          Top             =   600
          Width           =   330
       End
@@ -1794,7 +1391,7 @@ Begin VB.Form frmEditor_Quest
       Caption         =   "Mission Editing"
       Height          =   5775
       Left            =   3240
-      TabIndex        =   100
+      TabIndex        =   97
       Top             =   2400
       Width           =   11535
       Begin VB.ListBox CLI 
@@ -1818,6 +1415,376 @@ Begin VB.Form frmEditor_Quest
          X2              =   3120
          Y1              =   600
          Y2              =   5520
+      End
+   End
+   Begin VB.Frame fmeCLI 
+      Caption         =   "Add a new NPC/Event the player will need to meet with"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   4575
+      Left            =   3480
+      TabIndex        =   98
+      Top             =   4920
+      Visible         =   0   'False
+      Width           =   5055
+      Begin VB.ComboBox cmbNPC 
+         Height          =   315
+         Left            =   120
+         Style           =   2  'Dropdown List
+         TabIndex        =   25
+         Top             =   1440
+         Width           =   4815
+      End
+      Begin VB.HScrollBar scrlKillAmnt 
+         Height          =   255
+         LargeChange     =   10
+         Left            =   120
+         Min             =   1
+         TabIndex        =   59
+         Top             =   3600
+         Value           =   1
+         Width           =   4815
+      End
+      Begin VB.CommandButton btnCLICancel 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Cancel"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   2760
+         Style           =   1  'Graphical
+         TabIndex        =   67
+         Top             =   3960
+         Width           =   2175
+      End
+      Begin VB.OptionButton opEvent 
+         Caption         =   "Interact using Events."
+         Height          =   255
+         Left            =   240
+         TabIndex        =   34
+         ToolTipText     =   "Selecting this option removes the need for an NPC to start/continue the mission."
+         Top             =   2160
+         Width           =   4455
+      End
+      Begin VB.OptionButton opNPC 
+         Caption         =   "NPC's"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   30
+         Top             =   1920
+         Value           =   -1  'True
+         Width           =   4455
+      End
+      Begin VB.CommandButton btnAddCLI 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Accept"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   120
+         Style           =   1  'Graphical
+         TabIndex        =   66
+         Top             =   3960
+         Width           =   2175
+      End
+      Begin VB.CheckBox chkReset 
+         Caption         =   "Reset pre-existing kill amounts."
+         Height          =   255
+         Left            =   240
+         TabIndex        =   44
+         ToolTipText     =   "This option resets the kill count for the selected NPC('s) when the task begins."
+         Top             =   2760
+         Width           =   4695
+      End
+      Begin VB.OptionButton opThis 
+         Caption         =   "Just this NPC."
+         Height          =   255
+         Left            =   480
+         TabIndex        =   50
+         ToolTipText     =   "Reset the kill count value for this specific NPC."
+         Top             =   3000
+         Visible         =   0   'False
+         Width           =   1335
+      End
+      Begin VB.OptionButton opAll 
+         Caption         =   "All NPC's"
+         Height          =   255
+         Left            =   480
+         TabIndex        =   53
+         ToolTipText     =   "Reset the kill count values for all NPC's.  (Only applys to this quest.)"
+         Top             =   3240
+         Visible         =   0   'False
+         Width           =   1335
+      End
+      Begin VB.CheckBox chkPass 
+         Caption         =   "Move on to next task automatically."
+         Height          =   255
+         Left            =   240
+         TabIndex        =   40
+         ToolTipText     =   $"frmEditor_Quest.frx":0124
+         Top             =   2520
+         Width           =   4695
+      End
+      Begin VB.Label Label6 
+         BackStyle       =   0  'Transparent
+         Caption         =   $"frmEditor_Quest.frx":01B4
+         Height          =   855
+         Left            =   120
+         TabIndex        =   131
+         Top             =   480
+         Width           =   4815
+      End
+      Begin VB.Label lblKillAmnt 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Amount: 1"
+         BeginProperty Font 
+            Name            =   "Times New Roman"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   225
+         Left            =   2100
+         TabIndex        =   119
+         Top             =   3360
+         Width           =   840
+      End
+      Begin VB.Line Line3 
+         X1              =   120
+         X2              =   4920
+         Y1              =   240
+         Y2              =   240
+      End
+   End
+   Begin VB.Frame fmeShowMsg 
+      Caption         =   "Show player a message"
+      Height          =   3015
+      Left            =   9360
+      TabIndex        =   115
+      Top             =   5280
+      Visible         =   0   'False
+      Width           =   4455
+      Begin VB.CheckBox chkComplete 
+         Caption         =   "This is the response if the quest cannot be retaken."
+         Height          =   255
+         Left            =   120
+         TabIndex        =   143
+         ToolTipText     =   "Check this box if this message will be shown to the player when he/she talks to this NPC after completing the mission."
+         Top             =   1800
+         Width           =   4215
+      End
+      Begin VB.ComboBox cmbColor 
+         Height          =   315
+         ItemData        =   "frmEditor_Quest.frx":02A6
+         Left            =   720
+         List            =   "frmEditor_Quest.frx":02A8
+         Style           =   2  'Dropdown List
+         TabIndex        =   81
+         Top             =   2040
+         Width           =   3615
+      End
+      Begin VB.CommandButton btnMsgCancel 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Cancel"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   2280
+         Style           =   1  'Graphical
+         TabIndex        =   85
+         Top             =   2400
+         Width           =   2055
+      End
+      Begin VB.CommandButton btnMsgAccept 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Accept"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   495
+         Left            =   120
+         Style           =   1  'Graphical
+         TabIndex        =   84
+         Top             =   2400
+         Width           =   2055
+      End
+      Begin VB.CheckBox chkRes 
+         Caption         =   "This is the response if the last task is not done."
+         Height          =   255
+         Left            =   120
+         TabIndex        =   79
+         ToolTipText     =   "Check this box if this message will be shown to the player if the first task before this message isn't completed yet."
+         Top             =   1560
+         Width           =   4215
+      End
+      Begin VB.CheckBox chkStart 
+         Caption         =   "This is just a placeholder"
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   120
+         TabIndex        =   86
+         ToolTipText     =   "Check this box if this message will be the first message the player sees before starting the quest."
+         Top             =   2400
+         Width           =   4215
+      End
+      Begin VB.TextBox txtMsg 
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   1305
+         Left            =   120
+         MaxLength       =   300
+         MultiLine       =   -1  'True
+         TabIndex        =   69
+         ToolTipText     =   "Enter a message that will be shown to the player."
+         Top             =   240
+         Width           =   4215
+      End
+      Begin VB.Label Label9 
+         BackStyle       =   0  'Transparent
+         Caption         =   "Color:"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   125
+         Top             =   2085
+         Width           =   495
+      End
+   End
+   Begin VB.Frame fmeSound 
+      Caption         =   "Play a sound."
+      Height          =   2175
+      Left            =   9000
+      TabIndex        =   134
+      Top             =   7200
+      Visible         =   0   'False
+      Width           =   3975
+      Begin VB.CommandButton btnSoundAccept 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Accept"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   120
+         Style           =   1  'Graphical
+         TabIndex        =   141
+         Top             =   1680
+         Width           =   1695
+      End
+      Begin VB.CommandButton btnSoundCancel 
+         BackColor       =   &H00FFFFFF&
+         Caption         =   "Cancel"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   2160
+         Style           =   1  'Graphical
+         TabIndex        =   140
+         Top             =   1680
+         Width           =   1695
+      End
+      Begin VB.OptionButton opEveryone 
+         Caption         =   "Play for everyone in the game."
+         Height          =   255
+         Left            =   120
+         TabIndex        =   139
+         ToolTipText     =   "This will play the sound for all players in the game."
+         Top             =   1320
+         Width           =   3735
+      End
+      Begin VB.OptionButton opMap 
+         Caption         =   "Play for entire map that the player is on."
+         Height          =   255
+         Left            =   120
+         TabIndex        =   138
+         ToolTipText     =   "This will play the sound for all players on the same map as the player triggering this action."
+         Top             =   1080
+         Width           =   3735
+      End
+      Begin VB.OptionButton opPlayer 
+         Caption         =   "Play for player."
+         Height          =   255
+         Left            =   120
+         TabIndex        =   137
+         ToolTipText     =   "This will play the sound for the player only."
+         Top             =   840
+         Width           =   3735
+      End
+      Begin VB.ComboBox cmbSound 
+         Height          =   315
+         Left            =   720
+         Style           =   2  'Dropdown List
+         TabIndex        =   136
+         Top             =   360
+         Width           =   3135
+      End
+      Begin VB.Label Label8 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Sound:"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   135
+         Top             =   400
+         Width           =   510
       End
    End
    Begin VB.Menu mnuCLI 
@@ -2204,28 +2171,6 @@ ErrorHandler:
 
 End Sub
 
-Private Sub btnCancel_Click()
-    
-    ' If debug mode then handle error
-    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
-
-    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
-    
-    Unload frmEditor_Quest
-
-    Exit Sub
-   
-    ' Error Handler
-    Exit Sub
-
-ErrorHandler:
-    HandleError "btnCancel_Click", "frmEditor_Quest", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
-    Err.Clear
-
-    Exit Sub
-    
-End Sub
-
 Private Sub btnCLICancel_Click()
     
     ' If debug mode then handle error
@@ -2278,37 +2223,6 @@ ErrorHandler:
 
     Exit Sub
 
-End Sub
-
-Private Sub btnDelete_Click()
-
-    Dim TmpIndex As Long
-    
-    ' If debug mode then handle error
-    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
-
-    If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
-
-    ClearQuest EditorIndex
-    
-    TmpIndex = lstIndex.ListIndex
-    lstIndex.RemoveItem EditorIndex - 1
-    lstIndex.AddItem EditorIndex & ": " & Trim$(Quest(EditorIndex).Name), EditorIndex - 1
-    lstIndex.ListIndex = TmpIndex
-
-    QuestEditorInit
-
-    Exit Sub
-   
-    ' Error Handler
-    Exit Sub
-
-ErrorHandler:
-    HandleError "btnDelete_Click", "frmEditor_Quest", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
-    Err.Clear
-
-    Exit Sub
-    
 End Sub
 
 Private Sub btnDeleteAction_Click()
@@ -2791,29 +2705,6 @@ ErrorHandler:
 
     Exit Sub
 
-End Sub
-
-Private Sub btnSave_Click()
-    
-    ' If debug mode then handle error
-    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
-
-    If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
-
-    EditorSave = True
-    Call QuestEditorSave
-
-    Exit Sub
-   
-    ' Error Handler
-    Exit Sub
-
-ErrorHandler:
-    HandleError "btnSave_Click", "frmEditor_Quest", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
-    Err.Clear
-
-    Exit Sub
-    
 End Sub
 
 Private Sub btnSkillLvl_Click()
@@ -3571,7 +3462,7 @@ Private Sub cmdChangeData_Click()
     
     If Res = MAX_QUESTS Then Exit Sub
     
-    Call SendChangeDataSize(Res, EDITOR_QUESTS)
+    Call SendChangeDataSize(Res, EDITOR_QUEST)
     
     Unload frmEditor_Quest
     MAX_QUESTS = Res
@@ -3582,6 +3473,21 @@ Private Sub cmdChangeData_Click()
 ' Error handler
 ErrorHandler:
     HandleError "cmdChangeDataSize_Click", "frmEditor_Quest", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub cmdClose_Click()
+    If EditorIndex < 1 Or EditorIndex > MAX_RESOURCES Then Exit Sub
+    
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    Unload frmEditor_Quest
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "cmdClose_Click", "frmEditor_Quest", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -3605,6 +3511,35 @@ ErrorHandler:
     
 End Sub
 
+Private Sub cmdDelete_Click()
+    Dim TmpIndex As Long
+    
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
+
+    ClearQuest EditorIndex
+    
+    TmpIndex = lstIndex.ListIndex
+    lstIndex.RemoveItem EditorIndex - 1
+    lstIndex.AddItem EditorIndex & ": " & Trim$(Quest(EditorIndex).Name), EditorIndex - 1
+    lstIndex.ListIndex = TmpIndex
+
+    QuestEditorInit
+
+    Exit Sub
+   
+    ' Error Handler
+    Exit Sub
+
+ErrorHandler:
+    HandleError "cmdDelete_Click", "frmEditor_Quest", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+
+    Exit Sub
+End Sub
+
 Private Sub cmdPaste_Click()
     
     ' If debug mode then handle error
@@ -3626,6 +3561,25 @@ ErrorHandler:
 
     Exit Sub
     
+End Sub
+
+Private Sub cmdSave_Click()
+    ' If debug mode then handle error
+    If Options.Debug = 1 And App.LogMode = 1 Then On Error GoTo ErrorHandler
+
+    If EditorIndex < 1 Or EditorIndex > MAX_QUESTS Then Exit Sub
+
+    EditorSave = True
+    Call QuestEditorSave
+   
+    ' Error Handler
+    Exit Sub
+
+ErrorHandler:
+    HandleError "cmdSave_Click", "frmEditor_Quest", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
+    Err.Clear
+
+    Exit Sub
 End Sub
 
 Private Sub cmdSetVariable_Click()
@@ -3842,7 +3796,7 @@ Private Sub Form_Unload(Cancel As Integer)
         EditorSave = False
     End If
     
-    frmAdmin.chkEditor(EDITOR_QUESTS).Value = False
+    frmAdmin.chkEditor(EDITOR_QUEST).Value = False
     BringWindowToTop (frmAdmin.hWnd)
     Exit Sub
    

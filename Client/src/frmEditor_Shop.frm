@@ -242,10 +242,10 @@ Begin VB.Form frmEditor_Shop
    Begin VB.CommandButton cmdDelete 
       Caption         =   "Delete"
       Height          =   375
-      Left            =   5280
+      Left            =   5250
       TabIndex        =   15
       Top             =   4560
-      Width           =   1455
+      Width           =   1470
    End
    Begin VB.Frame Frame3 
       Caption         =   "Shop List"
@@ -292,15 +292,15 @@ Begin VB.Form frmEditor_Shop
       Left            =   3480
       TabIndex        =   14
       Top             =   4560
-      Width           =   1575
+      Width           =   1470
    End
    Begin VB.CommandButton cmdClose 
       Caption         =   "Close"
-      Height          =   420
-      Left            =   6960
+      Height          =   375
+      Left            =   7020
       TabIndex        =   16
       Top             =   4560
-      Width           =   1575
+      Width           =   1470
    End
 End
 Attribute VB_Name = "frmEditor_Shop"

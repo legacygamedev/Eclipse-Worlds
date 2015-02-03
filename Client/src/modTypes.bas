@@ -246,6 +246,7 @@ Private Type TempPlayerRec
     EmoticonNum As Long
     EmoticonTimer As Long
     EventTimer As Long
+    PvPTimer As Long
 End Type
 
 Private Type TileDataRec

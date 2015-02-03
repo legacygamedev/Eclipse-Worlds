@@ -401,9 +401,6 @@ Public Sub DestroyGame()
         LogoutGame
     End If
     
-    ' Destroy connection
-    Call DestroyTCP
-    
     ' Destroy DirectX
     DestroyDX8
     
@@ -924,6 +921,7 @@ Public Function AlertMsg(ByVal Message As String, Optional ByVal OkayOnly As Boo
     
     frmAlert.sMessage = Message
     frmAlert.OkayOnly = OkayOnly
+    On Error Resume Next
     frmAlert.Show vbModal
     AlertMsg = frmAlert.YesNo
 End Function
@@ -937,9 +935,11 @@ Public Sub ClearMenuPictures()
 End Sub
 
 Public Sub LogoutGame()
-    ' Send logout packet
-    Call SendLeaveGame
-
+    ' Destroy connection
+    Call DestroyTCP
+    
+    Call ClearData
+    
     Call Audio.StopMusic
     Call Audio.PlayMusic(Options.MenuMusic)
     Call Audio.StopMapSounds
@@ -971,8 +971,6 @@ Public Sub LogoutGame()
     MouseX = -1
     MouseY = -1
     Ping = -1
-    InvX = 0
-    InvY = 0
     EqX = 0
     EqY = 0
     BankX = 0

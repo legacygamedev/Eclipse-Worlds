@@ -3,7 +3,7 @@ Option Explicit
 
 ' API Declares
 Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
-Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hwnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lParam As Long) As Long
+Public Declare Function CallWindowProc Lib "user32" Alias "CallWindowProcA" (ByVal lpPrevWndFunc As Long, ByVal hWnd As Long, ByRef Msg() As Byte, ByVal wParam As Long, ByVal lParam As Long) As Long
 
 ' Sounds
 Public Const MAX_SOUNDS As Byte = 30
@@ -145,7 +145,7 @@ Public Const EDITOR_SHOP As Byte = 9
 Public Const EDITOR_SPELL As Byte = 10
 Public Const EDITOR_TITLE As Byte = 11
 Public Const EDITOR_EVENTS As Byte = 12
-Public Const EDITOR_QUESTS As Byte = 13
+Public Const EDITOR_QUEST As Byte = 13
 
 ' Dialogue box constants
 Public Const DIALOGUE_TYPE_NONE As Byte = 0

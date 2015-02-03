@@ -709,7 +709,7 @@ Private Sub scrlExp_Change()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    lblEXP.Caption = "Exp: " & scrlExp.Value
+    lblExp.Caption = "Exp: " & scrlExp.Value
     Resource(EditorIndex).exp = scrlExp.Value
     Exit Sub
     

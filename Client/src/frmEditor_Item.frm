@@ -1502,6 +1502,7 @@ Private Sub chkIndestructable_Click()
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     Item(EditorIndex).Indestructable = chkIndestructable.Value
+    
     Exit Sub
     
 ' Error handler

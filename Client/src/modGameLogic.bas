@@ -53,7 +53,7 @@ Public Sub GameLoop()
                 If Audio.IsMuted Then Audio.UpdateVolume
             End If
          
-            If GetForegroundWindow() = frmMain.hwnd Or GetForegroundWindow() = frmEditor_Events.hwnd Then
+            If GetForegroundWindow() = frmMain.hWnd Or GetForegroundWindow() = frmEditor_Events.hWnd Then
                 Call CheckInputKeys ' Check which keys were pressed
             End If
             
@@ -80,7 +80,7 @@ Public Sub GameLoop()
                 End If
             End If
             
-            If CanMoveNow And GetForegroundWindow() = frmMain.hwnd Then
+            If CanMoveNow And GetForegroundWindow() = frmMain.hWnd Then
                 Call CheckMovement ' Check if player is trying to move
                 Call CheckAttack ' Check to see if player is trying to attack
             End If
@@ -258,9 +258,9 @@ Sub ProcessPlayerMovement(ByVal Index As Long)
     End Select
 
     ' Diagonal...
-    If GetPlayerDir(Index) > DIR_RIGHT Then
-        MovementSpeed = MovementSpeed / 1.25
-    End If
+    'If GetPlayerDir(Index) > DIR_RIGHT Then
+    '    MovementSpeed = MovementSpeed / 1.25
+    'End If
 
   Select Case GetPlayerDir(Index)
         Case DIR_UP
@@ -307,12 +307,10 @@ Sub ProcessPlayerMovement(ByVal Index As Long)
     '  Check if completed walking over to the next tile
     If TempPlayer(Index).Moving > 0 Then
         If GetPlayerDir(Index) = DIR_RIGHT Or GetPlayerDir(Index) = DIR_DOWN Or GetPlayerDir(Index) = DIR_DOWNRIGHT Then
-            If (TempPlayer(Index).xOffset = 0) And (TempPlayer(Index).yOffset = 0) Then
+            If (TempPlayer(Index).xOffset >= 0) And (TempPlayer(Index).yOffset >= 0) Then
                 TempPlayer(Index).Moving = 0
                 
                 If TempPlayer(Index).Step = 1 Then
-                    TempPlayer(Index).Step = 2
-                ElseIf TempPlayer(Index).Step = 2 Then
                     TempPlayer(Index).Step = 3
                 Else
                     TempPlayer(Index).Step = 1
@@ -320,12 +318,10 @@ Sub ProcessPlayerMovement(ByVal Index As Long)
             End If
         Else
         
-            If (TempPlayer(Index).xOffset = 0) And (TempPlayer(Index).yOffset = 0) Then
+            If (TempPlayer(Index).xOffset <= 0) And (TempPlayer(Index).yOffset <= 0) Then
                 TempPlayer(Index).Moving = 0
         
                 If TempPlayer(Index).Step = 1 Then
-                    TempPlayer(Index).Step = 2
-                ElseIf TempPlayer(Index).Step = 2 Then
                     TempPlayer(Index).Step = 3
                 Else
                     TempPlayer(Index).Step = 1
@@ -355,9 +351,9 @@ Sub ProcessNPCMovement(ByVal MapNPCNum As Long)
     End Select
     
      ' Diagonal...
-    If MapNPC(MapNPCNum).Dir > DIR_RIGHT Then
-        MovementSpeed = MovementSpeed / 1.25
-    End If
+    'If MapNPC(MapNPCNum).Dir > DIR_RIGHT Then
+    '    MovementSpeed = MovementSpeed / 1.25
+    'End If
     
     Select Case MapNPC(MapNPCNum).Dir
         Case DIR_UP
@@ -404,12 +400,10 @@ Sub ProcessNPCMovement(ByVal MapNPCNum As Long)
     '  Check if completed walking over to the next tile
     If MapNPC(MapNPCNum).Moving > 0 Then
         If MapNPC(MapNPCNum).Dir = DIR_RIGHT Or MapNPC(MapNPCNum).Dir = DIR_DOWN Or MapNPC(MapNPCNum).Dir = DIR_DOWNRIGHT Then
-            If (MapNPC(MapNPCNum).xOffset = 0) And (MapNPC(MapNPCNum).yOffset = 0) Then
+            If (MapNPC(MapNPCNum).xOffset >= 0) And (MapNPC(MapNPCNum).yOffset >= 0) Then
                 MapNPC(MapNPCNum).Moving = 0
             
                 If MapNPC(MapNPCNum).Step = 1 Then
-                    MapNPC(MapNPCNum).Step = 2
-                ElseIf MapNPC(MapNPCNum).Step = 2 Then
                     MapNPC(MapNPCNum).Step = 3
                 Else
                     MapNPC(MapNPCNum).Step = 1
@@ -418,12 +412,10 @@ Sub ProcessNPCMovement(ByVal MapNPCNum As Long)
     
         Else
         
-            If (MapNPC(MapNPCNum).xOffset = 0) And (MapNPC(MapNPCNum).yOffset = 0) Then
+            If (MapNPC(MapNPCNum).xOffset <= 0) And (MapNPC(MapNPCNum).yOffset <= 0) Then
                 MapNPC(MapNPCNum).Moving = 0
         
                 If MapNPC(MapNPCNum).Step = 1 Then
-                    MapNPC(MapNPCNum).Step = 2
-                ElseIf MapNPC(MapNPCNum).Step = 2 Then
                     MapNPC(MapNPCNum).Step = 3
                 Else
                     MapNPC(MapNPCNum).Step = 1
@@ -2416,7 +2408,7 @@ Public Function GetCombatTreeName(ByVal CombatNum As Byte) As String
 End Function
 
 Public Sub UpdatePlayerTitles()
-    Dim I As Long, n As Long
+    Dim I As Long, N As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2520,7 +2512,7 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckForBattleMusic(ByVal MapNPCNum As Byte)
-    Dim n As Byte
+    Dim N As Byte
     
     ' Exit if invalid
     If MapNPCNum < 1 Or MapNPCNum > MAX_MAP_NPCS Then Exit Sub
@@ -2540,9 +2532,9 @@ Public Sub CheckForBattleMusic(ByVal MapNPCNum As Byte)
                 
                 ' Check if party members are being targeted
                 If Party.num > 0 Then
-                    For n = 1 To MAX_PARTY_MEMBERS
-                        If GetPlayerMap(MyIndex) = GetPlayerMap(Party.Member(n)) Then
-                            If MapNPC(MapNPCNum).Target = Party.Member(n) And MapNPC(MapNPCNum).Target > 0 Then
+                    For N = 1 To MAX_PARTY_MEMBERS
+                        If GetPlayerMap(MyIndex) = GetPlayerMap(Party.Member(N)) Then
+                            If MapNPC(MapNPCNum).Target = Party.Member(N) And MapNPC(MapNPCNum).Target > 0 Then
                                 If Len(Trim$(NPC(MapNPC(MapNPCNum).num).Music)) > 0 Then
                                     ActiveNPCTarget = MapNPCNum
                                 End If
