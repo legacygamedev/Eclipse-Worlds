@@ -410,6 +410,8 @@ Private Sub cmdChangeDataSize_Click()
         If Res = vbNo Then Exit Sub
     End If
     
+    val = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_BANS)
+    
     If Not IsNumeric(val) Then
         Exit Sub
     End If
