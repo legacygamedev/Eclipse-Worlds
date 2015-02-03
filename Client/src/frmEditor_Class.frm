@@ -1233,7 +1233,7 @@ Private Sub txtSearch_Change()
     
 ' Error handler
 ErrorHandler:
-    HandleError "frmEditor_Class", "frmEditor_Ban", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "frmEditor_Class", "frmEditor_Class", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 

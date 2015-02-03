@@ -391,13 +391,13 @@ Private Sub cmdChangeDataSize_Click()
     Dim Res As VbMsgBoxResult, val As String
     Dim dataModified As Boolean, I As Long
     
-    If EditorIndex < 1 Or EditorIndex > MAX_BANS Then Exit Sub
+    If EditorIndex < 1 Or EditorIndex > MAX_MORALS Then Exit Sub
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
-    For I = 1 To MAX_BANS
-        If Ban_Changed(I) And I <> EditorIndex Then
+    For I = 1 To MAX_MORALS
+        If Moral_Changed(I) And I <> EditorIndex Then
         
             dataModified = True
             Exit For
