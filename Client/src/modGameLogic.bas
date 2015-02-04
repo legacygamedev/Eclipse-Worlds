@@ -500,22 +500,42 @@ Public Sub CheckAttack()
             End If
         End If
         
-        Select Case Player(MyIndex).Dir
-            Case DIR_UP
-                X = GetPlayerX(MyIndex)
-                Y = GetPlayerY(MyIndex) - 1
-            Case DIR_DOWN
-                X = GetPlayerX(MyIndex)
-                Y = GetPlayerY(MyIndex) + 1
-            Case DIR_LEFT
-                X = GetPlayerX(MyIndex) - 1
-                Y = GetPlayerY(MyIndex)
-            Case DIR_RIGHT
-                X = GetPlayerX(MyIndex) + 1
-                Y = GetPlayerY(MyIndex)
-        End Select
+        X = GetPlayerX(MyIndex)
+        Y = GetPlayerY(MyIndex)
         
+        Select Case Player(MyIndex).Dir
+
+            Case DIR_UP
+                Y = Y - 1
+
+            Case DIR_DOWN
+                Y = Y + 1
+
+            Case DIR_LEFT
+                X = X - 1
+
+            Case DIR_RIGHT
+                X = X + 1
+
+            Case DIR_UPLEFT
+                Y = Y - 1
+                X = X - 1
+
+            Case DIR_UPRIGHT
+                Y = Y - 1
+                X = X + 1
+
+            Case DIR_DOWNLEFT
+                Y = Y + 1
+                X = X - 1
+
+            Case DIR_DOWNRIGHT
+                Y = Y + 1
+                X = X + 1
+        End Select
+
         If timeGetTime > TempPlayer(MyIndex).EventTimer Then
+
             For I = 1 To Map.CurrentEvents
                 If Map.MapEvents(I).Visible = 1 And Map.MapEvents(I).Trigger = 0 Then
                     If Map.MapEvents(I).X = X And Map.MapEvents(I).Y = Y Then
@@ -2408,7 +2428,7 @@ Public Function GetCombatTreeName(ByVal CombatNum As Byte) As String
 End Function
 
 Public Sub UpdatePlayerTitles()
-    Dim I As Long, N As Long
+    Dim I As Long, n As Long
     
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
@@ -2512,7 +2532,7 @@ ErrorHandler:
 End Sub
 
 Public Sub CheckForBattleMusic(ByVal MapNPCNum As Byte)
-    Dim N As Byte
+    Dim n As Byte
     
     ' Exit if invalid
     If MapNPCNum < 1 Or MapNPCNum > MAX_MAP_NPCS Then Exit Sub
@@ -2532,9 +2552,9 @@ Public Sub CheckForBattleMusic(ByVal MapNPCNum As Byte)
                 
                 ' Check if party members are being targeted
                 If Party.num > 0 Then
-                    For N = 1 To MAX_PARTY_MEMBERS
-                        If GetPlayerMap(MyIndex) = GetPlayerMap(Party.Member(N)) Then
-                            If MapNPC(MapNPCNum).Target = Party.Member(N) And MapNPC(MapNPCNum).Target > 0 Then
+                    For n = 1 To MAX_PARTY_MEMBERS
+                        If GetPlayerMap(MyIndex) = GetPlayerMap(Party.Member(n)) Then
+                            If MapNPC(MapNPCNum).Target = Party.Member(n) And MapNPC(MapNPCNum).Target > 0 Then
                                 If Len(Trim$(NPC(MapNPC(MapNPCNum).num).Music)) > 0 Then
                                     ActiveNPCTarget = MapNPCNum
                                 End If
