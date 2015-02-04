@@ -480,6 +480,9 @@ Private Sub cmdClose_Click()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
+    frmAdmin.chkEditor(EDITOR_MORAL).FontBold = False
+    frmAdmin.picEye(EDITOR_MORAL).Visible = False
+    BringWindowToTop (frmAdmin.hWnd)
     Unload frmEditor_Moral
     Exit Sub
     

@@ -1076,6 +1076,9 @@ Private Sub cmdClosel_Click()
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
+    frmAdmin.chkEditor(EDITOR_NPC).FontBold = False
+    frmAdmin.picEye(EDITOR_NPC).Visible = False
+    BringWindowToTop (frmAdmin.hWnd)
     Unload frmEditor_NPC
     Exit Sub
     
