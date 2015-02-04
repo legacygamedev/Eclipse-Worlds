@@ -1233,7 +1233,8 @@ Sub HandleMapData(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As 
     Map(MapNum).MaxY = buffer.ReadByte
     
     ReDim Map(MapNum).Tile(0 To Map(MapNum).MaxX, 0 To Map(MapNum).MaxY)
-
+    ReDim MapBlocks(MapNum).Blocks(0 To Map(MapNum).MaxX, 0 To Map(MapNum).MaxY)
+    
     Map(MapNum).NPC_HighIndex = buffer.ReadByte
     
     For x = 0 To Map(MapNum).MaxX
@@ -4677,6 +4678,7 @@ Dim buffer As clsBuffer, dataSize As Long, dataType As Byte, i As Long
             
             MAX_MAPS = dataSize
             ReDim Preserve Map(MAX_MAPS)
+            ReDim Preserve MapBlocks(MAX_MAPS)
             ReDim Preserve MapCache(MAX_MAPS)
             ReDim Preserve TempEventMap(MAX_MAPS)
             ReDim Preserve MapItem(MAX_MAPS)

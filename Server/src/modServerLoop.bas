@@ -1384,6 +1384,8 @@ End Sub
 Public Sub CacheMapBlocks(ByVal MapNum As Integer)
     Dim x As Long, Y As Long
     
+    ReDim Preserve MapBlocks(MapNum).Blocks(0 To Map(MapNum).MaxX, 0 To Map(MapNum).MaxY)
+    
     For x = 0 To Map(MapNum).MaxX
         For Y = 0 To Map(MapNum).MaxY
             If NPCTileIsOpen(MapNum, x, Y) = False Then

@@ -396,9 +396,9 @@ End Sub
 
 Public Sub redimData()
     ReDim Preserve Map(MAX_MAPS)
+    ReDim Preserve MapBlocks(MAX_MAPS)
     ReDim Preserve PlayersOnMap(MAX_MAPS)
     ReDim Preserve MapCache(MAX_MAPS)
-    ReDim Preserve MapBlocks(MAX_MAPS)
     ReDim Preserve TempEventMap(MAX_MAPS)
     ReDim Preserve Item(MAX_ITEMS)
     ReDim Preserve MapItem(MAX_MAPS, MAX_MAP_ITEMS)
@@ -1499,8 +1499,7 @@ Sub LoadMaps()
         
         ' have to set the tile()
         ReDim Map(i).Tile(0 To Map(i).MaxX, 0 To Map(i).MaxY)
-        ReDim MapBlocks(i).Blocks(0 To Map(i).MaxX, 0 To Map(i).MaxY)
-        
+
         Get #F, , Map(i).NPC_HighIndex
         
         For x = 0 To Map(i).MaxX
