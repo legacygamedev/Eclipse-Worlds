@@ -150,6 +150,7 @@ End Function
 Function GetPlayerQuestAmount(ByVal index As Long, ByVal QuestID As Long, ByVal NPCNum As Long)
     If index < 1 Or index > MAX_PLAYERS Then Exit Function
 
+    Exit Function
     ReDim Preserve Account(index).Chars(GetPlayerChar(index)).QuestAmount(MAX_QUESTS).ID(MAX_NPCS)
     GetPlayerQuestAmount = Account(index).Chars(GetPlayerChar(index)).QuestAmount(QuestID).ID(NPCNum)
 End Function
