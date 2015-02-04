@@ -134,7 +134,7 @@ Sub LeftGame(ByVal index As Long)
     Dim TradeTarget As Long
 
     If index < 1 Or index > Player_HighIndex Then Exit Sub
-    
+ 
     If Not tempplayer(index).HasLogged And GetPlayerLogin(index) <> vbNullString Then
         Call CloseSocket(index)
     End If

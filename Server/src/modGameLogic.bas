@@ -133,8 +133,7 @@ Sub SpawnMapItems(ByVal MapNum As Integer)
     ' Check for subscript out of range
     If MapNum < 1 Or MapNum > MAX_MAPS Then Exit Sub
     
-    If Map(MapNum).MaxX = 0 Or Map(MapNum).MaxY = 0 Then Exit Sub
-    ReDim Map(MAX_MAPS).Tile(Map(MapNum).MaxX, Map(MapNum).MaxY)
+    If Map(MapNum).MaxX < 1 Or Map(MapNum).MaxY < 1 Then Exit Sub
     
     ' Spawn what we have
     For x = 0 To Map(MapNum).MaxX
@@ -2318,18 +2317,6 @@ Public Function IsEventBlocked(index As Long, ByVal x As Long, ByVal Y As Long, 
         MapNum = GetPlayerMap(index)
         x = x + GetPlayerX(index)
         Y = Y + GetPlayerY(index)
-        
-        ' Check to see if a player event is already on that tile
-        For i = 1 To TempEventMap(MapNum).EventCount
-            If tempplayer(index).EventMap.EventPages(i).x = x Then
-                If tempplayer(index).EventMap.EventPages(i).Y = Y Then
-                    If tempplayer(index).EventMap.EventPages(i).WalkThrough = 0 Then
-                        IsEventBlocked = True
-                        Exit Function
-                    End If
-                End If
-            End If
-        Next
     Else
         x = x + MapNPC(MapNum).NPC(index).x
         Y = Y + MapNPC(MapNum).NPC(index).Y

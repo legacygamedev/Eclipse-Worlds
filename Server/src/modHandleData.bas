@@ -191,7 +191,6 @@ Dim QuestID As Long
     'set the player questid to this quest, and set the cli/greeter to the first one in the quest
     Call SetPlayerQuestCLI(index, QuestID, 1)
     Call SetPlayerQuestTask(index, QuestID, 2)
-    'Call SendPlayerData(Index)
     
     'Start processing the tasks of the quest.
     Call HandleQuestTask(index, QuestID, GetPlayerQuestCLI(index, QuestID), GetPlayerQuestTask(index, QuestID), False)
@@ -491,17 +490,19 @@ Private Sub HandleLogin(ByVal index As Long, ByRef Data() As Byte, ByVal StartAd
         
         ' Make sure they are not logged in already...
         For i = 1 To Player_HighIndex
-            If GetPlayerLogin(i) <> vbNullString And GetPlayerLogin(i) = Name Then
+            If GetPlayerLogin(i) <> vbNullString And UCase$(GetPlayerLogin(i)) = UCase$(Name) Then
                 If i <> index Then
                     Length = LenB(Account(index))
                     CopyMemory ByVal VarPtr(Account(index)), ByVal VarPtr(Account(i)), Length
                     Length = LenB(tempplayer(index))
                     CopyMemory ByVal VarPtr(tempplayer(index)), ByVal VarPtr(tempplayer(i)), Length
                     ClearAccount i
+                    tempplayer(index).HasLogged = False
                     
                     AccountLoaded = True
                     Exit For
                 Else
+                    tempplayer(index).HasLogged = False
                     AccountLoaded = True
                     Exit For
                 End If
@@ -4426,13 +4427,14 @@ Sub HandleEvent(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Lo
             
             If tempplayer(index).EventMap.EventPages(z).eventID = i Then
                 i = z
-                BeginEventProcessing = True
                 Exit For
             End If
         Next
     End If
     
-    If BeginEventProcessing = True Then
+    BeginEventProcessing = True
+    
+    If BeginEventProcessing Then
         If Map(GetPlayerMap(index)).Events(tempplayer(index).EventMap.EventPages(i).eventID).Pages(tempplayer(index).EventMap.EventPages(i).PageID).CommandListCount > 0 Then
             ' Process this event, it is action button and everything checks out
             tempplayer(index).EventProcessingCount = tempplayer(index).EventProcessingCount + 1
@@ -4625,7 +4627,6 @@ End Sub
 
 Sub HandleChangeDataSize(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
 Dim buffer As clsBuffer, dataSize As Long, dataType As Byte, i As Long
-
     Set buffer = New clsBuffer
     
     buffer.WriteBytes Data()
@@ -4637,37 +4638,36 @@ Dim buffer As clsBuffer, dataSize As Long, dataType As Byte, i As Long
     
         Case EDITOR_ANIMATION
             MAX_ANIMATIONS = dataSize
-            ReDim Animation(MAX_ANIMATIONS)
+            ReDim Preserve Animation(MAX_ANIMATIONS)
             SaveDataSizes
             frmServer.cmdReloadAnimations_Click
             SendEditAnimation index
         
         Case EDITOR_BAN
             MAX_BANS = dataSize
-            ReDim Ban(MAX_BANS)
+            ReDim Preserve Ban(MAX_BANS)
             SaveDataSizes
             frmServer.cmdReloadBans_Click
             SendEditBan index
         
         Case EDITOR_CLASS
             MAX_CLASSES = dataSize
-            ReDim Class(MAX_CLASSES)
+            ReDim Preserve Class(MAX_CLASSES)
             SaveDataSizes
             frmServer.cmdReloadClasses_Click
             SendEditClass index
             
         Case EDITOR_EMOTICON
             MAX_EMOTICONS = dataSize
-            ReDim Ban(MAX_BANS)
+            ReDim Preserve Ban(MAX_BANS)
             SaveDataSizes
             frmServer.cmdReloadEmoticons_Click
             SendEditEmoticon index
         
         Case EDITOR_ITEM
             MAX_ITEMS = dataSize
-            ReDim Item(MAX_ITEMS)
-            ReDim MapItem(MAX_MAPS)
-            ReDim MapItem(MAX_MAPS, MAX_MAP_ITEMS)
+            ReDim Preserve Item(MAX_ITEMS)
+            ReDim Preserve MapItem(MAX_MAPS, MAX_MAP_ITEMS)
             SaveDataSizes
             frmServer.cmdReloadItems_Click
             SendEditItem index
@@ -4676,62 +4676,61 @@ Dim buffer As clsBuffer, dataSize As Long, dataType As Byte, i As Long
             If dataSize < GetPlayerMap(index) Then Exit Sub
             
             MAX_MAPS = dataSize
-            ReDim Map(MAX_MAPS)
-            ReDim MapCache(MAX_MAPS)
-            ReDim TempEventMap(MAX_MAPS)
-            ReDim MapItem(MAX_MAPS)
-            ReDim MapItem(MAX_MAPS, MAX_MAP_ITEMS)
-            ReDim PlayersOnMap(MAX_MAPS)
+            ReDim Preserve Map(MAX_MAPS)
+            ReDim Preserve MapCache(MAX_MAPS)
+            ReDim Preserve TempEventMap(MAX_MAPS)
+            ReDim Preserve MapItem(MAX_MAPS)
+            ReDim Preserve PlayersOnMap(MAX_MAPS)
+            ReDim Preserve ResourceCache(MAX_MAPS)
             SaveDataSizes
             frmServer.cmdReloadMaps_Click
             SendMapReport index
             
         Case EDITOR_MORAL
             MAX_MORALS = dataSize
-            ReDim Moral(MAX_MORALS)
+            ReDim Preserve Moral(MAX_MORALS)
             SaveDataSizes
             frmServer.cmdReloadMorals_Click
             SendEditMoral index
             
         Case EDITOR_NPC
             MAX_NPCS = dataSize
-            ReDim NPC(MAX_NPCS)
+            ReDim Preserve NPC(MAX_NPCS)
             SaveDataSizes
             frmServer.cmdReloadNPCs_Click
             SendEditNPC index
             
         Case EDITOR_RESOURCE
             MAX_RESOURCES = dataSize
-            ReDim Resource(MAX_RESOURCES)
-            ReDim ResourceCache(MAX_MAPS)
+            ReDim Preserve Resource(MAX_RESOURCES)
             SaveDataSizes
             frmServer.cmdReloadResources_Click
             SendEditResource index
             
         Case EDITOR_SHOP
             MAX_SHOPS = dataSize
-            ReDim Shop(MAX_SHOPS)
+            ReDim Preserve Shop(MAX_SHOPS)
             SaveDataSizes
             frmServer.cmdReloadShops_Click
             SendEditShop index
             
         Case EDITOR_SPELL
             MAX_SPELLS = dataSize
-            ReDim Spell(MAX_SPELLS)
+            ReDim Preserve Spell(MAX_SPELLS)
             SaveDataSizes
             frmServer.cmdReloadSpells_Click
             SendEditSpell index
             
         Case EDITOR_TITLE
             MAX_TITLES = dataSize
-            ReDim Title(MAX_TITLES)
+            ReDim Preserve Title(MAX_TITLES)
             SaveDataSizes
             frmServer.cmdReloadTitles_Click
             SendEditTitle index
             
         Case EDITOR_QUESTS
             MAX_QUESTS = dataSize
-            ReDim quests(MAX_QUESTS)
+            ReDim Preserve Quest(MAX_QUESTS)
             SaveDataSizes
             frmServer.cmdReloadQuests_Click
             SendEditQuest index

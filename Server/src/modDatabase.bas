@@ -649,13 +649,13 @@ Sub AddChar(ByVal index As Long, ByVal Name As String, ByVal Gender As Byte, ByV
             End If
         Next
         
-        ReDim .QuestCompleted(MAX_QUESTS)
-        ReDim .QuestCLI(MAX_QUESTS)
-        ReDim .QuestAmount(MAX_QUESTS)
-        ReDim .QuestTask(MAX_QUESTS)
+        ReDim Preserve .QuestCompleted(MAX_QUESTS)
+        ReDim Preserve .QuestCLI(MAX_QUESTS)
+        ReDim Preserve .QuestAmount(MAX_QUESTS)
+        ReDim Preserve .QuestTask(MAX_QUESTS)
         
         For i = 1 To MAX_QUESTS
-            ReDim .QuestAmount(i).ID(MAX_NPCS)
+            ReDim Preserve .QuestAmount(i).ID(MAX_NPCS)
         Next
         
     End With
@@ -746,7 +746,7 @@ Sub SaveAccount(ByVal index As Long)
     Close #F
 End Sub
 
-Sub LoadAccount(ByVal index As Long, ByVal Name As String)
+Sub loadAccount(ByVal index As Long, ByVal Name As String)
     Dim filename As String
     Dim F As Long, i As Long
     Dim Length As Long
@@ -1254,7 +1254,6 @@ End Sub
 
 Sub ClearAnimation(ByVal index As Long)
     Call ZeroMemory(ByVal VarPtr(Animation(index)), LenB(Animation(index)))
-    ReDim Animation(MAX_ANIMATIONS)
     Animation(index).Name = vbNullString
     Animation(index).Sound = vbNullString
 End Sub
@@ -1460,10 +1459,11 @@ Sub LoadMaps()
     Dim x As Long
     Dim Y As Long, z As Long, p As Long, w As Long
     Dim newtileset As Long, newtiley As Long
-    
+  
     Call CheckMaps
-
+            
     For i = 1 To MAX_MAPS
+        On Error Resume Next
         filename = App.path & "\data\maps\" & i & ".dat"
         F = FreeFile
         Open filename For Binary As #F

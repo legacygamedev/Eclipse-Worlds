@@ -1374,8 +1374,6 @@ Function GetNpcDir(x As Long, Y As Long, x1 As Long, y1 As Long) As Long
 End Function
 
 Public Sub UpdateMapBlock(ByVal MapNum As Long, ByVal x As Long, ByVal Y As Long, ByRef blocked As Boolean)
-    ReDim Preserve MapBlocks(MapNum)
-    
     If blocked Then
         MapBlocks(MapNum).Blocks(x, Y) = 9
     Else
