@@ -1080,6 +1080,8 @@ Public Sub LoadQuests()
 
     Dim i        As Long, II As Long, III As Long
 
+    Exit Sub
+    
     Call CheckQuests
 
     For i = 1 To MAX_QUESTS
