@@ -209,13 +209,15 @@ Sub LeftGame(ByVal index As Long)
         Next
         
         ' Send a global message that they left
-        If GetPlayerAccess(index) <= STAFF_MODERATOR Then
-            Call GlobalMsg(GetPlayerName(index) & " has left " & Options.Name & "!", Grey)
-        Else
-            Call GlobalMsg(GetPlayerName(index) & " has left " & Options.Name & "!", DarkGrey)
+        If GetPlayerName(index) <> vbNullString Then
+            If GetPlayerAccess(index) <= STAFF_MODERATOR Then
+                Call GlobalMsg(GetPlayerName(index) & " has left " & Options.Name & "!", Grey)
+            Else
+                Call GlobalMsg(GetPlayerName(index) & " has left " & Options.Name & "!", DarkGrey)
+            End If
         End If
         
-        Call TextAdd(GetPlayerName(index) & " has logged out from " & Options.Name & ".")
+        Call TextAdd(GetPlayerLogin(index) & " has logged out from " & Options.Name & ".")
         
         TotalPlayersOnline = TotalPlayersOnline - 1
         
