@@ -1714,7 +1714,7 @@ nextevent:
             buffer.WriteLong i
             
             With tempplayer(index).EventMap.EventPages(i)
-                buffer.WriteString Map(GetPlayerMap(index)).Events(i).Name
+                buffer.WriteString Trim$(Map(MapNum).Events(.eventID).Name)
                 buffer.WriteLong .Dir
                 buffer.WriteLong .GraphicNum
                 buffer.WriteLong .GraphicType
