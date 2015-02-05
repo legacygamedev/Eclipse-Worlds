@@ -4128,9 +4128,9 @@ Sub DrawEventChatFace()
 
     With rec_pos
         .Top = 0
-        .Bottom = Tex_Face(EventFace).Height
+        .Bottom = 96
         .Left = 0
-        .Right = Tex_Face(EventFace).Width
+        .Right = 96
     End With
 
     RenderTextureByRects Tex_Face(EventFace), rec, rec_pos
@@ -4144,9 +4144,6 @@ Sub DrawEventChatFace()
     
     Direct3D_Device.EndScene
     Direct3D_Device.Present srcRect, srcRect, frmMain.picChatFace.hWnd, ByVal (0)
-    
-    frmMain.picChatFace.Height = Tex_Face(EventFace).Height
-    frmMain.picChatFace.Width = Tex_Face(EventFace).Width
     Exit Sub
     
 ' Error handler
