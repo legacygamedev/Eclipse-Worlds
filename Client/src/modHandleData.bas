@@ -3904,7 +3904,11 @@ Private Sub HandleGameData(ByVal Index As Long, ByRef data() As Byte, ByVal Star
     Set buffer = Nothing
     
     frmMenu.Caption = GAME_NAME
-    redimData
+    If InGame Then
+        redimDataPreserve
+    Else
+        redimData
+    End If
     Exit Sub
     
 ' Error handler
