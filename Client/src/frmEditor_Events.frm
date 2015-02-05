@@ -6293,6 +6293,8 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
+    If fraDialogue.Visible Then Exit Sub
+    
     If KeyAscii = vbKeyReturn Then
         cmdOK_Click
         KeyAscii = 0

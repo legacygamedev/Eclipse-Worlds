@@ -4441,8 +4441,8 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     End If
     
     If InGame Then
-        LogoutGame
         IsLogging = True
+        LogoutGame
     End If
     Exit Sub
     

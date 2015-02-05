@@ -1157,7 +1157,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtExp.text = NPC(EditorIndex).exp
+        .txtEXP.text = NPC(EditorIndex).exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         
@@ -4498,9 +4498,11 @@ End Sub
 Public Sub InitAdminPanel()
     frmAdmin.Visible = True
     
+    frmAdmin.Left = frmMain.Left + frmMain.Width + 145
+    frmAdmin.Top = frmMain.Top
+    
     If Not adminMin Then
-        frmAdmin.Left = frmMain.Left + frmMain.Width ' + TwipsToPixels(frmAdmin.Width, 0)
-        frmAdmin.Top = frmMain.Top
+
         frmAdmin.picSizer.BorderStyle = 0
         frmAdmin.picSizer.Picture = LoadResPicture("MIN", vbResBitmap)
     Else
@@ -4509,6 +4511,9 @@ Public Sub InitAdminPanel()
         frmAdmin.reverse = False
         frmAdmin.picSizer_Click
     End If
+
+    refreshingAdminList = True
+    SendRequestPlayersOnline
 End Sub
 
 Public Sub InsertByPtr(pArray() As Byte, ByVal StartIndex As Long, Optional ByVal NumElements As Long = 1)

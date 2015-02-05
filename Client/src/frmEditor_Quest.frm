@@ -1849,6 +1849,7 @@ Private Sub btnAddCLI_Click()
     TmpStr = Replace(cmbNPC.List(cmbNPC.ListIndex), val(cmbNPC.List(cmbNPC.ListIndex)) & ": ", vbNullString)
 
     If Not Len(TmpStr) > 0 Then Exit Sub
+    
     NPCIndex = 0
 
     For I = 1 To MAX_NPCS

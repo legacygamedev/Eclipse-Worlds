@@ -309,7 +309,7 @@ Public Sub DrawPlayerName(ByVal Index As Long)
     
     If Options.Levels = 1 Then
         'If Not Index = MyIndex Then
-            Level = "Lv: " & GetPlayerLevel(Index)
+            Level = GetPlayerLevel(Index)
             TextX = TextX + (EngineGetTextWidth(Font_Default, Level) / 2) + 4
         'End If
     End If
@@ -452,10 +452,10 @@ Public Sub DrawNPCName(ByVal Index As Long)
         TextX = GetNPCTextX(Index) - (EngineGetTextWidth(Font_Default, Name) / 2)
         
         If Options.Levels = 1 And NPC(npcNum).Level > 0 Then
-            Level = "Lv: " & NPC(npcNum).Level
+            Level = NPC(npcNum).Level
             
             If NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
-                TextX = TextX + EngineGetTextWidth(Font_Default, Trim$(Level) / 2) + 4
+                TextX = TextX + (EngineGetTextWidth(Font_Default, (Trim$(Level)))) + 4
             End If
         End If
         
@@ -465,7 +465,7 @@ Public Sub DrawNPCName(ByVal Index As Long)
     
     If Options.Levels = 1 And NPC(npcNum).Level > 0 Then
         If NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKONSIGHT Or NPC(npcNum).Behavior = NPC_BEHAVIOR_ATTACKWHENATTACKED Then
-            TextX = TextX - (EngineGetTextWidth(Font_Default, Trim$(Level)) / 2) - 4
+            TextX = TextX - (EngineGetTextWidth(Font_Default, (Trim$(Level)))) - 4
             
             If NPC(npcNum).Level = GetPlayerLevel(MyIndex) Then
                 Color = D3DColorARGB(255, 255, 255, 0)
