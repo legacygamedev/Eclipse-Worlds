@@ -3908,6 +3908,7 @@ Private Sub HandleGameData(ByVal Index As Long, ByRef data() As Byte, ByVal Star
         redimDataPreserve
     Else
         redimData
+        ClearData
     End If
     Exit Sub
     
