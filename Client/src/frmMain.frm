@@ -27,6 +27,21 @@ Begin VB.Form frmMain
    StartUpPosition =   2  'CenterScreen
    Tag             =   " "
    Visible         =   0   'False
+   Begin VB.PictureBox picButton 
+      BackColor       =   &H8000000A&
+      BorderStyle     =   0  'None
+      Height          =   435
+      Index           =   11
+      Left            =   14040
+      ScaleHeight     =   29
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   32
+      TabIndex        =   227
+      TabStop         =   0   'False
+      Top             =   9660
+      Visible         =   0   'False
+      Width           =   480
+   End
    Begin VB.PictureBox picQuestAccept 
       BackColor       =   &H00000000&
       ForeColor       =   &H00C0FFFF&
@@ -2220,21 +2235,6 @@ Begin VB.Form frmMain
          BackColor       =   &H8000000A&
          BorderStyle     =   0  'None
          Height          =   435
-         Index           =   11
-         Left            =   11160
-         ScaleHeight     =   29
-         ScaleMode       =   3  'Pixel
-         ScaleWidth      =   32
-         TabIndex        =   227
-         TabStop         =   0   'False
-         Top             =   8400
-         Visible         =   0   'False
-         Width           =   480
-      End
-      Begin VB.PictureBox picButton 
-         BackColor       =   &H8000000A&
-         BorderStyle     =   0  'None
-         Height          =   435
          Index           =   9
          Left            =   11160
          ScaleHeight     =   29
@@ -4085,6 +4085,7 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   -2147483647
             BorderStyle     =   0
+            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
