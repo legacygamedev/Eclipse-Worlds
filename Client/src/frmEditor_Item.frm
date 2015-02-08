@@ -25,6 +25,127 @@ Begin VB.Form frmEditor_Item
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'CenterScreen
    Visible         =   0   'False
+   Begin VB.Frame FraProjectileData 
+      Caption         =   "Projectile Data"
+      Height          =   1815
+      Left            =   3360
+      TabIndex        =   141
+      Top             =   4680
+      Width           =   5295
+      Begin VB.HScrollBar scrlProjectilePic 
+         Height          =   255
+         Left            =   2760
+         TabIndex        =   147
+         Top             =   480
+         Width           =   1335
+      End
+      Begin VB.PictureBox picProjectile 
+         AutoRedraw      =   -1  'True
+         BackColor       =   &H00000000&
+         BorderStyle     =   0  'None
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   600
+         Left            =   4320
+         ScaleHeight     =   40
+         ScaleMode       =   3  'Pixel
+         ScaleWidth      =   48
+         TabIndex        =   146
+         TabStop         =   0   'False
+         Top             =   240
+         Width           =   720
+      End
+      Begin VB.HScrollBar scrlProjectileSpeed 
+         Height          =   255
+         LargeChange     =   10
+         Left            =   1680
+         Max             =   5000
+         TabIndex        =   145
+         Top             =   1320
+         Width           =   1335
+      End
+      Begin VB.HScrollBar scrlProjectileDamage 
+         Height          =   255
+         Left            =   240
+         Max             =   255
+         TabIndex        =   144
+         Top             =   1320
+         Width           =   1335
+      End
+      Begin VB.HScrollBar scrlProjectileAmmo 
+         Height          =   255
+         Left            =   3120
+         Max             =   255
+         TabIndex        =   143
+         Top             =   1320
+         Width           =   1935
+      End
+      Begin VB.HScrollBar scrlProjectileRange 
+         Height          =   255
+         Left            =   240
+         Max             =   255
+         TabIndex        =   142
+         Top             =   480
+         Width           =   1335
+      End
+      Begin VB.Label lblProjectilePic 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Pic: 0"
+         Height          =   255
+         Left            =   2760
+         TabIndex        =   152
+         Top             =   240
+         Width           =   1215
+      End
+      Begin VB.Label lblProjectileSpeed 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Speed: 0"
+         Height          =   255
+         Left            =   1680
+         TabIndex        =   151
+         Top             =   1080
+         Width           =   1215
+      End
+      Begin VB.Label lblProjectileDamage 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Damage: 0"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   150
+         Top             =   1080
+         Width           =   1215
+      End
+      Begin VB.Label lblProjectileRange 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Range: 0"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   149
+         Top             =   240
+         Width           =   1215
+      End
+      Begin VB.Label lblProjectileAmmo 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Ammo Item: None"
+         Height          =   375
+         Left            =   3000
+         TabIndex        =   148
+         Top             =   960
+         Width           =   2175
+      End
+   End
    Begin VB.CommandButton cmdChangeDataSize 
       Caption         =   "Change Data Size"
       Height          =   375
@@ -2289,6 +2410,90 @@ Private Sub scrlPic_Change()
 ' Error handler
 ErrorHandler:
     HandleError "scrlPic_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlProjectileDamage_Change()
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+    
+    lblProjectileDamage.Caption = "Damage: " & scrlProjectileDamage.Value
+    Item(EditorIndex).Projectile.Damage = scrlProjectileDamage.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlProjectilePic_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlProjectilePic_Change()
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+    
+    lblProjectilePic.Caption = "Pic: " & scrlProjectilePic.Value
+    Item(EditorIndex).Projectile.Pic = scrlProjectilePic.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlProjectilePic_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlProjectileRange_Change()
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+    
+    lblProjectileRange.Caption = "Range: " & scrlProjectileRange.Value
+    Item(EditorIndex).Projectile.Range = scrlProjectileRange.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlProjectileRange_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlProjectileSpeed_Change()
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    If EditorIndex < 1 Or EditorIndex > MAX_ITEMS Then Exit Sub
+    
+    lblProjectileSpeed.Caption = "Speed: " & scrlProjectileSpeed.Value
+    Item(EditorIndex).Projectile.Speed = scrlProjectileSpeed.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlRarity_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    Err.Clear
+End Sub
+
+Private Sub scrlProjectileAmmo_Change()
+    ' If debug mode, handle error then exit out
+    If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
+    
+    If EditorIndex = 0 Or EditorIndex > MAX_ITEMS Then Exit Sub
+    
+    If scrlProjectileAmmo.Value = 0 Then
+        lblProjectileAmmo.Caption = "Ammo Item: None"
+    Else
+        lblProjectileAmmo.Caption = "Ammo Item: " & Trim$(Item(scrlProjectileAmmo.Value).Name)
+    End If
+    Item(EditorIndex).Projectile.Ammo = scrlProjectileAmmo.Value
+    Exit Sub
+    
+' Error handler
+ErrorHandler:
+    HandleError "scrlRarity_Change", "frmEditor_Item", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
