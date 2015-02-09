@@ -4611,5 +4611,7 @@ Public Function getItemType(itype As Byte) As String
                 getItemType = "Auto Life"
             Case 8
                 getItemType = "Change Sprite"
+            Case 9
+                getItemType = "Recipe"
         End Select
 End Function
