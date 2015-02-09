@@ -2357,7 +2357,7 @@ Public Sub ItemClassReqListInit()
 
     For I = 1 To MAX_CLASSES
         If Trim$(Class(I).Name) <> vbNullString Then
-            frmEditor_Item.cmbClassReq.AddItem Trim$(Class(I).Name), I
+            frmEditor_Item.cmbClassReq.AddItem Trim$(Class(I).Name), frmEditor_Item.cmbClassReq.ListCount
         End If
     Next
     frmEditor_Item.cmbClassReq.ListIndex = Item(EditorIndex).ClassReq
