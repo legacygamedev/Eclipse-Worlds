@@ -73,11 +73,6 @@ Sub JoinGame(ByVal index As Long)
     
     ' Send welcome messages
     Call SendWelcome(index)
-
-    ' Send Resource cache
-    For i = 0 To ResourceCache(GetPlayerMap(index)).Resource_Count
-        SendResourceCacheTo index, i
-    Next
     
     Call UpdateClassData(index)
     
