@@ -1428,8 +1428,8 @@ Sub HandleNeedMap(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As 
     Call SendMapNPCsTo(index, GetPlayerMap(index))
     Call SpawnMapEventsFor(index, GetPlayerMap(index))
     Call SendJoinMap(index)
-t
-    SendResourceCacheTo index, i
+
+    SendResourceCacheTo index
 
     tempplayer(index).GettingMap = NO
     Set buffer = New clsBuffer

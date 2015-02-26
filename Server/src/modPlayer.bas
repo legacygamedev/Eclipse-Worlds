@@ -1665,7 +1665,7 @@ Sub CheckResource(ByVal index As Long, ByVal x As Long, ByVal Y As Long)
                     If ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).Cur_Reward = 0 Then
                         ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).ResourceState = 1
                         ResourceCache(GetPlayerMap(index)).ResourceData(Resource_Num).ResourceTimer = timeGetTime
-                        SendResourceCacheToMap GetPlayerMap(index), Resource_Num
+                        SendResourceCacheToMap GetPlayerMap(index)
                     End If
                 Else
                     ' Send message if it exists

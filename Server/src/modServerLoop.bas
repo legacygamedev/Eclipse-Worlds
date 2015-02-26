@@ -267,11 +267,12 @@ Private Sub UpdateMapLogic()
                             
                             ' Re-set health to resource root
                             ResourceCache(MapNum).ResourceData(i).Cur_Reward = Random(Resource(Resource_Index).Reward_Min, Resource(Resource_Index).Reward_Max)
-                            SendResourceCacheToMap MapNum, i
                         End If
                     End If
                 End If
             Next
+            
+            SendResourceCacheToMap MapNum
         End If
 
         If PlayersOnMap(MapNum) = YES Then

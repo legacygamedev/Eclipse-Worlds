@@ -1801,7 +1801,7 @@ Sub SendPlayerSpell(ByVal index As Long, ByVal SpellSlot As Byte)
     Set buffer = Nothing
 End Sub
 
-Sub SendResourceCacheTo(ByVal index As Long, ByVal Resource_Num As Long)
+Sub SendResourceCacheTo(ByVal index As Long)
     Dim buffer As clsBuffer
     Dim i As Long
     Set buffer = New clsBuffer
@@ -1821,7 +1821,7 @@ Sub SendResourceCacheTo(ByVal index As Long, ByVal Resource_Num As Long)
     Set buffer = Nothing
 End Sub
 
-Sub SendResourceCacheToMap(ByVal MapNum As Integer, ByVal Resource_Num As Long)
+Sub SendResourceCacheToMap(ByVal MapNum As Integer)
     Dim buffer As clsBuffer
     Dim i As Long
     Set buffer = New clsBuffer
