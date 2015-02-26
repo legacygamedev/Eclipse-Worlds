@@ -636,6 +636,12 @@ Function CanMove() As Boolean
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
     
     CanMove = True
+    
+    ' Make sure they are not getting a map...
+    If GettingMap Then
+        CanMove = False
+        Exit Function
+    End If
 
     ' Make sure they aren't trying to move when they are already moving
     If TempPlayer(MyIndex).Moving <> 0 Then
