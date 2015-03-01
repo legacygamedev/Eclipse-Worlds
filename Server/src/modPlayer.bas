@@ -43,6 +43,10 @@ Sub JoinGame(ByVal index As Long)
     Call SendEmoticons(index)
     Call SendQuests(index)
     
+    For i = 1 To Vital_Count - 1
+        Call SendVital(index, i)
+    Next
+    
     ' Spell Cooldowns
     For i = 1 To MAX_PLAYER_SPELLS
         If GetPlayerSpell(index, i) > 0 Then
