@@ -47,6 +47,8 @@ Sub JoinGame(ByVal index As Long)
         Call SendVital(index, i)
     Next
     
+    Call SendPlayerExp(index)
+    
     ' Spell Cooldowns
     For i = 1 To MAX_PLAYER_SPELLS
         If GetPlayerSpell(index, i) > 0 Then
