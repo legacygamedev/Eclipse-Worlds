@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmItemSpawner 
    Appearance      =   0  'Flat
    BorderStyle     =   4  'Fixed ToolWindow
@@ -8,6 +8,7 @@ Begin VB.Form frmItemSpawner
    ClientLeft      =   8280
    ClientTop       =   4425
    ClientWidth     =   9015
+   Icon            =   "frmItemSpawner.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -367,11 +368,11 @@ Private Declare Function SendMessage Lib "user32" Alias _
  "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, _
  ByVal wParam As Long, lParam As Any) As Long
  
-Public Function ListView_SetIconSpacing(hWndLV As Long, cX As Long, cY As Long) As Long
+Public Function ListView_SetIconSpacing(hWndLV As Long, cx As Long, cy As Long) As Long
     Dim LVM_SETICONSPACING As Long
     
     LVM_SETICONSPACING = 4149
-    ListView_SetIconSpacing = SendMessage(hWndLV, LVM_SETICONSPACING, 0, ByVal MakeLong(cX, cY))
+    ListView_SetIconSpacing = SendMessage(hWndLV, LVM_SETICONSPACING, 0, ByVal MakeLong(cx, cy))
 End Function
 
 Public Sub updateFreeSlots()

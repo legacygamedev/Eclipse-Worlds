@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
@@ -4405,6 +4405,8 @@ Private Sub Form_Load()
     If cSubclasserHooker.ssc_Subclass(Me.cmdProperties.hWnd, ByVal 1, 1, Me) Then
         cSubclasserHooker.ssc_AddMsg Me.cmdProperties.hWnd, eMsgWhen.MSG_BEFORE, WM_SETFOCUS
     End If
+    
+    SetIcon
 End Sub
 
 Private Sub Form_Paint()

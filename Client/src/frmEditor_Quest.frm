@@ -5,6 +5,7 @@ Begin VB.Form frmEditor_Quest
    ClientLeft      =   45
    ClientTop       =   375
    ClientWidth     =   18975
+   Icon            =   "frmEditor_Quest.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -48,7 +49,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   255
          Left            =   120
          TabIndex        =   88
-         ToolTipText     =   $"frmEditor_Quest.frx":0000
+         ToolTipText     =   $"frmEditor_Quest.frx":038A
          Top             =   2520
          Visible         =   0   'False
          Width           =   3375
@@ -511,7 +512,7 @@ Begin VB.Form frmEditor_Quest
          Height          =   255
          Left            =   120
          TabIndex        =   38
-         ToolTipText     =   $"frmEditor_Quest.frx":0090
+         ToolTipText     =   $"frmEditor_Quest.frx":041A
          Top             =   1560
          Visible         =   0   'False
          Width           =   3375
@@ -1181,9 +1182,9 @@ Begin VB.Form frmEditor_Quest
       End
       Begin VB.ComboBox cmbClassReq 
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":0120
+         ItemData        =   "frmEditor_Quest.frx":04AA
          Left            =   6360
-         List            =   "frmEditor_Quest.frx":0122
+         List            =   "frmEditor_Quest.frx":04AC
          Style           =   2  'Dropdown List
          TabIndex        =   47
          Top             =   1200
@@ -1542,13 +1543,13 @@ Begin VB.Form frmEditor_Quest
          Height          =   255
          Left            =   240
          TabIndex        =   40
-         ToolTipText     =   $"frmEditor_Quest.frx":0124
+         ToolTipText     =   $"frmEditor_Quest.frx":04AE
          Top             =   2520
          Width           =   4695
       End
       Begin VB.Label Label6 
          BackStyle       =   0  'Transparent
-         Caption         =   $"frmEditor_Quest.frx":01B4
+         Caption         =   $"frmEditor_Quest.frx":053E
          Height          =   855
          Left            =   120
          TabIndex        =   131
@@ -1601,9 +1602,9 @@ Begin VB.Form frmEditor_Quest
       End
       Begin VB.ComboBox cmbColor 
          Height          =   315
-         ItemData        =   "frmEditor_Quest.frx":02A6
+         ItemData        =   "frmEditor_Quest.frx":0630
          Left            =   720
-         List            =   "frmEditor_Quest.frx":02A8
+         List            =   "frmEditor_Quest.frx":0632
          Style           =   2  'Dropdown List
          TabIndex        =   81
          Top             =   2040

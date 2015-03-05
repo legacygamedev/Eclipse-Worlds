@@ -6,6 +6,7 @@ Begin VB.Form frmMapPreview
    ClientLeft      =   45
    ClientTop       =   375
    ClientWidth     =   4320
+   Icon            =   "frmMapPreview.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False

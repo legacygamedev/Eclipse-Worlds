@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmCharEditor 
    BorderStyle     =   3  'Fixed Dialog
@@ -17,6 +17,7 @@ Begin VB.Form frmCharEditor
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
+   Icon            =   "frmCharEditor.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -84,9 +85,9 @@ Begin VB.Form frmCharEditor
       Begin VB.ComboBox cmbAccess 
          Appearance      =   0  'Flat
          Height          =   315
-         ItemData        =   "frmCharEditor.frx":0000
+         ItemData        =   "frmCharEditor.frx":038A
          Left            =   3390
-         List            =   "frmCharEditor.frx":0016
+         List            =   "frmCharEditor.frx":03A0
          TabIndex        =   48
          Top             =   1440
          Width           =   1155
@@ -632,11 +633,11 @@ End Sub
 Public Sub ResetCharList()
     listCharacters.Sorted = False
     listCharacters.listItems.Clear
-    Dim Length As Long, i As Long
+    Dim Length As Long, I As Long
     Length = UBound(charList)
-    For i = 0 To Length
-        listCharacters.listItems.Add , , charList(i, 0)
-        listCharacters.listItems.Item(i + 1).SubItems(1) = charList(i, 1)
+    For I = 0 To Length
+        listCharacters.listItems.Add , , charList(I, 0)
+        listCharacters.listItems.Item(I + 1).SubItems(1) = charList(I, 1)
     Next
     listCharacters.ColumnHeaders.Item(2).Width = 800
 End Sub
@@ -775,15 +776,15 @@ Private Sub txtFilter_Change()
     If txtFilter.text <> "" Then
         listCharacters.listItems.Clear
         
-        Dim content As String, Length As Long, i As Long
+        Dim content As String, Length As Long, I As Long
         content = txtFilter.text
     
         Length = UBound(charList)
         listCharacters.Sorted = False
-        For i = 0 To Length
-            If InStr(LCase$(charList(i, 0)), LCase$(content)) <> 0 Then
-                listCharacters.listItems.Add , , charList(i, 0)
-                listCharacters.listItems.Item(listCharacters.listItems.Count).SubItems(1) = charList(i, 1)
+        For I = 0 To Length
+            If InStr(LCase$(charList(I, 0)), LCase$(content)) <> 0 Then
+                listCharacters.listItems.Add , , charList(I, 0)
+                listCharacters.listItems.Item(listCharacters.listItems.Count).SubItems(1) = charList(I, 1)
             End If
         Next
         listCharacters.Sorted = True
