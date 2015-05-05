@@ -11,21 +11,21 @@ Function GetPlayerMaxVital(ByVal index As Long, ByVal Vital As Vitals) As Long
         Case HP
             Select Case Class(GetPlayerClass(index)).CombatTree
                 Case 1 ' Melee
-                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Endurance) / 3)) * 15 + 135
+                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (GetPlayerStat(index, Stats.Endurance) / 3)) * 15 + 135
                 Case 2 ' Range
-                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Endurance) / 3)) * 10 + 100
+                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (GetPlayerStat(index, Stats.Endurance) / 3)) * 10 + 100
                 Case 3 ' Magic
-                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Endurance) / 3)) * 5 + 75
+                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (GetPlayerStat(index, Stats.Endurance) / 3)) * 5 + 75
             End Select
 
         Case MP
             Select Case Class(GetPlayerClass(index)).CombatTree
                 Case 1 ' Melee
-                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Intelligence) / 3)) * 5 + 75
+                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (GetPlayerStat(index, Stats.Intelligence) / 3)) * 5 + 75
                 Case 2 ' Range
-                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Intelligence) / 3)) * 10 + 100
+                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (GetPlayerStat(index, Stats.Intelligence) / 3)) * 10 + 100
                 Case 3 ' Magic
-                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Intelligence) / 3)) * 15 + 135
+                    GetPlayerMaxVital = ((GetPlayerLevel(index) / 2) + (GetPlayerStat(index, Stats.Intelligence) / 3)) * 15 + 135
             End Select
     End Select
 End Function
@@ -164,7 +164,7 @@ Public Function CanPlayerSpellCritical(ByVal index As Long) As Boolean
 
     CanPlayerSpellCritical = False
 
-    Rate = Account(index).Chars(GetPlayerChar(index)).Stat(Stats.Intelligence) / 78.16
+    Rate = GetPlayerStat(index, Stats.Intelligence) / 78.16
     RandomNum = Random(1, 100)
     
     If RandomNum <= Rate Then
