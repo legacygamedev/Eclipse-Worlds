@@ -417,7 +417,7 @@ Sub SetPlayerEquipment(ByVal index As Long, ByVal InvNum As Byte, ByVal Equipmen
     Account(index).Chars(GetPlayerChar(index)).Equipment(EquipmentSlot).Num = InvNum
 End Sub
 
-Function GetPlayerEquipmentDur(ByVal index As Long, ByVal EquipmentSlot As Byte) As Byte
+Function GetPlayerEquipmentDur(ByVal index As Long, ByVal EquipmentSlot As Byte) As Integer
 
     If index < 1 Or index > MAX_PLAYERS Then Exit Function
     If EquipmentSlot = 0 Or EquipmentSlot > Equipment.Equipment_Count - 1 Then Exit Function

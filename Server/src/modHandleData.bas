@@ -840,7 +840,7 @@ End Sub
 ' :::::::::::::::::::::
 Sub HandleUseItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
     Dim InvNum As Byte
-    Dim InvItem As Integer
+    Dim ItemNum As Long
     Dim buffer As clsBuffer
     
     Set buffer = New clsBuffer
@@ -851,9 +851,9 @@ Sub HandleUseItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As 
     ' Check for subscript out of range
     If InvNum < 1 Or InvNum > MAX_INV Then Exit Sub
     
-    InvItem = GetPlayerInvItemNum(index, InvNum)
+    ItemNum = GetPlayerInvItemNum(index, InvNum)
             
-    UseItem index, InvNum
+    UseItem index, ItemNum
 End Sub
 
 ' ::::::::::::::::::::::::::

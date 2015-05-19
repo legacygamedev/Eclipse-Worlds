@@ -1814,16 +1814,17 @@ Public Sub UseItem(ByVal index As Long, ByVal InvNum As Byte)
     Dim SkillExp As Integer
     Dim SkillLevelReq As Byte
     Dim ToolReq As Long
-    Dim ItemNum As Byte
-
+    Dim ItemNum As Integer
+    
+    ItemNum = GetPlayerInvItemNum(index, InvNum)
+    
     ' Check subscript out of range
-    If InvNum < 1 Or InvNum > MAX_INV Then Exit Sub
+    If ItemNum < 1 Or ItemNum > MAX_ITEMS Then Exit Sub
     
     ' Check if they can use the item
     If Not CanPlayerUseItem(index, ItemNum) Then Exit Sub
     
     n = Item(ItemNum).Data2
-    ItemNum = GetPlayerInvItemNum(index, InvNum)
 
     ' Set the bind
     If Item(ItemNum).Type = ITEM_TYPE_EQUIPMENT Then
@@ -2337,7 +2338,7 @@ Function CanPlayerTrade(ByVal index As Long, ByVal TradeTarget As Long) As Boole
     CanPlayerTrade = True
 End Function
 
-Function CanPlayerUseItem(ByVal index As Long, ByVal ItemNum As Integer, Optional Message As Boolean = True) As Boolean
+Function CanPlayerUseItem(ByVal index As Long, ByVal ItemNum As Long, Optional Message As Boolean = True) As Boolean
     Dim LevelReq As Byte
     Dim AccessReq As Byte
     Dim ClassReq As Byte

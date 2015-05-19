@@ -677,7 +677,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Function GetPlayerEquipmentDur(ByVal Index As Long, ByVal EquipmentSlot As Byte) As Byte
+Function GetPlayerEquipmentDur(ByVal Index As Long, ByVal EquipmentSlot As Byte) As Integer
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
 
