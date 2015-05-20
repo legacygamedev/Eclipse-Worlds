@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "Richtx32.ocx"
 Begin VB.Form frmMain 
    BackColor       =   &H00E0E0E0&
@@ -4085,7 +4085,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   -2147483647
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
@@ -6649,18 +6648,18 @@ Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
         Else
             If Options.WASD = 1 Then
                 For I = 1 To MAX_HOTBAR - 3 '
-                    If KeyCode = 48 + I Then
+                    If KeyCode = 48 + I Or KeyCode = 96 + I Then
                         SendHotbarUse I
                     End If
                 Next
                 ' Hot bar button 0
-                If KeyCode = 48 Then SendHotbarUse 10
+                If KeyCode = 48 Or KeyCode = 96 Then SendHotbarUse 10
                 
                 ' Hot bar button -
-                If KeyCode = 189 Then SendHotbarUse 11
+                If KeyCode = 189 Or KeyCode = 109 Then SendHotbarUse 11
                 
                 ' Hot bar button +
-                If KeyCode = 187 Then SendHotbarUse 12
+                If KeyCode = 187 Or KeyCode = 107 Then SendHotbarUse 12
                 Exit Sub
             Else
                 For I = 1 To MAX_HOTBAR
