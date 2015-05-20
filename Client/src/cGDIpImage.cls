@@ -348,7 +348,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
     If DestImageClass Is Nothing Then Exit Function
     
     Dim BHI As BITMAPINFO, cRenderer As cGDIpRenderer
-    Dim cX As Long, cY As Long, X As Long, Y As Long
+    Dim cx As Long, cy As Long, X As Long, Y As Long
     Dim clipX As Long, clipY As Long, clipCx As Long, clipCy As Long
     Dim hDib As Long, dibPtr As Long, hObj As Long
     Dim dDC As Long, tDC As Long, scanWidth As Long, Angle As Single
@@ -366,9 +366,9 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
     End If
     
     If Angle = 0! Then
-        cX = Width: cY = Height
+        cx = Width: cy = Height
         If WithAttributes = False Then              ' applying attributes?
-            If cX = m_Size.nWidth And cY = m_Size.nHeight Then
+            If cx = m_Size.nWidth And cy = m_Size.nHeight Then
                 If DestImageClass Is Me Then        ' If no attributes and no-resize, then this is easy
                     pvCleanUp cuResetAttrs          ' Same class? Simply remove any attributes & reset to frame/page 0
                     If Not m_MultiImage Is Nothing Then m_MultiImage.Index = 0&
@@ -386,8 +386,8 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
             End If
         End If
     Else
-        cX = Sqr(Width * Width + Height * Height)   ' Max size required for 0-360 degree rotation
-        cY = cX                                     ' any excess will be trimmed later
+        cx = Sqr(Width * Width + Height * Height)   ' Max size required for 0-360 degree rotation
+        cy = cx                                     ' any excess will be trimmed later
     End If
     
     With BHI.bmiHeader                              ' determine end result color depth
@@ -413,11 +413,11 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
         If WithAttributes = True And .biBitCount = 24 Then
             If Not (Angle = 0! And m_Alpha = 0! And m_TransColor = 0&) Then .biBitCount = 32
         End If
-        .biHeight = cY
-        .biWidth = cX
+        .biHeight = cy
+        .biWidth = cx
         .biSize = 40&
         .biPlanes = 1
-        .biSizeImage = pvByteAlignOnWord(.biBitCount, cX) * cY
+        .biSizeImage = pvByteAlignOnWord(.biBitCount, cx) * cy
     End With
     dDC = GetDC(GetDesktopWindow)                   ' Create DIB and get DC so we can paint image into it
     hDib = CreateDIBSection(dDC, BHI, 0&, dibPtr, 0&, 0&)
@@ -428,7 +428,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
         Set cRenderer = New cGDIpRenderer
         cRenderer.AttachTokenClass m_Token
         If WithAttributes Then
-            cRenderer.RenderImageClassToDC Me, tDC, (cX - Width) \ 2, (cY - Height) \ 2, Width, Height, , , , , InterpolationModeHighQualityBicubic, SmoothingModeAntiAlias, CompositingQualityHighQuality, PixelOffsetModeHighQuality
+            cRenderer.RenderImageClassToDC Me, tDC, (cx - Width) \ 2, (cy - Height) \ 2, Width, Height, , , , , InterpolationModeHighQualityBicubic, SmoothingModeAntiAlias, CompositingQualityHighQuality, PixelOffsetModeHighQuality
         Else
             If m_Mirror Then GdipImageRotateFlip m_Image(m_SourceIndex), m_Mirror
             dDC = cRenderer.CreateHGraphicsFromHDC(tDC)
@@ -441,7 +441,7 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
         SelectObject tDC, hObj
         
         If Angle <> 0! Then                 ' trim if rotated, else pass image to destination ImageClass
-            Width = cX: Height = cY
+            Width = cx: Height = cy
             ReDim bData(0 To BHI.bmiHeader.biSizeImage - 1&)
             CopyMemory bData(0), ByVal dibPtr, BHI.bmiHeader.biSizeImage
             ' trimming rotated image; find real left edge; looking for non-zero Alpha byte
@@ -493,11 +493,11 @@ Public Function CloneImage(DestImageClass As cGDIpImage, Optional ByVal Width As
                 DeleteObject hDib: hDib = 0&        ' get rid of rotated DIB
                 Width = clipCx \ 4                  ' Set adjusted width/height
                 Height = clipCy
-                cY = 0&
+                cy = 0&
                 ReDim bTrim(0 To clipCx * Height - 1&)
                 For Y = clipY To clipY + clipCy - 1&
-                    CopyMemory bTrim(cY * clipCx), bData(Y * scanWidth + clipX), clipCx
-                    cY = cY + 1&
+                    CopyMemory bTrim(cy * clipCx), bData(Y * scanWidth + clipX), clipCx
+                    cy = cy + 1&
                 Next
                 Erase bData()                       ' Create new trimmed DIB
                 With BHI.bmiHeader
@@ -732,7 +732,7 @@ Public Function LoadPicture_FromNothing(Width As Long, Height As Long, graphics 
     Dim hImage As Long, IStream As IUnknown
     Dim flags As Long, hFile As Long, bData() As Byte
     
-    hImage = pvCreateSourcelessImage2(hImage, Width, Height, 1&, TokenClass, graphics)
+    hImage = pvCreateSourcelessImage2(hImage, Width, Height, 0&, TokenClass, graphics)
                     If hImage Then
                         m_Image(0) = hImage
                         m_Size.nWidth = Width
@@ -2071,7 +2071,7 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
     ' Function converts a metafile Stream/stdPicture to bitmap so we can render it with image attributes
 
     Dim hImage As Long, xyRatio As Single
-    Dim cX As Long, cY As Long, lColorType As Long
+    Dim cx As Long, cy As Long, lColorType As Long
     Dim bFalse As Boolean, lSize As Long, dibPtr As Long
     Dim IIStream As IUnknown, IPic As IPicture, Bounds As RECTF
     Dim BHI As BITMAPINFO, cRenderer As cGDIpRenderer
@@ -2085,16 +2085,16 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
         Set IIStream = IPic                                         ' new source if load is successful
         If (IPic.Attributes And PICTURE_TRANSPARENT) Then lColorType = PixelFormat32bppARGB Else lColorType = PixelFormat24bppRGB
         hImage = IPic.handle                                        ' Make non-zero
-        cX = IPic.Width * 1440& / 2540& / Screen.TwipsPerPixelX     ' get size in pixels
-        cY = IPic.Height * 1440& / 2540& / Screen.TwipsPerPixelY
+        cx = IPic.Width * 1440& / 2540& / Screen.TwipsPerPixelX     ' get size in pixels
+        cy = IPic.Height * 1440& / 2540& / Screen.TwipsPerPixelY
     Else                                        ' Called from LoadPicture_Stream
         Call GdipGetImageHorizontalResolution(theImage, xyRatio)     ' Calc size
         If xyRatio > 0! Then
             Call GdipGetImageBounds(theImage, Bounds, UnitPixel)        ' get reported size & convert to himetric to pixels
-            cX = Bounds.nWidth * (2540! / xyRatio) * 1440! / 2540! / Screen.TwipsPerPixelX
+            cx = Bounds.nWidth * (2540! / xyRatio) * 1440! / 2540! / Screen.TwipsPerPixelX
             If GdipGetImageVerticalResolution(theImage, xyRatio) = 0& Then
                 If xyRatio > 0! Then
-                    cY = Bounds.nHeight * (2540! / xyRatio) * 1440! / 2540! / Screen.TwipsPerPixelY
+                    cy = Bounds.nHeight * (2540! / xyRatio) * 1440! / 2540! / Screen.TwipsPerPixelY
                     lColorType = PixelFormat32bppARGB
                     hImage = theImage
                     Set IIStream = metaSource
@@ -2107,11 +2107,11 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
     Else
         With BHI.bmiHeader                                      ' Create DIB to render metafile to
             If lColorType = PixelFormat24bppRGB Then .biBitCount = 24 Else .biBitCount = 32
-            .biHeight = cY
-            .biWidth = cX
+            .biHeight = cy
+            .biWidth = cx
             .biPlanes = 1
             .biSize = 40
-            .biSizeImage = pvByteAlignOnWord(.biBitCount, cX) * cY
+            .biSizeImage = pvByteAlignOnWord(.biBitCount, cx) * cy
         End With
         dDC = GetDC(GetDesktopWindow())
         tDC = CreateCompatibleDC(dDC)
@@ -2132,14 +2132,14 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
                 cRenderer.AttachTokenClass m_Token
                 hGraphics = cRenderer.CreateHGraphicsFromHDC(tDC)
                 If hGraphics Then
-                    cRenderer.RenderToHGraphics hImage, hGraphics, 0&, 0&, cX, cY, Bounds.nLeft, Bounds.nTop, Bounds.nWidth, Bounds.nHeight
+                    cRenderer.RenderToHGraphics hImage, hGraphics, 0&, 0&, cx, cy, Bounds.nLeft, Bounds.nTop, Bounds.nWidth, Bounds.nHeight
                     cRenderer.DestroyHGraphics hGraphics
                 Else
                     GdipDisposeImage hImage: hImage = 0&    ' but out; theImage=hImage
                 End If
                 Set cRenderer = Nothing
             Else                                                ' Rendering from stdPicture object
-                IPic.Render tDC + 0&, 0&, 0&, cX + 0&, cY + 0&, 0&, IPic.Height, IPic.Width, -IPic.Height, ByVal 0&
+                IPic.Render tDC + 0&, 0&, 0&, cx + 0&, cy + 0&, 0&, IPic.Height, IPic.Width, -IPic.Height, ByVal 0&
             End If
             SelectObject tDC, hObj
             DeleteDC tDC
@@ -2152,7 +2152,7 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
                 If BHI.bmiHeader.biBitCount = 24 Then           ' Create new bitmap from DIB; no alpha checks necessary. Done.
                     GdipCreateBitmapFromHBITMAP hDib, 0&, hImage
                 Else                                            ' GDI+ can't do alpha bitmaps, so we do it manually
-                    scanWidth = cX * 4&
+                    scanWidth = cx * 4&
                     ReDim bBits(0 To BHI.bmiHeader.biSizeImage - 1&)
                     CopyMemory bBits(0), ByVal dibPtr, BHI.bmiHeader.biSizeImage
                     For lSize = 3& To BHI.bmiHeader.biSizeImage - 1& Step 4& ' toggle alpha to opaque and vice versa
@@ -2161,8 +2161,8 @@ Private Function pvMetaFileTo32bpp(metaSource As IUnknown, theImage As Long, res
                     CopyMemory ByVal dibPtr, bBits(0), BHI.bmiHeader.biSizeImage
                     Erase bBits()
                                                                 ' Create new GDI+ image & convert to stand alone image
-                    GdipCreateBitmapFromScan0 cX, cY, scanWidth, PixelFormat32bppPARGB, ByVal dibPtr, hImage
-                    If hImage Then hImage = pvCreateSourcelessImage(hImage, cX, cY, 6&)
+                    GdipCreateBitmapFromScan0 cx, cy, scanWidth, PixelFormat32bppPARGB, ByVal dibPtr, hImage
+                    If hImage Then hImage = pvCreateSourcelessImage(hImage, cx, cy, 6&)
                 End If
                 DeleteObject hDib                               ' no longer needed
                 If hImage Then                                  ' Success?

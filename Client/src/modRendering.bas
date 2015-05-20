@@ -434,7 +434,7 @@ Public Sub LoadTexture(ByRef TextureRec As DX8TextureRec)
             Set ConvertedBitmap = New cGDIpImage
             Set GDIGraphics = New cGDIpRenderer
             I = GDIGraphics.CreateGraphicsFromImageClass(SourceBitmap)
-            Call ConvertedBitmap.LoadPicture_FromNothing(newHeight, newWidth, I, GDIToken) 'I HAVE NO IDEA why this is backwards but it works.
+            Call ConvertedBitmap.LoadPicture_FromNothing(newWidth, newHeight, I, GDIToken) 'This is no longer backwards and it now works.
             Call GDIGraphics.DestroyHGraphics(I)
             I = GDIGraphics.CreateGraphicsFromImageClass(ConvertedBitmap)
             Call GDIGraphics.AttachTokenClass(GDIToken)
