@@ -1033,12 +1033,16 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
     ' Check to see if the map tile is blocked or not
     If Map.Tile(X, Y).Type = TILE_TYPE_BLOCKED Then
         CheckDirection = True
+        MouseX = -1
+        MouseY = -1
         Exit Function
     End If
 
     ' Check to see if the map tile is a resource or not
     If Map.Tile(X, Y).Type = TILE_TYPE_RESOURCE Then
         CheckDirection = True
+        MouseX = -1
+        MouseY = -1
         Exit Function
     End If
     
@@ -1065,6 +1069,8 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
                 If GetPlayerX(I) = X Then
                     If GetPlayerY(I) = Y Then
                         CheckDirection = True
+                        MouseX = -1
+                        MouseY = -1
                         Exit Function
                     End If
                 End If
@@ -1078,6 +1084,8 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
             If MapNPC(I).X = X Then
                 If MapNPC(I).Y = Y Then
                     CheckDirection = True
+                    MouseX = -1
+                    MouseY = -1
                     Exit Function
                 End If
             End If
@@ -1091,6 +1099,8 @@ Function CheckDirection(ByVal Direction As Byte) As Boolean
                 If Map.MapEvents(I).Y = Y Then
                     If Map.MapEvents(I).WalkThrough = 0 Then
                         CheckDirection = True
+                        MouseX = -1
+                        MouseY = -1
                         Exit Function
                     End If
                 End If

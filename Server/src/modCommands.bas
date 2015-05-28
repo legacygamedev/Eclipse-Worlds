@@ -403,7 +403,6 @@ Sub SetPlayerVariable(ByVal index As Long, ByVal VarNum As Long, ByVal NewValue 
     Account(index).Chars(GetPlayerChar(index)).Variables(VarNum) = NewValue
 End Sub
 
-
 Function GetPlayerEquipment(ByVal index As Long, ByVal EquipmentSlot As Byte) As Byte
 
     If index < 1 Or index > MAX_PLAYERS Then Exit Function
