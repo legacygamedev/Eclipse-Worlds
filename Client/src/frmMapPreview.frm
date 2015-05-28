@@ -52,8 +52,8 @@ Public Sub RecalcuateDimensions()
     Dim mapScale As Byte
     frmMapPreview.Caption = "Map Preview - #" & Player(MyIndex).Map
     mapScale = scaleBase()
-    Width = PixelsToTwips(Map.MaxX * mapScale + 6, 0)
-    Height = PixelsToTwips(Map.MaxY * mapScale + 28, 1)
+    Width = PixelsToTwips(Map.MaxX * mapScale, 0)
+    Height = PixelsToTwips(Map.MaxY * mapScale, 1)
     picMapPreview.Width = Map.MaxX * mapScale
     picMapPreview.Height = Map.MaxY * mapScale
     Move frmMain.Left - Width, frmMain.Top

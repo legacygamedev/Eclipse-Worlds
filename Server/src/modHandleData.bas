@@ -1648,9 +1648,15 @@ Sub HandleMutePlayer(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr 
         Exit Sub
     End If
     
-    Call PlayerMsg(n, "You have been muted by " & GetPlayerName(index) & "!", BrightRed)
-    Account(index).Chars(GetPlayerChar(index)).Status = "Muted"
-    Call SendPlayerStatus(index)
+    If Account(index).Chars(GetPlayerChar(index)).Status = "Muted" Then
+        Call PlayerMsg(n, "You have been unmuted by " & GetPlayerName(index) & "!", Yellow)
+        Account(index).Chars(GetPlayerChar(index)).Status = ""
+        Call SendPlayerStatus(index)
+    Else
+        Call PlayerMsg(n, "You have been muted by " & GetPlayerName(index) & "!", BrightRed)
+        Account(index).Chars(GetPlayerChar(index)).Status = "Muted"
+        Call SendPlayerStatus(index)
+    End If
 End Sub
 
 Public Sub LoadBans()
