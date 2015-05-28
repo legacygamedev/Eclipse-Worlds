@@ -359,6 +359,7 @@ Sub GameInit()
     
     ' GUI
     Call ToggleGUI(True)
+    Call frmMain.TogglePanel(14)
     
     ' Get ping
     CheckPing
