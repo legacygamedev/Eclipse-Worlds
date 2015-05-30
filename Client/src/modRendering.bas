@@ -4309,10 +4309,10 @@ Public Sub EditorMap_DrawTilePreview()
         .Top = 10
     End With
     If Not displayTilesets Then
-         RenderTexture Tex_Tileset(Tileset), ConvertMapX(X), ConvertMapY(Y), destRECT.X1, destRECT.Y1, Width * PIC_X, Height * PIC_Y, Width * PIC_X, Height * PIC_Y, D3DColorARGB(200, 255, 255, 255)
+         'RenderTexture Tex_Tileset(Tileset), ConvertMapX(X), ConvertMapY(Y), destRECT.X1, destRECT.Y1, Width * PIC_X, Height * PIC_Y, Width * PIC_X, Height * PIC_Y, D3DColorARGB(200, 255, 255, 255)
     Else
-        RenderTexture Tex_Tileset(Tileset), X, Y, destRECT.X1, destRECT.Y1, Width * PIC_X, Height * PIC_Y, Width * PIC_X, Height * PIC_Y
-        RenderText Font_Default, "PREVIEW OF SELECTED TILES", dRect.Left, dRect.Top, White
+        'RenderTexture Tex_Tileset(Tileset), X, Y, destRECT.X1, destRECT.Y1, Width * PIC_X, Height * PIC_Y, Width * PIC_X, Height * PIC_Y
+        'RenderText Font_Default, "PREVIEW OF SELECTED TILES", dRect.Left, dRect.Top, White
     End If
     Exit Sub
     
@@ -5089,12 +5089,11 @@ Public Sub EditorMap_DrawTileset()
     
     With dRect
         .Bottom = 0
-        .Left = (Tex_Tileset(Tileset).Width - 115) / 2
+        .Left = (Tex_Tileset(Tileset).Width - 115 - scrlX) / 2
         .Right = 0
-        .Top = Tex_Tileset(Tileset).Height + 10
+        .Top = Tex_Tileset(Tileset).Height + 10 - scrlY
     End With
-    RenderText Font_Default, "Current TILESET: " & Tileset, dRect.Left, dRect.Top, White
-    RenderText Font_Default, "Use Mouse Scroll to change tileset!", dRect.Left - 40, dRect.Top + 10, Gray
+    
     With destRECT
         .X1 = (EditorTileX * 32) - sRECT.Left
         .X2 = (EditorTileWidth * 32) + .X1
@@ -5103,7 +5102,6 @@ Public Sub EditorMap_DrawTileset()
     End With
     
     DrawSelectionBox destRECT
-        
     Exit Sub
     
 ' Error handler
