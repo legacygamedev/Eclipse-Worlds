@@ -5,7 +5,6 @@
 data/
 logs/
 
-*.exe
 *.dropbox
 *_i.c
 *_p.c
