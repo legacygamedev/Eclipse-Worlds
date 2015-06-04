@@ -2656,7 +2656,7 @@ Sub HandleBuyItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As 
         If .Item < 1 Then Exit Sub
         
         ' Work out price
-        Multiplier = Shop(tempplayer(index).InShop).BuyRate / 100
+        Multiplier = Shop(ShopNum).BuyRate / 100
         
         If .CostItem > 0 And .CostItem <> 1 Then
             ItemPrice = .CostValue * Multiplier
@@ -2664,7 +2664,7 @@ Sub HandleBuyItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As 
             If .CostValue = 0 Then
                 ItemPrice = Item(.Item).Price * Multiplier
             Else
-                ItemPrice = Item(.Item).Price * Multiplier * .CostValue
+                ItemPrice = Multiplier * .CostValue
             End If
         End If
         
@@ -2674,7 +2674,7 @@ Sub HandleBuyItem(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As 
             If .CostValue2 = 0 Then
                 ItemPrice2 = Item(.Item).Price * Multiplier
             Else
-                ItemPrice2 = Item(.Item).Price * Multiplier * .CostValue2
+                ItemPrice2 = Multiplier * .CostValue2
             End If
         End If
         

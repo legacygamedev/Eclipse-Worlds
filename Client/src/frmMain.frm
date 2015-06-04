@@ -210,7 +210,7 @@ Begin VB.Form frmMain
          Style           =   1  'Graphical
          TabIndex        =   146
          ToolTipText     =   "Delete all content of this map. "
-         Top             =   540
+         Top             =   120
          Width           =   420
       End
       Begin VB.CommandButton cmdRevert 
@@ -220,7 +220,7 @@ Begin VB.Form frmMain
          Style           =   1  'Graphical
          TabIndex        =   145
          ToolTipText     =   "Revert/Cancel all changes to this map."
-         Top             =   120
+         Top             =   540
          Width           =   420
       End
       Begin VB.CommandButton cmdProperties 
@@ -4085,7 +4085,6 @@ Begin VB.Form frmMain
             _Version        =   393217
             BackColor       =   -2147483647
             BorderStyle     =   0
-            Enabled         =   -1  'True
             ReadOnly        =   -1  'True
             ScrollBars      =   2
             Appearance      =   0
