@@ -83,7 +83,7 @@ Begin VB.Form frmEditor_NPC
       Top             =   8640
       Width           =   1455
    End
-   Begin VB.CommandButton cmdClosel 
+   Begin VB.CommandButton cmdClose 
       Caption         =   "Close"
       Height          =   375
       Left            =   6840
@@ -900,8 +900,10 @@ Private Sub cmbMusic_Click()
     
     If cmbMusic.ListIndex > 0 Then
         NPC(EditorIndex).Music = cmbMusic.List(cmbMusic.ListIndex)
+        Audio.PlayMusic cmbMusic.List(cmbMusic.ListIndex), True
     Else
         NPC(EditorIndex).Music = vbNullString
+        Audio.StopMusic
     End If
     Exit Sub
     
@@ -1070,7 +1072,7 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-Private Sub cmdClosel_Click()
+Private Sub cmdClose_Click()
     If EditorIndex < 1 Or EditorIndex > MAX_NPCS Then Exit Sub
     
     ' If debug mode, handle error then exit out
@@ -1080,11 +1082,12 @@ Private Sub cmdClosel_Click()
     frmAdmin.picEye(EDITOR_NPC).Visible = False
     BringWindowToTop (frmAdmin.hWnd)
     Unload frmEditor_NPC
+    PlayMapMusic
     Exit Sub
     
 ' Error handler
 ErrorHandler:
-    HandleError "cmdClosel_Click", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
+    HandleError "cmdClose_Click", "frmEditor_NPC", Err.Number, Err.Description, Err.Source, Err.HelpContext
     Err.Clear
 End Sub
 
@@ -1678,7 +1681,7 @@ Private Sub Form_KeyPress(KeyAscii As Integer)
         cmdSave_Click
         KeyAscii = 0
     ElseIf KeyAscii = vbKeyEscape Then
-        cmdClosel_Click
+        cmdClose_Click
         KeyAscii = 0
     End If
     Exit Sub
