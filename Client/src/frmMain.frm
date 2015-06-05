@@ -767,13 +767,13 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H80000008&
       Height          =   4050
-      Left            =   9060
+      Left            =   11760
       ScaleHeight     =   270
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   196
       TabIndex        =   197
       TabStop         =   0   'False
-      Top             =   12240
+      Top             =   11040
       Visible         =   0   'False
       Width           =   2940
       Begin VB.PictureBox picGuild_No 
@@ -957,12 +957,12 @@ Begin VB.Form frmMain
       BorderStyle     =   0  'None
       ForeColor       =   &H80000008&
       Height          =   3570
-      Left            =   12480
+      Left            =   11880
       ScaleHeight     =   238
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   210
       TabIndex        =   122
-      Top             =   12240
+      Top             =   11040
       Visible         =   0   'False
       Width           =   3150
       Begin VB.PictureBox picSpellDescPic 
@@ -1009,6 +1009,7 @@ Begin VB.Form frmMain
          TabIndex        =   124
          Top             =   1800
          Width           =   2640
+         WordWrap        =   -1  'True
       End
    End
    Begin VB.PictureBox picItemDesc 
@@ -1027,12 +1028,12 @@ Begin VB.Form frmMain
       EndProperty
       ForeColor       =   &H80000008&
       Height          =   3570
-      Left            =   12180
+      Left            =   11760
       ScaleHeight     =   238
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   210
       TabIndex        =   118
-      Top             =   12240
+      Top             =   11640
       Visible         =   0   'False
       Width           =   3150
       Begin VB.PictureBox picItemDescPic 
@@ -1079,6 +1080,7 @@ Begin VB.Form frmMain
          TabIndex        =   120
          Top             =   1800
          Width           =   2640
+         WordWrap        =   -1  'True
       End
    End
    Begin VB.PictureBox picOptionSwearFilter 

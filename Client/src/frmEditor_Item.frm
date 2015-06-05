@@ -626,6 +626,166 @@ Begin VB.Form frmEditor_Item
          Width           =   6015
       End
    End
+   Begin VB.Frame fraTitle 
+      Caption         =   "Title Data"
+      Height          =   1095
+      Left            =   3360
+      TabIndex        =   117
+      Top             =   4680
+      Visible         =   0   'False
+      Width           =   3735
+      Begin VB.HScrollBar scrlTitle 
+         Height          =   255
+         Left            =   1680
+         Max             =   255
+         Min             =   1
+         TabIndex        =   119
+         Top             =   360
+         Value           =   1
+         Width           =   1815
+      End
+      Begin VB.CheckBox chkReusable 
+         Caption         =   "Reusable"
+         Height          =   255
+         Index           =   4
+         Left            =   2520
+         TabIndex        =   118
+         TabStop         =   0   'False
+         Top             =   720
+         Width           =   1025
+      End
+      Begin VB.Label lblTitle 
+         AutoSize        =   -1  'True
+         Caption         =   "Title: 1"
+         Height          =   195
+         Left            =   240
+         TabIndex        =   120
+         Top             =   360
+         Width           =   480
+      End
+   End
+   Begin VB.Frame fraRecipe 
+      Caption         =   "Recipe Data"
+      Height          =   3015
+      Left            =   3360
+      TabIndex        =   121
+      Top             =   4680
+      Visible         =   0   'False
+      Width           =   6255
+      Begin VB.HScrollBar scrlItem1 
+         Height          =   255
+         Left            =   120
+         Max             =   5
+         TabIndex        =   128
+         Top             =   1080
+         Width           =   2535
+      End
+      Begin VB.HScrollBar scrlItem2 
+         Height          =   255
+         Left            =   2880
+         Max             =   5
+         TabIndex        =   127
+         Top             =   1080
+         Width           =   2535
+      End
+      Begin VB.HScrollBar scrlResult 
+         Height          =   255
+         Left            =   120
+         Max             =   5
+         TabIndex        =   126
+         Top             =   1800
+         Width           =   2535
+      End
+      Begin VB.HScrollBar scrlSkill 
+         Height          =   255
+         Left            =   2880
+         Max             =   5
+         TabIndex        =   125
+         Top             =   1800
+         Width           =   2535
+      End
+      Begin VB.HScrollBar ScrlSkillExp 
+         Height          =   255
+         Left            =   120
+         Max             =   5
+         TabIndex        =   124
+         Top             =   2640
+         Width           =   2535
+      End
+      Begin VB.HScrollBar ScrlToolRequired 
+         Height          =   255
+         Left            =   3000
+         Max             =   5
+         TabIndex        =   123
+         Top             =   360
+         Width           =   2535
+      End
+      Begin VB.HScrollBar ScrlSkillLevelReq 
+         Height          =   255
+         Left            =   2880
+         Max             =   5
+         TabIndex        =   122
+         Top             =   2640
+         Width           =   2535
+      End
+      Begin VB.Label lblToolRequired 
+         AutoSize        =   -1  'True
+         Caption         =   "Tool Required: None"
+         Height          =   180
+         Left            =   120
+         TabIndex        =   135
+         Top             =   360
+         Width           =   1530
+      End
+      Begin VB.Label lblItem1 
+         Caption         =   "Item 1: None"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   134
+         Top             =   720
+         Width           =   2535
+      End
+      Begin VB.Label lblItem2 
+         Caption         =   "Item 2: None"
+         Height          =   255
+         Left            =   2880
+         TabIndex        =   133
+         Top             =   720
+         Width           =   3135
+      End
+      Begin VB.Label lblResult 
+         Caption         =   "Result: None"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   132
+         Top             =   1440
+         Width           =   2535
+      End
+      Begin VB.Label lblSkill 
+         Caption         =   "Skill: None"
+         Height          =   255
+         Left            =   2880
+         TabIndex        =   131
+         Top             =   1440
+         Width           =   2535
+      End
+      Begin VB.Label lblSkillExp 
+         Caption         =   "Skill Exp: None"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   130
+         Top             =   2280
+         Width           =   2535
+      End
+      Begin VB.Label lblSkillLevelReq 
+         Caption         =   "Skill Level Req: None"
+         Height          =   255
+         Left            =   2880
+         TabIndex        =   129
+         Top             =   2280
+         Width           =   2535
+      End
+   End
    Begin VB.Frame fraEquipment 
       Caption         =   "Equipment Data"
       Height          =   3015
@@ -1299,166 +1459,6 @@ Begin VB.Form frmEditor_Item
          TabIndex        =   90
          Top             =   840
          Width           =   420
-      End
-   End
-   Begin VB.Frame fraTitle 
-      Caption         =   "Title Data"
-      Height          =   1095
-      Left            =   3360
-      TabIndex        =   117
-      Top             =   4680
-      Visible         =   0   'False
-      Width           =   3735
-      Begin VB.HScrollBar scrlTitle 
-         Height          =   255
-         Left            =   1440
-         Max             =   255
-         Min             =   1
-         TabIndex        =   119
-         Top             =   360
-         Value           =   1
-         Width           =   2055
-      End
-      Begin VB.CheckBox chkReusable 
-         Caption         =   "Reusable"
-         Height          =   255
-         Index           =   4
-         Left            =   2520
-         TabIndex        =   118
-         TabStop         =   0   'False
-         Top             =   720
-         Width           =   1025
-      End
-      Begin VB.Label lblTitle 
-         AutoSize        =   -1  'True
-         Caption         =   "Title: 1"
-         Height          =   195
-         Left            =   240
-         TabIndex        =   120
-         Top             =   360
-         Width           =   480
-      End
-   End
-   Begin VB.Frame fraRecipe 
-      Caption         =   "Recipe Data"
-      Height          =   3015
-      Left            =   3360
-      TabIndex        =   121
-      Top             =   4680
-      Visible         =   0   'False
-      Width           =   6255
-      Begin VB.HScrollBar scrlItem1 
-         Height          =   255
-         Left            =   120
-         Max             =   5
-         TabIndex        =   128
-         Top             =   1080
-         Width           =   2535
-      End
-      Begin VB.HScrollBar scrlItem2 
-         Height          =   255
-         Left            =   2880
-         Max             =   5
-         TabIndex        =   127
-         Top             =   1080
-         Width           =   2535
-      End
-      Begin VB.HScrollBar scrlResult 
-         Height          =   255
-         Left            =   120
-         Max             =   5
-         TabIndex        =   126
-         Top             =   1800
-         Width           =   2535
-      End
-      Begin VB.HScrollBar scrlSkill 
-         Height          =   255
-         Left            =   2880
-         Max             =   5
-         TabIndex        =   125
-         Top             =   1800
-         Width           =   2535
-      End
-      Begin VB.HScrollBar ScrlSkillExp 
-         Height          =   255
-         Left            =   120
-         Max             =   5
-         TabIndex        =   124
-         Top             =   2640
-         Width           =   2535
-      End
-      Begin VB.HScrollBar ScrlToolRequired 
-         Height          =   255
-         Left            =   3000
-         Max             =   5
-         TabIndex        =   123
-         Top             =   360
-         Width           =   2535
-      End
-      Begin VB.HScrollBar ScrlSkillLevelReq 
-         Height          =   255
-         Left            =   2880
-         Max             =   5
-         TabIndex        =   122
-         Top             =   2640
-         Width           =   2535
-      End
-      Begin VB.Label lblToolRequired 
-         AutoSize        =   -1  'True
-         Caption         =   "Tool Required: None"
-         Height          =   180
-         Left            =   120
-         TabIndex        =   135
-         Top             =   360
-         Width           =   1530
-      End
-      Begin VB.Label lblItem1 
-         Caption         =   "Item 1: None"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   134
-         Top             =   720
-         Width           =   2535
-      End
-      Begin VB.Label lblItem2 
-         Caption         =   "Item 2: None"
-         Height          =   255
-         Left            =   2880
-         TabIndex        =   133
-         Top             =   720
-         Width           =   3135
-      End
-      Begin VB.Label lblResult 
-         Caption         =   "Result: None"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   132
-         Top             =   1440
-         Width           =   2535
-      End
-      Begin VB.Label lblSkill 
-         Caption         =   "Skill: None"
-         Height          =   255
-         Left            =   2880
-         TabIndex        =   131
-         Top             =   1440
-         Width           =   2535
-      End
-      Begin VB.Label lblSkillExp 
-         Caption         =   "Skill Exp: None"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   130
-         Top             =   2280
-         Width           =   2535
-      End
-      Begin VB.Label lblSkillLevelReq 
-         Caption         =   "Skill Level Req: None"
-         Height          =   255
-         Left            =   2880
-         TabIndex        =   129
-         Top             =   2280
-         Width           =   2535
       End
    End
 End
@@ -2429,7 +2429,7 @@ Private Sub scrlTitle_Change()
     
     If fraTitle.Visible = False Then Exit Sub
     
-    'lblTitle.Caption = "Title: " & scrlTitle.Value
+    lblTitle.Caption = "Title: " & Trim$(title(scrlTitle.Value).Name)
     Item(EditorIndex).Data1 = scrlTitle.Value
     Exit Sub
     
