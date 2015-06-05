@@ -2429,7 +2429,12 @@ Private Sub scrlTitle_Change()
     
     If fraTitle.Visible = False Then Exit Sub
     
-    lblTitle.Caption = "Title: " & Trim$(title(scrlTitle.Value).Name)
+    If Not Trim$(title(scrlTitle.Value).Name) = vbNullString Then
+        lblTitle.Caption = "Title: " & Trim$(title(scrlTitle.Value).Name)
+    Else
+        lblTitle.Caption = "Title: None"
+    End If
+    
     Item(EditorIndex).Data1 = scrlTitle.Value
     Exit Sub
     
