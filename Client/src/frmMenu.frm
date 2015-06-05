@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCN.OCX"
+Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Begin VB.Form frmMenu 
    BackColor       =   &H00E0E0E0&
    BorderStyle     =   1  'Fixed Single
@@ -63,7 +63,7 @@ Begin VB.Form frmMenu
       Begin VB.CheckBox chkUsername 
          Appearance      =   0  'Flat
          BackColor       =   &H00000000&
-         Caption         =   "Save Username"
+         Caption         =   "Remember"
          BeginProperty Font 
             Name            =   "Georgia"
             Size            =   8.25
@@ -75,33 +75,12 @@ Begin VB.Form frmMenu
          EndProperty
          ForeColor       =   &H00FFFFFF&
          Height          =   255
-         Left            =   1320
-         TabIndex        =   26
+         Left            =   3960
+         TabIndex        =   25
          TabStop         =   0   'False
          Top             =   2160
          Value           =   1  'Checked
-         Width           =   1815
-      End
-      Begin VB.CheckBox chkPass 
-         Appearance      =   0  'Flat
-         BackColor       =   &H00000000&
-         Caption         =   "Save Password"
-         BeginProperty Font 
-            Name            =   "Georgia"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         ForeColor       =   &H00FFFFFF&
-         Height          =   255
-         Left            =   3720
-         TabIndex        =   7
-         TabStop         =   0   'False
-         Top             =   2160
-         Width           =   1575
+         Width           =   1335
       End
       Begin VB.TextBox txtLPass 
          Appearance      =   0  'Flat
@@ -212,7 +191,7 @@ Begin VB.Form frmMenu
       Left            =   540
       ScaleHeight     =   3645
       ScaleWidth      =   6630
-      TabIndex        =   28
+      TabIndex        =   27
       TabStop         =   0   'False
       Top             =   180
       Width           =   6630
@@ -225,7 +204,7 @@ Begin VB.Form frmMenu
       Left            =   555
       ScaleHeight     =   3645
       ScaleWidth      =   6630
-      TabIndex        =   24
+      TabIndex        =   23
       TabStop         =   0   'False
       Top             =   180
       Width           =   6630
@@ -245,7 +224,7 @@ Begin VB.Form frmMenu
          ForeColor       =   &H000000FF&
          Height          =   255
          Left            =   0
-         TabIndex        =   27
+         TabIndex        =   26
          Top             =   3320
          Visible         =   0   'False
          Width           =   6615
@@ -266,7 +245,7 @@ Begin VB.Form frmMenu
          ForeColor       =   &H00FFFFFF&
          Height          =   1575
          Left            =   1680
-         TabIndex        =   25
+         TabIndex        =   24
          Top             =   1200
          Width           =   3135
          WordWrap        =   -1  'True
@@ -281,7 +260,7 @@ Begin VB.Form frmMenu
       ScaleHeight     =   243
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   442
-      TabIndex        =   16
+      TabIndex        =   15
       TabStop         =   0   'False
       Top             =   180
       Visible         =   0   'False
@@ -302,7 +281,7 @@ Begin VB.Form frmMenu
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   2280
-         TabIndex        =   33
+         TabIndex        =   32
          TabStop         =   0   'False
          Top             =   2040
          Value           =   -1  'True
@@ -317,7 +296,7 @@ Begin VB.Form frmMenu
          ScaleHeight     =   48
          ScaleMode       =   3  'Pixel
          ScaleWidth      =   32
-         TabIndex        =   23
+         TabIndex        =   22
          TabStop         =   0   'False
          Top             =   1320
          Width           =   480
@@ -338,7 +317,7 @@ Begin VB.Form frmMenu
          Height          =   330
          Left            =   2280
          Style           =   2  'Dropdown List
-         TabIndex        =   19
+         TabIndex        =   18
          TabStop         =   0   'False
          Top             =   1560
          Width           =   2175
@@ -359,7 +338,7 @@ Begin VB.Form frmMenu
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   3360
-         TabIndex        =   18
+         TabIndex        =   17
          TabStop         =   0   'False
          Top             =   2040
          Width           =   1095
@@ -400,7 +379,7 @@ Begin VB.Form frmMenu
          Height          =   255
          Index           =   5
          Left            =   1080
-         TabIndex        =   22
+         TabIndex        =   21
          Top             =   2040
          Width           =   1095
       End
@@ -421,7 +400,7 @@ Begin VB.Form frmMenu
          Height          =   255
          Index           =   4
          Left            =   1440
-         TabIndex        =   21
+         TabIndex        =   20
          Top             =   1560
          Width           =   735
       End
@@ -442,7 +421,7 @@ Begin VB.Form frmMenu
          Height          =   255
          Index           =   2
          Left            =   1440
-         TabIndex        =   20
+         TabIndex        =   19
          Top             =   1080
          Width           =   735
       End
@@ -462,7 +441,7 @@ Begin VB.Form frmMenu
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   2280
-         TabIndex        =   17
+         TabIndex        =   16
          Top             =   2520
          Width           =   2175
       End
@@ -476,7 +455,7 @@ Begin VB.Form frmMenu
       ScaleHeight     =   243
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   442
-      TabIndex        =   8
+      TabIndex        =   7
       TabStop         =   0   'False
       Top             =   180
       Visible         =   0   'False
@@ -497,7 +476,7 @@ Begin VB.Form frmMenu
          IMEMode         =   3  'DISABLE
          Left            =   2520
          PasswordChar    =   "•"
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   2040
          Width           =   2775
       End
@@ -517,7 +496,7 @@ Begin VB.Form frmMenu
          IMEMode         =   3  'DISABLE
          Left            =   2520
          PasswordChar    =   "•"
-         TabIndex        =   11
+         TabIndex        =   10
          Top             =   1680
          Width           =   2775
       End
@@ -535,7 +514,7 @@ Begin VB.Form frmMenu
          EndProperty
          Height          =   225
          Left            =   2520
-         TabIndex        =   9
+         TabIndex        =   8
          Top             =   1320
          Width           =   2775
       End
@@ -555,7 +534,7 @@ Begin VB.Form frmMenu
          Height          =   255
          Index           =   11
          Left            =   1320
-         TabIndex        =   15
+         TabIndex        =   14
          Top             =   2040
          Width           =   1215
       End
@@ -575,7 +554,7 @@ Begin VB.Form frmMenu
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   2760
-         TabIndex        =   13
+         TabIndex        =   12
          Top             =   2520
          Width           =   1215
       End
@@ -595,7 +574,7 @@ Begin VB.Form frmMenu
          Height          =   255
          Index           =   9
          Left            =   1320
-         TabIndex        =   12
+         TabIndex        =   11
          Top             =   1680
          Width           =   1215
       End
@@ -615,7 +594,7 @@ Begin VB.Form frmMenu
          Height          =   255
          Index           =   8
          Left            =   1320
-         TabIndex        =   10
+         TabIndex        =   9
          Top             =   1320
          Width           =   1215
       End
@@ -638,7 +617,7 @@ Begin VB.Form frmMenu
       ScaleHeight     =   242
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   442
-      TabIndex        =   29
+      TabIndex        =   28
       TabStop         =   0   'False
       Top             =   180
       Visible         =   0   'False
@@ -659,7 +638,7 @@ Begin VB.Form frmMenu
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   2640
-         TabIndex        =   32
+         TabIndex        =   31
          Top             =   3240
          Width           =   1695
       End
@@ -678,7 +657,7 @@ Begin VB.Form frmMenu
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   2760
-         TabIndex        =   31
+         TabIndex        =   30
          Top             =   2880
          Width           =   1455
       End
@@ -698,7 +677,7 @@ Begin VB.Form frmMenu
          ForeColor       =   &H00FFFFFF&
          Height          =   255
          Left            =   2760
-         TabIndex        =   30
+         TabIndex        =   29
          Top             =   2520
          Width           =   1455
       End
@@ -775,13 +754,6 @@ Private Sub Form_Load()
         txtLUser.text = Trim$(Options.UserName)
         txtLUser.SelStart = Len(Trim$(Options.UserName))
         chkUsername.Value = Options.SaveUsername
-    End If
-    
-    ' Load the password
-    If Options.SavePassword = 1 Then
-        txtLPass.text = Trim$(Options.Password)
-        txtLPass.SelStart = Len(Trim$(Options.Password))
-        chkPass.Value = Options.SavePassword
     End If
     Exit Sub
     

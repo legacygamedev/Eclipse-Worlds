@@ -65,8 +65,6 @@ End Type
 ' Type recs
 Private Type OptionsRec
     SaveUsername As Byte
-    SavePassword As Byte
-    Password As String * NAME_LENGTH
     UserName As String * NAME_LENGTH
     IP As String
     Port As Long

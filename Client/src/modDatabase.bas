@@ -162,9 +162,7 @@ Public Sub SaveOptions()
     FileName = App.Path & "\data files\config.ini"
     
     Call PutVar(FileName, "Options", "Username", Trim$(Options.UserName))
-    Call PutVar(FileName, "Options", "Password", Trim$(Options.Password))
     Call PutVar(FileName, "Options", "SaveUsername", Trim$(Options.SaveUsername))
-    Call PutVar(FileName, "Options", "SavePassword", Trim$(Options.SavePassword))
     Call PutVar(FileName, "Options", "IP", Trim$(Options.IP))
     Call PutVar(FileName, "Options", "Port", Trim$(Options.Port))
     Call PutVar(FileName, "Options", "MenuMusic", Trim$(Options.MenuMusic))
@@ -206,25 +204,11 @@ Private Sub LoadOptionValues()
         Options.UserName = GetVar(FileName, "Options", "Username")
     End If
     
-    If GetVar(FileName, "Options", "Password") = "" Then
-        Options.Password = vbNullString
-        Call PutVar(FileName, "Options", "Password", Trim$(Options.Password))
-    Else
-        Options.Password = GetVar(FileName, "Options", "Password")
-    End If
-    
     If GetVar(FileName, "Options", "SaveUsername") = "" Then
         Options.SaveUsername = "1"
         Call PutVar(FileName, "Options", "SaveUsername", Trim$(Options.SaveUsername))
     Else
         Options.SaveUsername = GetVar(FileName, "Options", "SaveUsername")
-    End If
-    
-    If GetVar(FileName, "Options", "SavePassword") = "" Then
-        Options.SavePassword = "0"
-        Call PutVar(FileName, "Options", "SavePassword", Trim$(Options.SavePassword))
-    Else
-        Options.SavePassword = GetVar(FileName, "Options", "SavePassword")
     End If
     
     If GetVar(FileName, "Options", "IP") = "" Then
