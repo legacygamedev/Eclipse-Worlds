@@ -6221,8 +6221,8 @@ Private Sub picShopItems_MouseMove(Button As Integer, Shift As Integer, X As Sin
     ShopSlot = IsShopItem(X, Y)
 
     If ShopSlot <> 0 Then
-        X2 = X + picShop.Left + picShopItems.Left + 1
-        Y2 = Y + picShop.Top + picShopItems.Top + 1
+        X2 = X + picShop.Left + picShopItems.Left + 4
+        Y2 = Y + picShop.Top + picShopItems.Top + 12
         UpdateItemDescWindow Shop(InShop).TradeItem(ShopSlot).Item, X2, Y2
         LastItemDesc = Shop(InShop).TradeItem(ShopSlot).Item
         Exit Sub

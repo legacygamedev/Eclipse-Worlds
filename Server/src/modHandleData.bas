@@ -488,27 +488,6 @@ Private Sub HandleLogin(ByVal index As Long, ByRef Data() As Byte, ByVal StartAd
         Name = Trim$(buffer.ReadString)
         Password = Trim$(buffer.ReadString)
         
-        ' Make sure they are not logged in already...
-        For i = 1 To Player_HighIndex
-            If GetPlayerLogin(i) <> vbNullString And UCase$(GetPlayerLogin(i)) = UCase$(Name) Then
-                If i <> index Then
-                    Length = LenB(Account(index))
-                    CopyMemory ByVal VarPtr(Account(index)), ByVal VarPtr(Account(i)), Length
-                    Length = LenB(tempplayer(index))
-                    CopyMemory ByVal VarPtr(tempplayer(index)), ByVal VarPtr(tempplayer(i)), Length
-                    ClearAccount i
-                    tempplayer(index).HasLogged = False
-                    
-                    AccountLoaded = True
-                    Exit For
-                Else
-                    tempplayer(index).HasLogged = False
-                    AccountLoaded = True
-                    Exit For
-                End If
-            End If
-        Next
-        
         ' Prevent hacking
         If Len(Trim$(Name)) < 3 Or Len(Trim$(Name)) > NAME_LENGTH Then Exit Sub
         If Len(Trim$(Password)) < 3 Or Len(Trim$(Password)) > NAME_LENGTH Then Exit Sub
@@ -522,6 +501,28 @@ Private Sub HandleLogin(ByVal index As Long, ByRef Data() As Byte, ByVal StartAd
             Call AlertMsg(index, "Incorrect password.")
             Exit Sub
         End If
+        
+        ' Make sure they are not logged in already...
+        For i = 1 To Player_HighIndex
+            If GetPlayerLogin(i) <> vbNullString And UCase$(GetPlayerLogin(i)) = UCase$(Name) Then
+                If i <> index Then
+                    Length = LenB(Account(index))
+                    CopyMemory ByVal VarPtr(Account(index)), ByVal VarPtr(Account(i)), Length
+                    Length = LenB(tempplayer(index))
+                    CopyMemory ByVal VarPtr(tempplayer(index)), ByVal VarPtr(tempplayer(i)), Length
+                    ClearAccount i
+                    tempplayer(index).HasLogged = False
+                    frmServer.Socket(i).Close
+                    
+                    AccountLoaded = True
+                    Exit For
+                Else
+                    tempplayer(index).HasLogged = False
+                    AccountLoaded = True
+                    Exit For
+                End If
+            End If
+        Next
         
         If Not AccountLoaded Then
             ' Load the player
