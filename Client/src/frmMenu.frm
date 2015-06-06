@@ -873,7 +873,6 @@ Private Sub lblLAccept_Click()
     
     ' Save options
     Options.SaveUsername = frmMenu.chkUsername.Value
-    Options.SavePassword = frmMenu.chkPass.Value
     Options.UserName = Trim$(frmMenu.txtLUser.text)
     
     If frmMenu.chkUsername.Value = 0 Then
@@ -882,11 +881,6 @@ Private Sub lblLAccept_Click()
         Options.UserName = Trim$(frmMenu.txtLUser.text)
     End If
     
-    If frmMenu.chkPass.Value = 0 Then
-        Options.Password = vbNullString
-    Else
-        Options.Password = Trim$(frmMenu.txtLPass.text)
-    End If
     SaveOptions
     Exit Sub
     
