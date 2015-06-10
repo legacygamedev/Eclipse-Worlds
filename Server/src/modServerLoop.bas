@@ -484,7 +484,65 @@ Private Sub UpdateMapLogic()
                                             DidWalk = True
                                         End If
                                     End If
-    
+        
+                                    ' We could not move so target must be behind something, change direction to face them
+                                    If Not DidWalk Then
+                                        ' Up Left
+                                        If MapNPC(MapNum).NPC(x).Y > targetY And MapNPC(MapNum).NPC(x).x > targetX And Not DidWalk Then
+                                            If MapNPC(MapNum).NPC(x).x > targetX Then
+                                                Call NPCDir(MapNum, x, DIR_UPLEFT)
+                                                DidWalk = True
+                                            End If
+                                        End If
+                                        
+                                        ' Up right
+                                        If MapNPC(MapNum).NPC(x).Y > targetY And MapNPC(MapNum).NPC(x).x < targetX And Not DidWalk Then
+                                            If MapNPC(MapNum).NPC(x).x < targetX Then
+                                                Call NPCDir(MapNum, x, DIR_UPRIGHT)
+                                                DidWalk = True
+                                            End If
+                                        End If
+                                        
+                                        ' Down Left
+                                        If MapNPC(MapNum).NPC(x).Y < targetY And MapNPC(MapNum).NPC(x).x > targetX And Not DidWalk Then
+                                            If MapNPC(MapNum).NPC(x).x > targetX Then
+                                                Call NPCDir(MapNum, x, DIR_DOWNLEFT)
+                                                DidWalk = True
+                                            End If
+                                        End If
+                                        
+                                        ' Down Right
+                                        If MapNPC(MapNum).NPC(x).Y < targetY And MapNPC(MapNum).NPC(x).x < targetX And Not DidWalk Then
+                                            If MapNPC(MapNum).NPC(x).x < targetX Then
+                                                Call NPCDir(MapNum, x, DIR_DOWNRIGHT)
+                                                DidWalk = True
+                                            End If
+                                        End If
+                                        
+                                        ' Left
+                                        If MapNPC(MapNum).NPC(x).x > targetX And Not DidWalk Then
+                                            Call NPCDir(MapNum, x, DIR_LEFT)
+                                            DidWalk = True
+                                        End If
+                                        
+                                        ' Right
+                                        If MapNPC(MapNum).NPC(x).x < targetX And Not DidWalk Then
+                                            Call NPCDir(MapNum, x, DIR_RIGHT)
+                                            DidWalk = True
+                                        End If
+                                        
+                                        ' Up
+                                        If MapNPC(MapNum).NPC(x).Y > targetY And Not DidWalk Then
+                                            Call NPCDir(MapNum, x, DIR_UP)
+                                            DidWalk = True
+                                        End If
+                                        
+                                        ' Down
+                                        If MapNPC(MapNum).NPC(x).Y < targetY And Not DidWalk Then
+                                            Call NPCDir(MapNum, x, DIR_DOWN)
+                                            DidWalk = True
+                                        End If
+                                    End If
                                 Else
                                     Call NPCDir(MapNum, x, GetNpcDir(targetX, targetY, CLng(MapNPC(MapNum).NPC(x).x), CLng(MapNPC(MapNum).NPC(x).Y)))
                                 End If

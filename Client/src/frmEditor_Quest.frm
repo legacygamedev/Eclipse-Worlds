@@ -673,7 +673,7 @@ Begin VB.Form frmEditor_Quest
       End
    End
    Begin VB.Frame fraNPC 
-      Caption         =   "Mission List"
+      Caption         =   "Quest List"
       Height          =   8775
       Left            =   0
       TabIndex        =   92

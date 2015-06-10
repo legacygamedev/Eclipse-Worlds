@@ -27,7 +27,7 @@ Begin VB.Form frmCharEditor
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin VB.Frame frameSearch 
-      Caption         =   "Players"
+      Caption         =   "Players List"
       Height          =   5475
       Left            =   60
       TabIndex        =   3
