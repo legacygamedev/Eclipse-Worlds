@@ -239,7 +239,7 @@ Dim QuestNum As Long
             .Max_CLI = buffer.ReadLong
             
             If .Max_CLI > 0 Then
-                ReDim .CLI(1 To .Max_CLI)
+                ReDim Preserve .CLI(1 To .Max_CLI)
             
                 For I = 1 To .Max_CLI
                     .CLI(I).ItemIndex = buffer.ReadLong
@@ -2386,7 +2386,7 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
         OldEXPBarWidth = frmMain.imgEXPBar.Width
         NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
         
-        frmMain.lblExp.Caption = GetPlayerExp(MyIndex) & "/" & TNL
+        frmMain.lblEXP.Caption = GetPlayerExp(MyIndex) & "/" & TNL
     End If
 End Sub
 

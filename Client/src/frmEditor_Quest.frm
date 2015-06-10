@@ -1,6 +1,7 @@
 VERSION 5.00
 Begin VB.Form frmEditor_Quest 
    BorderStyle     =   1  'Fixed Single
+   Caption         =   "Quest Editor"
    ClientHeight    =   10170
    ClientLeft      =   45
    ClientTop       =   375

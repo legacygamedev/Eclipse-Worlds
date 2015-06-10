@@ -484,18 +484,7 @@ Private Sub UpdateMapLogic()
                                             DidWalk = True
                                         End If
                                     End If
-        
-                                    ' We could not move so Target must be behind something, walk randomly.
-                                    If Not DidWalk Then
-                                        Do While DidWalk = False
-                                            i = Int(Rnd * 8)
     
-                                            If CanNPCMove(MapNum, x, i) Then
-                                                Call NPCMove(MapNum, x, i, MOVING_RUNNING)
-                                                DidWalk = True
-                                            End If
-                                        Loop
-                                    End If
                                 Else
                                     Call NPCDir(MapNum, x, GetNpcDir(targetX, targetY, CLng(MapNPC(MapNum).NPC(x).x), CLng(MapNPC(MapNum).NPC(x).Y)))
                                 End If

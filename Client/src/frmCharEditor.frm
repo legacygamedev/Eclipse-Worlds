@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmCharEditor 
    BorderStyle     =   3  'Fixed Dialog
@@ -27,7 +27,7 @@ Begin VB.Form frmCharEditor
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin VB.Frame frameSearch 
-      Caption         =   "Search for Players"
+      Caption         =   "Players"
       Height          =   5475
       Left            =   60
       TabIndex        =   3
