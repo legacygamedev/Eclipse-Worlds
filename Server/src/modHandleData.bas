@@ -231,7 +231,7 @@ Dim QuestNum As Long
             .Max_CLI = buffer.ReadLong
             
             If .Max_CLI > 0 Then
-                ReDim .CLI(1 To .Max_CLI)
+                ReDim Preserve .CLI(1 To .Max_CLI)
                 
                 For i = 1 To .Max_CLI
                     .CLI(i).ItemIndex = buffer.ReadLong

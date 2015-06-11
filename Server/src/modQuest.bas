@@ -1081,8 +1081,6 @@ Public Sub LoadQuests()
     Dim F        As Long
 
     Dim i        As Long, ii As Long, III As Long
-
-    Exit Sub
     
     Call CheckQuests
 
