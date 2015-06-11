@@ -24,8 +24,8 @@ Private Declare Function SetWindowPos Lib "user32.dll" ( _
      ByVal hWndInsertAfter As Long, _
      ByVal X As Long, _
      ByVal Y As Long, _
-     ByVal cX As Long, _
-     ByVal cY As Long, _
+     ByVal cx As Long, _
+     ByVal cy As Long, _
      ByVal wFlags As Long) As Long
 Private Declare Sub CopyMemory Lib "kernel32" _
    Alias "RtlMoveMemory" _
@@ -128,6 +128,7 @@ Public Sub LeaveMapEditorMode(Cancel As Boolean)
     
     EditorSave = False
     Call ToggleGUI(True)
+    Call ToggleButtons(True)
     
     ' Make sure the properties form is closed
     If FormVisible("frmEditor_MapProperties") Then

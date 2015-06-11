@@ -13,11 +13,19 @@ Begin VB.Form frmEditor_Quest
    ScaleHeight     =   10170
    ScaleWidth      =   18975
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdChangeData 
+      Caption         =   "Change Data Size"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   147
+      Top             =   8280
+      Width           =   2895
+   End
    Begin VB.CommandButton cmdDelete 
       Caption         =   "Delete"
       Height          =   375
       Left            =   8280
-      TabIndex        =   147
+      TabIndex        =   146
       Top             =   8280
       Width           =   1455
    End
@@ -25,7 +33,7 @@ Begin VB.Form frmEditor_Quest
       Caption         =   "Close"
       Height          =   375
       Left            =   13200
-      TabIndex        =   146
+      TabIndex        =   145
       Top             =   8280
       Width           =   1455
    End
@@ -33,7 +41,7 @@ Begin VB.Form frmEditor_Quest
       Caption         =   "Save"
       Height          =   375
       Left            =   3360
-      TabIndex        =   145
+      TabIndex        =   144
       Top             =   8280
       Width           =   1455
    End
@@ -674,19 +682,11 @@ Begin VB.Form frmEditor_Quest
    End
    Begin VB.Frame fraNPC 
       Caption         =   "Quest List"
-      Height          =   8775
+      Height          =   8175
       Left            =   0
       TabIndex        =   92
       Top             =   0
       Width           =   3135
-      Begin VB.CommandButton cmdChangeData 
-         Caption         =   "Change Data Size"
-         Height          =   375
-         Left            =   120
-         TabIndex        =   144
-         Top             =   8280
-         Width           =   2895
-      End
       Begin VB.ListBox lstIndex 
          Height          =   7275
          Left            =   120
@@ -723,7 +723,7 @@ Begin VB.Form frmEditor_Quest
          Width           =   615
       End
    End
-   Begin VB.Frame fraQuest 
+   Begin VB.Frame Frame1 
       Caption         =   "Details"
       Height          =   2415
       Left            =   3240

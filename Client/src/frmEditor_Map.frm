@@ -814,7 +814,7 @@ Begin VB.Form frmEditor_Map
       Height          =   405
       Left            =   1620
       TabIndex        =   93
-      Top             =   1260
+      Top             =   1200
       Width           =   555
    End
    Begin VB.CommandButton cmdPaste 
@@ -822,7 +822,7 @@ Begin VB.Form frmEditor_Map
       Height          =   390
       Left            =   2400
       TabIndex        =   94
-      Top             =   1260
+      Top             =   1200
       Width           =   615
    End
    Begin VB.Frame fraType 
@@ -1152,6 +1152,176 @@ Begin VB.Form frmEditor_Map
          End
       End
    End
+   Begin VB.Frame fraLayers 
+      Caption         =   "Layers"
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   4470
+      Left            =   120
+      TabIndex        =   24
+      Top             =   0
+      Width           =   1455
+      Begin VB.HScrollBar scrlAutotile 
+         Height          =   255
+         Left            =   255
+         Max             =   5
+         TabIndex        =   83
+         Top             =   3105
+         Width           =   975
+      End
+      Begin VB.OptionButton optLayer 
+         Caption         =   "Fringe"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   4
+         Left            =   120
+         TabIndex        =   17
+         Top             =   960
+         Width           =   1215
+      End
+      Begin VB.OptionButton optLayer 
+         Caption         =   "Mask"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   2
+         Left            =   120
+         TabIndex        =   15
+         Top             =   480
+         Width           =   1215
+      End
+      Begin VB.OptionButton optLayer 
+         Caption         =   "Ground"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   1
+         Left            =   120
+         TabIndex        =   14
+         Top             =   240
+         Value           =   -1  'True
+         Width           =   1215
+      End
+      Begin VB.OptionButton optLayer 
+         Caption         =   "Roof"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   5
+         Left            =   120
+         TabIndex        =   18
+         Top             =   1200
+         Width           =   1215
+      End
+      Begin VB.OptionButton optLayer 
+         Caption         =   "Cover"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   3
+         Left            =   120
+         TabIndex        =   16
+         Top             =   720
+         Width           =   1215
+      End
+      Begin VB.CommandButton cmdClear 
+         Caption         =   "Clear"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   240
+         TabIndex        =   21
+         Top             =   3990
+         Width           =   975
+      End
+      Begin VB.CommandButton cmdFill 
+         Caption         =   "Fill"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   375
+         Left            =   240
+         TabIndex        =   20
+         Top             =   3510
+         Width           =   975
+      End
+      Begin VB.Label lblAutoTile 
+         Alignment       =   2  'Center
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Normal"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   135
+         TabIndex        =   84
+         Top             =   2865
+         Width           =   1215
+      End
+   End
    Begin VB.Frame fraAttribs 
       Caption         =   "Attributes"
       Height          =   4470
@@ -1279,176 +1449,6 @@ Begin VB.Form frmEditor_Map
          Left            =   120
          TabIndex        =   4
          Top             =   960
-         Width           =   1215
-      End
-   End
-   Begin VB.Frame fraLayers 
-      Caption         =   "Layers"
-      BeginProperty Font 
-         Name            =   "Verdana"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   4470
-      Left            =   120
-      TabIndex        =   24
-      Top             =   0
-      Width           =   1455
-      Begin VB.HScrollBar scrlAutotile 
-         Height          =   255
-         Left            =   255
-         Max             =   5
-         TabIndex        =   83
-         Top             =   1905
-         Width           =   975
-      End
-      Begin VB.OptionButton optLayer 
-         Caption         =   "Fringe"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Index           =   4
-         Left            =   120
-         TabIndex        =   17
-         Top             =   960
-         Width           =   1215
-      End
-      Begin VB.OptionButton optLayer 
-         Caption         =   "Mask"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Index           =   2
-         Left            =   120
-         TabIndex        =   15
-         Top             =   480
-         Width           =   1215
-      End
-      Begin VB.OptionButton optLayer 
-         Caption         =   "Ground"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Index           =   1
-         Left            =   120
-         TabIndex        =   14
-         Top             =   240
-         Value           =   -1  'True
-         Width           =   1215
-      End
-      Begin VB.OptionButton optLayer 
-         Caption         =   "Roof"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Index           =   5
-         Left            =   120
-         TabIndex        =   18
-         Top             =   1200
-         Width           =   1215
-      End
-      Begin VB.OptionButton optLayer 
-         Caption         =   "Cover"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Index           =   3
-         Left            =   120
-         TabIndex        =   16
-         Top             =   720
-         Width           =   1215
-      End
-      Begin VB.CommandButton cmdClear 
-         Caption         =   "Clear"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   240
-         TabIndex        =   21
-         Top             =   2790
-         Width           =   975
-      End
-      Begin VB.CommandButton cmdFill 
-         Caption         =   "Fill"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   375
-         Left            =   240
-         TabIndex        =   20
-         Top             =   2310
-         Width           =   975
-      End
-      Begin VB.Label lblAutoTile 
-         Alignment       =   2  'Center
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Normal"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   135
-         TabIndex        =   84
-         Top             =   1665
          Width           =   1215
       End
    End

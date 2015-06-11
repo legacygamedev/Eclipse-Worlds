@@ -2500,15 +2500,11 @@ Public Sub ToggleButtons(ByVal Visible As Boolean)
     
     If Visible Then
         For I = 1 To MAX_MAINBUTTONS
-            If Not I = 14 And Not I = 15 Then
-                frmMain.picButton(I).Visible = True
-            End If
+            frmMain.picButton(I).Visible = True
         Next
     Else
         For I = 1 To MAX_MAINBUTTONS
-            If Not I = 14 And Not I = 15 Then
-                frmMain.picButton(I).Visible = False
-            End If
+            frmMain.picButton(I).Visible = False
         Next
         Call frmMain.CloseAllPanels
     End If

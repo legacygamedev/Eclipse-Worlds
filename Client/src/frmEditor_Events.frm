@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.OCX"
 Begin VB.Form frmEditor_Events 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Event Editor"
@@ -4666,7 +4666,7 @@ Private Sub cmdCommands_Click(Index As Integer)
             fraCommand(22).Visible = True
             fraCommands.Visible = False
         Case 32
-            cmbWeather.ListIndex = 0
+            CmbWeather.ListIndex = 0
             scrlWeatherIntensity.Value = 0
             fraDialogue.Visible = True
             fraCommand(23).Visible = True

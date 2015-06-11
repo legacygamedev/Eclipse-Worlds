@@ -55,6 +55,7 @@ Public Sub MapEditorInit()
     frmEditor_Map.lblRevision.Caption = "Revision: " & Map.Revision
     
     Call ToggleGUI(False)
+    Call ToggleButtons(False)
 
     Exit Sub
     
@@ -736,6 +737,7 @@ Public Sub ItemEditorInit()
         ' Basic data
         frmEditor_Item.txtName.text = Trim$(.Name)
         frmEditor_Item.scrlPic.Value = .Pic
+        
         If .Type > frmEditor_Item.cmbType.ListCount - 1 Then
             frmEditor_Item.cmbType.ListIndex = frmEditor_Item.cmbType.ListCount - 1
         Else
@@ -743,24 +745,29 @@ Public Sub ItemEditorInit()
         End If
         
         frmEditor_Item.scrlAnim.Value = .Animation
+        
         If .Data3 > frmEditor_Item.cmbTool.ListCount - 1 Then
             frmEditor_Item.cmbTool.ListIndex = frmEditor_Item.cmbTool.ListCount - 1
         Else
             frmEditor_Item.cmbTool.ListIndex = .Data3
         End If
+        
         frmEditor_Item.scrlPaperdoll = .Paperdoll
         frmEditor_Item.scrlDurability = .Data1
         frmEditor_Item.txtDesc.text = Trim$(.Desc)
         frmEditor_Item.cmbEquipSlot.ListIndex = .EquipSlot
+        
         If .Type = ITEM_TYPE_SPELL Then
             frmEditor_Item.scrlSpell.Value = .Data1
         End If
+        
         frmEditor_Item.chkHoT.Value = .HoT
         frmEditor_Item.cmbProficiencyReq.ListIndex = .ProficiencyReq
         frmEditor_Item.chkTwoHanded.Value = .TwoHanded
         frmEditor_Item.chkStackable.Value = .stackable
         frmEditor_Item.chkIndestructable = .Indestructable
         frmEditor_Item.cmbSkillReq.ListIndex = .SkillReq
+        
         Call UpdateSpellScrollBars
         
         ' Reusable
@@ -1157,7 +1164,7 @@ Public Sub NPCEditorInit()
         .scrlRange.Value = NPC(EditorIndex).Range
         .txtHP.text = NPC(EditorIndex).HP
         .txtMP.text = NPC(EditorIndex).MP
-        .txtEXP.text = NPC(EditorIndex).exp
+        .txtExp.text = NPC(EditorIndex).exp
         .scrlLevel.Value = NPC(EditorIndex).Level
         .scrlDamage.Value = NPC(EditorIndex).Damage
         

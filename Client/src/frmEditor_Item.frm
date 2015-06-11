@@ -1807,7 +1807,6 @@ ErrorHandler:
     Err.Clear
 End Sub
 
-
 Public Sub Form_Load()
     Dim I As Long
     

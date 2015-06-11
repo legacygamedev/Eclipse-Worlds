@@ -24,6 +24,7 @@ Begin VB.Form frmEditor_Animation
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   673
    ShowInTaskbar   =   0   'False
+   StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cmdChangeDataSize 
       Caption         =   "Change Data Size"
       Height          =   375

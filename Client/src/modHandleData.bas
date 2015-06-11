@@ -2035,6 +2035,7 @@ Private Sub HandleEditMap()
     InMapEditor = True
     
     Call ToggleGUI(False)
+    Call ToggleButtons(False)
     Call frmMain.ToggleChatLock(True)
     
     ' Show the form
