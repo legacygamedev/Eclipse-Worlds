@@ -160,7 +160,7 @@ Sub DestroyServer()
     Call SetStatus("Unloading sockets...")
 
     For i = 1 To Player_HighIndex
-        tempplayer(i).PVPTimer = 0
+        tempplayer(i).HasLogged = True
         Call CloseSocket(i)
         Unload frmServer.Socket(i)
     Next

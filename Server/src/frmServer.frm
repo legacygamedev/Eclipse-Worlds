@@ -67,22 +67,22 @@ Begin VB.Form frmServer
       TabCaption(1)   =   "Players"
       TabPicture(1)   =   "frmServer.frx":170A6
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "lvwInfo"
+      Tab(1).Control(0)=   "cmdEditPlayer"
       Tab(1).Control(1)=   "cmdSavePlayers"
-      Tab(1).Control(2)=   "cmdEditPlayer"
+      Tab(1).Control(2)=   "lvwInfo"
       Tab(1).ControlCount=   3
       TabCaption(2)   =   "Control "
       TabPicture(2)   =   "frmServer.frx":170C2
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "fraServer"
-      Tab(2).Control(1)=   "fraDatabase"
+      Tab(2).Control(0)=   "fraDatabase"
+      Tab(2).Control(1)=   "fraServer"
       Tab(2).ControlCount=   2
       TabCaption(3)   =   "News"
       TabPicture(3)   =   "frmServer.frx":170DE
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "txtNews"
+      Tab(3).Control(0)=   "cmdLoadNews"
       Tab(3).Control(1)=   "cmdSaveNews"
-      Tab(3).Control(2)=   "cmdLoadNews"
+      Tab(3).Control(2)=   "txtNews"
       Tab(3).ControlCount=   3
       Begin VB.TextBox txtText 
          Appearance      =   0  'Flat
@@ -1275,7 +1275,7 @@ Private Sub mnuKickPlayer_Click()
     Name = frmServer.lvwInfo.SelectedItem.SubItems(3)
 
     If IsPlaying(FindPlayer(Name)) Then
-        tempplayer(FindPlayer(Name)).PVPTimer = 0
+        tempplayer(FindPlayer(Name)).HasLogged = True
         Call AlertMsg(FindPlayer(Name), "You have been kicked by the server!")
         Call LeftGame(FindPlayer(Name))
     End If

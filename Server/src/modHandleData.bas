@@ -1602,11 +1602,11 @@ Sub HandleKickPlayer(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr 
     If Not n = index Then
         If n > 0 Then
             If GetPlayerAccess(n) < GetPlayerAccess(index) Then
-                tempplayer(n).PVPTimer = 0
+                tempplayer(n).HasLogged = True
                 Call GlobalMsg(GetPlayerName(n) & " has been kicked from " & Options.Name & " by " & GetPlayerName(index) & "!", White)
                 Call AddLog(GetPlayerName(index) & " has kicked " & GetPlayerName(n) & ".", "Staff")
                 Call AlertMsg(n, "You have been kicked by " & GetPlayerName(index) & "!")
-                Call LeftGame(index)
+                Call CloseSocket(index)
             Else
                 Call PlayerMsg(index, "They are a higher or same access admin as you!", BrightRed)
             End If
