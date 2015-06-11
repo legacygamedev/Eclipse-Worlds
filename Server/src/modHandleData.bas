@@ -218,7 +218,7 @@ End Sub
 ' :::::::::::::::::::::::
 Sub HandleSaveQuest(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr As Long, ByVal ExtraVar As Long)
 Dim buffer As clsBuffer
-Dim i As Long, II As Long
+Dim i As Long, ii As Long
 Dim QuestNum As Long
     Set buffer = New clsBuffer
         buffer.WriteBytes Data()
@@ -241,15 +241,15 @@ Dim QuestNum As Long
                     If .CLI(i).Max_Actions > 0 Then
                         ReDim Preserve .CLI(i).Action(1 To .CLI(i).Max_Actions)
                         
-                        For II = 1 To .CLI(i).Max_Actions
-                            .CLI(i).Action(II).TextHolder = buffer.ReadString
-                            .CLI(i).Action(II).ActionID = buffer.ReadLong
-                            .CLI(i).Action(II).Amount = buffer.ReadLong
-                            .CLI(i).Action(II).MainData = buffer.ReadLong
-                            .CLI(i).Action(II).QuadData = buffer.ReadLong
-                            .CLI(i).Action(II).SecondaryData = buffer.ReadLong
-                            .CLI(i).Action(II).TertiaryData = buffer.ReadLong
-                        Next II
+                        For ii = 1 To .CLI(i).Max_Actions
+                            .CLI(i).Action(ii).TextHolder = buffer.ReadString
+                            .CLI(i).Action(ii).ActionID = buffer.ReadLong
+                            .CLI(i).Action(ii).Amount = buffer.ReadLong
+                            .CLI(i).Action(ii).MainData = buffer.ReadLong
+                            .CLI(i).Action(ii).QuadData = buffer.ReadLong
+                            .CLI(i).Action(ii).SecondaryData = buffer.ReadLong
+                            .CLI(i).Action(ii).TertiaryData = buffer.ReadLong
+                        Next ii
                     End If
                 Next i
             End If
@@ -1602,6 +1602,7 @@ Sub HandleKickPlayer(ByVal index As Long, ByRef Data() As Byte, ByVal StartAddr 
     If Not n = index Then
         If n > 0 Then
             If GetPlayerAccess(n) < GetPlayerAccess(index) Then
+                tempplayer(n).PVPTimer = 0
                 Call GlobalMsg(GetPlayerName(n) & " has been kicked from " & Options.Name & " by " & GetPlayerName(index) & "!", White)
                 Call AddLog(GetPlayerName(index) & " has kicked " & GetPlayerName(n) & ".", "Staff")
                 Call AlertMsg(n, "You have been kicked by " & GetPlayerName(index) & "!")

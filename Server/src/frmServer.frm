@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{248DD890-BB45-11CF-9ABC-0080C7E7B78D}#1.0#0"; "MSWINSCK.OCX"
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "TABCTL32.OCX"
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "mscomctl.OCX"
 Begin VB.Form frmServer 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Loading..."
@@ -81,11 +81,8 @@ Begin VB.Form frmServer
       TabPicture(3)   =   "frmServer.frx":170DE
       Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "txtNews"
-      Tab(3).Control(0).Enabled=   0   'False
       Tab(3).Control(1)=   "cmdSaveNews"
-      Tab(3).Control(1).Enabled=   0   'False
       Tab(3).Control(2)=   "cmdLoadNews"
-      Tab(3).Control(2).Enabled=   0   'False
       Tab(3).ControlCount=   3
       Begin VB.TextBox txtText 
          Appearance      =   0  'Flat
@@ -1278,6 +1275,7 @@ Private Sub mnuKickPlayer_Click()
     Name = frmServer.lvwInfo.SelectedItem.SubItems(3)
 
     If IsPlaying(FindPlayer(Name)) Then
+        tempplayer(FindPlayer(Name)).PVPTimer = 0
         Call AlertMsg(FindPlayer(Name), "You have been kicked by the server!")
         Call LeftGame(FindPlayer(Name))
     End If
