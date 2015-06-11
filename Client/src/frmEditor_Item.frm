@@ -101,10 +101,10 @@ Begin VB.Form frmEditor_Item
       End
       Begin VB.CheckBox chkStackable 
          Caption         =   "Stackable"
-         Height          =   435
-         Left            =   5160
+         Height          =   195
+         Left            =   5137
          TabIndex        =   112
-         Top             =   120
+         Top             =   240
          Width           =   1095
       End
       Begin VB.ComboBox cmbSound 
@@ -624,6 +624,140 @@ Begin VB.Form frmEditor_Item
          TabIndex        =   17
          Top             =   240
          Width           =   6015
+      End
+   End
+   Begin VB.Frame fraTeleport 
+      Caption         =   "Teleport"
+      Height          =   2415
+      Left            =   3360
+      TabIndex        =   82
+      Top             =   4680
+      Width           =   2895
+      Begin VB.CheckBox chkReusable 
+         Caption         =   "Reusable"
+         BeginProperty Font 
+            Name            =   "Verdana"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Index           =   0
+         Left            =   1680
+         TabIndex        =   34
+         TabStop         =   0   'False
+         Top             =   2040
+         Width           =   1140
+      End
+      Begin VB.HScrollBar scrlY 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   33
+         Top             =   1680
+         Width           =   2535
+      End
+      Begin VB.HScrollBar scrlX 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   32
+         Top             =   1080
+         Width           =   2535
+      End
+      Begin VB.HScrollBar scrlMap 
+         Height          =   255
+         Left            =   120
+         TabIndex        =   31
+         Top             =   480
+         Width           =   2535
+      End
+      Begin VB.Label lblY 
+         Caption         =   "Y: 0"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   85
+         Top             =   1440
+         Width           =   1935
+      End
+      Begin VB.Label lblX 
+         Caption         =   "X: 0"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   84
+         Top             =   840
+         Width           =   1935
+      End
+      Begin VB.Label lblMap 
+         Caption         =   "Map: 0"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   83
+         Top             =   240
+         Width           =   1935
+      End
+   End
+   Begin VB.Frame fraAutoLife 
+      Caption         =   "Auto Life Data"
+      Height          =   1815
+      Left            =   3360
+      TabIndex        =   89
+      Top             =   4680
+      Visible         =   0   'False
+      Width           =   3375
+      Begin VB.CheckBox chkWarpAway 
+         Caption         =   "Warp Away"
+         Height          =   255
+         Left            =   240
+         TabIndex        =   101
+         TabStop         =   0   'False
+         Top             =   1440
+         Width           =   1140
+      End
+      Begin VB.CheckBox chkReusable 
+         Caption         =   "Reusable"
+         Height          =   255
+         Index           =   2
+         Left            =   2160
+         TabIndex        =   20
+         TabStop         =   0   'False
+         Top             =   1440
+         Width           =   1025
+      End
+      Begin VB.HScrollBar scrlHP 
+         Height          =   255
+         Left            =   240
+         Min             =   1
+         TabIndex        =   18
+         Top             =   480
+         Value           =   1
+         Width           =   2895
+      End
+      Begin VB.HScrollBar scrlMP 
+         Height          =   255
+         Left            =   240
+         TabIndex        =   19
+         Top             =   1080
+         Width           =   2895
+      End
+      Begin VB.Label lblHP 
+         AutoSize        =   -1  'True
+         Caption         =   "HP: 1"
+         Height          =   195
+         Left            =   240
+         TabIndex        =   91
+         Top             =   240
+         Width           =   405
+      End
+      Begin VB.Label lblMP 
+         AutoSize        =   -1  'True
+         Caption         =   "MP: 0"
+         Height          =   195
+         Left            =   240
+         TabIndex        =   90
+         Top             =   840
+         Width           =   420
       End
    End
    Begin VB.Frame fraTitle 
@@ -1325,140 +1459,6 @@ Begin VB.Form frmEditor_Item
          TabIndex        =   78
          Top             =   240
          Width           =   2775
-      End
-   End
-   Begin VB.Frame fraTeleport 
-      Caption         =   "Teleport"
-      Height          =   2415
-      Left            =   3360
-      TabIndex        =   82
-      Top             =   4680
-      Width           =   2895
-      Begin VB.CheckBox chkReusable 
-         Caption         =   "Reusable"
-         BeginProperty Font 
-            Name            =   "Verdana"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Index           =   0
-         Left            =   1680
-         TabIndex        =   34
-         TabStop         =   0   'False
-         Top             =   2040
-         Width           =   1025
-      End
-      Begin VB.HScrollBar scrlY 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   33
-         Top             =   1680
-         Width           =   2535
-      End
-      Begin VB.HScrollBar scrlX 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   32
-         Top             =   1080
-         Width           =   2535
-      End
-      Begin VB.HScrollBar scrlMap 
-         Height          =   255
-         Left            =   120
-         TabIndex        =   31
-         Top             =   480
-         Width           =   2535
-      End
-      Begin VB.Label lblY 
-         Caption         =   "Y: 0"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   85
-         Top             =   1440
-         Width           =   1935
-      End
-      Begin VB.Label lblX 
-         Caption         =   "X: 0"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   84
-         Top             =   840
-         Width           =   1935
-      End
-      Begin VB.Label lblMap 
-         Caption         =   "Map: 0"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   83
-         Top             =   240
-         Width           =   1935
-      End
-   End
-   Begin VB.Frame fraAutoLife 
-      Caption         =   "Auto Life Data"
-      Height          =   1815
-      Left            =   3360
-      TabIndex        =   89
-      Top             =   4680
-      Visible         =   0   'False
-      Width           =   3375
-      Begin VB.CheckBox chkWarpAway 
-         Caption         =   "Warp Away"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   101
-         TabStop         =   0   'False
-         Top             =   1440
-         Width           =   1140
-      End
-      Begin VB.CheckBox chkReusable 
-         Caption         =   "Reusable"
-         Height          =   255
-         Index           =   2
-         Left            =   2160
-         TabIndex        =   20
-         TabStop         =   0   'False
-         Top             =   1440
-         Width           =   1025
-      End
-      Begin VB.HScrollBar scrlHP 
-         Height          =   255
-         Left            =   240
-         Min             =   1
-         TabIndex        =   18
-         Top             =   480
-         Value           =   1
-         Width           =   2895
-      End
-      Begin VB.HScrollBar scrlMP 
-         Height          =   255
-         Left            =   240
-         TabIndex        =   19
-         Top             =   1080
-         Width           =   2895
-      End
-      Begin VB.Label lblHP 
-         AutoSize        =   -1  'True
-         Caption         =   "HP: 1"
-         Height          =   195
-         Left            =   240
-         TabIndex        =   91
-         Top             =   240
-         Width           =   405
-      End
-      Begin VB.Label lblMP 
-         AutoSize        =   -1  'True
-         Caption         =   "MP: 0"
-         Height          =   195
-         Left            =   240
-         TabIndex        =   90
-         Top             =   840
-         Width           =   420
       End
    End
 End
@@ -2230,8 +2230,6 @@ Private Sub scrlMap_Change()
 
     ' If debug mode, handle error then exit out
     If App.LogMode = 1 And Options.Debug = 1 Then On Error GoTo ErrorHandler
-    
-    If fraTeleport.Visible Then Exit Sub
     
     lblMap.Caption = "Map: " & scrlMap.Value
     Item(EditorIndex).Data1 = scrlMap.Value
