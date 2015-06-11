@@ -810,6 +810,9 @@ Public Sub HandleKeyPresses(ByVal KeyAscii As Integer)
                         GoTo Continue
                     End If
 
+                    AddText "Quest System is disabled!", BrightRed
+                    Exit Sub
+                    
                     SendRequestEditQuests
                     
                     ' Editing animation request
