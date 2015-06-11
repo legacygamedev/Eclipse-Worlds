@@ -4307,22 +4307,9 @@ Private Sub mnuRCLI_Click()
     End If
 
     fmeMoveItem.Visible = False
-    
-    'lets delete the selected action/task
-    Res = InputBox("Enter the amount you want the new data size to be.", "Change Data Size", MAX_BANS)
-    
-    If Res = MAX_BANS Then Exit Sub
-    
-    Call SendChangeDataSize(Res, EDITOR_BAN)
-    
-    Unload frmEditor_Ban
-    SendRequestEditBan
-    
-    Exit Sub
-   
-    ' Error Handler
     Exit Sub
 
+' Error Handler
 ErrorHandler:
     HandleError "mnuRCLI_Click", "frmEditor_Quest", Err.Number, Err.Desciption, Err.Source, Err.HelpContext
     Err.Clear

@@ -176,7 +176,7 @@ Public Const TARGET_TYPE_NONE As Byte = 0
 Public Const TARGET_TYPE_PLAYER As Byte = 1
 Public Const TARGET_TYPE_NPC As Byte = 2
 
-Public Const TARGET_TYPE_EVENT As Byte = 4
+Public Const TARGET_TYPE_EVENT As Byte = 3
 
 ' Scrolling action message constants
 Public Const ACTIONMSG_STATIC As Byte = 0

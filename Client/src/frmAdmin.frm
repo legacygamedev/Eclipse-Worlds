@@ -51,6 +51,7 @@ Begin VB.Form frmAdmin
       Begin VB.CheckBox chkEditor 
          Alignment       =   1  'Right Justify
          Caption         =   "Quests"
+         Enabled         =   0   'False
          ForeColor       =   &H000000C0&
          Height          =   270
          Index           =   13
@@ -1117,7 +1118,7 @@ Public Sub chkEditor_Click(Index As Integer)
             Else
                 chkEditor(Index).FontBold = False
                 frmEditor_Animation.Visible = False
-                    BringWindowToTop (frmAdmin.hWnd)
+                BringWindowToTop (frmAdmin.hWnd)
             End If
         Case 1 ' Ban
             If chkEditor(Index).Value = 1 Then
