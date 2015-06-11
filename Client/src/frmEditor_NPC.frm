@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmEditor_NPC 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "NPC Editor"
-   ClientHeight    =   10305
+   ClientHeight    =   9945
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   8505
@@ -20,7 +20,7 @@ Begin VB.Form frmEditor_NPC
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   687
+   ScaleHeight     =   663
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   567
    ShowInTaskbar   =   0   'False

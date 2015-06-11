@@ -16,7 +16,7 @@ Begin VB.Form frmEditor_Quest
    Begin VB.CommandButton cmdDelete 
       Caption         =   "Delete"
       Height          =   375
-      Left            =   5040
+      Left            =   8280
       TabIndex        =   147
       Top             =   8280
       Width           =   1455
@@ -24,7 +24,7 @@ Begin VB.Form frmEditor_Quest
    Begin VB.CommandButton cmdClose 
       Caption         =   "Close"
       Height          =   375
-      Left            =   6720
+      Left            =   13200
       TabIndex        =   146
       Top             =   8280
       Width           =   1455
@@ -723,8 +723,8 @@ Begin VB.Form frmEditor_Quest
          Width           =   615
       End
    End
-   Begin VB.Frame Frame1 
-      Caption         =   "Mission Details"
+   Begin VB.Frame fraQuest 
+      Caption         =   "Details"
       Height          =   2415
       Left            =   3240
       TabIndex        =   93

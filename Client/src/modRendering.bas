@@ -4278,6 +4278,7 @@ Public Sub EditorMap_DrawTilePreview()
     
     ' Find tileset number
     Tileset = frmEditor_Map.scrlTileSet.Value
+    
     If Not displayTilesets Then
         X = CurX * PIC_X
         Y = CurY * PIC_Y
@@ -4308,8 +4309,9 @@ Public Sub EditorMap_DrawTilePreview()
         .Right = 0
         .Top = 10
     End With
+    
     If Not displayTilesets Then
-         'RenderTexture Tex_Tileset(Tileset), ConvertMapX(X), ConvertMapY(Y), destRECT.X1, destRECT.Y1, Width * PIC_X, Height * PIC_Y, Width * PIC_X, Height * PIC_Y, D3DColorARGB(200, 255, 255, 255)
+        RenderTexture Tex_Tileset(Tileset), ConvertMapX(X), ConvertMapY(Y), destRECT.X1, destRECT.Y1, Width * PIC_X, Height * PIC_Y, Width * PIC_X, Height * PIC_Y, D3DColorARGB(200, 255, 255, 255)
     Else
         'RenderTexture Tex_Tileset(Tileset), X, Y, destRECT.X1, destRECT.Y1, Width * PIC_X, Height * PIC_Y, Width * PIC_X, Height * PIC_Y
         'RenderText Font_Default, "PREVIEW OF SELECTED TILES", dRect.Left, dRect.Top, White

@@ -210,7 +210,7 @@ Begin VB.Form frmMain
          Style           =   1  'Graphical
          TabIndex        =   146
          ToolTipText     =   "Delete all content of this map. "
-         Top             =   120
+         Top             =   540
          Width           =   420
       End
       Begin VB.CommandButton cmdRevert 
@@ -220,7 +220,7 @@ Begin VB.Form frmMain
          Style           =   1  'Graphical
          TabIndex        =   145
          ToolTipText     =   "Revert/Cancel all changes to this map."
-         Top             =   540
+         Top             =   120
          Width           =   420
       End
       Begin VB.CommandButton cmdProperties 
@@ -4320,20 +4320,18 @@ Private Sub chkTilesets_Click()
     If frmMain.chkTilesets.Value Then
         frmMain.chkTilesets.Picture = LoadResPicture("TILESETS_DOWN", vbResBitmap)
         displayTilesets = True
-        'lblTitle = "UBER Map Editor - " & "Tileset: " & frmEditor_Map.scrlTileSet.Value
     Else
         frmMain.chkTilesets.Picture = LoadResPicture("TILESETS_UP", vbResBitmap)
         displayTilesets = False
-        'frmMain.lblTitle = "UBER Map Editor - " & "Layer: " & CurrentLayer
     End If
 End Sub
 
 Private Sub cmdDelete_Click()
-    'If AlertMsg("Are you sure you want to erase this map?", False, False) = YES Then
+    If AlertMsg("Are you sure you want to erase this map?", False, False) = YES Then
         Call ClearMap
         Call MapEditorSave
         redrawMapCache = True
-    'End If
+    End If
 End Sub
 
 Private Sub cmdProperties_Click()
@@ -7452,9 +7450,9 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
                         frmMapPreview.Move frmMain.Left - frmMapPreview.Width, frmMain.Top
                     End If
                     If FormVisible("frmMapPreview") Then
-                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width, frmMain.Top + frmMapPreview.Height
+                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 136, frmMain.Top + frmMapPreview.Height
                     Else
-                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width, frmMain.Top
+                        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 136, frmMain.Top
                     End If
                 End If
         Case WM_NCACTIVATE

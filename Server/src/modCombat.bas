@@ -646,11 +646,13 @@ Public Sub PlayerAttackNPC(ByVal Attacker As Long, ByVal MapNPCNum As Long, ByVa
         LevelDiff = GetPlayerLevel(Attacker) - NPC(NPCNum).Level
         
         If Exp > 0 Then
-            If LevelDiff > 0 And LevelDiff <= 10 Then
-                Exp = Exp / LevelDiff
-            ElseIf LevelDiff < 0 And LevelDiff >= -10 Then
-                LevelDiff = LevelDiff * -1
-                Exp = Exp + (Exp * (0.25 * LevelDiff))
+            If Not NPC(NPCNum).Level = 0 Then
+                If LevelDiff > 0 And LevelDiff <= 10 Then
+                    Exp = Exp / LevelDiff
+                ElseIf LevelDiff < 0 And LevelDiff >= -10 Then
+                    LevelDiff = LevelDiff * -1
+                    Exp = Exp + (Exp * (0.25 * LevelDiff))
+                End If
             End If
         End If
         

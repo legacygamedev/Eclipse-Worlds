@@ -97,7 +97,7 @@ Private Sub myWndProc(ByVal bBefore As Boolean, _
     Select Case uMsg
         Case WM_MOVE
             frmMain.Move frmMapPreview.Left + frmMapPreview.Width, frmMapPreview.Top
-            frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width, frmMain.Top + frmMapPreview.Height
+            frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 136, frmMain.Top + frmMapPreview.Height
             bHandled = 1
     End Select
 

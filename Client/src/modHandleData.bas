@@ -2044,9 +2044,9 @@ Private Sub HandleEditMap()
     Call MapEditorInit
     
     If FormVisible("frmMapPreview") Then
-        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width, frmMain.Top + frmMapPreview.Height
+        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 136, frmMain.Top + frmMapPreview.Height
     Else
-        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width, frmMain.Top
+        frmEditor_Map.Move frmMain.Left - frmEditor_Map.Width - 136, frmMain.Top
     End If
 
     frmAdmin.ShowEyeFor EDITOR_MAP
@@ -2386,7 +2386,7 @@ Private Sub HandlePlayerExp(ByVal Index As Long, ByRef data() As Byte, ByVal Sta
         OldEXPBarWidth = frmMain.imgEXPBar.Width
         NewEXPBarWidth = ((GetPlayerExp(MyIndex) / EXPBar_Width) / (TNL / EXPBar_Width)) * EXPBar_Width
         
-        frmMain.lblEXP.Caption = GetPlayerExp(MyIndex) & "/" & TNL
+        frmMain.lblExp.Caption = GetPlayerExp(MyIndex) & "/" & TNL
     End If
 End Sub
 
